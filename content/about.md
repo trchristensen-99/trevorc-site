@@ -5,7 +5,7 @@ tags:
   - about
 ---
 
-Trevor A. Christensen. PhD student at Cold Spring Harbor Laboratory in computational biology.
+Trevor Christensen. PhD student at Cold Spring Harbor Laboratory in computational biology.
 
 This site collects research notes, long-form writing, and a working wiki of things I want to keep around.
 
