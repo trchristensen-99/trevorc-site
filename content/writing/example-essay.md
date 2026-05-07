@@ -8,8 +8,8 @@ confidence: likely
 tags:
   - example
 audio:
-  src: https://example.com/recording.mp3
-  label: Audio narration (placeholder URL, replace with real file)
+  src: /static/audio-samples/andrew.mp3
+  label: Audio narration (Edge TTS, Andrew voice). Replace with your own once you pick.
 ---
 
 This is a placeholder essay that exists to demonstrate the new metadata fields and the sortable list. Delete when you have real content.
