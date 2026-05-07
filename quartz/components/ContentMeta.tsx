@@ -5,6 +5,7 @@ import { classNames } from "../util/lang"
 import { i18n } from "../i18n"
 import { JSX } from "preact"
 import style from "./styles/contentMeta.scss"
+import { calibrate } from "../util/calibration"
 
 interface ContentMetaOptions {
   showReadingTime: boolean
@@ -27,7 +28,7 @@ const ONE_DAY_MS = 24 * 60 * 60 * 1000
 export default ((opts?: Partial<ContentMetaOptions>) => {
   const options: ContentMetaOptions = { ...defaultOptions, ...opts }
 
-  function ContentMetadata({ cfg, fileData, displayClass }: QuartzComponentProps) {
+  function ContentMetadata({ cfg, fileData, allFiles, displayClass }: QuartzComponentProps) {
     const text = fileData.text
     if (!text) return null
 
@@ -71,7 +72,22 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
     }
 
     if (options.showImportance && typeof fm?.importance === "number") {
-      segments.push(<span class="meta-importance">importance {fm.importance}/10</span>)
+      const cal = calibrate(allFiles, fileData)
+      if (cal && cal.total >= 10 && cal.bucket !== cal.raw) {
+        segments.push(
+          <span class="meta-importance">
+            importance {cal.raw} (calibrated {cal.bucket}/10, rank {cal.rank} of {cal.total})
+          </span>,
+        )
+      } else if (cal) {
+        segments.push(
+          <span class="meta-importance">
+            importance {cal.raw}/10 (rank {cal.rank} of {cal.total})
+          </span>,
+        )
+      } else {
+        segments.push(<span class="meta-importance">importance {fm.importance}/10</span>)
+      }
     }
 
     if (options.showStatus && typeof fm?.status === "string") {

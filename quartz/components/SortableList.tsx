@@ -5,6 +5,7 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 import readingTime from "reading-time"
 import sortableScript from "./scripts/sortable.inline"
 import style from "./styles/sortable.scss"
+import { calibrate } from "../util/calibration"
 
 interface Props extends QuartzComponentProps {
   pages?: QuartzPluginData[]
@@ -31,7 +32,8 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
             <th data-sort="title">Title</th>
             <th data-sort="created">Published</th>
             <th data-sort="modified">Updated</th>
-            <th data-sort="importance">Importance</th>
+            <th data-sort="importance">Imp.</th>
+            <th data-sort="calibrated">Calib.</th>
             <th data-sort="reading">Read</th>
             <th data-sort="backlinks">Links in</th>
           </tr>
@@ -43,6 +45,8 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
             const created = page.dates?.created
             const modified = page.dates?.modified
             const importance = typeof fm.importance === "number" ? fm.importance : null
+            const cal = calibrate(allFiles, page)
+            const calibrated = cal ? cal.bucket : null
             const minutes = page.text ? Math.ceil(readingTime(page.text).minutes) : 0
             const linksIn = backlinkCounts.get(page.slug as string) ?? 0
 
@@ -52,6 +56,7 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
                 data-created={created?.getTime() ?? 0}
                 data-modified={modified?.getTime() ?? 0}
                 data-importance={importance ?? -1}
+                data-calibrated={calibrated ?? -1}
                 data-reading={minutes}
                 data-backlinks={linksIn}
               >
@@ -63,6 +68,7 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
                 <td>{created ? formatDate(created, cfg.locale) : "-"}</td>
                 <td>{modified ? formatDate(modified, cfg.locale) : "-"}</td>
                 <td class="num">{importance !== null ? importance : "-"}</td>
+                <td class="num">{calibrated !== null ? calibrated : "-"}</td>
                 <td class="num">{minutes ? `${minutes}m` : "-"}</td>
                 <td class="num">{linksIn || "-"}</td>
               </tr>
