@@ -2,6 +2,7 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 
 import style from "../styles/listPage.scss"
 import { PageList, SortFn } from "../PageList"
+import SortableListBuilder from "../SortableList"
 import { Root } from "hast"
 import { htmlToJsx } from "../../util/jsx"
 import { i18n } from "../../i18n"
@@ -17,12 +18,16 @@ interface FolderContentOptions {
   showFolderCount: boolean
   showSubfolders: boolean
   sort?: SortFn
+  layout: "list" | "table"
 }
 
 const defaultOptions: FolderContentOptions = {
   showFolderCount: true,
   showSubfolders: true,
+  layout: "table",
 }
+
+const SortableListInstance = SortableListBuilder(undefined)
 
 export default ((opts?: Partial<FolderContentOptions>) => {
   const options: FolderContentOptions = { ...defaultOptions, ...opts }
@@ -114,13 +119,22 @@ export default ((opts?: Partial<FolderContentOptions>) => {
             </p>
           )}
           <div>
-            <PageList {...listProps} />
+            {options.layout === "table" ? (
+              <SortableListInstance {...listProps} pages={allPagesInFolder} />
+            ) : (
+              <PageList {...listProps} />
+            )}
           </div>
         </div>
       </div>
     )
   }
 
-  FolderContent.css = concatenateResources(style, PageList.css)
+  FolderContent.css = concatenateResources(
+    style,
+    PageList.css,
+    SortableListInstance.css ?? "",
+  )
+  FolderContent.afterDOMLoaded = SortableListInstance.afterDOMLoaded
   return FolderContent
 }) satisfies QuartzComponentConstructor

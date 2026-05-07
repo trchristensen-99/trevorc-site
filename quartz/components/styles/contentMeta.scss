@@ -11,4 +11,14 @@
       }
     }
   }
+
+  .meta-importance,
+  .meta-status,
+  .meta-confidence {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .meta-status {
+    font-style: italic;
+  }
 }

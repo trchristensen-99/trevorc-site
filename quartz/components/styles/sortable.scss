@@ -1,0 +1,50 @@
+.sortable-list {
+  margin: 1rem 0;
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--lightgray);
+  }
+
+  th[data-sort] {
+    cursor: pointer;
+    user-select: none;
+    color: var(--darkgray);
+    font-weight: 600;
+
+    &:hover {
+      color: var(--secondary);
+    }
+
+    &::after {
+      content: " ";
+      display: inline-block;
+      width: 0.7em;
+    }
+
+    &[data-dir="asc"]::after {
+      content: " ↑";
+    }
+    &[data-dir="desc"]::after {
+      content: " ↓";
+    }
+  }
+
+  td.num {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  td.title a {
+    font-weight: 500;
+  }
+}
