@@ -26,7 +26,7 @@ export interface CalibrationOptions {
 }
 
 const DEFAULT_OPTIONS: CalibrationOptions = {
-  steepness: 1.5,
+  steepness: 2.0,
   minCorpusForBucketing: 10,
 }
 
