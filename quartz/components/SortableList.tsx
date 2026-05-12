@@ -11,6 +11,10 @@ interface Props extends QuartzComponentProps {
   pages?: QuartzPluginData[]
 }
 
+function slugAnchor(slug: string): string {
+  return slug.replace(/\//g, "--")
+}
+
 const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props) => {
   const list = pages ?? allFiles
 
@@ -25,17 +29,26 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
   if (list.length === 0) return null
 
   return (
-    <div class="sortable-list">
+    <div class="sortable-list" data-importance-mode="calibrated">
       <table>
         <thead>
           <tr>
             <th data-sort="title">Title</th>
-            <th data-sort="created">Published</th>
-            <th data-sort="modified">Updated</th>
-            <th data-sort="importance">Imp.</th>
-            <th data-sort="calibrated">Calib.</th>
-            <th data-sort="reading">Read</th>
-            <th data-sort="backlinks">Links in</th>
+            <th data-sort="created" data-default-dir="desc">Published</th>
+            <th data-sort="modified" data-default-dir="desc">Updated</th>
+            <th data-sort="importance" data-default-dir="desc" class="th-importance">
+              Importance
+              <span class="importance-toggle" role="group" aria-label="Importance view">
+                <button type="button" data-mode="raw" aria-pressed="false">
+                  raw
+                </button>
+                <button type="button" data-mode="calibrated" aria-pressed="true">
+                  calibrated
+                </button>
+              </span>
+            </th>
+            <th data-sort="reading" data-default-dir="asc">Read time</th>
+            <th data-sort="backlinks" data-default-dir="desc">Links in</th>
           </tr>
         </thead>
         <tbody>
@@ -49,13 +62,16 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
             const calibrated = cal ? cal.bucket : null
             const minutes = page.text ? Math.ceil(readingTime(page.text).minutes) : 0
             const linksIn = backlinkCounts.get(page.slug as string) ?? 0
+            const anchor = slugAnchor(page.slug ?? "")
 
             return (
               <tr
+                id={anchor}
+                data-slug={page.slug}
                 data-title={title.toLowerCase()}
                 data-created={created?.getTime() ?? 0}
                 data-modified={modified?.getTime() ?? 0}
-                data-importance={importance ?? -1}
+                data-raw={importance ?? -1}
                 data-calibrated={calibrated ?? -1}
                 data-reading={minutes}
                 data-backlinks={linksIn}
@@ -67,8 +83,9 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
                 </td>
                 <td>{created ? formatDate(created, cfg.locale) : "-"}</td>
                 <td>{modified ? formatDate(modified, cfg.locale) : "-"}</td>
-                <td class="num">{importance !== null ? importance : "-"}</td>
-                <td class="num">{calibrated !== null ? calibrated : "-"}</td>
+                <td class="num imp-cell" data-raw-text={importance ?? "-"} data-calibrated-text={calibrated ?? "-"}>
+                  {calibrated !== null ? calibrated : "-"}
+                </td>
                 <td class="num">{minutes ? `${minutes}m` : "-"}</td>
                 <td class="num">{linksIn || "-"}</td>
               </tr>

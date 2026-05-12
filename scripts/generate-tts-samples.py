@@ -19,13 +19,15 @@ This sample includes a few specific challenges. Numerical values, like 2.7 perce
 Most importantly, the voice should be easy to follow when you are not paying full attention. Voices that sound natural and have varied prosody tend to hold up better in this case. After listening to each sample, pick the voice that feels least fatiguing over a long essay."""
 
 # (voice id, friendly label, slug for filename)
+# US male voices only. edge-tts character notes from --list-voices.
 VOICES = [
-    ("en-US-AndrewNeural", "Andrew (US, professional male)", "andrew"),
-    ("en-US-AriaNeural", "Aria (US, neutral female)", "aria"),
-    ("en-US-RogerNeural", "Roger (US, narrator-style male)", "roger"),
-    ("en-US-EmmaNeural", "Emma (US, warm female)", "emma"),
-    ("en-GB-RyanNeural", "Ryan (UK male)", "ryan-uk"),
-    ("en-GB-SoniaNeural", "Sonia (UK female)", "sonia-uk"),
+    ("en-US-AndrewNeural", "Andrew (warm, confident, authentic)", "andrew"),
+    ("en-US-BrianNeural", "Brian (approachable, casual, sincere)", "brian"),
+    ("en-US-ChristopherNeural", "Christopher (reliable, authoritative)", "christopher"),
+    ("en-US-EricNeural", "Eric (rational, neutral)", "eric"),
+    ("en-US-GuyNeural", "Guy (passionate, energetic)", "guy"),
+    ("en-US-RogerNeural", "Roger (lively, narrator-style)", "roger"),
+    ("en-US-SteffanNeural", "Steffan (rational, measured)", "steffan"),
 ]
 
 

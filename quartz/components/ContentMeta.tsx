@@ -12,8 +12,6 @@ interface ContentMetaOptions {
   showReadingTime: boolean
   showComma: boolean
   showImportance: boolean
-  showStatus: boolean
-  showConfidence: boolean
   linkToAllPages: boolean
 }
 
@@ -21,13 +19,15 @@ const defaultOptions: ContentMetaOptions = {
   showReadingTime: true,
   showComma: true,
   showImportance: true,
-  showStatus: true,
-  showConfidence: true,
   linkToAllPages: true,
 }
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000
 const ALL_SLUG = "all" as FullSlug
+
+function slugAnchor(slug: string): string {
+  return slug.replace(/\//g, "--")
+}
 
 export default ((opts?: Partial<ContentMetaOptions>) => {
   const options: ContentMetaOptions = { ...defaultOptions, ...opts }
@@ -39,15 +39,22 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
     const segments: (string | JSX.Element)[] = []
     const fm = fileData.frontmatter as Record<string, unknown> | undefined
 
-    const allHref = (sortKey: string, dir: "asc" | "desc" = "desc") => {
+    const allHref = (sortKey: string, dir: "asc" | "desc") => {
       if (!options.linkToAllPages) return null
       if (fileData.slug === ALL_SLUG) return null
       const base = resolveRelative(fileData.slug!, ALL_SLUG)
-      return `${base}?sort=${sortKey}&dir=${dir}`
+      const anchor = slugAnchor(fileData.slug!)
+      return `${base}?sort=${sortKey}&dir=${dir}#${anchor}`
     }
 
-    const wrap = (href: string | null, children: JSX.Element | string) =>
-      href ? <a href={href} class="meta-sort-link">{children}</a> : children
+    const link = (href: string | null, text: string) =>
+      href ? (
+        <a href={href} class="meta-sort-link">
+          {text}
+        </a>
+      ) : (
+        <>{text}</>
+      )
 
     if (fileData.dates) {
       const created = fileData.dates.created
@@ -58,29 +65,21 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       if (!modified || sameDay) {
         segments.push(
           <span>
-            {wrap(
-              allHref("created"),
-              <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>,
-            )}
+            {link(allHref("created", "desc"), "Published")}{" "}
+            <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>
           </span>,
         )
       } else {
         segments.push(
           <span>
-            Published{" "}
-            {wrap(
-              allHref("created"),
-              <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>,
-            )}
+            {link(allHref("created", "desc"), "Published")}{" "}
+            <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>
           </span>,
         )
         segments.push(
           <span>
-            Updated{" "}
-            {wrap(
-              allHref("modified"),
-              <time datetime={modified.toISOString()}>{formatDate(modified, cfg.locale)}</time>,
-            )}
+            {link(allHref("modified", "desc"), "Updated")}{" "}
+            <time datetime={modified.toISOString()}>{formatDate(modified, cfg.locale)}</time>
           </span>,
         )
       }
@@ -91,7 +90,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       const displayedTime = i18n(cfg.locale).components.contentMeta.readingTime({
         minutes: Math.ceil(minutes),
       })
-      segments.push(<span>{wrap(allHref("reading"), displayedTime)}</span>)
+      segments.push(<span>{link(allHref("reading", "asc"), displayedTime)}</span>)
     }
 
     if (options.showImportance && typeof fm?.importance === "number") {
@@ -99,36 +98,26 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       if (cal && cal.total >= 10 && cal.bucket !== cal.raw) {
         segments.push(
           <span class="meta-importance">
-            {wrap(allHref("importance"), `importance ${cal.raw}`)}
+            {link(allHref("importance", "desc"), `importance ${cal.raw}`)}
             {" ("}
-            {wrap(allHref("calibrated"), `calibrated ${cal.bucket}/10`)}
-            {", "}
-            {`rank ${cal.rank} of ${cal.total}`}
-            {")"}
+            {link(allHref("calibrated", "desc"), `calibrated ${cal.bucket}/10`)}
+            {`, rank ${cal.rank} of ${cal.total})`}
           </span>,
         )
       } else if (cal) {
         segments.push(
           <span class="meta-importance">
-            {wrap(allHref("importance"), `importance ${cal.raw}/10`)}
+            {link(allHref("importance", "desc"), `importance ${cal.raw}/10`)}
             {` (rank ${cal.rank} of ${cal.total})`}
           </span>,
         )
       } else {
         segments.push(
           <span class="meta-importance">
-            {wrap(allHref("importance"), `importance ${fm.importance}/10`)}
+            {link(allHref("importance", "desc"), `importance ${fm.importance}/10`)}
           </span>,
         )
       }
-    }
-
-    if (options.showStatus && typeof fm?.status === "string") {
-      segments.push(<span class="meta-status">{fm.status}</span>)
-    }
-
-    if (options.showConfidence && typeof fm?.confidence === "string") {
-      segments.push(<span class="meta-confidence">confidence: {fm.confidence}</span>)
     }
 
     return (
