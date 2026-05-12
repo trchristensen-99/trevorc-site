@@ -95,19 +95,10 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
 
     if (options.showImportance && typeof fm?.importance === "number") {
       const cal = calibrate(allFiles, fileData)
-      if (cal && cal.total >= 10 && cal.bucket !== cal.raw) {
+      if (cal) {
         segments.push(
           <span class="meta-importance">
-            {link(allHref("importance", "desc"), `importance ${cal.raw}`)}
-            {" ("}
-            {link(allHref("calibrated", "desc"), `calibrated ${cal.bucket}/10`)}
-            {`, rank ${cal.rank} of ${cal.total})`}
-          </span>,
-        )
-      } else if (cal) {
-        segments.push(
-          <span class="meta-importance">
-            {link(allHref("importance", "desc"), `importance ${cal.raw}/10`)}
+            {link(allHref("importance", "desc"), `importance ${cal.bucket}/10`)}
             {` (rank ${cal.rank} of ${cal.total})`}
           </span>,
         )

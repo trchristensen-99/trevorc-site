@@ -54,45 +54,6 @@
     font-weight: 500;
   }
 
-  .importance-toggle {
-    display: inline-flex;
-    margin-left: 0.5rem;
-    font-size: 0.75em;
-    font-weight: 400;
-    vertical-align: middle;
-
-    button {
-      background: transparent;
-      border: 1px solid var(--gray);
-      color: var(--darkgray);
-      padding: 0.1rem 0.4rem;
-      cursor: pointer;
-      font: inherit;
-      font-size: inherit;
-      line-height: 1.2;
-
-      &:hover {
-        color: var(--secondary);
-        border-color: var(--secondary);
-      }
-
-      &[aria-pressed="true"] {
-        background: var(--secondary);
-        color: var(--light);
-        border-color: var(--secondary);
-      }
-    }
-
-    button:first-child {
-      border-radius: 3px 0 0 3px;
-    }
-
-    button:last-child {
-      border-radius: 0 3px 3px 0;
-      margin-left: -1px;
-    }
-  }
-
   tr.highlight-row {
     background-color: var(--textHighlight);
     transition: background-color 1.5s ease-out;

@@ -1,6 +1,7 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
 import style from "../styles/listPage.scss"
 import { PageList, SortFn } from "../PageList"
+import SortableListBuilder from "../SortableList"
 import { FullSlug, getAllSegmentPrefixes, resolveRelative, simplifySlug } from "../../util/path"
 import { QuartzPluginData } from "../../plugins/vfile"
 import { Root } from "hast"
@@ -8,6 +9,8 @@ import { htmlToJsx } from "../../util/jsx"
 import { i18n } from "../../i18n"
 import { ComponentChildren } from "preact"
 import { concatenateResources } from "../../util/resources"
+
+const SortableListInstance = SortableListBuilder(undefined)
 
 interface TagContentOptions {
   sort?: SortFn
@@ -99,7 +102,7 @@ export default ((opts?: Partial<TagContentOptions>) => {
                         </>
                       )}
                     </p>
-                    <PageList limit={options.numPages} {...listProps} sort={options?.sort} />
+                    <SortableListInstance {...listProps} pages={pages.slice(0, options.numPages)} />
                   </div>
                 </div>
               )
@@ -109,10 +112,6 @@ export default ((opts?: Partial<TagContentOptions>) => {
       )
     } else {
       const pages = allPagesWithTag(tag)
-      const listProps = {
-        ...props,
-        allFiles: pages,
-      }
 
       return (
         <div class="popover-hint">
@@ -120,7 +119,7 @@ export default ((opts?: Partial<TagContentOptions>) => {
           <div class="page-listing">
             <p>{i18n(cfg.locale).pages.tagContent.itemsUnderTag({ count: pages.length })}</p>
             <div>
-              <PageList {...listProps} sort={options?.sort} />
+              <SortableListInstance {...props} pages={pages} />
             </div>
           </div>
         </div>
@@ -128,6 +127,7 @@ export default ((opts?: Partial<TagContentOptions>) => {
     }
   }
 
-  TagContent.css = concatenateResources(style, PageList.css)
+  TagContent.css = concatenateResources(style, PageList.css, SortableListInstance.css ?? "")
+  TagContent.afterDOMLoaded = SortableListInstance.afterDOMLoaded
   return TagContent
 }) satisfies QuartzComponentConstructor

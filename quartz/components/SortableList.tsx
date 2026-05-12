@@ -29,24 +29,14 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
   if (list.length === 0) return null
 
   return (
-    <div class="sortable-list" data-importance-mode="calibrated">
+    <div class="sortable-list">
       <table>
         <thead>
           <tr>
             <th data-sort="title">Title</th>
             <th data-sort="created" data-default-dir="desc">Published</th>
             <th data-sort="modified" data-default-dir="desc">Updated</th>
-            <th data-sort="importance" data-default-dir="desc" class="th-importance">
-              Importance
-              <span class="importance-toggle" role="group" aria-label="Importance view">
-                <button type="button" data-mode="raw" aria-pressed="false">
-                  raw
-                </button>
-                <button type="button" data-mode="calibrated" aria-pressed="true">
-                  calibrated
-                </button>
-              </span>
-            </th>
+            <th data-sort="importance" data-default-dir="desc">Importance</th>
             <th data-sort="reading" data-default-dir="asc">Read time</th>
             <th data-sort="backlinks" data-default-dir="desc">Links in</th>
           </tr>
@@ -57,9 +47,8 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
             const title = (fm.title as string) ?? page.slug ?? "untitled"
             const created = page.dates?.created
             const modified = page.dates?.modified
-            const importance = typeof fm.importance === "number" ? fm.importance : null
             const cal = calibrate(allFiles, page)
-            const calibrated = cal ? cal.bucket : null
+            const importance = cal ? cal.bucket : null
             const minutes = page.text ? Math.ceil(readingTime(page.text).minutes) : 0
             const linksIn = backlinkCounts.get(page.slug as string) ?? 0
             const anchor = slugAnchor(page.slug ?? "")
@@ -71,8 +60,7 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
                 data-title={title.toLowerCase()}
                 data-created={created?.getTime() ?? 0}
                 data-modified={modified?.getTime() ?? 0}
-                data-raw={importance ?? -1}
-                data-calibrated={calibrated ?? -1}
+                data-importance={importance ?? -1}
                 data-reading={minutes}
                 data-backlinks={linksIn}
               >
@@ -83,9 +71,7 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
                 </td>
                 <td>{created ? formatDate(created, cfg.locale) : "-"}</td>
                 <td>{modified ? formatDate(modified, cfg.locale) : "-"}</td>
-                <td class="num imp-cell" data-raw-text={importance ?? "-"} data-calibrated-text={calibrated ?? "-"}>
-                  {calibrated !== null ? calibrated : "-"}
-                </td>
+                <td class="num">{importance !== null ? importance : "-"}</td>
                 <td class="num">{minutes ? `${minutes}m` : "-"}</td>
                 <td class="num">{linksIn || "-"}</td>
               </tr>

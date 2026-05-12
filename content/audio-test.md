@@ -37,6 +37,32 @@ The script tests numerical values (2.7 percent), proper nouns (Cold Spring Harbo
 
 <audio controls preload="metadata" src="/static/audio-samples/steffan.mp3"></audio>
 
+## Kokoro voices (local, free, generally smoother than Edge TTS)
+
+Kokoro is a 2024 open-source TTS model (~310MB, runs locally). Subjectively the prosody is more natural than Edge TTS, especially across longer passages. Setup is heavier (model download, soundfile, ffmpeg).
+
+### Michael (Kokoro, US male)
+
+<audio controls preload="metadata" src="/static/audio-samples/kokoro-michael.mp3"></audio>
+
+### Adam (Kokoro, US male)
+
+<audio controls preload="metadata" src="/static/audio-samples/kokoro-adam.mp3"></audio>
+
+### Liam (Kokoro, US male)
+
+<audio controls preload="metadata" src="/static/audio-samples/kokoro-liam.mp3"></audio>
+
+### Eric (Kokoro, US male)
+
+<audio controls preload="metadata" src="/static/audio-samples/kokoro-eric.mp3"></audio>
+
+### Puck (Kokoro, US male)
+
+<audio controls preload="metadata" src="/static/audio-samples/kokoro-puck.mp3"></audio>
+
+Regenerate via `scripts/generate-kokoro-samples.py`. Edit `VOICES` to add more (`am_onyx`, `am_echo`, `am_fenrir`, `am_santa` etc.).
+
 ## Auto-discovered audio narrations
 
 If you want a specific essay to have a narration without setting `audio:` in its frontmatter, drop an MP3 at `quartz/static/audio-narrations/<slug>.mp3`. Use `--` instead of `/` in the slug for nested paths: a piece at `content/writing/foo.md` looks for `quartz/static/audio-narrations/writing--foo.mp3`.
