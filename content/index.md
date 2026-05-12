@@ -10,6 +10,7 @@ PhD student at Cold Spring Harbor Laboratory working in computational biology. T
 
 ## Start here
 
-- [[writing/index|Writing]]
 - [[about|About]]
-- [[all|All writing]]
+- [[writing/index|All writing]]
+- [[all|All pages]]
+- [[contact|Contact]]

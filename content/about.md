@@ -11,7 +11,7 @@ This site collects research notes, long-form writing, and a working wiki of thin
 
 ## Contact
 
-Email: contact@trevorc.com
+See [[contact|the contact page]] for email and anonymous options.
 
 ## Elsewhere
 

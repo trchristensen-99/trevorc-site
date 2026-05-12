@@ -1,13 +1,9 @@
 ---
-title: Writing
-date: 2026-05-05
+title: All writing
+date: 2026-05-12
 tags:
   - writing
   - index
 ---
 
-Essays and long-form posts. Published when finished, edited indefinitely.
-
-## Posts
-
-Placeholder. Add posts as Markdown files in this folder.
+Essays and long-form posts. Sortable by publication date, last update, importance, reading time, and inbound links.
