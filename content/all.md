@@ -1,5 +1,5 @@
 ---
-title: All writings
+title: All writing
 date: 2026-05-12
 all_pages: true
 tags:

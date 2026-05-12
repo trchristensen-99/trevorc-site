@@ -10,6 +10,8 @@ import PageTitle from "./PageTitle"
 import ContentMeta from "./ContentMeta"
 import AudioPlayer from "./AudioPlayer"
 import SortableList from "./SortableList"
+import InlineToc from "./InlineToc"
+import SidebarMenu from "./SidebarMenu"
 import Spacer from "./Spacer"
 import TableOfContents from "./TableOfContents"
 import Explorer from "./Explorer"
@@ -38,6 +40,8 @@ export {
   ContentMeta,
   AudioPlayer,
   SortableList,
+  InlineToc,
+  SidebarMenu,
   Spacer,
   TableOfContents,
   Explorer,

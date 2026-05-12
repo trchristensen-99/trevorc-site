@@ -8,8 +8,8 @@ confidence: likely
 tags:
   - example
 audio:
-  src: /static/audio-samples/andrew.mp3
-  label: Audio narration (Edge TTS, Andrew voice). Replace with your own once you pick.
+  src: /static/audio-samples/kokoro-liam.mp3
+  label: Audio narration (Kokoro TTS, Liam voice — your chosen default).
 ---
 
 This is a placeholder essay that exists to demonstrate the new metadata fields and the sortable list. Delete when you have real content.

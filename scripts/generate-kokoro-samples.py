@@ -25,16 +25,18 @@ This sample includes a few specific challenges. Numerical values, like 2.7 perce
 Most importantly, the voice should be easy to follow when you are not paying full attention. Voices that sound natural and have varied prosody tend to hold up better in this case."""
 
 
-# Pick a few American voices to compare. Kokoro voice ids:
-#   am_michael, am_adam, am_eric, am_liam, am_onyx, am_echo, am_fenrir,
-#   am_puck, am_santa
+# Default voice for trevorc.com: am_liam (listed first).
+# Other American male options: am_michael, am_adam, am_eric, am_puck,
+# am_onyx, am_echo, am_fenrir, am_santa.
 VOICES = [
-    ("am_michael", "Michael (US male, Kokoro)", "kokoro-michael"),
-    ("am_adam", "Adam (US male, Kokoro)", "kokoro-adam"),
-    ("am_liam", "Liam (US male, Kokoro)", "kokoro-liam"),
-    ("am_eric", "Eric (US male, Kokoro)", "kokoro-eric"),
-    ("am_puck", "Puck (US male, Kokoro)", "kokoro-puck"),
+    ("am_liam", "Liam (US male, default)", "kokoro-liam"),
+    ("am_michael", "Michael (US male)", "kokoro-michael"),
+    ("am_adam", "Adam (US male)", "kokoro-adam"),
+    ("am_eric", "Eric (US male)", "kokoro-eric"),
+    ("am_puck", "Puck (US male)", "kokoro-puck"),
 ]
+
+DEFAULT_VOICE = "am_liam"
 
 
 def wav_to_mp3(wav_path: Path, mp3_path: Path) -> None:

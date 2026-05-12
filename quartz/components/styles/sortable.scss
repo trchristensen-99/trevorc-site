@@ -1,3 +1,11 @@
+// Narrow the mobile left-sidebar overlay so it doesn't take the whole screen
+@media (max-width: 800px) {
+  .sidebar.left {
+    max-width: 60vw;
+    min-width: 12rem;
+  }
+}
+
 .sortable-list {
   margin: 1rem 0;
   overflow-x: auto;
