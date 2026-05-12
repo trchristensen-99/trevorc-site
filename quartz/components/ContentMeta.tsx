@@ -6,6 +6,7 @@ import { i18n } from "../i18n"
 import { JSX } from "preact"
 import style from "./styles/contentMeta.scss"
 import { calibrate } from "../util/calibration"
+import { resolveRelative, FullSlug } from "../util/path"
 
 interface ContentMetaOptions {
   showReadingTime: boolean
@@ -13,6 +14,7 @@ interface ContentMetaOptions {
   showImportance: boolean
   showStatus: boolean
   showConfidence: boolean
+  linkToAllPages: boolean
 }
 
 const defaultOptions: ContentMetaOptions = {
@@ -21,9 +23,11 @@ const defaultOptions: ContentMetaOptions = {
   showImportance: true,
   showStatus: true,
   showConfidence: true,
+  linkToAllPages: true,
 }
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000
+const ALL_SLUG = "all" as FullSlug
 
 export default ((opts?: Partial<ContentMetaOptions>) => {
   const options: ContentMetaOptions = { ...defaultOptions, ...opts }
@@ -35,6 +39,16 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
     const segments: (string | JSX.Element)[] = []
     const fm = fileData.frontmatter as Record<string, unknown> | undefined
 
+    const allHref = (sortKey: string, dir: "asc" | "desc" = "desc") => {
+      if (!options.linkToAllPages) return null
+      if (fileData.slug === ALL_SLUG) return null
+      const base = resolveRelative(fileData.slug!, ALL_SLUG)
+      return `${base}?sort=${sortKey}&dir=${dir}`
+    }
+
+    const wrap = (href: string | null, children: JSX.Element | string) =>
+      href ? <a href={href} class="meta-sort-link">{children}</a> : children
+
     if (fileData.dates) {
       const created = fileData.dates.created
       const modified = fileData.dates.modified
@@ -44,20 +58,29 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       if (!modified || sameDay) {
         segments.push(
           <span>
-            <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>
+            {wrap(
+              allHref("created"),
+              <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>,
+            )}
           </span>,
         )
       } else {
         segments.push(
           <span>
             Published{" "}
-            <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>
+            {wrap(
+              allHref("created"),
+              <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>,
+            )}
           </span>,
         )
         segments.push(
           <span>
             Updated{" "}
-            <time datetime={modified.toISOString()}>{formatDate(modified, cfg.locale)}</time>
+            {wrap(
+              allHref("modified"),
+              <time datetime={modified.toISOString()}>{formatDate(modified, cfg.locale)}</time>,
+            )}
           </span>,
         )
       }
@@ -68,7 +91,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       const displayedTime = i18n(cfg.locale).components.contentMeta.readingTime({
         minutes: Math.ceil(minutes),
       })
-      segments.push(<span>{displayedTime}</span>)
+      segments.push(<span>{wrap(allHref("reading"), displayedTime)}</span>)
     }
 
     if (options.showImportance && typeof fm?.importance === "number") {
@@ -76,17 +99,27 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       if (cal && cal.total >= 10 && cal.bucket !== cal.raw) {
         segments.push(
           <span class="meta-importance">
-            importance {cal.raw} (calibrated {cal.bucket}/10, rank {cal.rank} of {cal.total})
+            {wrap(allHref("importance"), `importance ${cal.raw}`)}
+            {" ("}
+            {wrap(allHref("calibrated"), `calibrated ${cal.bucket}/10`)}
+            {", "}
+            {`rank ${cal.rank} of ${cal.total}`}
+            {")"}
           </span>,
         )
       } else if (cal) {
         segments.push(
           <span class="meta-importance">
-            importance {cal.raw}/10 (rank {cal.rank} of {cal.total})
+            {wrap(allHref("importance"), `importance ${cal.raw}/10`)}
+            {` (rank ${cal.rank} of ${cal.total})`}
           </span>,
         )
       } else {
-        segments.push(<span class="meta-importance">importance {fm.importance}/10</span>)
+        segments.push(
+          <span class="meta-importance">
+            {wrap(allHref("importance"), `importance ${fm.importance}/10`)}
+          </span>,
+        )
       }
     }
 
