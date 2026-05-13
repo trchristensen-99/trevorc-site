@@ -46,68 +46,37 @@ export default ((opts?: Partial<TagContentOptions>) => {
     const cssClasses: string[] = fileData.frontmatter?.cssclasses ?? []
     const classes = cssClasses.join(" ")
     if (tag === "/") {
+      // /tags index: just a flat list of tag names + counts, each linking
+      // to its own tag page where the full sortable table lives. Avoids
+      // the unwieldy per-tag listing on a single page once tags multiply.
       const tags = [
         ...new Set(
           allFiles.flatMap((data) => data.frontmatter?.tags ?? []).flatMap(getAllSegmentPrefixes),
         ),
       ].sort((a, b) => a.localeCompare(b))
-      const tagItemMap: Map<string, QuartzPluginData[]> = new Map()
+      const tagCount: Map<string, number> = new Map()
       for (const tag of tags) {
-        tagItemMap.set(tag, allPagesWithTag(tag))
+        tagCount.set(tag, allPagesWithTag(tag).length)
       }
       return (
         <div class="popover-hint">
-          <article class={classes}>
-            <p>{content}</p>
-          </article>
+          <article class={classes}>{content}</article>
           <p>{i18n(cfg.locale).pages.tagContent.totalTags({ count: tags.length })}</p>
-          <div>
+          <ul class="tag-index-list">
             {tags.map((tag) => {
-              const pages = tagItemMap.get(tag)!
-              const listProps = {
-                ...props,
-                allFiles: pages,
-              }
-
-              const contentPage = allFiles.filter((file) => file.slug === `tags/${tag}`).at(0)
-
-              const root = contentPage?.htmlAst
-              const content =
-                !root || root?.children.length === 0
-                  ? contentPage?.description
-                  : htmlToJsx(contentPage.filePath!, root)
-
+              const count = tagCount.get(tag) ?? 0
               const tagListingPage = `/tags/${tag}` as FullSlug
               const href = resolveRelative(fileData.slug!, tagListingPage)
-
               return (
-                <div>
-                  <h2>
-                    <a class="internal tag-link" href={href}>
-                      {tag}
-                    </a>
-                  </h2>
-                  {content && <p>{content}</p>}
-                  <div class="page-listing">
-                    <p>
-                      {i18n(cfg.locale).pages.tagContent.itemsUnderTag({ count: pages.length })}
-                      {pages.length > options.numPages && (
-                        <>
-                          {" "}
-                          <span>
-                            {i18n(cfg.locale).pages.tagContent.showingFirst({
-                              count: options.numPages,
-                            })}
-                          </span>
-                        </>
-                      )}
-                    </p>
-                    <SortableListInstance {...listProps} pages={pages.slice(0, options.numPages)} />
-                  </div>
-                </div>
+                <li>
+                  <a class="internal tag-link" href={href}>
+                    {tag}
+                  </a>
+                  <span class="tag-count"> ({count})</span>
+                </li>
               )
             })}
-          </div>
+          </ul>
         </div>
       )
     } else {
@@ -127,7 +96,26 @@ export default ((opts?: Partial<TagContentOptions>) => {
     }
   }
 
-  TagContent.css = concatenateResources(style, PageList.css, SortableListInstance.css ?? "")
+  TagContent.css = concatenateResources(
+    style,
+    PageList.css,
+    SortableListInstance.css ?? "",
+    `.tag-index-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .tag-index-list li {
+      padding: 0.25rem 0;
+    }
+    .tag-index-list .tag-count {
+      color: var(--gray);
+      font-size: 0.9em;
+    }`,
+  )
   TagContent.afterDOMLoaded = SortableListInstance.afterDOMLoaded
   return TagContent
 }) satisfies QuartzComponentConstructor
