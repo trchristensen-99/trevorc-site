@@ -18,7 +18,8 @@ PageTitle.css = `
   font-size: 1.25rem;
   margin: 0;
   font-family: var(--titleFont);
-  white-space: nowrap;
+  line-height: 1.15;
+  overflow-wrap: break-word;
 }
 .page-title a {
   color: inherit;

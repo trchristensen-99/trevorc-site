@@ -1,5 +1,6 @@
 function attachNavMenu(root: HTMLElement) {
   const toggle = root.querySelector<HTMLButtonElement>(".nav-menu-toggle")
+  const closeBtn = root.querySelector<HTMLButtonElement>(".nav-menu-close")
   if (!toggle) return
 
   const open = () => {
@@ -16,6 +17,11 @@ function attachNavMenu(root: HTMLElement) {
     if (toggle.getAttribute("aria-expanded") === "true") close()
     else open()
   }
+  const onCloseClick = (e: Event) => {
+    e.stopPropagation()
+    close()
+  }
+  const onLinkClick = () => close()
   const onDocClick = (e: Event) => {
     if (toggle.getAttribute("aria-expanded") !== "true") return
     const t = e.target as Node | null
@@ -27,16 +33,27 @@ function attachNavMenu(root: HTMLElement) {
   }
 
   toggle.addEventListener("click", onToggleClick)
+  closeBtn?.addEventListener("click", onCloseClick)
+  const links = root.querySelectorAll<HTMLAnchorElement>(".nav-menu-link")
+  links.forEach((link) => link.addEventListener("click", onLinkClick))
   document.addEventListener("click", onDocClick)
   document.addEventListener("keydown", onKey)
 
   window.addCleanup(() => {
     toggle.removeEventListener("click", onToggleClick)
+    closeBtn?.removeEventListener("click", onCloseClick)
+    links.forEach((link) => link.removeEventListener("click", onLinkClick))
     document.removeEventListener("click", onDocClick)
     document.removeEventListener("keydown", onKey)
   })
 }
 
 document.addEventListener("nav", () => {
-  document.querySelectorAll<HTMLElement>(".nav-menu").forEach(attachNavMenu)
+  document.querySelectorAll<HTMLElement>(".nav-menu").forEach((root) => {
+    // Ensure menu starts collapsed on every page navigation
+    root.classList.add("collapsed")
+    const toggle = root.querySelector<HTMLButtonElement>(".nav-menu-toggle")
+    if (toggle) toggle.setAttribute("aria-expanded", "false")
+    attachNavMenu(root)
+  })
 })

@@ -48,6 +48,33 @@ const css = `
 }
 .nav-menu.collapsed .nav-menu-list { display: none; }
 
+.nav-menu-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.25rem;
+}
+.nav-menu-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  color: var(--darkgray);
+  font: inherit;
+  font-size: 0.85em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 4px;
+}
+.nav-menu-close:hover {
+  color: var(--secondary);
+  background: var(--lightgray);
+}
+.nav-menu-close svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
 .nav-menu-link {
   display: block;
   padding: 0.55rem 0.75rem;
@@ -97,6 +124,24 @@ const SidebarMenu: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
         </svg>
       </button>
       <nav class="nav-menu-list" id="nav-menu-list" aria-label="Site navigation">
+        <div class="nav-menu-header">
+          <button type="button" class="nav-menu-close" aria-label="Close menu">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+            back
+          </button>
+        </div>
         {link("about", "About")}
         {link("all", "All pages")}
         {link("writing/index", "All writing")}

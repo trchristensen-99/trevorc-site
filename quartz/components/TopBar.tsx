@@ -18,14 +18,19 @@ const css = `
   align-items: center;
   gap: 0.75rem;
   width: 100%;
-  margin: 1.5rem 0 0.5rem;
+  /* Keep top bar within the same reading column as the article. At wider
+     viewports the bar stays anchored to the article width with growing
+     outer margins, instead of stretching edge-to-edge. */
+  max-width: 75ch;
+  margin: 0.75rem auto 0.5rem;
 }
-.top-bar > * {
-  display: flex;
-  align-items: center;
+.top-bar-left {
+  flex-shrink: 1;
   min-width: 0;
 }
 .top-bar-right {
+  display: flex;
+  align-items: center;
   gap: 0.75rem;
   flex-shrink: 0;
 }
