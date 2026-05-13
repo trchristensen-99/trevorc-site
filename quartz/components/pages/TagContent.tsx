@@ -3,14 +3,18 @@ import style from "../styles/listPage.scss"
 import { PageList, SortFn } from "../PageList"
 import SortableListBuilder from "../SortableList"
 import { FullSlug, getAllSegmentPrefixes, resolveRelative, simplifySlug } from "../../util/path"
-import { QuartzPluginData } from "../../plugins/vfile"
 import { Root } from "hast"
 import { htmlToJsx } from "../../util/jsx"
 import { i18n } from "../../i18n"
 import { ComponentChildren } from "preact"
 import { concatenateResources } from "../../util/resources"
+import tagFilterScript from "../scripts/tagFilter.inline"
 
 const SortableListInstance = SortableListBuilder(undefined)
+
+// Tag names treated as "meta" rather than content. Edit this set to
+// re-categorize.
+const META_TAGS = new Set(["home", "index", "meta"])
 
 interface TagContentOptions {
   sort?: SortFn
@@ -46,31 +50,36 @@ export default ((opts?: Partial<TagContentOptions>) => {
     const cssClasses: string[] = fileData.frontmatter?.cssclasses ?? []
     const classes = cssClasses.join(" ")
     if (tag === "/") {
-      // /tags index: just a flat list of tag names + counts, each linking
-      // to its own tag page where the full sortable table lives. Avoids
-      // the unwieldy per-tag listing on a single page once tags multiply.
       const tags = [
         ...new Set(
           allFiles.flatMap((data) => data.frontmatter?.tags ?? []).flatMap(getAllSegmentPrefixes),
         ),
       ].sort((a, b) => a.localeCompare(b))
       const tagCount: Map<string, number> = new Map()
-      for (const tag of tags) {
-        tagCount.set(tag, allPagesWithTag(tag).length)
-      }
+      for (const t of tags) tagCount.set(t, allPagesWithTag(t).length)
       return (
-        <div class="popover-hint">
+        <div class="popover-hint tag-filter-root">
           <article class={classes}>{content}</article>
           <p>{i18n(cfg.locale).pages.tagContent.totalTags({ count: tags.length })}</p>
+          <div class="tag-filter-controls">
+            <span>Show:</span>
+            <label>
+              <input type="checkbox" value="content" checked /> Content
+            </label>
+            <label>
+              <input type="checkbox" value="meta" /> Meta
+            </label>
+          </div>
           <ul class="tag-index-list">
-            {tags.map((tag) => {
-              const count = tagCount.get(tag) ?? 0
-              const tagListingPage = `/tags/${tag}` as FullSlug
+            {tags.map((t) => {
+              const isMeta = META_TAGS.has(t)
+              const count = tagCount.get(t) ?? 0
+              const tagListingPage = `/tags/${t}` as FullSlug
               const href = resolveRelative(fileData.slug!, tagListingPage)
               return (
-                <li>
+                <li data-category={isMeta ? "meta" : "content"}>
                   <a class="internal tag-link" href={href}>
-                    {tag}
+                    {t}
                   </a>
                   <span class="tag-count"> ({count})</span>
                 </li>
@@ -100,7 +109,21 @@ export default ((opts?: Partial<TagContentOptions>) => {
     style,
     PageList.css,
     SortableListInstance.css ?? "",
-    `.tag-index-list {
+    `.tag-filter-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0.25rem 0 0.5rem;
+      font-size: 0.95em;
+      color: var(--darkgray);
+    }
+    .tag-filter-controls label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      cursor: pointer;
+    }
+    .tag-index-list {
       list-style: none;
       padding: 0;
       margin: 0.5rem 0 0 0;
@@ -116,6 +139,9 @@ export default ((opts?: Partial<TagContentOptions>) => {
       font-size: 0.9em;
     }`,
   )
-  TagContent.afterDOMLoaded = SortableListInstance.afterDOMLoaded
+  TagContent.afterDOMLoaded = concatenateResources(
+    SortableListInstance.afterDOMLoaded,
+    tagFilterScript,
+  )
   return TagContent
 }) satisfies QuartzComponentConstructor

@@ -3,7 +3,7 @@ import { htmlToJsx } from "../../util/jsx"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
 import SortableListBuilder from "../SortableList"
 import { QuartzPluginData } from "../../plugins/vfile"
-import { resolveRelative } from "../../util/path"
+import { FullSlug, resolveRelative } from "../../util/path"
 import { formatDate } from "../Date"
 import { calibrate } from "../../util/calibration"
 
@@ -115,13 +115,23 @@ const Content: QuartzComponent = (props: QuartzComponentProps) => {
   let appended: ComponentChildren = null
 
   if (fm?.all_pages === true) {
-    const pages = allFiles.filter((f) => {
+    // Include every parsed file (including this page) and inject a synthetic
+    // entry for the auto-generated /tags index, which doesn't live in
+    // content/ but is emitted by Quartz. Skip individual /tags/<name> pages
+    // and the 404 page.
+    const pages: QuartzPluginData[] = allFiles.filter((f) => {
       if (!f.slug) return false
-      if (f.slug === fileData.slug) return false
       if (f.slug.startsWith("tags/")) return false
       if (f.slug === "404") return false
       return true
     })
+    const hasTagsIndex = pages.some((p) => p.slug === "tags")
+    if (!hasTagsIndex) {
+      pages.push({
+        slug: "tags" as FullSlug,
+        frontmatter: { title: "Tags", tags: [] },
+      } as QuartzPluginData)
+    }
     appended = <SortableListInstance {...props} pages={pages} />
   } else if (fm?.home_lists === true) {
     const HOME_LIMIT = 10
