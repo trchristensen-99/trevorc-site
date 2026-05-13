@@ -7,8 +7,12 @@
  * Screen width between $mobile and $desktop width will use the tablet layout.
  * assuming mobile < desktop
  */
+// Layout switches from top-bar (mobile-style) to side-sidebar (desktop) at
+// `desktop`. Below `desktop`, everything stacks at the top so the article
+// column gets full width for readability. Sidebar appears only when there is
+// enough margin space for it. The narrow "tablet" middle band is collapsed.
 $breakpoints: (
-  mobile: 800px,
+  mobile: 1199px,
   desktop: 1200px,
 );
 

@@ -4,21 +4,22 @@ import script from "./scripts/navMenu.inline"
 
 const css = `
 .nav-menu {
-  margin-top: 1rem;
   position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 .nav-menu-toggle {
   background: transparent;
   border: 1px solid var(--gray);
   border-radius: 4px;
-  padding: 0.35rem 0.5rem;
+  padding: 0.35rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  justify-content: center;
   color: var(--darkgray);
-  font-size: 0.85em;
-  font: inherit;
+  width: 2rem;
+  height: 2rem;
   line-height: 1;
 }
 .nav-menu-toggle:hover {
@@ -32,18 +33,18 @@ const css = `
 .nav-menu-list {
   position: absolute;
   top: calc(100% + 0.5rem);
-  left: 0;
+  right: 0;
   z-index: 50;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  min-width: 14rem;
-  max-width: 18rem;
+  min-width: 12rem;
+  max-width: 16rem;
   padding: 0.5rem;
   background: var(--light);
   border: 1px solid var(--lightgray);
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .nav-menu-list[hidden] { display: none; }
 .nav-menu-link {
@@ -63,19 +64,21 @@ const css = `
   color: var(--secondary);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1199px) {
   .nav-menu-list {
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     bottom: 0;
+    left: auto;
     width: 50vw;
-    min-width: 12rem;
-    max-width: 18rem;
+    min-width: 14rem;
+    max-width: 22rem;
     border-radius: 0;
-    border-right: 1px solid var(--lightgray);
-    box-shadow: 4px 0 14px rgba(0, 0, 0, 0.08);
-    padding-top: 1.2rem;
+    border-left: 1px solid var(--lightgray);
+    border-right: none;
+    box-shadow: -4px 0 14px rgba(0, 0, 0, 0.08);
+    padding-top: 3.5rem;
   }
 }
 `
@@ -103,12 +106,12 @@ const SidebarMenu: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
+          aria-hidden="true"
         >
           <line x1="3" y1="6" x2="21" y2="6" />
           <line x1="3" y1="12" x2="21" y2="12" />
           <line x1="3" y1="18" x2="21" y2="18" />
         </svg>
-        Menu
       </button>
       <nav class="nav-menu-list" id="nav-menu-list" hidden aria-label="Site navigation">
         {link("about", "About")}

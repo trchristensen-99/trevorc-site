@@ -34,9 +34,9 @@ export const defaultContentPageLayout: PageLayout = {
           grow: true,
         },
         { Component: Component.Darkmode() },
+        { Component: Component.SidebarMenu() },
       ],
     }),
-    Component.SidebarMenu(),
   ],
   right: [],
 }
@@ -54,9 +54,9 @@ export const defaultListPageLayout: PageLayout = {
           grow: true,
         },
         { Component: Component.Darkmode() },
+        { Component: Component.SidebarMenu() },
       ],
     }),
-    Component.SidebarMenu(),
   ],
   right: [],
 }
