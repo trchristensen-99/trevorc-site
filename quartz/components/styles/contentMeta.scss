@@ -1,3 +1,7 @@
+.content-meta-block {
+  margin: 0;
+}
+
 .content-meta {
   margin-top: 0;
   text-align: center;
@@ -33,4 +37,100 @@
       border-bottom-color: var(--secondary);
     }
   }
+
+  .meta-tags .meta-tag-link {
+    color: var(--secondary);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .meta-audio {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+  }
+
+  .meta-audio .audio-player-launch {
+    background: transparent;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--darkgray);
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    vertical-align: middle;
+  }
+  .meta-audio .audio-player-launch:hover {
+    color: var(--secondary);
+    border-color: var(--secondary);
+  }
+  .meta-audio .audio-player-launch svg {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+}
+
+/* Expandable full audio player that lives inside the metadata block */
+.content-meta-block[data-expanded="false"] .audio-player-full {
+  display: none;
+}
+.content-meta-block .audio-player-full {
+  margin: 0.5rem auto 0;
+  max-width: 36rem;
+  background: var(--lightgray);
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+}
+.content-meta-block .audio-player-full audio {
+  width: 100%;
+  display: block;
+  height: 36px;
+}
+.audio-player-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+.audio-player-toolbar button,
+.audio-player-toolbar select {
+  background: transparent;
+  border: 1px solid var(--gray);
+  color: var(--darkgray);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85em;
+  line-height: 1.3;
+}
+.audio-player-toolbar button:hover,
+.audio-player-toolbar select:hover {
+  border-color: var(--secondary);
+  color: var(--secondary);
+}
+.audio-player-status {
+  font-size: 0.85em;
+  color: var(--darkgray);
+  font-variant-numeric: tabular-nums;
+  margin-left: auto;
+}
+.audio-player-close {
+  background: transparent;
+  border: 1px solid var(--gray);
+  color: var(--darkgray);
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1em;
+  line-height: 1;
 }

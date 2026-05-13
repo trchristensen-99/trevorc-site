@@ -20,8 +20,6 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.ArticleTitle(),
     Component.ContentMeta(),
-    Component.AudioPlayer(),
-    Component.TagList(),
     Component.InlineToc(),
   ],
   left: [],

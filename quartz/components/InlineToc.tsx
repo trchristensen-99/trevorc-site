@@ -58,9 +58,8 @@ const css = `
 
 const InlineToc: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
   // Only render when there are enough sections to justify a table of contents.
-  // For very short pages with one or two headings, the TOC is more noise
-  // than help.
-  if (!fileData.toc || fileData.toc.length < 3) return null
+  // For very short pages with one heading, the TOC is more noise than help.
+  if (!fileData.toc || fileData.toc.length < 2) return null
   return (
     <details class="inline-toc" open={!fileData.collapseToc}>
       <summary>Contents</summary>

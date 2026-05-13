@@ -3,9 +3,8 @@
 .search {
   min-width: fit-content;
   max-width: 14rem;
-  @media all and ($mobile) {
-    flex-grow: 0.3;
-  }
+  flex-grow: 0;
+  flex-shrink: 0;
 
   & > .search-button {
     background-color: transparent;

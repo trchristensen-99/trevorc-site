@@ -169,10 +169,6 @@ a {
   margin: 0 auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  @media (max-width: 700px) {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
   & article {
     & > h1 {
       font-size: 2rem;
@@ -229,49 +225,13 @@ a {
       margin: 0 auto;
     }
 
-    & .sidebar {
-      // Sidebars are unused; collapse to zero so they don't reserve space.
-      display: none;
-    }
-
-    & .sidebar.left {
-      z-index: 1;
-      grid-area: grid-sidebar-left;
-      flex-direction: column;
-      @media all and ($mobile) {
-        gap: 0;
-        align-items: center;
-        position: initial;
-        display: flex;
-        height: unset;
-        flex-direction: row;
-        padding: 0;
-        padding-top: 2rem;
-      }
-    }
-
+    & .sidebar,
+    & .sidebar.left,
     & .sidebar.right {
-      grid-area: grid-sidebar-right;
-      margin-right: 0;
-      flex-direction: column;
-      @media all and ($mobile) {
-        margin-left: inherit;
-        margin-right: inherit;
-      }
-      @media all and not ($desktop) {
-        position: initial;
-        height: unset;
-        width: 100%;
-        flex-direction: row;
-        padding: 0;
-        & > * {
-          flex: 1;
-          max-height: 24rem;
-        }
-        & > .toc {
-          display: none;
-        }
-      }
+      // Sidebars are unused. Force hide at all widths so no mobile rule
+      // re-enables them and re-introduces the 2rem padding-top that was
+      // showing up as mysterious extra space at narrow widths.
+      display: none !important;
     }
     & .page-header,
     & .page-footer {

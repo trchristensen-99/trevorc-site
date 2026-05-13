@@ -10,7 +10,7 @@ function fmt(seconds: number): string {
   return `${m}:${s}`
 }
 
-function attachAudioPlayer(player: HTMLDivElement) {
+function attachAudioPlayer(player: HTMLElement) {
   const audio = player.querySelector("audio") as HTMLAudioElement | null
   if (!audio) return
 
@@ -21,8 +21,8 @@ function attachAudioPlayer(player: HTMLDivElement) {
   const setExpanded = (expanded: boolean) => {
     player.setAttribute("data-expanded", expanded ? "true" : "false")
     launchBtn?.setAttribute("aria-expanded", expanded ? "true" : "false")
-    if (expanded) audio.play().catch(() => {})
-    else audio.pause()
+    // Pause when collapsing; never auto-play on expand.
+    if (!expanded) audio.pause()
   }
   setExpanded(false)
   const onLaunch = () => setExpanded(true)
@@ -128,8 +128,12 @@ function attachAudioPlayer(player: HTMLDivElement) {
 
 function init() {
   document
-    .querySelectorAll<HTMLDivElement>(".audio-player")
-    .forEach((p) => attachAudioPlayer(p))
+    .querySelectorAll<HTMLElement>(".content-meta-block, .audio-player")
+    .forEach((p) => {
+      if (p.querySelector("audio")) attachAudioPlayer(p)
+    })
 }
 
 document.addEventListener("nav", init)
+if (document.readyState !== "loading") init()
+else document.addEventListener("DOMContentLoaded", init, { once: true })
