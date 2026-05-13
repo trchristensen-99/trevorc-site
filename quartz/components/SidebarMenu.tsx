@@ -122,7 +122,7 @@ const SidebarMenu: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
       <nav class="nav-menu-list" id="nav-menu-list" hidden aria-label="Site navigation">
         <div class="nav-menu-header">
           <button type="button" class="nav-menu-close" aria-label="Close menu">
-            {"<"}
+            ×
           </button>
         </div>
         {link("about", "About")}

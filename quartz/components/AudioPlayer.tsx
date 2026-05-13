@@ -3,36 +3,48 @@ import script from "./scripts/audioPlayer.inline"
 
 const css = `
 .audio-player {
-  margin: 1rem 0 1.5rem;
+  margin: 0.75rem 0 1rem;
   background: var(--lightgray);
   border-radius: 6px;
-  padding: 0.75rem 0.9rem 0.6rem;
+  padding: 0.5rem 0.6rem;
 }
 .audio-player audio {
   width: 100%;
   display: block;
+  height: 32px;
 }
-.audio-player-controls {
+.audio-player-row {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 0.5rem;
-  flex-wrap: wrap;
 }
-.audio-player-controls button,
-.audio-player-controls select {
+.audio-player-row audio {
+  flex: 1;
+  min-width: 0;
+}
+.audio-player-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+.audio-player[data-expanded="false"] .audio-player-toolbar { display: none; }
+
+.audio-player-toolbar button,
+.audio-player-toolbar select {
   background: transparent;
   border: 1px solid var(--gray);
   color: var(--darkgray);
-  padding: 0.25rem 0.55rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 4px;
   cursor: pointer;
   font: inherit;
   font-size: 0.85em;
-  line-height: 1.4;
+  line-height: 1.3;
 }
-.audio-player-controls button:hover,
-.audio-player-controls select:hover {
+.audio-player-toolbar button:hover,
+.audio-player-toolbar select:hover {
   border-color: var(--secondary);
   color: var(--secondary);
 }
@@ -42,10 +54,21 @@ const css = `
   font-variant-numeric: tabular-nums;
   margin-left: auto;
 }
-.audio-player .audio-meta {
-  font-size: 0.85em;
+
+.audio-player-expand {
+  background: transparent;
+  border: 1px solid var(--gray);
   color: var(--darkgray);
-  margin: 0.4rem 0 0;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85em;
+  flex-shrink: 0;
+}
+.audio-player-expand:hover {
+  border-color: var(--secondary);
+  color: var(--secondary);
 }
 `
 
@@ -55,22 +78,30 @@ const AudioPlayer: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
   if (!raw) return null
 
   let src: string
-  let label: string | undefined
   if (typeof raw === "string") {
     src = raw
   } else if (typeof raw === "object" && raw !== null && "src" in raw) {
-    const obj = raw as { src: unknown; label?: unknown }
+    const obj = raw as { src: unknown }
     if (typeof obj.src !== "string") return null
     src = obj.src
-    if (typeof obj.label === "string") label = obj.label
   } else {
     return null
   }
 
   return (
-    <div class="audio-player" data-audio-key={fileData.slug}>
-      <audio controls preload="metadata" src={src} />
-      <div class="audio-player-controls">
+    <div class="audio-player" data-audio-key={fileData.slug} data-expanded="false">
+      <div class="audio-player-row">
+        <audio controls preload="metadata" src={src} />
+        <button
+          type="button"
+          class="audio-player-expand"
+          aria-label="Toggle extra audio controls"
+          aria-expanded="false"
+        >
+          more
+        </button>
+      </div>
+      <div class="audio-player-toolbar">
         <button type="button" data-action="back15" aria-label="Back 15 seconds">
           {"⏪"} 15s
         </button>
@@ -89,7 +120,6 @@ const AudioPlayer: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
         </select>
         <span class="audio-player-status"></span>
       </div>
-      {label && <p class="audio-meta">{label}</p>}
     </div>
   )
 }

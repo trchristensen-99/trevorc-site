@@ -14,6 +14,22 @@ function attachAudioPlayer(player: HTMLDivElement) {
   const audio = player.querySelector("audio") as HTMLAudioElement | null
   if (!audio) return
 
+  // Expand/collapse toggle for the extra-controls toolbar
+  const expandBtn = player.querySelector(".audio-player-expand") as HTMLButtonElement | null
+  if (expandBtn) {
+    const setExpanded = (expanded: boolean) => {
+      player.setAttribute("data-expanded", expanded ? "true" : "false")
+      expandBtn.setAttribute("aria-expanded", expanded ? "true" : "false")
+      expandBtn.textContent = expanded ? "less" : "more"
+    }
+    setExpanded(false)
+    const onExpandClick = () => {
+      setExpanded(player.getAttribute("data-expanded") !== "true")
+    }
+    expandBtn.addEventListener("click", onExpandClick)
+    window.addCleanup(() => expandBtn.removeEventListener("click", onExpandClick))
+  }
+
   const key = player.getAttribute("data-audio-key") ?? audio.src
   const storageKey = STORAGE_POS_PREFIX + key
 

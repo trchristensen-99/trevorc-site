@@ -34,6 +34,22 @@ const css = `
   gap: 0.75rem;
   flex-shrink: 0;
 }
+
+/* Mobile: stack into two rows. Title centered on row 1, trio (search,
+   dark, hamburger) right-aligned on row 2 with consistent spacing. */
+@media (max-width: 700px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+  }
+  .top-bar-left {
+    text-align: center;
+  }
+  .top-bar-right {
+    justify-content: flex-end;
+  }
+}
 `
 
 const TopBar: QuartzComponent = (props: QuartzComponentProps) => (
