@@ -283,6 +283,13 @@ a {
 
     & .center > article {
       grid-area: grid-center;
+      // Cap article column at a comfortable reading width. Beyond this the
+      // margins grow rather than the prose. ~75ch ≈ 65-75 chars/line which
+      // is the upper end of the readability sweet spot.
+      max-width: 75ch;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
     }
 
     & footer {

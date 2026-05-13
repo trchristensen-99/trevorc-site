@@ -47,6 +47,8 @@ const css = `
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .nav-menu-list[hidden] { display: none; }
+.nav-menu.collapsed .nav-menu-list { display: none; }
+
 .nav-menu-link {
   display: block;
   padding: 0.55rem 0.75rem;
@@ -64,6 +66,7 @@ const css = `
   color: var(--secondary);
 }
 
+/* Below 1200px: drawer overlay from the right edge */
 @media (max-width: 1199px) {
   .nav-menu-list {
     position: fixed;
@@ -79,7 +82,12 @@ const css = `
     border-right: none;
     box-shadow: -4px 0 14px rgba(0, 0, 0, 0.08);
     padding-top: 3.5rem;
+    display: none;
   }
+  .nav-menu:not(.collapsed) .nav-menu-list { display: flex; }
+  /* On narrow widths the menu is hidden by default; user opens it */
+  .nav-menu:not(.user-toggled) .nav-menu-list { display: none; }
+  .nav-menu.user-toggled:not(.collapsed) .nav-menu-list { display: flex; }
 }
 `
 
@@ -96,7 +104,7 @@ const SidebarMenu: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
         class="nav-menu-toggle"
         aria-controls="nav-menu-list"
         aria-expanded="false"
-        aria-label="Open navigation menu"
+        aria-label="Toggle navigation menu"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +121,7 @@ const SidebarMenu: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
           <line x1="3" y1="18" x2="21" y2="18" />
         </svg>
       </button>
-      <nav class="nav-menu-list" id="nav-menu-list" hidden aria-label="Site navigation">
+      <nav class="nav-menu-list" id="nav-menu-list" aria-label="Site navigation">
         {link("about", "About")}
         {link("all", "All pages")}
         {link("writing/index", "All writing")}
