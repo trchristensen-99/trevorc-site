@@ -1,13 +1,16 @@
 function attachNavMenu(root: HTMLElement) {
   const toggle = root.querySelector<HTMLButtonElement>(".nav-menu-toggle")
   const closeBtn = root.querySelector<HTMLButtonElement>(".nav-menu-close")
-  if (!toggle) return
+  const list = root.querySelector<HTMLElement>(".nav-menu-list")
+  if (!toggle || !list) return
 
   const open = () => {
+    list.removeAttribute("hidden")
     root.classList.remove("collapsed")
     toggle.setAttribute("aria-expanded", "true")
   }
   const close = () => {
+    list.setAttribute("hidden", "")
     root.classList.add("collapsed")
     toggle.setAttribute("aria-expanded", "false")
   }
@@ -19,6 +22,7 @@ function attachNavMenu(root: HTMLElement) {
   }
   const onCloseClick = (e: Event) => {
     e.stopPropagation()
+    e.preventDefault()
     close()
   }
   const onLinkClick = () => close()
@@ -48,12 +52,22 @@ function attachNavMenu(root: HTMLElement) {
   })
 }
 
-document.addEventListener("nav", () => {
+function initAll() {
   document.querySelectorAll<HTMLElement>(".nav-menu").forEach((root) => {
-    // Ensure menu starts collapsed on every page navigation
+    // Force collapsed state on every (re)initialization
     root.classList.add("collapsed")
+    const list = root.querySelector<HTMLElement>(".nav-menu-list")
+    if (list) list.setAttribute("hidden", "")
     const toggle = root.querySelector<HTMLButtonElement>(".nav-menu-toggle")
     if (toggle) toggle.setAttribute("aria-expanded", "false")
     attachNavMenu(root)
   })
-})
+}
+
+document.addEventListener("nav", initAll)
+// Fallback for initial page load if the SPA nav event doesn't fire
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initAll, { once: true })
+} else {
+  initAll()
+}

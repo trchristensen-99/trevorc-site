@@ -21,8 +21,8 @@ const css = `
   /* Keep top bar within the same reading column as the article. At wider
      viewports the bar stays anchored to the article width with growing
      outer margins, instead of stretching edge-to-edge. */
-  max-width: 75ch;
-  margin: 0.75rem auto 0.5rem;
+  max-width: 100ch;
+  margin: 0.25rem auto 0.25rem;
 }
 .top-bar-left {
   flex-shrink: 1;

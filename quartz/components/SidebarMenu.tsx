@@ -35,7 +35,6 @@ const css = `
   top: calc(100% + 0.5rem);
   right: 0;
   z-index: 50;
-  display: flex;
   flex-direction: column;
   gap: 0.4rem;
   min-width: 12rem;
@@ -45,7 +44,9 @@ const css = `
   border: 1px solid var(--lightgray);
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
 }
+.nav-menu-list[hidden] { display: none !important; }
 .nav-menu.collapsed .nav-menu-list { display: none; }
 
 .nav-menu-header {
@@ -57,22 +58,17 @@ const css = `
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 0.25rem 0.5rem;
+  padding: 0.1rem 0.5rem;
   color: var(--darkgray);
   font: inherit;
-  font-size: 0.85em;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
+  font-size: 1.2em;
+  font-weight: 600;
+  line-height: 1;
   border-radius: 4px;
 }
 .nav-menu-close:hover {
   color: var(--secondary);
   background: var(--lightgray);
-}
-.nav-menu-close svg {
-  width: 0.9rem;
-  height: 0.9rem;
 }
 
 .nav-menu-link {
@@ -123,23 +119,10 @@ const SidebarMenu: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
           <line x1="3" y1="18" x2="21" y2="18" />
         </svg>
       </button>
-      <nav class="nav-menu-list" id="nav-menu-list" aria-label="Site navigation">
+      <nav class="nav-menu-list" id="nav-menu-list" hidden aria-label="Site navigation">
         <div class="nav-menu-header">
           <button type="button" class="nav-menu-close" aria-label="Close menu">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="19" y1="12" x2="5" y2="12" />
-              <polyline points="12 19 5 12 12 5" />
-            </svg>
-            back
+            {"<"}
           </button>
         </div>
         {link("about", "About")}

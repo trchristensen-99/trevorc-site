@@ -9,6 +9,9 @@ html {
   text-size-adjust: none;
   overflow-x: hidden;
   width: 100vw;
+  // Bump base font-size so all rem-sized text reads a couple of steps
+  // larger across the site.
+  font-size: 18px;
 
   @media all and ($mobile) {
     scroll-padding-top: 4rem;
@@ -268,12 +271,13 @@ a {
     }
     & .page-header,
     & .page-footer {
-      margin-top: 1rem;
+      margin-top: 0;
     }
 
     & .page-header {
       grid-area: grid-header;
       margin: 0;
+      padding: 0;
       @media all and ($mobile) {
         margin-top: 0;
         padding: 0;
@@ -282,10 +286,9 @@ a {
 
     & .center > article {
       grid-area: grid-center;
-      // Cap article column at a comfortable reading width. Beyond this the
-      // margins grow rather than the prose. ~75ch ≈ 65-75 chars/line which
-      // is the upper end of the readability sweet spot.
-      max-width: 75ch;
+      // Article cap. Wider than the typographic-purist value (~75ch) to
+      // match the user's preference; outer margins still grow past this.
+      max-width: 100ch;
       margin-left: auto;
       margin-right: auto;
       width: 100%;
