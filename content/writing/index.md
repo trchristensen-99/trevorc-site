@@ -6,4 +6,4 @@ tags:
   - index
 ---
 
-Essays and long-form posts. Sortable by publication date, last update, importance, reading time, and inbound links.
+Essays and long-form posts. Sortable by publication date, last update, importance, reading time, and inbound links. See [[metadata|Metadata]] for what each column means.
