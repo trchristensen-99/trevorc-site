@@ -22,7 +22,8 @@ const css = `
      viewports the bar stays anchored to the article width with growing
      outer margins, instead of stretching edge-to-edge. */
   max-width: 100ch;
-  margin: 0.25rem auto 0.25rem;
+  margin: 0 auto;
+  padding-top: 0.1rem;
 }
 .top-bar-left {
   flex-shrink: 1;
@@ -35,19 +36,24 @@ const css = `
   flex-shrink: 0;
 }
 
-/* Mobile: stack into two rows. Title centered on row 1, trio (search,
-   dark, hamburger) right-aligned on row 2 with consistent spacing. */
+/* Narrow widths: stack into two rows. Title on row 1 (centered). On row 2,
+   the search bar sits on the left edge and the dark-mode + hamburger
+   group sits on the right edge with the same outer gutter as the menu has,
+   for left-right symmetry. */
 @media (max-width: 700px) {
   .top-bar {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.25rem;
+    gap: 0.15rem;
   }
   .top-bar-left {
     text-align: center;
   }
   .top-bar-right {
-    justify-content: flex-end;
+    justify-content: space-between;
+  }
+  .top-bar-right .search {
+    margin-right: auto;
   }
 }
 `
