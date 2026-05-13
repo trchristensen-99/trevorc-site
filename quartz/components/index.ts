@@ -12,6 +12,7 @@ import AudioPlayer from "./AudioPlayer"
 import SortableList from "./SortableList"
 import InlineToc from "./InlineToc"
 import SidebarMenu from "./SidebarMenu"
+import TopBar from "./TopBar"
 import Spacer from "./Spacer"
 import TableOfContents from "./TableOfContents"
 import Explorer from "./Explorer"
@@ -42,6 +43,7 @@ export {
   SortableList,
   InlineToc,
   SidebarMenu,
+  TopBar,
   Spacer,
   TableOfContents,
   Explorer,

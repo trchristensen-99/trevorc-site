@@ -44,9 +44,8 @@ const css = `
   background: var(--light);
   border: 1px solid var(--lightgray);
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-.nav-menu-list[hidden] { display: none; }
 .nav-menu.collapsed .nav-menu-list { display: none; }
 
 .nav-menu-link {
@@ -65,30 +64,6 @@ const css = `
   border-color: var(--secondary);
   color: var(--secondary);
 }
-
-/* Below 1200px: drawer overlay from the right edge */
-@media (max-width: 1199px) {
-  .nav-menu-list {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: auto;
-    width: 50vw;
-    min-width: 14rem;
-    max-width: 22rem;
-    border-radius: 0;
-    border-left: 1px solid var(--lightgray);
-    border-right: none;
-    box-shadow: -4px 0 14px rgba(0, 0, 0, 0.08);
-    padding-top: 3.5rem;
-    display: none;
-  }
-  .nav-menu:not(.collapsed) .nav-menu-list { display: flex; }
-  /* On narrow widths the menu is hidden by default; user opens it */
-  .nav-menu:not(.user-toggled) .nav-menu-list { display: none; }
-  .nav-menu.user-toggled:not(.collapsed) .nav-menu-list { display: flex; }
-}
 `
 
 const SidebarMenu: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
@@ -98,7 +73,7 @@ const SidebarMenu: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
     </a>
   )
   return (
-    <div class="nav-menu">
+    <div class="nav-menu collapsed">
       <button
         type="button"
         class="nav-menu-toggle"

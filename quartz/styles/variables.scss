@@ -7,12 +7,8 @@
  * Screen width between $mobile and $desktop width will use the tablet layout.
  * assuming mobile < desktop
  */
-// Layout switches from top-bar (mobile-style) to side-sidebar (desktop) at
-// `desktop`. Below `desktop`, everything stacks at the top so the article
-// column gets full width for readability. Sidebar appears only when there is
-// enough margin space for it. The narrow "tablet" middle band is collapsed.
 $breakpoints: (
-  mobile: 1199px,
+  mobile: 800px,
   desktop: 1200px,
 );
 
@@ -27,11 +23,14 @@ $boldWeight: 700;
 $semiBoldWeight: 600;
 $normalWeight: 400;
 
-$mobileGrid: (
+// Single-column layout at every width. Top bar sits in the header row,
+// article in the center. Sidebars are unused; we render them as empty grid
+// areas (0-height) so existing Quartz rules that reference them stay valid.
+$singleColumnGrid: (
   templateRows: "auto auto auto auto auto",
   templateColumns: "auto",
   rowGap: "5px",
-  columnGap: "5px",
+  columnGap: "0",
   templateAreas:
     '"grid-sidebar-left"\
       "grid-header"\
@@ -39,27 +38,6 @@ $mobileGrid: (
       "grid-sidebar-right"\
       "grid-footer"',
 );
-$tabletGrid: (
-  templateRows: "auto auto auto auto",
-  templateColumns: "#{$sidePanelWidth} auto",
-  rowGap: "5px",
-  columnGap: "5px",
-  templateAreas:
-    '"grid-sidebar-left grid-header"\
-      "grid-sidebar-left grid-center"\
-      "grid-sidebar-left grid-sidebar-right"\
-      "grid-sidebar-left grid-footer"',
-);
-// Desktop grid: only left sidebar (right is unused on this site). Center
-// column fills the remaining width but the article inside is capped at 75ch
-// via base.scss, so beyond that point margins grow rather than the prose.
-$desktopGrid: (
-  templateRows: "auto auto auto",
-  templateColumns: "#{$sidePanelWidth} auto",
-  rowGap: "5px",
-  columnGap: "5px",
-  templateAreas:
-    '"grid-sidebar-left grid-header"\
-      "grid-sidebar-left grid-center"\
-      "grid-sidebar-left grid-footer"',
-);
+$mobileGrid: $singleColumnGrid;
+$tabletGrid: $singleColumnGrid;
+$desktopGrid: $singleColumnGrid;

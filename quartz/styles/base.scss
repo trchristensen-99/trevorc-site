@@ -160,8 +160,12 @@ a {
 }
 
 .page {
-  max-width: calc(#{map.get($breakpoints, desktop)} + 300px);
+  // No outer cap; the only width constraint is the article max-width (75ch)
+  // below. Outer margins grow with viewport once the article hits its cap.
+  max-width: none;
   margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   & article {
     & > h1 {
       font-size: 2rem;
@@ -219,13 +223,8 @@ a {
     }
 
     & .sidebar {
-      gap: 1.2rem;
-      top: 0;
-      box-sizing: border-box;
-      padding: $topSpacing 2rem 2rem 2rem;
-      display: flex;
-      height: 100vh;
-      position: sticky;
+      // Sidebars are unused; collapse to zero so they don't reserve space.
+      display: none;
     }
 
     & .sidebar.left {
