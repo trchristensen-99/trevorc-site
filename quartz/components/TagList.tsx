@@ -30,8 +30,9 @@ TagList.css = `
   display: flex;
   padding-left: 0;
   gap: 0.4rem;
-  margin: 1rem 0;
+  margin: 0.25rem 0 0;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .section-li > .section > .tags {

@@ -18,12 +18,11 @@ const css = `
   align-items: center;
   gap: 0.75rem;
   width: 100%;
-  /* Keep top bar within the same reading column as the article. At wider
-     viewports the bar stays anchored to the article width with growing
-     outer margins, instead of stretching edge-to-edge. */
-  max-width: 100ch;
+  /* Keep the top bar in the same reading column as the article. At wider
+     viewports the bar stays anchored and outer margins grow instead of the
+     line stretching edge to edge. */
+  max-width: 87ch;
   margin: 0 auto;
-  padding-top: 0.1rem;
 }
 .top-bar-left {
   flex-shrink: 1;
@@ -35,25 +34,26 @@ const css = `
   gap: 0.75rem;
   flex-shrink: 0;
 }
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
 
-/* Narrow widths: stack into two rows. Title on row 1 (centered). On row 2,
-   the search bar sits on the left edge and the dark-mode + hamburger
-   group sits on the right edge with the same outer gutter as the menu has,
-   for left-right symmetry. */
+/* Narrow widths: stack into two rows. Title centered on row 1. On row 2,
+   the search bar sits at the left edge and the dark+menu actions group
+   sits at the right edge, with the same outer gutter on both sides. */
 @media (max-width: 700px) {
   .top-bar {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.15rem;
+    gap: 0.6rem;
   }
   .top-bar-left {
     text-align: center;
   }
   .top-bar-right {
     justify-content: space-between;
-  }
-  .top-bar-right .search {
-    margin-right: auto;
   }
 }
 `
@@ -65,8 +65,10 @@ const TopBar: QuartzComponent = (props: QuartzComponentProps) => (
     </div>
     <div class="top-bar-right">
       <SearchInstance {...props} />
-      <DarkmodeInstance {...props} />
-      <SidebarMenuInstance {...props} />
+      <div class="top-bar-actions">
+        <DarkmodeInstance {...props} />
+        <SidebarMenuInstance {...props} />
+      </div>
     </div>
   </div>
 )

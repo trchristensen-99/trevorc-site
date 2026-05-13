@@ -14,21 +14,25 @@ function attachAudioPlayer(player: HTMLDivElement) {
   const audio = player.querySelector("audio") as HTMLAudioElement | null
   if (!audio) return
 
-  // Expand/collapse toggle for the extra-controls toolbar
-  const expandBtn = player.querySelector(".audio-player-expand") as HTMLButtonElement | null
-  if (expandBtn) {
-    const setExpanded = (expanded: boolean) => {
-      player.setAttribute("data-expanded", expanded ? "true" : "false")
-      expandBtn.setAttribute("aria-expanded", expanded ? "true" : "false")
-      expandBtn.textContent = expanded ? "less" : "more"
-    }
-    setExpanded(false)
-    const onExpandClick = () => {
-      setExpanded(player.getAttribute("data-expanded") !== "true")
-    }
-    expandBtn.addEventListener("click", onExpandClick)
-    window.addCleanup(() => expandBtn.removeEventListener("click", onExpandClick))
+  // Launch button opens the full player; close button collapses back to the
+  // icon. State lives in data-expanded on the player root.
+  const launchBtn = player.querySelector(".audio-player-launch") as HTMLButtonElement | null
+  const closeBtn = player.querySelector(".audio-player-close") as HTMLButtonElement | null
+  const setExpanded = (expanded: boolean) => {
+    player.setAttribute("data-expanded", expanded ? "true" : "false")
+    launchBtn?.setAttribute("aria-expanded", expanded ? "true" : "false")
+    if (expanded) audio.play().catch(() => {})
+    else audio.pause()
   }
+  setExpanded(false)
+  const onLaunch = () => setExpanded(true)
+  const onClose = () => setExpanded(false)
+  launchBtn?.addEventListener("click", onLaunch)
+  closeBtn?.addEventListener("click", onClose)
+  window.addCleanup(() => {
+    launchBtn?.removeEventListener("click", onLaunch)
+    closeBtn?.removeEventListener("click", onClose)
+  })
 
   const key = player.getAttribute("data-audio-key") ?? audio.src
   const storageKey = STORAGE_POS_PREFIX + key

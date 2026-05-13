@@ -2,11 +2,15 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 
 const css = `
 .inline-toc {
-  margin: 1rem 0 1.5rem;
+  margin: 1rem auto 1.5rem;
   padding: 0.5rem 0.85rem;
-  border-left: 3px solid var(--lightgray);
+  border: 1px solid var(--lightgray);
   background: var(--light);
+  border-radius: 6px;
   font-size: 0.95em;
+  max-width: 36rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 .inline-toc > summary {
   cursor: pointer;
@@ -15,6 +19,7 @@ const css = `
   list-style: none;
   user-select: none;
   outline: none;
+  text-align: center;
 }
 .inline-toc > summary::-webkit-details-marker {
   display: none;
@@ -52,7 +57,10 @@ const css = `
 `
 
 const InlineToc: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
-  if (!fileData.toc || fileData.toc.length === 0) return null
+  // Only render when there are enough sections to justify a table of contents.
+  // For very short pages with one or two headings, the TOC is more noise
+  // than help.
+  if (!fileData.toc || fileData.toc.length < 3) return null
   return (
     <details class="inline-toc" open={!fileData.collapseToc}>
       <summary>Contents</summary>

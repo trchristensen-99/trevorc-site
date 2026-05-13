@@ -290,9 +290,9 @@ a {
 
     & .center > article {
       grid-area: grid-center;
-      // Article cap. Wider than the typographic-purist value (~75ch) to
-      // match the user's preference; outer margins still grow past this.
-      max-width: 100ch;
+      // Article cap. Wider than the typographic-purist value (~75ch) but
+      // narrower than 100ch, which felt too sprawling.
+      max-width: 87ch;
       margin-left: auto;
       margin-right: auto;
       width: 100%;
