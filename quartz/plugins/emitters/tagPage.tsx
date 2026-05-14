@@ -29,17 +29,48 @@ function computeTagInfo(
   // add base tag
   tags.add("index")
 
+  // Aggregate dates from the set of files relevant to a given tag, so that
+  // ContentMeta can render meaningful "Published / Updated" metadata even on
+  // the auto-generated tag pages (which have no markdown source of their own).
+  const aggregateDates = (files: QuartzPluginData[]) => {
+    if (files.length === 0) return undefined
+    let created: Date | undefined
+    let modified: Date | undefined
+    for (const f of files) {
+      const c = f.dates?.created
+      const m = f.dates?.modified
+      if (c && (!created || c.getTime() < created.getTime())) created = c
+      if (m && (!modified || m.getTime() > modified.getTime())) modified = m
+    }
+    if (!created && !modified) return undefined
+    const c = created ?? modified!
+    const m = modified ?? created!
+    return { created: c, modified: m, published: c }
+  }
+
   const tagDescriptions: Record<string, ProcessedContent> = Object.fromEntries(
     [...tags].map((tag) => {
       const title =
         tag === "index"
           ? i18n(locale).pages.tagContent.tagIndex
           : `${i18n(locale).pages.tagContent.tag}: ${tag}`
+      const relevant =
+        tag === "index"
+          ? allFiles.filter((f) => (f.frontmatter?.tags ?? []).length > 0)
+          : allFiles.filter((f) =>
+              (f.frontmatter?.tags ?? []).flatMap(getAllSegmentPrefixes).includes(tag),
+            )
+      const dates = aggregateDates(relevant)
       return [
         tag,
         defaultProcessedContent({
           slug: joinSegments("tags", tag) as FullSlug,
           frontmatter: { title, tags: [] },
+          dates,
+          // A single space lets ContentMeta render its metadata segments.
+          // Reading time on the synthetic page rounds up to 1 min, which is
+          // accurate enough for an index page.
+          text: " ",
         }),
       ]
     }),
