@@ -12,10 +12,6 @@ import tagFilterScript from "../scripts/tagFilter.inline"
 
 const SortableListInstance = SortableListBuilder(undefined)
 
-// Tag names treated as "meta" rather than content. Edit this set to
-// re-categorize.
-const META_TAGS = new Set(["home", "index", "meta"])
-
 interface TagContentOptions {
   sort?: SortFn
   numPages: number
@@ -62,17 +58,6 @@ export default ((opts?: Partial<TagContentOptions>) => {
           <article class={classes}>{content}</article>
           <div class="tag-controls">
             <div class="tag-control-row">
-              <span class="tag-control-label">Show:</span>
-              <label class="tag-control-checkbox">
-                <input type="checkbox" value="content" checked />
-                <span>Content</span>
-              </label>
-              <label class="tag-control-checkbox">
-                <input type="checkbox" value="meta" />
-                <span>Meta</span>
-              </label>
-            </div>
-            <div class="tag-control-row">
               <span class="tag-control-label">Sort:</span>
               <select class="tag-sort-select" aria-label="Sort tags">
                 <option value="alpha-asc">A to Z</option>
@@ -84,16 +69,11 @@ export default ((opts?: Partial<TagContentOptions>) => {
           </div>
           <ul class="tag-index-list">
             {tags.map((t) => {
-              const isMeta = META_TAGS.has(t)
               const count = tagCount.get(t) ?? 0
               const tagListingPage = `/tags/${t}` as FullSlug
               const href = resolveRelative(fileData.slug!, tagListingPage)
               return (
-                <li
-                  data-category={isMeta ? "meta" : "content"}
-                  data-name={t}
-                  data-count={count}
-                >
+                <li data-name={t} data-count={count}>
                   <a class="internal tag-link" href={href}>
                     {t}
                   </a>

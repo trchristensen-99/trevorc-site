@@ -13,6 +13,7 @@ import SortableList from "./SortableList"
 import InlineToc from "./InlineToc"
 import SidebarMenu from "./SidebarMenu"
 import TopBar from "./TopBar"
+import PrevNext from "./PrevNext"
 import Spacer from "./Spacer"
 import TableOfContents from "./TableOfContents"
 import Explorer from "./Explorer"
@@ -44,6 +45,7 @@ export {
   InlineToc,
   SidebarMenu,
   TopBar,
+  PrevNext,
   Spacer,
   TableOfContents,
   Explorer,

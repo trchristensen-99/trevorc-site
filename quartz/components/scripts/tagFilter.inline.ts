@@ -1,18 +1,10 @@
-// Filter (content vs meta) + sort controls for the /tags index page.
-// State persisted in localStorage so the choice survives navigation.
+// Sort control for the /tags index page. State persisted in localStorage
+// so the choice survives navigation.
 
-const FILTER_KEY = "trevorc-tag-filter"
 const SORT_KEY = "trevorc-tag-sort"
-const DEFAULT_FILTER = new Set(["content"])
 const DEFAULT_SORT = "alpha-asc"
 
 type SortMode = "alpha-asc" | "alpha-desc" | "count-desc" | "count-asc"
-
-function readFilter(): Set<string> {
-  const raw = localStorage.getItem(FILTER_KEY)
-  if (raw === null) return new Set(DEFAULT_FILTER)
-  return new Set(raw.split(",").filter((s) => s.length > 0))
-}
 
 function readSort(): SortMode {
   const raw = localStorage.getItem(SORT_KEY)
@@ -20,16 +12,6 @@ function readSort(): SortMode {
     return raw
   }
   return DEFAULT_SORT
-}
-
-function applyFilter(root: HTMLElement) {
-  const list = root.querySelector<HTMLElement>(".tag-index-list")
-  if (!list) return
-  const visible = readFilter()
-  list.querySelectorAll<HTMLLIElement>("li").forEach((li) => {
-    const cat = li.getAttribute("data-category") ?? "content"
-    li.style.display = visible.has(cat) ? "" : "none"
-  })
 }
 
 function applySort(root: HTMLElement) {
@@ -52,26 +34,7 @@ function applySort(root: HTMLElement) {
 }
 
 function attach(root: HTMLElement) {
-  const filter = readFilter()
   const sort = readSort()
-
-  const checkboxes = root.querySelectorAll<HTMLInputElement>(
-    ".tag-control-checkbox input[type='checkbox']",
-  )
-  checkboxes.forEach((cb) => {
-    cb.checked = filter.has(cb.value)
-    const handler = () => {
-      const next = new Set<string>()
-      checkboxes.forEach((other) => {
-        if (other.checked) next.add(other.value)
-      })
-      localStorage.setItem(FILTER_KEY, Array.from(next).join(","))
-      applyFilter(root)
-    }
-    cb.addEventListener("change", handler)
-    window.addCleanup(() => cb.removeEventListener("change", handler))
-  })
-
   const sortSel = root.querySelector<HTMLSelectElement>(".tag-sort-select")
   if (sortSel) {
     sortSel.value = sort
@@ -82,8 +45,6 @@ function attach(root: HTMLElement) {
     sortSel.addEventListener("change", handler)
     window.addCleanup(() => sortSel.removeEventListener("change", handler))
   }
-
-  applyFilter(root)
   applySort(root)
 }
 
