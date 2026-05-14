@@ -29,7 +29,7 @@ export default ((opts?: Partial<TagContentOptions>) => {
   const options: TagContentOptions = { ...defaultOptions, ...opts }
 
   const TagContent: QuartzComponent = (props: QuartzComponentProps) => {
-    const { tree, fileData, allFiles, cfg } = props
+    const { tree, fileData, allFiles } = props
     const slug = fileData.slug
 
     if (!(slug?.startsWith("tags/") || slug === "tags")) {
@@ -60,15 +60,27 @@ export default ((opts?: Partial<TagContentOptions>) => {
       return (
         <div class="popover-hint tag-filter-root">
           <article class={classes}>{content}</article>
-          <p>{i18n(cfg.locale).pages.tagContent.totalTags({ count: tags.length })}</p>
-          <div class="tag-filter-controls">
-            <span>Show:</span>
-            <label>
-              <input type="checkbox" value="content" checked /> Content
-            </label>
-            <label>
-              <input type="checkbox" value="meta" /> Meta
-            </label>
+          <div class="tag-controls">
+            <div class="tag-control-row">
+              <span class="tag-control-label">Show:</span>
+              <label class="tag-control-checkbox">
+                <input type="checkbox" value="content" checked />
+                <span>Content</span>
+              </label>
+              <label class="tag-control-checkbox">
+                <input type="checkbox" value="meta" />
+                <span>Meta</span>
+              </label>
+            </div>
+            <div class="tag-control-row">
+              <span class="tag-control-label">Sort:</span>
+              <select class="tag-sort-select" aria-label="Sort tags">
+                <option value="alpha-asc">A to Z</option>
+                <option value="alpha-desc">Z to A</option>
+                <option value="count-desc">most pages first</option>
+                <option value="count-asc">fewest pages first</option>
+              </select>
+            </div>
           </div>
           <ul class="tag-index-list">
             {tags.map((t) => {
@@ -77,7 +89,11 @@ export default ((opts?: Partial<TagContentOptions>) => {
               const tagListingPage = `/tags/${t}` as FullSlug
               const href = resolveRelative(fileData.slug!, tagListingPage)
               return (
-                <li data-category={isMeta ? "meta" : "content"}>
+                <li
+                  data-category={isMeta ? "meta" : "content"}
+                  data-name={t}
+                  data-count={count}
+                >
                   <a class="internal tag-link" href={href}>
                     {t}
                   </a>
@@ -95,7 +111,7 @@ export default ((opts?: Partial<TagContentOptions>) => {
         <div class="popover-hint">
           <article class={classes}>{content}</article>
           <div class="page-listing">
-            <p>{i18n(cfg.locale).pages.tagContent.itemsUnderTag({ count: pages.length })}</p>
+            <p>{i18n(props.cfg.locale).pages.tagContent.itemsUnderTag({ count: pages.length })}</p>
             <div>
               <SortableListInstance {...props} pages={pages} />
             </div>
@@ -109,18 +125,45 @@ export default ((opts?: Partial<TagContentOptions>) => {
     style,
     PageList.css,
     SortableListInstance.css ?? "",
-    `.tag-filter-controls {
+    `.tag-controls {
       display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 0.25rem 0 0.5rem;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin: 0.5rem 0 0.75rem;
       font-size: 0.95em;
       color: var(--darkgray);
     }
-    .tag-filter-controls label {
+    .tag-control-row {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .tag-control-label {
+      min-width: 3rem;
+      color: var(--darkgray);
+    }
+    .tag-control-checkbox {
       display: inline-flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+    /* Override the global input[type=checkbox] translate so the box sits
+       on the text baseline rather than below it. */
+    .tag-control-checkbox input[type="checkbox"] {
+      transform: none;
+      margin: 0;
+      vertical-align: middle;
+    }
+    .tag-sort-select {
+      background: transparent;
+      border: 1px solid var(--gray);
+      color: var(--darkgray);
+      border-radius: 4px;
+      padding: 0.15rem 0.4rem;
+      font: inherit;
+      font-size: 0.95em;
       cursor: pointer;
     }
     .tag-index-list {

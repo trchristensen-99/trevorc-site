@@ -8,6 +8,7 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [Component.Backlinks()],
   footer: Component.Footer({
     links: {},
+    hide: true,
   }),
 }
 

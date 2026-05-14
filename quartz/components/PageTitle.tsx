@@ -18,7 +18,7 @@ PageTitle.css = `
   font-size: 1.75rem;
   margin: 0;
   font-family: var(--titleFont);
-  line-height: 1.1;
+  line-height: 1;
   overflow-wrap: break-word;
   font-weight: 700;
 }
