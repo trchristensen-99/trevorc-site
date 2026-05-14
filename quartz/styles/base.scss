@@ -260,6 +260,16 @@ a {
       margin-left: auto;
       margin-right: auto;
       width: 100%;
+
+      // Highlight the targeted heading when arriving via #anchor link.
+      // Lets the metadata page light up the relevant field section when
+      // linked from a per-page metadata label.
+      & :target {
+        background-color: var(--highlight);
+        border-radius: 4px;
+        padding: 0.15rem 0.35rem;
+        scroll-margin-top: 4rem;
+      }
     }
 
     // All siblings of the article inside .center (page-header with the top

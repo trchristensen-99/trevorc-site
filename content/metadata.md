@@ -7,14 +7,36 @@ tags:
 
 A reference for the metadata fields used on pieces of writing here, what they mean, and how they are rendered. Updated whenever the system changes.
 
-## How the metadata works
+## Fields
 
-In the frontmatter:
+### Published
 
-- `date`: when the piece was first published. Shown as "Published".
-- `modified`: when it was last meaningfully updated. Shown as "Updated" if it differs from `date` by more than a day. Quartz also infers this from git history if you omit the field.
-- `importance`: a 1 to 10 score. Manual judgement of how important this is to the author, with 10 being the most important. Shown in the page meta and used as a sortable column.
-- `tags`: a list of tags associated with the piece. Shown in the page meta as "Tags: x, y, z" with each linking to its tag page.
-- `audio`: optional. Either a string URL or `{src, label}` object. Renders an audio player launcher in the metadata line; click to expand into the full player with playback speed and 15-second skip controls.
+The `date` frontmatter field. When the piece was first published. Shown as "Published <date>" in the metadata header on each page.
 
-Importance scores are passed through a log inverse-J calibration at build time so the "calibrated" bucket adapts as the corpus grows (see `quartz/util/calibration.ts` for the formula).
+Clicking the date in any page's metadata jumps to [[all|All pages]] sorted by publication date.
+
+### Updated
+
+The `modified` frontmatter field. When the piece was last meaningfully updated. Shown as "Updated <date>" if it differs from the publication date by more than a day.
+
+If you don't set this in frontmatter, Quartz infers it from git history. Any commit touching the file updates the date — there is no "meaningful change" threshold. To freeze the value, set `modified:` explicitly in frontmatter.
+
+### Reading time
+
+Auto-computed from the page text using the reading-time package, at roughly 265 words per minute. Shown as "N min read" in the metadata header.
+
+Clicking the value jumps to [[all|All pages]] sorted shortest first.
+
+### Importance
+
+A 1 to 10 manual score in the frontmatter field `importance`. Manual judgement of how important the piece is to the author, with 10 being the most important.
+
+Raw scores are passed through a log inverse-J calibration at build time so the displayed "calibrated" bucket adapts as the corpus grows. The displayed value is the calibrated bucket; the rank shown alongside is the page's rank among all rated pages.
+
+### Tags
+
+The `tags` frontmatter field, a list of strings. Shown as "Tags: x, y, z" with each tag linking to its own page; the "Tags" label links to the full [[tags|Tags]] index.
+
+### Audio
+
+Optional. The `audio` frontmatter field, either a string URL or an object of the form `{src, label}`. Renders a small speaker icon in the metadata; click to expand the full audio player with playback-speed and 15-second skip controls.

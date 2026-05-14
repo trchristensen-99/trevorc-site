@@ -27,7 +27,9 @@
     font-style: italic;
   }
 
-  .meta-sort-link {
+  .meta-sort-link,
+  .meta-label-link,
+  .meta-value-link {
     color: inherit;
     text-decoration: none;
     border-bottom: 1px dotted var(--gray);

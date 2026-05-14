@@ -2,7 +2,6 @@ import { formatDate } from "./Date"
 import { QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import readingTime from "reading-time"
 import { classNames } from "../util/lang"
-import { i18n } from "../i18n"
 import { JSX } from "preact"
 import style from "./styles/contentMeta.scss"
 import { calibrate } from "../util/calibration"
@@ -25,6 +24,8 @@ const defaultOptions: ContentMetaOptions = {
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000
 const ALL_SLUG = "all" as FullSlug
+const META_SLUG = "metadata" as FullSlug
+const TAGS_SLUG = "tags" as FullSlug
 
 function slugAnchor(slug: string): string {
   return slug.replace(/\//g, "--")
@@ -49,21 +50,40 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
     const segments: (string | JSX.Element)[] = []
     const fm = fileData.frontmatter as Record<string, unknown> | undefined
 
-    const allHref = (sortKey: string, dir: "asc" | "desc") => {
+    // Value link: jumps to /all sorted by the matching key, with the source
+    // page anchored.
+    const valueHref = (sortKey: string, dir: "asc" | "desc") => {
       if (!options.linkToAllPages) return null
       if (fileData.slug === ALL_SLUG) return null
       const base = resolveRelative(fileData.slug!, ALL_SLUG)
       const anchor = slugAnchor(fileData.slug!)
       return `${base}?sort=${sortKey}&dir=${dir}#${anchor}`
     }
+    // Label link: jumps to /metadata with the corresponding heading anchored.
+    const labelHref = (anchor: string) => {
+      if (fileData.slug === META_SLUG) return null
+      return `${resolveRelative(fileData.slug!, META_SLUG)}#${anchor}`
+    }
+    const tagsLabelHref = () => {
+      if (fileData.slug === TAGS_SLUG) return null
+      return resolveRelative(fileData.slug!, TAGS_SLUG)
+    }
 
-    const link = (href: string | null, text: string) =>
+    const labelLink = (href: string | null, t: string) =>
       href ? (
-        <a href={href} class="meta-sort-link">
-          {text}
+        <a href={href} class="meta-label-link">
+          {t}
         </a>
       ) : (
-        <>{text}</>
+        <span>{t}</span>
+      )
+    const valueLink = (href: string | null, t: string | JSX.Element) =>
+      href ? (
+        <a href={href} class="meta-value-link">
+          {t}
+        </a>
+      ) : (
+        <span>{t}</span>
       )
 
     if (fileData.dates) {
@@ -75,21 +95,30 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       if (!modified || sameDay) {
         segments.push(
           <span>
-            {link(allHref("created", "desc"), "Published")}{" "}
-            <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>
+            {labelLink(labelHref("published"), "Published")}{" "}
+            {valueLink(
+              valueHref("created", "desc"),
+              <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>,
+            )}
           </span>,
         )
       } else {
         segments.push(
           <span>
-            {link(allHref("created", "desc"), "Published")}{" "}
-            <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>
+            {labelLink(labelHref("published"), "Published")}{" "}
+            {valueLink(
+              valueHref("created", "desc"),
+              <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>,
+            )}
           </span>,
         )
         segments.push(
           <span>
-            {link(allHref("modified", "desc"), "Updated")}{" "}
-            <time datetime={modified.toISOString()}>{formatDate(modified, cfg.locale)}</time>
+            {labelLink(labelHref("updated"), "Updated")}{" "}
+            {valueLink(
+              valueHref("modified", "desc"),
+              <time datetime={modified.toISOString()}>{formatDate(modified, cfg.locale)}</time>,
+            )}
           </span>,
         )
       }
@@ -97,10 +126,13 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
 
     if (options.showReadingTime) {
       const { minutes } = readingTime(text)
-      const displayedTime = i18n(cfg.locale).components.contentMeta.readingTime({
-        minutes: Math.ceil(minutes),
-      })
-      segments.push(<span>{link(allHref("reading", "asc"), displayedTime)}</span>)
+      const min = Math.ceil(minutes)
+      segments.push(
+        <span>
+          {valueLink(valueHref("reading", "asc"), `${min} min`)}{" "}
+          {labelLink(labelHref("reading-time"), "read")}
+        </span>,
+      )
     }
 
     if (options.showImportance && typeof fm?.importance === "number") {
@@ -108,20 +140,23 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       if (cal) {
         segments.push(
           <span class="meta-importance">
-            {link(allHref("importance", "desc"), `importance ${cal.bucket}/10`)}
+            {labelLink(labelHref("importance"), "importance")}{" "}
+            {valueLink(valueHref("importance", "desc"), `${cal.bucket}/10`)}
             {` (rank ${cal.rank} of ${cal.total})`}
           </span>,
         )
       } else {
         segments.push(
           <span class="meta-importance">
-            {link(allHref("importance", "desc"), `importance ${fm.importance}/10`)}
+            {labelLink(labelHref("importance"), "importance")}{" "}
+            {valueLink(valueHref("importance", "desc"), `${fm.importance}/10`)}
           </span>,
         )
       }
     }
 
-    // Audio launch icon as an inline segment.
+    // Audio launch icon as an inline segment (no text label; the icon itself
+    // is the click target for opening the player).
     const audioSrc = parseAudio(fm?.audio)
     if (audioSrc) {
       segments.push(
@@ -152,12 +187,14 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       )
     }
 
-    // Tags as a "Tags: x, y, z" inline segment (no hashtag chips).
+    // Tags as an inline "Tags: x, y, z" segment. The label links to the
+    // /tags index page; each tag links to its own page.
     const tags = fm?.tags as string[] | undefined
     if (tags && tags.length > 0) {
       segments.push(
         <span class="meta-tags">
-          Tags:{" "}
+          {labelLink(tagsLabelHref(), "Tags")}
+          {": "}
           {tags.map((t, i) => (
             <>
               <a
