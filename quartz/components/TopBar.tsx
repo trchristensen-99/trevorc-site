@@ -4,6 +4,7 @@ import DarkmodeBuilder from "./Darkmode"
 import SidebarMenuBuilder from "./SidebarMenu"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { concatenateResources } from "../util/resources"
+import stickyScript from "./scripts/stickyTopBar.inline"
 
 const PageTitleInstance = PageTitleBuilder(undefined)
 const SearchInstance = SearchBuilder(undefined)
@@ -40,20 +41,32 @@ const css = `
   gap: 0.75rem;
 }
 
-/* Narrow widths: stack into two rows. Title centered on row 1. On row 2,
-   the search bar sits at the left edge and the dark+menu actions group
-   sits at the right edge, with the same outer gutter on both sides. */
+/* Narrow widths: collapse to a single line. Smaller title on the left;
+   search/dark/menu as three icon buttons on the right, all the same size.
+   The whole page-header becomes sticky and hides on scroll-down /
+   re-reveals on scroll-up. */
 @media (max-width: 700px) {
   .top-bar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.6rem;
+    gap: 0.5rem;
   }
-  .top-bar-left {
-    text-align: center;
+  .top-bar-actions {
+    gap: 0.5rem;
   }
-  .top-bar-right {
-    justify-content: space-between;
+}
+.page-header {
+  transition: transform 180ms ease;
+}
+@media (max-width: 700px) {
+  .page-header {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    background: var(--light);
+    /* Subtle bottom border so it doesn't blend into the content when sticky */
+    box-shadow: 0 1px 0 var(--lightgray);
+  }
+  .page-header.top-bar-hidden {
+    transform: translateY(-100%);
   }
 }
 `
@@ -85,6 +98,7 @@ TopBar.afterDOMLoaded = concatenateResources(
   SearchInstance.afterDOMLoaded,
   DarkmodeInstance.afterDOMLoaded,
   SidebarMenuInstance.afterDOMLoaded,
+  stickyScript,
 )
 TopBar.beforeDOMLoaded = concatenateResources(
   PageTitleInstance.beforeDOMLoaded,

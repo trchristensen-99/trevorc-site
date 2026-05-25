@@ -31,7 +31,10 @@ PageTitle.css = `
 }
 @media (max-width: 700px) {
   .page-title {
-    font-size: 2rem;
+    font-size: 1.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 `

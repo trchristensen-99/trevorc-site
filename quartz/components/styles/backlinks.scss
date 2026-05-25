@@ -20,13 +20,16 @@
     content: ":";
   }
 
-  & > ul.overflow {
+  & > ul.backlinks-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: none;
-    overscroll-behavior: auto;
     display: inline;
+    /* Kill the legacy overflow/gradient behaviour entirely so the list
+       isn't faded out at the bottom and isn't height-capped. */
+    max-height: none;
+    overflow: visible;
+    mask-image: none;
 
     & > li {
       display: inline;
@@ -41,12 +44,26 @@
       }
     }
 
-    & > li:not(.overflow-end):not(:last-of-type)::after {
+    & > li:not(:last-of-type)::after {
       content: ", ";
     }
+  }
 
-    & > .overflow-end {
-      display: none;
-    }
+  &[data-expanded="false"] .backlink-extra { display: none; }
+  &[data-expanded="false"] .backlink-extra + .backlink-extra { display: none; }
+
+  & > .backlinks-toggle {
+    background: transparent;
+    border: none;
+    color: var(--secondary);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.9em;
+    padding: 0 0.25rem;
+    margin-left: 0.25rem;
+    border-bottom: 1px dotted var(--gray);
+  }
+  & > .backlinks-toggle:hover {
+    border-bottom-color: var(--secondary);
   }
 }
