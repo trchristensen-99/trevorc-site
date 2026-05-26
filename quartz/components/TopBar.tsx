@@ -48,9 +48,6 @@ const css = `
     gap: 0.5rem;
   }
 }
-.page-header > header {
-  transition: transform 180ms ease;
-}
 @media (max-width: 700px) {
   .page-header > header {
     position: sticky;
@@ -58,9 +55,9 @@ const css = `
     z-index: 80;
     background: var(--light);
     box-shadow: 0 1px 0 var(--lightgray);
-  }
-  .page-header > header.top-bar-hidden {
-    transform: translateY(-100%);
+    /* No transition: the JS updates transform every scroll frame so the
+       bar moves in lockstep with the page rather than easing in/out. */
+    will-change: transform;
   }
 }
 `
