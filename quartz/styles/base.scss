@@ -171,12 +171,14 @@ a {
   margin: 0 auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  padding-top: 0;
+  // Small but visible breath at the very top — matches the gap that
+  // appears when the sticky top bar reveals itself on scroll up.
+  padding-top: 0.2rem;
   padding-bottom: 0;
   @media (max-width: 700px) {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    padding-top: 0;
+    padding-top: 0.2rem;
     padding-bottom: 0.5rem;
   }
   & article {

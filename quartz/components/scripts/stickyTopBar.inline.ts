@@ -1,15 +1,16 @@
-// Mobile-only: hide the top bar when the user scrolls down, reveal it as
-// soon as they scroll up. Saves screen real-estate while keeping the bar
-// reachable.
+// Mobile-only: hide the inner <header> when the user scrolls down, reveal
+// it as soon as they scroll up. Saves screen real-estate while keeping the
+// bar reachable. Only the top bar itself toggles — breadcrumbs, title, and
+// metadata stay scrolled away.
 const MOBILE_MQ = "(max-width: 700px)"
-const HIDE_THRESHOLD = 80 // px scrolled past before hiding starts
+const HIDE_THRESHOLD = 80
 
 let lastY = 0
 let ticking = false
 
 function update() {
   const mq = window.matchMedia(MOBILE_MQ)
-  const headers = document.querySelectorAll<HTMLElement>(".page-header")
+  const headers = document.querySelectorAll<HTMLElement>(".page-header > header")
   if (headers.length === 0) {
     ticking = false
     return
