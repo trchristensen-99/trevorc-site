@@ -60,10 +60,10 @@ export default ((opts?: Partial<TagContentOptions>) => {
             <div class="tag-control-row">
               <span class="tag-control-label">Sort:</span>
               <select class="tag-sort-select" aria-label="Sort tags">
-                <option value="alpha-asc">A to Z</option>
-                <option value="alpha-desc">Z to A</option>
                 <option value="count-desc">most pages first</option>
                 <option value="count-asc">fewest pages first</option>
+                <option value="alpha-asc">A to Z</option>
+                <option value="alpha-desc">Z to A</option>
               </select>
             </div>
           </div>
@@ -73,7 +73,7 @@ export default ((opts?: Partial<TagContentOptions>) => {
               const tagListingPage = `/tags/${t}` as FullSlug
               const href = resolveRelative(fileData.slug!, tagListingPage)
               return (
-                <li data-name={t} data-count={count}>
+                <li id={`tag-${t}`} data-name={t} data-count={count}>
                   <a class="internal tag-link" href={href}>
                     {t}
                   </a>

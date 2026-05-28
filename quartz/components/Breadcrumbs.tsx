@@ -1,5 +1,6 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import breadcrumbsStyle from "./styles/breadcrumbs.scss"
+import breadcrumbsScript from "./scripts/breadcrumbsToggle.inline"
 import { FullSlug, SimpleSlug, resolveRelative, simplifySlug } from "../util/path"
 import { classNames } from "../util/lang"
 import { trieFromAllFiles } from "../util/ctx"
@@ -77,17 +78,38 @@ export default ((opts?: Partial<BreadcrumbOptions>) => {
     }
 
     return (
-      <nav class={classNames(displayClass, "breadcrumb-container")} aria-label="breadcrumbs">
+      <nav
+        class={classNames(displayClass, "breadcrumb-container")}
+        aria-label="breadcrumbs"
+        data-minimized="false"
+      >
+        <button
+          type="button"
+          class="breadcrumb-toggle breadcrumb-show"
+          aria-label="Show breadcrumbs"
+          title="Show breadcrumbs"
+        >
+          ❯
+        </button>
         {crumbs.map((crumb, index) => (
           <div class="breadcrumb-element">
             <a href={crumb.path}>{crumb.displayName}</a>
             {index !== crumbs.length - 1 && <p>{` ${options.spacerSymbol} `}</p>}
           </div>
         ))}
+        <button
+          type="button"
+          class="breadcrumb-toggle breadcrumb-hide"
+          aria-label="Hide breadcrumbs"
+          title="Hide breadcrumbs"
+        >
+          −
+        </button>
       </nav>
     )
   }
   Breadcrumbs.css = breadcrumbsStyle
+  Breadcrumbs.afterDOMLoaded = breadcrumbsScript
 
   return Breadcrumbs
 }) satisfies QuartzComponentConstructor

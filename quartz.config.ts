@@ -21,7 +21,7 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        header: "Inter",
+        header: "Newsreader",
         body: "Newsreader",
         code: "IBM Plex Mono",
       },
@@ -32,9 +32,11 @@ const config: QuartzConfig = {
           gray: "#b8b8b8",
           darkgray: "#4e4e4e",
           dark: "#2b2b2b",
-          secondary: "#284b63",
-          tertiary: "#84a59d",
-          highlight: "rgba(143, 159, 169, 0.15)",
+          // Ultramarine / Klein-blue family, a step lighter than IKB
+          // (#002FA7) so it reads as confidently bright instead of stoic.
+          secondary: "#2640D8",
+          tertiary: "#5a72E6",
+          highlight: "rgba(38, 64, 216, 0.10)",
           textHighlight: "#fff23688",
         },
         darkMode: {
@@ -43,9 +45,10 @@ const config: QuartzConfig = {
           gray: "#646464",
           darkgray: "#d4d4d4",
           dark: "#ebebec",
-          secondary: "#7b97aa",
-          tertiary: "#84a59d",
-          highlight: "rgba(143, 159, 169, 0.15)",
+          // Slightly desaturated for legibility on dark backgrounds.
+          secondary: "#6B82F0",
+          tertiary: "#9CABF5",
+          highlight: "rgba(107, 130, 240, 0.16)",
           textHighlight: "#b3aa0288",
         },
       },

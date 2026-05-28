@@ -173,12 +173,12 @@ a {
   padding-right: 1.5rem;
   // Just enough breath that the top of the title isn't visually cropped
   // against the viewport edge.
-  padding-top: 0.1rem;
+  padding-top: 0;
   padding-bottom: 0;
   @media (max-width: 700px) {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    padding-top: 0.1rem;
+    padding-top: 0;
     padding-bottom: 0.5rem;
   }
   & article {

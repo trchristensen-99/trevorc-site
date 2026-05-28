@@ -45,7 +45,7 @@ const css = `
     gap: 0.5rem;
   }
   .top-bar-right {
-    gap: 0.5rem;
+    gap: 0.9rem;
   }
 }
 @media (max-width: 700px) {

@@ -2,7 +2,7 @@
 // so the choice survives navigation.
 
 const SORT_KEY = "trevorc-tag-sort"
-const DEFAULT_SORT = "alpha-asc"
+const DEFAULT_SORT = "count-desc"
 
 type SortMode = "alpha-asc" | "alpha-desc" | "count-desc" | "count-asc"
 

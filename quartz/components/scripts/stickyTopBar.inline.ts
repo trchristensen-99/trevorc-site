@@ -2,7 +2,7 @@
 // up, the bar slides down at the same rate, as if it were the next element
 // in line above the page. Scrolling down hides it at the same rate.
 const MOBILE_MQ = "(max-width: 700px)"
-const ALWAYS_SHOW_BELOW = 20 // px scrolled past top: above this, allow hide
+const ALWAYS_SHOW_BELOW = 5 // px scrolled past top: above this, allow hide
 
 let lastY = 0
 let barOffset = 0 // current translateY in px (range: [-barHeight, 0])
@@ -28,8 +28,12 @@ function update() {
 
       if (y < ALWAYS_SHOW_BELOW) {
         barOffset = 0
-      } else {
-        barOffset = Math.max(-barHeight, Math.min(0, barOffset - dy))
+      } else if (dy < 0) {
+        // Scrolling up: snap fully visible. The bar drops down right away.
+        barOffset = 0
+      } else if (dy > 0) {
+        // Scrolling down: hide at scroll rate.
+        barOffset = Math.max(-barHeight, barOffset - dy)
       }
       h.style.transform = `translateY(${barOffset}px)`
     })

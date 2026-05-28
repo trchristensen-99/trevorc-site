@@ -1,13 +1,45 @@
 .breadcrumb-container {
-  margin: -1.2rem 0 0 0;
+  margin: -1.5rem 0 0 0;
   padding: 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  align-items: center;
   gap: 0.5rem;
   font-size: 0.9em;
   line-height: 1;
+  min-height: 1.2rem;
+}
+.breadcrumb-container[data-minimized="true"] .breadcrumb-element {
+  display: none;
+}
+.breadcrumb-container[data-minimized="true"] .breadcrumb-hide {
+  display: none;
+}
+.breadcrumb-container[data-minimized="false"] .breadcrumb-show {
+  display: none;
+}
+.breadcrumb-toggle {
+  background: transparent;
+  border: 1px solid var(--gray);
+  color: var(--darkgray);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85em;
+  line-height: 1;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+.breadcrumb-toggle:hover {
+  color: var(--secondary);
+  border-color: var(--secondary);
+}
+.breadcrumb-hide {
+  margin-left: 0.25rem;
+}
+.breadcrumb-show {
+  margin-right: 0.25rem;
 }
 
 .breadcrumb-element {
