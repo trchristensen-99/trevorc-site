@@ -99,38 +99,46 @@ html[data-meta-tags="false"] .meta-tags {
 body {
   margin: 0;
   box-sizing: border-box;
-  background-color: var(--light);
+  background: transparent;
   font-family: var(--bodyFont);
   color: var(--darkgray);
+  // Always leave a band of decor below the content column so the bottom
+  // image is connected to the side image as a single frame.
+  padding-bottom: 5rem;
+  min-height: 100vh;
 }
 
 /* ----- Decor background (single image around the content column) ----- */
-/* The body paints the decor pattern; the .page block sits on top with a
-   solid background, so the decor is visible only outside the content
-   column (sides + below content when scrolled to the bottom). The result
-   is a single continuous frame around the content. */
-html[data-decor="placeholder"] body {
+/* html paints the decor — that guarantees coverage all the way to the
+   bottom of the viewport even when the page is shorter than the screen.
+   .page covers the pattern with a solid var(--light) only over the
+   content column, so the pattern is visible in the side margins AND in
+   the bottom band below the content. */
+html {
+  background-color: var(--light);
+}
+html[data-decor="placeholder"] {
   background-color: var(--lightgray);
   background-image:
     linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px),
     linear-gradient(0deg, rgba(0,0,0,0.06) 1px, transparent 1px);
   background-size: 16px 16px;
 }
-html[data-decor="none"] body {
+html[data-decor="none"] {
   background-color: var(--light);
   background-image: none;
 }
 html[data-decor-fade="true"] body {
   -webkit-mask-image: linear-gradient(90deg,
     transparent 0,
-    var(--light) 5rem,
-    var(--light) calc(100% - 5rem),
+    #000 5rem,
+    #000 calc(100% - 5rem),
     transparent 100%
   );
   mask-image: linear-gradient(90deg,
     transparent 0,
-    var(--light) 5rem,
-    var(--light) calc(100% - 5rem),
+    #000 5rem,
+    #000 calc(100% - 5rem),
     transparent 100%
   );
 }
