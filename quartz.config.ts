@@ -45,12 +45,13 @@ const config: QuartzConfig = {
           gray: "#646464",
           darkgray: "#d4d4d4",
           dark: "#ebebec",
-          // Halfway between the brighter light-mode ultramarine and the
-          // earlier desaturated dark-mode blue. Compromise between
-          // legibility and "pop" against the dark background.
-          secondary: "#4861E4",
-          tertiary: "#7B8FED",
-          highlight: "rgba(72, 97, 228, 0.16)",
+          // Same lightness as the original dark-mode blue (#6B82F0,
+          // ~68% L in HSL) but saturated to the max along the blue axis:
+          // hsl(232, 100%, 68%). Reads as deeply ultramarine without
+          // sacrificing the legibility advantage of the lighter shade.
+          secondary: "#5C71FF",
+          tertiary: "#8F9EFF",
+          highlight: "rgba(92, 113, 255, 0.16)",
           textHighlight: "#b3aa0288",
         },
       },

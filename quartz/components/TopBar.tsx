@@ -59,7 +59,10 @@ const css = `
     background: var(--light);
     box-shadow: 0 1px 0 var(--lightgray);
     padding-top: 2px;
-    transition: transform 100ms ease;
+    /* Instant snap. With a non-zero transition, the bar spends time in a
+       partially-translated state — content peeks through above it during
+       the animation. 0ms gives a clean snap. */
+    transition: transform 0ms;
     will-change: transform;
   }
   .page-header > header.top-bar-hidden {
