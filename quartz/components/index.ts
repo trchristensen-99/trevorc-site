@@ -12,8 +12,9 @@ import AudioPlayer from "./AudioPlayer"
 import SortableList from "./SortableList"
 import InlineToc from "./InlineToc"
 import SidebarMenu from "./SidebarMenu"
+import SettingsButton from "./SettingsButton"
 import TopBar from "./TopBar"
-import TopDecor from "./TopDecor"
+import SideDecor from "./SideDecor"
 import BottomDecor from "./BottomDecor"
 import PrevNext from "./PrevNext"
 import Spacer from "./Spacer"
@@ -46,8 +47,9 @@ export {
   SortableList,
   InlineToc,
   SidebarMenu,
+  SettingsButton,
   TopBar,
-  TopDecor,
+  SideDecor,
   BottomDecor,
   PrevNext,
   Spacer,

@@ -60,8 +60,15 @@ const InlineToc: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
   // Only render when there are enough sections to justify a table of contents.
   // For very short pages with one heading, the TOC is more noise than help.
   if (!fileData.toc || fileData.toc.length < 2) return null
+  // Defer to the user's settings toggle for the default open state; per-page
+  // frontmatter expandToc still wins if set.
+  const userPref =
+    typeof document !== "undefined"
+      ? document.documentElement.getAttribute("data-expand-toc") === "true"
+      : false
+  const open = fileData.frontmatter?.expandToc === true || userPref
   return (
-    <details class="inline-toc" open={fileData.frontmatter?.expandToc === true}>
+    <details class="inline-toc" open={open}>
       <summary>Contents</summary>
       <ul>
         {fileData.toc.map((entry) => (

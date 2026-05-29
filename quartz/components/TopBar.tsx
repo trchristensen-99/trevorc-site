@@ -1,6 +1,7 @@
 import PageTitleBuilder from "./PageTitle"
 import SearchBuilder from "./Search"
 import DarkmodeBuilder from "./Darkmode"
+import SettingsButtonBuilder from "./SettingsButton"
 import SidebarMenuBuilder from "./SidebarMenu"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { concatenateResources } from "../util/resources"
@@ -9,6 +10,7 @@ import stickyScript from "./scripts/stickyTopBar.inline"
 const PageTitleInstance = PageTitleBuilder(undefined)
 const SearchInstance = SearchBuilder(undefined)
 const DarkmodeInstance = DarkmodeBuilder(undefined)
+const SettingsButtonInstance = SettingsButtonBuilder(undefined)
 const SidebarMenuInstance = SidebarMenuBuilder(undefined)
 
 const css = `
@@ -59,14 +61,12 @@ const css = `
     background: var(--light);
     box-shadow: 0 1px 0 var(--lightgray);
     padding-top: 2px;
-    /* Instant snap. With a non-zero transition, the bar spends time in a
-       partially-translated state — content peeks through above it during
-       the animation. 0ms gives a clean snap. */
+    /* No transition: the JS sets transform every scroll frame to match the
+       page's own scroll-up rate. With sticky top: -2px and padding-top: 2px
+       the bar tucks slightly above the viewport edge so no sliver of text
+       shows above it during a partial state. */
     transition: transform 0ms;
     will-change: transform;
-  }
-  .page-header > header.top-bar-hidden {
-    transform: translateY(-100%);
   }
   .page-title {
     line-height: 0.95;
@@ -82,6 +82,7 @@ const TopBar: QuartzComponent = (props: QuartzComponentProps) => (
     <div class="top-bar-right">
       <SearchInstance {...props} />
       <DarkmodeInstance {...props} />
+      <SettingsButtonInstance {...props} />
       <SidebarMenuInstance {...props} />
     </div>
   </div>
@@ -92,12 +93,14 @@ TopBar.css = concatenateResources(
   PageTitleInstance.css,
   SearchInstance.css,
   DarkmodeInstance.css,
+  SettingsButtonInstance.css,
   SidebarMenuInstance.css,
 )
 TopBar.afterDOMLoaded = concatenateResources(
   PageTitleInstance.afterDOMLoaded,
   SearchInstance.afterDOMLoaded,
   DarkmodeInstance.afterDOMLoaded,
+  SettingsButtonInstance.afterDOMLoaded,
   SidebarMenuInstance.afterDOMLoaded,
   stickyScript,
 )
@@ -105,6 +108,7 @@ TopBar.beforeDOMLoaded = concatenateResources(
   PageTitleInstance.beforeDOMLoaded,
   SearchInstance.beforeDOMLoaded,
   DarkmodeInstance.beforeDOMLoaded,
+  SettingsButtonInstance.beforeDOMLoaded,
   SidebarMenuInstance.beforeDOMLoaded,
 )
 

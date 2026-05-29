@@ -12,12 +12,70 @@ html {
   margin: 0;
   padding: 0;
   // Bump base font-size so all rem-sized text reads a couple of steps
-  // larger across the site.
+  // larger across the site. Overridden inline by the settings zoom option.
   font-size: 18px;
 
   @media all and ($mobile) {
     scroll-padding-top: 4rem;
   }
+}
+
+/* ----- Settings-driven theme overrides ----- */
+
+/* Default (blue) palette tint: backgrounds slightly blue-shifted so they
+   read as a cohesive set with the ultramarine accent. */
+:root[data-color-theme="blue"][saved-theme="light"] {
+  --light: #f6f7fb;
+  --lightgray: #e2e6ef;
+  --dark: #1a1d27;
+}
+:root[data-color-theme="blue"][saved-theme="dark"] {
+  --light: #14161e;
+  --lightgray: #2a2e3a;
+  --dark: #ebebec;
+}
+
+/* Red palette: stark white/black backgrounds and a deep red accent that
+   mirrors the ultramarine on the opposite end of the wheel. */
+:root[data-color-theme="red"][saved-theme="light"] {
+  --light: #ffffff;
+  --lightgray: #ececec;
+  --gray: #b8b8b8;
+  --darkgray: #4e4e4e;
+  --dark: #111111;
+  --secondary: #C8002A;
+  --tertiary: #E03A57;
+  --highlight: rgba(200, 0, 42, 0.10);
+  --textHighlight: #fff23688;
+}
+:root[data-color-theme="red"][saved-theme="dark"] {
+  --light: #000000;
+  --lightgray: #1f1f1f;
+  --gray: #6a6a6a;
+  --darkgray: #cccccc;
+  --dark: #f5f5f5;
+  --secondary: #FF5C75;
+  --tertiary: #FF8FA0;
+  --highlight: rgba(255, 92, 117, 0.16);
+  --textHighlight: #b3aa0288;
+}
+
+/* User-toggleable layout settings. */
+html[data-show-breadcrumbs="false"] .breadcrumb-container { display: none; }
+html[data-compact-mode="true"] {
+  --page-vertical: 0.25rem;
+}
+html[data-compact-mode="true"] .article-title { margin: 0.25rem 0 0.25rem; }
+html[data-compact-mode="true"] .content-meta-block { margin: 0; }
+html[data-decor="none"] .side-decor,
+html[data-decor="none"] .bottom-decor { display: none; }
+html[data-decor-fade="true"] .side-decor.left {
+  -webkit-mask-image: linear-gradient(90deg, var(--lightgray) 0%, transparent 100%);
+  mask-image: linear-gradient(90deg, var(--lightgray) 0%, transparent 100%);
+}
+html[data-decor-fade="true"] .side-decor.right {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, var(--lightgray) 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, var(--lightgray) 100%);
 }
 
 body {

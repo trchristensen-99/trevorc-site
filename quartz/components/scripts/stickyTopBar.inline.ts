@@ -1,19 +1,14 @@
-// Mobile-only sticky top bar. Binary state (fully visible / fully hidden)
-// with a CSS transition for the animation. Binary state is the only way to
-// keep the bar flush with the top of the viewport — any partial transform
-// leaves a gap above the bar where scrolling content shows through.
+// Mobile-only sticky top bar with proportional reveal: each px of scroll up
+// reveals 1 px of bar. After scrolling up by the bar's own height, the bar
+// is fully visible. Same logic on scroll-down. The bar's CSS uses top: -2px
+// and padding-top: 2px so its background extends past the viewport edge —
+// no sliver of text shows above it during partial states.
 const MOBILE_MQ = "(max-width: 700px)"
 const ALWAYS_SHOW_BELOW = 1
-const REVEAL_THRESHOLD = 0 // any scroll-up reveals
-const HIDE_THRESHOLD = 6 // px scroll-down before hiding
 
 let lastY = 0
+let barOffset = 0
 let ticking = false
-
-function setHidden(h: HTMLElement, hidden: boolean) {
-  if (hidden) h.classList.add("top-bar-hidden")
-  else h.classList.remove("top-bar-hidden")
-}
 
 function update() {
   try {
@@ -28,18 +23,16 @@ function update() {
 
     headers.forEach((h) => {
       if (!mq.matches) {
-        setHidden(h, false)
+        h.style.transform = ""
         return
       }
       const barHeight = h.offsetHeight || 50
       if (y < ALWAYS_SHOW_BELOW) {
-        setHidden(h, false)
-      } else if (dy < 0) {
-        // Any scroll up at all reveals the bar immediately.
-        setHidden(h, false)
-      } else if (dy > HIDE_THRESHOLD && y > barHeight) {
-        setHidden(h, true)
+        barOffset = 0
+      } else {
+        barOffset = Math.max(-barHeight, Math.min(0, barOffset - dy))
       }
+      h.style.transform = `translateY(${barOffset}px)`
     })
 
     lastY = y
@@ -58,6 +51,7 @@ function onScroll() {
 function init() {
   try {
     lastY = window.scrollY
+    barOffset = 0
     window.addEventListener("scroll", onScroll, { passive: true })
     if (typeof window.addCleanup === "function") {
       window.addCleanup(() => window.removeEventListener("scroll", onScroll))
