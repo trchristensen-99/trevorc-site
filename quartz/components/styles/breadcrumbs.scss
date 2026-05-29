@@ -31,6 +31,11 @@
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
 }
+/* The remaximization glyph (❯) has more ink near its top, so push it down
+   a touch with extra top padding so it reads as visually centered. */
+.breadcrumb-show {
+  padding: 0.2rem 0.35rem 0.04rem;
+}
 .breadcrumb-toggle:hover {
   color: var(--secondary);
   border-color: var(--secondary);

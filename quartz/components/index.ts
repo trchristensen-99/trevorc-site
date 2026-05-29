@@ -14,8 +14,6 @@ import InlineToc from "./InlineToc"
 import SidebarMenu from "./SidebarMenu"
 import SettingsButton from "./SettingsButton"
 import TopBar from "./TopBar"
-import SideDecor from "./SideDecor"
-import BottomDecor from "./BottomDecor"
 import PrevNext from "./PrevNext"
 import Spacer from "./Spacer"
 import TableOfContents from "./TableOfContents"
@@ -49,8 +47,6 @@ export {
   SidebarMenu,
   SettingsButton,
   TopBar,
-  SideDecor,
-  BottomDecor,
   PrevNext,
   Spacer,
   TableOfContents,

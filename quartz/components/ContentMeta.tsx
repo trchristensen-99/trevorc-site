@@ -94,7 +94,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
 
       if (!modified || sameDay) {
         segments.push(
-          <span>
+          <span class="meta-date">
             {labelLink(labelHref("date"), "Published")}{" "}
             {valueLink(
               valueHref("created", "desc"),
@@ -104,7 +104,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
         )
       } else {
         segments.push(
-          <span>
+          <span class="meta-date">
             {labelLink(labelHref("date"), "Published")}{" "}
             {valueLink(
               valueHref("created", "desc"),
@@ -113,7 +113,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
           </span>,
         )
         segments.push(
-          <span>
+          <span class="meta-modified">
             {labelLink(labelHref("modified"), "Updated")}{" "}
             {valueLink(
               valueHref("modified", "desc"),
@@ -128,7 +128,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       const { minutes } = readingTime(text)
       const min = Math.ceil(minutes)
       segments.push(
-        <span>
+        <span class="meta-reading">
           {valueLink(valueHref("reading", "asc"), `${min} min`)}{" "}
           {labelLink(labelHref("reading-time"), "read")}
         </span>,

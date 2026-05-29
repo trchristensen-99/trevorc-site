@@ -34,7 +34,10 @@ const css = `
 .top-bar-right {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+.top-bar-right > * {
   flex-shrink: 0;
 }
 
@@ -44,10 +47,10 @@ const css = `
    away normally with the page. */
 @media (max-width: 700px) {
   .top-bar {
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
   .top-bar-right {
-    gap: 0.9rem;
+    gap: 0.55rem;
   }
 }
 @media (max-width: 700px) {

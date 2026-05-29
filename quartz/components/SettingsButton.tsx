@@ -27,11 +27,11 @@ const css = `
 
 .settings-panel {
   position: fixed;
-  top: 4rem;
+  top: 3.25rem;
   right: 1rem;
   z-index: 100;
   width: min(22rem, calc(100vw - 2rem));
-  max-height: calc(100vh - 6rem);
+  max-height: calc(100vh - 5rem);
   overflow-y: auto;
   background: var(--light);
   border: 1px solid var(--lightgray);
@@ -44,12 +44,13 @@ const css = `
 .settings-panel[data-open="true"] { display: block; }
 .settings-panel h3 {
   font-size: 0.95em;
-  margin: 0 0 0.4rem;
+  margin: 0.75rem 0 0.4rem;
   color: var(--darkgray);
   font-weight: 600;
 }
+.settings-panel h3:first-of-type { margin-top: 0; }
 .settings-panel .settings-row {
-  margin: 0.5rem 0 0.85rem;
+  margin: 0.35rem 0 0.5rem;
 }
 .settings-panel label {
   display: flex;
@@ -57,8 +58,7 @@ const css = `
   gap: 0.5rem;
   margin: 0.25rem 0;
 }
-.settings-panel select,
-.settings-panel input[type="range"] {
+.settings-panel select {
   background: transparent;
   border: 1px solid var(--gray);
   border-radius: 4px;
@@ -70,6 +70,7 @@ const css = `
 .settings-panel input[type="checkbox"] {
   transform: none;
   margin: 0;
+  vertical-align: middle;
 }
 .settings-panel-row {
   display: flex;
@@ -85,13 +86,37 @@ const css = `
   width: 1.6rem;
   height: 1.6rem;
   border-radius: 50%;
-  background: var(--secondary);
   border: 2px solid var(--lightgray);
   cursor: pointer;
   flex-shrink: 0;
+  background-color: #C8002A; /* shows the OPPOSITE — clicking flips to red */
 }
+:root[data-color-theme="red"] .settings-pill {
+  background-color: #2640D8; /* clicking flips back to blue */
+}
+
+.settings-sub {
+  margin-top: 0.25rem;
+  padding-left: 0.25rem;
+  border-left: 2px solid var(--lightgray);
+}
+.settings-sub > summary {
+  cursor: pointer;
+  list-style: none;
+  color: var(--darkgray);
+  padding: 0.15rem 0;
+  outline: none;
+}
+.settings-sub > summary::-webkit-details-marker { display: none; }
+.settings-sub > summary::after {
+  content: " ▸";
+  color: var(--gray);
+  font-size: 0.85em;
+}
+.settings-sub[open] > summary::after { content: " ▾"; }
+
 .settings-reset {
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
   padding: 0.35rem 0.6rem;
   background: transparent;
   border: 1px solid var(--gray);
@@ -133,29 +158,21 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
     <div class="settings-panel" id="settings-panel" data-open="false" role="dialog" aria-label="Site settings">
       <h3>Theme</h3>
       <div class="settings-panel-row">
-        <label>
-          <span>Accent color</span>
-        </label>
-        <button type="button" class="settings-pill" data-setting="color-theme-toggle" aria-label="Toggle accent color (blue / red)"></button>
-      </div>
-      <div class="settings-row">
-        <label>
-          <input type="checkbox" data-setting="dark-mode" />
-          <span>Dark mode</span>
-        </label>
+        <span>Accent color</span>
+        <button type="button" class="settings-pill" data-setting="color-theme-toggle" aria-label="Switch accent color (blue / red)"></button>
       </div>
       <h3>Layout</h3>
       <div class="settings-row">
         <label>
-          <input type="checkbox" data-setting="show-breadcrumbs" />
+          <input type="checkbox" data-setting="showBreadcrumbs" />
           <span>Show breadcrumbs</span>
         </label>
         <label>
-          <input type="checkbox" data-setting="expand-toc" />
+          <input type="checkbox" data-setting="expandToc" />
           <span>Expand table of contents by default</span>
         </label>
         <label>
-          <input type="checkbox" data-setting="compact-mode" />
+          <input type="checkbox" data-setting="compactMode" />
           <span>Compact spacing</span>
         </label>
       </div>
@@ -164,27 +181,37 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
         <label>
           <span>Zoom</span>
           <select data-setting="zoom">
-            <option value="0.85">85%</option>
-            <option value="0.95">95%</option>
+            <option value="0.75">75%</option>
             <option value="1" selected>100%</option>
-            <option value="1.1">110%</option>
-            <option value="1.25">125%</option>
             <option value="1.5">150%</option>
+            <option value="2">200%</option>
           </select>
         </label>
       </div>
+      <h3>Metadata</h3>
+      <details class="settings-sub">
+        <summary>Which fields appear under titles</summary>
+        <div class="settings-row">
+          <label><input type="checkbox" data-setting="metaDate" /><span>Published date</span></label>
+          <label><input type="checkbox" data-setting="metaModified" /><span>Updated date</span></label>
+          <label><input type="checkbox" data-setting="metaReading" /><span>Reading time</span></label>
+          <label><input type="checkbox" data-setting="metaImportance" /><span>Importance</span></label>
+          <label><input type="checkbox" data-setting="metaAudio" /><span>Audio narration icon</span></label>
+          <label><input type="checkbox" data-setting="metaTags" /><span>Tags</span></label>
+        </div>
+      </details>
       <h3>Decoration</h3>
       <div class="settings-row">
         <label>
-          <span>Side / bottom art</span>
+          <span>Background art</span>
           <select data-setting="decor">
             <option value="placeholder">Placeholder grid</option>
             <option value="none">None</option>
           </select>
         </label>
         <label>
-          <input type="checkbox" data-setting="decor-fade" />
-          <span>Fade edges of side art</span>
+          <input type="checkbox" data-setting="decorFade" />
+          <span>Fade inner edge of side art</span>
         </label>
       </div>
       <button type="button" class="settings-reset" data-setting="reset">

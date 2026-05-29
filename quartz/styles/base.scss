@@ -20,6 +20,24 @@ html {
   }
 }
 
+/* ----- Zoom safety: prevent long tokens and oversized headings from
+   bursting the layout when the user picks a large zoom. ----- */
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: anywhere;
+  word-break: normal;
+  max-width: 100%;
+}
+.page-title,
+.breadcrumb-element a,
+.meta-value-link,
+.meta-label-link {
+  overflow-wrap: anywhere;
+}
+.top-bar {
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+}
+
 /* ----- Settings-driven theme overrides ----- */
 
 /* Default (blue) palette tint: backgrounds slightly blue-shifted so they
@@ -67,15 +85,15 @@ html[data-compact-mode="true"] {
 }
 html[data-compact-mode="true"] .article-title { margin: 0.25rem 0 0.25rem; }
 html[data-compact-mode="true"] .content-meta-block { margin: 0; }
-html[data-decor="none"] .side-decor,
-html[data-decor="none"] .bottom-decor { display: none; }
-html[data-decor-fade="true"] .side-decor.left {
-  -webkit-mask-image: linear-gradient(90deg, var(--lightgray) 0%, transparent 100%);
-  mask-image: linear-gradient(90deg, var(--lightgray) 0%, transparent 100%);
-}
-html[data-decor-fade="true"] .side-decor.right {
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, var(--lightgray) 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, var(--lightgray) 100%);
+/* Metadata visibility settings: each metadata field has a class that the
+   user can toggle off via the settings panel. */
+html[data-meta-date="false"] .meta-date,
+html[data-meta-modified="false"] .meta-modified,
+html[data-meta-reading="false"] .meta-reading,
+html[data-meta-importance="false"] .meta-importance,
+html[data-meta-audio="false"] .meta-audio,
+html[data-meta-tags="false"] .meta-tags {
+  display: none !important;
 }
 
 body {
@@ -84,6 +102,37 @@ body {
   background-color: var(--light);
   font-family: var(--bodyFont);
   color: var(--darkgray);
+}
+
+/* ----- Decor background (single image around the content column) ----- */
+/* The body paints the decor pattern; the .page block sits on top with a
+   solid background, so the decor is visible only outside the content
+   column (sides + below content when scrolled to the bottom). The result
+   is a single continuous frame around the content. */
+html[data-decor="placeholder"] body {
+  background-color: var(--lightgray);
+  background-image:
+    linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(0,0,0,0.06) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+html[data-decor="none"] body {
+  background-color: var(--light);
+  background-image: none;
+}
+html[data-decor-fade="true"] body {
+  -webkit-mask-image: linear-gradient(90deg,
+    transparent 0,
+    var(--light) 5rem,
+    var(--light) calc(100% - 5rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(90deg,
+    transparent 0,
+    var(--light) 5rem,
+    var(--light) calc(100% - 5rem),
+    transparent 100%
+  );
 }
 
 .text-highlight {
@@ -223,9 +272,12 @@ a {
 }
 
 .page {
-  // No outer cap; the only width constraint is the article max-width below.
-  // Outer margins grow with viewport once the article hits its cap.
-  max-width: none;
+  // The .page block carries the solid content background so the decor
+  // pattern on body is visible only in the margins. Capped slightly wider
+  // than the article column so there's a small rim of content background
+  // around the article before the decor starts.
+  max-width: calc(87ch + 3rem);
+  background-color: var(--light);
   margin: 0 auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;

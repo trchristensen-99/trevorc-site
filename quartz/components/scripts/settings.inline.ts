@@ -1,27 +1,38 @@
-// Settings panel: toggles, saved to localStorage, applied via data-attributes
-// on the documentElement. Other CSS / scripts read those attributes to
-// adjust appearance and behavior.
+// Settings panel: toggles saved to localStorage and applied via data-*
+// attributes on the documentElement. CSS reads those attributes to adjust
+// appearance and behavior. Dark mode lives outside this panel (its own
+// sun/moon button next to the gear); we don't double up here.
 
 interface Settings {
   colorTheme: "blue" | "red"
-  darkMode: boolean
   showBreadcrumbs: boolean
   expandToc: boolean
   compactMode: boolean
   zoom: number
   decor: "placeholder" | "none"
   decorFade: boolean
+  metaDate: boolean
+  metaModified: boolean
+  metaReading: boolean
+  metaImportance: boolean
+  metaAudio: boolean
+  metaTags: boolean
 }
 
 const DEFAULTS: Settings = {
   colorTheme: "blue",
-  darkMode: false,
   showBreadcrumbs: true,
   expandToc: false,
   compactMode: false,
   zoom: 1,
   decor: "placeholder",
   decorFade: false,
+  metaDate: true,
+  metaModified: true,
+  metaReading: true,
+  metaImportance: true,
+  metaAudio: true,
+  metaTags: true,
 }
 
 const KEY = "trevorc-settings-v1"
@@ -48,41 +59,42 @@ function write(s: Settings) {
 function apply(s: Settings) {
   const root = document.documentElement
   root.setAttribute("data-color-theme", s.colorTheme)
-  root.setAttribute("saved-theme", s.darkMode ? "dark" : "light")
   root.setAttribute("data-show-breadcrumbs", s.showBreadcrumbs ? "true" : "false")
   root.setAttribute("data-expand-toc", s.expandToc ? "true" : "false")
   root.setAttribute("data-compact-mode", s.compactMode ? "true" : "false")
   root.setAttribute("data-decor", s.decor)
   root.setAttribute("data-decor-fade", s.decorFade ? "true" : "false")
+  root.setAttribute("data-meta-date", s.metaDate ? "true" : "false")
+  root.setAttribute("data-meta-modified", s.metaModified ? "true" : "false")
+  root.setAttribute("data-meta-reading", s.metaReading ? "true" : "false")
+  root.setAttribute("data-meta-importance", s.metaImportance ? "true" : "false")
+  root.setAttribute("data-meta-audio", s.metaAudio ? "true" : "false")
+  root.setAttribute("data-meta-tags", s.metaTags ? "true" : "false")
+  // Zoom scales the base font-size from 18px.
   root.style.fontSize = `${18 * s.zoom}px`
-  try {
-    localStorage.setItem("theme", s.darkMode ? "dark" : "light")
-  } catch {
-    /* swallow */
-  }
+
+  // Apply the expand-toc setting to all <details.inline-toc> that haven't
+  // been touched by the user this session.
+  document
+    .querySelectorAll<HTMLDetailsElement>("details.inline-toc")
+    .forEach((d) => {
+      if (d.dataset.userToggled !== "true") d.open = s.expandToc
+    })
 }
 
 function reflectIntoPanel(s: Settings, panel: HTMLElement) {
-  const inputs = panel.querySelectorAll<HTMLInputElement>("input[data-setting]")
-  inputs.forEach((i) => {
-    const key = i.getAttribute("data-setting") as keyof Settings | "reset"
-    if (key === "reset") return
+  panel.querySelectorAll<HTMLInputElement>("input[data-setting]").forEach((i) => {
+    const key = i.getAttribute("data-setting")
+    if (!key || key === "reset") return
     if (i.type === "checkbox") {
-      i.checked = Boolean(s[key as keyof Settings])
+      const v = (s as unknown as Record<string, unknown>)[key]
+      i.checked = Boolean(v)
     }
   })
-  const selects = panel.querySelectorAll<HTMLSelectElement>("select[data-setting]")
-  selects.forEach((sel) => {
+  panel.querySelectorAll<HTMLSelectElement>("select[data-setting]").forEach((sel) => {
     const key = sel.getAttribute("data-setting") as keyof Settings
     sel.value = String(s[key])
   })
-  const pill = panel.querySelector<HTMLButtonElement>(".settings-pill")
-  if (pill) {
-    // Pill shows the *opposite* of current — clicking switches.
-    const opposite = s.colorTheme === "blue" ? "red" : "blue"
-    pill.style.background =
-      opposite === "blue" ? "var(--accent-blue, #2640D8)" : "var(--accent-red, #C8002A)"
-  }
 }
 
 function attach() {
@@ -102,14 +114,11 @@ function attach() {
     panel.setAttribute("data-open", "false")
     btn.setAttribute("aria-expanded", "false")
   }
-  const toggle = () => {
-    if (panel.getAttribute("data-open") === "true") close()
-    else open()
-  }
 
   btn.addEventListener("click", (e) => {
     e.stopPropagation()
-    toggle()
+    if (panel.getAttribute("data-open") === "true") close()
+    else open()
   })
   document.addEventListener("click", (e) => {
     if (panel.getAttribute("data-open") !== "true") return
@@ -122,37 +131,45 @@ function attach() {
     if (e.key === "Escape") close()
   })
 
+  // Track explicit user toggles on TOC <details> so settings.expandToc only
+  // controls untouched ones.
+  document.querySelectorAll<HTMLDetailsElement>("details.inline-toc").forEach((d) => {
+    d.addEventListener("toggle", () => {
+      d.dataset.userToggled = "true"
+    })
+  })
+
   panel.querySelectorAll<HTMLInputElement>("input[data-setting]").forEach((i) => {
-    const key = i.getAttribute("data-setting") as keyof Settings | "reset"
-    if (key === "reset") return
+    const key = i.getAttribute("data-setting")
+    if (!key || key === "reset") return
     i.addEventListener("change", () => {
       if (i.type === "checkbox") {
-        ;(state as Record<string, unknown>)[key] = i.checked
+        ;(state as unknown as Record<string, unknown>)[key] = i.checked
       }
       write(state)
       apply(state)
-      reflectIntoPanel(state, panel)
     })
   })
 
   panel.querySelectorAll<HTMLSelectElement>("select[data-setting]").forEach((sel) => {
     const key = sel.getAttribute("data-setting") as keyof Settings
     sel.addEventListener("change", () => {
-      const v: string | number = sel.value
-      ;(state as Record<string, unknown>)[key] =
-        key === "zoom" ? parseFloat(v as string) : v
+      const v: string = sel.value
+      ;(state as unknown as Record<string, unknown>)[key] =
+        key === "zoom" ? parseFloat(v) : v
       write(state)
       apply(state)
     })
   })
 
-  const pill = panel.querySelector<HTMLButtonElement>(".settings-pill")
-  pill?.addEventListener("click", () => {
-    state.colorTheme = state.colorTheme === "blue" ? "red" : "blue"
-    write(state)
-    apply(state)
-    reflectIntoPanel(state, panel)
-  })
+  panel.querySelector<HTMLButtonElement>("[data-setting='color-theme-toggle']")?.addEventListener(
+    "click",
+    () => {
+      state.colorTheme = state.colorTheme === "blue" ? "red" : "blue"
+      write(state)
+      apply(state)
+    },
+  )
 
   panel.querySelector<HTMLButtonElement>("[data-setting='reset']")?.addEventListener(
     "click",
@@ -165,7 +182,6 @@ function attach() {
   )
 }
 
-// Apply settings immediately so the initial paint has the right theme.
 try {
   apply(read())
 } catch {
