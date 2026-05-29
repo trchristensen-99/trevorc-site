@@ -4,8 +4,8 @@ import * as Component from "./quartz/components"
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
-  header: [Component.TopBar()],
-  afterBody: [Component.PrevNext(), Component.Backlinks()],
+  header: [Component.TopDecor(), Component.TopBar()],
+  afterBody: [Component.PrevNext(), Component.Backlinks(), Component.BottomDecor()],
   footer: Component.Footer({
     links: {},
     hide: true,
@@ -33,3 +33,4 @@ export const defaultListPageLayout: PageLayout = {
   left: [],
   right: [],
 }
+
