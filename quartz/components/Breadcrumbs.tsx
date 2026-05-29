@@ -80,8 +80,12 @@ export default ((opts?: Partial<BreadcrumbOptions>) => {
         const part = cleanedParts[i]
         const isLast = i === cleanedParts.length - 1
         const partSlug = cleanedParts.slice(0, i + 1).join("/") as SimpleSlug
+        // Capitalize the first letter to match how the trie-backed crumbs
+        // are formatted from frontmatter titles.
+        const cleaned = part.replaceAll("-", " ")
+        const display = cleaned.charAt(0).toUpperCase() + cleaned.slice(1)
         crumbs.push({
-          displayName: part.replaceAll("-", " "),
+          displayName: display,
           path: isLast ? "" : resolveRelative(fileData.slug!, partSlug),
         })
       }

@@ -51,30 +51,22 @@ const css = `
 @media (max-width: 700px) {
   .page-header > header {
     position: sticky;
-    top: 0;
+    /* Top set slightly above viewport so the bar's padding extends past the
+       very top edge — eliminates the thin gap where text could peek through
+       above the bar during the show/hide transition. */
+    top: -2px;
     z-index: 80;
     background: var(--light);
     box-shadow: 0 1px 0 var(--lightgray);
-    transition: transform 200ms ease;
+    padding-top: 2px;
+    transition: transform 100ms ease;
     will-change: transform;
   }
   .page-header > header.top-bar-hidden {
     transform: translateY(-100%);
   }
-  /* Pull the whole top section up aggressively on mobile so the URL bar
-     isn't separated from the title by visible whitespace. */
-  .page-header {
-    margin-top: -0.8rem;
-  }
   .page-title {
     line-height: 0.95;
-  }
-  .nav-menu-toggle,
-  .audio-player-launch,
-  .search > .search-button,
-  .darkmode {
-    height: 1.75rem !important;
-    min-height: 1.75rem;
   }
 }
 `

@@ -45,11 +45,12 @@ const config: QuartzConfig = {
           gray: "#646464",
           darkgray: "#d4d4d4",
           dark: "#ebebec",
-          // Same ultramarine as light mode — slightly less legible against
-          // a dark background but pops more, which is the look we want.
-          secondary: "#2640D8",
-          tertiary: "#5a72E6",
-          highlight: "rgba(38, 64, 216, 0.16)",
+          // Halfway between the brighter light-mode ultramarine and the
+          // earlier desaturated dark-mode blue. Compromise between
+          // legibility and "pop" against the dark background.
+          secondary: "#4861E4",
+          tertiary: "#7B8FED",
+          highlight: "rgba(72, 97, 228, 0.16)",
           textHighlight: "#b3aa0288",
         },
       },

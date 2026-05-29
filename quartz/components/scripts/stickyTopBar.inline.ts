@@ -4,8 +4,8 @@
 // leaves a gap above the bar where scrolling content shows through.
 const MOBILE_MQ = "(max-width: 700px)"
 const ALWAYS_SHOW_BELOW = 1
-const REVEAL_THRESHOLD = 2 // px scroll-up before revealing
-const HIDE_THRESHOLD = 4 // px scroll-down before hiding
+const REVEAL_THRESHOLD = 0 // any scroll-up reveals
+const HIDE_THRESHOLD = 6 // px scroll-down before hiding
 
 let lastY = 0
 let ticking = false
@@ -34,7 +34,8 @@ function update() {
       const barHeight = h.offsetHeight || 50
       if (y < ALWAYS_SHOW_BELOW) {
         setHidden(h, false)
-      } else if (dy < -REVEAL_THRESHOLD) {
+      } else if (dy < 0) {
+        // Any scroll up at all reveals the bar immediately.
         setHidden(h, false)
       } else if (dy > HIDE_THRESHOLD && y > barHeight) {
         setHidden(h, true)
