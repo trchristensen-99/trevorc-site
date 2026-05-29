@@ -23,11 +23,12 @@ PageTitle.css = `
   font-weight: 700;
 }
 .page-title a {
-  color: inherit;
+  /* Site title is always ultramarine, in both light and dark modes. */
+  color: var(--secondary);
   text-decoration: none;
 }
 .page-title a:hover {
-  color: var(--secondary);
+  color: var(--tertiary);
 }
 @media (max-width: 700px) {
   .page-title {

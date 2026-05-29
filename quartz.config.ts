@@ -45,10 +45,11 @@ const config: QuartzConfig = {
           gray: "#646464",
           darkgray: "#d4d4d4",
           dark: "#ebebec",
-          // Slightly desaturated for legibility on dark backgrounds.
-          secondary: "#6B82F0",
-          tertiary: "#9CABF5",
-          highlight: "rgba(107, 130, 240, 0.16)",
+          // Same ultramarine as light mode — slightly less legible against
+          // a dark background but pops more, which is the look we want.
+          secondary: "#2640D8",
+          tertiary: "#5a72E6",
+          highlight: "rgba(38, 64, 216, 0.16)",
           textHighlight: "#b3aa0288",
         },
       },

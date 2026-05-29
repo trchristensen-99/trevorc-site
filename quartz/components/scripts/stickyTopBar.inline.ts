@@ -1,12 +1,19 @@
-// Mobile-only sticky top bar with proportional reveal: as the user scrolls
-// up, the bar slides down at the same rate, as if it were the next element
-// in line above the page. Scrolling down hides it at the same rate.
+// Mobile-only sticky top bar. Binary state (fully visible / fully hidden)
+// with a CSS transition for the animation. Binary state is the only way to
+// keep the bar flush with the top of the viewport — any partial transform
+// leaves a gap above the bar where scrolling content shows through.
 const MOBILE_MQ = "(max-width: 700px)"
-const ALWAYS_SHOW_BELOW = 5 // px scrolled past top: above this, allow hide
+const ALWAYS_SHOW_BELOW = 1
+const REVEAL_THRESHOLD = 2 // px scroll-up before revealing
+const HIDE_THRESHOLD = 4 // px scroll-down before hiding
 
 let lastY = 0
-let barOffset = 0 // current translateY in px (range: [-barHeight, 0])
 let ticking = false
+
+function setHidden(h: HTMLElement, hidden: boolean) {
+  if (hidden) h.classList.add("top-bar-hidden")
+  else h.classList.remove("top-bar-hidden")
+}
 
 function update() {
   try {
@@ -21,26 +28,22 @@ function update() {
 
     headers.forEach((h) => {
       if (!mq.matches) {
-        h.style.transform = ""
+        setHidden(h, false)
         return
       }
       const barHeight = h.offsetHeight || 50
-
       if (y < ALWAYS_SHOW_BELOW) {
-        barOffset = 0
-      } else if (dy < 0) {
-        // Scrolling up: snap fully visible. The bar drops down right away.
-        barOffset = 0
-      } else if (dy > 0) {
-        // Scrolling down: hide at scroll rate.
-        barOffset = Math.max(-barHeight, barOffset - dy)
+        setHidden(h, false)
+      } else if (dy < -REVEAL_THRESHOLD) {
+        setHidden(h, false)
+      } else if (dy > HIDE_THRESHOLD && y > barHeight) {
+        setHidden(h, true)
       }
-      h.style.transform = `translateY(${barOffset}px)`
     })
 
     lastY = y
   } catch (_e) {
-    // Defensive: don't let a scroll-handler error break other scripts.
+    /* swallow */
   }
   ticking = false
 }
@@ -54,7 +57,6 @@ function onScroll() {
 function init() {
   try {
     lastY = window.scrollY
-    barOffset = 0
     window.addEventListener("scroll", onScroll, { passive: true })
     if (typeof window.addCleanup === "function") {
       window.addCleanup(() => window.removeEventListener("scroll", onScroll))

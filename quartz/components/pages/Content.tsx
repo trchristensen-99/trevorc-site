@@ -127,9 +127,27 @@ const Content: QuartzComponent = (props: QuartzComponentProps) => {
     })
     const hasTagsIndex = pages.some((p) => p.slug === "tags")
     if (!hasTagsIndex) {
+      // Synthesize the Tags page row with aggregated dates (earliest
+      // 'created' and latest 'modified' across every tagged page), matching
+      // what the TagPage emitter does for the rendered /tags page itself.
+      const tagged = allFiles.filter(
+        (f) => ((f.frontmatter?.tags as string[] | undefined) ?? []).length > 0,
+      )
+      let earliest: Date | undefined
+      let latest: Date | undefined
+      for (const f of tagged) {
+        const c = f.dates?.created
+        const m = f.dates?.modified
+        if (c && (!earliest || c.getTime() < earliest.getTime())) earliest = c
+        if (m && (!latest || m.getTime() > latest.getTime())) latest = m
+      }
+      const created = earliest ?? latest
+      const modified = latest ?? earliest
       pages.push({
         slug: "tags" as FullSlug,
-        frontmatter: { title: "Tags", tags: [] },
+        frontmatter: { title: "Tags", tags: ["meta"] },
+        dates: created && modified ? { created, modified, published: created } : undefined,
+        text: " ",
       } as QuartzPluginData)
     }
     appended = <SortableListInstance {...props} pages={pages} />
