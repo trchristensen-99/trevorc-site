@@ -96,8 +96,11 @@ const css = `
 }
 
 /* Pill swatch (capsule shape) — the alternate-accent toggle. Lives in
-   the bottom-right of the panel next to the reset button. Always
-   visible so the affordance is discoverable; brightens on hover. */
+   the bottom-right of the panel footer next to the reset button.
+   Invisible (opacity: 0) until hovered; in red mode the (blue) pill is
+   always visible so the user can switch back. Because the pill sits in
+   its own flex slot, nothing overlaps its click target — so hovering
+   its location reveals it reliably. */
 .settings-footer {
   margin-top: 0.65rem;
   display: flex;
@@ -113,7 +116,7 @@ const css = `
   cursor: pointer;
   background-color: #C8002A;
   padding: 0;
-  opacity: 0.6;
+  opacity: 0;
   transition: opacity 0.15s ease;
   flex-shrink: 0;
 }
