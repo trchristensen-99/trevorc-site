@@ -14,24 +14,22 @@ const SettingsButtonInstance = SettingsButtonBuilder(undefined)
 const SidebarMenuInstance = SidebarMenuBuilder(undefined)
 
 const css = `
-/* Top-bar size is locked to a fixed font-size so the gear/search/
-   darkmode/menu icons stay the same physical size regardless of the
-   user's text-zoom setting. Internal sizes below use em (relative to
-   this font-size) so changes here cascade. The article body still
-   zooms — only the navigation chrome stays put. */
+/* All four buttons in the top bar (search, darkmode, settings,
+   hamburger) are pinned to the same absolute pixel size so they don't
+   drift apart and don't scale with the user's text zoom. */
 .top-bar {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.75rem;
   width: 100%;
   max-width: 87ch;
   margin: 0 auto;
-  font-size: 1rem;
-  /* Small inset so the title and button row don't sit flush against
-     the .page padding's edge. */
-  padding: 0 0.35em;
+  /* Vertical padding gives a sliver of whitespace above and below the
+     button row. Horizontal padding keeps the title and buttons off the
+     bar's hard edge. */
+  padding: 0.45rem 0.5rem;
 }
 .top-bar-left {
   flex-shrink: 1;
@@ -40,43 +38,44 @@ const css = `
 .top-bar-right {
   display: flex;
   align-items: center;
-  gap: 0.6em;
+  gap: 0.55rem;
   flex-shrink: 0;
-  /* A touch of breathing room on either side of the button row. */
-  padding: 0 0.25em;
+  padding: 0 0.25rem;
 }
 .top-bar-right > * {
   flex-shrink: 0;
 }
 
-/* Cap the top-bar's font-size so the controls don't grow at high text
-   zoom. At default 1x = 18px the top-bar is 18px. At 2x text zoom the
-   surrounding html is 36px but the top-bar stays capped at 22px, so
-   the icons stay legible without blowing up the layout. */
-.top-bar {
-  font-size: min(1rem, 22px);
+/* Unified button size inside the top bar. The search button uses the
+   same height; its width grows with its text/icon content. */
+.top-bar .darkmode,
+.top-bar .settings-button,
+.top-bar .nav-menu-toggle,
+.top-bar .search > .search-button {
+  height: 38px;
+  box-sizing: border-box;
 }
-
-/* Lock the icon controls inside the top-bar to em units so they scale
-   with the top-bar's capped font-size (above), not the document font.
-   These overrides apply only inside .top-bar; outside the top bar each
-   component keeps its rem-based sizing. */
 .top-bar .darkmode,
 .top-bar .settings-button,
 .top-bar .nav-menu-toggle {
-  width: 2em;
-  height: 2em;
-  padding: 0.35em;
+  width: 38px;
+  padding: 7px;
 }
 .top-bar .darkmode svg,
 .top-bar .settings-button svg,
 .top-bar .nav-menu-toggle svg {
-  width: 1.1em;
-  height: 1.1em;
+  width: 22px;
+  height: 22px;
 }
 .top-bar .search > .search-button {
-  height: 2em;
-  font-size: 1em;
+  font-size: 14px;
+  padding: 0 12px 0 0;
+}
+.top-bar .search > .search-button svg {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  margin: 0 8px;
 }
 
 .page-title {
@@ -88,10 +87,11 @@ const css = `
 
 @media (max-width: 700px) {
   .top-bar {
-    gap: 0.4em;
+    gap: 0.4rem;
+    padding: 0.45rem 0.4rem;
   }
   .top-bar-right {
-    gap: 0.55em;
+    gap: 0.45rem;
   }
   .page-title {
     line-height: 0.95;
