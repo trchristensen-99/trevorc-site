@@ -54,7 +54,7 @@ const css = `
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  margin: 0.32rem 0;
+  margin: 0.5rem 0;
 }
 .settings-panel select {
   background: transparent;

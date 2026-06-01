@@ -41,10 +41,6 @@ const css = `
   flex-shrink: 0;
 }
 
-/* Narrow widths: single line. Smaller title on the left, three same-sized
-   icon buttons (search, dark, menu) on the right with even gaps. The
-   <header> element only becomes sticky; the breadcrumbs/title/meta scroll
-   away normally with the page. */
 @media (max-width: 700px) {
   .top-bar {
     gap: 0.4rem;
@@ -52,28 +48,27 @@ const css = `
   .top-bar-right {
     gap: 0.55rem;
   }
-}
-@media (max-width: 700px) {
-  .page-header > header {
-    position: sticky;
-    /* Top set slightly above viewport so the bar's padding extends past the
-       very top edge — eliminates the thin gap where text could peek through
-       above the bar during the show/hide transition. */
-    top: -2px;
-    z-index: 80;
-    background: var(--light);
-    box-shadow: 0 1px 0 var(--lightgray);
-    padding-top: 2px;
-    /* No transition: the JS sets transform every scroll frame to match the
-       page's own scroll-up rate. With sticky top: -2px and padding-top: 2px
-       the bar tucks slightly above the viewport edge so no sliver of text
-       shows above it during a partial state. */
-    transition: transform 0ms;
-    will-change: transform;
-  }
   .page-title {
     line-height: 0.95;
   }
+}
+
+/* Sticky top bar on every viewport. The <header> element only becomes
+   sticky; the breadcrumbs / title / meta below it scroll away normally.
+   Reveal is binary with a small CSS transition — the JS just flips
+   whether the bar is shown or hidden based on scroll direction, so any
+   tiny upward scroll slides it back in. top: -2px + padding-top: 2px
+   tucks the bar a hair past the viewport edge so no sliver of content
+   ever shows above the background. */
+.page-header > header {
+  position: sticky;
+  top: -2px;
+  z-index: 80;
+  background: var(--light);
+  box-shadow: 0 1px 0 var(--lightgray);
+  padding-top: 2px;
+  transition: transform 180ms ease;
+  will-change: transform;
 }
 `
 
