@@ -97,48 +97,73 @@ html[data-meta-tags="false"] .meta-tags {
 }
 
 body {
-  margin: 0;
+  margin: 0 auto;
   box-sizing: border-box;
   background: transparent;
   font-family: var(--bodyFont);
   color: var(--darkgray);
-  // Always leave a band of decor below the content column so the bottom
-  // image is connected to the side image as a single frame.
+  // Always leave a band below the content column so the bottom of the
+  // art frame is visible.
   padding-bottom: 5rem;
   min-height: 100vh;
 }
 
-/* ----- Decor background (single image around the content column) ----- */
-/* html paints the decor — that guarantees coverage all the way to the
-   bottom of the viewport even when the page is shorter than the screen.
-   .page covers the pattern with a solid var(--light) only over the
-   content column, so the pattern is visible in the side margins AND in
-   the bottom band below the content. */
+/* ----- Decor frame ----- */
+/* html paints the OUTER background color (what the art borders against).
+   body carries the art pattern and is centered with a capped max-width
+   so the art is only visible in a strip on each side of the content
+   plus a band below it; outside that, html's outer color shows.
+   .page covers the middle with a solid var(--light) so the art is only
+   visible in the margin frame. */
+
+/* Outer color (what the art borders against). "match" inherits the
+   content color so the outer area is invisible against the page —
+   useful for a clean look with just a side art strip. "light", "dark",
+   "gray" lock to specific values so the user can have e.g. a dark frame
+   around a light page or vice versa. */
 html {
-  background-color: var(--light);
+  --outer-bg: var(--light);
+  background-color: var(--outer-bg);
 }
-html[data-decor="placeholder"] {
+html[data-decor-outer="light"] { --outer-bg: #faf8f8; }
+html[data-decor-outer="dark"] { --outer-bg: #161618; }
+html[data-decor-outer="gray"] { --outer-bg: var(--lightgray); }
+
+/* Art strip width on each side of the content column. "full" lets the
+   art fill the full viewport (no outer band visible). */
+html { --decor-side: 999rem; }
+html[data-decor-width="narrow"] { --decor-side: 3rem; }
+html[data-decor-width="medium"] { --decor-side: 6rem; }
+html[data-decor-width="wide"] { --decor-side: 12rem; }
+html[data-decor-width="full"]   { --decor-side: 999rem; }
+
+/* Art content + edge. */
+html[data-decor="placeholder"] body {
   background-color: var(--lightgray);
   background-image:
     linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px),
     linear-gradient(0deg, rgba(0,0,0,0.06) 1px, transparent 1px);
   background-size: 16px 16px;
+  max-width: calc(87ch + 3rem + 2 * var(--decor-side));
 }
-html[data-decor="none"] {
-  background-color: var(--light);
+html[data-decor="none"] body {
+  background-color: transparent;
   background-image: none;
+  max-width: none;
 }
-html[data-decor-fade="true"] body {
+/* Fade edge: mask body so the outer edge of the art fades into the
+   outer color instead of stopping abruptly. */
+html[data-decor-edge="fade"] body {
   -webkit-mask-image: linear-gradient(90deg,
     transparent 0,
-    #000 5rem,
-    #000 calc(100% - 5rem),
+    #000 min(3rem, var(--decor-side)),
+    #000 calc(100% - min(3rem, var(--decor-side))),
     transparent 100%
   );
   mask-image: linear-gradient(90deg,
     transparent 0,
-    #000 5rem,
-    #000 calc(100% - 5rem),
+    #000 min(3rem, var(--decor-side)),
+    #000 calc(100% - min(3rem, var(--decor-side))),
     transparent 100%
   );
 }

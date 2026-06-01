@@ -36,20 +36,23 @@
   color-scheme: light;
 }
 
+/* Show the icon for the mode the user would switch TO. In dark mode the
+   sun is shown (click to switch to light); in light mode the moon is
+   shown (click to switch to dark). */
 :root[saved-theme="dark"] .darkmode {
   & > .dayIcon {
-    display: none;
+    display: inline;
   }
   & > .nightIcon {
-    display: inline;
+    display: none;
   }
 }
 
 :root .darkmode {
   & > .dayIcon {
-    display: inline;
+    display: none;
   }
   & > .nightIcon {
-    display: none;
+    display: inline;
   }
 }

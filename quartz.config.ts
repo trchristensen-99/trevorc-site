@@ -45,12 +45,12 @@ const config: QuartzConfig = {
           gray: "#646464",
           darkgray: "#d4d4d4",
           dark: "#ebebec",
-          // A step lighter than the original dark-mode blue (#6B82F0) and
-          // pushed to fully saturated blue: hsl(232, 100%, 72%). Reads as
-          // clearly bluer than the original while staying easy on the eye.
-          secondary: "#6E80FF",
-          tertiary: "#9CAAFF",
-          highlight: "rgba(110, 128, 255, 0.16)",
+          // Pushed lighter (hsl(232, 100%, 83%)) so blue links read brighter
+          // against the dark backdrop — closer to a pale ice-blue than the
+          // older saturated mid-blue.
+          secondary: "#B0BBFF",
+          tertiary: "#D1D8FF",
+          highlight: "rgba(176, 187, 255, 0.16)",
           textHighlight: "#b3aa0288",
         },
       },

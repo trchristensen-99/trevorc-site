@@ -4,12 +4,17 @@ import { fetchCanonical } from "./util"
 
 const p = new DOMParser()
 let activeAnchor: HTMLAnchorElement | null = null
+// Delay before a popover starts fetching/showing. The browser fires
+// mouseenter immediately, which can feel jumpy when sweeping the cursor
+// across text. 700ms means deliberate hovers trigger previews and casual
+// passes don't.
+const HOVER_DELAY_MS = 700
 
-async function mouseEnterHandler(
-  this: HTMLAnchorElement,
-  { clientX, clientY }: { clientX: number; clientY: number },
+async function actuallyShow(
+  link: HTMLAnchorElement,
+  clientX: number,
+  clientY: number,
 ) {
-  const link = (activeAnchor = this)
   if (link.dataset.noPopover === "true") {
     return
   }
@@ -107,7 +112,7 @@ async function mouseEnterHandler(
   }
 
   document.body.appendChild(popoverElement)
-  if (activeAnchor !== this) {
+  if (activeAnchor !== link) {
     return
   }
 
@@ -123,11 +128,30 @@ function clearActivePopover() {
 document.addEventListener("nav", () => {
   const links = [...document.querySelectorAll("a.internal")] as HTMLAnchorElement[]
   for (const link of links) {
-    link.addEventListener("mouseenter", mouseEnterHandler)
-    link.addEventListener("mouseleave", clearActivePopover)
+    let pendingTimer: number | null = null
+    const onEnter = (e: MouseEvent) => {
+      activeAnchor = link
+      const { clientX, clientY } = e
+      if (pendingTimer != null) window.clearTimeout(pendingTimer)
+      pendingTimer = window.setTimeout(() => {
+        if (activeAnchor === link) {
+          actuallyShow(link, clientX, clientY)
+        }
+      }, HOVER_DELAY_MS)
+    }
+    const onLeave = () => {
+      if (pendingTimer != null) {
+        window.clearTimeout(pendingTimer)
+        pendingTimer = null
+      }
+      clearActivePopover()
+    }
+    link.addEventListener("mouseenter", onEnter)
+    link.addEventListener("mouseleave", onLeave)
     window.addCleanup(() => {
-      link.removeEventListener("mouseenter", mouseEnterHandler)
-      link.removeEventListener("mouseleave", clearActivePopover)
+      if (pendingTimer != null) window.clearTimeout(pendingTimer)
+      link.removeEventListener("mouseenter", onEnter)
+      link.removeEventListener("mouseleave", onLeave)
     })
   }
 })

@@ -68,8 +68,10 @@ const css = `
   flex-shrink: 0;
 }
 
-/* Pill swatch (capsule shape) instead of a circle. Sits at the top-right
-   of the panel as the only theme control — no label. */
+/* Pill swatch (capsule shape) sits in the top-right corner of the panel
+   as the only theme control. In blue mode the pill is red and stays
+   hidden until the user actually hovers its exact spot (an unobtrusive
+   secondary choice). In red mode the pill is blue and always visible. */
 .settings-pill {
   position: absolute;
   top: 0.7rem;
@@ -77,13 +79,20 @@ const css = `
   width: 1.4rem;
   height: 0.7rem;
   border-radius: 999px;
-  border: 1px solid var(--gray);
+  border: none;
   cursor: pointer;
-  background-color: #C8002A; /* shows the OPPOSITE — clicking flips to red */
+  background-color: #C8002A;
   padding: 0;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.settings-pill:hover,
+.settings-pill:focus-visible {
+  opacity: 1;
 }
 :root[data-color-theme="red"] .settings-pill {
-  background-color: #2640D8; /* clicking flips back to blue */
+  background-color: #2640D8;
+  opacity: 1;
 }
 
 .settings-sub {
@@ -193,8 +202,29 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
           </select>
         </label>
         <label>
-          <input type="checkbox" data-setting="decorFade" />
-          <span>Fade edges of art</span>
+          <span>Art width</span>
+          <select data-setting="decorWidth">
+            <option value="narrow">Narrow</option>
+            <option value="medium">Medium</option>
+            <option value="wide">Wide</option>
+            <option value="full" selected>Full</option>
+          </select>
+        </label>
+        <label>
+          <span>Art edge</span>
+          <select data-setting="decorEdge">
+            <option value="solid" selected>Solid</option>
+            <option value="fade">Fade</option>
+          </select>
+        </label>
+        <label>
+          <span>Outer color</span>
+          <select data-setting="decorOuter">
+            <option value="match" selected>Match</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="gray">Gray</option>
+          </select>
         </label>
       </div>
       <details class="settings-sub">

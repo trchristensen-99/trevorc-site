@@ -10,7 +10,9 @@ interface Settings {
   compactMode: boolean
   zoom: number
   decor: "placeholder" | "none"
-  decorFade: boolean
+  decorEdge: "solid" | "fade"
+  decorWidth: "narrow" | "medium" | "wide" | "full"
+  decorOuter: "match" | "light" | "dark" | "gray"
   metaDate: boolean
   metaModified: boolean
   metaReading: boolean
@@ -26,7 +28,9 @@ const DEFAULTS: Settings = {
   compactMode: false,
   zoom: 1,
   decor: "placeholder",
-  decorFade: false,
+  decorEdge: "solid",
+  decorWidth: "full",
+  decorOuter: "match",
   metaDate: true,
   metaModified: true,
   metaReading: true,
@@ -63,18 +67,17 @@ function apply(s: Settings) {
   root.setAttribute("data-expand-toc", s.expandToc ? "true" : "false")
   root.setAttribute("data-compact-mode", s.compactMode ? "true" : "false")
   root.setAttribute("data-decor", s.decor)
-  root.setAttribute("data-decor-fade", s.decorFade ? "true" : "false")
+  root.setAttribute("data-decor-edge", s.decorEdge)
+  root.setAttribute("data-decor-width", s.decorWidth)
+  root.setAttribute("data-decor-outer", s.decorOuter)
   root.setAttribute("data-meta-date", s.metaDate ? "true" : "false")
   root.setAttribute("data-meta-modified", s.metaModified ? "true" : "false")
   root.setAttribute("data-meta-reading", s.metaReading ? "true" : "false")
   root.setAttribute("data-meta-importance", s.metaImportance ? "true" : "false")
   root.setAttribute("data-meta-audio", s.metaAudio ? "true" : "false")
   root.setAttribute("data-meta-tags", s.metaTags ? "true" : "false")
-  // Zoom scales the base font-size from 18px.
   root.style.fontSize = `${18 * s.zoom}px`
 
-  // Apply the expand-toc setting to all <details.inline-toc> that haven't
-  // been touched by the user this session.
   document
     .querySelectorAll<HTMLDetailsElement>("details.inline-toc")
     .forEach((d) => {
@@ -87,8 +90,7 @@ function reflectIntoPanel(s: Settings, panel: HTMLElement) {
     const key = i.getAttribute("data-setting")
     if (!key || key === "reset") return
     if (i.type === "checkbox") {
-      const v = (s as unknown as Record<string, unknown>)[key]
-      i.checked = Boolean(v)
+      i.checked = Boolean((s as unknown as Record<string, unknown>)[key])
     }
   })
   panel.querySelectorAll<HTMLSelectElement>("select[data-setting]").forEach((sel) => {
@@ -97,11 +99,16 @@ function reflectIntoPanel(s: Settings, panel: HTMLElement) {
   })
 }
 
-function attach() {
+// Always apply settings from storage as soon as the script loads — happens
+// on every page transition since the inline script re-runs.
+apply(read())
+
+document.addEventListener("nav", () => {
   const btn = document.querySelector<HTMLButtonElement>(".settings-button")
   const panel = document.querySelector<HTMLElement>(".settings-panel")
   if (!btn || !panel) return
 
+  // Re-read in case storage changed in another tab.
   const state: Settings = read()
   apply(state)
   reflectIntoPanel(state, panel)
@@ -115,79 +122,89 @@ function attach() {
     btn.setAttribute("aria-expanded", "false")
   }
 
-  btn.addEventListener("click", (e) => {
+  const onBtn = (e: MouseEvent) => {
     e.stopPropagation()
     if (panel.getAttribute("data-open") === "true") close()
     else open()
-  })
-  document.addEventListener("click", (e) => {
+  }
+  const onDocClick = (e: MouseEvent) => {
     if (panel.getAttribute("data-open") !== "true") return
     const t = e.target as Node | null
     if (!t) return
     if (panel.contains(t) || btn.contains(t)) return
     close()
-  })
-  document.addEventListener("keydown", (e) => {
+  }
+  const onKey = (e: KeyboardEvent) => {
     if (e.key === "Escape") close()
+  }
+
+  btn.addEventListener("click", onBtn)
+  document.addEventListener("click", onDocClick)
+  document.addEventListener("keydown", onKey)
+
+  window.addCleanup(() => {
+    btn.removeEventListener("click", onBtn)
+    document.removeEventListener("click", onDocClick)
+    document.removeEventListener("keydown", onKey)
   })
 
-  // Track explicit user toggles on TOC <details> so settings.expandToc only
-  // controls untouched ones.
   document.querySelectorAll<HTMLDetailsElement>("details.inline-toc").forEach((d) => {
-    d.addEventListener("toggle", () => {
+    const onToggle = () => {
       d.dataset.userToggled = "true"
-    })
+    }
+    d.addEventListener("toggle", onToggle)
+    window.addCleanup(() => d.removeEventListener("toggle", onToggle))
   })
 
   panel.querySelectorAll<HTMLInputElement>("input[data-setting]").forEach((i) => {
     const key = i.getAttribute("data-setting")
     if (!key || key === "reset") return
-    i.addEventListener("change", () => {
+    const onChange = () => {
       if (i.type === "checkbox") {
         ;(state as unknown as Record<string, unknown>)[key] = i.checked
       }
       write(state)
       apply(state)
-    })
+    }
+    i.addEventListener("change", onChange)
+    window.addCleanup(() => i.removeEventListener("change", onChange))
   })
 
   panel.querySelectorAll<HTMLSelectElement>("select[data-setting]").forEach((sel) => {
     const key = sel.getAttribute("data-setting") as keyof Settings
-    sel.addEventListener("change", () => {
+    const onChange = () => {
       const v: string = sel.value
       ;(state as unknown as Record<string, unknown>)[key] =
         key === "zoom" ? parseFloat(v) : v
       write(state)
       apply(state)
-    })
+    }
+    sel.addEventListener("change", onChange)
+    window.addCleanup(() => sel.removeEventListener("change", onChange))
   })
 
-  panel.querySelector<HTMLButtonElement>("[data-setting='color-theme-toggle']")?.addEventListener(
-    "click",
-    () => {
+  const pill = panel.querySelector<HTMLButtonElement>(
+    "[data-setting='color-theme-toggle']",
+  )
+  if (pill) {
+    const onPill = () => {
       state.colorTheme = state.colorTheme === "blue" ? "red" : "blue"
       write(state)
       apply(state)
-    },
-  )
+    }
+    pill.addEventListener("click", onPill)
+    window.addCleanup(() => pill.removeEventListener("click", onPill))
+  }
 
-  panel.querySelector<HTMLButtonElement>("[data-setting='reset']")?.addEventListener(
-    "click",
-    () => {
+  const reset = panel.querySelector<HTMLButtonElement>("[data-setting='reset']")
+  if (reset) {
+    const onReset = () => {
       Object.assign(state, DEFAULTS)
       write(state)
       apply(state)
       reflectIntoPanel(state, panel)
-    },
-  )
-}
-
-try {
-  apply(read())
-} catch {
-  /* swallow */
-}
-
-document.addEventListener("nav", attach)
-if (document.readyState !== "loading") attach()
-else document.addEventListener("DOMContentLoaded", attach, { once: true })
+    }
+    reset.addEventListener("click", onReset)
+    window.addCleanup(() => reset.removeEventListener("click", onReset))
+  }
+})
