@@ -1,18 +1,19 @@
-// Sticky top bar tied to scroll direction. The reveal speed (and
-// whether the bar reveals at all on scroll-up) is configurable via
-// the settings panel — see data-topbar-reveal on <html>.
+// Sticky top bar tied to scroll direction. Behavior is configurable
+// via html[data-topbar-reveal]:
 //
-//   off     → bar stays hidden after the first scroll-down, only
-//             reappears when the page reaches the top.
-//   slow    → 1× scroll rate (bar moves 1 px per 1 px of scroll up)
+//   off     → bar stays hidden once scrolled past; only the top-of-page
+//             "fixed" zone shows it again.
+//   slow    → 1× scroll rate (true 1:1 with the page)
 //   normal  → 2× scroll rate (default)
 //   fast    → 4× scroll rate
-//   instant → bar snaps fully visible on any upward scroll
+//   instant → snaps fully visible on any upward scroll
 //
-// Hide always tracks scroll 1:1 so the bar doesn't disappear in a
-// flash when the user starts scrolling down.
-const ALWAYS_SHOW_BELOW = 1
+// Hide always tracks scroll 1:1 so the bar doesn't blink away when the
+// user starts scrolling down. While the user is still in the top
+// STAY_VISIBLE_PX of the page the bar is pinned visible (it shouldn't
+// slide off on tiny scrolls near the top).
 const HIDE_GAIN = 1
+const STAY_VISIBLE_PX = 96
 
 const REVEAL_GAINS: Record<string, number> = {
   off: 0,
@@ -26,9 +27,8 @@ let lastY = 0
 let barOffset = 0
 let ticking = false
 
-function revealGain(): number {
-  const mode = document.documentElement.getAttribute("data-topbar-reveal") || "normal"
-  return REVEAL_GAINS[mode] ?? REVEAL_GAINS.normal
+function revealMode(): string {
+  return document.documentElement.getAttribute("data-topbar-reveal") || "normal"
 }
 
 function update() {
@@ -40,16 +40,33 @@ function update() {
     }
     const y = Math.max(0, window.scrollY)
     const dy = y - lastY
-    const gainUp = revealGain()
+    const mode = revealMode()
 
     headers.forEach((h) => {
       const barHeight = h.offsetHeight || 50
-      if (y < ALWAYS_SHOW_BELOW) {
+      const pinUntil = Math.max(STAY_VISIBLE_PX, barHeight)
+
+      if (y < pinUntil) {
+        // Near the top of the page: the bar stays put. The user
+        // shouldn't see it slide off on the tiniest scroll.
         barOffset = 0
+      } else if (mode === "instant") {
+        // Any upward dy snaps fully visible; downward hides 1:1.
+        if (dy < 0) {
+          barOffset = 0
+        } else if (dy > 0) {
+          barOffset = Math.max(-barHeight, barOffset - dy * HIDE_GAIN)
+        }
+      } else if (mode === "off") {
+        // No reveal on scroll up; only the pin zone above brings it back.
+        if (dy > 0) {
+          barOffset = Math.max(-barHeight, barOffset - dy * HIDE_GAIN)
+        }
       } else {
-        const gain = dy < 0 ? gainUp : HIDE_GAIN
+        const gain = dy < 0 ? REVEAL_GAINS[mode] ?? REVEAL_GAINS.normal : HIDE_GAIN
         barOffset = Math.max(-barHeight, Math.min(0, barOffset - dy * gain))
       }
+
       h.style.transform = `translateY(${barOffset}px)`
     })
 
