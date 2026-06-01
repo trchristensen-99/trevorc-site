@@ -77,6 +77,7 @@ function apply(s: Settings) {
   root.setAttribute("data-meta-audio", s.metaAudio ? "true" : "false")
   root.setAttribute("data-meta-tags", s.metaTags ? "true" : "false")
   root.style.fontSize = `${18 * s.zoom}px`
+  root.setAttribute("data-zoom", String(s.zoom))
 
   document
     .querySelectorAll<HTMLDetailsElement>("details.inline-toc")

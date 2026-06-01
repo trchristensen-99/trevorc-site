@@ -111,15 +111,32 @@ const css = `
   .page-title {
     line-height: 0.95;
   }
+
+  /* Don't let the title shrink past 4rem on mobile — without this the
+     flex item collapses to nothing before the right-hand button group
+     wraps, hiding "Trevor Christensen" entirely at high zoom. */
+  .top-bar-left {
+    min-width: 4rem;
+  }
+
+  /* At 150 % and 200 % zoom the four buttons each grow to ~75–100 px
+     and won't fit in a single mobile-wide row alongside the title.
+     Cap the button-group width to two buttons wide so it folds into a
+     compact 2×2 grid — title stays visible on the left, buttons stack
+     to two rows on the right. */
+  html[data-zoom="1.5"] .top-bar .top-bar-right,
+  html[data-zoom="2"] .top-bar .top-bar-right {
+    max-width: calc(2 * 2.1rem + 0.55rem);
+  }
 }
 
 /* Sticky top bar on every viewport. The <header> element only becomes
    sticky; the breadcrumbs / title / meta below it scroll away normally.
-   transition: transform 0ms — the JS updates transform every scroll
-   frame to track the page's own scroll rate 1:1, so any easing here
-   would visibly lag the reveal behind the scroll. top: -2px +
-   padding-top: 2px tucks the bar a hair past the viewport edge so no
-   sliver of content shows above the background during partial states. */
+   No will-change: transform here — declaring it creates a new
+   containing block for the position-fixed search modal living inside
+   the header, which would trap the modal inside the top-bar instead
+   of letting it cover the whole viewport. The transform animation
+   runs fine without the hint. */
 .page-header > header {
   position: sticky;
   top: -2px;
@@ -128,7 +145,6 @@ const css = `
   box-shadow: 0 1px 0 var(--lightgray);
   padding-top: 2px;
   transition: transform 0ms;
-  will-change: transform;
 }
 `
 

@@ -57,12 +57,10 @@
     position: fixed;
     contain: layout;
     z-index: 999;
-    /* Anchor with left+right/top+bottom (instead of width: 100vw which
-       includes the scrollbar) so the modal fills the visible viewport
-       precisely. The inner .search-space's margin-auto then centers it
-       in that visible area instead of in 100vw, which was nudging it
-       to one side. */
-    inset: 0;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
     overflow-y: auto;
     display: none;
     backdrop-filter: blur(4px);
