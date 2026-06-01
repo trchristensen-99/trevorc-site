@@ -21,10 +21,14 @@ const css = `
    buttons and the same square footprint on mobile (icon-only). */
 .top-bar {
   display: flex;
-  flex-wrap: nowrap;
+  /* Allow the title and the button group to wrap when there isn't
+     enough horizontal room (e.g. at high text-zoom on narrow phones).
+     row-gap gives wrapped rows breathing space. */
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 0.75rem;
+  row-gap: 0.5rem;
   width: 100%;
   max-width: 87ch;
   margin: 0 auto;
@@ -36,8 +40,12 @@ const css = `
 }
 .top-bar-right {
   display: flex;
+  /* And within the button group itself: if even four icons don't fit
+     on one row at high zoom, allow them to wrap onto a second row. */
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.55rem;
+  row-gap: 0.5rem;
   flex-shrink: 0;
   padding: 0 0.25rem;
 }
