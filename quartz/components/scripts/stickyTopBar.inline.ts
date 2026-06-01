@@ -1,8 +1,10 @@
-// Sticky top bar with proportional reveal: each pixel of scroll up
-// reveals exactly 1 pixel of bar (1:1 with the page's own scroll rate),
-// and each pixel of scroll down hides 1 pixel. Same logic on every
-// viewport so the bar drops in/out at the same rate as the page scrolls.
+// Sticky top bar tied to scroll direction. Reveal is accelerated
+// (REVEAL_GAIN px of bar per 1 px of scroll up) so a brief scroll-up
+// snaps the bar most of the way back in; hide tracks scroll 1:1 so
+// the bar doesn't disappear in a flash when you start scrolling down.
 const ALWAYS_SHOW_BELOW = 1
+const REVEAL_GAIN = 4
+const HIDE_GAIN = 1
 
 let lastY = 0
 let barOffset = 0
@@ -23,7 +25,8 @@ function update() {
       if (y < ALWAYS_SHOW_BELOW) {
         barOffset = 0
       } else {
-        barOffset = Math.max(-barHeight, Math.min(0, barOffset - dy))
+        const gain = dy < 0 ? REVEAL_GAIN : HIDE_GAIN
+        barOffset = Math.max(-barHeight, Math.min(0, barOffset - dy * gain))
       }
       h.style.transform = `translateY(${barOffset}px)`
     })
