@@ -93,7 +93,8 @@ const css = `
 @media (max-width: 700px) {
   .top-bar {
     gap: 0.4rem;
-    padding: 0.45rem 0.4rem;
+    /* Tighter vertical padding on mobile so the bar isn't too tall. */
+    padding: 0.22rem 0.4rem;
   }
   .top-bar-right {
     gap: 0.45rem;

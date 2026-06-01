@@ -1,9 +1,11 @@
-// Sticky top bar tied to scroll direction. Reveal is accelerated
-// (REVEAL_GAIN px of bar per 1 px of scroll up) so a brief scroll-up
-// snaps the bar most of the way back in; hide tracks scroll 1:1 so
-// the bar doesn't disappear in a flash when you start scrolling down.
+// Sticky top bar tied to scroll direction. Reveal is moderately
+// accelerated (REVEAL_GAIN px of bar per 1 px of scroll up) so a
+// little scroll-up brings the bar most of the way back in without
+// snapping it fully visible on the lightest touch. Hide tracks scroll
+// 1:1 so the bar doesn't disappear in a flash when you start
+// scrolling down.
 const ALWAYS_SHOW_BELOW = 1
-const REVEAL_GAIN = 4
+const REVEAL_GAIN = 2
 const HIDE_GAIN = 1
 
 let lastY = 0
