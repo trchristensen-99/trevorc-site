@@ -14,9 +14,11 @@ const SettingsButtonInstance = SettingsButtonBuilder(undefined)
 const SidebarMenuInstance = SidebarMenuBuilder(undefined)
 
 const css = `
-/* All four buttons in the top bar (search, darkmode, settings,
-   hamburger) are pinned to the same absolute pixel size so they don't
-   drift apart and don't scale with the user's text zoom. */
+/* All four top-bar buttons use rem-based sizing so they scale together
+   with the user's text zoom, while preserving their square (1:1)
+   aspect ratio at any zoom level. The article body and the buttons
+   grow together; the search button uses the same height as the icon
+   buttons and the same square footprint on mobile (icon-only). */
 .top-bar {
   display: flex;
   flex-wrap: nowrap;
@@ -26,9 +28,6 @@ const css = `
   width: 100%;
   max-width: 87ch;
   margin: 0 auto;
-  /* Vertical padding gives a sliver of whitespace above and below the
-     button row. Horizontal padding keeps the title and buttons off the
-     bar's hard edge. */
   padding: 0.45rem 0.5rem;
 }
 .top-bar-left {
@@ -46,36 +45,34 @@ const css = `
   flex-shrink: 0;
 }
 
-/* Unified button size inside the top bar. The search button uses the
-   same height; its width grows with its text/icon content. */
 .top-bar .darkmode,
 .top-bar .settings-button,
 .top-bar .nav-menu-toggle,
 .top-bar .search > .search-button {
-  height: 38px;
+  height: 2.1rem;
   box-sizing: border-box;
 }
 .top-bar .darkmode,
 .top-bar .settings-button,
 .top-bar .nav-menu-toggle {
-  width: 38px;
-  padding: 7px;
+  width: 2.1rem;
+  padding: 0.4rem;
 }
 .top-bar .darkmode svg,
 .top-bar .settings-button svg,
 .top-bar .nav-menu-toggle svg {
-  width: 22px;
-  height: 22px;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 .top-bar .search > .search-button {
-  font-size: 14px;
-  padding: 0 12px 0 0;
+  font-size: 0.85rem;
+  padding: 0 0.65rem 0 0;
 }
 .top-bar .search > .search-button svg {
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
-  margin: 0 8px;
+  width: 1.2rem;
+  height: 1.2rem;
+  min-width: 1.2rem;
+  margin: 0 0.45rem;
 }
 
 .page-title {
@@ -92,6 +89,16 @@ const css = `
   }
   .top-bar-right {
     gap: 0.45rem;
+  }
+  /* On mobile, search collapses to icon-only. Force square (width =
+     height) so its aspect ratio stays 1:1 at every zoom level. */
+  .top-bar .search > .search-button {
+    width: 2.1rem;
+    padding: 0;
+    justify-content: center;
+  }
+  .top-bar .search > .search-button svg {
+    margin: 0;
   }
   .page-title {
     line-height: 0.95;
