@@ -222,6 +222,16 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
           </select>
         </label>
         <label>
+          <span>Bar reveal</span>
+          <select data-setting="topBarReveal">
+            <option value="off">Off</option>
+            <option value="slow">Slow</option>
+            <option value="normal" selected>Normal</option>
+            <option value="fast">Fast</option>
+            <option value="instant">Instant</option>
+          </select>
+        </label>
+        <label>
           <span>Background art</span>
           <select data-setting="decor">
             <option value="placeholder">Grid</option>

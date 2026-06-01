@@ -11,6 +11,7 @@ interface Settings {
   showBreadcrumbs: boolean
   expandToc: boolean
   zoom: number
+  topBarReveal: "off" | "slow" | "normal" | "fast" | "instant"
   decor: "placeholder" | "none"
   decorEdgeInner: "solid" | "fade"
   decorEdgeOuter: "solid" | "fade"
@@ -28,6 +29,7 @@ const DEFAULTS: Settings = {
   showBreadcrumbs: true,
   expandToc: false,
   zoom: 1,
+  topBarReveal: "normal",
   decor: "placeholder",
   decorEdgeInner: "solid",
   decorEdgeOuter: "solid",
@@ -78,6 +80,7 @@ function apply(s: Settings) {
   root.setAttribute("data-meta-tags", s.metaTags ? "true" : "false")
   root.style.fontSize = `${18 * s.zoom}px`
   root.setAttribute("data-zoom", String(s.zoom))
+  root.setAttribute("data-topbar-reveal", s.topBarReveal)
 
   document
     .querySelectorAll<HTMLDetailsElement>("details.inline-toc")
