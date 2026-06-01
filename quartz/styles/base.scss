@@ -146,9 +146,9 @@ html[data-decor="none"] body {
   background-image: none;
   max-width: none;
 }
-/* Fade edge: mask body so the outer edge of the art fades into the
-   outer color instead of stopping abruptly. */
-html[data-decor-edge="fade"] body {
+/* Outer edge of the art band (where art meets the outer-color frame):
+   solid stops abruptly, fade tapers into the outer color. */
+html[data-decor-edge-outer="fade"] body {
   -webkit-mask-image: linear-gradient(90deg,
     transparent 0,
     #000 min(3rem, var(--decor-side)),
@@ -159,6 +159,25 @@ html[data-decor-edge="fade"] body {
     transparent 0,
     #000 min(3rem, var(--decor-side)),
     #000 calc(100% - min(3rem, var(--decor-side))),
+    transparent 100%
+  );
+}
+
+/* Inner edge of the art band (where art meets the content column):
+   solid leaves a hard edge at .page's boundary; fade tapers .page's
+   side bands into the art. The fade only affects the 1.5rem of .page
+   padding so the centered article column is never made transparent. */
+html[data-decor-edge-inner="fade"] .page {
+  -webkit-mask-image: linear-gradient(90deg,
+    transparent 0,
+    #000 1.5rem,
+    #000 calc(100% - 1.5rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(90deg,
+    transparent 0,
+    #000 1.5rem,
+    #000 calc(100% - 1.5rem),
     transparent 100%
   );
 }

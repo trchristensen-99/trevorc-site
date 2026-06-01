@@ -95,23 +95,27 @@ const css = `
   background: var(--lightgray);
 }
 
-/* Pill swatch (capsule shape) — the alternate-accent toggle. In blue
-   mode the pill is red and stays hidden until the user hovers its exact
-   spot; in red mode the pill is blue and always visible so the user can
-   switch back. Tucked into the bottom-right corner. */
+/* Pill swatch (capsule shape) — the alternate-accent toggle. Lives in
+   the bottom-right of the panel next to the reset button. Always
+   visible so the affordance is discoverable; brightens on hover. */
+.settings-footer {
+  margin-top: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
 .settings-pill {
-  position: absolute;
-  bottom: 0.7rem;
-  right: 0.75rem;
-  width: 1.4rem;
-  height: 0.7rem;
+  width: 1.6rem;
+  height: 0.8rem;
   border-radius: 999px;
   border: none;
   cursor: pointer;
   background-color: #C8002A;
   padding: 0;
-  opacity: 0;
+  opacity: 0.6;
   transition: opacity 0.15s ease;
+  flex-shrink: 0;
 }
 .settings-pill:hover,
 .settings-pill:focus-visible {
@@ -146,7 +150,6 @@ const css = `
 }
 
 .settings-reset {
-  margin-top: 0.65rem;
   padding: 0.3rem 0.55rem;
   background: transparent;
   border: 1px solid var(--gray);
@@ -221,8 +224,15 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
           </select>
         </label>
         <label>
-          <span>Art edge</span>
-          <select data-setting="decorEdge">
+          <span>Inner edge</span>
+          <select data-setting="decorEdgeInner">
+            <option value="solid" selected>Solid</option>
+            <option value="fade">Fade</option>
+          </select>
+        </label>
+        <label>
+          <span>Outer edge</span>
+          <select data-setting="decorEdgeOuter">
             <option value="solid" selected>Solid</option>
             <option value="fade">Fade</option>
           </select>
@@ -248,15 +258,17 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
           <label><input type="checkbox" data-setting="metaTags" /><span>Tags</span></label>
         </div>
       </details>
-      <button type="button" class="settings-reset" data-setting="reset">
-        Restore defaults
-      </button>
-      <button
-        type="button"
-        class="settings-pill"
-        data-setting="color-theme-toggle"
-        aria-label="Switch accent color (blue / red)"
-      ></button>
+      <div class="settings-footer">
+        <button type="button" class="settings-reset" data-setting="reset">
+          Restore defaults
+        </button>
+        <button
+          type="button"
+          class="settings-pill"
+          data-setting="color-theme-toggle"
+          aria-label="Switch accent color (blue / red)"
+        ></button>
+      </div>
     </div>
   </div>
 )

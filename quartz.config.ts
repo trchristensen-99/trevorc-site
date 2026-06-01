@@ -75,7 +75,9 @@ const config: QuartzConfig = {
       Plugin.TableOfContents(),
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
       Plugin.Description(),
-      Plugin.Latex({ renderEngine: "katex" }),
+      // Latex/KaTeX removed: the site has no math content, but enabling
+      // the plugin pulls katex.min.css and copy-tex.min.js from jsdelivr
+      // on every page (render-blocking, ~50KB). Re-add if math is needed.
     ],
     filters: [Plugin.RemoveDrafts()],
     emitters: [

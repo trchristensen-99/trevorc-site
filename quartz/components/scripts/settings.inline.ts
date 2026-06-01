@@ -12,7 +12,8 @@ interface Settings {
   expandToc: boolean
   zoom: number
   decor: "placeholder" | "none"
-  decorEdge: "solid" | "fade"
+  decorEdgeInner: "solid" | "fade"
+  decorEdgeOuter: "solid" | "fade"
   decorOuter: "match" | "light" | "dark" | "gray"
   metaDate: boolean
   metaModified: boolean
@@ -28,7 +29,8 @@ const DEFAULTS: Settings = {
   expandToc: false,
   zoom: 1,
   decor: "placeholder",
-  decorEdge: "solid",
+  decorEdgeInner: "solid",
+  decorEdgeOuter: "solid",
   decorOuter: "match",
   metaDate: true,
   metaModified: true,
@@ -65,7 +67,8 @@ function apply(s: Settings) {
   root.setAttribute("data-show-breadcrumbs", s.showBreadcrumbs ? "true" : "false")
   root.setAttribute("data-expand-toc", s.expandToc ? "true" : "false")
   root.setAttribute("data-decor", s.decor)
-  root.setAttribute("data-decor-edge", s.decorEdge)
+  root.setAttribute("data-decor-edge-inner", s.decorEdgeInner)
+  root.setAttribute("data-decor-edge-outer", s.decorEdgeOuter)
   root.setAttribute("data-decor-outer", s.decorOuter)
   root.setAttribute("data-meta-date", s.metaDate ? "true" : "false")
   root.setAttribute("data-meta-modified", s.metaModified ? "true" : "false")
