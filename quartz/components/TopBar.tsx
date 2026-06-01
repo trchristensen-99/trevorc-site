@@ -29,6 +29,9 @@ const css = `
   max-width: 87ch;
   margin: 0 auto;
   font-size: 1rem;
+  /* Small inset so the title and button row don't sit flush against
+     the .page padding's edge. */
+  padding: 0 0.35em;
 }
 .top-bar-left {
   flex-shrink: 1;
@@ -39,6 +42,8 @@ const css = `
   align-items: center;
   gap: 0.6em;
   flex-shrink: 0;
+  /* A touch of breathing room on either side of the button row. */
+  padding: 0 0.25em;
 }
 .top-bar-right > * {
   flex-shrink: 0;

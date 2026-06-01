@@ -21,6 +21,11 @@ PageTitle.css = `
   line-height: 1;
   overflow-wrap: break-word;
   font-weight: 700;
+  /* "Trevor Christensen" has no descenders (no y/g/q/p), so the font's
+     baseline space below the glyph makes the visible text sit above the
+     line's mathematical center. Nudge the title down a hair so the ink
+     centers visually with the icon row. */
+  padding-top: 0.12em;
 }
 .page-title a {
   /* Site title is always ultramarine, in both light and dark modes. */
