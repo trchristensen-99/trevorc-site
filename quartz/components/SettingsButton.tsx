@@ -37,7 +37,7 @@ const css = `
   border: 1px solid var(--lightgray);
   border-radius: 6px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-  padding: 0.75rem 0.85rem;
+  padding: 1.6rem 0.85rem 0.75rem;
   display: none;
   font-size: 0.9em;
 }
@@ -49,7 +49,7 @@ const css = `
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  margin: 0.2rem 0;
+  margin: 0.32rem 0;
 }
 .settings-panel select {
   background: transparent;
@@ -68,13 +68,35 @@ const css = `
   flex-shrink: 0;
 }
 
-/* Pill swatch (capsule shape) sits in the top-right corner of the panel
-   as the only theme control. In blue mode the pill is red and stays
-   hidden until the user actually hovers its exact spot (an unobtrusive
-   secondary choice). In red mode the pill is blue and always visible. */
+/* Close (×) button in the top-right corner — same look as the sidebar
+   menu's close button. */
+.settings-close {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.4rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.1rem 0.5rem;
+  color: var(--darkgray);
+  font: inherit;
+  font-size: 1.2em;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 4px;
+}
+.settings-close:hover {
+  color: var(--secondary);
+  background: var(--lightgray);
+}
+
+/* Pill swatch (capsule shape) — the alternate-accent toggle. In blue
+   mode the pill is red and stays hidden until the user hovers its exact
+   spot; in red mode the pill is blue and always visible so the user can
+   switch back. Tucked into the bottom-right corner. */
 .settings-pill {
   position: absolute;
-  top: 0.7rem;
+  bottom: 0.7rem;
   right: 0.75rem;
   width: 1.4rem;
   height: 0.7rem;
@@ -96,13 +118,13 @@ const css = `
 }
 
 .settings-sub {
-  margin: 0.3rem 0;
+  margin: 0.35rem 0;
 }
 .settings-sub > summary {
   cursor: pointer;
   list-style: none;
   color: var(--darkgray);
-  padding: 0.15rem 0;
+  padding: 0.18rem 0;
   outline: none;
 }
 .settings-sub > summary::-webkit-details-marker { display: none; }
@@ -119,7 +141,7 @@ const css = `
 }
 
 .settings-reset {
-  margin-top: 0.55rem;
+  margin-top: 0.65rem;
   padding: 0.3rem 0.55rem;
   background: transparent;
   border: 1px solid var(--gray);
@@ -164,14 +186,10 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
       data-open="false"
       role="dialog"
       aria-label="Site settings"
-      style="position: fixed;"
     >
-      <button
-        type="button"
-        class="settings-pill"
-        data-setting="color-theme-toggle"
-        aria-label="Switch accent color (blue / red)"
-      ></button>
+      <button type="button" class="settings-close" aria-label="Close settings">
+        ×
+      </button>
       <div class="settings-row">
         <label>
           <input type="checkbox" data-setting="showBreadcrumbs" />
@@ -180,10 +198,6 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
         <label>
           <input type="checkbox" data-setting="expandToc" />
           <span>Expand TOC by default</span>
-        </label>
-        <label>
-          <input type="checkbox" data-setting="compactMode" />
-          <span>Compact spacing</span>
         </label>
         <label>
           <span>Text zoom</span>
@@ -199,15 +213,6 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
           <select data-setting="decor">
             <option value="placeholder">Grid</option>
             <option value="none">None</option>
-          </select>
-        </label>
-        <label>
-          <span>Art width</span>
-          <select data-setting="decorWidth">
-            <option value="narrow">Narrow</option>
-            <option value="medium">Medium</option>
-            <option value="wide">Wide</option>
-            <option value="full" selected>Full</option>
           </select>
         </label>
         <label>
@@ -241,6 +246,12 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
       <button type="button" class="settings-reset" data-setting="reset">
         Restore defaults
       </button>
+      <button
+        type="button"
+        class="settings-pill"
+        data-setting="color-theme-toggle"
+        aria-label="Switch accent color (blue / red)"
+      ></button>
     </div>
   </>
 )

@@ -80,11 +80,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* User-toggleable layout settings. */
 html[data-show-breadcrumbs="false"] .breadcrumb-container { display: none; }
-html[data-compact-mode="true"] {
-  --page-vertical: 0.25rem;
-}
-html[data-compact-mode="true"] .article-title { margin: 0.25rem 0 0.25rem; }
-html[data-compact-mode="true"] .content-meta-block { margin: 0; }
 /* Metadata visibility settings: each metadata field has a class that the
    user can toggle off via the settings panel. */
 html[data-meta-date="false"] .meta-date,
@@ -129,15 +124,15 @@ html[data-decor-outer="light"] { --outer-bg: #faf8f8; }
 html[data-decor-outer="dark"] { --outer-bg: #161618; }
 html[data-decor-outer="gray"] { --outer-bg: var(--lightgray); }
 
-/* Art strip width on each side of the content column. "full" lets the
-   art fill the full viewport (no outer band visible). */
-html { --decor-side: 999rem; }
-html[data-decor-width="narrow"] { --decor-side: 3rem; }
-html[data-decor-width="medium"] { --decor-side: 6rem; }
-html[data-decor-width="wide"] { --decor-side: 12rem; }
-html[data-decor-width="full"]   { --decor-side: 999rem; }
+/* Art strip width is inherent to each art type — the art's own scale
+   determines how wide its margin band is. Future art types should set
+   --decor-side themselves. */
+html { --decor-side: 0rem; }
 
 /* Art content + edge. */
+html[data-decor="placeholder"] {
+  --decor-side: 6rem;
+}
 html[data-decor="placeholder"] body {
   background-color: var(--lightgray);
   background-image:
