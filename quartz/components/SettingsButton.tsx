@@ -35,7 +35,9 @@ const css = `
   top: calc(100% + 0.5rem);
   right: 0;
   z-index: 100;
-  width: min(15rem, calc(100vw - 2rem));
+  /* Cap absolute width so the panel stays in the viewport at high text
+     zoom (where 15rem would otherwise balloon past the screen). */
+  width: min(15rem, 280px, calc(100vw - 2rem));
   max-height: calc(100vh - 5rem);
   overflow-y: auto;
   background: var(--light);
@@ -44,7 +46,7 @@ const css = `
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   padding: 1.6rem 0.85rem 0.75rem;
   display: none;
-  font-size: 0.9em;
+  font-size: min(0.9rem, 14px);
 }
 .settings-panel[data-open="true"] { display: block; }
 .settings-panel .settings-row {

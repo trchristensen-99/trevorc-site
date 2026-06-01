@@ -27,15 +27,10 @@ h1, h2, h3, h4, h5, h6 {
   word-break: normal;
   max-width: 100%;
 }
-.page-title,
 .breadcrumb-element a,
 .meta-value-link,
 .meta-label-link {
   overflow-wrap: anywhere;
-}
-.top-bar {
-  flex-wrap: wrap;
-  row-gap: 0.5rem;
 }
 
 /* ----- Settings-driven theme overrides ----- */

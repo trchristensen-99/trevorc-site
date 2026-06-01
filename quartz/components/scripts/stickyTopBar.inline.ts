@@ -1,18 +1,12 @@
-// Sticky top bar with binary show/hide driven by scroll direction.
-// Any upward scroll reveals the bar; a small accumulated downward scroll
-// hides it. CSS handles the slide animation via a transition on transform.
+// Sticky top bar with proportional reveal: each pixel of scroll up
+// reveals exactly 1 pixel of bar (1:1 with the page's own scroll rate),
+// and each pixel of scroll down hides 1 pixel. Same logic on every
+// viewport so the bar drops in/out at the same rate as the page scrolls.
 const ALWAYS_SHOW_BELOW = 1
-const HIDE_AFTER_DOWN_PX = 12
 
 let lastY = 0
-let downAccum = 0
+let barOffset = 0
 let ticking = false
-
-function setVisible(headers: NodeListOf<HTMLElement>, visible: boolean) {
-  headers.forEach((h) => {
-    h.style.transform = visible ? "" : "translateY(-100%)"
-  })
-}
 
 function update() {
   try {
@@ -24,21 +18,15 @@ function update() {
     const y = Math.max(0, window.scrollY)
     const dy = y - lastY
 
-    if (y < ALWAYS_SHOW_BELOW) {
-      setVisible(headers, true)
-      downAccum = 0
-    } else if (dy < 0) {
-      // Any upward scroll → reveal.
-      setVisible(headers, true)
-      downAccum = 0
-    } else if (dy > 0) {
-      // Downward; accumulate a small distance before hiding so a stray
-      // jitter doesn't flicker the bar away.
-      downAccum += dy
-      if (downAccum > HIDE_AFTER_DOWN_PX) {
-        setVisible(headers, false)
+    headers.forEach((h) => {
+      const barHeight = h.offsetHeight || 50
+      if (y < ALWAYS_SHOW_BELOW) {
+        barOffset = 0
+      } else {
+        barOffset = Math.max(-barHeight, Math.min(0, barOffset - dy))
       }
-    }
+      h.style.transform = `translateY(${barOffset}px)`
+    })
 
     lastY = y
   } catch (_e) {
@@ -56,7 +44,7 @@ function onScroll() {
 function init() {
   try {
     lastY = window.scrollY
-    downAccum = 0
+    barOffset = 0
     window.addEventListener("scroll", onScroll, { passive: true })
     if (typeof window.addCleanup === "function") {
       window.addCleanup(() => window.removeEventListener("scroll", onScroll))
