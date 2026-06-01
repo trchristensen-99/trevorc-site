@@ -109,78 +109,90 @@ function setOpen(open: boolean) {
   if (b) b.setAttribute("aria-expanded", open ? "true" : "false")
 }
 
-// Apply settings immediately so the page paints with the saved theme.
-apply(read())
+// Mirrors the sandwich menu's pattern: install global delegated handlers
+// once, using the capture phase so nothing in the DOM can stop the event
+// before we see it. init() runs on every entry path (initial load, nav).
 
-document.addEventListener("click", (e) => {
-  const t = e.target as Element | null
-  if (!t) return
+let handlersInstalled = false
+function installGlobalHandlers() {
+  if (handlersInstalled) return
+  handlersInstalled = true
 
-  if (t.closest(".settings-button")) {
-    e.stopPropagation()
-    const p = panelEl()
-    setOpen(p?.getAttribute("data-open") !== "true")
+  document.addEventListener(
+    "click",
+    (e) => {
+      const t = e.target as Element | null
+      if (!t) return
+
+      if (t.closest(".settings-button")) {
+        const p = panelEl()
+        setOpen(p?.getAttribute("data-open") !== "true")
+        const state = read()
+        if (p) reflectIntoPanel(state, p)
+        e.stopPropagation()
+        return
+      }
+
+      if (t.closest(".settings-close")) {
+        setOpen(false)
+        e.stopPropagation()
+        return
+      }
+
+      if (t.closest("[data-setting='color-theme-toggle']")) {
+        const state = read()
+        state.colorTheme = state.colorTheme === "blue" ? "red" : "blue"
+        write(state)
+        apply(state)
+        e.stopPropagation()
+        return
+      }
+
+      if (t.closest("[data-setting='reset']")) {
+        const state: Settings = { ...DEFAULTS }
+        write(state)
+        apply(state)
+        const p = panelEl()
+        if (p) reflectIntoPanel(state, p)
+        e.stopPropagation()
+        return
+      }
+
+      // Outside-click closes an open panel.
+      const p = panelEl()
+      if (p && p.getAttribute("data-open") === "true" && !p.contains(t)) {
+        setOpen(false)
+      }
+    },
+    true,
+  )
+
+  document.addEventListener("change", (e) => {
+    const t = e.target as Element | null
+    if (!t) return
+    if (!t.closest(".settings-panel")) return
+    const key = t.getAttribute("data-setting")
+    if (!key || key === "reset") return
+
     const state = read()
-    if (p) reflectIntoPanel(state, p)
-    return
-  }
-
-  if (t.closest(".settings-close")) {
-    e.stopPropagation()
-    setOpen(false)
-    return
-  }
-
-  if (t.closest("[data-setting='color-theme-toggle']")) {
-    e.stopPropagation()
-    const state = read()
-    state.colorTheme = state.colorTheme === "blue" ? "red" : "blue"
+    if (t instanceof HTMLInputElement && t.type === "checkbox") {
+      ;(state as unknown as Record<string, unknown>)[key] = t.checked
+    } else if (t instanceof HTMLSelectElement) {
+      const v = t.value
+      ;(state as unknown as Record<string, unknown>)[key] =
+        key === "zoom" ? parseFloat(v) : v
+    }
     write(state)
     apply(state)
-    return
-  }
+  })
 
-  if (t.closest("[data-setting='reset']")) {
-    e.stopPropagation()
-    const state: Settings = { ...DEFAULTS }
-    write(state)
-    apply(state)
-    const p = panelEl()
-    if (p) reflectIntoPanel(state, p)
-    return
-  }
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setOpen(false)
+  })
+}
 
-  // Outside-click closes an open panel.
-  const p = panelEl()
-  if (p && p.getAttribute("data-open") === "true" && !p.contains(t)) {
-    setOpen(false)
-  }
-})
-
-document.addEventListener("change", (e) => {
-  const t = e.target as Element | null
-  if (!t) return
-  if (!t.closest(".settings-panel")) return
-  const key = t.getAttribute("data-setting")
-  if (!key || key === "reset") return
-
-  const state = read()
-  if (t instanceof HTMLInputElement && t.type === "checkbox") {
-    ;(state as unknown as Record<string, unknown>)[key] = t.checked
-  } else if (t instanceof HTMLSelectElement) {
-    const v = t.value
-    ;(state as unknown as Record<string, unknown>)[key] =
-      key === "zoom" ? parseFloat(v) : v
-  }
-  write(state)
-  apply(state)
-})
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") setOpen(false)
-})
-
-document.addEventListener("nav", () => {
+function init() {
+  installGlobalHandlers()
   const state = read()
   apply(state)
   const p = panelEl()
@@ -194,4 +206,11 @@ document.addEventListener("nav", () => {
     d.addEventListener("toggle", onToggle)
     window.addCleanup(() => d.removeEventListener("toggle", onToggle))
   })
-})
+}
+
+document.addEventListener("nav", init)
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init, { once: true })
+} else {
+  init()
+}
