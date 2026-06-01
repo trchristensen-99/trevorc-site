@@ -2,6 +2,11 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 import settingsScript from "./scripts/settings.inline"
 
 const css = `
+.settings {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
 .settings-button {
   background: transparent;
   border: 1px solid var(--gray);
@@ -26,9 +31,9 @@ const css = `
 }
 
 .settings-panel {
-  position: fixed;
-  top: 3.25rem;
-  right: 1rem;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
   z-index: 100;
   width: min(15rem, calc(100vw - 2rem));
   max-height: calc(100vh - 5rem);
@@ -158,7 +163,7 @@ const css = `
 `
 
 const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
-  <>
+  <div class="settings">
     <button
       type="button"
       class="settings-button"
@@ -253,7 +258,7 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
         aria-label="Switch accent color (blue / red)"
       ></button>
     </div>
-  </>
+  </div>
 )
 
 SettingsButton.css = css
