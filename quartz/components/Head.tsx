@@ -55,7 +55,10 @@ export default (() => {
 
         <meta name="og:site_name" content={cfg.pageTitle}></meta>
         <meta property="og:title" content={title} />
-        <meta property="og:type" content="website" />
+        <meta
+          property="og:type"
+          content={fileData.dates?.created ? "article" : "website"}
+        />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
@@ -79,7 +82,54 @@ export default (() => {
             <meta property="twitter:domain" content={cfg.baseUrl}></meta>
             <meta property="og:url" content={socialUrl}></meta>
             <meta property="twitter:url" content={socialUrl}></meta>
+            <link rel="canonical" href={socialUrl} />
           </>
+        )}
+
+        {/* Article-specific OG tags + JSON-LD so search engines and link
+            previewers can pick up authorship and publish dates. */}
+        {fileData.dates?.created && (
+          <meta
+            property="article:published_time"
+            content={fileData.dates.created.toISOString()}
+          />
+        )}
+        {fileData.dates?.modified && (
+          <meta
+            property="article:modified_time"
+            content={fileData.dates.modified.toISOString()}
+          />
+        )}
+        <meta name="author" content={cfg.pageTitle} />
+        {fileData.dates?.created && cfg.baseUrl && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                headline: title,
+                description,
+                datePublished: fileData.dates.created.toISOString(),
+                dateModified: (fileData.dates.modified ?? fileData.dates.created).toISOString(),
+                author: {
+                  "@type": "Person",
+                  name: cfg.pageTitle,
+                  url: `https://${cfg.baseUrl}`,
+                },
+                publisher: {
+                  "@type": "Person",
+                  name: cfg.pageTitle,
+                  url: `https://${cfg.baseUrl}`,
+                },
+                mainEntityOfPage: { "@type": "WebPage", "@id": socialUrl },
+                keywords:
+                  Array.isArray(fileData.frontmatter?.tags) && fileData.frontmatter?.tags.length
+                    ? (fileData.frontmatter?.tags as string[]).join(", ")
+                    : undefined,
+              }),
+            }}
+          />
         )}
 
         <link rel="icon" href={iconPath} />

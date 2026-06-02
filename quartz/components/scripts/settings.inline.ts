@@ -26,7 +26,7 @@ interface Settings {
 
 const DEFAULTS: Settings = {
   colorTheme: "blue",
-  showBreadcrumbs: true,
+  showBreadcrumbs: false,
   expandToc: false,
   zoom: 1,
   topBarReveal: "normal",

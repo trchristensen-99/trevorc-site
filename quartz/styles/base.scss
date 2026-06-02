@@ -4,6 +4,19 @@
 @use "./syntax.scss";
 @use "./callouts.scss";
 
+/* Footnote markers (and any other <sup>/<sub>) shouldn't inflate the
+   line they sit on. Default browser styling uses vertical-align: super
+   which stretches line-height; we shift the glyph with position: relative
+   + top instead so the line keeps the body's natural height. */
+sup, sub {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
 html {
   scroll-behavior: smooth;
   text-size-adjust: none;
