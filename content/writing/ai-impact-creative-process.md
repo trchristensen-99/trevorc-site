@@ -4,10 +4,10 @@ date: 2026-06-01
 modified: 2026-06-01
 importance: 6
 status: finished
-confidence: likely
 tags:
   - ai
   - creativity
+  - tradeoffs
 ---
 
 There has been much discussion about the benefits and harms of Artificial Intelligence, especially in recent years. Some of these are unique and unexpected — such as AI's overuse of emdashes [^1] — but many form complementary pairs. For instance, while AI can cause environmental harms, it can also accelerate the development and spread of green technologies. At a personal level, AI could hasten your death or keep you healthy indefinitely. At the extremes, it could cause the largest mass extinction event in history (including humans) or it could preserve every one indefinitely, even bringing species back from the dead.
