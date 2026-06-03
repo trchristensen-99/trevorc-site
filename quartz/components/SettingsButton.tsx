@@ -231,38 +231,51 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
             <option value="instant">Instant</option>
           </select>
         </label>
-        <label>
-          <span>Background art</span>
-          <select data-setting="decor">
-            <option value="placeholder">Grid</option>
-            <option value="cycle">Cycle (test)</option>
-            <option value="none">None</option>
-          </select>
-        </label>
-        <label>
-          <span>Inner edge</span>
-          <select data-setting="decorEdgeInner">
-            <option value="solid" selected>Solid</option>
-            <option value="fade">Fade</option>
-          </select>
-        </label>
-        <label>
-          <span>Outer edge</span>
-          <select data-setting="decorEdgeOuter">
-            <option value="solid" selected>Solid</option>
-            <option value="fade">Fade</option>
-          </select>
-        </label>
-        <label>
-          <span>Outer color</span>
-          <select data-setting="decorOuter">
-            <option value="match" selected>Match</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="gray">Gray</option>
-          </select>
-        </label>
       </div>
+      <details class="settings-sub">
+        <summary>Background art</summary>
+        <div class="settings-row">
+          <label>
+            <span>Type</span>
+            <select data-setting="decor">
+              <option value="placeholder">Grid</option>
+              <option value="cycle">Cycle (test)</option>
+              <option value="none">None</option>
+            </select>
+          </label>
+          <label>
+            <span>Scale</span>
+            <select data-setting="decorScale">
+              <option value="fill" selected>Fill</option>
+              <option value="fit">Fit</option>
+              <option value="native">Native</option>
+            </select>
+          </label>
+          <label>
+            <span>Inner edge</span>
+            <select data-setting="decorEdgeInner">
+              <option value="solid" selected>Solid</option>
+              <option value="fade">Fade</option>
+            </select>
+          </label>
+          <label>
+            <span>Outer edge</span>
+            <select data-setting="decorEdgeOuter">
+              <option value="solid" selected>Solid</option>
+              <option value="fade">Fade</option>
+            </select>
+          </label>
+          <label>
+            <span>Outer color</span>
+            <select data-setting="decorOuter">
+              <option value="match" selected>Match</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="gray">Gray</option>
+            </select>
+          </label>
+        </div>
+      </details>
       <details class="settings-sub">
         <summary>Page metadata fields</summary>
         <div class="settings-row">

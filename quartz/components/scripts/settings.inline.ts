@@ -13,6 +13,7 @@ interface Settings {
   zoom: number
   topBarReveal: "off" | "slow" | "normal" | "fast" | "instant"
   decor: "placeholder" | "none" | "cycle"
+  decorScale: "fill" | "fit" | "native"
   decorEdgeInner: "solid" | "fade"
   decorEdgeOuter: "solid" | "fade"
   decorOuter: "match" | "light" | "dark" | "gray"
@@ -31,6 +32,7 @@ const DEFAULTS: Settings = {
   zoom: 1,
   topBarReveal: "normal",
   decor: "placeholder",
+  decorScale: "fill",
   decorEdgeInner: "solid",
   decorEdgeOuter: "solid",
   decorOuter: "match",
@@ -69,6 +71,7 @@ function apply(s: Settings) {
   root.setAttribute("data-show-breadcrumbs", s.showBreadcrumbs ? "true" : "false")
   root.setAttribute("data-expand-toc", s.expandToc ? "true" : "false")
   root.setAttribute("data-decor", s.decor)
+  root.setAttribute("data-decor-scale", s.decorScale)
   root.setAttribute("data-decor-edge-inner", s.decorEdgeInner)
   root.setAttribute("data-decor-edge-outer", s.decorEdgeOuter)
   root.setAttribute("data-decor-outer", s.decorOuter)

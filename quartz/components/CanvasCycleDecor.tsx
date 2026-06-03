@@ -10,13 +10,24 @@ const css = `
   z-index: -1;
   pointer-events: none;
   display: none;
-  /* 640x480 source — fill the viewport (the center is hidden behind
-     .page, so the visible parts are the sides + bottom). */
+  /* Default: zoom the scene to fill the viewport. The center is hidden
+     behind .page so the visible parts are the sides + bottom. */
   object-fit: cover;
+  object-position: center;
   image-rendering: pixelated;
 }
 html[data-decor="cycle"] .decor-canvas {
   display: block;
+}
+/* Scale options:
+     fill   — object-fit: cover (default, fills the viewport, may crop)
+     fit    — object-fit: contain (scales to fit, may show outer color)
+     native — no scaling, image at its native pixel size */
+html[data-decor-scale="fit"] .decor-canvas {
+  object-fit: contain;
+}
+html[data-decor-scale="native"] .decor-canvas {
+  object-fit: none;
 }
 /* In cycle mode body provides no background of its own — the canvas
    does. Clear pattern, mask, and max-width so nothing covers it. */
