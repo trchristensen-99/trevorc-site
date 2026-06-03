@@ -12,7 +12,7 @@ interface Settings {
   expandToc: boolean
   zoom: number
   topBarReveal: "off" | "slow" | "normal" | "fast" | "instant"
-  decor: "placeholder" | "none"
+  decor: "placeholder" | "none" | "cycle"
   decorEdgeInner: "solid" | "fade"
   decorEdgeOuter: "solid" | "fade"
   decorOuter: "match" | "light" | "dark" | "gray"

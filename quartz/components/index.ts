@@ -13,6 +13,7 @@ import SortableList from "./SortableList"
 import InlineToc from "./InlineToc"
 import SidebarMenu from "./SidebarMenu"
 import SettingsButton from "./SettingsButton"
+import CanvasCycleDecor from "./CanvasCycleDecor"
 import TopBar from "./TopBar"
 import PrevNext from "./PrevNext"
 import Spacer from "./Spacer"
@@ -46,6 +47,7 @@ export {
   InlineToc,
   SidebarMenu,
   SettingsButton,
+  CanvasCycleDecor,
   TopBar,
   PrevNext,
   Spacer,
