@@ -10,17 +10,16 @@ const css = `
   z-index: -1;
   pointer-events: none;
   display: none;
-  /* The scene is 640x480 — fill the viewport with object-fit cover so
-     the sides and bottom of the picture become the visible margins. */
+  /* 640x480 source — fill the viewport (the center is hidden behind
+     .page, so the visible parts are the sides + bottom). */
   object-fit: cover;
-  /* Hard-edged scaling preserves the pixel-art look at upscaled sizes. */
   image-rendering: pixelated;
 }
 html[data-decor="cycle"] .decor-canvas {
   display: block;
 }
-/* When the canvas decor is on, body's pattern background goes away — the
-   canvas is the background. */
+/* In cycle mode body provides no background of its own — the canvas
+   does. Clear pattern, mask, and max-width so nothing covers it. */
 html[data-decor="cycle"] body {
   background: transparent;
   background-image: none;
@@ -30,9 +29,13 @@ html[data-decor="cycle"] body {
 }
 `
 
-const CanvasCycleDecor: QuartzComponent = (_props: QuartzComponentProps) => (
-  <canvas class="decor-canvas" aria-hidden="true"></canvas>
-)
+// The actual <canvas> is created and appended directly to <body> by the
+// inline script (canvasCycle.inline.ts). Doing it from JS lets us
+// guarantee the canvas isn't trapped inside an ancestor stacking
+// context — e.g. the sticky top-bar's transformed <header>, which
+// would otherwise pin the fixed-positioned canvas to that element and
+// drag it around as the header transforms on scroll.
+const CanvasCycleDecor: QuartzComponent = (_props: QuartzComponentProps) => null
 
 CanvasCycleDecor.css = css
 CanvasCycleDecor.afterDOMLoaded = script

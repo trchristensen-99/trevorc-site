@@ -118,10 +118,27 @@ function stop() {
   rafId = 0
 }
 
+function ensureCanvas(): HTMLCanvasElement {
+  // Always live as a direct child of <body>, so it isn't trapped inside
+  // a transformed ancestor's stacking/containing context (e.g. the
+  // sticky top-bar). Move or create as needed.
+  let c = document.querySelector<HTMLCanvasElement>("canvas.decor-canvas")
+  if (c && c.parentElement !== document.body) {
+    c.remove()
+    c = null
+  }
+  if (!c) {
+    c = document.createElement("canvas")
+    c.className = "decor-canvas"
+    c.setAttribute("aria-hidden", "true")
+    document.body.appendChild(c)
+  }
+  return c
+}
+
 async function start() {
   stop()
-  canvas = document.querySelector<HTMLCanvasElement>("canvas.decor-canvas")
-  if (!canvas) return
+  canvas = ensureCanvas()
   const mode = document.documentElement.getAttribute("data-decor")
   if (mode !== "cycle") {
     canvas.style.display = "none"
