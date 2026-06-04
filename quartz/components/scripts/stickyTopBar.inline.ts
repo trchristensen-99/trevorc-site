@@ -13,13 +13,16 @@
 // STAY_VISIBLE_PX of the page the bar is pinned visible (it shouldn't
 // slide off on tiny scrolls near the top).
 const HIDE_GAIN = 1
-const STAY_VISIBLE_PX = 96
+// Tiny pin zone — just enough to absorb sub-pixel jitter at exact y=0
+// (browser repaints, address-bar adjustments on mobile). Beyond that
+// the bar tracks scroll the same as the rest of the page.
+const STAY_VISIBLE_PX = 4
 
 const REVEAL_GAINS: Record<string, number> = {
   off: 0,
-  slow: 1,
-  normal: 2,
-  fast: 4,
+  slow: 2,
+  normal: 5,
+  fast: 10,
   instant: 99999,
 }
 

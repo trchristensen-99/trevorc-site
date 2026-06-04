@@ -10,20 +10,22 @@ const css = `
   z-index: -1;
   pointer-events: none;
   display: none;
-  /* Default: zoom the scene to fill the viewport. The center is hidden
-     behind .page so the visible parts are the sides + bottom. */
+  /* Default: fill the viewport, anchored to the bottom so the scene's
+     ground/trees always touch the bottom of the screen regardless of
+     viewport size. The horizon/sky can crop off the top instead. */
   object-fit: cover;
-  object-position: center;
+  object-position: center bottom;
   image-rendering: pixelated;
 }
 html[data-decor="cycle"] .decor-canvas {
   display: block;
 }
 /* Scale options:
-     fill — object-fit: cover (default, fills the viewport, may crop)
-     fit  — object-fit: contain (scales to fit, may show outer color) */
+     fill — object-fit: cover (default, fills viewport, anchored bottom)
+     fit  — object-fit: contain (scales to fit; outer color shows above) */
 html[data-decor-scale="fit"] .decor-canvas {
   object-fit: contain;
+  object-position: center bottom;
 }
 /* In cycle mode body provides no background of its own — the canvas
    does. Clear pattern, mask, and max-width so nothing covers it. */

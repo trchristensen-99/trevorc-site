@@ -81,21 +81,32 @@ function tick() {
   const s = scene
   const elapsed = performance.now() - startTime
 
-  // Build a per-frame palette by rotating each cycle range.
-  // For rate 280, one full step takes 1000ms.
+  // Build a per-frame palette by rotating each cycle range with
+  // BlendShift interpolation: instead of snapping to integer palette
+  // positions every step, we lerp between adjacent positions using the
+  // fractional part of the shift. The cycling looks like a smooth
+  // gradient drift rather than a stepped flicker.
   const palette: RGB[] = s.colors.slice()
   for (const c of s.cycles) {
     if (c.rate === 0 || c.high <= c.low) continue
     const len = c.high - c.low + 1
     const stepsPerMs = c.rate / 280 / 1000
-    const shift = Math.floor(elapsed * stepsPerMs) % len
+    const totalShift = elapsed * stepsPerMs
+    const shift = Math.floor(totalShift) % len
+    const frac = totalShift - Math.floor(totalShift)
     const dir = c.reverse === 2 ? -1 : 1
     for (let i = 0; i < len; i++) {
-      // Where does palette[low + i] come from in the original?
-      // It comes from low + ((i - shift*dir) mod len).
-      let src = i - shift * dir
-      src = ((src % len) + len) % len
-      palette[c.low + i] = s.colors[c.low + src]
+      let srcA = i - shift * dir
+      srcA = ((srcA % len) + len) % len
+      let srcB = srcA - dir
+      srcB = ((srcB % len) + len) % len
+      const a = s.colors[c.low + srcA]
+      const b = s.colors[c.low + srcB]
+      palette[c.low + i] = [
+        Math.round(a[0] + (b[0] - a[0]) * frac),
+        Math.round(a[1] + (b[1] - a[1]) * frac),
+        Math.round(a[2] + (b[2] - a[2]) * frac),
+      ]
     }
   }
 
