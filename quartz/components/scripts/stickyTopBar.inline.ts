@@ -29,6 +29,10 @@ const REVEAL_GAINS: Record<string, number> = {
 let lastY = 0
 let barOffset = 0
 let ticking = false
+// Track the most recent non-zero scroll direction so a sub-pixel
+// upward motion (touch fling, smooth-scroll snapping) still flips us
+// into reveal mode even if the rAF frame's dy reads as exactly 0.
+let lastDir = 0
 
 function revealMode(): string {
   return document.documentElement.getAttribute("data-topbar-reveal") || "normal"
@@ -43,25 +47,24 @@ function update() {
     }
     const y = Math.max(0, window.scrollY)
     const dy = y - lastY
+    if (dy !== 0) lastDir = dy < 0 ? -1 : 1
     const mode = revealMode()
 
     headers.forEach((h) => {
       const barHeight = h.offsetHeight || 50
-      const pinUntil = Math.max(STAY_VISIBLE_PX, barHeight)
 
-      if (y < pinUntil) {
-        // Near the top of the page: the bar stays put. The user
-        // shouldn't see it slide off on the tiniest scroll.
+      // Tiny absolute pin: bar stays put only in the first few px of
+      // scroll to absorb sub-pixel jitter. Once past that, the reveal
+      // logic for the active mode runs every frame.
+      if (y < STAY_VISIBLE_PX) {
         barOffset = 0
       } else if (mode === "instant") {
-        // Any upward dy snaps fully visible; downward hides 1:1.
-        if (dy < 0) {
+        if (dy < 0 || (dy === 0 && lastDir < 0)) {
           barOffset = 0
         } else if (dy > 0) {
           barOffset = Math.max(-barHeight, barOffset - dy * HIDE_GAIN)
         }
       } else if (mode === "off") {
-        // No reveal on scroll up; only the pin zone above brings it back.
         if (dy > 0) {
           barOffset = Math.max(-barHeight, barOffset - dy * HIDE_GAIN)
         }

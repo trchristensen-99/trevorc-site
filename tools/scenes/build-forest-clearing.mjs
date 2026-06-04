@@ -17,9 +17,10 @@ import { fileURLToPath } from "node:url"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// Wider aspect to cover more horizontal viewport, higher pixel count
-// to make each on-screen pixel small at typical desktop widths.
-const W = 1920
+// Wide aspect for side coverage. Pulled in from 1920 so the tree
+// clusters aren't washed off the visible side strips under
+// object-fit: cover scaling, and the central clearing is tighter.
+const W = 1440
 const H = 720
 
 // ---------- Palette (256 slots) ----------
@@ -175,15 +176,25 @@ function drawCloud(cx, cy, rx, ry, indexOffset) {
     for (let x = xStart; x < xEnd; x++) {
       const ex = (x - cx) / rx
       const ey = (y - cy) / ry
-      // Cloud shape: ellipse plus organic noise mask, flat-bottomed.
+      // Cloud silhouette: ellipse plus organic noise mask, flat-bottomed.
+      // Shape noise stays (so the outline reads organically), but the
+      // along-band assignment below uses a CLEAN function of x only so
+      // adjacent pixels get consecutive cycle indices — the prereq for
+      // the palette-rotation looking like smooth lateral drift instead
+      // of scattered twinkle.
       const inEllipse = ex * ex + ey * ey
       if (inEllipse > 1.05) continue
       const noise = cloudNoise(x * 0.5, y * 0.5, 28) * 0.5
       const top = (y - cy) / ry // -1 at top, +1 at bottom
       const shape = inEllipse - noise + (top > 0.3 ? (top - 0.3) * 0.8 : 0)
       if (shape > 0.85) continue
-      // Along-cloud parameter: smooth left→right with vertical wobble.
-      const along = (x - (cx - rx)) / (rx * 2) + 0.1 * (cloudNoise(x, y, 80) - 0.5)
+      // Clean horizontal bands across the cloud: pixel at relative x
+      // position p gets cycle slot floor(p * 32). Adjacent pixels share
+      // a slot for ~rx*2/32 pixels, then move to the next slot. As the
+      // palette rotates one step, the bright/dim positions of the cycle
+      // shift one band sideways, which the eye reads as the highlight
+      // drifting across the cloud.
+      const along = (x - (cx - rx)) / (rx * 2)
       const u = clamp(along, 0, 0.999)
       const cycleIdx = 16 + (((Math.floor(u * 32) + indexOffset) % 32) + 32) % 32
       setPx(x, y, cycleIdx)
@@ -191,14 +202,15 @@ function drawCloud(cx, cy, rx, ry, indexOffset) {
   }
 }
 
-// A handful of clouds at varying altitudes, sizes, and palette offsets.
-drawCloud(220, 280, 200, 60, 0)
-drawCloud(720, 240, 240, 70, 8)
-drawCloud(1220, 290, 280, 75, 16)
-drawCloud(1640, 250, 200, 55, 24)
-drawCloud(420, 380, 180, 50, 4)
-drawCloud(960, 410, 220, 55, 12)
-drawCloud(1480, 380, 200, 60, 20)
+// Clouds scattered across the sky at varying altitudes, sizes, and
+// palette offsets. Positions kept inside the narrower 1440 width.
+drawCloud(180, 280, 180, 55, 0)
+drawCloud(560, 240, 220, 65, 8)
+drawCloud(980, 290, 230, 70, 16)
+drawCloud(1280, 250, 170, 55, 24)
+drawCloud(320, 390, 170, 50, 4)
+drawCloud(760, 410, 200, 55, 12)
+drawCloud(1160, 390, 180, 55, 20)
 
 // ---------- Mountains ----------
 function drawRidge(peaks, baseY, idxLo, idxHi, noisy) {
@@ -222,14 +234,14 @@ function drawRidge(peaks, baseY, idxLo, idxHi, noisy) {
   }
 }
 drawRidge(
-  [[-30, 600], [240, 555], [480, 540], [720, 565], [960, 525], [1200, 555], [1440, 540], [1680, 570], [1920, 560]],
+  [[-30, 600], [200, 555], [400, 540], [600, 565], [800, 525], [1000, 555], [1200, 540], [1400, 560], [1470, 560]],
   HORIZON_Y + 90,
   80,
   94,
   true,
 )
 drawRidge(
-  [[-30, 660], [180, 625], [420, 600], [620, 615], [840, 590], [1080, 615], [1320, 600], [1560, 620], [1800, 610], [1950, 630]],
+  [[-30, 660], [160, 625], [360, 600], [560, 615], [760, 590], [960, 615], [1160, 600], [1360, 620], [1470, 625]],
   HORIZON_Y + 140,
   96,
   110,
@@ -242,13 +254,32 @@ for (let y = HORIZON_Y + 140; y < H; y++) {
   const idx = 176 + Math.floor(t * 15)
   for (let x = 0; x < W; x++) setPx(x, y, idx)
 }
-// Grass stipples
-for (let i = 0; i < 24000; i++) {
+// Grass stipples — much denser, with closer-up blades taller so the
+// foreground reads as ground meadow rather than flat green.
+for (let i = 0; i < 60000; i++) {
   const x = Math.floor(rnd() * W)
-  const y = Math.floor(HORIZON_Y + 150 + rnd() * (H - HORIZON_Y - 150))
-  const blades = 1 + Math.floor(rnd() * 4)
+  // Bias y toward the bottom — more blades visible up close than at
+  // the back of the clearing.
+  const t = Math.pow(rnd(), 0.5)
+  const y = Math.floor(HORIZON_Y + 150 + t * (H - HORIZON_Y - 150))
+  const blades = 1 + Math.floor(rnd() * (2 + t * 4))
   for (let k = 0; k < blades; k++) {
     setPx(x, y - k, 192 + Math.floor(rnd() * 15))
+  }
+}
+
+// Occasional darker tufts to break up the green and suggest uneven
+// ground.
+for (let i = 0; i < 1200; i++) {
+  const x = Math.floor(rnd() * W)
+  const t = Math.pow(rnd(), 0.4)
+  const y = Math.floor(HORIZON_Y + 160 + t * (H - HORIZON_Y - 160))
+  const w = 1 + Math.floor(rnd() * 4)
+  const h = 1 + Math.floor(rnd() * 3)
+  for (let dy = 0; dy < h; dy++) {
+    for (let dx = -w; dx <= w; dx++) {
+      setPx(x + dx, y - dy, 208 + Math.floor(rnd() * 14))
+    }
   }
 }
 
@@ -315,17 +346,20 @@ function drawConifer(cx, baseY, height, seedOffset = 0) {
   }
 }
 
-// Distribute trees along the far left and far right, scattered in
-// depth so the front edge of the forest looks staggered.
+// Trees clustered on the far left and far right, staggered in depth.
+// Positions tightened in toward the center compared to the 1920-wide
+// draft so the cluster fills the side strips on a 16:9 viewport.
 const leftCluster = [
-  [40, H - 12, 380, 11],
-  [120, H - 22, 320, 23],
-  [200, H - 8, 360, 41],
-  [280, H - 30, 280, 67],
-  [350, H - 16, 240, 83],
-  [80, H - 60, 250, 97],
-  [220, H - 70, 230, 109],
-  [340, H - 70, 200, 131],
+  [40, H - 12, 360, 11],
+  [110, H - 22, 320, 23],
+  [180, H - 8, 340, 41],
+  [250, H - 30, 280, 67],
+  [320, H - 16, 250, 83],
+  [400, H - 26, 220, 95],
+  [70, H - 60, 240, 97],
+  [200, H - 68, 230, 109],
+  [310, H - 70, 200, 131],
+  [380, H - 80, 180, 143],
 ]
 const rightCluster = leftCluster.map(([cx, by, h, so]) => [W - cx, by, h, so + 1])
 
