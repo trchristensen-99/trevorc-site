@@ -38,52 +38,64 @@ function setRange(start, end, fn) {
   }
 }
 
-// Layout (kept symbolic for ease of future weather/time-of-day layers).
+// Layout
 //  0-15    utility / deep shadow tones
-//  16-47   CLOUD CYCLE (32 colors instead of 16 — longer loop, more drift)
-//  48-63   upper sky gradient (deep blue → mid blue)
-//  64-79   horizon glow band (warm)
-//  80-95   distant mountains (cool purple-blue)
-//  96-111  midground hills
-//  112-127 distant tree line (reserved)
-//  128-143 foreground tree foliage (cool / shadow side)
-//  144-159 foreground tree foliage (highlight / lit side)
-//  160-175 tree trunks
-//  176-191 ground grass base
-//  192-207 ground grass highlights
-//  208-223 ground shadow tones
-//  224-255 reserved
+//  16-47   CLOUD CYCLE (32 colors, all narrow-band whitish)
+//  48-95   sky gradient (48 colors — finer steps so the gradient reads
+//          as continuous rather than as visible bands)
+//  96-111  horizon glow band (warm)
+//  112-127 distant mountains
+//  128-143 midground hills
+//  144-159 distant tree line (reserved)
+//  160-175 foreground tree foliage (cool / shadow side)
+//  176-191 foreground tree foliage (highlight / lit side)
+//  192-207 tree trunks
+//  208-223 ground grass base
+//  224-239 ground grass highlights
+//  240-255 ground shadow / dark tufts
 setRange(0, 15, (t) => [lerp(6, 36, t), lerp(6, 32, t), lerp(8, 40, t)])
 
-// Cloud cycle: 32 entries forming a soft gradient between sky-blue and
-// near-white. Painted as cloud-shaped patches in the scene rather than
-// stripes, so the rotation reads as the cloud's color slowly migrating
-// across its silhouette — i.e. the cloud drifting.
+// Cloud cycle: 32 entries kept in a narrow whitish range. The cycle
+// describes a *brightness wave* across the cloud body — one bright
+// peak near t=0.5 and a soft "shaded underside" near t=0 and t=1
+// (which are made identical so the loop closes seamlessly with no
+// visible seam when the palette wraps). The color stays mostly white
+// throughout; what migrates is the position of the highlight inside
+// the cloud's silhouette.
 setRange(16, 47, (t) => {
-  // First two-thirds: ramp from sky-blue toward off-white.
-  // Last third: ease back to sky-blue, closing the loop seamlessly.
-  let mix
-  if (t < 2 / 3) mix = t / (2 / 3) // 0 → 1
-  else mix = 1 - (t - 2 / 3) / (1 / 3) // 1 → 0
-  const eased = 0.5 - 0.5 * Math.cos(mix * Math.PI) // smoothstep
+  // bright: 0 at the cycle endpoints, 1 at the midpoint, smooth sinusoid.
+  const bright = 0.5 - 0.5 * Math.cos(t * 2 * Math.PI)
+  // shaded white (cool gray-blue) → bright white → shaded white
   return [
-    lerp(150, 244, eased),
-    lerp(185, 248, eased),
-    lerp(225, 253, eased),
+    lerp(224, 252, bright),
+    lerp(228, 252, bright),
+    lerp(236, 252, bright),
   ]
 })
 
-setRange(48, 63, (t) => [lerp(58, 130, t), lerp(105, 180, t), lerp(175, 220, t)])
-setRange(64, 79, (t) => [lerp(180, 245, t), lerp(180, 215, t), lerp(180, 190, t)])
-setRange(80, 95, (t) => [lerp(72, 110, t), lerp(80, 115, t), lerp(110, 145, t)])
-setRange(96, 111, (t) => [lerp(45, 80, t), lerp(65, 95, t), lerp(60, 80, t)])
-setRange(112, 127, (t) => [lerp(20, 50, t), lerp(50, 80, t), lerp(30, 55, t)])
-setRange(128, 143, (t) => [lerp(15, 40, t), lerp(58, 92, t), lerp(22, 48, t)])
-setRange(144, 159, (t) => [lerp(45, 95, t), lerp(95, 145, t), lerp(38, 68, t)])
-setRange(160, 175, (t) => [lerp(40, 90, t), lerp(28, 62, t), lerp(18, 38, t)])
-setRange(176, 191, (t) => [lerp(65, 105, t), lerp(105, 145, t), lerp(50, 80, t)])
-setRange(192, 207, (t) => [lerp(110, 160, t), lerp(155, 195, t), lerp(75, 110, t)])
-setRange(208, 223, (t) => [lerp(40, 70, t), lerp(70, 105, t), lerp(40, 65, t)])
+// Sky gradient: 48 colors from deep zenith blue down to the upper edge
+// of the horizon glow band. Finer steps = continuous-looking gradient.
+setRange(48, 95, (t) => {
+  // Slight gamma so the upper half stays darker longer (sky reads as
+  // deeper overhead, brighter near the horizon).
+  const eased = Math.pow(t, 1.15)
+  return [
+    lerp(60, 168, eased),
+    lerp(102, 198, eased),
+    lerp(168, 226, eased),
+  ]
+})
+
+setRange(96, 111, (t) => [lerp(180, 245, t), lerp(185, 220, t), lerp(180, 200, t)])
+setRange(112, 127, (t) => [lerp(72, 110, t), lerp(80, 115, t), lerp(110, 145, t)])
+setRange(128, 143, (t) => [lerp(45, 80, t), lerp(65, 95, t), lerp(60, 80, t)])
+setRange(144, 159, (t) => [lerp(20, 50, t), lerp(50, 80, t), lerp(30, 55, t)])
+setRange(160, 175, (t) => [lerp(15, 40, t), lerp(58, 92, t), lerp(22, 48, t)])
+setRange(176, 191, (t) => [lerp(45, 95, t), lerp(95, 145, t), lerp(38, 68, t)])
+setRange(192, 207, (t) => [lerp(40, 90, t), lerp(28, 62, t), lerp(18, 38, t)])
+setRange(208, 223, (t) => [lerp(65, 105, t), lerp(105, 145, t), lerp(50, 80, t)])
+setRange(224, 239, (t) => [lerp(110, 160, t), lerp(155, 195, t), lerp(75, 110, t)])
+setRange(240, 255, (t) => [lerp(40, 70, t), lerp(70, 105, t), lerp(40, 65, t)])
 
 // ---------- Pixel buffer ----------
 const pixels = new Uint8Array(W * H)
@@ -141,20 +153,22 @@ const ridgeNoise = valueNoise(0x1337C0DE)
 // y=540..580    horizon glow band
 const HORIZON_Y = 580
 
-for (let y = 0; y < 200; y++) {
-  const idx = 48 + Math.floor((y / 200) * 15)
+// Sky uses the full 48-color gradient (indices 48-95) across the full
+// pre-horizon-glow height for the smoothest possible top-to-bottom
+// transition.
+const SKY_LO = 48
+const SKY_HI = 95
+const SKY_BOTTOM = 540 // last y row that uses the sky gradient
+for (let y = 0; y < SKY_BOTTOM; y++) {
+  const t = y / (SKY_BOTTOM - 1)
+  const idx = SKY_LO + Math.floor(t * (SKY_HI - SKY_LO))
   for (let x = 0; x < W; x++) setPx(x, y, idx)
 }
 
-// Ambient mid-sky fill (later overwritten by cloud blobs).
-for (let y = 200; y < 540; y++) {
-  const t = (y - 200) / (540 - 200)
-  const idx = 48 + Math.floor(lerp(15, 8, t))
-  for (let x = 0; x < W; x++) setPx(x, y, idx)
-}
-for (let y = 540; y < HORIZON_Y; y++) {
-  const t = (y - 540) / (HORIZON_Y - 540)
-  const idx = 64 + Math.floor(t * 15)
+// Horizon glow band (warmer, 16 colors).
+for (let y = SKY_BOTTOM; y < HORIZON_Y; y++) {
+  const t = (y - SKY_BOTTOM) / (HORIZON_Y - SKY_BOTTOM)
+  const idx = 96 + Math.floor(t * 15)
   for (let x = 0; x < W; x++) setPx(x, y, idx)
 }
 
@@ -236,40 +250,36 @@ function drawRidge(peaks, baseY, idxLo, idxHi, noisy) {
 drawRidge(
   [[-30, 600], [200, 555], [400, 540], [600, 565], [800, 525], [1000, 555], [1200, 540], [1400, 560], [1470, 560]],
   HORIZON_Y + 90,
-  80,
-  94,
+  112,
+  126,
   true,
 )
 drawRidge(
   [[-30, 660], [160, 625], [360, 600], [560, 615], [760, 590], [960, 615], [1160, 600], [1360, 620], [1470, 625]],
   HORIZON_Y + 140,
-  96,
-  110,
+  128,
+  142,
   true,
 )
 
 // ---------- Ground ----------
+// Base ground (208-223), stipple highlights (224-239), shadow/tuft
+// patches (240-255). Indices updated to match the new palette layout
+// where the sky gradient owns 48-95.
 for (let y = HORIZON_Y + 140; y < H; y++) {
   const t = (y - (HORIZON_Y + 140)) / (H - (HORIZON_Y + 140))
-  const idx = 176 + Math.floor(t * 15)
+  const idx = 208 + Math.floor(t * 15)
   for (let x = 0; x < W; x++) setPx(x, y, idx)
 }
-// Grass stipples — much denser, with closer-up blades taller so the
-// foreground reads as ground meadow rather than flat green.
 for (let i = 0; i < 60000; i++) {
   const x = Math.floor(rnd() * W)
-  // Bias y toward the bottom — more blades visible up close than at
-  // the back of the clearing.
   const t = Math.pow(rnd(), 0.5)
   const y = Math.floor(HORIZON_Y + 150 + t * (H - HORIZON_Y - 150))
   const blades = 1 + Math.floor(rnd() * (2 + t * 4))
   for (let k = 0; k < blades; k++) {
-    setPx(x, y - k, 192 + Math.floor(rnd() * 15))
+    setPx(x, y - k, 224 + Math.floor(rnd() * 15))
   }
 }
-
-// Occasional darker tufts to break up the green and suggest uneven
-// ground.
 for (let i = 0; i < 1200; i++) {
   const x = Math.floor(rnd() * W)
   const t = Math.pow(rnd(), 0.4)
@@ -278,7 +288,7 @@ for (let i = 0; i < 1200; i++) {
   const h = 1 + Math.floor(rnd() * 3)
   for (let dy = 0; dy < h; dy++) {
     for (let dx = -w; dx <= w; dx++) {
-      setPx(x + dx, y - dy, 208 + Math.floor(rnd() * 14))
+      setPx(x + dx, y - dy, 240 + Math.floor(rnd() * 14))
     }
   }
 }
@@ -294,19 +304,19 @@ function drawConifer(cx, baseY, height, seedOffset = 0) {
   const trunkTopY = baseY - trunkH
   const trunkHW = Math.max(3, Math.floor(height * 0.022))
 
-  // Trunk with noisy bark texture
+  // Trunk with noisy bark texture (palette range 192-207)
   for (let y = trunkTopY; y < baseY; y++) {
     for (let x = cx - trunkHW; x <= cx + trunkHW; x++) {
       const n = trunkNoise(x + seedOffset, y, 5)
-      const idx = 160 + Math.floor(n * 14)
+      const idx = 192 + Math.floor(n * 14)
       setPx(x, y, idx)
     }
   }
-  // A few extra vertical bark grooves
+  // Vertical bark grooves
   for (let g = -trunkHW + 1; g <= trunkHW - 1; g += 2) {
     for (let y = trunkTopY; y < baseY; y++) {
       const wobble = Math.round((trunkNoise(g, y, 9) - 0.5) * 2)
-      setPx(cx + g + wobble, y, 160 + Math.floor(trunkNoise(g, y, 13) * 6))
+      setPx(cx + g + wobble, y, 192 + Math.floor(trunkNoise(g, y, 13) * 6))
     }
   }
 
@@ -336,11 +346,13 @@ function drawConifer(cx, baseY, height, seedOffset = 0) {
         const variance = leafNoise(x + seedOffset, y, 4) * 14
         let idx
         if (rel < 0.45) {
-          idx = 144 + Math.floor(rel * 28 + variance)
+          // highlight (lit) side — palette 176-191
+          idx = 176 + Math.floor(rel * 28 + variance)
         } else {
-          idx = 128 + Math.floor((rel - 0.45) * 26 + variance)
+          // shadow (cool) side — palette 160-175
+          idx = 160 + Math.floor((rel - 0.45) * 26 + variance)
         }
-        setPx(x, y, clamp(idx, 128, 159))
+        setPx(x, y, clamp(idx, 160, 191))
       }
     }
   }
