@@ -12,7 +12,7 @@ interface Settings {
   expandToc: boolean
   zoom: number
   topBarReveal: "off" | "slow" | "normal" | "fast" | "instant"
-  decor: "placeholder" | "none" | "cycle"
+  decor: "none" | "cycle"
   decorScale: "fill" | "fit"
   decorEdgeInner: "solid" | "fade"
   decorEdgeOuter: "solid" | "fade"
@@ -31,7 +31,7 @@ const DEFAULTS: Settings = {
   expandToc: false,
   zoom: 1,
   topBarReveal: "normal",
-  decor: "placeholder",
+  decor: "none",
   decorScale: "fill",
   decorEdgeInner: "solid",
   decorEdgeOuter: "solid",

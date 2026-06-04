@@ -238,9 +238,8 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
           <label>
             <span>Type</span>
             <select data-setting="decor">
-              <option value="placeholder">Grid</option>
-              <option value="cycle">Cycle (test)</option>
-              <option value="none">None</option>
+              <option value="none" selected>None</option>
+              <option value="cycle">Cycle</option>
             </select>
           </label>
           <label>
