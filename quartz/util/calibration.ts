@@ -76,7 +76,9 @@ function rateableFiles(allFiles: QuartzPluginData[]): QuartzPluginData[] {
     .sort((a, b) => {
       const ai = (a.frontmatter as Record<string, unknown>).importance as number
       const bi = (b.frontmatter as Record<string, unknown>).importance as number
-      if (ai !== bi) return ai - bi
+      // Descending: most important first, so rank 1 = most important.
+      if (ai !== bi) return bi - ai
+      // Stable tiebreak by modified date.
       const am = a.dates?.modified?.getTime() ?? 0
       const bm = b.dates?.modified?.getTime() ?? 0
       return am - bm
@@ -99,7 +101,25 @@ export function calibrate(
 
   const idx = ranked.findIndex((f) => f.slug === file.slug)
   if (idx < 0) return null
-  const rank = idx + 1
+
+  // Collapse ties: every file with the same raw importance shares one
+  // rank — the median of their 1-based positions, floored. With rank 1
+  // = most important, floor pulls ties toward the more-important side.
+  let start = idx
+  let end = idx
+  while (
+    start > 0 &&
+    ((ranked[start - 1].frontmatter as Record<string, unknown>).importance as number) === raw
+  ) {
+    start--
+  }
+  while (
+    end < total - 1 &&
+    ((ranked[end + 1].frontmatter as Record<string, unknown>).importance as number) === raw
+  ) {
+    end++
+  }
+  const rank = Math.floor((start + end) / 2) + 1
   const percentile = (rank / total) * 100
 
   // Below threshold: just return rank/percentile, no bucketing
@@ -107,13 +127,14 @@ export function calibrate(
     return { raw, bucket: raw, rank, total, percentile }
   }
 
-  // Compute target counts for current corpus, then assign buckets by rank
+  // Compute target counts for current corpus, then assign buckets by rank.
+  // counts[10] = how many essays end up in bucket 10 (the highest), etc.
+  // With rank 1 = most important, walk buckets from 10 down so the top
+  // ranks land in bucket 10.
   const counts = targetCounts(total, opts.steepness)
-  // counts[1] = how many essays end up in bucket 1, etc.
-  // Bucket assignment: bottom counts[1] ranks → bucket 1, next counts[2] → bucket 2, etc.
   let cumulative = 0
   let bucket = 1
-  for (let b = 1; b <= 10; b++) {
+  for (let b = 10; b >= 1; b--) {
     cumulative += counts[b]
     if (rank <= cumulative) {
       bucket = b

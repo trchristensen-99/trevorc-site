@@ -2,7 +2,7 @@
 title: AI's Impact on the Creative Process
 date: 2026-06-01
 modified: 2026-06-01
-importance: 6
+importance: 5
 status: finished
 tags:
   - ai
