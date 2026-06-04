@@ -1,5 +1,5 @@
 ---
-title: Leg Day for the Mind?
+title: Leg Day for the Mind
 date: 2026-06-03
 modified: 2026-06-03
 importance: 4
