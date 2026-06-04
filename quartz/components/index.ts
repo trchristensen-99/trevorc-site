@@ -14,6 +14,7 @@ import InlineToc from "./InlineToc"
 import SidebarMenu from "./SidebarMenu"
 import SettingsButton from "./SettingsButton"
 import CanvasCycleDecor from "./CanvasCycleDecor"
+import FootnoteHover from "./FootnoteHover"
 import TopBar from "./TopBar"
 import PrevNext from "./PrevNext"
 import Spacer from "./Spacer"
@@ -48,6 +49,7 @@ export {
   SidebarMenu,
   SettingsButton,
   CanvasCycleDecor,
+  FootnoteHover,
   TopBar,
   PrevNext,
   Spacer,
