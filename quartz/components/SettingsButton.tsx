@@ -248,7 +248,6 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
             <select data-setting="decorScale">
               <option value="fill" selected>Fill</option>
               <option value="fit">Fit</option>
-              <option value="native">Native</option>
             </select>
           </label>
           <label>

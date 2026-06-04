@@ -26,7 +26,7 @@ let startTime = 0
 let rafId = 0
 let currentSceneUrl: string | null = null
 
-const SCENE_URL = "/static/canvascycle/testramp.js"
+const SCENE_URL = "/static/canvascycle/forest-clearing.js"
 
 async function loadScene(url: string): Promise<Scene | null> {
   try {

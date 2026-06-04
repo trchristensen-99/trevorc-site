@@ -20,14 +20,10 @@ html[data-decor="cycle"] .decor-canvas {
   display: block;
 }
 /* Scale options:
-     fill   — object-fit: cover (default, fills the viewport, may crop)
-     fit    — object-fit: contain (scales to fit, may show outer color)
-     native — no scaling, image at its native pixel size */
+     fill — object-fit: cover (default, fills the viewport, may crop)
+     fit  — object-fit: contain (scales to fit, may show outer color) */
 html[data-decor-scale="fit"] .decor-canvas {
   object-fit: contain;
-}
-html[data-decor-scale="native"] .decor-canvas {
-  object-fit: none;
 }
 /* In cycle mode body provides no background of its own — the canvas
    does. Clear pattern, mask, and max-width so nothing covers it. */

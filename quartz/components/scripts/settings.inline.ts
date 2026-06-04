@@ -13,7 +13,7 @@ interface Settings {
   zoom: number
   topBarReveal: "off" | "slow" | "normal" | "fast" | "instant"
   decor: "placeholder" | "none" | "cycle"
-  decorScale: "fill" | "fit" | "native"
+  decorScale: "fill" | "fit"
   decorEdgeInner: "solid" | "fade"
   decorEdgeOuter: "solid" | "fade"
   decorOuter: "match" | "light" | "dark" | "gray"
