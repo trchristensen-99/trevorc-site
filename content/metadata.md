@@ -29,7 +29,7 @@ Clicking the value jumps to [[all|All pages]] sorted shortest first.
 
 A 1 to 10 manual score in the frontmatter field `importance`. Judgement of how important the piece is to the author, with 10 being the most important.
 
-Raw scores are passed through a log inverse-J calibration at build time so the displayed "calibrated" bucket adapts as the corpus grows. The displayed value is the calibrated bucket; the rank shown alongside is the page's rank among all rated pages.
+The parenthetical "(rank R of T)" alongside the score is the page's standing among all rated pages — **lower numbers mean the piece is more important**, so rank 1 is the most important and rank T the least. Ties share a single rank (the floored median of their positions), so two equally-rated pieces in a corpus of three both show "rank 1 of 3".
 
 ### tags
 
