@@ -2,7 +2,7 @@
 title: Pixel Art
 date: 2026-06-05
 modified: 2026-06-05
-importance: 2
+importance: 3
 status: finished
 tags:
   - art
