@@ -2,7 +2,7 @@
 title: Is Life like a Video Game?
 date: 2026-06-07
 modified: 2026-06-07
-importance: 3
+importance: 5
 status: finished
 tags:
   - video games
@@ -20,7 +20,13 @@ Given this generality, it seems to me that the answer to this post's titular que
 
 In most games there are structured objectives, including ways to objectively "win." However, at least to me, life seems more like an open-ended sandbox like *Minecraft* or Paradox games in that you make your own goals/fun. There are achievements you can go for but it can be more fun to ignore those and build your kingdom however you want. Obviously, life most closely resembles a game like *The Sims*, but that's clearly art imitating life. The same is true with *GTA V*.
 
-More abstractly, life is a sandbox with the rules of physics as the engine. Of course, unlike the default game mode in most games, real life is on hardcore mode [^2] where (to the best of our knowledge) you can't respawn after you die. This naturally makes people more cautious since you lose all progress and have to completely restart the game. Real life is the ultimate hardcore mode, since even in hardcore mode video games you know you can always just start another playthrough with the lessons you learned from all of your previous runs. Unless you find some way to respawn with your memories intact [^3], that won't be happening irl. Another deep difference is that there is no way to really know what lies outside the universe where our lives take place. You know about the wider world outside of the game, but we can never really be sure what lies outside ourselves.
+More abstractly, life is a sandbox with the rules of physics as the engine. Of course, unlike the default game mode in most games, real life is on hardcore mode [^2] where (to the best of our knowledge) you can't respawn after you die. This naturally makes people more cautious since you lose all progress and have to completely restart the game. Real life is the ultimate hardcore mode, since even in hardcore mode video games you know you can always just start another playthrough with the lessons you learned from all of your previous runs.
+
+At first, this seemingly undercuts the affirmative answer we reached earlier in the piece. Unless we find some way to respawn with our memories intact [^3], we only ever have one continuous "play-through" of our lives. Moreover, we learn everything about ourselves as well as the world we live in while playing the game. Indeed, this is because we as players are contained within the universe's physics engine rather than existing outside of it. Imagine a physics engine simulation with no players interacting with it from the outside. Within the game, there arise entities like ourselves who can think, self-reflect, and interact with the world. At what point do cellular automata or "NPCs" become players in their own right?
+
+It is interesting to think about this in relation to game-playing AIs like Deep Blue or AlphaGo. Even LLMs can be thought of as playing a next-word-prediction game. To get better at their assigned tasks, models start understanding the wider world they are a part of. Humans evolved under surprisingly similar circumstances, just with genetic fitness as our optimization function. As gaming gets more advanced, its features approach those of reality.
+
+Of course, other than through Occam's razor, we can't rule out explanations involving things outside of our universe and physics. This gets at another deep difference between reality and video games, which is that there is no way to know what lies outside the universe where our lives take place. Hints about what might exist beyond tantalize us from every corner — including mathematics, science, religion, spiritual experiences, and more — but things for which we have reproducible evidence are only ever part of the physics engine in which we all live. Moreover, a gamer can always stop playing and "return" to the familiar wider world; we cannot make such a move with equivalent certainty. So while life shares a lot of mechanics with contemporary video games, it's the only shot we get, and is played from inside the game itself with only the faintest whisper, if even that, of what happens outside.
 
 [^1]: seemingly a recurring theme in these posts for some reason.
 
