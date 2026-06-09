@@ -14,7 +14,16 @@ interface Settings {
   topBarReveal: "off" | "slow" | "normal" | "fast" | "instant"
   artTheme: "none" | "seasonal" | "ocean" | "forest" | "mountain" | "winter" | "medieval_city"
   hemisphere: "auto" | "north" | "south"
-  weatherChance: "off" | "low" | "medium" | "high" | "always"
+  weatherChance: "never" | "sometimes" | "always"
+  timeOfDay:
+    | "auto"
+    | "early_morning"
+    | "late_morning"
+    | "afternoon"
+    | "before_sunset"
+    | "after_sunset"
+    | "night"
+  directArt: string
   metaDate: boolean
   metaModified: boolean
   metaReading: boolean
@@ -31,7 +40,9 @@ const DEFAULTS: Settings = {
   topBarReveal: "normal",
   artTheme: "none",
   hemisphere: "auto",
-  weatherChance: "medium",
+  weatherChance: "sometimes",
+  timeOfDay: "auto",
+  directArt: "auto",
   metaDate: true,
   metaModified: true,
   metaReading: true,
@@ -69,6 +80,8 @@ function apply(s: Settings) {
   root.setAttribute("data-art-theme", s.artTheme)
   root.setAttribute("data-hemisphere", s.hemisphere)
   root.setAttribute("data-weather", s.weatherChance)
+  root.setAttribute("data-time-of-day", s.timeOfDay)
+  root.setAttribute("data-direct-art", s.directArt)
   // Nudge the site-art renderer to re-evaluate immediately when the
   // theme/hemisphere/weather change, rather than waiting for its tick.
   try {

@@ -45,7 +45,11 @@
       "label": "Mountain",
       "type": "diurnal",
       "timeline": {
-        "early_morning": { "src": "quantum_quasar_studio/mountain/early_morning.png",            "artist": "quantum_quasar_studio" },
+        "early_morning": [
+          { "src": "quantum_quasar_studio/mountain/sunrise_1.png",      "artist": "quantum_quasar_studio" },
+          { "src": "quantum_quasar_studio/mountain/sunrise_2.png",      "artist": "quantum_quasar_studio" },
+          { "src": "quantum_quasar_studio/mountain/early_morning.png",  "artist": "quantum_quasar_studio" }
+        ],
         "late_morning":  { "src": "pixel_1992/mountain/late_morning.png",                       "artist": "pixel_1992" },
         "afternoon":     { "src": "pixel_1992/mountain/early_afternoon.png",                    "artist": "pixel_1992" },
         "before_sunset": { "src": "pixel_1992/mountain/late_afternoon_and_evening.png",         "artist": "pixel_1992" },

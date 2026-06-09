@@ -154,6 +154,33 @@ const css = `
   margin: 0.2rem 0 0.2rem 0.1rem;
 }
 
+.settings-section-heading {
+  display: block;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: var(--darkgray);
+  margin: 0.4rem 0 0.2rem;
+}
+
+/* Hide time-of-day and weather rows where they don't make sense for the
+   current theme. Time-of-day disappears for "none" and "medieval_city"
+   (which is seasonal-static). Weather disappears for any theme that
+   has no weather variants in the manifest (none / seasonal / forest /
+   mountain / medieval_city). */
+html[data-art-theme="none"] .art-theme-block .art-time-row,
+html[data-art-theme="medieval_city"] .art-theme-block .art-time-row {
+  display: none;
+}
+html[data-art-theme="none"] .art-theme-block .art-weather-row,
+html[data-art-theme="forest"] .art-theme-block .art-weather-row,
+html[data-art-theme="mountain"] .art-theme-block .art-weather-row,
+html[data-art-theme="medieval_city"] .art-theme-block .art-weather-row {
+  display: none;
+}
+html[data-art-theme="none"] .art-more-options {
+  display: none;
+}
+
 .settings-reset {
   padding: 0.3rem 0.55rem;
   background: transparent;
@@ -232,45 +259,104 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
           </select>
         </label>
       </div>
-      <details class="settings-sub">
-        <summary>Background art</summary>
+      {/* Art theme controls — shown inline (no outer details). The
+          "Time of day" and "Weather" rows are hidden when they don't
+          apply via CSS hooks on html[data-art-theme]. */}
+      <div class="settings-row art-theme-block">
+        <span class="settings-section-heading">Art Theme</span>
+        <label>
+          <span>Theme</span>
+          <select data-setting="artTheme">
+            <option value="none" selected>None</option>
+            <option value="seasonal">Seasonal</option>
+            <option value="ocean">Ocean</option>
+            <option value="forest">Forest</option>
+            <option value="mountain">Mountain</option>
+            <option value="winter">Winter</option>
+            <option value="medieval_city">Medieval city</option>
+          </select>
+        </label>
+        <label class="art-time-row">
+          <span>Time of day</span>
+          <select data-setting="timeOfDay">
+            <option value="auto" selected>Auto</option>
+            <option value="early_morning">Early morning</option>
+            <option value="late_morning">Late morning</option>
+            <option value="afternoon">Afternoon</option>
+            <option value="before_sunset">Before sunset</option>
+            <option value="after_sunset">After sunset</option>
+            <option value="night">Night</option>
+          </select>
+        </label>
+        <label class="art-weather-row">
+          <span>Weather</span>
+          <select data-setting="weatherChance">
+            <option value="never">Never</option>
+            <option value="sometimes" selected>Sometimes</option>
+            <option value="always">Always</option>
+          </select>
+        </label>
+      </div>
+      <details class="settings-sub art-more-options">
+        <summary>More Art Options</summary>
         <div class="settings-row">
           <label>
-            <span>Theme</span>
-            <select data-setting="artTheme">
-              <option value="none" selected>None</option>
-              <option value="seasonal">Seasonal</option>
-              <option value="ocean">Ocean</option>
-              <option value="forest">Forest</option>
-              <option value="mountain">Mountain</option>
-              <option value="winter">Winter</option>
-              <option value="medieval_city">Medieval city</option>
+            <span>Hemisphere</span>
+            <select data-setting="hemisphere">
+              <option value="auto" selected>Auto</option>
+              <option value="north">Northern</option>
+              <option value="south">Southern</option>
+            </select>
+          </label>
+          <label>
+            <span>Direct art</span>
+            <select data-setting="directArt">
+              <option value="auto" selected>Auto (use theme)</option>
+              <optgroup label="Ocean">
+                <option value="ocean|early_morning">Ocean — early morning</option>
+                <option value="ocean|late_morning">Ocean — late morning</option>
+                <option value="ocean|afternoon">Ocean — afternoon</option>
+                <option value="ocean|before_sunset">Ocean — before sunset</option>
+                <option value="ocean|after_sunset">Ocean — after sunset</option>
+                <option value="ocean|night">Ocean — night</option>
+                <option value="ocean|weather:rain">Ocean — rain</option>
+              </optgroup>
+              <optgroup label="Forest">
+                <option value="forest|early_morning">Forest — early morning</option>
+                <option value="forest|late_morning">Forest — late morning</option>
+                <option value="forest|afternoon">Forest — afternoon</option>
+                <option value="forest|before_sunset">Forest — before sunset</option>
+                <option value="forest|after_sunset">Forest — after sunset</option>
+                <option value="forest|night">Forest — night</option>
+              </optgroup>
+              <optgroup label="Mountain">
+                <option value="mountain|early_morning">Mountain — early morning</option>
+                <option value="mountain|late_morning">Mountain — late morning</option>
+                <option value="mountain|afternoon">Mountain — afternoon</option>
+                <option value="mountain|before_sunset">Mountain — before sunset</option>
+                <option value="mountain|after_sunset">Mountain — after sunset</option>
+                <option value="mountain|night">Mountain — night</option>
+              </optgroup>
+              <optgroup label="Winter">
+                <option value="winter|early_morning">Winter — early morning</option>
+                <option value="winter|late_morning">Winter — late morning</option>
+                <option value="winter|afternoon">Winter — afternoon</option>
+                <option value="winter|before_sunset">Winter — before sunset</option>
+                <option value="winter|after_sunset">Winter — after sunset</option>
+                <option value="winter|night">Winter — night</option>
+                <option value="winter|weather:snow">Winter — snow</option>
+              </optgroup>
+              <optgroup label="Medieval city">
+                <option value="medieval_city|variant:winter">Medieval city — winter</option>
+                <option value="medieval_city|variant:spring_and_fall">Medieval city — spring/fall</option>
+                <option value="medieval_city|variant:summer">Medieval city — summer</option>
+              </optgroup>
+              <optgroup label="Special">
+                <option value="special:halloween">Halloween</option>
+              </optgroup>
             </select>
           </label>
         </div>
-        <details class="settings-sub">
-          <summary>Advanced</summary>
-          <div class="settings-row">
-            <label>
-              <span>Hemisphere</span>
-              <select data-setting="hemisphere">
-                <option value="auto" selected>Auto</option>
-                <option value="north">Northern</option>
-                <option value="south">Southern</option>
-              </select>
-            </label>
-            <label>
-              <span>Weather</span>
-              <select data-setting="weatherChance">
-                <option value="off">Off</option>
-                <option value="low">Low</option>
-                <option value="medium" selected>Medium</option>
-                <option value="high">High</option>
-                <option value="always">Always</option>
-              </select>
-            </label>
-          </div>
-        </details>
       </details>
       <details class="settings-sub">
         <summary>Page metadata fields</summary>

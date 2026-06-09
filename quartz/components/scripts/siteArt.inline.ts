@@ -20,11 +20,12 @@ interface Band {
   toHour: number
   isDaytime: boolean
 }
-interface TimelineEntry {
+interface SingleEntry {
   src: string
   artist: string
 }
-interface WeatherVariant extends TimelineEntry {
+type TimelineEntry = SingleEntry | SingleEntry[]
+interface WeatherVariant extends SingleEntry {
   appliesTo: string[]
 }
 interface DiurnalTheme {
@@ -165,29 +166,57 @@ function fnv1a(str: string): number {
 }
 
 const WEATHER_CHANCE: Record<string, number> = {
-  off: 0,
-  low: 0.15,
-  medium: 0.25,
-  high: 0.4,
+  never: 0,
+  sometimes: 0.25,
   always: 1.0,
 }
 
+// Southern-hemisphere IANA timezone identifiers (or prefixes). Anything
+// matching makes hemisphere autodetect resolve to "south". The list
+// favors locations clearly south of the equator; near-equator zones
+// stay on the default (north) since the seasonal shift there is
+// negligible anyway.
+const SOUTH_HEMISPHERE_HINTS = [
+  "Antarctica/",
+  "Australia/",
+  "Pacific/Auckland",
+  "Pacific/Chatham",
+  "Pacific/Fiji",
+  "Pacific/Norfolk",
+  "Pacific/Noumea",
+  "Pacific/Port_Moresby",
+  "Pacific/Tongatapu",
+  "Pacific/Easter",
+  "America/Argentina",
+  "America/Asuncion",
+  "America/Montevideo",
+  "America/Santiago",
+  "America/Sao_Paulo",
+  "America/Punta_Arenas",
+  "America/La_Paz",
+  "America/Campo_Grande",
+  "America/Cuiaba",
+  "America/Porto_Velho",
+  "America/Rio_Branco",
+  "Africa/Johannesburg",
+  "Africa/Maputo",
+  "Africa/Harare",
+  "Africa/Windhoek",
+  "Africa/Gaborone",
+  "Africa/Maseru",
+  "Africa/Mbabane",
+  "Africa/Lusaka",
+  "Africa/Antananarivo",
+  "Indian/Mauritius",
+  "Indian/Reunion",
+  "Indian/Mahe",
+]
+
 function pickHemisphere(setting: string): "north" | "south" {
   if (setting === "north" || setting === "south") return setting
-  // Auto: very light heuristic from the timezone string. Default north.
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""
-    const southHints = [
-      "Australia/",
-      "Pacific/Auckland",
-      "Pacific/Fiji",
-      "America/Argentina",
-      "America/Sao_Paulo",
-      "America/Santiago",
-      "Africa/Johannesburg",
-      "Antarctica/",
-    ]
-    if (southHints.some((p) => tz.startsWith(p))) return "south"
+    if (SOUTH_HEMISPHERE_HINTS.some((p) => tz.startsWith(p))) return "south"
   } catch (_e) {
     /* swallow */
   }
@@ -216,6 +245,26 @@ function pickWeather(theme: Theme, band: Band, chanceSetting: string, date: Date
   if (r0 >= chance) return null
   const idx = fnv1a(seed + "|pick") % eligible.length
   return eligible[idx][0]
+}
+
+function resolveTimelineEntry(
+  entry: TimelineEntry,
+  band: Band,
+  now: Date,
+): SingleEntry {
+  if (!Array.isArray(entry)) return entry
+  if (entry.length === 1) return entry[0]
+  const h = now.getHours() + now.getMinutes() / 60
+  const span = band.toHour - band.fromHour
+  let progress: number
+  if (band.toHour > 24) {
+    if (h >= band.fromHour) progress = (h - band.fromHour) / span
+    else progress = (h + 24 - band.fromHour) / span
+  } else {
+    progress = (h - band.fromHour) / span
+  }
+  const idx = Math.min(entry.length - 1, Math.max(0, Math.floor(progress * entry.length)))
+  return entry[idx]
 }
 
 function pickSrc(
@@ -247,27 +296,80 @@ function pickSrc(
   if (weatherKey && theme.weather && theme.weather[weatherKey]) {
     return theme.weather[weatherKey].src
   }
-  const entry = theme.timeline[band.name]
-  return entry ? entry.src : null
+  const tlEntry = theme.timeline[band.name]
+  if (!tlEntry) return null
+  return resolveTimelineEntry(tlEntry, band, date).src
+}
+
+// Direct-art override: encoding scheme used in the gear menu's "Direct
+// art" select. Returns a resolved src path relative to manifest.basePath,
+// or null if the encoding is "auto" / unparseable.
+function resolveDirectArt(spec: string, m: Manifest): string | null {
+  if (!spec || spec === "auto") return null
+  // Specials encoded as "special:halloween"
+  if (spec.startsWith("special:")) {
+    const key = spec.slice("special:".length)
+    return m.specials[key]?.src ?? null
+  }
+  // Otherwise "<theme>|<selector>" where selector is a band name,
+  // "weather:<key>", or "variant:<key>".
+  const sep = spec.indexOf("|")
+  if (sep < 0) return null
+  const themeName = spec.slice(0, sep)
+  const selector = spec.slice(sep + 1)
+  const theme = m.themes[themeName]
+  if (!theme) return null
+  if (selector.startsWith("weather:") && theme.type === "diurnal") {
+    const w = theme.weather?.[selector.slice("weather:".length)]
+    return w ? w.src : null
+  }
+  if (selector.startsWith("variant:") && theme.type === "seasonal_static") {
+    const v = theme.variants[selector.slice("variant:".length)]
+    return v ? v.src : null
+  }
+  if (theme.type === "diurnal") {
+    const entry = theme.timeline[selector]
+    if (!entry) return null
+    return Array.isArray(entry) ? entry[0].src : entry.src
+  }
+  return null
 }
 
 interface Settings {
   artTheme: string
   hemisphere: string
   weatherChance: string
+  timeOfDay: string
+  directArt: string
+}
+const SETTINGS_DEFAULTS: Settings = {
+  artTheme: "none",
+  hemisphere: "auto",
+  weatherChance: "sometimes",
+  timeOfDay: "auto",
+  directArt: "auto",
 }
 function readSettings(): Settings {
   try {
     const raw = localStorage.getItem("trevorc-settings-v1")
-    if (!raw) return { artTheme: "none", hemisphere: "auto", weatherChance: "medium" }
+    if (!raw) return { ...SETTINGS_DEFAULTS }
     const parsed = JSON.parse(raw)
     return {
-      artTheme: parsed.artTheme ?? "none",
-      hemisphere: parsed.hemisphere ?? "auto",
-      weatherChance: parsed.weatherChance ?? "medium",
+      artTheme: parsed.artTheme ?? SETTINGS_DEFAULTS.artTheme,
+      hemisphere: parsed.hemisphere ?? SETTINGS_DEFAULTS.hemisphere,
+      // Old levels (off/low/medium/high) migrate to the three-state model.
+      weatherChance: (() => {
+        const v = parsed.weatherChance
+        if (v === "always" || v === "sometimes" || v === "never") return v
+        if (v === "off") return "never"
+        if (v === "low" || v === "medium" || v === "high") return "sometimes"
+        return SETTINGS_DEFAULTS.weatherChance
+      })(),
+      timeOfDay: parsed.timeOfDay ?? SETTINGS_DEFAULTS.timeOfDay,
+      directArt: parsed.directArt ?? SETTINGS_DEFAULTS.directArt,
     }
   } catch {
-    return { artTheme: "none", hemisphere: "auto", weatherChance: "medium" }
+    return { ...SETTINGS_DEFAULTS }
   }
 }
 
@@ -315,6 +417,14 @@ async function tick() {
   if (!manifest) return
   ensureContainer()
   const settings = readSettings()
+
+  // Direct-art override wins above everything else.
+  const direct = resolveDirectArt(settings.directArt, manifest)
+  if (direct) {
+    await crossfadeTo(`${manifest.basePath}/${direct}`)
+    return
+  }
+
   if (settings.artTheme === "none") {
     fadeBlank()
     return
@@ -323,7 +433,18 @@ async function tick() {
   let themeName = settings.artTheme
   if (themeName === "seasonal") themeName = pickSeasonalTheme(new Date(), hemi, manifest)
   const bands = dynamicBands(manifest.bands, new Date(), hemi)
-  const band = pickBand(new Date(), bands)
+
+  // Time-of-day setting: "auto" follows the dynamic clock-based band,
+  // otherwise force the named band so the user can preview any moment.
+  let band: Band
+  if (settings.timeOfDay && settings.timeOfDay !== "auto") {
+    band =
+      bands.find((b) => b.name === settings.timeOfDay) ||
+      pickBand(new Date(), bands)
+  } else {
+    band = pickBand(new Date(), bands)
+  }
+
   const theme = manifest.themes[themeName]
   const weatherKey = theme ? pickWeather(theme, band, settings.weatherChance, new Date()) : null
   const srcRel = pickSrc(themeName, band, weatherKey, new Date(), manifest)

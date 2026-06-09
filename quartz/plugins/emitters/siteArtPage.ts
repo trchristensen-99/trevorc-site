@@ -38,8 +38,10 @@ function collectImages(manifest: Manifest): Map<string, ManifestImage[]> {
     if ((theme as any).type === "diurnal") {
       const tl = (theme as any).timeline || {}
       for (const [band, entry] of Object.entries(tl)) {
-        const e = entry as ManifestImage
-        push(e.artist, { src: e.src, artist: e.artist, band })
+        const entries = Array.isArray(entry) ? entry : [entry]
+        for (const e of entries as ManifestImage[]) {
+          push(e.artist, { src: e.src, artist: e.artist, band: `${themeName} / ${band}` })
+        }
       }
       const weather = (theme as any).weather || {}
       for (const [wname, entry] of Object.entries(weather)) {
