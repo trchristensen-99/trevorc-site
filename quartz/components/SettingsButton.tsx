@@ -236,42 +236,41 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
         <summary>Background art</summary>
         <div class="settings-row">
           <label>
-            <span>Type</span>
-            <select data-setting="decor">
+            <span>Theme</span>
+            <select data-setting="artTheme">
               <option value="none" selected>None</option>
-            </select>
-          </label>
-          <label>
-            <span>Scale</span>
-            <select data-setting="decorScale">
-              <option value="fill" selected>Fill</option>
-              <option value="fit">Fit</option>
-            </select>
-          </label>
-          <label>
-            <span>Inner edge</span>
-            <select data-setting="decorEdgeInner">
-              <option value="solid" selected>Solid</option>
-              <option value="fade">Fade</option>
-            </select>
-          </label>
-          <label>
-            <span>Outer edge</span>
-            <select data-setting="decorEdgeOuter">
-              <option value="solid" selected>Solid</option>
-              <option value="fade">Fade</option>
-            </select>
-          </label>
-          <label>
-            <span>Outer color</span>
-            <select data-setting="decorOuter">
-              <option value="match" selected>Match</option>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-              <option value="gray">Gray</option>
+              <option value="seasonal">Seasonal</option>
+              <option value="ocean">Ocean</option>
+              <option value="forest">Forest</option>
+              <option value="mountain">Mountain</option>
+              <option value="winter">Winter</option>
+              <option value="medieval_city">Medieval city</option>
             </select>
           </label>
         </div>
+        <details class="settings-sub">
+          <summary>Advanced</summary>
+          <div class="settings-row">
+            <label>
+              <span>Hemisphere</span>
+              <select data-setting="hemisphere">
+                <option value="auto" selected>Auto</option>
+                <option value="north">Northern</option>
+                <option value="south">Southern</option>
+              </select>
+            </label>
+            <label>
+              <span>Weather</span>
+              <select data-setting="weatherChance">
+                <option value="off">Off</option>
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+                <option value="always">Always</option>
+              </select>
+            </label>
+          </div>
+        </details>
       </details>
       <details class="settings-sub">
         <summary>Page metadata fields</summary>

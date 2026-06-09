@@ -12,11 +12,9 @@ interface Settings {
   expandToc: boolean
   zoom: number
   topBarReveal: "off" | "slow" | "normal" | "fast" | "instant"
-  decor: "none" | "cycle"
-  decorScale: "fill" | "fit"
-  decorEdgeInner: "solid" | "fade"
-  decorEdgeOuter: "solid" | "fade"
-  decorOuter: "match" | "light" | "dark" | "gray"
+  artTheme: "none" | "seasonal" | "ocean" | "forest" | "mountain" | "winter" | "medieval_city"
+  hemisphere: "auto" | "north" | "south"
+  weatherChance: "off" | "low" | "medium" | "high" | "always"
   metaDate: boolean
   metaModified: boolean
   metaReading: boolean
@@ -31,11 +29,9 @@ const DEFAULTS: Settings = {
   expandToc: false,
   zoom: 1,
   topBarReveal: "normal",
-  decor: "none",
-  decorScale: "fill",
-  decorEdgeInner: "solid",
-  decorEdgeOuter: "solid",
-  decorOuter: "match",
+  artTheme: "none",
+  hemisphere: "auto",
+  weatherChance: "medium",
   metaDate: true,
   metaModified: true,
   metaReading: true,
@@ -67,21 +63,19 @@ function write(s: Settings) {
 
 function apply(s: Settings) {
   const root = document.documentElement
-  // The /background/ showcase forces its own decor settings on the
-  // <html> attributes via inline HTML; don't let saved user settings
-  // override them.
-  const isShowcase =
-    typeof window !== "undefined" && window.location.pathname.includes("/background/")
   root.setAttribute("data-color-theme", s.colorTheme)
   root.setAttribute("data-show-breadcrumbs", s.showBreadcrumbs ? "true" : "false")
   root.setAttribute("data-expand-toc", s.expandToc ? "true" : "false")
-  if (!isShowcase) {
-    root.setAttribute("data-decor", s.decor)
-    root.setAttribute("data-decor-scale", s.decorScale)
+  root.setAttribute("data-art-theme", s.artTheme)
+  root.setAttribute("data-hemisphere", s.hemisphere)
+  root.setAttribute("data-weather", s.weatherChance)
+  // Nudge the site-art renderer to re-evaluate immediately when the
+  // theme/hemisphere/weather change, rather than waiting for its tick.
+  try {
+    document.dispatchEvent(new CustomEvent("site-art-changed"))
+  } catch (_e) {
+    /* swallow */
   }
-  root.setAttribute("data-decor-edge-inner", s.decorEdgeInner)
-  root.setAttribute("data-decor-edge-outer", s.decorEdgeOuter)
-  root.setAttribute("data-decor-outer", s.decorOuter)
   root.setAttribute("data-meta-date", s.metaDate ? "true" : "false")
   root.setAttribute("data-meta-modified", s.metaModified ? "true" : "false")
   root.setAttribute("data-meta-reading", s.metaReading ? "true" : "false")

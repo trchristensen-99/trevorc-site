@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "basePath": "/static/site-art",
+  "bands": [
+    { "name": "early_morning", "fromHour": 5.5,  "toHour": 7.5,  "isDaytime": true },
+    { "name": "late_morning",  "fromHour": 7.5,  "toHour": 11.5, "isDaytime": true },
+    { "name": "afternoon",     "fromHour": 11.5, "toHour": 16.5, "isDaytime": true },
+    { "name": "before_sunset", "fromHour": 16.5, "toHour": 18.0, "isDaytime": true },
+    { "name": "after_sunset",  "fromHour": 18.0, "toHour": 20.5, "isDaytime": false },
+    { "name": "night",         "fromHour": 20.5, "toHour": 29.5, "isDaytime": false }
+  ],
+  "themes": {
+    "ocean": {
+      "label": "Ocean",
+      "type": "diurnal",
+      "timeline": {
+        "early_morning": { "src": "free-game-assets/ocean/sunrise.png",       "artist": "free-game-assets" },
+        "late_morning":  { "src": "free-game-assets/ocean/late_morning.png",  "artist": "free-game-assets" },
+        "afternoon":     { "src": "free-game-assets/ocean/afternoon.png",     "artist": "free-game-assets" },
+        "before_sunset": { "src": "free-game-assets/ocean/before_sunset.png", "artist": "free-game-assets" },
+        "after_sunset":  { "src": "free-game-assets/ocean/after_sunset.png",  "artist": "free-game-assets" },
+        "night":         { "src": "free-game-assets/ocean/night.png",         "artist": "free-game-assets" }
+      },
+      "weather": {
+        "rain": {
+          "src": "free-game-assets/ocean/rain_daytime.png",
+          "artist": "free-game-assets",
+          "appliesTo": ["late_morning", "afternoon", "before_sunset"]
+        }
+      }
+    },
+    "forest": {
+      "label": "Forest",
+      "type": "diurnal",
+      "timeline": {
+        "early_morning": { "src": "quantum_quasar_studio/forest/morning.png",   "artist": "quantum_quasar_studio" },
+        "late_morning":  { "src": "quantum_quasar_studio/forest/morning.png",   "artist": "quantum_quasar_studio" },
+        "afternoon":     { "src": "quantum_quasar_studio/forest/afternoon.png", "artist": "quantum_quasar_studio" },
+        "before_sunset": { "src": "quantum_quasar_studio/forest/evening.png",   "artist": "quantum_quasar_studio" },
+        "after_sunset":  { "src": "pixel_1992/forest/sunset.png",               "artist": "pixel_1992" },
+        "night":         { "src": "pixel_1992/forest/night.png",                "artist": "pixel_1992" }
+      }
+    },
+    "mountain": {
+      "label": "Mountain",
+      "type": "diurnal",
+      "timeline": {
+        "early_morning": { "src": "quantum_quasar_studio/mountain/early_morning.png",            "artist": "quantum_quasar_studio" },
+        "late_morning":  { "src": "pixel_1992/mountain/late_morning.png",                       "artist": "pixel_1992" },
+        "afternoon":     { "src": "pixel_1992/mountain/early_afternoon.png",                    "artist": "pixel_1992" },
+        "before_sunset": { "src": "pixel_1992/mountain/late_afternoon_and_evening.png",         "artist": "pixel_1992" },
+        "after_sunset":  { "src": "pixel_1992/mountain/sunset.png",                             "artist": "pixel_1992" },
+        "night":         { "src": "pixel_1992/mountain/night.png",                              "artist": "pixel_1992" }
+      }
+    },
+    "winter": {
+      "label": "Winter",
+      "type": "diurnal",
+      "timeline": {
+        "early_morning": { "src": "free-game-assets/winter/sunrise_and_sunset.png", "artist": "free-game-assets" },
+        "late_morning":  { "src": "free-game-assets/winter/morning.png",            "artist": "free-game-assets" },
+        "afternoon":     { "src": "pixel_1992/winter/afternoon.png",                "artist": "pixel_1992" },
+        "before_sunset": { "src": "free-game-assets/winter/evening.png",            "artist": "free-game-assets" },
+        "after_sunset":  { "src": "free-game-assets/winter/sunrise_and_sunset.png", "artist": "free-game-assets" },
+        "night":         { "src": "free-game-assets/winter/night.png",              "artist": "free-game-assets" }
+      },
+      "weather": {
+        "snow": {
+          "src": "quantum_quasar_studio/winter/snow.png",
+          "artist": "quantum_quasar_studio",
+          "appliesTo": ["early_morning", "late_morning", "afternoon", "before_sunset"]
+        }
+      }
+    },
+    "medieval_city": {
+      "label": "Medieval city",
+      "type": "seasonal_static",
+      "variants": {
+        "winter":         { "src": "quantum_quasar_studio/medieval_city/winter.png",          "artist": "quantum_quasar_studio" },
+        "spring_and_fall": { "src": "quantum_quasar_studio/medieval_city/spring_and_fall.png", "artist": "quantum_quasar_studio" },
+        "summer":          { "src": "quantum_quasar_studio/medieval_city/summer.png",          "artist": "quantum_quasar_studio" }
+      },
+      "monthsToVariant": {
+        "1": "winter", "2": "winter", "12": "winter",
+        "6": "summer", "7": "summer", "8": "summer",
+        "3": "spring_and_fall", "4": "spring_and_fall", "5": "spring_and_fall",
+        "9": "spring_and_fall", "10": "spring_and_fall", "11": "spring_and_fall"
+      }
+    }
+  },
+  "specials": {
+    "halloween": {
+      "fromMonthDay": "10-15",
+      "toMonthDay": "10-31",
+      "appliesTo": ["night"],
+      "src": "pixel_1992/specials/halloween.png",
+      "artist": "pixel_1992"
+    }
+  },
+  "seasonal": {
+    "north": [
+      { "fromMonthDay": "12-01", "toMonthDay": "03-01", "theme": "winter" },
+      { "fromMonthDay": "03-01", "toMonthDay": "06-01", "theme": "forest" },
+      { "fromMonthDay": "06-01", "toMonthDay": "09-01", "theme": "ocean" },
+      { "fromMonthDay": "09-01", "toMonthDay": "12-01", "theme": "mountain" }
+    ],
+    "south": [
+      { "fromMonthDay": "06-01", "toMonthDay": "09-01", "theme": "winter" },
+      { "fromMonthDay": "09-01", "toMonthDay": "12-01", "theme": "forest" },
+      { "fromMonthDay": "12-01", "toMonthDay": "03-01", "theme": "ocean" },
+      { "fromMonthDay": "03-01", "toMonthDay": "06-01", "theme": "mountain" }
+    ]
+  },
+  "artists": {
+    "free-game-assets": {
+      "name": "Free Game Assets",
+      "url": "https://free-game-assets.itch.io/"
+    },
+    "pixel_1992": {
+      "name": "PIXEL_1992",
+      "url": "https://pixel-1992.itch.io/"
+    },
+    "quantum_quasar_studio": {
+      "name": "Quantum Quasar Studio",
+      "url": "https://quantum-quasar-studio.itch.io/"
+    }
+  }
+}

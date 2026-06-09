@@ -20,3 +20,5 @@ See [[contact|the contact page]] for email and anonymous options.
 ## About this site
 
 Built with [Quartz](https://quartz.jzhao.xyz). Source on [GitHub](https://github.com/trchristensen-99/trevorc-site). Hosted on Cloudflare Pages.
+
+The pixel-art landscapes in the background (when enabled in the gear menu) come from a handful of itch.io artists; full credits are on the [site art page](./site-art).
