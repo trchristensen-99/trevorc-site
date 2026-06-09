@@ -1,7 +1,7 @@
 ---
 title: When should you use AI in writing?
-date: 2026-06-05
-modified: 2026-06-05
+date: 2026-06-04
+modified: 2026-06-04
 importance: 4
 status: finished
 tags:
