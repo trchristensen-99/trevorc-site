@@ -2,7 +2,7 @@
 title: "Stream-of-Consciousness Writing: A Useful Technique"
 date: 2026-06-09
 modified: 2026-06-09
-importance: 1
+importance: 4
 status: finished
 tags:
   - experimental
