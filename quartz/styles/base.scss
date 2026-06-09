@@ -247,10 +247,6 @@ a {
 
   &.internal {
     text-decoration: none;
-    background-color: var(--highlight);
-    padding: 0 0.1rem;
-    border-radius: 5px;
-    line-height: 1.4rem;
 
     &.broken {
       color: var(--secondary);
@@ -261,11 +257,6 @@ a {
       }
     }
 
-    &:has(> img) {
-      background-color: transparent;
-      border-radius: 0;
-      padding: 0;
-    }
     &.tag-link {
       &::before {
         content: "#";
@@ -273,13 +264,11 @@ a {
     }
   }
 
+  /* Suppress the little "arrow out of box" glyph Quartz appends after
+     external links — keep external links visually indistinguishable
+     from internal ones. */
   &.external .external-icon {
-    height: 1ex;
-    margin: 0 0.15em;
-
-    > path {
-      fill: var(--dark);
-    }
+    display: none;
   }
 }
 
