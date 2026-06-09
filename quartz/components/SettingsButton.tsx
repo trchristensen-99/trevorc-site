@@ -277,7 +277,7 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
       <details class="settings-sub">
         <summary>Page metadata fields</summary>
         <div class="settings-row">
-          <label><input type="checkbox" data-setting="metaDate" /><span>Published date</span></label>
+          <label><input type="checkbox" data-setting="metaDate" /><span>Created date</span></label>
           <label><input type="checkbox" data-setting="metaModified" /><span>Updated date</span></label>
           <label><input type="checkbox" data-setting="metaReading" /><span>Reading time</span></label>
           <label><input type="checkbox" data-setting="metaImportance" /><span>Importance</span></label>

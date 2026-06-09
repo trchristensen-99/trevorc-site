@@ -173,7 +173,7 @@ const Content: QuartzComponent = (props: QuartzComponentProps) => {
 
     appended = (
       <>
-        {renderHomeSection("Recently published", byPublished.slice(0, HOME_LIMIT), "created", props)}
+        {renderHomeSection("Recently created", byPublished.slice(0, HOME_LIMIT), "created", props)}
         {renderHomeSection("Most important", byImportance.slice(0, HOME_LIMIT), "importance", props)}
         {renderHomeSection("Recently updated", byUpdated.slice(0, HOME_LIMIT), "modified", props)}
       </>

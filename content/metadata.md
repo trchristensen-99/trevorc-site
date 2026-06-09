@@ -11,7 +11,7 @@ A reference for the metadata fields used on pieces of writing here. Section head
 
 ### date
 
-When the piece was first published. Shown as "Published <date>" in the metadata header on each page. Clicking the date in any page's metadata jumps to [[all|All pages]] sorted by publication date.
+When the piece was first created. Shown as "Created <date>" in the metadata header on each page. Clicking the date in any page's metadata jumps to [[all|All pages]] sorted by creation date.
 
 ### modified
 

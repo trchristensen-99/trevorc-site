@@ -95,7 +95,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       if (!modified || sameDay) {
         segments.push(
           <span class="meta-date">
-            {labelLink(labelHref("date"), "Published")}{" "}
+            {labelLink(labelHref("date"), "Created")}{" "}
             {valueLink(
               valueHref("created", "desc"),
               <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>,
@@ -105,7 +105,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       } else {
         segments.push(
           <span class="meta-date">
-            {labelLink(labelHref("date"), "Published")}{" "}
+            {labelLink(labelHref("date"), "Created")}{" "}
             {valueLink(
               valueHref("created", "desc"),
               <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>,
