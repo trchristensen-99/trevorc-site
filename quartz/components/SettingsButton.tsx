@@ -239,7 +239,6 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
             <span>Type</span>
             <select data-setting="decor">
               <option value="none" selected>None</option>
-              <option value="cycle">Cycle</option>
             </select>
           </label>
           <label>
