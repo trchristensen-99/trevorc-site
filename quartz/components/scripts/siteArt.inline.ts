@@ -114,6 +114,46 @@ function pickBand(now: Date, bands: Band[]): Band {
   return bands[0]
 }
 
+// Solar-aware band shifting: in summer, mornings start earlier and
+// evenings stretch later; in winter, the opposite. The amplitude
+// approximates a ~6-hour summer/winter day-length spread (roughly
+// mid-latitude — 40–45° — without doing a real sunrise/sunset calc).
+//
+// shift returns +1 at the local summer solstice, -1 at the winter
+// solstice, 0 at the equinoxes, smoothly cosine-interpolated.
+const SOLAR_SHIFT_AMPLITUDE_HOURS = 1.5
+const NOON_HOUR = 11.5
+
+function dayOfYear(date: Date): number {
+  const startUtc = Date.UTC(date.getFullYear(), 0, 0)
+  return Math.floor((date.getTime() - startUtc) / 86400000)
+}
+
+function seasonalShift(date: Date, hemisphere: "north" | "south"): number {
+  // Northern summer solstice ≈ day 172 (Jun 21), Southern ≈ day 355 (Dec 21).
+  const solsticeDay = hemisphere === "north" ? 172 : 355
+  return Math.cos((2 * Math.PI * (dayOfYear(date) - solsticeDay)) / 365.25)
+}
+
+function adjustEdge(h: number, shift: number): number {
+  // Morning-side edges (those landing before our nominal noon, plus
+  // the wrapping end-of-night which is "tomorrow morning") shift
+  // *earlier* in summer and *later* in winter. Evening-side edges
+  // shift *later* in summer and *earlier* in winter.
+  const delta = shift * SOLAR_SHIFT_AMPLITUDE_HOURS
+  const isMorningSide = h < NOON_HOUR || h > 24
+  return isMorningSide ? h - delta : h + delta
+}
+
+function dynamicBands(staticBands: Band[], date: Date, hemisphere: "north" | "south"): Band[] {
+  const shift = seasonalShift(date, hemisphere)
+  return staticBands.map((b) => ({
+    ...b,
+    fromHour: adjustEdge(b.fromHour, shift),
+    toHour: adjustEdge(b.toHour, shift),
+  }))
+}
+
 // Tiny deterministic hash for daily weather rolls (no flicker across reloads).
 function fnv1a(str: string): number {
   let h = 0x811c9dc5
@@ -282,7 +322,8 @@ async function tick() {
   const hemi = pickHemisphere(settings.hemisphere)
   let themeName = settings.artTheme
   if (themeName === "seasonal") themeName = pickSeasonalTheme(new Date(), hemi, manifest)
-  const band = pickBand(new Date(), manifest.bands)
+  const bands = dynamicBands(manifest.bands, new Date(), hemi)
+  const band = pickBand(new Date(), bands)
   const theme = manifest.themes[themeName]
   const weatherKey = theme ? pickWeather(theme, band, settings.weatherChance, new Date()) : null
   const srcRel = pickSrc(themeName, band, weatherKey, new Date(), manifest)
