@@ -1,18 +1,20 @@
-// Site art renderer: paints a background scene behind the page using
-// freely-licensed pixel-art landscapes from itch.io artists. The
-// manifest (/static/site-art/manifest.json) describes themes, their
-// time-of-day timelines, weather variants, the seasonal mapping, and
-// any date-window specials (e.g. Halloween).
+// Site art renderer.
 //
-// Rendering uses two stacked <img> elements anchored to the bottom of
-// the viewport. State transitions (time-of-day band changes, weather
-// rolls, theme changes from settings) crossfade the inactive image to
-// the new src over CROSSFADE_MS. Re-evaluation runs every TICK_MS so
-// time bands shift in the background without user interaction.
+// Two stacked <img> elements at the viewport bottom. The "base" layer
+// always sits at opacity 1; the "fade" overlay sits above it at
+// opacity 0 by default. To change the displayed scene we set the
+// overlay's src to the new image and animate its opacity 0 → 1.
+// During the fade, every visible pixel is a per-pixel alpha blend of
+// the new image (alpha=t) over the old (alpha=1) — total compositing
+// alpha is constant at 1, so there's no "white/black/gray middle"
+// like a symmetric opacity crossfade would give. Once the overlay
+// reaches opacity 1, the base copies the new src (instant; browser
+// cache), the overlay is reset to opacity 0, and the cycle repeats.
 
 const MANIFEST_URL = "/static/site-art/manifest.json"
 const TICK_MS = 30 * 1000
-const CROSSFADE_MS = 12000
+const CROSSFADE_MS = 10000
+const SOMETIMES_WEATHER_CHANCE = 0.175 // midpoint of 15–20%
 
 interface Band {
   name: string
@@ -37,7 +39,7 @@ interface DiurnalTheme {
 interface SeasonalStaticTheme {
   label: string
   type: "seasonal_static"
-  variants: Record<string, TimelineEntry>
+  variants: Record<string, SingleEntry>
   monthsToVariant: Record<string, string>
 }
 type Theme = DiurnalTheme | SeasonalStaticTheme
@@ -65,26 +67,32 @@ interface Manifest {
 
 let manifest: Manifest | null = null
 let manifestPromise: Promise<Manifest | null> | null = null
-let imgA: HTMLImageElement | null = null
-let imgB: HTMLImageElement | null = null
-let activeSlot: "a" | "b" = "a"
+let imgBase: HTMLImageElement | null = null
+let imgFade: HTMLImageElement | null = null
 let currentSrc = ""
+let fadeToken = 0
 let tickTimer: number | null = null
 
+// Per-page-load rolls. Re-rolled by start() on every nav so each fresh
+// page (or SPA navigation) gets a fresh chance at weather and a fresh
+// random scene.
+let weatherRolledOn = false
+let rolledRandomSrc: string | null = null
+
 function ensureContainer() {
-  if (imgA && imgA.isConnected && imgB && imgB.isConnected) return
-  // Remove any leftover from prior nav
+  if (imgBase && imgBase.isConnected && imgFade && imgFade.isConnected) return
   document.querySelectorAll("img.site-art-frame").forEach((el) => el.remove())
-  imgA = document.createElement("img")
-  imgB = document.createElement("img")
-  for (const img of [imgA, imgB]) {
-    img.className = "site-art-frame"
+  imgBase = document.createElement("img")
+  imgFade = document.createElement("img")
+  imgBase.className = "site-art-frame site-art-base"
+  imgFade.className = "site-art-frame site-art-fade"
+  for (const img of [imgBase, imgFade]) {
     img.setAttribute("aria-hidden", "true")
-    img.style.opacity = "0"
     img.alt = ""
     document.body.appendChild(img)
   }
-  activeSlot = "a"
+  imgBase.style.opacity = "0"
+  imgFade.style.opacity = "0"
   currentSrc = ""
 }
 
@@ -96,7 +104,6 @@ function monthDay(date: Date): string {
 }
 function inDateRange(date: Date, fromMD: string, toMD: string): boolean {
   const md = monthDay(date)
-  // toMD is exclusive; wraps the calendar year if fromMD > toMD
   if (fromMD <= toMD) return md >= fromMD && md < toMD
   return md >= fromMD || md < toMD
 }
@@ -107,7 +114,6 @@ function pickBand(now: Date, bands: Band[]): Band {
     if (b.toHour <= 24) {
       if (h >= b.fromHour && h < b.toHour) return b
     } else {
-      // Wraps midnight (e.g. 20.5 → 29.5 means 20.5–05.5)
       const wrappedTo = b.toHour - 24
       if (h >= b.fromHour || h < wrappedTo) return b
     }
@@ -116,12 +122,9 @@ function pickBand(now: Date, bands: Band[]): Band {
 }
 
 // Solar-aware band shifting: in summer, mornings start earlier and
-// evenings stretch later; in winter, the opposite. The amplitude
-// approximates a ~6-hour summer/winter day-length spread (roughly
-// mid-latitude — 40–45° — without doing a real sunrise/sunset calc).
-//
-// shift returns +1 at the local summer solstice, -1 at the winter
-// solstice, 0 at the equinoxes, smoothly cosine-interpolated.
+// evenings stretch later. The 11:30 noon-ish junction stays fixed (so
+// the late_morning ↔ afternoon boundary doesn't drift across the
+// year). Amplitude is roughly a 40–45° latitude day-length spread.
 const SOLAR_SHIFT_AMPLITUDE_HOURS = 1.5
 const NOON_HOUR = 11.5
 
@@ -131,19 +134,15 @@ function dayOfYear(date: Date): number {
 }
 
 function seasonalShift(date: Date, hemisphere: "north" | "south"): number {
-  // Northern summer solstice ≈ day 172 (Jun 21), Southern ≈ day 355 (Dec 21).
   const solsticeDay = hemisphere === "north" ? 172 : 355
   return Math.cos((2 * Math.PI * (dayOfYear(date) - solsticeDay)) / 365.25)
 }
 
 function adjustEdge(h: number, shift: number): number {
-  // Morning-side edges (those landing before our nominal noon, plus
-  // the wrapping end-of-night which is "tomorrow morning") shift
-  // *earlier* in summer and *later* in winter. Evening-side edges
-  // shift *later* in summer and *earlier* in winter.
   const delta = shift * SOLAR_SHIFT_AMPLITUDE_HOURS
-  const isMorningSide = h < NOON_HOUR || h > 24
-  return isMorningSide ? h - delta : h + delta
+  if (Math.abs(h - NOON_HOUR) < 0.01) return h
+  if (h > 24 || h < NOON_HOUR) return h - delta
+  return h + delta
 }
 
 function dynamicBands(staticBands: Band[], date: Date, hemisphere: "north" | "south"): Band[] {
@@ -155,27 +154,6 @@ function dynamicBands(staticBands: Band[], date: Date, hemisphere: "north" | "so
   }))
 }
 
-// Tiny deterministic hash for daily weather rolls (no flicker across reloads).
-function fnv1a(str: string): number {
-  let h = 0x811c9dc5
-  for (let i = 0; i < str.length; i++) {
-    h ^= str.charCodeAt(i)
-    h = Math.imul(h, 0x01000193) >>> 0
-  }
-  return h >>> 0
-}
-
-const WEATHER_CHANCE: Record<string, number> = {
-  never: 0,
-  sometimes: 0.25,
-  always: 1.0,
-}
-
-// Southern-hemisphere IANA timezone identifiers (or prefixes). Anything
-// matching makes hemisphere autodetect resolve to "south". The list
-// favors locations clearly south of the equator; near-equator zones
-// stay on the default (north) since the seasonal shift there is
-// negligible anyway.
 const SOUTH_HEMISPHERE_HINTS = [
   "Antarctica/",
   "Australia/",
@@ -231,20 +209,19 @@ function pickSeasonalTheme(date: Date, hemisphere: "north" | "south", m: Manifes
   return rules[0].theme
 }
 
-function pickWeather(theme: Theme, band: Band, chanceSetting: string, date: Date): string | null {
+// Weather decision. "always" pins on (when an eligible variant exists
+// for the current band); "never" pins off; "sometimes" obeys a single
+// per-page-load coin flip — i.e. set when start() runs and stable for
+// the rest of this navigation.
+function pickWeather(theme: Theme, band: Band, chance: string): string | null {
   if (theme.type !== "diurnal" || !theme.weather) return null
   const eligible = Object.entries(theme.weather).filter(([_, w]) =>
     w.appliesTo.includes(band.name),
   )
   if (!eligible.length) return null
-  const chance = WEATHER_CHANCE[chanceSetting] ?? 0
-  if (chance === 0) return null
-  // Deterministic per day + theme so the weather doesn't flicker on reload.
-  const seed = `${theme.label}|${date.getFullYear()}|${date.getMonth()}|${date.getDate()}`
-  const r0 = (fnv1a(seed) % 1000) / 1000
-  if (r0 >= chance) return null
-  const idx = fnv1a(seed + "|pick") % eligible.length
-  return eligible[idx][0]
+  if (chance === "always") return eligible[0][0]
+  if (chance === "sometimes" && weatherRolledOn) return eligible[0][0]
+  return null
 }
 
 function resolveTimelineEntry(
@@ -275,24 +252,19 @@ function pickSrc(
   m: Manifest,
 ): string | null {
   if (themeName === "none") return null
-
-  // Specials (e.g. Halloween night) — checked before theme lookup so they win.
   for (const sp of Object.values(m.specials)) {
     if (inDateRange(date, sp.fromMonthDay, sp.toMonthDay) && sp.appliesTo.includes(band.name)) {
       return sp.src
     }
   }
-
   const theme = m.themes[themeName]
   if (!theme) return null
-
   if (theme.type === "seasonal_static") {
     const monthKey = String(date.getMonth() + 1)
     const variantKey = theme.monthsToVariant[monthKey] || Object.keys(theme.variants)[0]
     const entry = theme.variants[variantKey]
     return entry ? entry.src : null
   }
-
   if (weatherKey && theme.weather && theme.weather[weatherKey]) {
     return theme.weather[weatherKey].src
   }
@@ -301,18 +273,37 @@ function pickSrc(
   return resolveTimelineEntry(tlEntry, band, date).src
 }
 
-// Direct-art override: encoding scheme used in the gear menu's "Direct
-// art" select. Returns a resolved src path relative to manifest.basePath,
-// or null if the encoding is "auto" / unparseable.
+function allManifestSrcs(m: Manifest): string[] {
+  const out: string[] = []
+  for (const t of Object.values(m.themes)) {
+    if (t.type === "diurnal") {
+      for (const e of Object.values(t.timeline)) {
+        if (Array.isArray(e)) for (const x of e) out.push(x.src)
+        else out.push(e.src)
+      }
+      if (t.weather) for (const w of Object.values(t.weather)) out.push(w.src)
+    } else if (t.type === "seasonal_static") {
+      for (const v of Object.values(t.variants)) out.push(v.src)
+    }
+  }
+  for (const sp of Object.values(m.specials)) out.push(sp.src)
+  return out
+}
+
+function pickRandomSrc(m: Manifest): string | null {
+  if (rolledRandomSrc) return rolledRandomSrc
+  const all = allManifestSrcs(m)
+  if (!all.length) return null
+  rolledRandomSrc = all[Math.floor(Math.random() * all.length)]
+  return rolledRandomSrc
+}
+
 function resolveDirectArt(spec: string, m: Manifest): string | null {
   if (!spec || spec === "auto") return null
-  // Specials encoded as "special:halloween"
   if (spec.startsWith("special:")) {
     const key = spec.slice("special:".length)
     return m.specials[key]?.src ?? null
   }
-  // Otherwise "<theme>|<selector>" where selector is a band name,
-  // "weather:<key>", or "variant:<key>".
   const sep = spec.indexOf("|")
   if (sep < 0) return null
   const themeName = spec.slice(0, sep)
@@ -343,7 +334,7 @@ interface Settings {
   directArt: string
 }
 const SETTINGS_DEFAULTS: Settings = {
-  artTheme: "none",
+  artTheme: "seasonal",
   hemisphere: "auto",
   weatherChance: "sometimes",
   timeOfDay: "auto",
@@ -357,7 +348,6 @@ function readSettings(): Settings {
     return {
       artTheme: parsed.artTheme ?? SETTINGS_DEFAULTS.artTheme,
       hemisphere: parsed.hemisphere ?? SETTINGS_DEFAULTS.hemisphere,
-      // Old levels (off/low/medium/high) migrate to the three-state model.
       weatherChance: (() => {
         const v = parsed.weatherChance
         if (v === "always" || v === "sometimes" || v === "never") return v
@@ -373,10 +363,8 @@ function readSettings(): Settings {
   }
 }
 
-function fadeBlank() {
-  if (imgA) imgA.style.opacity = "0"
-  if (imgB) imgB.style.opacity = "0"
-  currentSrc = ""
+function setResolved(theme: string) {
+  document.documentElement.setAttribute("data-art-resolved", theme)
 }
 
 function loadImage(img: HTMLImageElement, src: string): Promise<void> {
@@ -401,15 +389,55 @@ function loadImage(img: HTMLImageElement, src: string): Promise<void> {
   })
 }
 
+function wait(ms: number): Promise<void> {
+  return new Promise((r) => window.setTimeout(r, ms))
+}
+
 async function crossfadeTo(src: string) {
-  if (!imgA || !imgB) return
+  if (!imgBase || !imgFade) return
   if (src === currentSrc) return
-  const next = activeSlot === "a" ? imgB : imgA
-  const prev = activeSlot === "a" ? imgA : imgB
-  await loadImage(next, src)
-  next.style.opacity = "1"
-  prev.style.opacity = "0"
-  activeSlot = activeSlot === "a" ? "b" : "a"
+  const myToken = ++fadeToken
+
+  // First render: pop straight into the base, no overlay fade needed.
+  if (!currentSrc) {
+    await loadImage(imgBase, src)
+    if (myToken !== fadeToken) return
+    imgBase.style.transition = "opacity 200ms ease-in-out"
+    imgBase.style.opacity = "1"
+    currentSrc = src
+    return
+  }
+
+  // Otherwise: overlay the new image on top of the current base. The
+  // base stays at opacity 1; the overlay fades 0 → 1. At every moment
+  // the compositing alpha sums to 1, so the screen never goes through
+  // a darker mid-frame.
+  await loadImage(imgFade, src)
+  if (myToken !== fadeToken) return
+
+  // Reset overlay to opacity 0 with no transition, then animate to 1.
+  imgFade.style.transition = "none"
+  imgFade.style.opacity = "0"
+  // Force a reflow so the browser registers the 0 state before the next
+  // style assignment animates.
+  void imgFade.offsetHeight
+  imgFade.style.transition = `opacity ${CROSSFADE_MS}ms ease-in-out`
+  imgFade.style.opacity = "1"
+
+  await wait(CROSSFADE_MS)
+  if (myToken !== fadeToken) return
+
+  // Snap base to the new src (browser cache makes this near-instant),
+  // wait one frame so the load lands, then reset the overlay.
+  await loadImage(imgBase, src)
+  if (myToken !== fadeToken) return
+  await new Promise<void>((r) => requestAnimationFrame(() => r()))
+  if (myToken !== fadeToken) return
+
+  imgFade.style.transition = "none"
+  imgFade.style.opacity = "0"
+  void imgFade.offsetHeight
+
   currentSrc = src
 }
 
@@ -418,38 +446,50 @@ async function tick() {
   ensureContainer()
   const settings = readSettings()
 
-  // Direct-art override wins above everything else.
+  // Direct-art override wins over everything else.
   const direct = resolveDirectArt(settings.directArt, manifest)
   if (direct) {
+    setResolved(settings.artTheme === "seasonal" ? "direct" : settings.artTheme)
     await crossfadeTo(`${manifest.basePath}/${direct}`)
     return
   }
 
   if (settings.artTheme === "none") {
-    fadeBlank()
+    setResolved("none")
+    if (imgBase) imgBase.style.opacity = "0"
+    if (imgFade) imgFade.style.opacity = "0"
+    currentSrc = ""
     return
   }
+
+  if (settings.artTheme === "random") {
+    setResolved("random")
+    const r = pickRandomSrc(manifest)
+    if (!r) return
+    await crossfadeTo(`${manifest.basePath}/${r}`)
+    return
+  }
+
   const hemi = pickHemisphere(settings.hemisphere)
   let themeName = settings.artTheme
   if (themeName === "seasonal") themeName = pickSeasonalTheme(new Date(), hemi, manifest)
-  const bands = dynamicBands(manifest.bands, new Date(), hemi)
+  setResolved(themeName)
 
-  // Time-of-day setting: "auto" follows the dynamic clock-based band,
-  // otherwise force the named band so the user can preview any moment.
+  const bands = dynamicBands(manifest.bands, new Date(), hemi)
   let band: Band
   if (settings.timeOfDay && settings.timeOfDay !== "auto") {
-    band =
-      bands.find((b) => b.name === settings.timeOfDay) ||
-      pickBand(new Date(), bands)
+    band = bands.find((b) => b.name === settings.timeOfDay) || pickBand(new Date(), bands)
   } else {
     band = pickBand(new Date(), bands)
   }
 
   const theme = manifest.themes[themeName]
-  const weatherKey = theme ? pickWeather(theme, band, settings.weatherChance, new Date()) : null
+  const weatherKey = theme ? pickWeather(theme, band, settings.weatherChance) : null
   const srcRel = pickSrc(themeName, band, weatherKey, new Date(), manifest)
   if (!srcRel) {
-    fadeBlank()
+    if (imgBase) imgBase.style.opacity = "0"
+    if (imgFade) imgFade.style.opacity = "0"
+    currentSrc = ""
     return
   }
   await crossfadeTo(`${manifest.basePath}/${srcRel}`)
@@ -470,6 +510,9 @@ async function ensureManifest(): Promise<Manifest | null> {
 
 async function start() {
   ensureContainer()
+  // Re-roll per-page-load decisions on every navigation.
+  weatherRolledOn = Math.random() < SOMETIMES_WEATHER_CHANCE
+  rolledRandomSrc = null
   await ensureManifest()
   if (!manifest) return
   await tick()

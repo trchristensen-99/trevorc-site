@@ -12,7 +12,15 @@ interface Settings {
   expandToc: boolean
   zoom: number
   topBarReveal: "off" | "slow" | "normal" | "fast" | "instant"
-  artTheme: "none" | "seasonal" | "ocean" | "forest" | "mountain" | "winter" | "medieval_city"
+  artTheme:
+    | "none"
+    | "seasonal"
+    | "random"
+    | "ocean"
+    | "forest"
+    | "mountain"
+    | "winter"
+    | "medieval_city"
   hemisphere: "auto" | "north" | "south"
   weatherChance: "never" | "sometimes" | "always"
   timeOfDay:
@@ -38,7 +46,7 @@ const DEFAULTS: Settings = {
   expandToc: false,
   zoom: 1,
   topBarReveal: "normal",
-  artTheme: "none",
+  artTheme: "seasonal",
   hemisphere: "auto",
   weatherChance: "sometimes",
   timeOfDay: "auto",

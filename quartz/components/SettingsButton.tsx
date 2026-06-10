@@ -154,27 +154,33 @@ const css = `
   margin: 0.2rem 0 0.2rem 0.1rem;
 }
 
-.settings-section-heading {
-  display: block;
-  font-size: 0.95em;
-  font-weight: 600;
-  color: var(--darkgray);
-  margin: 0.4rem 0 0.2rem;
-}
+/* Hide Time of day / Weather based on the *user-picked* theme and the
+   *resolved* theme. Resolved is the actual theme being rendered after
+   "seasonal" picks one from the current date; it's set on the html
+   element by siteArt.inline.ts on every tick, so changes take effect
+   without a refresh.
 
-/* Hide time-of-day and weather rows where they don't make sense for the
-   current theme. Time-of-day disappears for "none" and "medieval_city"
-   (which is seasonal-static). Weather disappears for any theme that
-   has no weather variants in the manifest (none / seasonal / forest /
-   mountain / medieval_city). */
-html[data-art-theme="none"] .art-theme-block .art-time-row,
-html[data-art-theme="medieval_city"] .art-theme-block .art-time-row {
+   Time of day is meaningless for: none, random, medieval_city
+     (medieval_city is seasonal-static, no diurnal cycle).
+   Weather is meaningless for: none, random, and any theme without a
+     weather variant in the manifest (currently forest, mountain,
+     medieval_city). */
+html[data-art-theme="none"] .art-time-row,
+html[data-art-theme="random"] .art-time-row,
+html[data-art-theme="medieval_city"] .art-time-row,
+html[data-art-resolved="medieval_city"] .art-time-row,
+html[data-art-resolved="none"] .art-time-row {
   display: none;
 }
-html[data-art-theme="none"] .art-theme-block .art-weather-row,
-html[data-art-theme="forest"] .art-theme-block .art-weather-row,
-html[data-art-theme="mountain"] .art-theme-block .art-weather-row,
-html[data-art-theme="medieval_city"] .art-theme-block .art-weather-row {
+html[data-art-theme="none"] .art-weather-row,
+html[data-art-theme="random"] .art-weather-row,
+html[data-art-theme="forest"] .art-weather-row,
+html[data-art-theme="mountain"] .art-weather-row,
+html[data-art-theme="medieval_city"] .art-weather-row,
+html[data-art-resolved="forest"] .art-weather-row,
+html[data-art-resolved="mountain"] .art-weather-row,
+html[data-art-resolved="medieval_city"] .art-weather-row,
+html[data-art-resolved="none"] .art-weather-row {
   display: none;
 }
 html[data-art-theme="none"] .art-more-options {
@@ -259,16 +265,15 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
           </select>
         </label>
       </div>
-      {/* Art theme controls — shown inline (no outer details). The
-          "Time of day" and "Weather" rows are hidden when they don't
-          apply via CSS hooks on html[data-art-theme]. */}
+      {/* Art Theme is the only always-visible row; everything else
+          lives inside More Art Options. */}
       <div class="settings-row art-theme-block">
-        <span class="settings-section-heading">Art Theme</span>
-        <label>
-          <span>Theme</span>
+        <label class="art-theme-row">
+          <span>Art Theme</span>
           <select data-setting="artTheme">
-            <option value="none" selected>None</option>
-            <option value="seasonal">Seasonal</option>
+            <option value="none">None</option>
+            <option value="seasonal" selected>Seasonal</option>
+            <option value="random">Random</option>
             <option value="ocean">Ocean</option>
             <option value="forest">Forest</option>
             <option value="mountain">Mountain</option>
@@ -276,30 +281,30 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
             <option value="medieval_city">Medieval city</option>
           </select>
         </label>
-        <label class="art-time-row">
-          <span>Time of day</span>
-          <select data-setting="timeOfDay">
-            <option value="auto" selected>Auto</option>
-            <option value="early_morning">Early morning</option>
-            <option value="late_morning">Late morning</option>
-            <option value="afternoon">Afternoon</option>
-            <option value="before_sunset">Before sunset</option>
-            <option value="after_sunset">After sunset</option>
-            <option value="night">Night</option>
-          </select>
-        </label>
-        <label class="art-weather-row">
-          <span>Weather</span>
-          <select data-setting="weatherChance">
-            <option value="never">Never</option>
-            <option value="sometimes" selected>Sometimes</option>
-            <option value="always">Always</option>
-          </select>
-        </label>
       </div>
       <details class="settings-sub art-more-options">
         <summary>More Art Options</summary>
         <div class="settings-row">
+          <label class="art-time-row">
+            <span>Time of day</span>
+            <select data-setting="timeOfDay">
+              <option value="auto" selected>Auto</option>
+              <option value="early_morning">Early morning</option>
+              <option value="late_morning">Late morning</option>
+              <option value="afternoon">Afternoon</option>
+              <option value="before_sunset">Before sunset</option>
+              <option value="after_sunset">After sunset</option>
+              <option value="night">Night</option>
+            </select>
+          </label>
+          <label class="art-weather-row">
+            <span>Weather</span>
+            <select data-setting="weatherChance">
+              <option value="never">Never</option>
+              <option value="sometimes" selected>Sometimes</option>
+              <option value="always">Always</option>
+            </select>
+          </label>
           <label>
             <span>Hemisphere</span>
             <select data-setting="hemisphere">
