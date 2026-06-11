@@ -98,6 +98,7 @@ const config: QuartzConfig = {
       Plugin.CustomOgImages(),
       Plugin.RobotsTxt(),
       Plugin.SiteArtPage(),
+      Plugin.BackgroundShowcase(),
     ],
   },
 }

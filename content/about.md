@@ -21,4 +21,4 @@ See [[contact|the contact page]] for email and anonymous options.
 
 Built with [Quartz](https://quartz.jzhao.xyz). Source on [GitHub](https://github.com/trchristensen-99/trevorc-site). Hosted on Cloudflare Pages.
 
-The pixel-art landscapes in the background (when enabled in the gear menu) come from a handful of itch.io artists; full credits are on the [site art page](./site-art).
+The pixel-art landscapes in the background (when enabled in the gear menu) come from a handful of itch.io artists; full credits are on the [site art page](./site-art). For a full-bleed view of just the art with nothing else on screen, see the [background showcase](./background).

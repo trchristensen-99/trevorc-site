@@ -118,6 +118,142 @@ export const SiteArtPage: QuartzEmitterPlugin = () => ({
       })
       .join("")
 
+    // Time-band tables (matches the constants in siteArt.inline.ts: a
+    // ±1.5 h cosine-interpolated solar offset with the 11:30 noon
+    // junction anchored). Three columns: equinox baseline, summer
+    // solstice (north), winter solstice (north).
+    const timeBandsRow = (
+      band: string,
+      eq: string,
+      summer: string,
+      winter: string,
+    ) =>
+      `<tr><td>${band}</td><td>${eq}</td><td>${summer}</td><td>${winter}</td></tr>`
+    const timeBandsTable = `
+      <table class="art-table">
+        <thead>
+          <tr>
+            <th>Band</th>
+            <th>Equinox (Mar / Sep)</th>
+            <th>Summer solstice (N — Jun 21)</th>
+            <th>Winter solstice (N — Dec 21)</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${timeBandsRow("early_morning", "05:30 – 07:30", "04:00 – 06:00", "07:00 – 09:00")}
+          ${timeBandsRow("late_morning", "07:30 – 11:30", "06:00 – 11:30", "09:00 – 11:30")}
+          ${timeBandsRow("afternoon", "11:30 – 16:30", "11:30 – 18:00", "11:30 – 15:00")}
+          ${timeBandsRow("before_sunset", "16:30 – 18:00", "18:00 – 19:30", "15:00 – 16:30")}
+          ${timeBandsRow("after_sunset", "18:00 – 20:30", "19:30 – 22:00", "16:30 – 19:00")}
+          ${timeBandsRow("night", "20:30 – 05:30", "22:00 – 04:00", "19:00 – 07:00")}
+        </tbody>
+      </table>`
+
+    const themeRow = (
+      band: string,
+      ocean: string,
+      forest: string,
+      mountain: string,
+      winter: string,
+    ) =>
+      `<tr><td>${band}</td><td>${ocean}</td><td>${forest}</td><td>${mountain}</td><td>${winter}</td></tr>`
+    const themesTable = `
+      <table class="art-table">
+        <thead>
+          <tr>
+            <th>Band</th>
+            <th>Ocean</th>
+            <th>Forest</th>
+            <th>Mountain</th>
+            <th>Winter</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${themeRow(
+            "early_morning",
+            "FGA / ocean / sunrise",
+            "QQS / forest / morning",
+            "QQS / mountain / sunrise_1 → sunrise_2 → early_morning",
+            "FGA / winter / sunrise_and_sunset",
+          )}
+          ${themeRow(
+            "late_morning",
+            "FGA / ocean / late_morning",
+            "QQS / forest / morning <em>(reused)</em>",
+            "P1992 / mountain / late_morning",
+            "FGA / winter / morning",
+          )}
+          ${themeRow(
+            "afternoon",
+            "FGA / ocean / afternoon",
+            "QQS / forest / afternoon",
+            "P1992 / mountain / early_afternoon",
+            "P1992 / winter / afternoon",
+          )}
+          ${themeRow(
+            "before_sunset",
+            "FGA / ocean / before_sunset",
+            "QQS / forest / evening",
+            "P1992 / mountain / late_afternoon_and_evening",
+            "FGA / winter / evening",
+          )}
+          ${themeRow(
+            "after_sunset",
+            "FGA / ocean / after_sunset",
+            "P1992 / forest / sunset",
+            "P1992 / mountain / sunset",
+            "FGA / winter / sunrise_and_sunset <em>(reused)</em>",
+          )}
+          ${themeRow(
+            "night",
+            "FGA / ocean / night",
+            "P1992 / forest / night",
+            "P1992 / mountain / night",
+            "FGA / winter / night",
+          )}
+        </tbody>
+      </table>`
+
+    const timeTablesHtml = `
+      <section class="art-times">
+        <h2>How the day cycle works</h2>
+        <p>The renderer picks a band from the local clock with a cosine-interpolated solar shift of ±1.5 h applied to the morning- and evening-side edges. The 11:30 noon junction is anchored, so the late-morning / afternoon hand-off stays put across the year. Southern Hemisphere flips the phase (winter solstice in June).</p>
+
+        <h3>Time bands by season</h3>
+        ${timeBandsTable}
+
+        <h3>What each band shows, per theme</h3>
+        ${themesTable}
+        <p class="art-note">Artist short names: <strong>FGA</strong> = Free Game Assets, <strong>P1992</strong> = PIXEL_1992, <strong>QQS</strong> = Quantum Quasar Studio.</p>
+
+        <h3>Weather variants</h3>
+        <p>Trigger when Weather = Always (whenever an eligible variant exists for the current band) or Sometimes (single per-page-load coin flip; ~17.5 % chance).</p>
+        <ul>
+          <li><strong>Ocean — rain</strong> covers late_morning, afternoon, and before_sunset → FGA / ocean / rain_daytime</li>
+          <li><strong>Winter — snow</strong> covers early_morning, late_morning, afternoon, and before_sunset → QQS / winter / snow</li>
+        </ul>
+
+        <h3>Medieval city — seasonal-static</h3>
+        <p>No diurnal cycle. The current month chooses the variant:</p>
+        <ul>
+          <li>Dec / Jan / Feb → winter</li>
+          <li>Jun / Jul / Aug → summer</li>
+          <li>Mar–May / Sep–Nov → spring_and_fall</li>
+        </ul>
+
+        <h3>Specials</h3>
+        <ul>
+          <li><strong>Halloween (Oct 15 – Oct 31)</strong> overrides the night band on whichever theme is active → PIXEL_1992 / specials / halloween</li>
+        </ul>
+
+        <h3>Seasonal theme picks</h3>
+        <p>When Art Theme = Seasonal, the date and hemisphere choose which theme renders.</p>
+        <ul>
+          <li><strong>Northern</strong>: Dec–Feb winter · Mar–May forest · Jun–Aug ocean · Sep–Nov mountain</li>
+          <li><strong>Southern</strong>: Jun–Aug winter · Sep–Nov forest · Dec–Feb ocean · Mar–May mountain</li>
+        </ul>
+      </section>`
+
     const html = `<!doctype html>
 <html lang="${cfg.locale ?? "en-US"}">
 <head>
@@ -159,13 +295,31 @@ export const SiteArtPage: QuartzEmitterPlugin = () => ({
       font-size: 0.85em;
       color: var(--darkgray);
     }
+    .art-times { margin: 3rem 0; }
+    .art-times h3 { margin-top: 1.5rem; }
+    .art-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9em;
+      margin: 0.5rem 0 1rem;
+    }
+    .art-table th, .art-table td {
+      text-align: left;
+      padding: 0.35rem 0.5rem;
+      border-bottom: 1px solid var(--lightgray);
+      vertical-align: top;
+    }
+    .art-table th { font-weight: 600; }
+    .art-note { font-size: 0.85em; color: var(--darkgray); margin-top: 0; }
   </style>
 </head>
 <body data-slug="site-art">
   <div class="site-art-page">
     <h1>Site art credits</h1>
     <p>The background scenes on this site are pixel-art landscapes licensed for commercial use from the artists below. Each artist's name links to their itch.io page; thumbnails show the specific images and the time-band / variant they cover on the site.</p>
+    <p>For a full-bleed view with no chrome, see the <a href="../background/">background showcase</a>.</p>
     ${sectionHtml}
+    ${timeTablesHtml}
     <p><a href="./about">← Back to About</a></p>
   </div>
   <script src="../postscript.js" type="application/javascript"></script>
