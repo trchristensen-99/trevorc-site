@@ -24,13 +24,18 @@ export const BackgroundShowcase: QuartzEmitterPlugin = () => ({
   <link rel="icon" href="../static/icon.png">
   <link rel="stylesheet" href="../index.css">
   <style>
+    /* body must stay transparent: the renderer paints the .site-art-
+       frame <img>s at z-index: -1, and an opaque body background sits
+       on top of them in the html stacking context. Hiding the page
+       chrome is fine because the imgs are position: fixed and don't
+       depend on it. */
     html, body {
       margin: 0;
       padding: 0;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background: #0a0a0a;
+      background: transparent !important;
     }
     body > *:not(.site-art-frame) { display: none !important; }
     .site-art-frame { display: block !important; }

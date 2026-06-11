@@ -20,15 +20,19 @@ function applySort(root: HTMLElement) {
   const mode = readSort()
   const items = Array.from(list.querySelectorAll<HTMLLIElement>("li"))
   items.sort((a, b) => {
+    const an = (a.getAttribute("data-name") ?? "").toLowerCase()
+    const bn = (b.getAttribute("data-name") ?? "").toLowerCase()
     if (mode === "alpha-asc" || mode === "alpha-desc") {
-      const an = (a.getAttribute("data-name") ?? "").toLowerCase()
-      const bn = (b.getAttribute("data-name") ?? "").toLowerCase()
       const cmp = an.localeCompare(bn)
       return mode === "alpha-asc" ? cmp : -cmp
     }
     const ac = parseFloat(a.getAttribute("data-count") ?? "0")
     const bc = parseFloat(b.getAttribute("data-count") ?? "0")
-    return mode === "count-desc" ? bc - ac : ac - bc
+    const primary = mode === "count-desc" ? bc - ac : ac - bc
+    // Tiebreak: equal-frequency tags sort alphabetically (ascending),
+    // so the order is deterministic and readable within each count band.
+    if (primary !== 0) return primary
+    return an.localeCompare(bn)
   })
   for (const li of items) list.appendChild(li)
 }
