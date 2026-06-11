@@ -26,12 +26,15 @@ interface Settings {
   timeOfDay:
     | "auto"
     | "early_morning"
+    | "sunrise"
     | "late_morning"
     | "afternoon"
     | "before_sunset"
+    | "sunset"
     | "after_sunset"
     | "night"
   directArt: string
+  pageBgOpacity: "100" | "85" | "70" | "55" | "40"
   metaDate: boolean
   metaModified: boolean
   metaReading: boolean
@@ -51,6 +54,7 @@ const DEFAULTS: Settings = {
   weatherChance: "sometimes",
   timeOfDay: "auto",
   directArt: "auto",
+  pageBgOpacity: "100",
   metaDate: true,
   metaModified: true,
   metaReading: true,
@@ -90,6 +94,8 @@ function apply(s: Settings) {
   root.setAttribute("data-weather", s.weatherChance)
   root.setAttribute("data-time-of-day", s.timeOfDay)
   root.setAttribute("data-direct-art", s.directArt)
+  root.setAttribute("data-page-bg-pct", s.pageBgOpacity)
+  root.style.setProperty("--page-bg-pct", s.pageBgOpacity)
   // Nudge the site-art renderer to re-evaluate immediately when the
   // theme/hemisphere/weather change, rather than waiting for its tick.
   try {

@@ -88,6 +88,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* User-toggleable layout settings. */
 html[data-show-breadcrumbs="false"] .breadcrumb-container { display: none; }
+
+/* When the page background is anything less than fully solid, blur
+   whatever's behind it (the site-art) so the text stays readable. */
+html:not([data-page-bg-pct="100"]) .page {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
 /* Metadata visibility settings: each metadata field has a class that the
    user can toggle off via the settings panel. */
 html[data-meta-date="false"] .meta-date,
@@ -307,8 +314,12 @@ a {
   // pattern on body is visible only in the margins. Capped slightly wider
   // than the article column so there's a small rim of content background
   // around the article before the decor starts.
+  // --page-bg-pct (set by settings.inline.ts) controls the opacity of
+  // the content background so the user can see the site-art through
+  // the article column. backdrop-filter blurs the art behind it when
+  // it's anything less than fully solid so the text stays readable.
   max-width: calc(87ch + 3rem);
-  background-color: var(--light);
+  background-color: color-mix(in srgb, var(--light) calc(var(--page-bg-pct, 100) * 1%), transparent);
   margin: 0 auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;

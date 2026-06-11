@@ -118,98 +118,114 @@ export const SiteArtPage: QuartzEmitterPlugin = () => ({
       })
       .join("")
 
-    // Time-band tables (matches the constants in siteArt.inline.ts: a
-    // ±1.5 h cosine-interpolated solar offset with the 11:30 noon
-    // junction anchored). Three columns: equinox baseline, summer
-    // solstice (north), winter solstice (north).
-    const timeBandsRow = (
+    // Combined table: for every band, show the seasonal time window
+    // AND the default image you'd see in each of the four
+    // Seasonal-picked themes (Spring → forest, Summer → ocean,
+    // Fall → mountain, Winter → winter).
+    const combinedRow = (
       band: string,
-      eq: string,
-      summer: string,
-      winter: string,
+      times: { eq: string; summer: string; winter: string },
+      imgs: { spring: string; summerImg: string; fall: string; winterImg: string },
     ) =>
-      `<tr><td>${band}</td><td>${eq}</td><td>${summer}</td><td>${winter}</td></tr>`
-    const timeBandsTable = `
-      <table class="art-table">
-        <thead>
-          <tr>
-            <th>Band</th>
-            <th>Equinox (Mar / Sep)</th>
-            <th>Summer solstice (N — Jun 21)</th>
-            <th>Winter solstice (N — Dec 21)</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${timeBandsRow("early_morning", "05:30 – 07:30", "04:00 – 06:00", "07:00 – 09:00")}
-          ${timeBandsRow("late_morning", "07:30 – 11:30", "06:00 – 11:30", "09:00 – 11:30")}
-          ${timeBandsRow("afternoon", "11:30 – 16:30", "11:30 – 18:00", "11:30 – 15:00")}
-          ${timeBandsRow("before_sunset", "16:30 – 18:00", "18:00 – 19:30", "15:00 – 16:30")}
-          ${timeBandsRow("after_sunset", "18:00 – 20:30", "19:30 – 22:00", "16:30 – 19:00")}
-          ${timeBandsRow("night", "20:30 – 05:30", "22:00 – 04:00", "19:00 – 07:00")}
-        </tbody>
-      </table>`
+      `<tr><td><strong>${band}</strong></td>` +
+      `<td>${times.eq}<br/><span class="art-times-small">summer ${times.summer}<br/>winter ${times.winter}</span></td>` +
+      `<td>${imgs.spring}</td>` +
+      `<td>${imgs.summerImg}</td>` +
+      `<td>${imgs.fall}</td>` +
+      `<td>${imgs.winterImg}</td></tr>`
 
-    const themeRow = (
-      band: string,
-      ocean: string,
-      forest: string,
-      mountain: string,
-      winter: string,
-    ) =>
-      `<tr><td>${band}</td><td>${ocean}</td><td>${forest}</td><td>${mountain}</td><td>${winter}</td></tr>`
-    const themesTable = `
-      <table class="art-table">
+    const combinedTable = `
+      <table class="art-table art-combined">
         <thead>
           <tr>
             <th>Band</th>
-            <th>Ocean</th>
-            <th>Forest</th>
-            <th>Mountain</th>
-            <th>Winter</th>
+            <th>Clock window (equinox / summer / winter solstice)</th>
+            <th>Spring (forest)</th>
+            <th>Summer (ocean)</th>
+            <th>Fall (mountain)</th>
+            <th>Winter (winter)</th>
           </tr>
         </thead>
         <tbody>
-          ${themeRow(
+          ${combinedRow(
             "early_morning",
-            "FGA / ocean / sunrise",
-            "QQS / forest / morning",
-            "QQS / mountain / sunrise_1 → sunrise_2 → early_morning",
-            "FGA / winter / sunrise_and_sunset",
+            { eq: "05:00 – 06:00", summer: "03:30 – 04:30", winter: "06:30 – 07:30" },
+            {
+              spring: "P1992 / forest / night",
+              summerImg: "FGA / ocean / night <em>(reused from night)</em>",
+              fall: "QQS / mountain / sunrise_1",
+              winterImg: "FGA / winter / night <em>(reused from night)</em>",
+            },
           )}
-          ${themeRow(
+          ${combinedRow(
+            "sunrise",
+            { eq: "06:00 – 07:00", summer: "04:30 – 05:30", winter: "07:30 – 08:30" },
+            {
+              spring: "QQS / forest / morning",
+              summerImg: "FGA / ocean / sunrise",
+              fall: "QQS / mountain / sunrise_2",
+              winterImg: "FGA / winter / sunrise_and_sunset",
+            },
+          )}
+          ${combinedRow(
             "late_morning",
-            "FGA / ocean / late_morning",
-            "QQS / forest / morning <em>(reused)</em>",
-            "P1992 / mountain / late_morning",
-            "FGA / winter / morning",
+            { eq: "07:00 – 11:30", summer: "05:30 – 11:30", winter: "08:30 – 11:30" },
+            {
+              spring: "QQS / forest / morning <em>(reused)</em>",
+              summerImg: "FGA / ocean / late_morning",
+              fall: "QQS / mountain / early_morning → P1992 / mountain / late_morning",
+              winterImg: "FGA / winter / morning",
+            },
           )}
-          ${themeRow(
+          ${combinedRow(
             "afternoon",
-            "FGA / ocean / afternoon",
-            "QQS / forest / afternoon",
-            "P1992 / mountain / early_afternoon",
-            "P1992 / winter / afternoon",
+            { eq: "11:30 – 16:00", summer: "11:30 – 17:30", winter: "11:30 – 14:30" },
+            {
+              spring: "QQS / forest / afternoon",
+              summerImg: "FGA / ocean / afternoon → P1992 / ocean / late_afternoon",
+              fall: "P1992 / mountain / early_afternoon",
+              winterImg: "P1992 / winter / afternoon",
+            },
           )}
-          ${themeRow(
+          ${combinedRow(
             "before_sunset",
-            "FGA / ocean / before_sunset",
-            "QQS / forest / evening",
-            "P1992 / mountain / late_afternoon_and_evening",
-            "FGA / winter / evening",
+            { eq: "16:00 – 17:30", summer: "17:30 – 19:00", winter: "14:30 – 16:00" },
+            {
+              spring: "QQS / forest / evening",
+              summerImg: "FGA / ocean / before_sunset",
+              fall: "P1992 / mountain / late_afternoon_and_evening",
+              winterImg: "FGA / winter / evening",
+            },
           )}
-          ${themeRow(
+          ${combinedRow(
+            "sunset",
+            { eq: "17:30 – 18:30", summer: "19:00 – 20:00", winter: "16:00 – 17:00" },
+            {
+              spring: "P1992 / forest / sunset",
+              summerImg: "P1992 / ocean / sunset",
+              fall: "P1992 / mountain / sunset",
+              winterImg: "FGA / winter / sunrise_and_sunset <em>(reused)</em>",
+            },
+          )}
+          ${combinedRow(
             "after_sunset",
-            "FGA / ocean / after_sunset",
-            "P1992 / forest / sunset",
-            "P1992 / mountain / sunset",
-            "FGA / winter / sunrise_and_sunset <em>(reused)</em>",
+            { eq: "18:30 – 20:30", summer: "20:00 – 22:00", winter: "17:00 – 19:00" },
+            {
+              spring: "P1992 / forest / sunset <em>(reused)</em>",
+              summerImg: "FGA / ocean / after_sunset",
+              fall: "P1992 / mountain / sunset <em>(reused)</em>",
+              winterImg: "FGA / winter / evening <em>(reused)</em>",
+            },
           )}
-          ${themeRow(
+          ${combinedRow(
             "night",
-            "FGA / ocean / night",
-            "P1992 / forest / night",
-            "P1992 / mountain / night",
-            "FGA / winter / night",
+            { eq: "20:30 – 05:00", summer: "22:00 – 03:30", winter: "19:00 – 06:30" },
+            {
+              spring: "P1992 / forest / night",
+              summerImg: "FGA / ocean / night",
+              fall: "P1992 / mountain / night",
+              winterImg: "FGA / winter / night",
+            },
           )}
         </tbody>
       </table>`
@@ -219,18 +235,16 @@ export const SiteArtPage: QuartzEmitterPlugin = () => ({
         <h2>How the day cycle works</h2>
         <p>The renderer picks a band from the local clock with a cosine-interpolated solar shift of ±1.5 h applied to the morning- and evening-side edges. The 11:30 noon junction is anchored, so the late-morning / afternoon hand-off stays put across the year. Southern Hemisphere flips the phase (winter solstice in June).</p>
 
-        <h3>Time bands by season</h3>
-        ${timeBandsTable}
-
-        <h3>What each band shows, per theme</h3>
-        ${themesTable}
-        <p class="art-note">Artist short names: <strong>FGA</strong> = Free Game Assets, <strong>P1992</strong> = PIXEL_1992, <strong>QQS</strong> = Quantum Quasar Studio.</p>
+        <h3>Seasonal cycle — times and default images</h3>
+        <p>This table shows, for every band, when it runs (clock window at the equinoxes, then the summer and winter solstice windows for Northern Hemisphere) and which image displays in the theme that "Seasonal" picks for that season.</p>
+        ${combinedTable}
+        <p class="art-note">Artist short names: <strong>FGA</strong> = Free Game Assets, <strong>P1992</strong> = PIXEL_1992, <strong>QQS</strong> = Quantum Quasar Studio. Arrows ("→") in a cell mean a multi-frame band that walks through several images in order.</p>
 
         <h3>Weather variants</h3>
         <p>Trigger when Weather = Always (whenever an eligible variant exists for the current band) or Sometimes (single per-page-load coin flip; ~17.5 % chance).</p>
         <ul>
           <li><strong>Ocean — rain</strong> covers late_morning, afternoon, and before_sunset → FGA / ocean / rain_daytime</li>
-          <li><strong>Winter — snow</strong> covers early_morning, late_morning, afternoon, and before_sunset → QQS / winter / snow</li>
+          <li><strong>Winter — snow</strong> covers early_morning, sunrise, late_morning, afternoon, and before_sunset → QQS / winter / snow</li>
         </ul>
 
         <h3>Medieval city — seasonal-static</h3>
@@ -244,6 +258,15 @@ export const SiteArtPage: QuartzEmitterPlugin = () => ({
         <h3>Specials</h3>
         <ul>
           <li><strong>Halloween (Oct 15 – Oct 31)</strong> overrides the night band on whichever theme is active → PIXEL_1992 / specials / halloween</li>
+        </ul>
+
+        <h3>Image usage notes</h3>
+        <p>The 33-image set isn't quite covered evenly across the seasonal cycle. Notes on what's pulling more than its share and what's sitting idle:</p>
+        <ul>
+          <li><strong>Unused</strong>: <code>quantum_quasar_studio / ocean / early_morning</code> — the QQS ocean only includes an early_morning piece, and Ocean's pre-dawn slot uses FGA / ocean / night for stylistic consistency with the rest of the FGA-driven Ocean cycle. Could be swapped in if you'd prefer the QQS look.</li>
+          <li><strong>Used twice</strong> (typical for short bands the artist didn't draw separately for): QQS / forest / morning (sunrise + late_morning), P1992 / forest / sunset (sunset + after_sunset), P1992 / forest / night (early_morning + night), P1992 / mountain / sunset (sunset + after_sunset), FGA / winter / sunrise_and_sunset (sunrise + sunset), FGA / winter / evening (before_sunset + after_sunset), FGA / winter / night (early_morning + night), FGA / ocean / night (early_morning + night).</li>
+          <li><strong>Multi-frame walks</strong>: Mountain late_morning steps through <code>QQS / early_morning → P1992 / late_morning</code> as the band progresses; Ocean afternoon steps through <code>FGA / afternoon → P1992 / late_afternoon</code>. These walk the imager linearly across the band's clock duration.</li>
+          <li><strong>Underrepresented relative to artist contribution</strong>: PIXEL_1992 / ocean / late_afternoon only appears as the second frame of Ocean's afternoon multi-frame walk; pulling it into a dedicated slot would require nudging the band layout.</li>
         </ul>
 
         <h3>Seasonal theme picks</h3>
@@ -311,6 +334,8 @@ export const SiteArtPage: QuartzEmitterPlugin = () => ({
     }
     .art-table th { font-weight: 600; }
     .art-note { font-size: 0.85em; color: var(--darkgray); margin-top: 0; }
+    .art-times-small { font-size: 0.85em; color: var(--darkgray); }
+    .art-combined td { font-size: 0.88em; }
   </style>
 </head>
 <body data-slug="site-art">

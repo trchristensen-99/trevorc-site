@@ -290,11 +290,23 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
             <select data-setting="timeOfDay">
               <option value="auto" selected>Auto</option>
               <option value="early_morning">Early morning</option>
+              <option value="sunrise">Sunrise</option>
               <option value="late_morning">Late morning</option>
               <option value="afternoon">Afternoon</option>
               <option value="before_sunset">Before sunset</option>
+              <option value="sunset">Sunset</option>
               <option value="after_sunset">After sunset</option>
               <option value="night">Night</option>
+            </select>
+          </label>
+          <label>
+            <span>Page opacity</span>
+            <select data-setting="pageBgOpacity">
+              <option value="100" selected>Solid</option>
+              <option value="85">High</option>
+              <option value="70">Medium</option>
+              <option value="55">Low</option>
+              <option value="40">Very low</option>
             </select>
           </label>
           <label class="art-weather-row">
@@ -319,34 +331,42 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
               <option value="auto" selected>Auto (use theme)</option>
               <optgroup label="Ocean">
                 <option value="ocean|early_morning">Ocean — early morning</option>
+                <option value="ocean|sunrise">Ocean — sunrise</option>
                 <option value="ocean|late_morning">Ocean — late morning</option>
                 <option value="ocean|afternoon">Ocean — afternoon</option>
                 <option value="ocean|before_sunset">Ocean — before sunset</option>
+                <option value="ocean|sunset">Ocean — sunset</option>
                 <option value="ocean|after_sunset">Ocean — after sunset</option>
                 <option value="ocean|night">Ocean — night</option>
                 <option value="ocean|weather:rain">Ocean — rain</option>
               </optgroup>
               <optgroup label="Forest">
                 <option value="forest|early_morning">Forest — early morning</option>
+                <option value="forest|sunrise">Forest — sunrise</option>
                 <option value="forest|late_morning">Forest — late morning</option>
                 <option value="forest|afternoon">Forest — afternoon</option>
                 <option value="forest|before_sunset">Forest — before sunset</option>
+                <option value="forest|sunset">Forest — sunset</option>
                 <option value="forest|after_sunset">Forest — after sunset</option>
                 <option value="forest|night">Forest — night</option>
               </optgroup>
               <optgroup label="Mountain">
                 <option value="mountain|early_morning">Mountain — early morning</option>
+                <option value="mountain|sunrise">Mountain — sunrise</option>
                 <option value="mountain|late_morning">Mountain — late morning</option>
                 <option value="mountain|afternoon">Mountain — afternoon</option>
                 <option value="mountain|before_sunset">Mountain — before sunset</option>
+                <option value="mountain|sunset">Mountain — sunset</option>
                 <option value="mountain|after_sunset">Mountain — after sunset</option>
                 <option value="mountain|night">Mountain — night</option>
               </optgroup>
               <optgroup label="Winter">
                 <option value="winter|early_morning">Winter — early morning</option>
+                <option value="winter|sunrise">Winter — sunrise</option>
                 <option value="winter|late_morning">Winter — late morning</option>
                 <option value="winter|afternoon">Winter — afternoon</option>
                 <option value="winter|before_sunset">Winter — before sunset</option>
+                <option value="winter|sunset">Winter — sunset</option>
                 <option value="winter|after_sunset">Winter — after sunset</option>
                 <option value="winter|night">Winter — night</option>
                 <option value="winter|weather:snow">Winter — snow</option>

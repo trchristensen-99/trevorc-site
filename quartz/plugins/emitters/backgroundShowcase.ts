@@ -24,21 +24,27 @@ export const BackgroundShowcase: QuartzEmitterPlugin = () => ({
   <link rel="icon" href="../static/icon.png">
   <link rel="stylesheet" href="../index.css">
   <style>
-    /* body must stay transparent: the renderer paints the .site-art-
-       frame <img>s at z-index: -1, and an opaque body background sits
-       on top of them in the html stacking context. Hiding the page
-       chrome is fine because the imgs are position: fixed and don't
-       depend on it. */
+    /* The renderer paints two site-art <img>s at position: fixed. On
+       the main site they sit at z-index: -1, which puts them behind
+       html's bg color and any opaque body. On /background there's no
+       .page to stack on top, so we lift them above body explicitly
+       (z-index: 1 !important) so they cover whatever color shows
+       before the manifest finishes loading. Body and html keep a
+       neutral dark fallback so the pre-load state isn't a glaring
+       white flash. */
     html, body {
       margin: 0;
       padding: 0;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background: transparent !important;
+      background: #14161e !important;
     }
     body > *:not(.site-art-frame) { display: none !important; }
-    .site-art-frame { display: block !important; }
+    .site-art-frame {
+      display: block !important;
+      z-index: 1 !important;
+    }
   </style>
   <script src="../prescript.js" type="application/javascript"></script>
 </head>
