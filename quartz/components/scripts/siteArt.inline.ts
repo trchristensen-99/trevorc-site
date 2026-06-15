@@ -122,11 +122,11 @@ function pickBand(now: Date, bands: Band[]): Band {
 }
 
 // Solar-aware band shifting: in summer, mornings start earlier and
-// evenings stretch later. The 11:30 noon-ish junction stays fixed (so
-// the late_morning ↔ afternoon boundary doesn't drift across the
-// year). Amplitude is roughly a 40–45° latitude day-length spread.
+// evenings stretch later. The 12:00 noon junction stays fixed (so the
+// morning ↔ afternoon boundary doesn't drift across the year).
+// Amplitude is roughly a 40–45° latitude day-length spread.
 const SOLAR_SHIFT_AMPLITUDE_HOURS = 1.5
-const NOON_HOUR = 11.5
+const NOON_HOUR = 12.0
 
 function dayOfYear(date: Date): number {
   const startUtc = Date.UTC(date.getFullYear(), 0, 0)

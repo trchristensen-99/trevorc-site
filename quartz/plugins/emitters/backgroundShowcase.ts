@@ -46,10 +46,10 @@ export const BackgroundShowcase: QuartzEmitterPlugin = () => ({
       z-index: 1 !important;
     }
   </style>
-  <script src="../prescript.js" type="application/javascript"></script>
+  <script src="../prescript.js"></script>
 </head>
 <body data-slug="background">
-  <script src="../postscript.js" type="application/javascript"></script>
+  <script src="../postscript.js" type="module"></script>
 </body>
 </html>`
     yield write({

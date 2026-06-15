@@ -25,11 +25,11 @@ interface Settings {
   weatherChance: "never" | "sometimes" | "always"
   timeOfDay:
     | "auto"
-    | "early_morning"
+    | "before_sunrise"
     | "sunrise"
-    | "late_morning"
+    | "morning"
     | "afternoon"
-    | "before_sunset"
+    | "evening"
     | "sunset"
     | "after_sunset"
     | "night"
@@ -70,6 +70,16 @@ function read(): Settings {
     const raw = localStorage.getItem(KEY)
     if (!raw) return { ...DEFAULTS }
     const parsed = JSON.parse(raw)
+    // Migrate older saved band names (pre-v3 manifest).
+    if (parsed.timeOfDay === "early_morning") parsed.timeOfDay = "before_sunrise"
+    else if (parsed.timeOfDay === "late_morning") parsed.timeOfDay = "morning"
+    else if (parsed.timeOfDay === "before_sunset") parsed.timeOfDay = "evening"
+    if (typeof parsed.directArt === "string") {
+      parsed.directArt = parsed.directArt
+        .replace("|early_morning", "|before_sunrise")
+        .replace("|late_morning", "|morning")
+        .replace("|before_sunset", "|evening")
+    }
     return { ...DEFAULTS, ...parsed }
   } catch {
     return { ...DEFAULTS }

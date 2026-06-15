@@ -95,6 +95,16 @@ html:not([data-page-bg-pct="100"]) .page {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
+
+/* The credits page is *about* the background art, so the .page column
+   defaults to a translucent panel even when the user has Page opacity
+   set to Solid. Always blur whatever sits behind it so the body copy
+   stays readable on top of the moving pixel-art scene. */
+body[data-slug="site-art/index"] .page {
+  background-color: color-mix(in srgb, var(--light) 55%, transparent) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
 /* Metadata visibility settings: each metadata field has a class that the
    user can toggle off via the settings panel. */
 html[data-meta-date="false"] .meta-date,
