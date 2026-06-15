@@ -34,7 +34,7 @@ interface Settings {
     | "after_sunset"
     | "night"
   directArt: string
-  pageBgOpacity: "100" | "85" | "70" | "55" | "40"
+  pageBgOpacity: "100" | "85" | "70" | "55" | "40" | "20" | "0"
   metaDate: boolean
   metaModified: boolean
   metaReading: boolean
@@ -42,6 +42,14 @@ interface Settings {
   metaAudio: boolean
   metaTags: boolean
 }
+
+// Mobile screens are small enough that an opaque .page panel completely
+// covers the background art. Default mobile users to a slightly
+// translucent panel so the art still peeks through, while desktop keeps
+// the fully-solid default. Either can be overridden in the settings
+// panel.
+const isMobileDefault =
+  typeof window !== "undefined" && window.matchMedia("(max-width: 700px)").matches
 
 const DEFAULTS: Settings = {
   colorTheme: "blue",
@@ -54,7 +62,7 @@ const DEFAULTS: Settings = {
   weatherChance: "sometimes",
   timeOfDay: "auto",
   directArt: "auto",
-  pageBgOpacity: "100",
+  pageBgOpacity: isMobileDefault ? "85" : "100",
   metaDate: true,
   metaModified: true,
   metaReading: true,

@@ -38,76 +38,27 @@ interface ManifestImage {
   src: string
   artist: string
 }
+interface ManifestBand {
+  name: string
+  fromHour: number
+  toHour: number
+  isDaytime: boolean
+}
 interface Manifest {
   basePath: string
+  bands: ManifestBand[]
   themes: Record<string, any>
   specials: Record<string, any>
   artists: Record<string, ManifestArtist>
 }
 
-interface ArtistEntry {
+interface ThumbItem {
   src: string
+  artistId: string
   caption: string
-}
-
-// Dedupe by src within each artist; combine slot labels using "+".
-function collectImages(manifest: Manifest): Map<string, ArtistEntry[]> {
-  // artist → src → captions[]
-  const byArtist = new Map<string, Map<string, string[]>>()
-  const push = (artist: string, src: string, caption: string) => {
-    if (!byArtist.has(artist)) byArtist.set(artist, new Map())
-    const m = byArtist.get(artist)!
-    if (!m.has(src)) m.set(src, [])
-    m.get(src)!.push(caption)
-  }
-
-  for (const [themeName, theme] of Object.entries(manifest.themes)) {
-    if ((theme as any).type === "diurnal") {
-      // Within a theme, group bands by (artist|src) so an image used
-      // in multiple bands shows up once with a "band1+band2" caption.
-      const grouped = new Map<string, { artist: string; src: string; bands: string[] }>()
-      for (const [band, entry] of Object.entries((theme as any).timeline || {})) {
-        const entries = Array.isArray(entry) ? entry : [entry]
-        for (const e of entries as ManifestImage[]) {
-          const key = `${e.artist}|${e.src}`
-          if (!grouped.has(key)) grouped.set(key, { artist: e.artist, src: e.src, bands: [] })
-          grouped.get(key)!.bands.push(band)
-        }
-      }
-      for (const item of grouped.values()) {
-        push(item.artist, item.src, `${themeName} / ${item.bands.join("+")}`)
-      }
-
-      for (const [wname, entry] of Object.entries((theme as any).weather || {})) {
-        const e = entry as ManifestImage
-        push(e.artist, e.src, `${themeName} / ${wname}`)
-      }
-    } else if ((theme as any).type === "seasonal_static") {
-      const grouped = new Map<string, { artist: string; src: string; vars: string[] }>()
-      for (const [vname, entry] of Object.entries((theme as any).variants || {})) {
-        const e = entry as ManifestImage
-        const key = `${e.artist}|${e.src}`
-        if (!grouped.has(key)) grouped.set(key, { artist: e.artist, src: e.src, vars: [] })
-        grouped.get(key)!.vars.push(vname)
-      }
-      for (const item of grouped.values()) {
-        push(item.artist, item.src, `${themeName} / ${item.vars.join("+")}`)
-      }
-    }
-  }
-  for (const [name, entry] of Object.entries(manifest.specials || {})) {
-    const e = entry as ManifestImage
-    push(e.artist, e.src, `special / ${name}`)
-  }
-
-  const out = new Map<string, ArtistEntry[]>()
-  for (const [artist, m] of byArtist) {
-    out.set(
-      artist,
-      [...m.entries()].map(([src, captions]) => ({ src, caption: captions.join(", ") })),
-    )
-  }
-  return out
+  // The directArt spec the thumbnail click writes into settings.
+  // "src:<relativePath>" pins this exact image regardless of band/theme.
+  directArt: string
 }
 
 function escapeHtml(s: string): string {
@@ -118,29 +69,154 @@ function escapeHtml(s: string): string {
     .replace(/"/g, "&quot;")
 }
 
-function buildArtistSections(manifest: Manifest, basePath: string): string {
-  const byArtist = collectImages(manifest)
-  const artistOrder = Array.from(byArtist.keys()).sort()
-  return artistOrder
-    .map((id) => {
-      const info = manifest.artists[id]
-      if (!info) return ""
-      const imgs = byArtist.get(id) || []
-      const thumbs = imgs
-        .map((img) => {
-          const src = `${basePath}/${img.src}`
-          return `<figure><img src="${escapeHtml(src)}" alt="${escapeHtml(
-            img.caption,
-          )}" loading="lazy" /><figcaption>${escapeHtml(img.caption)}</figcaption></figure>`
+function titleCase(s: string): string {
+  const cleaned = s.replace(/_/g, " ")
+  return cleaned.charAt(0).toUpperCase() + cleaned.slice(1)
+}
+
+// For each theme, collapse duplicate images: an image used in multiple
+// bands shows up once with a "band1+band2" caption. Multi-frame walks
+// (one band → array of images) keep each frame as its own entry with a
+// "(1/2)" suffix so the same band label can recur for the two distinct
+// images.
+function collectThumbItems(themeName: string, theme: any, manifest: Manifest): ThumbItem[] {
+  const items: ThumbItem[] = []
+
+  if (theme.type === "diurnal") {
+    // band → array of frames in source order
+    const bandFrames = new Map<string, ManifestImage[]>()
+    for (const [band, entry] of Object.entries(theme.timeline || {})) {
+      const arr = Array.isArray(entry) ? entry : [entry]
+      bandFrames.set(band, arr as ManifestImage[])
+    }
+
+    // (artist|src) → list of (band, frameIdx, frameTotal)
+    interface BandInfo {
+      band: string
+      frameIdx: number
+      frameTotal: number
+    }
+    const srcToInfo = new Map<string, { artist: string; src: string; bands: BandInfo[] }>()
+    for (const [band, frames] of bandFrames) {
+      const total = frames.length
+      frames.forEach((frame, i) => {
+        const key = `${frame.artist}|${frame.src}`
+        if (!srcToInfo.has(key)) {
+          srcToInfo.set(key, { artist: frame.artist, src: frame.src, bands: [] })
+        }
+        srcToInfo.get(key)!.bands.push({ band, frameIdx: i, frameTotal: total })
+      })
+    }
+
+    // Walk bands in manifest order so the page reflects the daily cycle.
+    const bandOrder = manifest.bands.map((b) => b.name)
+    const seen = new Set<string>()
+    for (const band of bandOrder) {
+      const frames = bandFrames.get(band) || []
+      for (let i = 0; i < frames.length; i++) {
+        const frame = frames[i]
+        const key = `${frame.artist}|${frame.src}`
+        if (seen.has(key)) continue
+        seen.add(key)
+        const info = srcToInfo.get(key)!
+        const captionParts = info.bands.map((b) =>
+          b.frameTotal > 1 ? `${b.band} (${b.frameIdx + 1}/${b.frameTotal})` : b.band,
+        )
+        items.push({
+          src: frame.src,
+          artistId: frame.artist,
+          caption: captionParts.join("+"),
+          directArt: `src:${frame.src}`,
         })
-        .join("")
-      return `<section class="art-artist"><h2><a href="${escapeHtml(
-        info.url,
-      )}" target="_blank" rel="noopener">${escapeHtml(
-        info.name,
-      )}</a></h2><div class="art-grid">${thumbs}</div></section>`
+      }
+    }
+
+    // Weather variants follow the timeline thumbnails for the theme.
+    for (const [wname, entry] of Object.entries(theme.weather || {})) {
+      const e = entry as ManifestImage
+      items.push({
+        src: e.src,
+        artistId: e.artist,
+        caption: `${wname} (weather)`,
+        directArt: `src:${e.src}`,
+      })
+    }
+  } else if (theme.type === "seasonal_static") {
+    for (const [vname, entry] of Object.entries(theme.variants || {})) {
+      const e = entry as ManifestImage
+      items.push({
+        src: e.src,
+        artistId: e.artist,
+        caption: vname.replace(/_/g, " "),
+        directArt: `src:${e.src}`,
+      })
+    }
+  }
+
+  return items
+}
+
+function renderThumbnail(item: ThumbItem, manifest: Manifest, basePath: string): string {
+  const src = `${basePath}/${item.src}`
+  const artist = manifest.artists[item.artistId]
+  const artistName = artist?.name ?? item.artistId
+  const artistMarkup = artist?.url
+    ? `<a class="artist" href="${escapeHtml(artist.url)}" target="_blank" rel="noopener">${escapeHtml(artistName)}</a>`
+    : `<span class="artist">${escapeHtml(artistName)}</span>`
+  return `<figure>
+    <img src="${escapeHtml(src)}" alt="${escapeHtml(item.caption)}" loading="lazy" data-direct-art="${escapeHtml(item.directArt)}" />
+    <figcaption>
+      <span class="band">${escapeHtml(item.caption)}</span>
+      ${artistMarkup}
+    </figcaption>
+  </figure>`
+}
+
+function renderThemeSection(
+  displayName: string,
+  items: ThumbItem[],
+  manifest: Manifest,
+  basePath: string,
+): string {
+  if (items.length === 0) return ""
+  const thumbs = items.map((it) => renderThumbnail(it, manifest, basePath)).join("")
+  return `<section class="art-theme"><h2>${escapeHtml(displayName)}</h2><div class="art-grid">${thumbs}</div></section>`
+}
+
+function buildThemeSections(manifest: Manifest, basePath: string): string {
+  let html = ""
+  for (const [themeName, theme] of Object.entries(manifest.themes)) {
+    const items = collectThumbItems(themeName, theme, manifest)
+    html += renderThemeSection(titleCase(themeName), items, manifest, basePath)
+  }
+  // Specials, if any, go in their own section so they stay visible
+  // even when the active theme doesn't surface them.
+  const specials: ThumbItem[] = []
+  for (const [name, entry] of Object.entries(manifest.specials || {})) {
+    const e = entry as ManifestImage
+    specials.push({
+      src: e.src,
+      artistId: e.artist,
+      caption: name,
+      directArt: `src:${e.src}`,
     })
+  }
+  html += renderThemeSection("Specials", specials, manifest, basePath)
+  return html
+}
+
+function buildArtistsList(manifest: Manifest): string {
+  const artists = Object.entries(manifest.artists).sort((a, b) =>
+    a[1].name.localeCompare(b[1].name),
+  )
+  if (artists.length === 0) return ""
+  const items = artists
+    .map(
+      ([_, info]) =>
+        `<li><a href="${escapeHtml(info.url)}" target="_blank" rel="noopener">${escapeHtml(info.name)}</a></li>`,
+    )
     .join("")
+  return `<section class="art-artists"><h2>Artists</h2><ul>${items}</ul></section>`
 }
 
 // Combined table: for every band, the clock window AND the default
@@ -297,8 +373,8 @@ function buildTimeTablesHtml(): string {
 
 const bodyCss = `
 .site-art-credits { margin-bottom: 3rem; }
-.site-art-credits .art-artist { margin: 1.5rem 0 2.5rem; }
-.site-art-credits .art-artist h2 { margin-bottom: 0.75rem; }
+.site-art-credits .art-theme { margin: 1.5rem 0 2.5rem; }
+.site-art-credits .art-theme > h2 { margin-bottom: 0.75rem; }
 .site-art-credits .art-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -317,10 +393,33 @@ const bodyCss = `
   border-radius: 4px;
   image-rendering: pixelated;
   background: var(--lightgray);
+  cursor: pointer;
+  transition: outline-color 0.15s ease;
+  outline: 2px solid transparent;
+}
+.site-art-credits .art-grid img:hover {
+  outline-color: var(--secondary);
 }
 .site-art-credits .art-grid figcaption {
   font-size: 0.85em;
   color: var(--darkgray);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.site-art-credits .art-grid figcaption .band {
+  font-variant-numeric: tabular-nums;
+}
+.site-art-credits .art-grid figcaption .artist {
+  font-size: 0.92em;
+  opacity: 0.85;
+}
+.site-art-credits .art-artists ul {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
 }
 .site-art-credits .art-times { margin: 2rem 0; }
 .site-art-credits .art-times h3 { margin-top: 1.5rem; }
@@ -399,11 +498,12 @@ export const SiteArtPage: QuartzEmitterPlugin = () => {
       const backgroundLink = `${root}/background/` as RelativeURL
 
       bodyHtml =
-        `<p>The background scenes on this site are pixel-art landscapes licensed for commercial use from the artists below. Each artist's name links to their itch.io page; thumbnails show the specific images and the time-band / variant they cover on the site.</p>` +
+        `<p>The background scenes on this site are pixel-art landscapes licensed for commercial use from the artists listed below. Thumbnails are grouped by the theme/cycle they belong to; click any thumbnail to pin it as the active background.</p>` +
         `<p>For a full-bleed view with no chrome, see the <a href="${escapeHtml(
           backgroundLink,
         )}">background showcase</a>.</p>` +
-        buildArtistSections(manifest, basePath) +
+        buildThemeSections(manifest, basePath) +
+        buildArtistsList(manifest) +
         buildTimeTablesHtml() +
         `<p><a href="${escapeHtml(aboutLink)}">← Back to About</a></p>`
 

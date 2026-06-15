@@ -303,10 +303,12 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
             <span>Page opacity</span>
             <select data-setting="pageBgOpacity">
               <option value="100" selected>Solid</option>
-              <option value="85">High</option>
-              <option value="70">Medium</option>
-              <option value="55">Low</option>
-              <option value="40">Very low</option>
+              <option value="85">Mostly solid</option>
+              <option value="70">High</option>
+              <option value="55">Medium</option>
+              <option value="40">Low</option>
+              <option value="20">Very low</option>
+              <option value="0">Transparent</option>
             </select>
           </label>
           <label class="art-weather-row">

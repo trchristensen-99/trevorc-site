@@ -300,6 +300,11 @@ function pickRandomSrc(m: Manifest): string | null {
 
 function resolveDirectArt(spec: string, m: Manifest): string | null {
   if (!spec || spec === "auto") return null
+  // "src:<relativePath>" pins a specific image by its manifest-relative
+  // path. Used by the /site-art credits page when a thumbnail is
+  // clicked, so the user can promote any specific image to the active
+  // background without thinking about its theme/band addressing.
+  if (spec.startsWith("src:")) return spec.slice("src:".length)
   if (spec.startsWith("special:")) {
     const key = spec.slice("special:".length)
     return m.specials[key]?.src ?? null
@@ -511,6 +516,38 @@ async function ensureManifest(): Promise<Manifest | null> {
   return manifestPromise
 }
 
+// Wire up the credits-page thumbnail clicks: clicking any thumbnail
+// pins that exact image as the background by writing a "src:" spec into
+// the directArt setting and nudging the renderer. The selector only
+// matches on the /site-art credits page, so this is a no-op elsewhere.
+const SETTINGS_KEY = "trevorc-settings-v1"
+function bindCreditsThumbnails() {
+  document
+    .querySelectorAll<HTMLImageElement>(".art-grid img[data-direct-art]")
+    .forEach((img) => {
+      const handler = (e: Event) => {
+        e.preventDefault()
+        const spec = img.getAttribute("data-direct-art")
+        if (!spec) return
+        try {
+          const raw = localStorage.getItem(SETTINGS_KEY)
+          const parsed = raw ? JSON.parse(raw) : {}
+          parsed.directArt = spec
+          localStorage.setItem(SETTINGS_KEY, JSON.stringify(parsed))
+        } catch (_e) {
+          /* swallow */
+        }
+        document.documentElement.setAttribute("data-direct-art", spec)
+        document.dispatchEvent(new CustomEvent("site-art-changed"))
+      }
+      img.style.cursor = "pointer"
+      img.addEventListener("click", handler)
+      if (typeof window.addCleanup === "function") {
+        window.addCleanup(() => img.removeEventListener("click", handler))
+      }
+    })
+}
+
 async function start() {
   ensureContainer()
   // Re-roll per-page-load decisions on every navigation.
@@ -519,6 +556,7 @@ async function start() {
   await ensureManifest()
   if (!manifest) return
   await tick()
+  bindCreditsThumbnails()
   if (tickTimer) window.clearInterval(tickTimer)
   tickTimer = window.setInterval(tick, TICK_MS)
   if (typeof window.addCleanup === "function") {
