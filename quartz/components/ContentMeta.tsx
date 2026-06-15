@@ -141,7 +141,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
         segments.push(
           <span class="meta-importance">
             {labelLink(labelHref("importance"), "importance")}{" "}
-            {valueLink(valueHref("importance", "desc"), `${cal.bucket}/10`)}
+            {valueLink(valueHref("importance", "desc"), `${cal.raw}/10`)}
             {` (rank ${cal.rank} of ${cal.total})`}
           </span>,
         )

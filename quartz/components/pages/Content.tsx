@@ -76,7 +76,7 @@ function renderHomeSection(
             meta = formatDate(p.dates.modified, props.cfg.locale)
           } else if (metaField === "importance") {
             const cal = calibrate(props.allFiles, p)
-            meta = cal ? `${cal.bucket}/10` : ""
+            meta = cal ? `${cal.raw}/10` : ""
           }
           return (
             <li>
