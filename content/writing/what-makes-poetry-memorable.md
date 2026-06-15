@@ -18,7 +18,7 @@ I just started reading John Milton's *Paradise Lost* for the first time, and it'
 >
 > — John Milton
 
-The TL;DR is that he doesn't like rhymes, but uses largely unrhymed strict iambic pentameter in a throwback to ancient Roman and Greek poetry [^1]. I like how he frames his argument as this seemingly new poetic form actually being traditional "heroic verse" in contrast to the contemporary fashion of rhyming. His dismissal of rhymed endings as having a "jingling" sound made me chuckle.
+The TL;DR is that he doesn't like rhymes, but uses largely unrhymed strict iambic pentameter in a throwback to ancient Roman and Greek poetry[^1]. I like how he frames his argument as this seemingly new poetic form actually being traditional "heroic verse" in contrast to the contemporary fashion of rhyming. His dismissal of rhymed endings as having a "jingling" sound made me chuckle.
 
 This made me think about whether you need either structure or rhyme to make good poetry. To me, one aspect of good poetry is that it is memorable, and both structure and rhyming seemingly help with this. For instance, think of the classic "Roses are red, Violets are blue" with any number of possible endings. Not only are both lines four syllables with emphasis on the first and fourth of these, but "blue" is always supposed to rhyme with whatever the end of the following lines are (for instance, "…Sugar is sweet, And so are you."). This explains why modern songs, especially catchy ones, have both of these elements. Rap in particular is interesting as a (relatively) spoken-word medium that deploys rhyming and verse structure to great effect.
 
@@ -26,7 +26,7 @@ It is interesting then that modern poetry mostly eschews both of these elements.
 
 ![The viral short free-verse "Tiger" poem attributed to Nael, age 6, often credited as the most popular poem on the internet — a handful of lines centered on a plain page about a tiger destroying its cage.](../static/poem-tiger.webp)
 
-Despite not thinking about it that often, I can still recite this poem by heart [^2]. It does a great job taking an instantly captivating situation that could be concerning, violent, or tragic and instead uses it to emphasize the eminently relatable feeling of sudden freedom from a cage. It's probably the most popular poem on the internet, likely due to a combination of its quality and its brevity.
+Despite not thinking about it that often, I can still recite this poem by heart[^2]. It does a great job taking an instantly captivating situation that could be concerning, violent, or tragic and instead uses it to emphasize the eminently relatable feeling of sudden freedom from a cage. It's probably the most popular poem on the internet, likely due to a combination of its quality and its brevity.
 
 Therefore, it would seem that in order to make free verse memorable, it should be both powerful enough and short enough to overcome its lack of any familiar structure. Additionally, this is just conjecture, but it seems harder to make free verse poetry that has wide appeal than to do the same with structured and rhyming poetry. This could be related to its memorability as well as the fact that there are so many more degrees of freedom for people to find fault with. Maybe this is similar to why modernist architecture is generally disliked; fewer rules means it is harder to please everyone. That doesn't mean that free verse is necessarily less good than structured poetry, just that fewer people view individual examples of the former as positively as they do the latter.
 

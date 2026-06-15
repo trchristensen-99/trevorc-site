@@ -1,12 +1,17 @@
-// Footnote hover tooltip. Replaces Quartz's default link-preview popover
-// behavior for footnote references with a small tooltip that shows only
-// the footnote text — no surrounding page chrome, no list numbers, no
-// back-arrow link.
+// Footnote hover/click tooltip. Replaces Quartz's default link-preview
+// popover behavior and the browser's anchor-jump for footnote refs with
+// a small tooltip that shows the footnote text near the reference.
+//
+// Hover (desktop): show tooltip while the cursor is on the ref.
+// Click (any device): prevent the page-bottom jump and "pin" the tooltip
+// so it stays open. Click the same ref to toggle off; click anywhere
+// outside to dismiss.
 
 const HOVER_DELAY_MS = 200
 
 let tooltipEl: HTMLDivElement | null = null
 let pendingTimer: number | null = null
+let pinnedRef: HTMLAnchorElement | null = null
 
 function ensureTooltip(): HTMLDivElement {
   if (tooltipEl && tooltipEl.isConnected) return tooltipEl
@@ -78,25 +83,44 @@ function hide() {
     pendingTimer = null
   }
   if (tooltipEl) tooltipEl.style.display = "none"
+  pinnedRef = null
 }
 
 function bind(link: HTMLAnchorElement) {
   // Suppress Quartz's default link-preview popover on footnote refs —
-  // we replace it with our own tooltip below.
+  // we replace it with our own tooltip.
   link.setAttribute("data-no-popover", "true")
 
   const onEnter = () => {
+    if (pinnedRef) return
     if (pendingTimer != null) window.clearTimeout(pendingTimer)
     pendingTimer = window.setTimeout(() => showFor(link), HOVER_DELAY_MS)
   }
-  const onLeave = () => hide()
+  const onLeave = () => {
+    if (pinnedRef) return
+    hide()
+  }
+  const onClick = (e: MouseEvent) => {
+    // Suppress the browser's jump-to-anchor behaviour; the reader can
+    // see the footnote in the tooltip instead.
+    e.preventDefault()
+    if (pinnedRef === link) {
+      // Second click on the same ref toggles the tooltip off.
+      hide()
+      return
+    }
+    pinnedRef = link
+    showFor(link)
+  }
 
   link.addEventListener("mouseenter", onEnter)
   link.addEventListener("mouseleave", onLeave)
+  link.addEventListener("click", onClick)
   if (typeof window.addCleanup === "function") {
     window.addCleanup(() => {
       link.removeEventListener("mouseenter", onEnter)
       link.removeEventListener("mouseleave", onLeave)
+      link.removeEventListener("click", onClick)
     })
   }
 }
@@ -107,6 +131,30 @@ function init() {
     .forEach(bind)
 }
 
+// Click-anywhere-outside dismisses a pinned tooltip. Installed once
+// (not per ref) since the listener lives on document for the page's
+// lifetime.
+let outsideInstalled = false
+function installOutsideHandler() {
+  if (outsideInstalled) return
+  outsideInstalled = true
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (!pinnedRef) return
+      const t = e.target as Element | null
+      if (!t) return
+      // Clicks on a footnote ref are handled by its own onClick.
+      if (t.closest("a[data-footnote-ref]")) return
+      // Clicks inside the tooltip itself shouldn't dismiss.
+      if (tooltipEl && tooltipEl.contains(t)) return
+      hide()
+    },
+    true,
+  )
+}
+
 document.addEventListener("nav", init)
+installOutsideHandler()
 if (document.readyState !== "loading") init()
 else document.addEventListener("DOMContentLoaded", init, { once: true })
