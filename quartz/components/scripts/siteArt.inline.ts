@@ -13,7 +13,12 @@
 
 const MANIFEST_URL = "/static/site-art/manifest.json"
 const TICK_MS = 30 * 1000
+// Natural tick cycling between bands gets a long, calm crossfade so
+// the change isn't distracting. When the user explicitly changes a
+// setting (Art Theme, Time of day, a click on a /site-art thumbnail,
+// etc.) we honour the request quickly so they can see the result.
 const CROSSFADE_MS = 10000
+const USER_CROSSFADE_MS = 1500
 const SOMETIMES_WEATHER_CHANCE = 0.175 // midpoint of 15–20%
 
 interface Band {
@@ -401,7 +406,7 @@ function wait(ms: number): Promise<void> {
   return new Promise((r) => window.setTimeout(r, ms))
 }
 
-async function crossfadeTo(src: string) {
+async function crossfadeTo(src: string, durationMs: number = CROSSFADE_MS) {
   if (!imgBase || !imgFade) return
   if (src === currentSrc) return
   const myToken = ++fadeToken
@@ -429,10 +434,10 @@ async function crossfadeTo(src: string) {
   // Force a reflow so the browser registers the 0 state before the next
   // style assignment animates.
   void imgFade.offsetHeight
-  imgFade.style.transition = `opacity ${CROSSFADE_MS}ms ease-in-out`
+  imgFade.style.transition = `opacity ${durationMs}ms ease-in-out`
   imgFade.style.opacity = "1"
 
-  await wait(CROSSFADE_MS)
+  await wait(durationMs)
   if (myToken !== fadeToken) return
 
   // Snap base to the new src (browser cache makes this near-instant),
@@ -449,16 +454,24 @@ async function crossfadeTo(src: string) {
   currentSrc = src
 }
 
+// Set whenever a user action (settings change, /site-art thumbnail
+// click) wants the renderer to react quickly. Consumed by tick() on
+// the next run, then reset, so subsequent natural ticks return to the
+// long calm crossfade.
+let fastNextFade = false
+
 async function tick() {
   if (!manifest) return
   ensureContainer()
   const settings = readSettings()
+  const fadeMs = fastNextFade ? USER_CROSSFADE_MS : CROSSFADE_MS
+  fastNextFade = false
 
   // Direct-art override wins over everything else.
   const direct = resolveDirectArt(settings.directArt, manifest)
   if (direct) {
     setResolved(settings.artTheme === "seasonal" ? "direct" : settings.artTheme)
-    await crossfadeTo(`${manifest.basePath}/${direct}`)
+    await crossfadeTo(`${manifest.basePath}/${direct}`, fadeMs)
     return
   }
 
@@ -474,7 +487,7 @@ async function tick() {
     setResolved("random")
     const r = pickRandomSrc(manifest)
     if (!r) return
-    await crossfadeTo(`${manifest.basePath}/${r}`)
+    await crossfadeTo(`${manifest.basePath}/${r}`, fadeMs)
     return
   }
 
@@ -500,7 +513,7 @@ async function tick() {
     currentSrc = ""
     return
   }
-  await crossfadeTo(`${manifest.basePath}/${srcRel}`)
+  await crossfadeTo(`${manifest.basePath}/${srcRel}`, fadeMs)
 }
 
 async function ensureManifest(): Promise<Manifest | null> {
@@ -571,6 +584,7 @@ async function start() {
 
 document.addEventListener("nav", start)
 document.addEventListener("site-art-changed", () => {
+  fastNextFade = true
   tick()
 })
 if (document.readyState !== "loading") start()

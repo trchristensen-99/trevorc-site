@@ -238,14 +238,6 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
       </button>
       <div class="settings-row">
         <label>
-          <input type="checkbox" data-setting="showBreadcrumbs" />
-          <span>Show breadcrumbs</span>
-        </label>
-        <label>
-          <input type="checkbox" data-setting="expandToc" />
-          <span>Expand TOC by default</span>
-        </label>
-        <label>
           <span>Text zoom</span>
           <select data-setting="zoom">
             <option value="0.75">75%</option>
@@ -263,6 +255,26 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
             <option value="fast">Fast</option>
             <option value="instant">Instant</option>
           </select>
+        </label>
+        <label>
+          <span>Page opacity</span>
+          <select data-setting="pageBgOpacity">
+            <option value="100" selected>Solid</option>
+            <option value="85">Mostly solid</option>
+            <option value="70">High</option>
+            <option value="55">Medium</option>
+            <option value="40">Low</option>
+            <option value="20">Very low</option>
+            <option value="0">Transparent</option>
+          </select>
+        </label>
+        <label>
+          <input type="checkbox" data-setting="showBreadcrumbs" />
+          <span>Show breadcrumbs</span>
+        </label>
+        <label>
+          <input type="checkbox" data-setting="expandToc" />
+          <span>Expand TOC by default</span>
         </label>
       </div>
       {/* Art Theme is the only always-visible row; everything else
@@ -297,18 +309,6 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
               <option value="sunset">Sunset</option>
               <option value="after_sunset">After sunset</option>
               <option value="night">Night</option>
-            </select>
-          </label>
-          <label>
-            <span>Page opacity</span>
-            <select data-setting="pageBgOpacity">
-              <option value="100" selected>Solid</option>
-              <option value="85">Mostly solid</option>
-              <option value="70">High</option>
-              <option value="55">Medium</option>
-              <option value="40">Low</option>
-              <option value="20">Very low</option>
-              <option value="0">Transparent</option>
             </select>
           </label>
           <label class="art-weather-row">

@@ -137,7 +137,11 @@ const css = `
    containing block for the position-fixed search modal living inside
    the header, which would trap the modal inside the top-bar instead
    of letting it cover the whole viewport. The transform animation
-   runs fine without the hint. */
+   runs fine without the hint.
+
+   The transform transition is set imperatively by stickyTopBar.inline.ts
+   so the duration can vary with the "Bar reveal" speed setting (slow /
+   normal / fast / instant). */
 .page-header > header {
   position: sticky;
   top: -2px;
@@ -145,7 +149,6 @@ const css = `
   background: var(--light);
   box-shadow: 0 1px 0 var(--lightgray);
   padding-top: 2px;
-  transition: transform 0ms;
 }
 `
 
