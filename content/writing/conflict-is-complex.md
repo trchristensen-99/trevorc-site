@@ -1,0 +1,20 @@
+---
+title: Conflict is Complex
+date: 2026-06-14
+modified: 2026-06-15
+importance: 4
+status: finished
+tags:
+  - history
+  - politics
+---
+
+When predicting the future, creating stories, or even discussing past and present events, it is easy to paint conflicts as the result of a straightforward clash between two easily-separable groups. However, if we look back through history, we find that this is almost never the case. Wars are the ultimate form of conflict, so this post focuses on them, though the same pattern shows up in politics, economics, and elsewhere.
+
+There is a long line of conflicts that illustrate this point. I will mostly focus on wars in the last 600 years, starting with the Spanish conquest of the Americas in the 1500s. A cursory understanding puts the small force of Spaniards on one side vs vast Aztec and Inca armies on the other, when in reality the Spanish had shifting alliances not just with other native tribes that willingly joined them but sometimes with rival internal factions of their opponents' empires. The vast majority of the Spanish armies were native, especially at the beginning of the conquest. A further complication to the idea that most conflict pitted Europeans against natives arises when considering how many colonial wars saw one or both sides made up of an alliance between native powers and foreign ones. For instance, in 1600s and 1700s North America, the French and British each had sets of native allies who they joined or who joined them in conflicts.
+
+In the 1791 Haitian Revolution, instead of just being a literal black vs white conflict there were several sides that formed shifting alliances including black slaves, French colonists, the Revolutionary French government, free black and mixed race people, the British, and the Spanish. At one point the black rebels were aided by Polish soldiers from Napoleon's expeditionary force who defected to their side; Dessalines later granted these European fighters Haitian citizenship despite the new state's general exclusion of whites. This isn't to say that race didn't play a major and even primary role in the conflict, just that the conflict was much more complex than such a rigid delineation would suggest.
+
+In addition to conflicts involving racial delineations, wars with ostensibly religious or ideological motives often have more complex realities that determine where the battle lines are drawn. As an example, the Thirty Years' War of 1618-1648 started out as a war between Protestants and Catholics, but because of concerns about territory and the balance of power in Europe the Catholic French fought alongside the Protestant powers while the Lutheran Electorate of Saxony sided with the Catholic Habsburgs. Similarly, the World Wars of the first half of the 20th century are often seen as a war of democracies against autocracies but alliances were often based more on security or common interests than ideological reasons (explaining how capitalist and imperial democracies like the UK and USA wound up siding with Imperial/Soviet Russia).
+
+You could do the same analysis with US and USSR vs UK and France on decolonization in the 1950s/60s, or the Sino-Soviet split of the late 1950s and 60s despite both powers being communist, or how far-right and far-left figures have lined up on both sides of the current Russia-Ukraine war. There are good reasons why events play out the way they do, but the point is that conflicts are rarely clean cut along the most salient fault lines like ideology, race, etc. Stated identities like race, religion, and ideology do shape conflicts, often powerfully; they just coexist with material interests, regional politics, and personal loyalties in ways no identity-clash framing predicts. Although this may seem obvious, a lot of narratives (fictional and otherwise) portray neat divides between two sides when the reality was much more complex. Failing to keep this in mind makes predictions less reliable and fiction more simplistic.
