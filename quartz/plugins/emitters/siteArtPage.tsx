@@ -414,6 +414,31 @@ const bodyCss = `
   font-size: 0.92em;
   opacity: 0.85;
 }
+.site-art-credits .site-art-controls {
+  margin: 1rem 0 2rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--lightgray) 30%, transparent);
+}
+.site-art-credits .site-art-controls p {
+  margin: 0.25rem 0;
+}
+.site-art-credits .site-art-controls .settings-reset {
+  margin: 0 0.25rem;
+  padding: 0.25rem 0.6rem;
+  background: transparent;
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  color: var(--darkgray);
+  font: inherit;
+  font-size: 0.92em;
+  cursor: pointer;
+}
+.site-art-credits .site-art-controls .settings-reset:hover {
+  color: var(--secondary);
+  border-color: var(--secondary);
+}
 .site-art-credits .art-artists ul {
   list-style: none;
   padding-left: 0;
@@ -502,6 +527,10 @@ export const SiteArtPage: QuartzEmitterPlugin = () => {
         `<p>For a full-bleed view with no chrome, see the <a href="${escapeHtml(
           backgroundLink,
         )}">background showcase</a>.</p>` +
+        `<section class="site-art-controls">` +
+        `<p>Been changing things? <button type="button" class="settings-reset" data-setting="reset">Reset to defaults</button> restores the normal cycle, default panel opacity, and clears any pinned image.</p>` +
+        `<p class="art-note">More controls (theme, time of day, page opacity, text outline, backdrop blur, and so on) live in the gear icon at the top-right of every page.</p>` +
+        `</section>` +
         buildThemeSections(manifest, basePath) +
         buildArtistsList(manifest) +
         buildTimeTablesHtml() +

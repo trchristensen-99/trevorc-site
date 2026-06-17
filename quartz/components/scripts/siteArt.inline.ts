@@ -356,10 +356,15 @@ function readSettings(): Settings {
   try {
     const raw = localStorage.getItem("trevorc-settings-v1")
     const parsed = raw ? JSON.parse(raw) : {}
+    // The /background showcase exists to display whichever scene the
+    // reader has currently pinned, so the directArt selection from a
+    // /site-art thumbnail click must carry over. We only override the
+    // theme when the reader's saved choice would leave the page blank
+    // (artTheme=none), in which case we fall back to Seasonal so the
+    // showcase has something to render.
+    const userArtTheme = parsed.artTheme ?? SETTINGS_DEFAULTS.artTheme
     return {
-      // The /background showcase always forces Seasonal so the page
-      // shows something even when the saved theme is None.
-      artTheme: isShowcase ? "seasonal" : parsed.artTheme ?? SETTINGS_DEFAULTS.artTheme,
+      artTheme: isShowcase && userArtTheme === "none" ? "seasonal" : userArtTheme,
       hemisphere: parsed.hemisphere ?? SETTINGS_DEFAULTS.hemisphere,
       weatherChance: (() => {
         const v = parsed.weatherChance
@@ -369,10 +374,10 @@ function readSettings(): Settings {
         return SETTINGS_DEFAULTS.weatherChance
       })(),
       timeOfDay: parsed.timeOfDay ?? SETTINGS_DEFAULTS.timeOfDay,
-      directArt: isShowcase ? "auto" : parsed.directArt ?? SETTINGS_DEFAULTS.directArt,
+      directArt: parsed.directArt ?? SETTINGS_DEFAULTS.directArt,
     }
   } catch {
-    return { ...SETTINGS_DEFAULTS, artTheme: isShowcase ? "seasonal" : SETTINGS_DEFAULTS.artTheme }
+    return { ...SETTINGS_DEFAULTS }
   }
 }
 
