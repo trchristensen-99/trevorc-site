@@ -35,6 +35,16 @@ interface Settings {
     | "night"
   directArt: string
   pageBgOpacity: "100" | "85" | "70" | "55" | "40" | "20" | "0"
+  // Text-outline halo behind the body copy, useful when the page panel
+  // is translucent and the background art makes the text harder to
+  // read. "on" applies it only at the lower opacity steps (40/20/0)
+  // where it actually helps; "off" disables it entirely.
+  textOutline: "on" | "off"
+  // Backdrop blur behind the translucent .page panel. "on" (default)
+  // preserves the existing soft frosted-glass look; "off" lets the
+  // background art read sharply through the panel, which is what most
+  // users want when they crank opacity to 0.
+  backgroundBlur: "on" | "off"
   metaDate: boolean
   metaModified: boolean
   metaReading: boolean
@@ -63,6 +73,8 @@ const DEFAULTS: Settings = {
   timeOfDay: "auto",
   directArt: "auto",
   pageBgOpacity: isMobileDefault ? "85" : "100",
+  textOutline: "on",
+  backgroundBlur: "on",
   metaDate: true,
   metaModified: true,
   metaReading: true,
@@ -114,6 +126,8 @@ function apply(s: Settings) {
   root.setAttribute("data-direct-art", s.directArt)
   root.setAttribute("data-page-bg-pct", s.pageBgOpacity)
   root.style.setProperty("--page-bg-pct", s.pageBgOpacity)
+  root.setAttribute("data-text-outline", s.textOutline)
+  root.setAttribute("data-background-blur", s.backgroundBlur)
   // Nudge the site-art renderer to re-evaluate immediately when the
   // theme/hemisphere/weather change, rather than waiting for its tick.
   try {

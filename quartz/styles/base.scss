@@ -90,18 +90,48 @@ h1, h2, h3, h4, h5, h6 {
 html[data-show-breadcrumbs="false"] .breadcrumb-container { display: none; }
 
 /* When the page background is anything less than fully solid, blur
-   whatever's behind it (the site-art) so the text stays readable. */
-html:not([data-page-bg-pct="100"]) .page {
+   whatever's behind it (the site-art) so the text stays readable.
+   The reader can disable the blur via the settings panel. */
+html:not([data-page-bg-pct="100"]):not([data-background-blur="off"]) .page,
+html:not([data-page-bg-pct="100"]):not([data-background-blur="off"]) .page-header > header,
+html:not([data-page-bg-pct="100"]):not([data-background-blur="off"]) details.inline-toc {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
+/* The sticky top bar and the inline TOC are visually layered ON TOP of
+   the .page panel, so when the panel goes translucent these need to
+   match — otherwise an opaque header floats above a see-through page,
+   which looks broken. */
+.page-header > header {
+  background-color: color-mix(in srgb, var(--light) calc(var(--page-bg-pct, 100) * 1%), transparent) !important;
+}
+details.inline-toc {
+  background-color: color-mix(in srgb, var(--light) calc(var(--page-bg-pct, 100) * 1%), transparent) !important;
+}
+
+/* Text-outline halo for low-opacity panels. Only kicks in at the
+   bottom of the opacity range (low/very-low/transparent), where the
+   pixel-art bleeds through enough to actually hurt readability. The
+   shadow color matches the page bg so the halo separates the glyphs
+   from whatever's behind the panel. */
+html[data-text-outline="on"][data-page-bg-pct="40"] .page,
+html[data-text-outline="on"][data-page-bg-pct="20"] .page,
+html[data-text-outline="on"][data-page-bg-pct="0"] .page {
+  text-shadow:
+    0 0 2px var(--light),
+    0 0 4px var(--light),
+    0 0 6px var(--light);
+}
+
 /* The credits page is *about* the background art, so the .page column
    defaults to a translucent panel even when the user has Page opacity
-   set to Solid. Always blur whatever sits behind it so the body copy
-   stays readable on top of the moving pixel-art scene. */
+   set to Solid. The blur still respects the global toggle so a reader
+   who wants the art sharp on /site-art can have it. */
 body[data-slug="site-art/index"] .page {
   background-color: color-mix(in srgb, var(--light) 55%, transparent) !important;
+}
+html:not([data-background-blur="off"]) body[data-slug="site-art/index"] .page {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }

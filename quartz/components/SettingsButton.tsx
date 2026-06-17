@@ -256,26 +256,6 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
             <option value="instant">Instant</option>
           </select>
         </label>
-        <label>
-          <span>Page opacity</span>
-          <select data-setting="pageBgOpacity">
-            <option value="100" selected>Solid</option>
-            <option value="85">Mostly solid</option>
-            <option value="70">High</option>
-            <option value="55">Medium</option>
-            <option value="40">Low</option>
-            <option value="20">Very low</option>
-            <option value="0">Transparent</option>
-          </select>
-        </label>
-        <label>
-          <input type="checkbox" data-setting="showBreadcrumbs" />
-          <span>Show breadcrumbs</span>
-        </label>
-        <label>
-          <input type="checkbox" data-setting="expandToc" />
-          <span>Expand TOC by default</span>
-        </label>
       </div>
       {/* Art Theme is the only always-visible row; everything else
           lives inside More Art Options. */}
@@ -386,6 +366,37 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
         </div>
       </details>
       <details class="settings-sub">
+        <summary>Background options</summary>
+        <div class="settings-row">
+          <label>
+            <span>Page opacity</span>
+            <select data-setting="pageBgOpacity">
+              <option value="100" selected>Solid</option>
+              <option value="85">Mostly solid</option>
+              <option value="70">High</option>
+              <option value="55">Medium</option>
+              <option value="40">Low</option>
+              <option value="20">Very low</option>
+              <option value="0">Transparent</option>
+            </select>
+          </label>
+          <label>
+            <span>Text outline</span>
+            <select data-setting="textOutline">
+              <option value="on" selected>On (auto)</option>
+              <option value="off">Off</option>
+            </select>
+          </label>
+          <label>
+            <span>Backdrop blur</span>
+            <select data-setting="backgroundBlur">
+              <option value="on" selected>On</option>
+              <option value="off">Off</option>
+            </select>
+          </label>
+        </div>
+      </details>
+      <details class="settings-sub">
         <summary>Page metadata fields</summary>
         <div class="settings-row">
           <label><input type="checkbox" data-setting="metaDate" /><span>Created date</span></label>
@@ -396,6 +407,16 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
           <label><input type="checkbox" data-setting="metaTags" /><span>Tags</span></label>
         </div>
       </details>
+      <div class="settings-row">
+        <label>
+          <input type="checkbox" data-setting="showBreadcrumbs" />
+          <span>Show breadcrumbs</span>
+        </label>
+        <label>
+          <input type="checkbox" data-setting="expandToc" />
+          <span>Expand TOC by default</span>
+        </label>
+      </div>
       <div class="settings-footer">
         <button type="button" class="settings-reset" data-setting="reset">
           Restore defaults
