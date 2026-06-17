@@ -529,7 +529,7 @@ export const SiteArtPage: QuartzEmitterPlugin = () => {
         )}">background showcase</a>.</p>` +
         `<section class="site-art-controls">` +
         `<p>Been changing things? <button type="button" class="settings-reset" data-setting="reset">Reset to defaults</button> restores the normal cycle, default panel opacity, and clears any pinned image.</p>` +
-        `<p class="art-note">More controls (theme, time of day, page opacity, text outline, backdrop blur, and so on) live in the gear icon at the top-right of every page.</p>` +
+        `<p>More controls (theme, time of day, page opacity, text outline, backdrop blur, and so on) live in the gear icon at the top-right of every page.</p>` +
         `</section>` +
         buildThemeSections(manifest, basePath) +
         buildArtistsList(manifest) +
