@@ -34,7 +34,7 @@ const SortableList: QuartzComponent = ({ cfg, fileData, allFiles, pages }: Props
         <thead>
           <tr>
             <th data-sort="title">Title</th>
-            <th data-sort="created" data-default-dir="desc">Created</th>
+            <th data-sort="created" data-default-dir="desc" data-default-sort="true">Created</th>
             <th data-sort="modified" data-default-dir="desc">Updated</th>
             <th data-sort="importance" data-default-dir="desc">Importance</th>
             <th data-sort="reading" data-default-dir="asc">Read time</th>

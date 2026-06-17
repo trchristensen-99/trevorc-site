@@ -1,8 +1,8 @@
 ---
 title: Replay Value
 date: 2026-06-06
-modified: 2026-06-06
-importance: 3
+modified: 2026-06-17
+importance: 2
 status: finished
 tags:
   - media

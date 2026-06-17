@@ -32,8 +32,15 @@ function scrollToHash() {
 
 function applyInitialSortFromURL(table: HTMLTableElement) {
   const params = new URLSearchParams(window.location.search)
-  const sortKey = params.get("sort")
+  let sortKey = params.get("sort")
   const dirParam = params.get("dir")
+  // Fall back to whichever column is marked data-default-sort if the
+  // URL doesn't request a specific sort. Keeps the table from showing
+  // raw file order when a reader lands on /all without query params.
+  if (!sortKey) {
+    const defaultTh = table.querySelector<HTMLElement>('th[data-default-sort="true"]')
+    if (defaultTh) sortKey = defaultTh.getAttribute("data-sort")
+  }
   if (!sortKey) return
   const th = table.querySelector<HTMLElement>(`th[data-sort="${sortKey}"]`)
   if (!th) return
@@ -81,4 +88,10 @@ function attachSortHandlers() {
   document.querySelectorAll<HTMLDivElement>(".sortable-list").forEach((root) => attachOne(root))
 }
 
+// Run on every navigation event, AND on the initial page load: when a
+// reader follows a /all?sort=... link directly (not through SPA nav),
+// spa.inline.ts fires its one-shot "nav" event before this listener is
+// registered, so we'd otherwise miss it and the table stays unsorted.
 document.addEventListener("nav", attachSortHandlers)
+if (document.readyState !== "loading") attachSortHandlers()
+else document.addEventListener("DOMContentLoaded", attachSortHandlers, { once: true })

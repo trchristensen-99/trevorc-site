@@ -1,8 +1,8 @@
 ---
 title: Conflict is Complex
 date: 2026-06-14
-modified: 2026-06-15
-importance: 4
+modified: 2026-06-17
+importance: 5
 status: finished
 tags:
   - history
