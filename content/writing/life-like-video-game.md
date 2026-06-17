@@ -1,8 +1,8 @@
 ---
 title: Is Life like a Video Game?
 date: 2026-06-07
-modified: 2026-06-07
-importance: 6
+modified: 2026-06-17
+importance: 5
 status: finished
 tags:
   - video games

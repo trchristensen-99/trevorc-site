@@ -1,8 +1,8 @@
 ---
 title: How Do Apps Affect Dating?
 date: 2026-06-16
-modified: 2026-06-16
-importance: 3
+modified: 2026-06-17
+importance: 4
 status: finished
 tags:
   - romance

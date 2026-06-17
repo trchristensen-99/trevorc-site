@@ -1,12 +1,12 @@
 ---
 title: AI and the Hedonic Treadmill
 date: 2026-06-12
-modified: 2026-06-12
-importance: 4
+modified: 2026-06-17
+importance: 3
 status: finished
 tags:
   - ai
-  - meta
+  - technology
 ---
 
 > "AI is whatever hasn't been done yet." — Larry Tesler
