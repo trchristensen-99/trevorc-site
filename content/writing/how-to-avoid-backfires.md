@@ -1,7 +1,7 @@
 ---
 title: How to Avoid Backfires (and Misfires)
-date: 2026-06-19
-modified: 2026-06-19
+date: 2026-06-18
+modified: 2026-06-18
 importance: 7
 status: finished
 tags:
