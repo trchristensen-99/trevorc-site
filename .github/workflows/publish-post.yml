@@ -2,19 +2,28 @@ name: Publish post from issue
 
 on:
   issues:
-    types: [opened, labeled]
+    types: [labeled]
+
+# Belt-and-suspenders against the trigger firing twice (issue opened
+# with the label applied at creation produces an "opened" event AND a
+# "labeled" event in GitHub's webhook stream). With only [labeled] in
+# the trigger above this is largely defensive, but keeps things tidy
+# if a future GitHub change reintroduces the dup.
+concurrency:
+  group: publish-issue-${{ github.event.issue.number }}
+  cancel-in-progress: false
 
 jobs:
   publish:
     # Only run when:
-    #   1. the issue author is the repo owner (so a stranger can't open
-    #      an issue and have it published), AND
-    #   2. the issue has the "publish" label (so general issues don't
-    #      accidentally trigger publishing).
+    #   1. The specific event was "this issue just got the publish
+    #      label" (so labelling with any other label later doesn't
+    #      re-trigger publishing on an already-published post), AND
+    #   2. The issue author is the repo owner (so a stranger opening
+    #      a labelled issue can't get a post published).
     if: >
-      github.event.issue.user.login == github.repository_owner &&
-      (contains(github.event.issue.labels.*.name, 'publish') ||
-       github.event.label.name == 'publish')
+      github.event.label.name == 'publish' &&
+      github.event.issue.user.login == github.repository_owner
     runs-on: ubuntu-latest
     permissions:
       contents: write
