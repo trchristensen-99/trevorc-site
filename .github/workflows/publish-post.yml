@@ -1,0 +1,187 @@
+name: Publish post from issue
+
+on:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  publish:
+    # Only run when:
+    #   1. the issue author is the repo owner (so a stranger can't open
+    #      an issue and have it published), AND
+    #   2. the issue has the "publish" label (so general issues don't
+    #      accidentally trigger publishing).
+    if: >
+      github.event.issue.user.login == github.repository_owner &&
+      (contains(github.event.issue.labels.*.name, 'publish') ||
+       github.event.label.name == 'publish')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Parse issue and write markdown
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs')
+            const path = require('path')
+
+            const title = (context.payload.issue.title || '').trim()
+            const rawBody = context.payload.issue.body || ''
+            // GitHub Markdown editor inserts \r\n on Windows clients;
+            // normalise so the YAML-frontmatter regex doesn't miss.
+            const body = rawBody.replace(/\r\n/g, '\n')
+
+            if (!title) {
+              core.setFailed('Issue title is empty')
+              return
+            }
+
+            // Defaults — used when the issue body omits them.
+            const fm = {
+              importance: 4,
+              status: 'finished',
+              tags: [],
+              date: null,
+              modified: null,
+            }
+            let content = body
+
+            const parseMetaLine = (key, value) => {
+              const k = key.toLowerCase()
+              const v = value.trim().replace(/^["']|["']$/g, '')
+              if (k === 'tags') {
+                fm.tags = v
+                  .replace(/^\[|\]$/g, '')
+                  .split(',')
+                  .map((t) => t.trim().replace(/^["']|["']$/g, ''))
+                  .filter(Boolean)
+              } else if (k === 'importance') {
+                const n = parseInt(v, 10)
+                if (!Number.isNaN(n)) fm.importance = n
+              } else if (k === 'status' || k === 'date' || k === 'modified' || k === 'title') {
+                fm[k] = v
+              }
+            }
+
+            // Two accepted formats for metadata at the top of the body:
+            //   1. YAML frontmatter (--- ... ---)
+            //   2. Plain "Key: value" lines followed by a blank line
+            const yamlMatch = body.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/)
+            if (yamlMatch) {
+              const yaml = yamlMatch[1]
+              content = yamlMatch[2]
+              for (const line of yaml.split('\n')) {
+                const m = line.match(/^([A-Za-z_]+):\s*(.+)$/)
+                if (m) parseMetaLine(m[1], m[2])
+              }
+            } else {
+              // Strip a "## Metadata" heading the issue template uses,
+              // so the simple-format parser can see the Key:Value lines
+              // beneath it.
+              const stripped = body.replace(/^##\s+Metadata\s*\n/i, '')
+              const lines = stripped.split('\n')
+              let idx = 0
+              // Walk header lines until we hit a blank line.
+              while (idx < lines.length && lines[idx].trim() !== '') {
+                const m = lines[idx].match(/^([A-Za-z]+):\s*(.+)$/)
+                if (!m) break
+                parseMetaLine(m[1], m[2])
+                idx++
+              }
+              // Eat blank lines between metadata and content.
+              while (idx < lines.length && lines[idx].trim() === '') idx++
+              // Drop a "## Post" or "## Content" heading the issue
+              // template uses, so it doesn't end up in the article body.
+              if (idx < lines.length && /^##\s+(Post|Content)\s*$/i.test(lines[idx])) {
+                idx++
+                while (idx < lines.length && lines[idx].trim() === '') idx++
+              }
+              content = lines.slice(idx).join('\n')
+            }
+
+            // Slug from title.
+            const slug = title
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-+|-+$/g, '')
+              .slice(0, 80)
+
+            if (!slug) {
+              core.setFailed(`Could not derive slug from title: ${title}`)
+              return
+            }
+
+            // Today's date (UTC). GitHub-hosted runners run in UTC, so a
+            // late-evening post in US Eastern may end up on the next
+            // day. If you want US Eastern dates, replace with a fixed
+            // timezone conversion.
+            const today = new Date().toISOString().slice(0, 10)
+            const date = fm.date || today
+            const modified = fm.modified || today
+
+            const tagsBlock =
+              fm.tags.length > 0
+                ? fm.tags.map((t) => `  - ${t}`).join('\n')
+                : '  - untagged'
+
+            const md = `---\ntitle: ${title}\ndate: ${date}\nmodified: ${modified}\nimportance: ${fm.importance}\nstatus: ${fm.status}\ntags:\n${tagsBlock}\n---\n\n${content.trim()}\n`
+
+            const dir = 'content/writing'
+            fs.mkdirSync(dir, { recursive: true })
+            const filePath = path.join(dir, slug + '.md')
+
+            if (fs.existsSync(filePath)) {
+              core.setFailed(`File ${filePath} already exists; pick a different title or edit the post directly.`)
+              return
+            }
+
+            fs.writeFileSync(filePath, md)
+            core.setOutput('slug', slug)
+            core.setOutput('file_path', filePath)
+            core.setOutput('title', title)
+            core.setOutput('date', date)
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "${{ steps.parse.outputs.file_path }}"
+          git commit -m "Publish: ${{ steps.parse.outputs.title }} (via issue #${{ github.event.issue.number }})"
+          git push
+
+      - name: Comment on issue and close
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const slug = '${{ steps.parse.outputs.slug }}'
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Published as \`content/writing/${slug}.md\`. The post should appear at https://trevorc.com/writing/${slug} once Cloudflare Pages finishes deploying (usually 1-2 minutes).`,
+            })
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed',
+              state_reason: 'completed',
+            })
+
+      - name: On failure, comment with the error
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Publish failed. Check the [workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId}) for details.`,
+            })
