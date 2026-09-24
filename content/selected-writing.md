@@ -3,7 +3,7 @@ title: Selected writing
 date: 2026-09-24
 modified: 2026-09-24
 hideMeta: true
-home_lists: true
+home_lists: "top"
 description: A curated entry point to the essays here, grouped by theme, plus recent and highest-rated pieces.
 tags:
   - meta

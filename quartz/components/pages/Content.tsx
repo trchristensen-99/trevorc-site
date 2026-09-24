@@ -155,7 +155,7 @@ const Content: QuartzComponent = (props: QuartzComponentProps) => {
       } as QuartzPluginData)
     }
     appended = <SortableListInstance {...props} pages={pages} />
-  } else if (fm?.home_lists === true) {
+  } else if (fm?.home_lists === true || fm?.home_lists === "top") {
     const HOME_LIMIT = 10
     const writings = allFiles.filter((f) => isWriting(f, fileData.slug))
 
@@ -184,10 +184,16 @@ const Content: QuartzComponent = (props: QuartzComponentProps) => {
     )
   }
 
+  // home_lists: "top" puts the generated lists above the page body, for
+  // pages where the lists are the primary index and the prose is
+  // commentary on it.
+  const listsFirst = fm?.home_lists === "top"
+
   return (
     <article class={classString}>
+      {listsFirst ? appended : null}
       {content}
-      {appended}
+      {listsFirst ? null : appended}
     </article>
   )
 }
