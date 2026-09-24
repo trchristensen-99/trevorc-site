@@ -1,6 +1,6 @@
 ---
 title: Setting Goals and Sticking to Them
-date: 2026-06-20
+date: 2026-06-19
 modified: 2026-06-21
 importance: 4
 status: finished

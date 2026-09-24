@@ -3,6 +3,7 @@ import TagContent from "./pages/TagContent"
 import FolderContent from "./pages/FolderContent"
 import NotFound from "./pages/404"
 import ArticleTitle from "./ArticleTitle"
+import Spoiler from "./Spoiler"
 import Darkmode from "./Darkmode"
 import ReaderMode from "./ReaderMode"
 import Head from "./Head"
@@ -36,6 +37,7 @@ import ConditionalRender from "./ConditionalRender"
 
 export {
   ArticleTitle,
+  Spoiler,
   Content,
   TagContent,
   FolderContent,

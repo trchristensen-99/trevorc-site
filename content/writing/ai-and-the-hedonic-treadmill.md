@@ -1,6 +1,6 @@
 ---
 title: AI and the Hedonic Treadmill
-date: 2026-06-12
+date: 2026-06-11
 modified: 2026-06-17
 importance: 3
 status: finished

@@ -1,6 +1,6 @@
 ---
 title: Breaking the Cycle
-date: 2026-06-17
+date: 2026-06-15
 modified: 2026-06-18
 importance: 6
 status: finished

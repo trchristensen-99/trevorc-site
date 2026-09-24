@@ -1,0 +1,23 @@
+---
+title: Why is it so hard to make good sequels and adaptations?
+date: 2026-06-29
+modified: 2026-06-29
+importance: 3
+status: finished
+tags:
+  - fiction
+  - movies
+  - media
+---
+
+Funnily enough, the [previous post](./the-power-of-fiction) was originally about why directors often refuse to use fan fiction as source material but that became a now-unrelated tangent that didn't really fit with the rest. You would think it wouldn't be that hard for movie adaptation and sequel creators not to screw things up as badly as they often do. If they don't have any good ideas they could just use well-regarded fanfics or extended universe canon material. Release a bunch of written stories, see which ones (if any) get popular, and adapt the ones that do. Better yet, allow a bunch of other people to write stories based on your characters on their own for free (fan fiction) and if a contribution is good enough, you can adapt that. This is how the legendary canon around figures like King Arthur got built: people came up with a bunch of stories, they got modified over time, and the best versions of the best ones generally stuck around.
+
+[Star Wars](./ranking-every-star-wars-episode) had a bunch of this to draw on, many entries of which people loved, but instead they nuked everything and replaced it with something that is more derivative of the original while somehow making its own decisions in all the worst ways possible. They halfheartedly brought in a couple of extended universe fan favorites like Thrawn but it was too little too late, and now most people stopped following all the new content. I get that writers and directors want full creative freedom and the power to add major plot twists whenever they feel like it, but this often doesn't turn out well.
+
+You could imagine the most currently popular stories out of the set of all stories being very memetically "fit," with the precise combination of plot elements, characters, and style resonating with lots of people. These include written works, standalone or existing movies/TV shows, video games, or even creepypastas (e.g. The Backrooms). As changes or "mutations" are made when they are adapted into further films or TV shows, this has deleterious effects on their general quality in the public eye as the average change takes it further from that local peak in the memetic fitness landscape. The only way this wouldn't happen is if the team working on the adaptation truly does have enough skill and taste to stay close to the peak despite making changes, or even rarer, find an entirely new memetic fitness peak some distance from the original. The adaptation of *Starship Troopers* could be seen as an instance of the latter.
+
+![A three-dimensional fitness landscape rendered as a grey mesh surface with three peaks rising from a flat plain. The vertical axis is labelled "Fitness" and both horizontal axes are labelled "Sequence space". Two starting points, one magenta and one blue, each send several curved trajectories uphill toward different peaks, illustrating that populations starting from different points climb to different local optima.](../static/fitness-landscape.jpg)
+
+Here is an example of a fitness landscape from biology, where fitness is the ability to successfully reproduce. In memetics, fitness involves reproducing or spreading informationally rather than biologically, like when you recommend a movie to your friends. Image source: [Science](https://www.science.org/doi/10.1126/science.adh3860).
+
+It is generally hard to make sequels or new works in continuity with an existing canon, since you have to simultaneously introduce novel elements to keep readers interested while maintaining the overall structure of the story. If you don't do the former you end up with the 20th Marvel or Star Wars movie no-one cares about since we've already seen all the variations, while if you don't do the latter, not only does the story feel disconnected but you have to come up with a whole new set of elements that somehow reach a similar height in the memetic fitness landscape. However, it shouldn't be that hard to make a good adaptation from another medium. There will always be some difficulty in going from writing to film or from film to graphic novel, but as long as you stay relatively close to the choices of the original work, you don't run the risk of making choices people dislike. The most faithful adaptations (Harry Potter, Lord of the Rings) are often the most praised for good reason. Of course, once a very faithful adaptation has already been made, you might have to add some novel elements to get audiences interested, but then this becomes more of a sequel problem.

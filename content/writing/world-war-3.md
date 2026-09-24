@@ -1,0 +1,21 @@
+---
+title: World War 3
+date: 2026-06-27
+modified: 2026-06-27
+importance: 7
+status: finished
+tags:
+  - history
+  - war
+  - future
+---
+
+One of the emerging themes in my writing seems to be attempting to use history to predict the future. Continuing in this vein, people often discuss when and how World War 3 might occur. Applying our [previously-developed intuition](./greece-europe-rome-usa) that history doesn't repeat but it often rhymes, what might we see in a future large-scale conflict based on past large-scale conflicts?
+
+Superficially, you could pattern match and say that it looks like it will be Germany, one somewhat-weaker European power (Austria/Italy), and an Asian power with a history of successfully fighting European armies (Ottomans/Japanese) teaming up against the UK, France, Russia, and eventually the U.S.A. It seems ludicrous to imagine this under the current geopolitical order, largely because the two world wars were much closer to each other than to the present day, and in many ways the first [directly caused the second](./breaking-the-cycle), making them more like a single prolonged conflict. Currently, the alliance blocs look more like some combination of the U.S., E.U., Anglosphere, Japan, South Korea, Israel, Gulf states, and friends in one corner vs China, Russia, Iran, North Korea, and friends in the other corner, with the exact flashpoint (Ukraine, Iran, Taiwan, Palestine, Yemen) determining who gets involved when[^1]. It makes sense that we would see a significant shift from the last war 80+ years ago, since a similar shift was seen between the Napoleonic wars where the British and French were deadly enemies going back hundreds of years to WW1 where they became best buddies (kind of like Germany and France or perhaps South Korea and Japan would be now).
+
+Rather than looking at just the most recent world wars, it is worth considering previous global conflicts. This includes the Mongol conquests, Timurid conquests, European colonization, the Thirty Years' War, and the Seven Years' War, among others. These naturally lend themselves to two main categories: the first three (and other conflicts like them) involve vast conquests spurred on by the conquerors having vastly superior military power, while the latter two were more political conflicts that usually involved prior tensions gradually building up to some inciting incident that sends the complex web of alliances into war. WW3 could be closer to the former case if one group suddenly becomes much more powerful than the others and then decides to start conquering them (perhaps through AI), while the latter case could emerge according to the pattern of a flashpoint bringing several powers on both sides to war. It also seems like large conflicts occur with some regularity throughout human history, so unless improved living conditions drastically alter this tendency, we may be coming up on another one after a long period of relative peace.
+
+The one area where it would be helpful to extrapolate trends from WW1 to WW2 to WW3 is regarding technology. Advances in technology shaped previous global conflicts like the Seven Years' War but not nearly to the same extent. Just as the first world wars saw cavalry and battleships become outmoded and new types of war fighting tools like tanks, fighters, and aircraft carriers take their place, a third world war would likely drastically accelerate current warfare technological progress in a similar manner, as seen by the newfound role of drones in places like Ukraine. As conflict escalates, military tech continues to develop faster, with deadlier iterations coming out rapidly. The ultimate extension of this pattern is the development of weapons of mass destruction. In WW1, poison gas killed hundreds of thousands, while in WW2 nuclear weapons killed hundreds of thousands more. Fortunately, the trend has been for subsequent conflicts not to use the same WMDs as before. But this disturbingly points to the development and use of new WMDs in WW3 like bioweapons or military AI (we can already see the first steps towards development of the latter). It's worth thinking about ways to prevent this, even though I'm not sure how.
+
+[^1]: as was the case in WW1 as the crisis in Serbia gradually pulled in more European powers.
