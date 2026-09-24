@@ -49,6 +49,10 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
 
     const segments: (string | JSX.Element)[] = []
     const fm = fileData.frontmatter as Record<string, unknown> | undefined
+    // Pages that act as a professional front door (home, research,
+    // about, contact) read better without a created-date / reading-time
+    // / tags line under the title.
+    if (fm?.hideMeta === true) return null
 
     // Value link: jumps to /all sorted by the matching key, with the source
     // page anchored.

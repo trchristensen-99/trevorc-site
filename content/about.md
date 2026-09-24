@@ -1,5 +1,6 @@
 ---
 title: About
+hideMeta: true
 date: 2026-05-05
 modified: 2026-09-24
 description: Trevor Christensen — PhD student in computational biology at Cold Spring Harbor Laboratory, in Peter Koo's lab.

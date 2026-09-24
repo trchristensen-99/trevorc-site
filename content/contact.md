@@ -1,5 +1,6 @@
 ---
 title: Contact
+hideMeta: true
 date: 2026-05-12
 modified: 2026-09-24
 tags:

@@ -1,5 +1,6 @@
 ---
 title: Research
+hideMeta: true
 date: 2026-09-24
 modified: 2026-09-24
 description: Machine learning for regulatory genomics — data scaling laws, efficient sequence-to-function models, and applications to nucleic-acid therapeutics.

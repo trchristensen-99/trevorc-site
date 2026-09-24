@@ -97,6 +97,10 @@ function isWriting(f: QuartzPluginData, selfSlug: string | undefined): boolean {
   if (f.slug === selfSlug) return false
   if (f.slug === "all" || f.slug === "about" || f.slug === "audio-test") return false
   if (f.slug === "publications" || f.slug === "index" || f.slug === "404") return false
+  // Standalone non-essay pages: these are site furniture, not writing,
+  // so they shouldn't appear in the recent/important essay feeds.
+  if (f.slug === "research" || f.slug === "contact" || f.slug === "metadata") return false
+  if (f.slug === "site-art" || f.slug === "background") return false
   if (f.slug.startsWith("tags/")) return false
   // Exclude folder index pages (writing/index, notes/index, etc.)
   if (f.slug.endsWith("/index")) return false
