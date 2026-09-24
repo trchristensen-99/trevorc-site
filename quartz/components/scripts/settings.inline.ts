@@ -152,6 +152,31 @@ function apply(s: Settings) {
     })
 }
 
+
+// The Direct art dropdown can only represent theme/band options, so a
+// "src:<path>" pin set by clicking a /site-art thumbnail has no matching
+// <option>. Render it as a read-only line under the dropdown, with an
+// unpin button, so an override that silently outranks the seasonal
+// cycle is visible rather than mysterious.
+function reflectPinnedArt(s: Settings) {
+  const note = document.querySelector<HTMLElement>(".art-pinned-note")
+  if (!note) return
+  const spec = s.directArt
+  if (typeof spec === "string" && spec.startsWith("src:")) {
+    const path = spec.slice("src:".length)
+    note.setAttribute("data-pinned", "true")
+    note.textContent = `Pinned: ${path} (overrides the theme cycle)`
+    const btn = document.createElement("button")
+    btn.type = "button"
+    btn.textContent = "Unpin"
+    btn.setAttribute("data-setting", "unpin-art")
+    note.appendChild(btn)
+  } else {
+    note.setAttribute("data-pinned", "false")
+    note.textContent = ""
+  }
+}
+
 function reflectIntoPanel(s: Settings, panel: HTMLElement) {
   panel.querySelectorAll<HTMLInputElement>("input[data-setting]").forEach((i) => {
     const key = i.getAttribute("data-setting")
@@ -164,6 +189,7 @@ function reflectIntoPanel(s: Settings, panel: HTMLElement) {
     const key = sel.getAttribute("data-setting") as keyof Settings
     sel.value = String(s[key])
   })
+  reflectPinnedArt(s)
 }
 
 function panelEl() {
@@ -214,6 +240,17 @@ function installGlobalHandlers() {
         state.colorTheme = state.colorTheme === "blue" ? "red" : "blue"
         write(state)
         apply(state)
+        e.stopPropagation()
+        return
+      }
+
+      if (t.closest("[data-setting='unpin-art']")) {
+        const state = read()
+        state.directArt = "auto"
+        write(state)
+        apply(state)
+        const p = panelEl()
+        if (p) reflectIntoPanel(state, p)
         e.stopPropagation()
         return
       }
@@ -277,6 +314,14 @@ function init() {
     window.addCleanup(() => d.removeEventListener("toggle", onToggle))
   })
 }
+
+// A /site-art thumbnail click writes directArt straight to localStorage
+// and fires this event; refresh the pinned line so it matches even if
+// the panel is already open.
+document.addEventListener("site-art-changed", () => {
+  const p = panelEl()
+  if (p) reflectPinnedArt(read())
+})
 
 document.addEventListener("nav", init)
 if (document.readyState === "loading") {

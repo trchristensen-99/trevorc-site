@@ -148,6 +148,32 @@ const css = `
   font-size: 0.85em;
 }
 .settings-sub[open] > summary::after { content: " ▾"; }
+.art-pinned-note {
+  display: none;
+  margin: 0.1rem 0 0.35rem;
+  padding-left: 0.6rem;
+  font-size: 0.86em;
+  line-height: 1.35;
+  color: var(--darkgray);
+  overflow-wrap: anywhere;
+}
+.art-pinned-note[data-pinned="true"] { display: block; }
+.art-pinned-note button {
+  background: transparent;
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  color: var(--darkgray);
+  font: inherit;
+  font-size: 0.92em;
+  padding: 0.1rem 0.4rem;
+  margin-left: 0.3rem;
+  cursor: pointer;
+}
+.art-pinned-note button:hover {
+  color: var(--secondary);
+  border-color: var(--secondary);
+}
+
 .settings-sub > .settings-row {
   padding-left: 0.6rem;
   border-left: 2px solid var(--lightgray);
@@ -363,6 +389,11 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
               </optgroup>
             </select>
           </label>
+          {/* Thumbnail clicks on /site-art pin an exact image, which the
+              Direct art dropdown can't represent (its options are
+              theme/band pairs). Surface the pin here so an override
+              that outranks the seasonal cycle isn't invisible. */}
+          <p class="art-pinned-note" data-pinned="false"></p>
         </div>
       </details>
       <details class="settings-sub">
