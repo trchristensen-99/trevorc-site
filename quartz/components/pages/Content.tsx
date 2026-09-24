@@ -63,7 +63,7 @@ function renderHomeSection(
 ): ComponentChildren {
   if (pages.length === 0) return null
   return (
-    <details class="home-section" open>
+    <details class="home-section">
       <summary>{title}</summary>
       <ul>
         {pages.map((p) => {
