@@ -9,6 +9,10 @@ import * as Plugin from "./quartz/plugins"
 const config: QuartzConfig = {
   configuration: {
     pageTitle: "Trevor Christensen",
+    // Shown in link previews (Open Graph / Twitter cards) and as the
+    // fallback meta description on pages without their own.
+    description:
+      "PhD student at Cold Spring Harbor Laboratory working on machine learning for regulatory genomics, with interests in RNA/DNA therapeutics.",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
