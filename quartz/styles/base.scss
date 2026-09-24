@@ -836,3 +836,35 @@ iframe.pdf {
   transition: width 0.2s ease;
   z-index: 9999;
 }
+
+/* Paired maps/figures. The Greece:Rome::Europe:USA essay argues by
+   parallelism, so its maps read best two-up: the Roman case beside the
+   American one, the fragmented map beside the unified one. Collapses to
+   a single column on narrow screens. */
+.map-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  align-items: end;
+}
+@media all and ($mobile) {
+  .map-pair { grid-template-columns: 1fr; }
+}
+.map-pair figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.map-pair img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  background: var(--lightgray);
+}
+.map-pair figcaption {
+  font-size: 0.82em;
+  line-height: 1.4;
+  color: var(--darkgray);
+}
