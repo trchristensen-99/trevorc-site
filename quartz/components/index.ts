@@ -4,6 +4,7 @@ import FolderContent from "./pages/FolderContent"
 import NotFound from "./pages/404"
 import ArticleTitle from "./ArticleTitle"
 import Spoiler from "./Spoiler"
+import EmailObfuscate from "./EmailObfuscate"
 import Darkmode from "./Darkmode"
 import ReaderMode from "./ReaderMode"
 import Head from "./Head"
@@ -38,6 +39,7 @@ import ConditionalRender from "./ConditionalRender"
 export {
   ArticleTitle,
   Spoiler,
+  EmailObfuscate,
   Content,
   TagContent,
   FolderContent,

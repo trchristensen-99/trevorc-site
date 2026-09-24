@@ -36,4 +36,4 @@ Before CSHL I was a postbaccalaureate fellow at the National Cancer Institute, w
 - Google Scholar: [profile](https://scholar.google.com/citations?user=wPd2OWsAAAAJ&hl=en)
 - GitHub: [trchristensen-99](https://github.com/trchristensen-99)
 - LinkedIn: [trevor-christensen](https://www.linkedin.com/in/trevor-christensen-353b42154/)
-- Email: [contact@trevorc.com](mailto:contact@trevorc.com)
+- Email: <span class="email-obf" data-eml="Y29udGFjdEB0cmV2b3JjLmNvbQ==">contact at trevorc dot com</span>
