@@ -14,7 +14,10 @@ This site doubles as a working notebook — research notes and long-form essays 
 
 ## Elsewhere
 
+- Resume: [PDF](/static/Trevor_Christensen_Resume_2026.pdf)
+- Google Scholar: [profile](https://scholar.google.com/citations?user=wPd2OWsAAAAJ&hl=en)
 - GitHub: [trchristensen-99](https://github.com/trchristensen-99)
+- LinkedIn: [trevor-christensen](https://www.linkedin.com/in/trevor-christensen-353b42154/)
 - Email: [contact@trevorc.com](mailto:contact@trevorc.com)
 
 ## Contact
