@@ -754,9 +754,20 @@ tr {
 
 img {
   max-width: 100%;
+  /* Images now carry intrinsic width/height attributes (see the
+     ImageDimensions transformer) so the browser can reserve a
+     correctly-proportioned box before they load. height: auto is
+     required alongside those attributes, otherwise the literal height
+     is honoured and the image stretches once max-width scales it down.
+
+     content-visibility: auto was removed here: it lets the browser
+     skip layout for offscreen elements, which reports zero size until
+     they scroll into view and then snaps to full height -- the same
+     scroll-jump the width/height attributes are meant to fix. Lazy
+     loading already covers the bandwidth concern. */
+  height: auto;
   border-radius: 5px;
   margin: 1rem 0;
-  content-visibility: auto;
 }
 
 p > img + em {

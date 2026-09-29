@@ -12,3 +12,5 @@ export { TableOfContents } from "./toc"
 export { HardLineBreaks } from "./linebreaks"
 export { RoamFlavoredMarkdown } from "./roam"
 export { AudioAutoDiscover } from "./audioAutoDiscover"
+
+export { ImageDimensions } from "./imageDimensions"
