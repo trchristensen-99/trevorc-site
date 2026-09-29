@@ -1,7 +1,7 @@
 ---
-title: Greece is to Europe as Rome is to the U.S.A.
+title: Ancient Greece is to Europe as Rome is to the U.S.A.
 date: 2026-06-26
-modified: 2026-09-23
+modified: 2026-09-28
 importance: 5
 status: finished
 tags:

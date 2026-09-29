@@ -480,8 +480,11 @@ async function tick() {
     return
   }
 
-  if (settings.artTheme === "none") {
-    setResolved("none")
+  // Neutral themes are a calm middle ground between the pixel art and
+  // nothing at all: no image, but CSS paints a distinct margin tone so
+  // the content column still reads as a panel.
+  if (settings.artTheme === "none" || settings.artTheme.startsWith("neutral_")) {
+    setResolved(settings.artTheme)
     if (imgBase) imgBase.style.opacity = "0"
     if (imgFade) imgFade.style.opacity = "0"
     currentSrc = ""
@@ -534,39 +537,11 @@ async function ensureManifest(): Promise<Manifest | null> {
   return manifestPromise
 }
 
-// Wire up the credits-page thumbnail clicks: clicking any thumbnail
-// pins that exact image as the background by writing a "src:" spec into
-// the directArt setting and nudging the renderer. The selector only
-// matches on the /site-art credits page, so this is a no-op elsewhere.
+// Thumbnail clicks on /site-art are handled by the lightbox, which
+// carries the explicit "Set as site background" action. Pinning a
+// background is a deliberate choice rather than a side effect of
+// clicking a picture.
 const SETTINGS_KEY = "trevorc-settings-v1"
-function bindCreditsThumbnails() {
-  document
-    .querySelectorAll<HTMLImageElement>(".art-grid img[data-direct-art]")
-    .forEach((img) => {
-      if (img.getAttribute("data-art-bound") === "true") return
-      img.setAttribute("data-art-bound", "true")
-      const handler = (e: Event) => {
-        e.preventDefault()
-        const spec = img.getAttribute("data-direct-art")
-        if (!spec) return
-        try {
-          const raw = localStorage.getItem(SETTINGS_KEY)
-          const parsed = raw ? JSON.parse(raw) : {}
-          parsed.directArt = spec
-          localStorage.setItem(SETTINGS_KEY, JSON.stringify(parsed))
-        } catch (_e) {
-          /* swallow */
-        }
-        document.documentElement.setAttribute("data-direct-art", spec)
-        document.dispatchEvent(new CustomEvent("site-art-changed"))
-      }
-      img.style.cursor = "pointer"
-      img.addEventListener("click", handler)
-      if (typeof window.addCleanup === "function") {
-        window.addCleanup(() => img.removeEventListener("click", handler))
-      }
-    })
-}
 
 async function start() {
   ensureContainer()
@@ -576,7 +551,6 @@ async function start() {
   await ensureManifest()
   if (!manifest) return
   await tick()
-  bindCreditsThumbnails()
   if (tickTimer) window.clearInterval(tickTimer)
   tickTimer = window.setInterval(tick, TICK_MS)
   if (typeof window.addCleanup === "function") {

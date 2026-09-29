@@ -879,3 +879,15 @@ iframe.pdf {
   line-height: 1.4;
   color: var(--darkgray);
 }
+
+/* Neutral background themes. A calm alternative to the pixel art: no
+   image, but the outer band takes a distinct tone so the content column
+   still reads as a panel floating on something. Each is defined for
+   light and dark so the contrast direction stays sensible. */
+html[data-art-theme="neutral_paper"] { --outer-bg: #ece7dd; }
+html[data-art-theme="neutral_slate"] { --outer-bg: #d8dee8; }
+html[data-art-theme="neutral_gray"]  { --outer-bg: #dcdcdc; }
+
+html[saved-theme="dark"][data-art-theme="neutral_paper"] { --outer-bg: #2a2621; }
+html[saved-theme="dark"][data-art-theme="neutral_slate"] { --outer-bg: #1e242e; }
+html[saved-theme="dark"][data-art-theme="neutral_gray"]  { --outer-bg: #242424; }

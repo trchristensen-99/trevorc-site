@@ -5,6 +5,7 @@ import NotFound from "./pages/404"
 import ArticleTitle from "./ArticleTitle"
 import Spoiler from "./Spoiler"
 import EmailObfuscate from "./EmailObfuscate"
+import Lightbox from "./Lightbox"
 import Darkmode from "./Darkmode"
 import ReaderMode from "./ReaderMode"
 import Head from "./Head"
@@ -40,6 +41,7 @@ export {
   ArticleTitle,
   Spoiler,
   EmailObfuscate,
+  Lightbox,
   Content,
   TagContent,
   FolderContent,

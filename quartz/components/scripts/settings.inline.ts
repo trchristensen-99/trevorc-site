@@ -14,6 +14,9 @@ interface Settings {
   topBarReveal: "off" | "slow" | "normal" | "fast" | "instant"
   artTheme:
     | "none"
+    | "neutral_paper"
+    | "neutral_slate"
+    | "neutral_gray"
     | "seasonal"
     | "random"
     | "ocean"

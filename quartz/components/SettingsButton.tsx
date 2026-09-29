@@ -192,6 +192,7 @@ const css = `
      weather variant in the manifest (currently forest, mountain,
      medieval_city). */
 html[data-art-theme="none"] .art-time-row,
+html[data-art-theme^="neutral_"] .art-time-row,
 html[data-art-theme="random"] .art-time-row,
 html[data-art-theme="medieval_city"] .art-time-row,
 html[data-art-resolved="medieval_city"] .art-time-row,
@@ -199,6 +200,7 @@ html[data-art-resolved="none"] .art-time-row {
   display: none;
 }
 html[data-art-theme="none"] .art-weather-row,
+html[data-art-theme^="neutral_"] .art-weather-row,
 html[data-art-theme="random"] .art-weather-row,
 html[data-art-theme="forest"] .art-weather-row,
 html[data-art-theme="mountain"] .art-weather-row,
@@ -290,6 +292,11 @@ const SettingsButton: QuartzComponent = (_props: QuartzComponentProps) => (
           <span>Art Theme</span>
           <select data-setting="artTheme">
             <option value="none">None</option>
+            <optgroup label="Neutral">
+              <option value="neutral_paper">Paper</option>
+              <option value="neutral_slate">Slate</option>
+              <option value="neutral_gray">Gray</option>
+            </optgroup>
             <option value="seasonal" selected>Seasonal</option>
             <option value="random">Random</option>
             <option value="ocean">Ocean</option>
