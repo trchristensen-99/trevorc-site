@@ -106,6 +106,7 @@ function onScroll() {
   window.requestAnimationFrame(update)
 }
 
+let scrollBound = false
 function init() {
   try {
     lastY = window.scrollY
@@ -118,9 +119,15 @@ function init() {
       h.style.transition = "transform 0ms"
       h.style.transform = "translateY(0)"
     })
-    window.addEventListener("scroll", onScroll, { passive: true })
-    if (typeof window.addCleanup === "function") {
-      window.addCleanup(() => window.removeEventListener("scroll", onScroll))
+    if (!scrollBound) {
+      scrollBound = true
+      window.addEventListener("scroll", onScroll, { passive: true })
+      if (typeof window.addCleanup === "function") {
+        window.addCleanup(() => {
+          scrollBound = false
+          window.removeEventListener("scroll", onScroll)
+        })
+      }
     }
   } catch (_e) {
     /* swallow */

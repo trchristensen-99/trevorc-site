@@ -47,6 +47,9 @@ export const BackgroundShowcase: QuartzEmitterPlugin = () => ({
     }
   </style>
   <script src="../prescript.js"></script>
+  <!-- Normal pages get this from pageResources; the showcase builds its own
+       document, so define it here or search.inline.ts throws ReferenceError. -->
+  <script>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script>
 </head>
 <body data-slug="background">
   <script src="../postscript.js" type="module"></script>

@@ -41,6 +41,15 @@ function notifyNav(url: FullSlug) {
 }
 
 const cleanupFns: Set<(...args: any[]) => void> = new Set()
+// Adopt any cleanups registered before this script ran (see
+// cleanupShim.inline.ts), then take over as the real implementation.
+const buffered = (window as any).__earlyCleanups as
+  | Array<(...args: any[]) => void>
+  | undefined
+if (Array.isArray(buffered)) {
+  for (const fn of buffered) cleanupFns.add(fn)
+  delete (window as any).__earlyCleanups
+}
 window.addCleanup = (fn) => cleanupFns.add(fn)
 
 function startLoading() {

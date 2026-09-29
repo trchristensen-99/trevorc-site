@@ -87,6 +87,11 @@ function hide() {
 }
 
 function bind(link: HTMLAnchorElement) {
+  // init() runs on both "nav" and DOMContentLoaded, so guard against
+  // binding twice: a second click handler would toggle the tooltip
+  // straight back off again.
+  if (link.getAttribute("data-fn-bound") === "true") return
+  link.setAttribute("data-fn-bound", "true")
   // Suppress Quartz's default link-preview popover on footnote refs —
   // we replace it with our own tooltip.
   link.setAttribute("data-no-popover", "true")

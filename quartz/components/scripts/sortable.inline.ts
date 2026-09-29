@@ -56,6 +56,12 @@ function attachOne(root: HTMLElement) {
   if (!table) return
   applyInitialSortFromURL(table)
 
+  // attachSortHandlers runs on both "nav" and DOMContentLoaded; without
+  // this guard each header ends up with two click handlers and a single
+  // click toggles the direction twice.
+  if (table.getAttribute("data-sort-bound") === "true") return
+  table.setAttribute("data-sort-bound", "true")
+
   const headers = table.querySelectorAll<HTMLElement>("th[data-sort]")
   headers.forEach((th) => {
     const handler = () => {

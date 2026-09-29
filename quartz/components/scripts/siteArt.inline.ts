@@ -543,6 +543,8 @@ function bindCreditsThumbnails() {
   document
     .querySelectorAll<HTMLImageElement>(".art-grid img[data-direct-art]")
     .forEach((img) => {
+      if (img.getAttribute("data-art-bound") === "true") return
+      img.setAttribute("data-art-bound", "true")
       const handler = (e: Event) => {
         e.preventDefault()
         const spec = img.getAttribute("data-direct-art")
