@@ -41,6 +41,21 @@ const homeListsCss = `
   align-items: baseline;
   margin: 0.4rem 0;
 }
+.home-section li.has-blurb {
+  display: block;
+  margin: 0.85rem 0;
+}
+.home-section li .row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+.home-section li .blurb {
+  margin: 0.15rem 0 0;
+  font-size: 0.9em;
+  line-height: 1.45;
+  color: var(--darkgray);
+}
 .home-section li .title {
   flex: 1;
   min-width: 0;
@@ -55,18 +70,61 @@ const homeListsCss = `
 
 type MetaField = "created" | "modified" | "importance"
 
+// Opening sentence of a page, used as an auto-generated blurb on the
+// writing highlights page. Taken verbatim from the prose rather than
+// summarised, so it can never misrepresent a piece and never needs
+// maintaining as the essays change.
+//
+// Reads the parsed tree rather than the flattened text so it can skip
+// a leading epigraph (several essays open with a block quote) and drop
+// footnote reference markers, both of which otherwise land in the
+// middle of the blurb.
+function firstParagraphText(p: QuartzPluginData): string {
+  const ast = (p as unknown as { htmlAst?: { children?: any[] } }).htmlAst
+  const kids = ast?.children
+  if (!Array.isArray(kids)) return ""
+  const para = kids.find((n: any) => n?.type === "element" && n.tagName === "p")
+  if (!para) return ""
+  const collect = (node: any): string => {
+    if (!node) return ""
+    if (node.type === "text") return node.value ?? ""
+    if (node.type !== "element") return ""
+    // footnote markers and back-refs are not prose
+    if (node.tagName === "sup") return ""
+    if (node.properties?.dataFootnoteRef !== undefined) return ""
+    return (node.children ?? []).map(collect).join("")
+  }
+  return collect(para)
+}
+
+function firstSentence(p: QuartzPluginData, maxLen = 190): string {
+  const clean = firstParagraphText(p).replace(/\s+/g, " ").trim()
+  if (!clean) return ""
+  // Require the period to be followed by a capital or quote so that
+  // "U.S.A." and "9.4/10" don't end the sentence early.
+  const m = clean.match(/^.*?[.!?](?=\s+["'“(]?[A-Z0-9])/)
+  let out = m ? m[0] : clean
+  if (out.length > maxLen) {
+    const cut = out.slice(0, maxLen)
+    out = cut.slice(0, cut.lastIndexOf(" ")) + "\u2026"
+  }
+  return out
+}
+
 function renderHomeSection(
   title: string,
   pages: QuartzPluginData[],
   metaField: MetaField,
   props: QuartzComponentProps,
+  opts: { excerpts?: number; open?: boolean } = {},
 ): ComponentChildren {
   if (pages.length === 0) return null
+  const excerpts = opts.excerpts ?? 0
   return (
-    <details class="home-section">
+    <details class="home-section" open={opts.open ?? false}>
       <summary>{title}</summary>
       <ul>
-        {pages.map((p) => {
+        {pages.map((p, i) => {
           const fm = (p.frontmatter ?? {}) as Record<string, unknown>
           const pageTitle = (fm.title as string) ?? p.slug ?? "untitled"
           let meta = ""
@@ -78,12 +136,16 @@ function renderHomeSection(
             const cal = calibrate(props.allFiles, p)
             meta = cal ? `${cal.raw}/10` : ""
           }
+          const blurb = i < excerpts ? firstSentence(p) : ""
           return (
-            <li>
-              <a class="internal title" href={resolveRelative(props.fileData.slug!, p.slug!)}>
-                {pageTitle}
-              </a>
-              <span class="meta">{meta}</span>
+            <li class={blurb ? "has-blurb" : undefined}>
+              <div class="row">
+                <a class="internal title" href={resolveRelative(props.fileData.slug!, p.slug!)}>
+                  {pageTitle}
+                </a>
+                <span class="meta">{meta}</span>
+              </div>
+              {blurb ? <p class="blurb">{blurb}</p> : null}
             </li>
           )
         })}
@@ -175,11 +237,14 @@ const Content: QuartzComponent = (props: QuartzComponentProps) => {
       return bi - ai
     })
 
+    // On the highlights page the lists are the content, so open them
+    // and give the top few entries an opening-sentence blurb.
+    const o = fm?.home_lists === "top" ? { excerpts: 3, open: true } : {}
     appended = (
       <>
-        {renderHomeSection("Recently created", byPublished.slice(0, HOME_LIMIT), "created", props)}
-        {renderHomeSection("Most important", byImportance.slice(0, HOME_LIMIT), "importance", props)}
-        {renderHomeSection("Recently updated", byUpdated.slice(0, HOME_LIMIT), "modified", props)}
+        {renderHomeSection("Recently created", byPublished.slice(0, HOME_LIMIT), "created", props, o)}
+        {renderHomeSection("Most important", byImportance.slice(0, HOME_LIMIT), "importance", props, o)}
+        {renderHomeSection("Recently updated", byUpdated.slice(0, HOME_LIMIT), "modified", props, o)}
       </>
     )
   }

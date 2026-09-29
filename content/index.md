@@ -31,3 +31,5 @@ This site also contains research notes and writing on whatever topics I've been 
 - [About](./about): more about me, and notes on how this site is built.
 - [Site art](./site-art): credits for the pixel-art backgrounds, with a browsable gallery.
 - [Contact](./contact): how to reach me.
+
+New writing is available over [RSS](/index.xml).

@@ -7,3 +7,5 @@ tags:
 ---
 
 Essays and long-form posts. Sortable by publication date, last update, importance, reading time, and inbound links. See [[metadata|Metadata]] for what each column means.
+
+This archive is also available as an [RSS feed](/index.xml).

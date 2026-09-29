@@ -96,6 +96,8 @@ const config: QuartzConfig = {
       Plugin.ContentIndex({
         enableSiteMap: true,
         enableRSS: true,
+        // Default is 10, which covered barely a third of the essays.
+        rssLimit: 40,
       }),
       Plugin.Assets(),
       Plugin.Static(),
