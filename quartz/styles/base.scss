@@ -93,8 +93,22 @@ html[data-show-breadcrumbs="false"] .breadcrumb-container { display: none; }
    whatever's behind it (the site-art) so the text stays readable.
    The reader can disable the blur via the settings panel. */
 html:not([data-page-bg-pct="100"]):not([data-background-blur="off"]) .page,
-html:not([data-page-bg-pct="100"]):not([data-background-blur="off"]) .page-header > header,
 html:not([data-page-bg-pct="100"]):not([data-background-blur="off"]) details.inline-toc {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* The sticky header gets its blur from a pseudo-element rather than the
+   element itself. A non-none backdrop-filter makes an element a
+   containing block for position:fixed descendants, and the search modal
+   lives inside the header -- putting the filter on ::before keeps the
+   header itself clean so the modal still resolves against the viewport. */
+html:not([data-page-bg-pct="100"]):not([data-background-blur="off"]) .page-header > header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }

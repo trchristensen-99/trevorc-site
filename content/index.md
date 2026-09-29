@@ -2,23 +2,17 @@
 title: Hello there!
 hideMeta: true
 date: 2026-05-12
-modified: 2026-09-29
+modified: 2026-09-30
 description: Trevor Christensen, PhD student at Cold Spring Harbor Laboratory working on machine learning for regulatory genomics, with interests in nucleic acid-based therapeutics.
 tags:
   - home
 ---
 
-My name is Trevor Christensen. I am a PhD student at Cold Spring Harbor Laboratory, in [Peter Koo's lab](https://koolab.cshl.edu/), building machine-learning models for regulatory genomics.
+My name is Trevor Christensen. I am a PhD student in [Peter Koo's lab](https://koolab.cshl.edu/) at Cold Spring Harbor Laboratory building machine learning models for regulatory genomics.
 
 I work on the data-centric side of sequence-to-function modeling: how to design the data that makes these models better, and how to make the models themselves faster and more reliable. I'm interested in applying these methods in ways that improve human health and wellbeing, such as nucleic acid-based therapeutics.
 
 [Research](./research) · [Résumé](/static/Trevor_Christensen_Resume_2026.pdf) · [About](./about) · [Contact](./contact)
-
-## Currently
-
-- **Thesis:** data scaling laws for regulatory genomics. Which sequence-generation strategies buy the most model improvement per experiment and per dollar, so that training sets can be designed deliberately rather than accumulated by default.
-- **Recent work:** knowledge distillation for genomic models, producing roughly 10× faster inference at comparable accuracy, plus uncertainty quantification.
-- **Before CSHL:** pancreatic-cancer GWAS variant characterization at the National Cancer Institute, and DNA polymerase engineering at Claremont McKenna College.
 
 ## Selected publications
 

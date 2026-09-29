@@ -2,7 +2,7 @@
 title: About
 hideMeta: true
 date: 2026-05-05
-modified: 2026-09-29
+modified: 2026-09-30
 description: Trevor Christensen, PhD student in computational biology at Cold Spring Harbor Laboratory. Background, interests, and notes on this site.
 tags:
   - about
@@ -14,9 +14,9 @@ After college I spent two years as a postbaccalaureate research fellow at the Na
 
 I am now a PhD student at Cold Spring Harbor Laboratory, in [Peter Koo's lab](https://koolab.cshl.edu/), working on machine learning for regulatory genomics. The [Research](./research) page covers what I work on now, along with my publications.
 
-## Writing here
+## Writing
 
-Outside of research I write most days, mostly about history, technology, media, and how people set and pursue goals. [Selected writing](./selected-writing) is the curated way in; [all writing](./writing/) is the full archive, sortable by several fields. Each piece carries an importance rating out of 10, which is my own subjective sense of how much it matters rather than anything calibrated.
+Sometimes I write about a wide range of topics that strike my interest (and might strike yours as well). [Selected writing](./selected-writing) is the curated way in; [all writing](./writing/) is the full archive, sortable by several fields. Each piece carries an importance rating out of 10, which is my own subjective sense of how much it matters rather than anything calibrated.
 
 ## About this site
 

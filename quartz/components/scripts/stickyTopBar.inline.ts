@@ -47,7 +47,13 @@ function revealMode(): string {
 function applyState(headers: NodeListOf<HTMLElement>, cfg: RevealConfig) {
   headers.forEach((h) => {
     h.style.transition = `transform ${cfg.durationMs}ms ease-out`
-    h.style.transform = hidden ? "translateY(-100%)" : "translateY(0)"
+    // "none" rather than translateY(0) for the resting visible state:
+    // any non-none transform (identity included) makes the header a
+    // containing block for position:fixed descendants, which knocks the
+    // search modal off-centre by the width of the page gutter. Browsers
+    // interpolate none <-> translateY() as the identity matrix, so the
+    // hide/show animation is unaffected.
+    h.style.transform = hidden ? "translateY(-100%)" : "none"
   })
 }
 
@@ -117,7 +123,7 @@ function init() {
     // doesn't animate in on first paint.
     document.querySelectorAll<HTMLElement>(".page-header > header").forEach((h) => {
       h.style.transition = "transform 0ms"
-      h.style.transform = "translateY(0)"
+      h.style.transform = "none"
     })
     if (!scrollBound) {
       scrollBound = true

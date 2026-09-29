@@ -339,7 +339,7 @@ function buildTimeTablesHtml(): string {
 
       <h3>Seasonal cycle — times and default images</h3>
       <p>This table shows, for every band, when it runs (clock window at the equinoxes, then the summer and winter solstice windows for Northern Hemisphere) and which image displays in the theme that "Seasonal" picks for that season.</p>
-      ${buildCombinedTable()}
+      <div class="art-table-scroll">${buildCombinedTable()}</div>
       <p class="art-note">Artist short names: <strong>FGA</strong> = Free Game Assets, <strong>P1992</strong> = PIXEL_1992, <strong>QQS</strong> = Quantum Quasar Studio. Arrows ("→") in a cell mean a multi-frame band that walks through several images in order.</p>
 
       <h3>Weather variants</h3>
@@ -448,6 +448,10 @@ const bodyCss = `
 }
 .site-art-credits .art-times { margin: 2rem 0; }
 .site-art-credits .art-times h3 { margin-top: 1.5rem; }
+.site-art-credits .art-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .site-art-credits .art-table {
   width: 100%;
   border-collapse: collapse;
