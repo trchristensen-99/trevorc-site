@@ -91,7 +91,14 @@ export function googleFontHref(theme: Theme) {
   const bodyFont = formatFontSpecification("body", body)
   const codeFont = formatFontSpecification("code", code)
 
-  return `https://fonts.googleapis.com/css2?family=${headerFont}&family=${bodyFont}&family=${codeFont}&display=swap`
+  // display=optional rather than swap. With swap the browser paints in a
+  // fallback face and then re-lays-out the whole document when the web
+  // font arrives, which measured a cumulative layout shift of 0.3-0.5 on
+  // a cold load (blocking Google Fonts entirely dropped every page to
+  // 0.018). optional gives the font a short block window and, if it
+  // misses, keeps the fallback for that pageview only -- the font is
+  // still cached for every subsequent navigation. No reflow either way.
+  return `https://fonts.googleapis.com/css2?family=${headerFont}&family=${bodyFont}&family=${codeFont}&display=optional`
 }
 
 export function googleFontSubsetHref(theme: Theme, text: string) {

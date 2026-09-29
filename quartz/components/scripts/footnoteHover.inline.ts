@@ -107,8 +107,13 @@ function bind(link: HTMLAnchorElement) {
   }
   const onClick = (e: MouseEvent) => {
     // Suppress the browser's jump-to-anchor behaviour; the reader can
-    // see the footnote in the tooltip instead.
+    // see the footnote in the tooltip instead. stopPropagation matters
+    // as much as preventDefault here: spa.inline.ts has a window-level
+    // click handler that does not check defaultPrevented, and for a
+    // same-page hash it calls scrollIntoView() + pushState, which put
+    // the jump back. Keep the event from reaching it at all.
     e.preventDefault()
+    e.stopPropagation()
     if (pinnedRef === link) {
       // Second click on the same ref toggles the tooltip off.
       hide()

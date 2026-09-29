@@ -62,7 +62,31 @@ function generateRSSFeed(cfg: GlobalConfiguration, idx: ContentIndexMap, limit?:
     <pubDate>${content.date?.toUTCString()}</pubDate>
   </item>`
 
+  // The feed is for the writing, not the site furniture. Without this
+  // the home/about/contact/research/selected-writing pages take up half
+  // the (rssLimit-capped) feed and push real essays out of it.
+  const NON_POST = new Set([
+    "",
+    "about",
+    "contact",
+    "research",
+    "selected-writing",
+    "all",
+    "metadata",
+    "tags",
+    "site-art",
+    "background",
+    "404",
+  ])
   const items = Array.from(idx)
+    .filter(([slug]) => {
+      const s = simplifySlug(slug) as string
+      if (NON_POST.has(s) || NON_POST.has(slug as string)) return false
+      if (slug === ("index" as typeof slug)) return false
+      if (s.startsWith("tags/")) return false
+      if (s.endsWith("/index") || s === "writing") return false
+      return true
+    })
     .sort(([_, f1], [__, f2]) => {
       if (f1.date && f2.date) {
         return f2.date.getTime() - f1.date.getTime()
