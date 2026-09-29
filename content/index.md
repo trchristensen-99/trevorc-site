@@ -12,7 +12,7 @@ My name is Trevor Christensen. I am a PhD student at Cold Spring Harbor Laborato
 
 I work on the data-centric side of sequence-to-function modeling: how to design the data that makes these models better, and how to make the models themselves faster and more reliable. I'm interested in applying these methods in ways that improve human health and wellbeing, such as nucleic acid-based therapeutics.
 
-[Research](./research) · [Resume](/static/Trevor_Christensen_Resume_2026.pdf) · [About](./about) · [Contact](./contact)
+[Research](./research) · [Résumé](/static/Trevor_Christensen_Resume_2026.pdf) · [About](./about) · [Contact](./contact)
 
 ## Currently
 
