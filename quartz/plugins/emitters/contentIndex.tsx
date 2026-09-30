@@ -18,6 +18,7 @@ export type ContentDetails = {
   content: string
   richContent?: string
   date?: Date
+  created?: Date
   description?: string
 }
 
@@ -59,7 +60,7 @@ function generateRSSFeed(cfg: GlobalConfiguration, idx: ContentIndexMap, limit?:
     <link>https://${joinSegments(base, encodeURI(slug))}</link>
     <guid>https://${joinSegments(base, encodeURI(slug))}</guid>
     <description><![CDATA[ ${content.richContent ?? content.description} ]]></description>
-    <pubDate>${content.date?.toUTCString()}</pubDate>
+    <pubDate>${(content.created ?? content.date)?.toUTCString()}</pubDate>
   </item>`
 
   // The feed is for the writing, not the site furniture. Without this
@@ -89,11 +90,15 @@ function generateRSSFeed(cfg: GlobalConfiguration, idx: ContentIndexMap, limit?:
       return true
     })
     .sort(([_, f1], [__, f2]) => {
-      if (f1.date && f2.date) {
-        return f2.date.getTime() - f1.date.getTime()
-      } else if (f1.date && !f2.date) {
+      // Order by publication date, not last-modified: a copy-edit to an
+      // old post should not resurface it at the top of a reader's feed.
+      const d1 = f1.created ?? f1.date
+      const d2 = f2.created ?? f2.date
+      if (d1 && d2) {
+        return d2.getTime() - d1.getTime()
+      } else if (d1 && !d2) {
         return -1
-      } else if (!f1.date && f2.date) {
+      } else if (!d1 && d2) {
         return 1
       }
 
@@ -140,6 +145,7 @@ export const ContentIndex: QuartzEmitterPlugin<Partial<Options>> = (opts) => {
               ? escapeHTML(toHtml(tree as Root, { allowDangerousHtml: true }))
               : undefined,
             date: date,
+            created: file.data.dates?.created ?? date,
             description: file.data.description ?? "",
           })
         }
@@ -171,6 +177,7 @@ export const ContentIndex: QuartzEmitterPlugin<Partial<Options>> = (opts) => {
           // for the RSS feed
           delete content.description
           delete content.date
+          delete content.created
           return [slug, content]
         }),
       )

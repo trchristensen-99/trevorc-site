@@ -1,59 +1,51 @@
-// Sticky top bar tied to scroll direction. Behavior is configurable
-// via html[data-topbar-reveal]:
+// Sticky top bar tied to scroll direction, configurable via
+// html[data-topbar-reveal]:
 //
-//   off     → bar stays hidden once scrolled past; only the top-of-page
-//             pin zone reveals it.
-//   slow    → upward scroll of 80 px triggers reveal (long, slow fade)
-//   normal  → 30 px (default, moderate fade)
-//   fast    → 10 px (short, snappy fade)
-//   instant → any upward motion reveals; no transition
+//   off     → only the top-of-page pin zone brings it back
+//   slow    → reveals at half your scroll rate
+//   normal  → reveals 1:1 with your scroll (default)
+//   fast    → reveals at twice your scroll rate
+//   instant → snaps fully open on any upward scroll
 //
-// The bar is a binary visible/hidden state with a smooth CSS
-// transition; we accumulate scroll delta in the current direction
-// and flip state once the threshold is crossed. This is more
-// predictable than tracking pixel offsets per frame, and the smooth
-// transition matches the fade used elsewhere on the site.
+// The bar tracks scroll position directly rather than flipping between
+// two states on a threshold. Scrolling up drags it back into view by
+// the distance you scrolled (times the gain), so a small scroll peeks
+// at it and a larger one pulls it fully down. That makes it usable for
+// a quick glance without committing to a full reveal. Hiding is always
+// 1:1 so it doesn't snap away under you.
 
 interface RevealConfig {
-  showThreshold: number
-  hideThreshold: number
-  durationMs: number
-  alwaysReveal: boolean
+  gain: number
+  snap: boolean
 }
 
 const REVEAL_CONFIG: Record<string, RevealConfig> = {
-  off: { showThreshold: Infinity, hideThreshold: 30, durationMs: 200, alwaysReveal: false },
-  slow: { showThreshold: 80, hideThreshold: 30, durationMs: 400, alwaysReveal: false },
-  normal: { showThreshold: 30, hideThreshold: 30, durationMs: 250, alwaysReveal: false },
-  fast: { showThreshold: 10, hideThreshold: 30, durationMs: 150, alwaysReveal: false },
-  instant: { showThreshold: 1, hideThreshold: 30, durationMs: 0, alwaysReveal: true },
+  off: { gain: 0, snap: false },
+  slow: { gain: 0.5, snap: false },
+  normal: { gain: 1, snap: false },
+  fast: { gain: 2, snap: false },
+  instant: { gain: 0, snap: true },
 }
 
-// Top-of-page pin zone — bar stays visible inside this slab regardless
-// of scroll direction so sub-pixel jitter near y=0 doesn't flash it
-// off and on.
+// Bar stays pinned inside this slab at the top so sub-pixel jitter at
+// y≈0 can't flicker it.
 const STAY_VISIBLE_PX = 4
 
 let lastY = 0
-let accumDelta = 0
-let lastSignedDir = 0
-let hidden = false
+let barOffset = 0
 let ticking = false
 
 function revealMode(): string {
   return document.documentElement.getAttribute("data-topbar-reveal") || "normal"
 }
 
-function applyState(headers: NodeListOf<HTMLElement>, cfg: RevealConfig) {
+function paint(headers: NodeListOf<HTMLElement>, animate: boolean) {
   headers.forEach((h) => {
-    h.style.transition = `transform ${cfg.durationMs}ms ease-out`
-    // "none" rather than translateY(0) for the resting visible state:
-    // any non-none transform (identity included) makes the header a
-    // containing block for position:fixed descendants, which knocks the
-    // search modal off-centre by the width of the page gutter. Browsers
-    // interpolate none <-> translateY() as the identity matrix, so the
-    // hide/show animation is unaffected.
-    h.style.transform = hidden ? "translateY(-100%)" : "none"
+    h.style.transition = animate ? "transform 150ms ease-out" : "transform 0ms"
+    // A non-none transform makes the header a containing block for the
+    // position:fixed search modal, which knocks it off-centre. Fully
+    // revealed is the common case, so clear the transform entirely there.
+    h.style.transform = barOffset === 0 ? "none" : `translateY(${barOffset}px)`
   })
 }
 
@@ -66,40 +58,27 @@ function update() {
     }
     const y = Math.max(0, window.scrollY)
     const dy = y - lastY
-    const mode = revealMode()
-    const cfg = REVEAL_CONFIG[mode] ?? REVEAL_CONFIG.normal
-
-    // Reset the accumulator whenever direction flips, so a quick
-    // up-then-down doesn't combine into a misleading sum.
-    const dir = Math.sign(dy)
-    if (dir !== 0 && dir !== lastSignedDir) {
-      accumDelta = 0
-      lastSignedDir = dir
-    }
-    accumDelta += dy
-
-    let nextHidden = hidden
-    if (y < STAY_VISIBLE_PX) {
-      // Pinned visible near the top.
-      nextHidden = false
-      accumDelta = 0
-    } else if (cfg.alwaysReveal && dy < 0) {
-      nextHidden = false
-      accumDelta = 0
-    } else if (!hidden && accumDelta > cfg.hideThreshold) {
-      nextHidden = true
-      accumDelta = 0
-    } else if (hidden && accumDelta < -cfg.showThreshold) {
-      nextHidden = false
-      accumDelta = 0
-    }
-
-    if (nextHidden !== hidden) {
-      hidden = nextHidden
-      applyState(headers, cfg)
-    }
-
     lastY = y
+    const cfg = REVEAL_CONFIG[revealMode()] ?? REVEAL_CONFIG.normal
+    const barHeight = headers[0].offsetHeight || 50
+    const prev = barOffset
+    let animate = false
+
+    if (y < STAY_VISIBLE_PX) {
+      barOffset = 0
+    } else if (dy > 0) {
+      // Hiding always tracks 1:1 with the scroll.
+      barOffset = Math.max(-barHeight, barOffset - dy)
+    } else if (dy < 0) {
+      if (cfg.snap) {
+        barOffset = 0
+        animate = true
+      } else {
+        barOffset = Math.min(0, barOffset + -dy * cfg.gain)
+      }
+    }
+
+    if (barOffset !== prev) paint(headers, animate)
   } catch (_e) {
     /* swallow */
   }
@@ -116,11 +95,7 @@ let scrollBound = false
 function init() {
   try {
     lastY = window.scrollY
-    accumDelta = 0
-    lastSignedDir = 0
-    hidden = false
-    // Apply the initial (visible, no transition) state so the bar
-    // doesn't animate in on first paint.
+    barOffset = 0
     document.querySelectorAll<HTMLElement>(".page-header > header").forEach((h) => {
       h.style.transition = "transform 0ms"
       h.style.transform = "none"

@@ -142,6 +142,17 @@ const css = `
    The transform transition is set imperatively by stickyTopBar.inline.ts
    so the duration can vary with the "Bar reveal" speed setting (slow /
    normal / fast / instant). */
+/* Quartz's base rule sets a 2rem vertical margin on header, and because the
+   sticky header doesn't establish a block formatting context that top
+   margin collapses out through .page-header, pushing the whole bar 36px
+   down the page. That headroom is fine on a desktop window and wasteful
+   on a phone, so pull it in at the mobile breakpoint. */
+@media all and (max-width: 700px) {
+  .page-header > header {
+    margin-top: 0.4rem;
+  }
+}
+
 .page-header > header {
   position: sticky;
   top: -2px;

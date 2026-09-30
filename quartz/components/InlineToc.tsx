@@ -8,7 +8,7 @@ const css = `
    setting in the gear menu. */
 .inline-toc {
   display: inline-block;
-  margin: 0.2rem 0 1.5rem;
+  margin: 0 0 0.25rem;
   padding: 0.3rem 0.65rem;
   border: 1px solid var(--lightgray);
   border-radius: 6px;

@@ -3,7 +3,7 @@ title: Hello there!
 hideMeta: true
 date: 2026-05-12
 modified: 2026-09-30
-description: Trevor Christensen, PhD student at Cold Spring Harbor Laboratory working on machine learning for regulatory genomics, with interests in nucleic acid-based therapeutics.
+description: Trevor Christensen, PhD student at [Cold Spring Harbor Laboratory](https://www.cshl.edu/) working on machine learning for regulatory genomics, with interests in nucleic acid-based therapeutics.
 tags:
   - home
 ---

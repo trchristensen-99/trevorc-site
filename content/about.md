@@ -2,13 +2,13 @@
 title: About
 hideMeta: true
 date: 2026-05-05
-modified: 2026-09-30
-description: Trevor Christensen, PhD student in computational biology at Cold Spring Harbor Laboratory. Background, interests, and notes on this site.
+modified: 2026-10-01
+description: Trevor Christensen, PhD student in computational biology at [Cold Spring Harbor Laboratory](https://www.cshl.edu/). Background, interests, and notes on this site.
 tags:
   - about
 ---
 
-I was born and raised in Seattle. I studied molecular biology at Claremont McKenna College, where I engineered DNA polymerases to synthesize modified nucleic acids relevant to aptamers and nucleic acid-based therapeutics.
+I was born and raised in the Seattle area. I studied molecular biology at Claremont McKenna College, where I engineered DNA polymerases to synthesize modified nucleic acids relevant to aptamers and nucleic acid-based therapeutics.
 
 After college I spent two years as a postbaccalaureate research fellow at the National Cancer Institute in Rockville, Maryland, characterizing pancreatic-cancer GWAS variants with RNA-seq and gene-regulatory-network inference. That work is where I moved from the bench toward computation.
 

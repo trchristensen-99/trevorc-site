@@ -8,7 +8,7 @@ tags:
   - research
 ---
 
-I'm a PhD student in [Peter Koo's lab](https://koolab.cshl.edu/) at Cold Spring Harbor Laboratory. I build machine-learning models that predict function directly from nucleic-acid sequence, and I focus on the *data-centric* side of that problem: which data to generate, and how to train on it efficiently.
+I'm a PhD student in [Peter Koo's lab](https://koolab.cshl.edu/) at [Cold Spring Harbor Laboratory](https://www.cshl.edu/). I build machine-learning models that predict function directly from nucleic-acid sequence, and I focus on the *data-centric* side of that problem: which data to generate, and how to train on it efficiently.
 
 ## What I work on
 
