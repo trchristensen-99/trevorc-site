@@ -31,6 +31,31 @@ export const Description: QuartzTransformerPlugin<Partial<Options>> = (userOpts)
             let frontMatterDescription = file.data.frontmatter?.description
             let text = escapeHTML(toString(tree))
 
+            // The description should read as the start of the prose.
+            // toString(tree) flattens everything, so an essay opening
+            // with a block-quote epigraph gets the quote, and footnote
+            // reference markers get glued onto the preceding word.
+            // Build a separate, cleaned string for the description while
+            // leaving file.data.text (reading time, search index) whole.
+            const stripNode = (n: any): boolean =>
+              n?.type === "element" &&
+              (n.tagName === "sup" || n.properties?.dataFootnoteRef !== undefined)
+            const prose = (n: any): string => {
+              if (!n) return ""
+              if (n.type === "text") return n.value ?? ""
+              if (n.type !== "element") return ""
+              if (stripNode(n)) return ""
+              return (n.children ?? []).map(prose).join("")
+            }
+            const topLevel = (tree as unknown as { children?: any[] }).children ?? []
+            const firstProseIdx = topLevel.findIndex(
+              (n: any) => n?.type === "element" && n.tagName === "p",
+            )
+            const descSource =
+              firstProseIdx >= 0
+                ? escapeHTML(topLevel.slice(firstProseIdx).map(prose).join(" "))
+                : text
+
             if (opts.replaceExternalLinks) {
               frontMatterDescription = frontMatterDescription?.replace(
                 urlRegex,
@@ -46,7 +71,7 @@ export const Description: QuartzTransformerPlugin<Partial<Options>> = (userOpts)
             }
 
             // otherwise, use the text content
-            const desc = text
+            const desc = descSource
             const sentences = desc.replace(/\s+/g, " ").split(/\.\s/)
             let finalDesc = ""
             let sentenceIdx = 0
