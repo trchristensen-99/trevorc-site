@@ -267,12 +267,18 @@ export function renderPage(
           <Body {...componentData}>
             {LeftComponent}
             <div class="center">
+              {/* The top bar is position: sticky. Sticky elements are clamped
+                  to their nearest block-container ancestor, so while this
+                  lived inside .page-header it unstuck after ~290px -- the
+                  height of the title block -- and scrolled away with it,
+                  never to return. As a direct child of .center its sticky
+                  range is the whole article. */}
+              <Header {...componentData}>
+                {header.map((HeaderComponent) => (
+                  <HeaderComponent {...componentData} />
+                ))}
+              </Header>
               <div class="page-header">
-                <Header {...componentData}>
-                  {header.map((HeaderComponent) => (
-                    <HeaderComponent {...componentData} />
-                  ))}
-                </Header>
                 <div class="popover-hint">
                   {beforeBody.map((BodyComponent) => (
                     <BodyComponent {...componentData} />

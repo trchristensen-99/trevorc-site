@@ -51,7 +51,7 @@ function paint(headers: NodeListOf<HTMLElement>, animate: boolean) {
 
 function update() {
   try {
-    const headers = document.querySelectorAll<HTMLElement>(".page-header > header")
+    const headers = document.querySelectorAll<HTMLElement>(".center > header")
     if (headers.length === 0) {
       ticking = false
       return
@@ -96,7 +96,7 @@ function init() {
   try {
     lastY = window.scrollY
     barOffset = 0
-    document.querySelectorAll<HTMLElement>(".page-header > header").forEach((h) => {
+    document.querySelectorAll<HTMLElement>(".center > header").forEach((h) => {
       h.style.transition = "transform 0ms"
       h.style.transform = "none"
     })

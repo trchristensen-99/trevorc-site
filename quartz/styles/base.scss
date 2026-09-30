@@ -20,8 +20,17 @@ sub { bottom: -0.25em; }
 html {
   scroll-behavior: smooth;
   text-size-adjust: none;
+  // `overflow-x: hidden` here forces overflow-y to compute to auto,
+  // which makes <html> a scroll container and stops position: sticky
+  // descendants sticking to the viewport in several engines (iOS Safari
+  // especially) -- the sticky top bar then just scrolls away and never
+  // comes back. `clip` gives the same horizontal protection without
+  // creating a scroll container; `hidden` stays first as a fallback for
+  // engines that don't support it.
   overflow-x: hidden;
-  width: 100vw;
+  overflow-x: clip;
+  // width: 100vw is what made the bandaid necessary: 100vw counts the
+  // scrollbar gutter, so <html> rendered wider than the viewport.
   margin: 0;
   padding: 0;
   // Bump base font-size so all rem-sized text reads a couple of steps
@@ -102,7 +111,7 @@ html:not([data-page-bg-pct="100"]):not([data-background-blur="off"]) .page {
    containing block for position:fixed descendants, and the search modal
    lives inside the header -- putting the filter on ::before keeps the
    header itself clean so the modal still resolves against the viewport. */
-html:not([data-page-bg-pct="100"]):not([data-background-blur="off"]) .page-header > header::before {
+html:not([data-page-bg-pct="100"]):not([data-background-blur="off"]) .center > header::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -116,7 +125,7 @@ html:not([data-page-bg-pct="100"]):not([data-background-blur="off"]) .page-heade
    the .page panel, so when the panel goes translucent these need to
    match — otherwise an opaque header floats above a see-through page,
    which looks broken. */
-.page-header > header {
+.center > header {
   background-color: color-mix(in srgb, var(--light) calc(var(--page-bg-pct, 100) * 1%), transparent) !important;
 }
 

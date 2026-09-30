@@ -90,7 +90,7 @@ const css = `
   min-width: 0;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .top-bar {
     gap: 0.4rem;
     /* Tighter vertical padding on mobile so the bar isn't too tall. */
@@ -147,13 +147,18 @@ const css = `
    margin collapses out through .page-header, pushing the whole bar 36px
    down the page. That headroom is fine on a desktop window and wasteful
    on a phone, so pull it in at the mobile breakpoint. */
-@media all and (max-width: 700px) {
-  .page-header > header {
-    margin-top: 0.4rem;
+@media all and (max-width: 800px) {
+  .center > header {
+    margin-top: 0.15rem;
+  }
+}
+@media all and (min-width: 801px) {
+  .center > header {
+    margin-top: 0.5rem;
   }
 }
 
-.page-header > header {
+.center > header {
   position: sticky;
   top: -2px;
   z-index: 80;
