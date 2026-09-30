@@ -217,7 +217,7 @@ const Content: QuartzComponent = (props: QuartzComponentProps) => {
       } as QuartzPluginData)
     }
     appended = <SortableListInstance {...props} pages={pages} />
-  } else if (fm?.home_lists === true || fm?.home_lists === "top") {
+  } else if (fm?.home_lists === true || fm?.home_lists === "highlights") {
     const HOME_LIMIT = 10
     const writings = allFiles.filter((f) => isWriting(f, fileData.slug))
 
@@ -237,9 +237,11 @@ const Content: QuartzComponent = (props: QuartzComponentProps) => {
       return bi - ai
     })
 
-    // On the highlights page the lists are the content, so open them
-    // and give the top few entries an opening-sentence blurb.
-    const o = fm?.home_lists === "top" ? { excerpts: 3, open: true } : {}
+    // On the highlights page the lists are the content: open them and
+    // give every row the essay's opening line, which reads as a hook
+    // plus enough context to decide whether to click.
+    const o =
+      fm?.home_lists === "highlights" ? { excerpts: HOME_LIMIT, open: true } : {}
     appended = (
       <>
         {renderHomeSection("Recently created", byPublished.slice(0, HOME_LIMIT), "created", props, o)}
@@ -249,16 +251,10 @@ const Content: QuartzComponent = (props: QuartzComponentProps) => {
     )
   }
 
-  // home_lists: "top" puts the generated lists above the page body, for
-  // pages where the lists are the primary index and the prose is
-  // commentary on it.
-  const listsFirst = fm?.home_lists === "top"
-
   return (
     <article class={classString}>
-      {listsFirst ? appended : null}
       {content}
-      {listsFirst ? null : appended}
+      {appended}
     </article>
   )
 }

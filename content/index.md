@@ -26,7 +26,7 @@ Full list on the [Research](./research) page.
 This site also contains research notes and writing on whatever topics I've been thinking about lately.
 
 - [Research](./research): what I work on, my background, and publications.
-- [Selected writing](./selected-writing): a curated entry point to the essays, grouped by theme.
+- [Highlighted writing](./highlighted-writing): a curated entry point to the essays, grouped by theme.
 - [All writing](./writing/): the full archive, sortable by date, importance, reading time, and inbound links.
 - [About](./about): more about me, and notes on how this site is built.
 - [Site art](./site-art): credits for the pixel-art backgrounds, with a browsable gallery.

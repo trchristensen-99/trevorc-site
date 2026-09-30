@@ -16,7 +16,7 @@ I am now a PhD student at Cold Spring Harbor Laboratory, in [Peter Koo's lab](ht
 
 ## Writing
 
-Sometimes I write about a wide range of topics that strike my interest (and might strike yours as well). [Selected writing](./selected-writing) is the curated way in; [all writing](./writing/) is the full archive, sortable by several fields. Each piece carries an importance rating out of 10, which is my own subjective sense of how much it matters rather than anything calibrated.
+Sometimes I write about a wide range of topics that strike my interest (and might strike yours as well). [Highlighted writing](./highlighted-writing) is the curated way in; [all writing](./writing/) is the full archive, sortable by several fields. Each piece carries an importance rating out of 10, which is my own subjective sense of how much it matters rather than anything calibrated.
 
 ## About this site
 
