@@ -66,7 +66,10 @@ const isMobileDefault =
 
 const DEFAULTS: Settings = {
   colorTheme: "blue",
-  showBreadcrumbs: false,
+  // Breadcrumbs earn their space on a wide screen and crowd a narrow
+  // one, so the default follows the viewport. An explicit choice in the
+  // panel still wins and applies everywhere.
+  showBreadcrumbs: !isMobileDefault,
   expandToc: false,
   zoom: 1,
   topBarReveal: "normal",
