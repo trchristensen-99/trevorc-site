@@ -15,7 +15,7 @@ export const sharedPageComponents: SharedLayout = {
 // components for pages that display a single page (e.g. a single note)
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
-    Component.Breadcrumbs({ showCurrentPage: false }),
+    Component.Breadcrumbs({ showCurrentPage: true }),
     Component.ArticleTitle(),
     Component.ContentMeta(),
     Component.InlineToc(),
@@ -26,7 +26,7 @@ export const defaultContentPageLayout: PageLayout = {
 
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
-  beforeBody: [Component.Breadcrumbs({ showCurrentPage: false }), Component.ArticleTitle(), Component.ContentMeta()],
+  beforeBody: [Component.Breadcrumbs({ showCurrentPage: true }), Component.ArticleTitle(), Component.ContentMeta()],
   left: [],
   right: [],
 }

@@ -66,10 +66,11 @@ const isMobileDefault =
 
 const DEFAULTS: Settings = {
   colorTheme: "blue",
-  // Breadcrumbs earn their space on a wide screen and crowd a narrow
-  // one, so the default follows the viewport. An explicit choice in the
-  // panel still wins and applies everywhere.
-  showBreadcrumbs: !isMobileDefault,
+  // Off by default everywhere. The top bar already names the site and
+  // the article title says where you are, so breadcrumbs are a
+  // navigational extra rather than something every visitor needs on
+  // first load. An explicit choice in the panel still wins.
+  showBreadcrumbs: false,
   expandToc: false,
   zoom: 1,
   topBarReveal: "normal",
