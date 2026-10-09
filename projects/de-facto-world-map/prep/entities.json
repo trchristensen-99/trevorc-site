@@ -1,0 +1,406 @@
+{
+ "_note": "Entities beyond Natural Earth's countries, plus overrides. kind: state | de facto state | dependency | armed group | international. 'base' remaps Natural Earth features whose de facto controller isn't the feature itself.",
+ "base": {
+  "ATA": {
+   "c": "none",
+   "k": "uncontrolled",
+   "note": "No state exercises sovereignty. Seven territorial claims are held in abeyance by the Antarctic Treaty (1959), and research stations are operated by around 30 countries."
+  },
+  "BRT": {
+   "c": "none",
+   "k": "uncontrolled",
+   "note": "Terra nullius: claimed by neither Egypt nor Sudan, because each claims the Hala'ib Triangle instead under a different boundary line."
+  },
+  "CNM": {
+   "c": "UNFICYP",
+   "k": "international",
+   "note": "The UN buffer zone (Green Line) between the Republic of Cyprus and Northern Cyprus, patrolled by UNFICYP since 1974."
+  },
+  "KAS": {
+   "c": "IND",
+   "k": "control",
+   "note": "Held by India since 1984; claimed by Pakistan."
+  },
+  "SPI": {
+   "c": "none",
+   "k": "contested",
+   "note": "A stretch of the Chile-Argentina border that has never been demarcated."
+  },
+  "PGA": {
+   "c": "none",
+   "k": "contested",
+   "note": "Individual reefs and islands are occupied by China, Vietnam, the Philippines, Malaysia, and Taiwan."
+  },
+  "SCR": {
+   "c": "CHN",
+   "k": "control",
+   "note": "Controlled by Chinese coast guard ships since a 2012 standoff; claimed by the Philippines."
+  },
+  "BJN": {
+   "c": "COL",
+   "k": "control",
+   "note": "Awarded to Colombia by the International Court of Justice in 2012."
+  },
+  "SER": {
+   "c": "COL",
+   "k": "control",
+   "note": "Awarded to Colombia by the International Court of Justice in 2012."
+  },
+  "USG": {
+   "c": "USA",
+   "k": "lease",
+   "note": "Leased to the United States since 1903; Cuba considers the lease invalid."
+  },
+  "KAB": {
+   "c": "RUS",
+   "k": "lease",
+   "note": "Leased to Russia by Kazakhstan for the Baikonur Cosmodrome; administered by Russia until 2050."
+  },
+  "ESB": {
+   "c": "GBR",
+   "k": "dependency",
+   "note": "A UK Sovereign Base Area retained when Cyprus became independent in 1960."
+  },
+  "WSB": {
+   "c": "GBR",
+   "k": "dependency",
+   "note": "A UK Sovereign Base Area retained when Cyprus became independent in 1960."
+  },
+  "BRI": {
+   "c": "none",
+   "k": "contested",
+   "note": "A river island claimed by both Brazil and Uruguay."
+  }
+ },
+ "entities": {
+  "SAH": {
+   "name": "Sahrawi Republic",
+   "formal": "Sahrawi Arab Democratic Republic",
+   "kind": "de facto state",
+   "recognition": "Recognized by several dozen UN members and a member of the African Union; governs the area east of Morocco's berm."
+  },
+  "TWN": {
+   "name": "Taiwan",
+   "formal": "Republic of China",
+   "kind": "de facto state",
+   "recognition": "Recognized by about a dozen UN members; claimed by the People's Republic of China."
+  },
+  "KOS": {
+   "kind": "de facto state",
+   "recognition": "Recognized by roughly half of UN members; claimed by Serbia."
+  },
+  "CYN": {
+   "name": "Northern Cyprus",
+   "formal": "Turkish Republic of Northern Cyprus",
+   "kind": "de facto state",
+   "recognition": "Recognized only by Turkey; claimed by Cyprus."
+  },
+  "SOL": {
+   "kind": "de facto state",
+   "recognition": "Self-governing since 1991; recognized by Israel in December 2025, and claimed by Somalia."
+  },
+  "PSX": {
+   "name": "Palestine",
+   "kind": "de facto state",
+   "recognition": "Recognized by most UN members; a UN non-member observer state."
+  },
+  "ABK": {
+   "name": "Abkhazia",
+   "kind": "de facto state",
+   "color": "#3f9f8a",
+   "recognition": "Recognized by Russia and a handful of other states; claimed by Georgia."
+  },
+  "SOS": {
+   "name": "South Ossetia",
+   "kind": "de facto state",
+   "color": "#e0b44a",
+   "recognition": "Recognized by Russia and a handful of other states; claimed by Georgia."
+  },
+  "PMR": {
+   "name": "Transnistria",
+   "formal": "Pridnestrovian Moldavian Republic",
+   "kind": "de facto state",
+   "color": "#a83a3a",
+   "recognition": "Recognized by no UN member; claimed by Moldova."
+  },
+  "UNFICYP": {
+   "name": "UN Buffer Zone",
+   "formal": "United Nations Buffer Zone in Cyprus",
+   "kind": "international",
+   "color": "#7fa8e0"
+  },
+  "USA": {
+   "short": "United States"
+  },
+  "AFG": {
+   "note": "Governed by the Taliban's Islamic Emirate since August 2021. Russia became the first state to recognize it, in July 2025."
+  },
+  "MMR": {
+   "note": "Ruled by the military since the February 2021 coup; Min Aung Hlaing became president in 2026 after elections widely dismissed as neither free nor fair."
+  },
+  "SDN": {
+   "formal": "Transitional Sovereignty Council (army-led)",
+   "note": "The army-led government, based in Port Sudan and Khartoum, at war with the Rapid Support Forces since April 2023."
+  },
+  "LBY": {
+   "formal": "Government of National Unity (Tripoli)",
+   "note": "The internationally recognized government in Tripoli; the east and south are held by Khalifa Haftar's Libyan National Army."
+  },
+  "YEM": {
+   "formal": "Presidential Leadership Council",
+   "note": "The internationally recognized government, based in Aden, backed by Saudi Arabia."
+  },
+  "SOM": {
+   "formal": "Federal Government of Somalia",
+   "note": "Federal government in Mogadishu, with the federal member states that cooperate with it."
+  },
+  "TASIS": {
+   "name": "RSF-held Sudan",
+   "formal": "Government of Peace and Unity (Tasis)",
+   "kind": "armed group",
+   "color": "#b08a4a",
+   "recognition": "Proclaimed by the Rapid Support Forces and allies in 2025; recognized by no state.",
+   "note": "The Rapid Support Forces paramilitary, at war with the army since April 2023."
+  },
+  "SPLMN": {
+   "name": "SPLM-North (al-Hilu)",
+   "formal": "Sudan People's Liberation Movement-North",
+   "kind": "armed group",
+   "color": "#5a7ab0",
+   "note": "Has governed parts of the Nuba Mountains since 2011; allied with the RSF in the Tasis coalition since 2025."
+  },
+  "SLMAW": {
+   "name": "SLM (Abdel Wahid)",
+   "formal": "Sudan Liberation Movement / Army (Abdel Wahid al-Nur)",
+   "kind": "armed group",
+   "color": "#8a6ab0",
+   "note": "Holds parts of Jebel Marra and Tawila, neutral between the army and the RSF."
+  },
+  "HOU": {
+   "name": "Houthi-held Yemen",
+   "formal": "Supreme Political Council (Ansar Allah)",
+   "kind": "armed group",
+   "color": "#7a9a3a",
+   "recognition": "Recognized by no state; Iran maintains relations.",
+   "note": "The Houthi movement has held Sanaa since 2014 and governs most of Yemen's population."
+  },
+  "LNA": {
+   "name": "Eastern Libya",
+   "formal": "Government of National Stability / Libyan National Army",
+   "kind": "de facto state",
+   "color": "#a8844a",
+   "recognition": "Recognized by no state; backed by Egypt, the UAE, and Russia.",
+   "note": "Khalifa Haftar's forces have held the east since 2014 and most of the south since 2019."
+  },
+  "SWD": {
+   "name": "Suwayda",
+   "formal": "Druze administration of Jabal al-Arab (Jabal Bashan)",
+   "kind": "de facto state",
+   "color": "#e0c04a",
+   "recognition": "Recognized by no state.",
+   "note": "Druze factions under Sheikh Hikmat al-Hijri have run the province outside government control since the July 2025 fighting."
+  },
+  "HAMAS": {
+   "name": "Hamas-held Gaza",
+   "formal": "Hamas administration in Gaza",
+   "kind": "armed group",
+   "color": "#4a9a5a",
+   "note": "Hamas has governed Gaza since 2007; since the October 2025 ceasefire it holds the area west of the Israeli 'yellow line'."
+  },
+  "M23": {
+   "name": "AFC/M23",
+   "formal": "Alliance Fleuve Congo / March 23 Movement",
+   "kind": "armed group",
+   "color": "#8a4a7a",
+   "recognition": "Recognized by no state; backed by Rwanda.",
+   "note": "Took Goma in January 2025 and Bukavu in February 2025 and runs a parallel administration in the Kivus."
+  },
+  "PUNTLAND": {
+   "name": "Puntland",
+   "formal": "Puntland State of Somalia",
+   "kind": "de facto state",
+   "color": "#3a6aa0",
+   "recognition": "An autonomous federal member state that withdrew recognition of the federal government in 2024; it does not claim independence."
+  },
+  "JUBALAND": {
+   "name": "Jubaland",
+   "formal": "Jubaland State of Somalia",
+   "kind": "de facto state",
+   "color": "#3aa07a",
+   "recognition": "A federal member state that broke with the federal government in late 2024; it does not claim independence."
+  },
+  "SHABAAB": {
+   "name": "al-Shabaab",
+   "formal": "Harakat al-Shabaab al-Mujahideen",
+   "kind": "armed group",
+   "color": "#4a4a4a",
+   "note": "Al-Qaeda's Somali affiliate, which taxes and governs much of rural southern Somalia."
+  },
+  "AA": {
+   "name": "Arakan Army",
+   "formal": "Arakan Army / United League of Arakan",
+   "kind": "armed group",
+   "color": "#3a7a9a",
+   "note": "Took most of Rakhine State in 2024-25 and runs its own administration."
+  },
+  "UWSA": {
+   "name": "Wa State",
+   "formal": "United Wa State Army / Wa State",
+   "kind": "de facto state",
+   "color": "#3a4f9a",
+   "recognition": "Recognized by no state; nominally part of Myanmar but self-governing since 1989, closely tied to China."
+  },
+  "NDAA": {
+   "name": "Mongla",
+   "formal": "National Democratic Alliance Army (Special Region 4)",
+   "kind": "armed group",
+   "color": "#c08a5a",
+   "note": "A ceasefire group that has run Mongla autonomously since 1989."
+  },
+  "MNDAA": {
+   "name": "Kokang",
+   "formal": "Myanmar National Democratic Alliance Army",
+   "kind": "armed group",
+   "color": "#d08a3a",
+   "note": "Retook Laukkai in January 2024 and Kutkai in March 2026."
+  },
+  "TNLA": {
+   "name": "Ta'ang (TNLA)",
+   "formal": "Ta'ang National Liberation Army",
+   "kind": "armed group",
+   "color": "#3f8f6a",
+   "note": "Holds Namhsan, Mantong, Namhkan and Namtu; returned Mogok, Kyaukme, Hsipaw and Nawnghkio to the junta under Chinese pressure."
+  },
+  "KIA": {
+   "name": "Kachin Independence Army",
+   "kind": "armed group",
+   "color": "#2a6a3a"
+  },
+  "CHINR": {
+   "name": "Chin resistance forces",
+   "kind": "armed group",
+   "color": "#7a2a3a"
+  },
+  "NUG": {
+   "name": "National Unity Government and PDFs",
+   "kind": "armed group",
+   "color": "#a03030"
+  },
+  "KNPP": {
+   "name": "Karenni resistance forces",
+   "kind": "armed group",
+   "color": "#5a2a6a"
+  },
+  "KNU": {
+   "name": "Karen National Union",
+   "kind": "armed group",
+   "color": "#2a4a8a"
+  },
+  "JNIM": {
+   "name": "JNIM",
+   "formal": "Jama'at Nusrat al-Islam wal-Muslimin",
+   "kind": "armed group",
+   "color": "#2b2b2b"
+  },
+  "ISSP": {
+   "name": "Islamic State Sahel",
+   "kind": "armed group",
+   "color": "#5a2a2a"
+  },
+  "FLA": {
+   "name": "Azawad Liberation Front",
+   "kind": "armed group",
+   "color": "#8a7a2a"
+  },
+  "ISWAP": {
+   "name": "Islamic State West Africa",
+   "kind": "armed group",
+   "color": "#4a2a4a"
+  },
+  "JAS": {
+   "name": "Boko Haram (JAS)",
+   "kind": "armed group",
+   "color": "#2a2a2a"
+  },
+  "FANO": {
+   "name": "Fano militias",
+   "kind": "armed group",
+   "color": "#3a6a2a"
+  },
+  "ISM": {
+   "name": "Islamic State Mozambique",
+   "kind": "armed group",
+   "color": "#3a3a3a"
+  },
+  "AMBA": {
+   "name": "Ambazonian separatists",
+   "kind": "armed group",
+   "color": "#2a4a8a"
+  },
+  "TTP": {
+   "name": "Pakistani Taliban (TTP)",
+   "kind": "armed group",
+   "color": "#2a2a2a"
+  },
+  "BLA": {
+   "name": "Baloch separatists",
+   "kind": "armed group",
+   "color": "#2a5a3a"
+  },
+  "ELN": {
+   "name": "ELN",
+   "formal": "National Liberation Army",
+   "kind": "armed group",
+   "color": "#8a2020"
+  },
+  "EMC": {
+   "name": "FARC dissidents (EMC)",
+   "kind": "armed group",
+   "color": "#5a1a1a"
+  },
+  "VIVANSANM": {
+   "name": "Viv Ansanm gang coalition",
+   "kind": "armed group",
+   "color": "#3a3a3a"
+  },
+  "SPLAIO": {
+   "name": "SPLA-in-Opposition",
+   "kind": "armed group",
+   "color": "#2a3a6a"
+  },
+  "ADF": {
+   "name": "Allied Democratic Forces (IS Central Africa)",
+   "kind": "armed group",
+   "color": "#3a2a2a"
+  }
+ },
+ "operators": {
+  "Argentina": "ARG",
+  "Australia": "AUS",
+  "Belgium": "BEL",
+  "Brazil": "BRA",
+  "Bulgaria": "BGR",
+  "Chile": "CHL",
+  "China": "CHN",
+  "Czech Republic": "CZE",
+  "Ecuador": "ECU",
+  "France": "FRA",
+  "Germany": "DEU",
+  "India": "IND",
+  "Italy": "ITA",
+  "Japan": "JPN",
+  "New Zealand": "NZL",
+  "Norway": "NOR",
+  "Peru": "PER",
+  "Poland": "POL",
+  "Republic of Belarus": "BLR",
+  "Republic of Korea": "KOR",
+  "Russia": "RUS",
+  "South Africa": "ZAF",
+  "Spain": "ESP",
+  "Ukraine": "UKR",
+  "United Kingdom": "GBR",
+  "United States": "USA",
+  "Uruguay": "URY"
+ }
+}

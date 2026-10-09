@@ -1,0 +1,1009 @@
+{
+ "asOf": "2026-10",
+ "_note": "Where de facto control differs from Natural Earth's base map. Applied in order; each area is carved out of whatever it overlaps.",
+ "areas": [
+  {
+   "id": "abkhazia",
+   "name": "Abkhazia",
+   "controller": "ABK",
+   "geometry": {
+    "ne_disputed": "B35"
+   },
+   "asOf": "2026-10",
+   "confidence": "high",
+   "note": "Self-governing since the 1992-93 war, with a permanent Russian military presence.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "south-ossetia",
+   "name": "South Ossetia",
+   "controller": "SOS",
+   "geometry": {
+    "ne_disputed": "B37"
+   },
+   "asOf": "2026-10",
+   "confidence": "high",
+   "note": "Self-governing since the early 1990s; Russian forces have been based there since the 2008 war.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "transnistria",
+   "name": "Transnistria",
+   "controller": "PMR",
+   "geometry": {
+    "ne_disputed": "B36"
+   },
+   "asOf": "2026-10",
+   "confidence": "high",
+   "note": "Self-governing since the 1992 war, with a Russian garrison.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "ukraine-occupied",
+   "name": "Russian-occupied Ukraine",
+   "controller": "RUS",
+   "kind": "occupation",
+   "geometry": {
+    "union": [
+     {
+      "reference_units": {
+       "set": "UKR-ADM3",
+       "reference": "deepstate:occupied",
+       "threshold": 0.5
+      }
+     },
+     {
+      "ne_disputed": "B89"
+     }
+    ]
+   },
+   "clip": {
+    "union": [
+     {
+      "ne_country": "UKR"
+     },
+     {
+      "ne_disputed": "B89"
+     }
+    ]
+   },
+   "buffer_km": 1.5,
+   "asOf": "2026-10-07",
+   "confidence": "high",
+   "note": "Crimea (occupied since 2014) and the parts of Donetsk, Luhansk, Zaporizhzhia, Kherson, Kharkiv and Dnipropetrovsk oblasts held since 2022: about a fifth of Ukraine. Russia claims to have annexed Crimea and four oblasts. Drawn as the Ukrainian municipalities (OpenStreetMap level 3, via geoBoundaries) that are mostly occupied on DeepStateMap's map, so the line is approximate at the scale of individual municipalities.",
+   "sources": [
+    {
+     "title": "DeepStateMap.Live (snapshot of 7 October 2026)",
+     "url": "https://deepstatemap.live/"
+    },
+    {
+     "title": "Chatham House: How a Russia-Ukraine ceasefire could imperil Ukrainian and European security (May 2026)",
+     "url": "https://www.chathamhouse.org/2026/05/how-russia-ukraine-ceasefire-could-imperil-ukrainian-and-european-security/03-russia"
+    },
+    {
+     "title": "geoBoundaries: Ukraine ADM3 (OpenStreetMap)",
+     "url": "https://www.geoboundaries.org/"
+    }
+   ]
+  },
+  {
+   "id": "ukraine-gray",
+   "name": "Gray zone along the front",
+   "controller": "none",
+   "kind": "contested",
+   "geometry": {
+    "reference_units": {
+     "set": "UKR-ADM3",
+     "reference": "deepstate:gray",
+     "threshold": 0.4
+    }
+   },
+   "clip": {
+    "ne_country": "UKR"
+   },
+   "asOf": "2026-10-07",
+   "confidence": "medium",
+   "note": "Municipalities mostly in the zone DeepStateMap marks as unknown status, where neither side has established control.",
+   "sources": [
+    {
+     "title": "DeepStateMap.Live (snapshot of 7 October 2026)",
+     "url": "https://deepstatemap.live/"
+    }
+   ]
+  },
+  {
+   "id": "west-bank",
+   "name": "West Bank and East Jerusalem",
+   "controller": "ISR",
+   "kind": "occupation",
+   "geometry": {
+    "ne_disputed": [
+     "B54",
+     "B98"
+    ]
+   },
+   "asOf": "2026-10",
+   "confidence": "high",
+   "note": "Under Israeli military occupation since 1967; East Jerusalem was annexed by Israel. The Palestinian Authority administers civil affairs in Areas A and B (about 40% of the West Bank).",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "gaza-israeli",
+   "name": "Israeli-held Gaza",
+   "controller": "ISR",
+   "kind": "occupation",
+   "geometry": {
+    "ne_disputed": "B53"
+   },
+   "asOf": "2026-10-08",
+   "confidence": "medium",
+   "note": "East of the 'yellow line' set by the October 2025 ceasefire, which Israel has since pushed westward: Israeli estimates put its share of the Strip at about 63% in October 2026.",
+   "sources": [
+    {
+     "title": "Gisha: The Yellow Line",
+     "url": "https://gisha.org/en/the-yellow-line/"
+    },
+    {
+     "title": "CBC: Israel's yellow line in Gaza is moving",
+     "url": "https://www.cbc.ca/news/investigates/satellite-images-gaza-yellow-line-9.7257822"
+    },
+    {
+     "title": "Israel Hayom: Behind the Yellow Line (8 October 2026)",
+     "url": "https://www.israelhayom.com/2026/10/08/behind-the-yellow-line-hamas-is-already-preparing-for-the-next-phase/"
+    }
+   ]
+  },
+  {
+   "id": "gaza-hamas",
+   "name": "Hamas-held Gaza",
+   "controller": "HAMAS",
+   "kind": "control",
+   "geometry": {
+    "polygon": [
+     [
+      34.4,
+      31.64
+     ],
+     [
+      34.477,
+      31.548
+     ],
+     [
+      34.468,
+      31.515
+     ],
+     [
+      34.458,
+      31.488
+     ],
+     [
+      34.432,
+      31.462
+     ],
+     [
+      34.398,
+      31.44
+     ],
+     [
+      34.372,
+      31.41
+     ],
+     [
+      34.345,
+      31.385
+     ],
+     [
+      34.318,
+      31.362
+     ],
+     [
+      34.292,
+      31.342
+     ],
+     [
+      34.262,
+      31.33
+     ],
+     [
+      34.232,
+      31.322
+     ],
+     [
+      34.12,
+      31.3
+     ],
+     [
+      34.1,
+      31.62
+     ]
+    ]
+   },
+   "asOf": "2026-10-08",
+   "confidence": "low",
+   "note": "West of the yellow line: Gaza City's western neighborhoods, the central camps, and western Khan Younis and al-Mawasi. Hand-drawn approximation of a line that moves.",
+   "sources": [
+    {
+     "title": "Wikipedia: Yellow Line (Gaza)",
+     "url": "https://en.wikipedia.org/wiki/Yellow_Line_(Gaza)"
+    },
+    {
+     "title": "Gisha: The Yellow Line",
+     "url": "https://gisha.org/en/the-yellow-line/"
+    }
+   ]
+  },
+  {
+   "id": "golan",
+   "name": "Golan Heights",
+   "controller": "ISR",
+   "kind": "occupation",
+   "geometry": {
+    "ne_disputed": [
+     "B16",
+     "B58"
+    ]
+   },
+   "asOf": "2026-10",
+   "confidence": "high",
+   "note": "Held by Israel since 1967 and annexed in 1981; the United States recognized the annexation in 2019, but nearly all other states consider it occupied Syrian territory. Includes the Shebaa Farms, claimed by Lebanon.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "syria-buffer",
+   "name": "Syrian buffer zone and Mount Hermon",
+   "controller": "ISR",
+   "kind": "occupation",
+   "geometry": {
+    "ne_disputed": "B49"
+   },
+   "asOf": "2025",
+   "confidence": "low",
+   "note": "Israeli forces entered the UN-patrolled buffer zone after Assad's fall in December 2024 and said they would stay; I couldn't confirm their 2026 positions.",
+   "sources": [
+    {
+     "title": "AAP: Israeli troops to stay in buffer zone inside Syria",
+     "url": "https://aapnews.aap.com.au/news/israeli-troops-to-stay-in-buffer-zone-inside-syria"
+    }
+   ]
+  },
+  {
+   "id": "suwayda",
+   "name": "Suwayda",
+   "controller": "SWD",
+   "kind": "control",
+   "geometry": {
+    "ne_admin1": [
+     "SY-SU"
+    ]
+   },
+   "asOf": "2026-06",
+   "confidence": "medium",
+   "note": "Run by Druze factions under a single National Guard aligned with Sheikh al-Hijri since the July 2025 massacres; the government still holds the province's western and far eastern edges.",
+   "sources": [
+    {
+     "title": "Syria Direct: Suwayda stands at a crossroads",
+     "url": "https://syriadirect.org/suwayda-stands-at-a-crossroads-one-year-after-assads-fall/"
+    },
+    {
+     "title": "UN Syria Commission report on Suwayda (March 2026)",
+     "url": "https://www.ohchr.org/en/press-releases/2026/03/un-syria-commission-releases-report-july-massacres-and-other-grave"
+    }
+   ]
+  },
+  {
+   "id": "yemen-houthi",
+   "name": "Houthi-held Yemen",
+   "controller": "HOU",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "YEM-ADM2",
+     "within": [
+      "YE-SD",
+      "YE-AM",
+      "YE-SN",
+      "YE-SA",
+      "YE-DH",
+      "YE-IB",
+      "YE-RA",
+      "YE-MW",
+      "YE-HJ",
+      "YE-HU",
+      "YE-BA",
+      "YE-JA"
+     ],
+     "except": [
+      "Midi",
+      "Al Khukhah",
+      "Hays",
+      "Mukayras",
+      "Khab wa Ash Sha'f"
+     ],
+     "names": [
+      "At Ta'iziyah",
+      "Shar'ab As Salam",
+      "Shar'ab Ar Rawnah",
+      "Maqbanah",
+      "Mawiyah",
+      "Dimnat Khadir",
+      "Damt",
+      "Juban",
+      "Al Husha",
+      "Harib",
+      "Al Abdiyah",
+      "Mahliyah",
+      "Rahabah",
+      "Jabal Murad",
+      "Al Jubah",
+      "Majzar",
+      "Madghal Al Jid'an",
+      "Sirwah",
+      "Harib Al Qaramish"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "YEM"
+   },
+   "buffer_km": 2,
+   "asOf": "2026-07",
+   "confidence": "medium",
+   "note": "The north and west, home to most of Yemen's population. Drawn at the district level; the front has barely moved since the April 2022 truce. After the separatist STC's December 2025 offensive collapsed and the group dissolved in January 2026, the south is held by government and Saudi-backed forces.",
+   "sources": [
+    {
+     "title": "MERIP: Yemen After the Saudi-Emirati Split (July 2026)",
+     "url": "https://www.merip.org/2026/07/yemen-after-the-saudi-emirati-split/"
+    },
+    {
+     "title": "Middle East Institute: Riyadh takes the helm in Yemen",
+     "url": "https://mei.edu/publication/riyadh-takes-the-helm-in-yemen/"
+    },
+    {
+     "title": "Wikipedia: 2025-2026 southern Yemen campaign",
+     "url": "https://en.wikipedia.org/wiki/2025%E2%80%932026_southern_Yemen_campaign"
+    }
+   ]
+  },
+  {
+   "id": "libya-east",
+   "name": "Eastern and southern Libya",
+   "controller": "LNA",
+   "kind": "control",
+   "geometry": {
+    "ne_admin1": [
+     "LY-AJ",
+     "LY-BA",
+     "LY-BU",
+     "LY-JA",
+     "LY-MJ",
+     "LY-QB",
+     "LY-KF",
+     "LY-JU",
+     "LY-SR",
+     "LY-SB",
+     "LY-WD",
+     "LY-WS",
+     "LY-MQ",
+     "LY-GT"
+    ]
+   },
+   "asOf": "2026-05",
+   "confidence": "high",
+   "note": "Held by Khalifa Haftar's Libyan National Army, with the parallel House of Representatives government; the lines have been stable since the 2020 ceasefire, with Turkish forces in the west and Russian ones in Haftar's territory deterring either side.",
+   "sources": [
+    {
+     "title": "NYRB: Libya, the Dangerous Gamble (August 2026)",
+     "url": "https://www.nybooks.com/online/2026/08/05/libya-the-dangerous-gamble/"
+    },
+    {
+     "title": "Kuwait Times: Libyan National Army conducts grand exercises",
+     "url": "https://kuwaittimes.com/article/43792/world/middle-east/libyan-national-army-conducts-grand-exercises/"
+    }
+   ]
+  },
+  {
+   "id": "sudan-rsf",
+   "name": "RSF-held Sudan",
+   "controller": "TASIS",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "SDN-ADM2",
+     "within": [
+      "SD-DN",
+      "SD-DS",
+      "SD-DE",
+      "SD-DW"
+     ],
+     "except": [
+      "At Tina",
+      "Um Baru"
+     ],
+     "names": [
+      "An Nuhud",
+      "Ghubaish",
+      "Al Khiwai",
+      "Abu Zabad",
+      "Wad Bandah",
+      "Al Idia",
+      "Babanusa",
+      "Al Meiram",
+      "Keilak",
+      "As Salam - WK",
+      "As Sunut",
+      "Al Lagowa",
+      "Al Dibab"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "SDN"
+   },
+   "buffer_km": 2,
+   "asOf": "2026-09-25",
+   "confidence": "medium",
+   "note": "Almost all of Darfur, where El Fasher fell in October 2025, and nearly all of West Kordofan, where Babanusa's army base fell in December 2025.",
+   "sources": [
+    {
+     "title": "Sudans Post: Territorial control map as of 25 September 2026",
+     "url": "https://www.sudanspost.com/territorial-control-map-as-of-september-25-2026/"
+    },
+    {
+     "title": "Al Jazeera: The battle for Kordofan (1 October 2026)",
+     "url": "https://www.aljazeera.com/news/2026/10/1/the-battle-for-kordofan-the-corridor-linking-sudans-east-and-west"
+    },
+    {
+     "title": "Mada Masr: RSF seizes military's last stronghold in West Kordofan",
+     "url": "https://www.madamasr.com/en/2025/12/03/news/u/sudan-nashra-rsf-seizes-militarys-last-stronghold-in-west-kordofan-military-advances-into-splm-n-territory-in-south-kordofan-afwerki-pushes-for-russian-logistical-center-on-sudan/"
+    }
+   ]
+  },
+  {
+   "id": "sudan-jebel-marra",
+   "name": "Jebel Marra and Tawila",
+   "controller": "SLMAW",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "SDN-ADM2",
+     "names": [
+      "Wasat Jabal Marrah",
+      "Shamal Jabal Marrah",
+      "Sharg Aj Jabal",
+      "Tawila"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "SDN"
+   },
+   "asOf": "2026-09-25",
+   "confidence": "low",
+   "note": "The SLM faction of Abdel Wahid al-Nur holds parts of these localities, outside both army and RSF control.",
+   "sources": [
+    {
+     "title": "Sudans Post: Territorial control map as of 25 September 2026",
+     "url": "https://www.sudanspost.com/territorial-control-map-as-of-september-25-2026/"
+    }
+   ]
+  },
+  {
+   "id": "sudan-splmn",
+   "name": "Nuba Mountains and southern Blue Nile",
+   "controller": "SPLMN",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "SDN-ADM2",
+     "names": [
+      "Heiban",
+      "Um Durein",
+      "Al Buram",
+      "Al Kurmuk"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "SDN"
+   },
+   "asOf": "2026-09-25",
+   "confidence": "low",
+   "note": "SPLM-North (al-Hilu) has held the core of the Nuba Mountains since 2011 and, with the RSF, parts of southern Blue Nile. Kadugli and Dilling remain army-held under siege.",
+   "sources": [
+    {
+     "title": "Al Jazeera: Is the Sudanese army gaining momentum against the RSF? (4 October 2026)",
+     "url": "https://www.aljazeera.com/news/2026/10/4/is-the-sudanese-army-gaining-momentum-against-the-rsf"
+    },
+    {
+     "title": "Sudans Post: Territorial control map as of 25 September 2026",
+     "url": "https://www.sudanspost.com/territorial-control-map-as-of-september-25-2026/"
+    }
+   ]
+  },
+  {
+   "id": "sudan-kordofan-front",
+   "name": "North Kordofan front",
+   "controller": "none",
+   "kind": "contested",
+   "geometry": {
+    "gb": {
+     "set": "SDN-ADM2",
+     "names": [
+      "Bara",
+      "Gharb Bara",
+      "Soudari",
+      "Gebrat Al Sheikh"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "SDN"
+   },
+   "asOf": "2026-10-02",
+   "confidence": "low",
+   "note": "Bara has changed hands repeatedly; the army took Sodari on 25 September and says it took al-Mazroub in early October.",
+   "sources": [
+    {
+     "title": "Al Jazeera: Sudan's army says it captured RSF stronghold in North Kordofan (2 October 2026)",
+     "url": "https://www.aljazeera.com/news/2026/10/2/sudans-army-says-it-captured-rsf-stronghold-in-north-kordofan"
+    },
+    {
+     "title": "Sudan Tribune: Sudan army recaptures 11 areas in North Kordofan",
+     "url": "https://sudantribune.com/article/318891"
+    }
+   ]
+  },
+  {
+   "id": "abyei",
+   "name": "Abyei",
+   "controller": "none",
+   "kind": "contested",
+   "geometry": {
+    "gb": {
+     "set": "SDN-ADM2",
+     "names": [
+      "Abyei PCA area"
+     ]
+    }
+   },
+   "clip": {
+    "union": [
+     {
+      "ne_country": "SDN"
+     },
+     {
+      "ne_country": "SDS"
+     }
+    ]
+   },
+   "asOf": "2026-10",
+   "confidence": "medium",
+   "note": "Claimed by both Sudan and South Sudan and patrolled by UN peacekeepers (UNISFA) since 2011.",
+   "sources": [
+    {
+     "title": "geoBoundaries: Sudan ADM2",
+     "url": "https://www.geoboundaries.org/"
+    }
+   ]
+  },
+  {
+   "id": "kivu-m23",
+   "name": "AFC/M23-held Kivu",
+   "controller": "M23",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "COD-ADM2",
+     "names": [
+      "Nyiragongo",
+      "Rutshuru",
+      "Masisi",
+      "Goma",
+      "Bukavu",
+      "Kalehe",
+      "Kabare",
+      "Walungu",
+      "Idjwi"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "COD"
+   },
+   "buffer_km": 1,
+   "asOf": "2026-09-25",
+   "confidence": "medium",
+   "note": "Goma (January 2025), Bukavu (February 2025) and the surrounding territories. Peace talks under the Doha framework agreed a roadmap in August 2026, but fighting continues.",
+   "sources": [
+    {
+     "title": "Critical Threats: Congo War Security Review (25 September 2026)",
+     "url": "https://www.criticalthreats.org/briefs/congo-war-security-review"
+    },
+    {
+     "title": "Al Jazeera: DR Congo, M23 rebels agree on roadmap for peace talks",
+     "url": "https://www.aljazeera.com/news/2026/8/23/dr-congo-m23-rebels-agree-on-roadmap-for-peace-talks"
+    }
+   ]
+  },
+  {
+   "id": "kivu-front",
+   "name": "Walikale and Uvira",
+   "controller": "none",
+   "kind": "contested",
+   "geometry": {
+    "gb": {
+     "set": "COD-ADM2",
+     "names": [
+      "Walikale",
+      "Uvira"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "COD"
+   },
+   "asOf": "2026-09-25",
+   "confidence": "low",
+   "note": "Contested between AFC/M23 and the army and its allies; positions change hands week to week.",
+   "sources": [
+    {
+     "title": "Critical Threats: Congo War Security Review (25 September 2026)",
+     "url": "https://www.criticalthreats.org/briefs/congo-war-security-review"
+    }
+   ]
+  },
+  {
+   "id": "puntland",
+   "name": "Puntland",
+   "controller": "PUNTLAND",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "SOM-ADM2",
+     "names": [
+      "BOSSASO",
+      "ALULA",
+      "ISKUSHUBAN",
+      "QANDALA",
+      "BENDER BAYLA",
+      "GARDO",
+      "HAFUN",
+      "UFEYN",
+      "WACIYA",
+      "GAROWE",
+      "EYL",
+      "BURTINLE",
+      "DANGOROYO",
+      "GALKAYU NORTH",
+      "JARIBAN",
+      "GOLDOGOB",
+      "BADHAN"
+     ]
+    }
+   },
+   "clip": {
+    "union": [
+     {
+      "ne_country": "SOM"
+     },
+     {
+      "ne_country": "SOL"
+     }
+    ]
+   },
+   "buffer_km": 2,
+   "asOf": "2026-08",
+   "confidence": "medium",
+   "note": "Has governed itself without recognizing the federal government since 2024, pending constitutional changes; it is fighting Islamic State in the Cal Miskaad mountains.",
+   "sources": [
+    {
+     "title": "Horn Review: US relations with Somaliland, Puntland, and Jubaland (August 2026)",
+     "url": "https://hornreview.org/2026/08/12/between-sovereignty-and-territorial-reality-united-states-relations-with-somaliland-puntland-and-jubaland/"
+    },
+    {
+     "title": "BTI 2026 Somalia Country Report",
+     "url": "https://bti-project.org/en/reports/country-report/SOM"
+    }
+   ]
+  },
+  {
+   "id": "ssc-khatumo",
+   "name": "Sool and Buhodle (SSC-Khatumo)",
+   "controller": "SOM",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "SOM-ADM2",
+     "names": [
+      "LAS ANOD",
+      "TALEH",
+      "HUDUN",
+      "BUHODLE"
+     ]
+    }
+   },
+   "clip": {
+    "union": [
+     {
+      "ne_country": "SOM"
+     },
+     {
+      "ne_country": "SOL"
+     }
+    ]
+   },
+   "buffer_km": 2,
+   "asOf": "2026-08",
+   "confidence": "medium",
+   "note": "Taken from Somaliland by SSC-Khatumo forces in 2023; now a federal member state (North Eastern State) aligned with Mogadishu. Somaliland still claims it.",
+   "sources": [
+    {
+     "title": "Political Geography Now: Somalia",
+     "url": "https://www.polgeonow.com/search/label/somalia"
+    }
+   ]
+  },
+  {
+   "id": "jubaland",
+   "name": "Jubaland",
+   "controller": "JUBALAND",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "SOM-ADM2",
+     "names": [
+      "KISMAYO",
+      "AFMADOW",
+      "BADHADHE"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "SOM"
+   },
+   "buffer_km": 2,
+   "asOf": "2026-08",
+   "confidence": "low",
+   "note": "Holds Kismayo and the Lower Juba towns; broke with the federal government after its contested 2024 election and repelled federal forces.",
+   "sources": [
+    {
+     "title": "Horn Review: US relations with Somaliland, Puntland, and Jubaland (August 2026)",
+     "url": "https://hornreview.org/2026/08/12/between-sovereignty-and-territorial-reality-united-states-relations-with-somaliland-puntland-and-jubaland/"
+    },
+    {
+     "title": "BTI 2026 Somalia Country Report",
+     "url": "https://bti-project.org/en/reports/country-report/SOM"
+    }
+   ]
+  },
+  {
+   "id": "shabaab-juba",
+   "name": "Middle Juba",
+   "controller": "SHABAAB",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "SOM-ADM2",
+     "names": [
+      "BUAALE",
+      "JILIB EAST",
+      "JILIB WEST",
+      "SAKOW",
+      "JAMAAME EAST",
+      "JAMAAME WEST"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "SOM"
+   },
+   "buffer_km": 2,
+   "asOf": "2026-04",
+   "confidence": "medium",
+   "note": "Al-Shabaab's heartland, held for the group's entire existence; it also controls much of rural southern and central Somalia (see the insurgent-presence layer).",
+   "sources": [
+    {
+     "title": "Political Geography Now: Somalia",
+     "url": "https://www.polgeonow.com/search/label/somalia"
+    },
+    {
+     "title": "CTC Sentinel: Somalia at a Crossroads",
+     "url": "https://ctc.westpoint.edu/somalia-at-a-crossroads-resurgent-insurgents-fragmented-politics-and-the-uncertain-future-of-aussom/"
+    }
+   ]
+  },
+  {
+   "id": "rakhine-aa",
+   "name": "Rakhine and Paletwa",
+   "controller": "AA",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "MMR-ADM3",
+     "within": [
+      "MM-16"
+     ],
+     "except": [
+      "Sittwe",
+      "Munaung"
+     ],
+     "names": [
+      "Paletwa"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "MMR"
+   },
+   "buffer_km": 2,
+   "asOf": "2026-07",
+   "confidence": "high",
+   "note": "About 90% of Rakhine State (14 of 17 townships) plus Paletwa in Chin State; the junta holds Sittwe, Kyaukphyu and Manaung.",
+   "sources": [
+    {
+     "title": "The Diplomat: For the Arakan Army, Recognition Must Be Earned (July 2026)",
+     "url": "https://thediplomat.com/2026/07/for-the-arakan-army-recognition-must-be-earned/"
+    },
+    {
+     "title": "Wikipedia: Territory of the Arakan Army",
+     "url": "https://en.wikipedia.org/wiki/Territory_of_the_Arakan_Army"
+    }
+   ]
+  },
+  {
+   "id": "wa-state",
+   "name": "Wa State",
+   "controller": "UWSA",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "MMR-ADM3",
+     "names": [
+      "Hopang",
+      "Mongmao",
+      "Pangwaun",
+      "Narphan",
+      "Matman",
+      "Pangsang"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "MMR"
+   },
+   "buffer_km": 1,
+   "asOf": "2026-07",
+   "confidence": "high",
+   "note": "The northern Wa region (the Wa Self-Administered Division). The UWSA also holds a separate southern area along the Thai border, not drawn here.",
+   "sources": [
+    {
+     "title": "Wikipedia: Wa State",
+     "url": "https://en.wikipedia.org/wiki/Wa_State"
+    },
+    {
+     "title": "Irrawaddy: Wa become first ethnic force to congratulate Min Aung Hlaing on presidency",
+     "url": "https://www.irrawaddy.com/news/burma/wa-become-first-ethnic-force-to-congratulate-min-aung-hlaing-on-presidency.html"
+    }
+   ]
+  },
+  {
+   "id": "mongla",
+   "name": "Mongla",
+   "controller": "NDAA",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "MMR-ADM3",
+     "names": [
+      "Mongla"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "MMR"
+   },
+   "buffer_km": 1,
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "Special Region 4, self-administered under a ceasefire since 1989.",
+   "sources": [
+    {
+     "title": "geoBoundaries: Myanmar ADM3",
+     "url": "https://www.geoboundaries.org/"
+    }
+   ]
+  },
+  {
+   "id": "kokang",
+   "name": "Kokang and Kutkai",
+   "controller": "MNDAA",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "MMR-ADM3",
+     "names": [
+      "Laukkaing",
+      "Konkyan",
+      "Kutkai"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "MMR"
+   },
+   "buffer_km": 1,
+   "asOf": "2026-05",
+   "confidence": "medium",
+   "note": "The Kokang region since January 2024, and Kutkai since March 2026; the MNDAA returned Lashio to the junta in 2025 under Chinese pressure.",
+   "sources": [
+    {
+     "title": "Wikipedia: People's Government of Kokang",
+     "url": "https://en.wikipedia.org/wiki/People's_Government_of_Kokang"
+    },
+    {
+     "title": "Wikipedia: 2026 Kutkai offensive",
+     "url": "https://en.wikipedia.org/wiki/2026_Kutkai_offensive"
+    }
+   ]
+  },
+  {
+   "id": "taang",
+   "name": "Ta'ang areas",
+   "controller": "TNLA",
+   "kind": "control",
+   "geometry": {
+    "gb": {
+     "set": "MMR-ADM3",
+     "names": [
+      "Namhsan",
+      "Manton",
+      "Namhkan",
+      "Namtu"
+     ]
+    }
+   },
+   "clip": {
+    "ne_country": "MMR"
+   },
+   "buffer_km": 1,
+   "asOf": "2026-05",
+   "confidence": "medium",
+   "note": "The junta demanded in May 2026 that the TNLA withdraw to Namhsan and Mantong alone; it had not done so.",
+   "sources": [
+    {
+     "title": "IMNA: TNLA under pressure to withdraw from captured towns (May 2026)",
+     "url": "https://monnews.org/2026/05/25/tnla-under-pressure-to-withdraw-from-captured-towns/"
+    },
+    {
+     "title": "Irrawaddy: Myanmar regime tells TNLA to surrender another four towns",
+     "url": "https://www.irrawaddy.com/news/burma/myanmar-regime-tells-tnla-to-surrender-another-four-towns.html"
+    }
+   ]
+  }
+ ]
+}

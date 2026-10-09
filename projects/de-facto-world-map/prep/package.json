@@ -1,0 +1,17 @@
+{
+  "name": "de-facto-world-map-prep",
+  "private": true,
+  "description": "Builds ../data from Natural Earth plus the curated files in this directory. Not installed by the site build.",
+  "type": "module",
+  "scripts": {
+    "fetch": "node fetch.mjs",
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "@turf/turf": "7.2.0",
+    "culori": "4.0.1",
+    "mapshaper": "0.6.102",
+    "polylabel": "2.0.1",
+    "topojson-client": "3.1.0"
+  }
+}

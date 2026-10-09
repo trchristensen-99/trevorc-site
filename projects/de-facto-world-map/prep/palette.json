@@ -1,0 +1,25 @@
+{
+  "_note": "Identity colors by entity id (Natural Earth ADM0_A3 where one exists). Chosen from each state's flag or its traditional map color. Locked colors are never nudged by the neighbor-contrast pass; every other color may shift in lightness, chroma, or slightly in hue until it is distinguishable from its neighbors. Dependencies without an entry inherit a lighter shade of their parent.",
+  "locked": ["IND", "RUS", "FRA", "DEU", "CHN", "USA", "BRA", "ARG", "GBR", "ESP", "NLD", "SAU", "QAT", "PAK", "KAZ", "COD", "SOM", "COL", "UKR", "IRL", "MAR", "JPN", "TUR", "AUS", "CAN"],
+  "colors": {
+    "USA": "#4a7cc0", "CAN": "#c8473f", "MEX": "#3f8f4f", "GTM": "#6fb3e2", "BLZ": "#2f55a3", "HND": "#2b8fb0", "SLV": "#2d4f9e", "NIC": "#5b8fd6", "CRI": "#c0392b", "PAN": "#d2665b",
+    "CUB": "#3a58a8", "JAM": "#3d9a4d", "HTI": "#2e4ea0", "DOM": "#c43c3c", "BHS": "#2cb5c8", "TTO": "#c62f2f", "BRB": "#2a3f99", "DMA": "#2f8a4a", "LCA": "#59a8e0", "VCT": "#3a7ec8", "GRD": "#c9483a", "ATG": "#c8463a", "KNA": "#3a9a4a",
+    "COL": "#e3be2b", "VEN": "#7f2236", "ECU": "#3a6db5", "PER": "#b33a5c", "BOL": "#d4a62a", "CHL": "#d55a3a", "ARG": "#74acdf", "URY": "#3f63b0", "PRY": "#c9403a", "BRA": "#3e9d4a", "GUY": "#e2b33c", "SUR": "#c2453f",
+    "GBR": "#c8473f", "IRL": "#3f9b5a", "FRA": "#3d5fc8", "ESP": "#e6b830", "PRT": "#2f7d3a", "AND": "#3a5ab0", "MCO": "#d05050", "BEL": "#d9b23a", "NLD": "#e6802e", "LUX": "#7fb6e0", "DEU": "#7d7f86", "CHE": "#d0352b", "LIE": "#3355aa", "AUT": "#e08a7a", "ITA": "#3fa35a", "SMR": "#6fb0e0", "VAT": "#e8d24a", "MLT": "#c84a4a",
+    "DNK": "#c43a4a", "NOR": "#b8443f", "SWE": "#3a6fb0", "FIN": "#a6c8ea", "ISL": "#4a6fc8", "EST": "#3c78c4", "LVA": "#9e3039", "LTU": "#c8a632", "POL": "#c8434f", "CZE": "#3b5fa8", "SVK": "#6e8fd6", "HUN": "#4f8f4a",
+    "SVN": "#5f8ad0", "HRV": "#d4574a", "BIH": "#2c4fa3", "SRB": "#8c3b3b", "MNE": "#c9372c", "KOS": "#2a5db0", "ALB": "#d02f2f", "MKD": "#e8c13a", "GRC": "#4d7fd1", "BGR": "#3f9a5f", "ROU": "#e4c13b", "MDA": "#c8763a",
+    "UKR": "#4a7fd0", "BLR": "#9a3a3a", "RUS": "#4b8b57", "TUR": "#c73a3a", "CYP": "#d68a3a", "CYN": "#c84a4a", "GEO": "#d8585f", "ARM": "#e08a3c", "AZE": "#3fa0c8",
+    "IRN": "#3f9a5a", "IRQ": "#9c6b4a", "SYR": "#3d8b55", "LBN": "#d0544a", "ISR": "#5b84d6", "PSX": "#3f8f4f", "JOR": "#b8434f", "SAU": "#2e7d3a", "YEM": "#c0504d", "OMN": "#c55a4a", "ARE": "#6a8a4a", "QAT": "#8a1538", "BHR": "#c04040", "KWT": "#3e9a6a",
+    "EGY": "#d8b04a", "LBY": "#4a8f5a", "TUN": "#d03a3a", "DZA": "#3f8f5a", "MAR": "#b02e33", "SAH": "#6a8a5a", "MRT": "#3a8a3a",
+    "AFG": "#cfc6b0", "PAK": "#1f6b3a", "IND": "#f28c28", "NPL": "#c63a4a", "BTN": "#e8a83a", "BGD": "#2e8b4f", "LKA": "#a3403a", "MDV": "#c84a4a",
+    "CHN": "#d0342c", "TWN": "#2f5fc4", "HKG": "#e07a6a", "MAC": "#4aa07a", "MNG": "#3a78c8", "PRK": "#b33030", "KOR": "#4a78c8", "JPN": "#d9505a",
+    "KAZ": "#4fb3d9", "KGZ": "#d13a3a", "UZB": "#4aa36a", "TKM": "#2e8b57", "TJK": "#c8b048",
+    "MMR": "#d4b43a", "THA": "#5b6fd0", "LAO": "#c25a4a", "KHM": "#3a64b8", "VNM": "#e8c23a", "MYS": "#2c3e8f", "SGP": "#e05050", "BRN": "#f0d03a", "IDN": "#d03a3a", "TLS": "#e0a830", "PHL": "#3a5ac8",
+    "PNG": "#5a5048", "AUS": "#3a9a50", "NZL": "#4a4f5a", "FJI": "#6fb8e0", "SLB": "#3a7ab8", "VUT": "#c8a03a", "WSM": "#c8403a", "TON": "#c8303a", "KIR": "#c8503a", "TUV": "#5ab0e0", "NRU": "#2a4a9a", "MHL": "#3a5ab0", "FSM": "#6aa8e0", "PLW": "#4aa8e0",
+    "SDN": "#b8473f", "SDS": "#3a6fb8", "ETH": "#c9b23a", "ERI": "#3a8ab0", "DJI": "#6ab8d8", "SOM": "#4ea8de", "SOL": "#2e8b4a", "KEN": "#b83a3a", "UGA": "#e0b830", "TZA": "#3a9a7a", "RWA": "#3aa0d8", "BDI": "#c84a4a",
+    "COD": "#4fa8e0", "COG": "#3f9a4f", "GAB": "#e0c03a", "CMR": "#3a8a4a", "CAF": "#4a68b8", "TCD": "#3a5ab0", "GNQ": "#4a9a5a", "STP": "#3a9a4a",
+    "NGA": "#2f8f4f", "NER": "#e88a3a", "BEN": "#e8c83a", "TGO": "#4aa05a", "GHA": "#c8a23a", "CIV": "#f08a2a", "BFA": "#c84a3a", "MLI": "#3a9a4a", "SEN": "#3a8a4a", "GMB": "#3a5ab8", "GNB": "#d4a43a", "GIN": "#c8443a", "SLE": "#4aa0d0", "LBR": "#b83a4a", "CPV": "#3a5ab8",
+    "AGO": "#b83a3a", "ZMB": "#3a8a3a", "NAM": "#3a6ab0", "BWA": "#7ab8e0", "ZWE": "#e0b83a", "ZAF": "#2f7a4a", "MOZ": "#3aa07a", "MWI": "#b84a3a", "MDG": "#c25a5a", "LSO": "#3a5ab8", "SWZ": "#3a6ab8", "COM": "#3a9a5a", "MUS": "#c8403a", "SYC": "#3a6ab8",
+    "ABW": "#5aa0d8", "CUW": "#3a5ab0", "SXM": "#c84a4a", "GRL": "#c98a8a", "FRO": "#5a8ad0", "ALD": "#5a8ad0"
+  }
+}

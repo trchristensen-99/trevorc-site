@@ -9,3 +9,6 @@ private/
 .replit
 replit.nix
 .tts-venv/
+
+# downloaded source data for project maps (rebuilt by prep scripts)
+projects/*/prep/raw/

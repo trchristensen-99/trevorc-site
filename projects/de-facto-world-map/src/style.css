@@ -1,0 +1,113 @@
+:root {
+  /* Outside the map's outline (the sphere is drawn in the map's ocean color). */
+  --bg: #e6ecf1;
+  --panel: rgba(255, 255, 255, 0.92);
+  --ink: #1d2329;
+  --muted: #5b6672;
+  --line: rgba(0, 0, 0, 0.12);
+  --accent: #2f5fc4;
+  --none: #f4f4ef;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0a0f14;
+  --panel: rgba(20, 27, 35, 0.92);
+  --ink: #e8edf2;
+  --muted: #9aa6b2;
+  --line: rgba(255, 255, 255, 0.14);
+  --accent: #8fb0ff;
+  --none: #d9dbd4;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.45 "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}
+#app { position: relative; width: 100%; height: 100%; }
+#map { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+#map:active { cursor: grabbing; }
+#status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: var(--muted); pointer-events: none; }
+#status:empty { display: none; }
+
+.panel {
+  position: absolute;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(6px);
+}
+.controls { top: 12px; left: 12px; width: 236px; padding: 10px 12px; display: grid; gap: 8px; }
+.controls header { display: grid; gap: 1px; }
+.controls header strong { font-size: 15px; }
+#asof { color: var(--muted); font-size: 12px; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+select, button { font: inherit; color: inherit; }
+select { padding: 3px 6px; border-radius: 6px; border: 1px solid var(--line); background: transparent; }
+select option { color: #111; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 2px; }
+legend { padding: 0; margin-bottom: 2px; color: var(--muted); font-size: 12px; }
+fieldset label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.actions button {
+  padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line);
+  background: transparent; cursor: pointer;
+}
+.actions button:hover { border-color: var(--accent); }
+.actions a { color: var(--accent); font-size: 13px; text-decoration: none; }
+.actions a:hover { text-decoration: underline; }
+.hint { margin: 0; color: var(--muted); font-size: 12px; }
+#toggle-controls { display: none; top: 12px; left: 12px; width: 40px; height: 40px; cursor: pointer; font-size: 18px; color: var(--ink); }
+
+.legend { left: 12px; bottom: 12px; padding: 6px 12px; font-size: 12.5px; max-width: 260px; }
+.legend summary { cursor: pointer; color: var(--muted); }
+.legend ul { list-style: none; margin: 6px 0 2px; padding: 0; display: grid; gap: 3px; }
+.legend li, .claims li { display: flex; align-items: center; gap: 8px; }
+.swatch { flex: none; width: 18px; height: 12px; border-radius: 2px; background: var(--c); border: 1px solid rgba(0, 0, 0, 0.35); }
+.swatch.hatch-solid { background: repeating-linear-gradient(45deg, var(--c) 0 2.5px, color-mix(in srgb, var(--c) 55%, white) 2.5px 5px); }
+.swatch.hatch { background: repeating-linear-gradient(45deg, var(--c) 0 1.6px, transparent 1.6px 5px); }
+.swatch.contested { background: repeating-linear-gradient(45deg, #9aa0a6 0 1.2px, var(--none) 1.2px 5px); }
+.swatch.none { background: var(--none); }
+.swatch.dashed { background: none; border: 0; border-top: 2px dashed var(--c); height: 0; margin-top: 2px; }
+.swatch.dot { width: 9px; height: 9px; border-radius: 50%; background: #d0342c; margin: 0 4.5px; }
+
+.info {
+  top: 12px; right: 12px; width: 320px; max-height: calc(100% - 24px); overflow: auto;
+  padding: 12px 14px 14px;
+}
+.info h2 { margin: 0 24px 2px 0; font-size: 18px; }
+.info h3 { margin: 12px 0 4px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+.info .formal { margin: 0 0 8px; color: var(--muted); }
+.info dl { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; margin: 8px 0; }
+.info dt { color: var(--muted); }
+.info dd { margin: 0; }
+.info p { margin: 8px 0; }
+.info ul { margin: 0; padding-left: 18px; }
+.info ul.claims { list-style: none; padding: 0; display: grid; gap: 6px; }
+.info ul.claims li { align-items: flex-start; }
+.info ul.claims .swatch { margin-top: 5px; }
+.info a { color: var(--accent); }
+.info .close {
+  position: absolute; top: 6px; right: 8px; border: 0; background: none; font-size: 22px; line-height: 1;
+  cursor: pointer; color: var(--muted);
+}
+#tooltip {
+  position: absolute; pointer-events: none; padding: 3px 8px; border-radius: 6px;
+  background: var(--panel); border: 1px solid var(--line); font-size: 12.5px; white-space: nowrap;
+}
+
+/* Narrow maps (phones, and the embed on the project page) fold the
+   options behind a button so they don't cover the map. */
+@media (max-width: 1000px) {
+  #toggle-controls { display: block; }
+  .controls { display: none; top: 60px; }
+  body.controls-open .controls { display: grid; }
+}
+@media (max-width: 640px) {
+  .legend { max-width: calc(100% - 24px); }
+  .legend:not([open]) { padding: 4px 10px; }
+  .info { left: 8px; right: 8px; top: auto; bottom: 8px; width: auto; max-height: 55%; }
+}

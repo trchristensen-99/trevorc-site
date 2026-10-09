@@ -108,6 +108,7 @@ const config: QuartzConfig = {
       Plugin.RobotsTxt(),
       Plugin.SiteArtPage(),
       Plugin.BackgroundShowcase(),
+      Plugin.ProjectApps(),
     ],
   },
 }

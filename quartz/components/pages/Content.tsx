@@ -164,6 +164,8 @@ function isWriting(f: QuartzPluginData, selfSlug: string | undefined): boolean {
   if (f.slug === "research" || f.slug === "contact" || f.slug === "metadata") return false
   if (f.slug === "site-art" || f.slug === "background") return false
   if (f.slug.startsWith("tags/")) return false
+  // Projects have their own section; they aren't essays.
+  if (f.slug.startsWith("projects/")) return false
   // Exclude folder index pages (writing/index, notes/index, etc.)
   if (f.slug.endsWith("/index")) return false
   // Exclude pages without text content
@@ -188,6 +190,8 @@ const Content: QuartzComponent = (props: QuartzComponentProps) => {
     const pages: QuartzPluginData[] = allFiles.filter((f) => {
       if (!f.slug) return false
       if (f.slug.startsWith("tags/")) return false
+  // Projects have their own section; they aren't essays.
+  if (f.slug.startsWith("projects/")) return false
       if (f.slug === "404") return false
       return true
     })

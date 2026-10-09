@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>De Facto World Map</title>
+    <meta name="description" content="Who actually controls territory around the world, rather than who claims it." />
+    <link rel="icon" href="/static/icon.png" />
+    <link rel="stylesheet" href="./main.css" />
+  </head>
+  <body>
+    <main id="app">
+      <svg id="map" role="img" aria-label="World map of de facto territorial control"></svg>
+      <p id="status" aria-live="polite">Loading map…</p>
+
+      <button id="toggle-controls" class="panel" aria-label="Map options">☰</button>
+      <section class="panel controls" aria-label="Map options">
+        <header>
+          <strong>De Facto World Map</strong>
+          <span id="asof"></span>
+        </header>
+        <label class="row">Projection <select id="projection"></select></label>
+        <fieldset id="layers"><legend>Layers</legend></fieldset>
+        <div class="row actions">
+          <button id="export" type="button">Download SVG</button>
+          <a id="elsewhere"></a>
+        </div>
+        <p id="hint" class="hint"></p>
+      </section>
+
+      <details class="panel legend" open>
+        <summary>Legend</summary>
+        <ul>
+          <li><span class="swatch" style="--c: #4b8b57"></span>Governed by a state or de facto state</li>
+          <li><span class="swatch hatch-solid" style="--c: #4b8b57"></span>Military occupation</li>
+          <li><span class="swatch contested"></span>Contested or undemarcated</li>
+          <li><span class="swatch none"></span>No controlling state</li>
+          <li><span class="swatch dashed" style="--c: #c8434f"></span>Claimed, not controlled</li>
+          <li><span class="swatch hatch" style="--c: #8a4a7a"></span>Insurgent presence</li>
+          <li><span class="swatch dot"></span>Antarctic station</li>
+        </ul>
+      </details>
+
+      <aside id="info" class="panel info" hidden aria-live="polite"></aside>
+      <div id="tooltip" hidden></div>
+    </main>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

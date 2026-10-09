@@ -28,6 +28,7 @@ This site also contains research notes and writing on whatever topics I've been 
 - [Research](./research): what I work on, my background, and publications.
 - [Highlighted writing](./highlighted-writing): a curated entry point to the essays, grouped by theme.
 - [All writing](./writing/): the full archive, sortable by date, importance, reading time, and inbound links.
+- [Projects](./projects/): tools and visualizations I've built, like a [map of who actually controls territory](./projects/de-facto-world-map) around the world.
 - [About](./about): more about me, and notes on how this site is built.
 - [Site art](./site-art): credits for the pixel-art backgrounds, with a browsable gallery.
 - [Contact](./contact): how to reach me.

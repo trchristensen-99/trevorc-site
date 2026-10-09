@@ -910,3 +910,26 @@ html[data-art-theme="neutral_gray"]  { --outer-bg: #dcdcdc; }
 html[saved-theme="dark"][data-art-theme="neutral_paper"] { --outer-bg: #2a2621; }
 html[saved-theme="dark"][data-art-theme="neutral_slate"] { --outer-bg: #1e242e; }
 html[saved-theme="dark"][data-art-theme="neutral_gray"]  { --outer-bg: #242424; }
+
+// Interactive project apps embedded in their project page (see
+// quartz/plugins/emitters/projectApps.ts for why they live in an iframe).
+.project-embed {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  margin: 1rem 0 0.5rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--light);
+
+  @media all and ($mobile) {
+    aspect-ratio: 4 / 5;
+  }
+
+  & iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}

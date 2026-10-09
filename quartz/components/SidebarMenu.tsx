@@ -130,6 +130,7 @@ const SidebarMenu: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
         {link("all", "All pages")}
         {link("highlighted-writing", "Highlighted writing")}
         {link("writing/index", "All writing")}
+        {link("projects/index", "Projects")}
         {link("metadata", "Metadata")}
         {link("site-art/index", "Site art")}
         {link("contact", "Contact")}

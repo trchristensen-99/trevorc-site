@@ -1,0 +1,497 @@
+{
+ "_note": "Insurgent presence: armed groups operating or governing rural areas without holding territory outright. Drawn at province or district level, so these are indicative extents, not lines.",
+ "presence": [
+  {
+   "id": "shabaab-south",
+   "name": "Southern and central Somalia",
+   "group": "SHABAAB",
+   "geometry": {
+    "ne_admin1": [
+     "SO-SH",
+     "SO-SD",
+     "SO-BY",
+     "SO-BK",
+     "SO-HI",
+     "SO-GA",
+     "SO-GE",
+     "SO-JH"
+    ]
+   },
+   "asOf": "2026-04",
+   "confidence": "medium",
+   "note": "Holds much of the countryside and taxes trade even in government-held towns; estimates put its control at around 30% of Somalia's land.",
+   "sources": [
+    {
+     "title": "War on the Rocks: Flailing State, the resurgence of al-Shabaab",
+     "url": "https://warontherocks.com/flailing-state-the-resurgence-of-al-shabaab-in-somalia/"
+    },
+    {
+     "title": "Political Geography Now: Somalia",
+     "url": "https://www.polgeonow.com/search/label/somalia"
+    }
+   ]
+  },
+  {
+   "id": "kachin",
+   "name": "Kachin State",
+   "group": "KIA",
+   "geometry": {
+    "ne_admin1": [
+     "MM-11"
+    ]
+   },
+   "asOf": "2026-05",
+   "confidence": "medium",
+   "note": "The KIA holds much of rural Kachin State and several towns, and is pressing junta positions around Bhamo; the junta holds Myitkyina.",
+   "sources": [
+    {
+     "title": "Myanmar Peace Monitor: The junta's campaign to recapture resistance-controlled towns",
+     "url": "https://mmpeacemonitor.org/en/eng-cover-story/the-juntas-campaign-to-recapture-resistance-controlled-towns/"
+    }
+   ]
+  },
+  {
+   "id": "chin",
+   "name": "Chin State",
+   "group": "CHINR",
+   "geometry": {
+    "minus": [
+     {
+      "ne_admin1": [
+       "MM-14"
+      ]
+     },
+     {
+      "gb": {
+       "set": "MMR-ADM3",
+       "names": [
+        "Paletwa"
+       ]
+      }
+     }
+    ]
+   },
+   "asOf": "2026-05",
+   "confidence": "medium",
+   "note": "Chin resistance forces hold most of the state's towns and countryside.",
+   "sources": [
+    {
+     "title": "Myanmar Peace Monitor",
+     "url": "https://mmpeacemonitor.org/en/eng-cover-story/the-juntas-campaign-to-recapture-resistance-controlled-towns/"
+    }
+   ]
+  },
+  {
+   "id": "sagaing-magway",
+   "name": "Sagaing and Magway",
+   "group": "NUG",
+   "geometry": {
+    "ne_admin1": [
+     "MM-01",
+     "MM-03"
+    ]
+   },
+   "asOf": "2026-05",
+   "confidence": "medium",
+   "note": "People's Defense Forces loyal to the National Unity Government contest much of the dry zone; the junta imposed martial law on dozens of townships here in April 2026.",
+   "sources": [
+    {
+     "title": "Malay Mail: Myanmar junta imposes military control over 60 townships (April 2026)",
+     "url": "https://www.malaymail.com/news/world/2026/04/24/myanmar-junta-imposes-military-control-over-60-townships-in-new-crackdown/217508"
+    }
+   ]
+  },
+  {
+   "id": "karenni",
+   "name": "Karenni (Kayah) State",
+   "group": "KNPP",
+   "geometry": {
+    "ne_admin1": [
+     "MM-12"
+    ]
+   },
+   "asOf": "2026-05",
+   "confidence": "low",
+   "note": "Karenni resistance forces hold much of the state, though the junta has retaken some towns since 2025.",
+   "sources": [
+    {
+     "title": "Myanmar Peace Monitor",
+     "url": "https://mmpeacemonitor.org/en/eng-cover-story/the-juntas-campaign-to-recapture-resistance-controlled-towns/"
+    }
+   ]
+  },
+  {
+   "id": "karen",
+   "name": "Karen (Kayin) State",
+   "group": "KNU",
+   "geometry": {
+    "ne_admin1": [
+     "MM-13"
+    ]
+   },
+   "asOf": "2026-05",
+   "confidence": "low",
+   "note": "The KNU and allied forces control large rural areas along the Thai border.",
+   "sources": [
+    {
+     "title": "Myanmar Peace Monitor",
+     "url": "https://mmpeacemonitor.org/en/eng-cover-story/the-juntas-campaign-to-recapture-resistance-controlled-towns/"
+    }
+   ]
+  },
+  {
+   "id": "jnim-mali",
+   "name": "Central and western Mali",
+   "group": "JNIM",
+   "geometry": {
+    "ne_admin1": [
+     "ML-5",
+     "ML-4",
+     "ML-6",
+     "ML-1"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "JNIM controls much of the countryside, besieges towns, and blockaded fuel supplies to Bamako in late 2025.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "jnim-burkina",
+   "name": "Northern and eastern Burkina Faso",
+   "group": "JNIM",
+   "geometry": {
+    "ne_admin1": [
+     "BF-SOM",
+     "BF-OUD",
+     "BF-SEN",
+     "BF-YAG",
+     "BF-LOR",
+     "BF-BAM",
+     "BF-SMT",
+     "BF-NAM",
+     "BF-GNA",
+     "BF-KMD",
+     "BF-GOU",
+     "BF-TAP",
+     "BF-KMP",
+     "BF-KOS",
+     "BF-SOR",
+     "BF-MOU",
+     "BF-YAT"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "JNIM operates across roughly half of Burkina Faso, blockading many towns that the junta nominally holds.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "issp",
+   "name": "Ménaka, Gao, Tillabéri and Tahoua",
+   "group": "ISSP",
+   "geometry": {
+    "ne_admin1": [
+     "ML-7",
+     "NE-6",
+     "NE-5"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "Islamic State Sahel dominates the Ménaka region and the borderlands of western Niger.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "fla",
+   "name": "Kidal region",
+   "group": "FLA",
+   "geometry": {
+    "ne_admin1": [
+     "ML-8"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "low",
+   "note": "Tuareg separatists lost Kidal town to the army in 2023 but remain active in the desert, notably around Tinzaouaten.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "iswap",
+   "name": "Lake Chad and northern Borno",
+   "group": "ISWAP",
+   "geometry": {
+    "gb": {
+     "set": "NGA-ADM2",
+     "names": [
+      "Mobbar",
+      "Kukawa",
+      "Guzamala",
+      "Marte",
+      "Monguno",
+      "Nganzai",
+      "Kala Balge",
+      "Ngala",
+      "Dikwa",
+      "Abadam"
+     ]
+    }
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "ISWAP holds the Lake Chad islands and much of northern Borno's countryside.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "jas",
+   "name": "Sambisa and the Mandara Mountains",
+   "group": "JAS",
+   "geometry": {
+    "gb": {
+     "set": "NGA-ADM2",
+     "names": [
+      "Gwoza",
+      "Bama",
+      "Konduga",
+      "Damboa"
+     ]
+    }
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "Boko Haram's JAS faction operates from the Sambisa forest and the Mandara Mountains.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "fano",
+   "name": "Amhara",
+   "group": "FANO",
+   "geometry": {
+    "ne_admin1": [
+     "ET-AM"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "Fano militias have fought the federal government since 2023 and hold much of rural Amhara.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "cabo-delgado",
+   "name": "Cabo Delgado",
+   "group": "ISM",
+   "geometry": {
+    "ne_admin1": [
+     "MZ-P"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "Islamic State Mozambique remains active despite Rwandan and Mozambican operations.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "ambazonia",
+   "name": "Northwest and Southwest Cameroon",
+   "group": "AMBA",
+   "geometry": {
+    "ne_admin1": [
+     "CM-NW",
+     "CM-SW"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "Anglophone separatists have fought for an independent 'Ambazonia' since 2017.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "ttp",
+   "name": "Former tribal areas",
+   "group": "TTP",
+   "geometry": {
+    "ne_admin1": [
+     "PK-TA"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "The Pakistani Taliban has resurged in Khyber Pakhtunkhwa's former tribal districts since 2021.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "balochistan",
+   "name": "Balochistan",
+   "group": "BLA",
+   "geometry": {
+    "ne_admin1": [
+     "PK-BA"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "Baloch separatists stage frequent attacks across the province, including the 2025 Jaffar Express hijacking.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "eln",
+   "name": "Catatumbo and Arauca",
+   "group": "ELN",
+   "geometry": {
+    "ne_admin1": [
+     "CO-NSA",
+     "CO-ARA"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "The ELN has dominated these border departments since its 2025 Catatumbo offensive.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "emc",
+   "name": "Cauca and Guaviare",
+   "group": "EMC",
+   "geometry": {
+    "ne_admin1": [
+     "CO-CAU",
+     "CO-GUV"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "low",
+   "note": "FARC dissident factions control rural areas and coca routes.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "haiti",
+   "name": "Ouest and Artibonite",
+   "group": "VIVANSANM",
+   "geometry": {
+    "ne_admin1": [
+     "HT-OU",
+     "HT-AR"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "The Viv Ansanm gang coalition controls most of Port-au-Prince and much of the Artibonite valley.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "splaio",
+   "name": "Upper Nile and Jonglei",
+   "group": "SPLAIO",
+   "geometry": {
+    "ne_admin1": [
+     "SS-NU",
+     "SS-JG"
+    ]
+   },
+   "asOf": "2026",
+   "confidence": "low",
+   "note": "Fighting between the government and opposition forces resumed in 2025 after Riek Machar's arrest.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  },
+  {
+   "id": "adf",
+   "name": "Beni, Lubero and Ituri",
+   "group": "ADF",
+   "geometry": {
+    "gb": {
+     "set": "COD-ADM2",
+     "names": [
+      "Beni",
+      "Lubero",
+      "Irumu",
+      "Mambasa"
+     ]
+    }
+   },
+   "asOf": "2026",
+   "confidence": "medium",
+   "note": "The Islamic State-affiliated ADF carries out frequent massacres of civilians.",
+   "sources": [
+    {
+     "title": "ACLED Conflict Index",
+     "url": "https://acleddata.com/conflict-index/"
+    }
+   ]
+  }
+ ]
+}

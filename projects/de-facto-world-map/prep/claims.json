@@ -1,0 +1,930 @@
+{
+ "_note": "Territory claimed by someone who does not control it. Antarctic claims are added automatically from Natural Earth.",
+ "claims": [
+  {
+   "id": "taiwan-prc",
+   "name": "Taiwan",
+   "claimant": "CHN",
+   "geometry": {
+    "ne_country": "TWN"
+   },
+   "note": "Claimed by the People's Republic of China, which has never governed it.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "kosovo-srb",
+   "name": "Kosovo",
+   "claimant": "SRB",
+   "geometry": {
+    "ne_country": "KOS"
+   },
+   "note": "Claimed by Serbia since Kosovo declared independence in 2008.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "somaliland-som",
+   "name": "Somaliland",
+   "claimant": "SOM",
+   "geometry": {
+    "ne_country": "SOL"
+   },
+   "note": "Claimed by Somalia.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "ncyprus-cyp",
+   "name": "Northern Cyprus",
+   "claimant": "CYP",
+   "geometry": {
+    "ne_country": "CYN"
+   },
+   "note": "Claimed by the Republic of Cyprus.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "abkhazia-geo",
+   "name": "Abkhazia",
+   "claimant": "GEO",
+   "geometry": {
+    "ne_disputed": "B35"
+   },
+   "note": "Claimed by Georgia.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "south-ossetia-geo",
+   "name": "South Ossetia",
+   "claimant": "GEO",
+   "geometry": {
+    "ne_disputed": "B37"
+   },
+   "note": "Claimed by Georgia.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "transnistria-mda",
+   "name": "Transnistria",
+   "claimant": "MDA",
+   "geometry": {
+    "ne_disputed": "B36"
+   },
+   "note": "Claimed by Moldova.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "crimea-ukr",
+   "name": "Crimea",
+   "claimant": "UKR",
+   "geometry": {
+    "ne_disputed": "B89"
+   },
+   "note": "Claimed by Ukraine; occupied and annexed by Russia in 2014.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "sadr-mar",
+   "name": "Sahrawi Free Zone",
+   "claimant": "MAR",
+   "geometry": {
+    "ne_country": "SAH"
+   },
+   "note": "Claimed by Morocco as part of its southern provinces.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "wsahara-sah",
+   "name": "Western Sahara (Moroccan-held)",
+   "claimant": "SAH",
+   "geometry": {
+    "ne_disputed": "B19"
+   },
+   "note": "Claimed by the Sahrawi Republic; held by Morocco west of the berm.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "kashmir-pak-held-ind",
+   "name": "Azad Kashmir and Gilgit-Baltistan",
+   "claimant": "IND",
+   "geometry": {
+    "ne_disputed": [
+     "B08",
+     "B09"
+    ]
+   },
+   "note": "Held by Pakistan; claimed by India.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "kashmir-chn-held-ind",
+   "name": "Aksai Chin and Shaksgam",
+   "claimant": "IND",
+   "geometry": {
+    "ne_disputed": [
+     "B06",
+     "B07"
+    ]
+   },
+   "note": "Held by China; claimed by India.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "kashmir-ind-held-pak",
+   "name": "Jammu and Kashmir, Ladakh",
+   "claimant": "PAK",
+   "geometry": {
+    "ne_disputed": [
+     "B05",
+     "C01"
+    ]
+   },
+   "note": "Held by India; claimed by Pakistan.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "siachen-pak",
+   "name": "Siachen Glacier",
+   "claimant": "PAK",
+   "geometry": {
+    "ne_country": "KAS"
+   },
+   "note": "Held by India since 1984; claimed by Pakistan.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "arunachal-chn",
+   "name": "Arunachal Pradesh and other areas",
+   "claimant": "CHN",
+   "geometry": {
+    "ne_disputed": [
+     "B00",
+     "B01",
+     "B02",
+     "B03",
+     "B04"
+    ]
+   },
+   "note": "Held by India; claimed by China.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "bhutan-chn",
+   "name": "Northern Bhutan",
+   "claimant": "CHN",
+   "geometry": {
+    "ne_disputed": [
+     "B75",
+     "B76"
+    ]
+   },
+   "note": "Held by Bhutan; claimed by China.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "kalapani-npl",
+   "name": "Kalapani",
+   "claimant": "NPL",
+   "geometry": {
+    "ne_disputed": "B88"
+   },
+   "note": "Held by India; claimed by Nepal.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "golan-syr",
+   "name": "Golan Heights",
+   "claimant": "SYR",
+   "geometry": {
+    "ne_disputed": "B16"
+   },
+   "note": "Held by Israel since 1967; claimed by Syria.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "shebaa-lbn",
+   "name": "Shebaa Farms",
+   "claimant": "LBN",
+   "geometry": {
+    "ne_disputed": "B58"
+   },
+   "note": "Held by Israel; claimed by Lebanon.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "ejerusalem-psx",
+   "name": "East Jerusalem",
+   "claimant": "PSX",
+   "geometry": {
+    "ne_disputed": "B98"
+   },
+   "note": "Held and annexed by Israel; claimed by Palestine.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "kurils-jpn",
+   "name": "Southern Kuril Islands",
+   "claimant": "JPN",
+   "geometry": {
+    "ne_disputed": "B29"
+   },
+   "note": "Held by Russia since 1945; claimed by Japan as its Northern Territories.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "falklands-arg",
+   "name": "Falkland Islands",
+   "claimant": "ARG",
+   "geometry": {
+    "ne_disputed": "B12"
+   },
+   "note": "Held by the United Kingdom; claimed by Argentina.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "sgeorgia-arg",
+   "name": "South Georgia and the South Sandwich Islands",
+   "claimant": "ARG",
+   "geometry": {
+    "ne_disputed": [
+     "B32",
+     "B33"
+    ]
+   },
+   "note": "Held by the United Kingdom; claimed by Argentina.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "essequibo-ven",
+   "name": "Guayana Esequiba",
+   "claimant": "VEN",
+   "geometry": {
+    "ne_disputed": "B56"
+   },
+   "note": "Held by Guyana; claimed by Venezuela, which declared it a Venezuelan state in 2024.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "gibraltar-esp",
+   "name": "Gibraltar",
+   "claimant": "ESP",
+   "geometry": {
+    "ne_country": "GIB"
+   },
+   "note": "Held by the United Kingdom; claimed by Spain.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "ceuta-melilla-mar",
+   "name": "Ceuta, Melilla, and Spanish islets",
+   "claimant": "MAR",
+   "geometry": {
+    "ne_disputed": [
+     "B60",
+     "B61",
+     "B62",
+     "B63",
+     "B64",
+     "B65"
+    ]
+   },
+   "note": "Held by Spain; claimed by Morocco.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "paracels-vnm",
+   "name": "Paracel Islands",
+   "claimant": "VNM",
+   "geometry": {
+    "ne_disputed": "B47"
+   },
+   "note": "Held by China since 1974; claimed by Vietnam.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "paracels-twn",
+   "name": "Paracel Islands",
+   "claimant": "TWN",
+   "geometry": {
+    "ne_disputed": "B47"
+   },
+   "note": "Held by China; claimed by Taiwan.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "spratlys-chn",
+   "name": "Spratly Islands",
+   "claimant": "CHN",
+   "geometry": {
+    "ne_country": "PGA"
+   },
+   "note": "Occupied in parts by five claimants; China claims them all.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "spratlys-vnm",
+   "name": "Spratly Islands",
+   "claimant": "VNM",
+   "geometry": {
+    "ne_country": "PGA"
+   },
+   "note": "Occupied in parts by five claimants; Vietnam claims them all.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "spratlys-phl",
+   "name": "Spratly Islands",
+   "claimant": "PHL",
+   "geometry": {
+    "ne_country": "PGA"
+   },
+   "note": "Occupied in parts by five claimants; the Philippines claims part of them.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "spratlys-twn",
+   "name": "Spratly Islands",
+   "claimant": "TWN",
+   "geometry": {
+    "ne_country": "PGA"
+   },
+   "note": "Occupied in parts by five claimants; Taiwan claims them all.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "scarborough-phl",
+   "name": "Scarborough Shoal",
+   "claimant": "PHL",
+   "geometry": {
+    "ne_country": "SCR"
+   },
+   "note": "Controlled by Chinese coast guard ships since 2012; claimed by the Philippines.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "senkaku-chn",
+   "name": "Senkaku Islands",
+   "claimant": "CHN",
+   "geometry": {
+    "ne_disputed": "B18"
+   },
+   "note": "Held by Japan; claimed by China as the Diaoyu Islands.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "senkaku-twn",
+   "name": "Senkaku Islands",
+   "claimant": "TWN",
+   "geometry": {
+    "ne_disputed": "B18"
+   },
+   "note": "Held by Japan; claimed by Taiwan.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "dokdo-jpn",
+   "name": "Liancourt Rocks",
+   "claimant": "JPN",
+   "geometry": {
+    "ne_disputed": "B39"
+   },
+   "note": "Held by South Korea as Dokdo; claimed by Japan as Takeshima.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "tunbs-are",
+   "name": "Abu Musa and the Tunbs",
+   "claimant": "ARE",
+   "geometry": {
+    "ne_disputed": "B73"
+   },
+   "note": "Held by Iran since 1971; claimed by the UAE.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "halaib-sdn",
+   "name": "Hala'ib Triangle",
+   "claimant": "SDN",
+   "geometry": {
+    "ne_disputed": "B93"
+   },
+   "note": "Held by Egypt; claimed by Sudan.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "ilemi-sds",
+   "name": "Ilemi Triangle",
+   "claimant": "SDS",
+   "geometry": {
+    "ne_disputed": "B17"
+   },
+   "note": "Administered by Kenya; claimed by South Sudan.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "kafia-kingi-sds",
+   "name": "Kafia Kingi",
+   "claimant": "SDS",
+   "geometry": {
+    "ne_disputed": "B13"
+   },
+   "note": "Held by Sudan; claimed by South Sudan.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "belize-gtm",
+   "name": "Southern Belize",
+   "claimant": "GTM",
+   "geometry": {
+    "ne_disputed": "B51"
+   },
+   "note": "Held by Belize; claimed by Guatemala, pending at the International Court of Justice.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "guantanamo-cub",
+   "name": "Guantánamo Bay",
+   "claimant": "CUB",
+   "geometry": {
+    "ne_country": "USG"
+   },
+   "note": "Leased to the United States since 1903; Cuba considers the lease invalid.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "mayotte-com",
+   "name": "Mayotte",
+   "claimant": "COM",
+   "geometry": {
+    "ne_disputed": "B22"
+   },
+   "note": "Held by France; claimed by Comoros.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "scattered-mdg",
+   "name": "Scattered Islands",
+   "claimant": "MDG",
+   "geometry": {
+    "ne_disputed": [
+     "B23",
+     "B24",
+     "B26",
+     "B27"
+    ]
+   },
+   "note": "Held by France; claimed by Madagascar.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "tromelin-mus",
+   "name": "Tromelin Island",
+   "claimant": "MUS",
+   "geometry": {
+    "ne_disputed": "B25"
+   },
+   "note": "Held by France; claimed by Mauritius.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "suriname-guy",
+   "name": "Tigri Area",
+   "claimant": "SUR",
+   "geometry": {
+    "ne_disputed": "B15"
+   },
+   "note": "Held by Guyana; claimed by Suriname.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "suriname-guf",
+   "name": "Lawa Headwaters",
+   "claimant": "SUR",
+   "geometry": {
+    "ne_disputed": "B14"
+   },
+   "note": "Held by France (French Guiana); claimed by Suriname.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "olivenza-prt",
+   "name": "Olivenza",
+   "claimant": "PRT",
+   "geometry": {
+    "ne_disputed": "B67"
+   },
+   "note": "Held by Spain; claimed by Portugal.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "matthew-hunter-vut",
+   "name": "Matthew and Hunter Islands",
+   "claimant": "VUT",
+   "geometry": {
+    "ne_disputed": "B66"
+   },
+   "note": "Held by France (New Caledonia); claimed by Vanuatu.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "wake-mhl",
+   "name": "Wake Island",
+   "claimant": "MHL",
+   "geometry": {
+    "ne_disputed": "B59"
+   },
+   "note": "Held by the United States; claimed by the Marshall Islands.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "navassa-hti",
+   "name": "Navassa Island",
+   "claimant": "HTI",
+   "geometry": {
+    "ne_disputed": "B34"
+   },
+   "note": "Held by the United States; claimed by Haiti.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "artigas-ury",
+   "name": "Corner of Artigas",
+   "claimant": "URY",
+   "geometry": {
+    "ne_disputed": "B92"
+   },
+   "note": "Held by Brazil; claimed by Uruguay.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "doumera-dji",
+   "name": "Doumeira Islands",
+   "claimant": "DJI",
+   "geometry": {
+    "ne_disputed": "B87"
+   },
+   "note": "Held by Eritrea; claimed by Djibouti.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "prk-kor",
+   "name": "North Korea",
+   "claimant": "KOR",
+   "geometry": {
+    "ne_country": "PRK"
+   },
+   "note": "South Korea's constitution claims the whole peninsula.",
+   "sources": [
+    {
+     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
+     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+    }
+   ]
+  },
+  {
+   "id": "ukraine-occupied-ukr",
+   "name": "Russian-occupied Ukraine",
+   "claimant": "UKR",
+   "geometry": {
+    "area": "ukraine-occupied"
+   },
+   "note": "Ukraine's internationally recognized territory.",
+   "sources": [
+    {
+     "title": "DeepStateMap.Live",
+     "url": "https://deepstatemap.live/"
+    }
+   ]
+  },
+  {
+   "id": "oblasts-rus",
+   "name": "Rest of Donetsk, Luhansk, Zaporizhzhia and Kherson",
+   "claimant": "RUS",
+   "geometry": {
+    "minus": [
+     {
+      "ne_admin1": [
+       "UA-14",
+       "UA-09",
+       "UA-23",
+       "UA-65"
+      ]
+     },
+     {
+      "area": "ukraine-occupied"
+     }
+    ]
+   },
+   "note": "Russia claims to have annexed these four oblasts in full in September 2022, including the parts it has never held, among them the cities of Zaporizhzhia and Kherson.",
+   "sources": [
+    {
+     "title": "Wikipedia: Russian annexation of Donetsk, Kherson, Luhansk and Zaporizhzhia oblasts",
+     "url": "https://en.wikipedia.org/wiki/Russian_annexation_of_Donetsk,_Kherson,_Luhansk_and_Zaporizhzhia_oblasts"
+    }
+   ]
+  },
+  {
+   "id": "palestine-psx",
+   "name": "West Bank and Gaza",
+   "claimant": "PSX",
+   "geometry": {
+    "union": [
+     {
+      "area": "west-bank"
+     },
+     {
+      "area": "gaza-israeli"
+     },
+     {
+      "area": "gaza-hamas"
+     }
+    ]
+   },
+   "note": "The territory of the State of Palestine as recognized by most UN members.",
+   "sources": [
+    {
+     "title": "Natural Earth",
+     "url": "https://www.naturalearthdata.com/"
+    }
+   ]
+  },
+  {
+   "id": "ssc-sol",
+   "name": "Sool and Buhodle",
+   "claimant": "SOL",
+   "geometry": {
+    "area": "ssc-khatumo"
+   },
+   "note": "Claimed by Somaliland, which lost Las Anod to SSC-Khatumo forces in 2023.",
+   "sources": [
+    {
+     "title": "Political Geography Now: Somalia",
+     "url": "https://www.polgeonow.com/search/label/somalia"
+    }
+   ]
+  }
+ ]
+}
