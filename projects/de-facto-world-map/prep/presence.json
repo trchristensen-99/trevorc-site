@@ -17,9 +17,9 @@
      "SO-JH"
     ]
    },
-   "asOf": "2026-04",
+   "asOf": "2026-10",
    "confidence": "medium",
-   "note": "Holds much of the countryside and taxes trade even in government-held towns; estimates put its control at around 30% of Somalia's land.",
+   "note": "Holds or contests most of the countryside of southern and central Somalia, about 30% of the country's land, and taxes trade in government towns; it besieges El Dhere and stepped up attacks around Mogadishu in mid-2026.",
    "sources": [
     {
      "title": "War on the Rocks: Flailing State, the resurgence of al-Shabaab",
@@ -36,13 +36,20 @@
    "name": "Kachin State",
    "group": "KIA",
    "geometry": {
-    "ne_admin1": [
-     "MM-11"
+    "minus": [
+     {
+      "ne_admin1": [
+       "MM-11"
+      ]
+     },
+     {
+      "area": "kachin-kia"
+     }
     ]
    },
-   "asOf": "2026-05",
+   "asOf": "2026-10",
    "confidence": "medium",
-   "note": "The KIA holds much of rural Kachin State and several towns, and is pressing junta positions around Bhamo; the junta holds Myitkyina.",
+   "note": "The KIA holds most of rural Kachin State and contests Bhamo; the junta holds Myitkyina, Bhamo town and Putao.",
    "sources": [
     {
      "title": "Myanmar Peace Monitor: The junta's campaign to recapture resistance-controlled towns",
@@ -71,10 +78,14 @@
      }
     ]
    },
-   "asOf": "2026-05",
+   "asOf": "2026-10",
    "confidence": "medium",
-   "note": "Chin resistance forces hold most of the state's towns and countryside.",
+   "note": "Chin resistance forces hold most of the countryside and the southern towns; the junta retook Falam and Tonzang in 2026 and holds Hakha.",
    "sources": [
+    {
+     "title": "Mizzima (29 Apr 2026)",
+     "url": "https://eng.mizzima.com/2026/04/29/33629"
+    },
     {
      "title": "Myanmar Peace Monitor",
      "url": "https://mmpeacemonitor.org/en/eng-cover-story/the-juntas-campaign-to-recapture-resistance-controlled-towns/"
@@ -91,9 +102,9 @@
      "MM-03"
     ]
    },
-   "asOf": "2026-05",
+   "asOf": "2026-10",
    "confidence": "medium",
-   "note": "People's Defense Forces loyal to the National Unity Government contest much of the dry zone; the junta imposed martial law on dozens of townships here in April 2026.",
+   "note": "People's Defense Forces contest much of the dry zone, but the junta has retaken several Sagaing towns since the 2025-26 election and put dozens of townships under martial law.",
    "sources": [
     {
      "title": "Malay Mail: Myanmar junta imposes military control over 60 townships (April 2026)",
@@ -148,13 +159,23 @@
      "ML-5",
      "ML-4",
      "ML-6",
-     "ML-1"
+     "ML-1",
+     "ML-2",
+     "ML-3"
     ]
    },
-   "asOf": "2026",
+   "asOf": "2026-10",
    "confidence": "medium",
-   "note": "JNIM controls much of the countryside, besieges towns, and blockaded fuel supplies to Bamako in late 2025.",
+   "note": "JNIM rules much of the countryside through taxes and local deals, and since April 2026 has besieged Bamako, which is resupplied by army-escorted fuel convoys. It does not hold major towns.",
    "sources": [
+    {
+     "title": "Wikipedia: 2026 Mali offensives",
+     "url": "https://en.wikipedia.org/wiki/2026_Mali_offensives"
+    },
+    {
+     "title": "The OpsCon: Bamako fuel siege (19 Jul 2026)",
+     "url": "https://theopscon.com/intelligence/threat-level-mali-bamako-fuel-siege-convoys-2026-07-19"
+    },
     {
      "title": "ACLED Conflict Index",
      "url": "https://acleddata.com/conflict-index/"
@@ -226,13 +247,21 @@
      "ML-8"
     ]
    },
-   "asOf": "2026",
+   "asOf": "2026-10",
    "confidence": "low",
-   "note": "Tuareg separatists lost Kidal town to the army in 2023 but remain active in the desert, notably around Tinzaouaten.",
+   "note": "Tuareg separatists and JNIM took Kidal, Tessalit and Aguelhok in April 2026, but the army and Russian forces retook Kidal unopposed on 6 October. The FLA remains around Tessalit and Tinzaouatene near the Algerian border.",
    "sources": [
     {
-     "title": "ACLED Conflict Index",
-     "url": "https://acleddata.com/conflict-index/"
+     "title": "Critical Threats: The fall of northern Mali (28 Apr 2026)",
+     "url": "https://criticalthreats.org/analysis/fall-of-northern-mali-jnim-fla-offensive-russia-issp-camara"
+    },
+    {
+     "title": "ISS: Can Mali's FLA-JNIM alliance survive? (3 Sep 2026)",
+     "url": "https://issafrica.org/iss-today/can-mali-s-fla-jnim-insurgent-alliance-survive-its-internal-divisions"
+    },
+    {
+     "title": "La Nouvelle Tribune: After the retaking of Kidal (7 Oct 2026)",
+     "url": "https://lanouvelletribune.info/2026/10/mali-apres-la-reprise-de-kidal-les-defis-qui-attendent-larmee-malienne/"
     }
    ]
   },
@@ -435,16 +464,21 @@
    "geometry": {
     "ne_admin1": [
      "HT-OU",
-     "HT-AR"
+     "HT-AR",
+     "HT-CE"
     ]
    },
-   "asOf": "2026",
+   "asOf": "2026-10",
    "confidence": "medium",
    "note": "The Viv Ansanm gang coalition controls most of Port-au-Prince and much of the Artibonite valley.",
    "sources": [
     {
      "title": "ACLED Conflict Index",
      "url": "https://acleddata.com/conflict-index/"
+    },
+    {
+     "title": "Al Jazeera: UN extends mandate of gang suppression force in Haiti (29 Sep 2026)",
+     "url": "https://www.aljazeera.com/news/2026/9/29/un-extends-mandate-of-gang-suppression-force-in-haiti-for-six-months"
     }
    ]
   },
@@ -458,10 +492,14 @@
      "SS-JG"
     ]
    },
-   "asOf": "2026",
+   "asOf": "2026-10",
    "confidence": "low",
-   "note": "Fighting between the government and opposition forces resumed in 2025 after Riek Machar's arrest.",
+   "note": "Fighting resumed in 2025 after Riek Machar's arrest; opposition forces hold Akobo County and much of rural Lou Nuer Jonglei and Upper Nile, while the army holds Nasir, Ulang and the state capitals.",
    "sources": [
+    {
+     "title": "Sudans Post: SPLA-IO regains control of Akobo (Apr 2026)",
+     "url": "https://www.sudanspost.com/spla-io-regains-control-of-akobo-sudans-post-geolocation-shows/"
+    },
     {
      "title": "ACLED Conflict Index",
      "url": "https://acleddata.com/conflict-index/"
@@ -477,6 +515,8 @@
      "set": "COD-ADM2",
      "names": [
       "Beni",
+      "Oïcha",
+      "Butembo",
       "Lubero",
       "Irumu",
       "Mambasa"

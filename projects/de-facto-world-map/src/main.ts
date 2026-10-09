@@ -1,6 +1,6 @@
 import "./style.css"
 import type { Topology } from "topojson-specification"
-import { DARK, LIGHT, PROJECTIONS, WorldMap, type Hit, type LayerId, type MapData, type ProjectionId } from "./map"
+import { DARK, LIGHT, PROJECTIONS, WorldMap, type Hit, type LayerId, type MapData, type MapTopology, type ProjectionId } from "./map"
 import type { Details, Entity, Kind, Meta, Source, Station } from "./types"
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
@@ -91,6 +91,20 @@ function sourcesHTML(sources: Source[] | undefined) {
 function main(data: MapData, details: Details, meta: Meta) {
   const svg = document.querySelector<SVGSVGElement>("#map")!
   const map = new WorldMap(svg, data)
+  // The full-detail file is several times larger, so it loads only once
+  // someone zooms in.
+  let hiRequested = false
+  map.onNeedDetail = () => {
+    if (hiRequested) return
+    hiRequested = true
+    fetch("./data/map-hi.topo.json")
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`${r.status} loading map-hi.topo.json`))))
+      .then((topo: MapTopology) => map.setDetail(topo))
+      .catch((e) => {
+        console.error(e)
+        hiRequested = false
+      })
+  }
   const ent = (c: string): Entity | undefined => data.entities[c]
   const nameOf = (c: string) => (c === "none" ? "No controlling state" : ent(c)?.name ?? c)
 

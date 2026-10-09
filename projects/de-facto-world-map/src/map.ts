@@ -5,16 +5,18 @@
 
 import {
   geoArea,
+  geoBounds,
   geoContains,
   geoDistance,
   geoEqualEarth,
   geoGraticule10,
-  geoMercator,
   geoOrthographic,
   geoPath,
+  geoProjection,
   type GeoPath,
   type GeoPermissibleObjects,
   type GeoProjection,
+  type GeoRawProjection,
 } from "d3-geo"
 import { geoRobinson, geoWinkel3 } from "d3-geo-projection"
 import { pointer, select, type Selection } from "d3-selection"
@@ -31,10 +33,20 @@ export const PROJECTIONS = {
   winkel: { label: "Winkel tripel", globe: false, make: () => geoWinkel3() },
   equalEarth: { label: "Equal Earth", globe: false, make: () => geoEqualEarth() },
   robinson: { label: "Robinson", globe: false, make: () => geoRobinson() },
-  mercator: { label: "Mercator", globe: false, make: () => geoMercator() },
+  mercator: { label: "Mercator", globe: false, make: () => clampedMercator() },
   globe: { label: "Globe", globe: true, make: () => geoOrthographic().clipAngle(90) },
 } as const
 export type ProjectionId = keyof typeof PROJECTIONS
+
+// Mercator sends the poles to infinity, so Antarctica (whose ring runs along
+// the South Pole) turns inside out and covers the map. Clamp latitudes to
+// ±85° first: the pole edge becomes a straight line just off the map.
+function clampedMercator(): GeoProjection {
+  const max = (85 * Math.PI) / 180
+  const raw: GeoRawProjection = (x, y) => [x, Math.log(Math.tan(Math.PI / 4 + Math.max(-max, Math.min(max, y)) / 2))]
+  raw.invert = (x, y) => [x, 2 * Math.atan(Math.exp(y)) - Math.PI / 2]
+  return geoProjection(raw)
+}
 
 export type LayerId = "labels" | "claims" | "presence" | "stations" | "graticule"
 
@@ -64,11 +76,53 @@ export interface Hit {
   presence: F[]
 }
 
+export type MapTopology = Topology<{
+  control: GeometryCollection<FeatureProps>
+  claims: GeometryCollection<FeatureProps>
+  presence: GeometryCollection<FeatureProps>
+}>
+
 export interface MapData {
-  topo: Topology<{ control: GeometryCollection<FeatureProps>; claims: GeometryCollection<FeatureProps>; presence: GeometryCollection<FeatureProps> }>
+  topo: MapTopology
   entities: Record<string, Entity>
   stations: Station[]
 }
+
+// One level of detail: the same features at some resolution, plus the
+// lon/lat box of each so hit tests can skip most of them cheaply.
+interface Detail {
+  control: F[]
+  claims: F[]
+  presence: F[]
+  borders: MultiLineString
+  coast: MultiLineString
+  boxes: WeakMap<F, [[number, number], [number, number]]>
+}
+
+function detail(topo: MapTopology): Detail {
+  const fc = (o: GeometryCollection<FeatureProps>) => (feature(topo, o) as FeatureCollection<Geometry, FeatureProps>).features
+  const differs = (a: { properties?: FeatureProps | null }, b: { properties?: FeatureProps | null }) =>
+    a !== b && (a.properties?.c !== b.properties?.c || a.properties?.k !== b.properties?.k)
+  const d: Detail = {
+    control: fc(topo.objects.control),
+    claims: fc(topo.objects.claims),
+    presence: fc(topo.objects.presence),
+    borders: mesh(topo, topo.objects.control, (a, b) => differs(a as never, b as never)),
+    coast: mesh(topo, topo.objects.control, (a, b) => a === b),
+    boxes: new WeakMap(),
+  }
+  for (const f of [...d.control, ...d.claims, ...d.presence]) d.boxes.set(f, geoBounds(f))
+  return d
+}
+
+// Whether a lon/lat box (which may cross the antimeridian) holds a point.
+function inBox(b: [[number, number], [number, number]], [x, y]: [number, number]) {
+  if (y < b[0][1] - 0.01 || y > b[1][1] + 0.01) return false
+  return b[0][0] <= b[1][0] ? x >= b[0][0] - 0.01 && x <= b[1][0] + 0.01 : x >= b[0][0] - 0.01 || x <= b[1][0] + 0.01
+}
+
+// Flat maps switch to the full-detail file past this zoom.
+const HI_ZOOM = 1.8
 
 const MERCATOR_EXTENT: GeoPermissibleObjects = {
   type: "Polygon",
@@ -79,11 +133,8 @@ export class WorldMap {
   private svg: SVGSel<SVGSVGElement>
   private defs: SVGSel<SVGDefsElement>
   private root: SVGSel<SVGGElement>
-  private control: F[]
-  private claims: F[]
-  private presence: F[]
-  private borders: MultiLineString
-  private coast: MultiLineString
+  private lo: Detail
+  private hi: Detail | null = null
   private labelFeature = new Map<string, F>()
   private projection!: GeoProjection
   private path!: GeoPath
@@ -108,18 +159,11 @@ export class WorldMap {
     private el: SVGSVGElement,
     private data: MapData,
   ) {
-    const { topo } = data
-    this.control = (feature(topo, topo.objects.control) as FeatureCollection<Geometry, FeatureProps>).features
-    this.claims = (feature(topo, topo.objects.claims) as FeatureCollection<Geometry, FeatureProps>).features
-    this.presence = (feature(topo, topo.objects.presence) as FeatureCollection<Geometry, FeatureProps>).features
-    const differs = (a: { properties?: FeatureProps | null }, b: { properties?: FeatureProps | null }) =>
-      a !== b && (a.properties?.c !== b.properties?.c || a.properties?.k !== b.properties?.k)
-    this.borders = mesh(topo, topo.objects.control, (a, b) => differs(a as never, b as never))
-    this.coast = mesh(topo, topo.objects.control, (a, b) => a === b)
+    this.lo = detail(data.topo)
 
     // The label for each controller sits in its largest piece.
     const best = new Map<string, number>()
-    for (const f of this.control) {
+    for (const f of this.lo.control) {
       const c = f.properties.c
       const area = geoArea(f)
       if (area > (best.get(c) ?? -1)) {
@@ -136,7 +180,7 @@ export class WorldMap {
       this.root.append("g").attr("data-layer", g)
 
     this.zoomer = zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 40])
+      .scaleExtent([1, 500])
       .on("zoom", (e: D3ZoomEvent<SVGSVGElement, unknown>) => this.zoomed(e))
     this.svg.call(this.zoomer).on("dblclick.zoom", null)
 
@@ -164,6 +208,25 @@ export class WorldMap {
     this.svg.call(this.zoomer.transform, zoomIdentity)
     this.resize()
   }
+
+  // Called once the full-detail file has loaded.
+  setDetail(topo: MapTopology) {
+    this.hi = detail(topo)
+    if (this.wantsHi) this.render()
+  }
+
+  // Asked for the first time the map is zoomed in on a flat projection.
+  onNeedDetail: () => void = () => {}
+
+  private get wantsHi() {
+    return !this.isGlobe && this.transform.k >= HI_ZOOM
+  }
+
+  // The level of detail the map is drawn with right now.
+  private get d(): Detail {
+    return this.wantsHi && this.hi ? this.hi : this.lo
+  }
+  private drawn: Detail | null = null
 
   setLayer(id: LayerId, on: boolean) {
     if (on) this.layers.add(id)
@@ -263,18 +326,22 @@ export class WorldMap {
       this.schedule()
     } else {
       this.root.attr("transform", e.transform.toString())
-      this.schedule(true)
+      if (this.wantsHi && !this.hi) this.onNeedDetail()
+      this.schedule(this.d === this.drawn)
     }
   }
 
   private schedule(lightweight = false) {
+    this.full ||= !lightweight
     if (this.frame) return
     this.frame = requestAnimationFrame(() => {
       this.frame = 0
-      if (lightweight) this.restyleForZoom()
-      else this.render()
+      if (this.full) this.render()
+      else this.restyleForZoom()
+      this.full = false
     })
   }
+  private full = false
 
   private hitAt(at: [number, number]): Hit | null {
     const p = this.isGlobe ? at : this.transform.invert(at)
@@ -282,13 +349,15 @@ export class WorldMap {
     if (!ll || Number.isNaN(ll[0])) return null
     const lonLat = ll as [number, number]
     if (this.isGlobe && geoDistance(lonLat, [-this.rotation[0], -this.rotation[1]]) > Math.PI / 2) return null
-    const area = this.control.find((f) => geoContains(f, lonLat))
+    const d = this.d
+    const inside = (f: F) => inBox(d.boxes.get(f)!, lonLat) && geoContains(f, lonLat)
+    const area = d.control.find(inside)
     if (!area) return null
     return {
       lonLat,
       area,
-      claims: this.layers.has("claims") ? this.claims.filter((f) => geoContains(f, lonLat)) : [],
-      presence: this.layers.has("presence") ? this.presence.filter((f) => geoContains(f, lonLat)) : [],
+      claims: this.layers.has("claims") ? d.claims.filter(inside) : [],
+      presence: this.layers.has("presence") ? d.presence.filter(inside) : [],
     }
   }
 
@@ -327,6 +396,7 @@ export class WorldMap {
   private render() {
     if (!this.projection) return
     const t = this.theme
+    const d = (this.drawn = this.d)
     const layer = (name: string) => this.root.select<SVGGElement>(`[data-layer=${name}]`)
     this.defs.selectAll("pattern").remove()
 
@@ -339,36 +409,36 @@ export class WorldMap {
       .attr("fill", "none").attr("stroke", t.graticule).attr("stroke-width", 0.5)
       .attr("vector-effect", "non-scaling-stroke")
 
-    layer("control").selectAll<SVGPathElement, F>("path").data(this.control, (d) => d.properties.a).join("path")
-      .attr("d", (d) => this.path(d) ?? "")
-      .attr("fill", (d) => this.fillFor(d.properties.c, d.properties.k))
+    layer("control").selectAll<SVGPathElement, F>("path").data(d.control, (f) => f.properties.a).join("path")
+      .attr("d", (f) => this.path(f) ?? "")
+      .attr("fill", (f) => this.fillFor(f.properties.c, f.properties.k))
 
     layer("presence").selectAll<SVGPathElement, F>("path")
-      .data(this.layers.has("presence") ? this.presence : [], (d) => d.properties.a).join("path")
-      .attr("d", (d) => this.path(d) ?? "")
-      .attr("fill", (d) => this.pattern(`pres-${d.properties.c}`, "transparent", this.colorOf(d.properties.c), 1.6, 6))
-      .attr("stroke", (d) => this.colorOf(d.properties.c)).attr("stroke-width", 0.6).attr("stroke-opacity", 0.8)
+      .data(this.layers.has("presence") ? d.presence : [], (f) => f.properties.a).join("path")
+      .attr("d", (f) => this.path(f) ?? "")
+      .attr("fill", (f) => this.pattern(`pres-${f.properties.c}`, "transparent", this.colorOf(f.properties.c), 1.6, 6))
+      .attr("stroke", (f) => this.colorOf(f.properties.c)).attr("stroke-width", 0.6).attr("stroke-opacity", 0.8)
       .attr("vector-effect", "non-scaling-stroke").attr("pointer-events", "none")
 
     const b = layer("borders")
-    b.selectAll<SVGPathElement, MultiLineString>("path.coast").data([this.coast]).join("path").attr("class", "coast")
-      .attr("d", (d) => this.path(d) ?? "")
+    b.selectAll<SVGPathElement, MultiLineString>("path.coast").data([d.coast]).join("path").attr("class", "coast")
+      .attr("d", (m) => this.path(m) ?? "")
       .attr("fill", "none").attr("stroke", t.coast).attr("stroke-width", 0.45).attr("stroke-opacity", 0.75)
       .attr("vector-effect", "non-scaling-stroke").attr("pointer-events", "none")
-    b.selectAll<SVGPathElement, MultiLineString>("path.border").data([this.borders]).join("path").attr("class", "border")
-      .attr("d", (d) => this.path(d) ?? "")
+    b.selectAll<SVGPathElement, MultiLineString>("path.border").data([d.borders]).join("path").attr("class", "border")
+      .attr("d", (m) => this.path(m) ?? "")
       .attr("fill", "none").attr("stroke", t.border).attr("stroke-width", 0.7).attr("stroke-linejoin", "round")
       .attr("vector-effect", "non-scaling-stroke").attr("pointer-events", "none")
 
     // Claims: a pale halo under a dashed line in the claimant's color.
-    const claims = this.layers.has("claims") ? this.claims : []
-    layer("claims").selectAll<SVGPathElement, F>("path.halo").data(claims, (d) => d.properties.a).join("path").attr("class", "halo")
-      .attr("d", (d) => this.path(d) ?? "")
+    const claims = this.layers.has("claims") ? d.claims : []
+    layer("claims").selectAll<SVGPathElement, F>("path.halo").data(claims, (f) => f.properties.a).join("path").attr("class", "halo")
+      .attr("d", (f) => this.path(f) ?? "")
       .attr("fill", "none").attr("stroke", t.labelHalo).attr("stroke-width", 2.6).attr("stroke-opacity", 0.55)
       .attr("vector-effect", "non-scaling-stroke").attr("pointer-events", "none")
-    layer("claims").selectAll<SVGPathElement, F>("path.line").data(claims, (d) => d.properties.a).join("path").attr("class", "line")
-      .attr("d", (d) => this.path(d) ?? "")
-      .attr("fill", "none").attr("stroke", (d) => darken(this.colorOf(d.properties.c), 0.15))
+    layer("claims").selectAll<SVGPathElement, F>("path.line").data(claims, (f) => f.properties.a).join("path").attr("class", "line")
+      .attr("d", (f) => this.path(f) ?? "")
+      .attr("fill", "none").attr("stroke", (f) => darken(this.colorOf(f.properties.c), 0.15))
       .attr("stroke-width", 1.4).attr("stroke-dasharray", "4 3")
       .attr("vector-effect", "non-scaling-stroke").attr("pointer-events", "none")
 
@@ -429,8 +499,10 @@ export class WorldMap {
     // Boxes in screen pixels; a label is shown only if it fits inside its
     // country and doesn't overlap a larger country's label.
     const placed: [number, number, number, number][] = []
+    // Labels grow a little when zoomed far in, so small places stay legible.
+    const grow = Math.min(1.8, Math.max(1, k ** 0.2))
     for (const t of texts) {
-      const size = +(t.getAttribute("data-base") ?? 10)
+      const size = Math.min(22, +(t.getAttribute("data-base") ?? 10) * grow)
       const span = +(t.getAttribute("data-span") ?? 0) * k
       const w = (t.textContent ?? "").length * size * 0.56
       const x = +(t.getAttribute("x") ?? 0) * k

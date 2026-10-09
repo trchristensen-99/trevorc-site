@@ -290,6 +290,16 @@
    ]
   },
   {
+   "id": "south-lebanon-lbn",
+   "name": "Southern Lebanon",
+   "claimant": "LBN",
+   "geometry": {
+    "area": "south-lebanon"
+   },
+   "note": "Lebanese territory occupied by Israel since March 2026.",
+   "sources": []
+  },
+  {
    "id": "shebaa-lbn",
    "name": "Shebaa Farms",
    "claimant": "LBN",
@@ -836,11 +846,15 @@
    "geometry": {
     "ne_country": "PRK"
    },
-   "note": "South Korea's constitution claims the whole peninsula.",
+   "note": "South Korea's constitution claims the whole peninsula. North Korea no longer claims the South: its March 2026 constitutional revision dropped reunification and bounded its territory by the Republic of Korea to the south, though it leaves the sea border undefined.",
    "sources": [
     {
-     "title": "Natural Earth 1:10m Admin 0 disputed areas (v5.1.1)",
-     "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/"
+     "title": "Reuters via US News: North Korea revises constitution to drop references to unification (6 May 2026)",
+     "url": "https://www.usnews.com/news/world/articles/2026-05-06/north-korea-revises-constitution-to-drop-references-to-unification-of-korean-peninsula"
+    },
+    {
+     "title": "Korea Economic Institute: North Korea's new constitution buries the reunification project (21 May 2026)",
+     "url": "https://keia.org/analysis/north-koreas-new-constitution-buries-the-reunification-project/"
     }
    ]
   },

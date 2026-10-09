@@ -34,12 +34,14 @@ for (const layer of NE_LAYERS) {
 }
 
 // geoBoundaries (gbOpen) administrative units for countries whose control
-// lines don't follow Natural Earth's provinces. Simplified geometry is
-// plenty at world-map scale.
+// lines don't follow Natural Earth's provinces, at full resolution so the
+// zoomed-in map stays sharp. Ukraine's units only serve as a reference grid
+// (and the full file is 120 MB), so it uses the simplified geometry.
 const GB = ["UKR/ADM3", "YEM/ADM2", "SDN/ADM2", "COD/ADM2", "SOM/ADM2", "MMR/ADM3", "SYR/ADM2", "PSE/ADM2", "MLI/ADM2", "BFA/ADM2", "NER/ADM2", "NGA/ADM2"]
+const SIMPLIFIED = new Set(["UKR/ADM3"])
 for (const q of GB) {
   const meta = await (await fetch(`https://www.geoboundaries.org/api/current/gbOpen/${q}/`)).json()
-  const url = meta.simplifiedGeometryGeoJSON
+  const url = SIMPLIFIED.has(q) ? meta.simplifiedGeometryGeoJSON : meta.gjDownloadURL
   await download(url, path.join(RAW, "gb", `${q.replace("/", "-")}.geojson`))
   fs.writeFileSync(path.join(RAW, "gb", `${q.replace("/", "-")}.meta.json`), JSON.stringify({ license: meta.boundaryLicense, source: meta.boundarySource, year: meta.boundaryYearRepresented, url: meta.apiURL }))
   console.log(`geoBoundaries ${q} (${meta.boundaryLicense})`)

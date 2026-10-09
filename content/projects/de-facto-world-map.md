@@ -16,7 +16,7 @@ Most world maps show borders as countries claim them. This one shows who actuall
   <iframe src="/apps/de-facto-world-map/" title="De Facto World Map" loading="lazy"></iframe>
 </div>
 
-[Open the map full screen](/apps/de-facto-world-map/). Click any area for who controls it, how confident the assessment is, and the sources behind it. You can switch between flat projections and a globe, toggle the claims and insurgent-presence layers, and download the current view as an SVG. The address bar keeps track of the view, so a link like [this one](/apps/de-facto-world-map/#p=winkel&z=40,15,4) opens straight onto a region.
+[Open the map full screen](/apps/de-facto-world-map/). Click any area for who controls it, how confident the assessment is, and the sources behind it. You can switch between flat projections and a globe, toggle the claims and insurgent-presence layers, and download the current view as an SVG. Zooming in on a flat map loads the full-resolution borders. The address bar keeps track of the view, so a link like [this one](/apps/de-facto-world-map/#p=winkel&z=40,15,4) opens straight onto a region.
 
 ## How to read it
 
@@ -32,10 +32,11 @@ An entity gets its own color when the recognized government exercises no real au
 
 Some of the calls are judgment calls:
 
-- **Puntland and Jubaland** are colored separately from Somalia because both have broken with the federal government and run their own affairs, although neither claims independence.
-- **Northeast Syria** is shown as government-held. The SDF announced its dissolution into the Syrian army in August 2026, but its former members still hold neighborhoods of Hasakah and Qamishli, so this may be premature.
+- **Puntland and Jubaland** are colored separately from Somalia. Neither claims independence, but both have refused the federal government's authority since 2024, and in 2026 Puntland seized federal bases while Jubaland rewrote its constitution to call itself a government rather than a federal state.
+- **Northeast Syria** is shown as government-held. Damascus took over Raqqa, Deir ez-Zor, Hasakah, Qamishli and Kobani during 2026, and the SDF's former units now serve as army brigades after its dissolution in August. Islamic State cells still raid in the desert but hold no ground.
 - **The West Bank** is shown as Israeli-occupied in full, though the Palestinian Authority administers civil affairs in Areas A and B.
 - **Western Sahara** west of the berm is shown as Moroccan-controlled rather than occupied, since it was never another recognized state's territory; the Sahrawi Republic's claim to it is drawn instead.
+- **North Korea** no longer claims the South: its March 2026 constitution dropped reunification and bounds its territory by the Republic of Korea. South Korea's claim to the whole peninsula is still drawn.
 - **Rival governments** in a civil war (Yemen, Libya, Sudan) each claim the whole country, so those claims are left implicit rather than outlining every front line.
 - **The Sahel** is shown as insurgent presence rather than control: JNIM and Islamic State dominate much of the countryside, but rarely hold towns for long.
 
@@ -50,4 +51,5 @@ The map data is released under [CC BY-SA 4.0](https://creativecommons.org/licens
 
 ## Changelog
 
+- **8 October 2026:** Houthi gains on the Red Sea coast and around Taiz, and a Yemeni front-line layer; Israel's occupation of southern Lebanon; a retraced Gaza yellow line on a more accurate outline of the Strip; Sudan, Somalia, Congo and Myanmar updated to late-September reporting; full-resolution borders when zoomed in; Mercator fixed.
 - **October 2026:** first version, with control as of early October 2026.

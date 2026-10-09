@@ -139,6 +139,30 @@ function shareInside(unit, ref) {
   return inRef / inUnit
 }
 
+// The Natural Earth province a unit belongs to. Coastal and island units
+// can have their interior point just outside Natural Earth's coarser
+// coastline, so those fall back to the nearest province.
+const provinceCache = new WeakMap()
+function provinceOf(u) {
+  if (provinceCache.has(u)) return provinceCache.get(u)
+  const pt = u.inner.geometry.coordinates
+  const near = admin1.filter((f) => {
+    const b = (f.bbox ??= turf.bbox(f))
+    return pt[0] >= b[0] - 1 && pt[0] <= b[2] + 1 && pt[1] >= b[1] - 1 && pt[1] <= b[3] + 1
+  })
+  let best = near.find((f) => turf.booleanPointInPolygon(u.inner, f))
+  if (!best) {
+    let d = Infinity
+    for (const f of near) {
+      const x = turf.pointToPolygonDistance(u.inner, f)
+      if (x < d) { d = x; best = f }
+    }
+  }
+  const code = best?.properties.iso_3166_2
+  provinceCache.set(u, code)
+  return code
+}
+
 function resolve(r, where) {
   if (r.ne_country) {
     const hits = countries.filter((f) => f.properties.ADM0_A3 === r.ne_country)
@@ -165,7 +189,6 @@ function resolve(r, where) {
   if (r.gb) {
     const { set, names = [], within = [], except = [] } = r.gb
     const units = gbSet(set)
-    const provinces = admin1.filter((f) => within.includes(f.properties.iso_3166_2))
     const wantNames = new Set(names.map(norm))
     const skip = new Set(except.map(norm))
     const found = new Set()
@@ -173,7 +196,7 @@ function resolve(r, where) {
       const n = norm(u.properties.shapeName)
       if (skip.has(n)) return false
       if (wantNames.has(n)) { found.add(n); return true }
-      return provinces.some((pv) => turf.booleanPointInPolygon(u.inner, pv))
+      return within.length > 0 && within.includes(provinceOf(u))
     })
     for (const n of wantNames) if (!found.has(n)) throw new Error(`${where}: no ${set} unit named ${n}`)
     if (!hits.length) throw new Error(`${where}: no ${set} units selected`)
@@ -206,6 +229,15 @@ function resolve(r, where) {
     return turf.intersect(turf.featureCollection([a, b]))
   }
   throw new Error(`${where}: unknown geometry recipe ${JSON.stringify(r)}`)
+}
+
+// Carving an area out of a feature whose edges don't quite match leaves
+// slivers; drop leftover parts under 0.05 km².
+function dropSlivers(geom) {
+  if (geom.type !== "MultiPolygon") return turf.area(geom) < 5e4 ? null : geom
+  const parts = geom.coordinates.filter((c) => turf.area(turf.polygon(c)) >= 5e4)
+  if (parts.length === 0) return null
+  return parts.length === 1 ? { type: "Polygon", coordinates: parts[0] } : { type: "MultiPolygon", coordinates: parts }
 }
 
 const bboxOverlap = (a, b) => {
@@ -261,7 +293,7 @@ for (const area of areasIn.areas) {
   if (!g) { warn(`${where}: does not overlap any land`); continue }
   for (const f of overlapping) {
     const rest = turf.difference(turf.featureCollection([f, g]))
-    f.geometry = rest ? rest.geometry : null
+    f.geometry = rest ? dropSlivers(rest.geometry) : null
   }
   control = control.filter((f) => f.geometry)
   control.push({ type: "Feature", geometry: g.geometry, properties: { a: area.id, c: area.controller, k: area.kind ?? "control" } })
@@ -328,13 +360,18 @@ writeLayer("control", control)
 writeLayer("claims", claimFeatures)
 writeLayer("presence", presenceFeatures)
 fs.mkdirSync(OUT, { recursive: true })
-execFileSync(MAPSHAPER, [
-  "-i", "combine-files", ...["control", "claims", "presence"].map((n) => path.join(TMP, `${n}.json`)),
-  "-snap", "interval=0.0005",
-  "-clean", "allow-overlaps",
-  "-simplify", "weighted", "percentage=9%", "keep-shapes", "planar",
-  "-o", path.join(OUT, "map.topo.json"), "format=topojson", "quantization=100000", "target=*",
-], { stdio: ["ignore", "ignore", "inherit"] })
+// Two levels of detail with the same features: a light file for the globe
+// and the whole-world view, and the full source detail for zooming in.
+const topology = (file, simplify, quantization) =>
+  execFileSync(MAPSHAPER, [
+    "-i", "combine-files", ...["control", "claims", "presence"].map((n) => path.join(TMP, `${n}.json`)),
+    "-snap", "interval=0.0005",
+    "-clean", "allow-overlaps",
+    ...simplify,
+    "-o", path.join(OUT, file), "format=topojson", `quantization=${quantization}`, "target=*",
+  ], { stdio: ["ignore", "ignore", "inherit"] })
+topology("map.topo.json", ["-simplify", "weighted", "percentage=9%", "keep-shapes", "planar"], 100000)
+topology("map-hi.topo.json", [], 2000000)
 
 const topo = readJson(path.join(OUT, "map.topo.json"))
 const controlOut = topoFeature(topo, topo.objects.control).features
