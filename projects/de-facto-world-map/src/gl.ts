@@ -1,10 +1,13 @@
-// Textured base maps (satellite, terrain, streets) drawn with MapLibre on a
-// globe or a flat Mercator map, with the de facto layers on top. MapLibre
-// loads on first use from vendor/ (see vendor.json), so the default atlas
-// view doesn't pay for it.
+// The globe and Mercator views, drawn with MapLibre: a base (plain,
+// satellite imagery or a street map), optional terrain shading, the de facto
+// layers, and reference features from OpenStreetMap (cities, states, parks,
+// Indigenous lands, military areas, roads, airports) that can be switched on
+// like Google Maps' layers. MapLibre loads on first use from vendor/ (see
+// vendor.json), so the default atlas view doesn't pay for it.
 
 import type {
   ExpressionSpecification,
+  FilterSpecification,
   GeoJSONSource,
   LayerSpecification,
   Map as MLMap,
@@ -17,6 +20,7 @@ import type { Feature, FeatureCollection, Geometry } from "geojson"
 import {
   detail,
   labelSize,
+  regionNames,
   type Detail,
   type F,
   type Hit,
@@ -27,17 +31,34 @@ import {
   type Renderer,
   type Theme,
 } from "./map"
-import type { Station } from "./types"
+import type { BaseAbroad, Station } from "./types"
 
 type MapLibre = typeof import("maplibre-gl")
 
-export const BASES = {
-  satellite: { label: "Satellite" },
-  terrain: { label: "Terrain" },
-  streets: { label: "Streets" },
-} as const
-export type BaseId = keyof typeof BASES
 export const GL_PROJECTIONS: ProjectionId[] = ["globe", "mercator"]
+
+export const BASES = { plain: "Plain", satellite: "Satellite", streets: "Streets" } as const
+export type BaseId = keyof typeof BASES
+export const COUNTRY_STYLES = { fill: "Filled", outline: "Colored outlines", lines: "Borders only", off: "Hidden" } as const
+export type CountryStyle = keyof typeof COUNTRY_STYLES
+export const MAP_FEATURES = {
+  cities: "Cities and towns",
+  states: "States and provinces",
+  parks: "Parks and protected areas",
+  indigenous: "Indigenous lands",
+  military: "Military areas",
+  roads: "Major roads",
+  airports: "Airports",
+} as const
+export type MapFeature = keyof typeof MAP_FEATURES
+
+export interface GlOptions {
+  base: BaseId
+  terrain: boolean // relief shading, plus elevation colors on the plain base
+  relief3d: boolean
+  countries: CountryStyle
+  features: Set<MapFeature>
+}
 
 // ------------------------------------------------------------- sources
 
@@ -62,7 +83,8 @@ const dem = (): SourceSpecification => ({
     `<a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" target="_blank">Terrain Tiles</a> ` +
     `(Mapzen; SRTM, GMTED2010, ETOPO1 and others)`,
 })
-const DATA_CREDIT = `De facto borders: <a href="/projects/de-facto-world-map" target="_top">trevorc.com</a> (CC BY-SA 4.0)`
+const DATA_CREDIT = `De facto borders: <a href="/projects/de-facto-world-map" target="_top">trevorc.com</a>`
+const OSM_CREDIT = "OpenFreeMap © OpenMapTiles, data © OpenStreetMap contributors"
 
 // OpenFreeMap's styles supply the street map, place names and fonts.
 const styleCache = new Map<string, Promise<StyleSpecification>>()
@@ -90,15 +112,25 @@ function loadLibrary(): Promise<MapLibre> {
 
 // ------------------------------------------------------------ appearance
 
-// How strongly the de facto layers cover each base map.
-const LOOK = {
-  satellite: { fill: 0.42, pattern: 0.9, border: "#ffffff", borderOpacity: 0.9, ink: "#ffffff", halo: "rgba(0,0,0,0.85)" },
-  terrain: { fill: 0.42, pattern: 0.85, border: "#2a3138", borderOpacity: 0.85, ink: "#1d2329", halo: "#ffffff" },
-  streets: { fill: 0.38, pattern: 0.85, border: "#3a4652", borderOpacity: 0.8, ink: "#1d2329", halo: "#ffffff" },
-} as const
-const STREETS_DARK = { ...LOOK.streets, fill: 0.55, border: "#c9d1d9", ink: "#eef1f4", halo: "#0e141a" }
+interface Look {
+  land: string
+  sea: string
+  fill: number // opacity of country fills
+  border: string
+  ink: string // label text
+  halo: string
+  regionInk: "dark" | "light" // which tint of a region's color its name uses
+  road: string
+}
+function lookFor(base: BaseId, dark: boolean): Look {
+  if (base === "satellite")
+    return { land: "#0b1a2a", sea: "#0b1a2a", fill: 0.42, border: "#ffffff", ink: "#ffffff", halo: "rgba(0,0,0,0.85)", regionInk: "light", road: "rgba(255,236,170,0.75)" }
+  return dark
+    ? { land: "#262b31", sea: "#121c26", fill: base === "streets" ? 0.55 : 0.62, border: "#c9d1d9", ink: "#eef1f4", halo: "#0e141a", regionInk: "light", road: "#58616b" }
+    : { land: "#efede6", sea: "#b9d3e6", fill: base === "streets" ? 0.38 : 0.62, border: "#3a4652", ink: "#1d2329", halo: "#ffffff", regionInk: "dark", road: "#b5b0a6" }
+}
 
-// Elevation colors for the terrain map, ocean floor included.
+// Elevation colors for the plain base with terrain on, sea floor included.
 const RELIEF: ExpressionSpecification = [
   "interpolate", ["linear"], ["elevation"],
   -10000, "#0b2b50", -5000, "#1f4f82", -2000, "#3f78ad", -200, "#7fb0d8", -1, "#acd0ea",
@@ -109,7 +141,11 @@ const hex = (c: string): [number, number, number] => {
   const n = parseInt(c.slice(1), 16)
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255]
 }
-const darken = (c: string, t: number) => "#" + hex(c).map((v) => Math.round(v * (1 - t)).toString(16).padStart(2, "0")).join("")
+const toHex = (rgb: number[]) => "#" + rgb.map((v) => Math.round(v).toString(16).padStart(2, "0")).join("")
+const mix = (c: string, d: string, t: number) => {
+  const a = hex(c), b = hex(d)
+  return toHex(a.map((v, i) => v + (b[i] - v) * t))
+}
 
 // A tileable square of diagonal stripes, for occupation, contested and
 // presence fills. `gap` is the color between stripes (alpha 0 for none).
@@ -124,11 +160,29 @@ function stripes(ink: [number, number, number, number], gap: [number, number, nu
   return { width: size, height: size, data }
 }
 
+const PLACE_NAME: ExpressionSpecification = [
+  "case", ["has", "name:nonlatin"],
+  ["concat", ["get", "name:latin"], "\n", ["get", "name:nonlatin"]],
+  ["coalesce", ["get", "name_en"], ["get", "name"]],
+]
+
+// Which style layers belong to each switchable feature (city layers are
+// added as the style is built, since they come from OpenFreeMap's style).
+const FEATURE_LAYERS: Record<MapFeature, string[]> = {
+  cities: [],
+  states: ["ref-states-line", "ref-states-label"],
+  parks: ["ref-parks-fill", "ref-parks-line", "ref-parks-label"],
+  indigenous: ["ref-indigenous-line", "ref-indigenous-label"],
+  military: ["ref-military-fill", "ref-military-line", "ref-military-label"],
+  roads: ["ref-roads"],
+  airports: ["ref-airports"],
+}
+
 // ---------------------------------------------------------------- map
 
-export async function createGlMap(container: HTMLElement, data: MapData, base: BaseId, theme: Theme) {
+export async function createGlMap(container: HTMLElement, data: MapData, options: GlOptions, theme: Theme) {
   const lib = await loadLibrary()
-  const m = new GlMap(lib, container, data, base, theme)
+  const m = new GlMap(lib, container, data, options, theme)
   await m.ready
   return m
 }
@@ -137,6 +191,7 @@ export class GlMap implements Renderer {
   onHover: (hit: Hit | null, at: [number, number]) => void = () => {}
   onSelect: (hit: Hit | null) => void = () => {}
   onStation: (s: Station) => void = () => {}
+  onBase: (b: BaseAbroad) => void = () => {}
   onNeedDetail: () => void = () => {}
   onViewChange: () => void = () => {}
 
@@ -144,16 +199,13 @@ export class GlMap implements Renderer {
   private map: MLMap
   private d: Detail
   private projection: ProjectionId = "globe"
-  private layers = new Set<LayerId>(["labels", "claims", "presence", "stations"])
+  private layers = new Set<LayerId>(["labels", "regions", "shading", "claims", "presence", "stations", "bases"])
   private styleLoaded = false
+  private options: GlOptions
+  private cityLayers: string[] = []
 
-  constructor(
-    lib: MapLibre,
-    container: HTMLElement,
-    private data: MapData,
-    private base: BaseId,
-    private theme: Theme,
-  ) {
+  constructor(lib: MapLibre, container: HTMLElement, private data: MapData, options: GlOptions, private theme: Theme) {
+    this.options = { ...options, features: new Set(options.features) }
     this.d = detail(data.topo)
     this.map = new lib.Map({
       container,
@@ -170,10 +222,17 @@ export class GlMap implements Renderer {
     this.map.on("mousemove", (e) => this.onHover(this.hitAt(e), [e.point.x, e.point.y]))
     this.map.getCanvas().addEventListener("mouseleave", () => this.onHover(null, [0, 0]))
     this.map.on("click", (e) => {
-      const st = this.map.queryRenderedFeatures(e.point, { layers: this.has("dfm-stations") ? ["dfm-stations"] : [] })[0]
-      const station = st && this.data.stations.find((s) => s.name === st.properties.name)
-      if (station) this.onStation(station)
-      else this.onSelect(this.hitAt(e))
+      const point = this.visibleLayers(["dfm-bases", "dfm-stations"])
+      const p = point.length ? this.map.queryRenderedFeatures(e.point, { layers: point })[0] : undefined
+      if (p?.layer.id === "dfm-bases") {
+        const b = this.data.abroad[p.properties.i as number]
+        if (b) return this.onBase(b)
+      }
+      if (p?.layer.id === "dfm-stations") {
+        const s = this.data.stations.find((x) => x.name === p.properties.name)
+        if (s) return this.onStation(s)
+      }
+      this.onSelect(this.hitAt(e))
     })
     // Phones start with the credits folded behind MapLibre's (i) button,
     // where they'd otherwise cover the legend. MapLibre opens them when it
@@ -207,11 +266,20 @@ export class GlMap implements Renderer {
     if (this.styleLoaded) this.applyLayers()
   }
 
+  // Base and terrain changes rebuild the style; the rest only switch layers
+  // on and off.
+  setOptions(o: GlOptions) {
+    const rebuild = o.base !== this.options.base || o.terrain !== this.options.terrain
+    this.options = { ...o, features: new Set(o.features) }
+    if (rebuild) void this.restyle()
+    else if (this.styleLoaded) this.applyLayers()
+  }
+
   setTheme(t: Theme) {
     const changed = t.dark !== this.theme.dark
     this.theme = t
-    // Only the street map has a dark version.
-    if (changed && this.base === "streets") void this.restyle()
+    // The satellite base looks the same either way.
+    if (changed && this.options.base !== "satellite") void this.restyle()
   }
 
   setDetail(topo: MapTopology) {
@@ -275,17 +343,21 @@ export class GlMap implements Renderer {
   private credits() {
     const text = (h: string) => h.replace(/<[^>]+>/g, "").replace(/&copy;/g, "©")
     const style = this.map.getStyle()
-    const used = new Set(style.layers.map((l) => ("source" in l ? l.source : "")))
-    if (this.layers.has("relief")) used.add("dem3d")
+    const used = new Set(
+      style.layers
+        .filter((l) => (l.layout as { visibility?: string } | undefined)?.visibility !== "none")
+        .map((l) => ("source" in l ? l.source : "")),
+    )
+    if (this.options.relief3d) used.add("dem3d")
     const out = Object.entries(style.sources)
       .filter(([id]) => used.has(id))
-      .map(([id, x]) => (id === "openmaptiles" ? "OpenFreeMap © OpenMapTiles, data © OpenStreetMap contributors" : "attribution" in x && x.attribution ? text(x.attribution) : ""))
+      .map(([id, x]) => (id === "openmaptiles" ? OSM_CREDIT : "attribution" in x && x.attribution ? text(x.attribution) : ""))
       .filter(Boolean)
     return [...new Set(out)]
   }
 
   private look() {
-    return this.base === "streets" && this.theme.dark ? STREETS_DARK : LOOK[this.base]
+    return lookFor(this.options.base, this.theme.dark)
   }
 
   private async restyle() {
@@ -302,50 +374,59 @@ export class GlMap implements Renderer {
   }
 
   private async buildStyle(): Promise<StyleSpecification> {
-    const ofm = await ofmStyle(this.base === "streets" && this.theme.dark ? "dark" : "positron")
-    const isPlace = (l: LayerSpecification) =>
-      l.type === "symbol" && "source-layer" in l && l["source-layer"] === "place" && !/country|state/.test(l.id)
-    let under: LayerSpecification[] = []
-    let over: LayerSpecification[] = []
-    const sources: StyleSpecification["sources"] = {
-      openmaptiles: ofm.sources.openmaptiles,
-      dem: dem(),
-      dem3d: dem(),
-    }
+    const { base, terrain } = this.options
+    const L = this.look()
+    const ofm = await ofmStyle(this.theme.dark && base !== "satellite" ? "dark" : "positron")
+    const sources: StyleSpecification["sources"] = { openmaptiles: ofm.sources.openmaptiles, dem: dem(), dem3d: dem() }
+    const hillshade = (strength: number): LayerSpecification => ({
+      id: "hillshade", type: "hillshade", source: "dem",
+      paint: {
+        "hillshade-exaggeration": strength, "hillshade-shadow-color": "#3a3328", "hillshade-highlight-color": "#ffffff",
+        "hillshade-illumination-anchor": "map",
+      },
+    })
 
-    if (this.base === "streets") {
-      // The street map's own borders and country names would contradict
-      // the de facto ones, so they go.
-      const kept = ofm.layers.filter((l) => !/boundary|country|state/.test(l.id) && !("source" in l && l.source === "ne2_shaded"))
-      const firstSymbol = kept.findIndex((l) => l.type === "symbol")
-      under = kept.slice(0, firstSymbol)
-      over = kept.slice(firstSymbol)
-    } else if (this.base === "satellite") {
-      sources.satellite = SATELLITE
-      under = [
-        { id: "space", type: "background", paint: { "background-color": "#0b1a2a" } },
-        { id: "satellite", type: "raster", source: "satellite", paint: { "raster-fade-duration": 150 } },
-      ]
-      over = ofm.layers.filter(isPlace).map((l) => ({
-        ...l,
-        paint: { ...(l as { paint?: object }).paint, "text-color": "#ffffff", "text-halo-color": "rgba(0,0,0,0.8)", "text-halo-width": 1.3 },
-      })) as LayerSpecification[]
-    } else {
-      under = [
-        { id: "sea", type: "background", paint: { "background-color": "#acd0ea" } },
-        { id: "relief", type: "color-relief", source: "dem", paint: { "color-relief-color": RELIEF } },
-        {
-          id: "hillshade", type: "hillshade", source: "dem",
-          paint: { "hillshade-exaggeration": 0.4, "hillshade-shadow-color": "#3a3328", "hillshade-highlight-color": "#ffffff" },
-        },
-        // Vector water on top keeps coastlines crisp where the elevation
-        // tiles are coarse, while letting the sea floor show through.
+    let under: LayerSpecification[] = [] // below the country fills
+    let between: LayerSpecification[] = [] // above the fills, below lines
+    if (base === "plain") {
+      under = [{ id: "land", type: "background", paint: { "background-color": L.land } }]
+      if (terrain) under.push({ id: "relief", type: "color-relief", source: "dem", paint: { "color-relief-color": RELIEF } })
+      // Water goes over the country fills, so coastlines follow
+      // OpenStreetMap's rather than the coarser ones in the border data.
+      between = [
         {
           id: "water", type: "fill", source: "openmaptiles", "source-layer": "water",
-          paint: { "fill-color": "#9cc6e6", "fill-opacity": 0.6 },
+          filter: ["!=", ["get", "brunnel"], "tunnel"],
+          paint: { "fill-color": terrain ? "#9cc6e6" : L.sea, "fill-opacity": terrain ? 0.6 : 1 },
+        },
+        {
+          id: "waterway", type: "line", source: "openmaptiles", "source-layer": "waterway", minzoom: 6,
+          filter: ["match", ["get", "class"], ["river", "canal"], true, false],
+          paint: { "line-color": L.sea, "line-width": ["interpolate", ["linear"], ["zoom"], 6, 0.5, 12, 2] },
         },
       ]
-      over = ofm.layers.filter(isPlace)
+      if (terrain) between.push(hillshade(0.35))
+    } else if (base === "satellite") {
+      sources.satellite = SATELLITE
+      under = [
+        { id: "space", type: "background", paint: { "background-color": L.land } },
+        { id: "satellite", type: "raster", source: "satellite", paint: { "raster-fade-duration": 150 } },
+      ]
+      if (terrain) under.push(hillshade(0.25))
+    } else {
+      // The street map minus its own borders and country, state and place
+      // names, which would contradict or duplicate the layers here. Its
+      // water and roads go over the country fills.
+      const kept = ofm.layers.filter(
+        (l) =>
+          !/boundary|country|state/.test(l.id) &&
+          !("source" in l && l.source === "ne2_shaded") &&
+          !(l.type === "symbol" && "source-layer" in l && l["source-layer"] === "place"),
+      )
+      const bg = kept.findIndex((l) => l.type === "background")
+      under = kept.slice(0, bg + 1)
+      between = kept.slice(bg + 1)
+      if (terrain) between.splice(between.findIndex((l) => l.id === "water") + 1, 0, hillshade(0.3))
     }
 
     return {
@@ -361,72 +442,244 @@ export class GlMap implements Renderer {
         "dfm-claims": { type: "geojson", data: empty() },
         "dfm-presence": { type: "geojson", data: empty() },
         "dfm-stations": { type: "geojson", data: empty() },
+        "dfm-bases": { type: "geojson", data: empty() },
         "dfm-labels": { type: "geojson", data: empty() },
+        "dfm-regions": { type: "geojson", data: empty() },
       },
-      layers: [...under, ...this.overlay(), ...over, ...this.labelLayers()],
+      layers: [
+        ...under,
+        ...this.fills(),
+        ...between.filter((l) => l.type !== "symbol"),
+        ...this.featureAreas(),
+        ...this.lines(),
+        ...this.points(),
+        ...between.filter((l) => l.type === "symbol"), // street and water names
+        ...this.featureLabels(ofm),
+        ...this.labelLayers(),
+      ],
     }
   }
 
-  private overlay(): LayerSpecification[] {
+  private fills(): LayerSpecification[] {
     const L = this.look()
-    const kinds = (...k: string[]): ExpressionSpecification => ["match", ["get", "k"], k, true, false]
     return [
-      { id: "dfm-fill", type: "fill", source: "dfm-control", filter: kinds("control", "dependency", "lease", "international"), paint: { "fill-color": ["get", "col"], "fill-opacity": L.fill } },
-      { id: "dfm-occ", type: "fill", source: "dfm-control", filter: kinds("occupation"), paint: { "fill-pattern": ["concat", "occ-", ["get", "c"]], "fill-opacity": L.pattern } },
-      { id: "dfm-contested", type: "fill", source: "dfm-control", filter: kinds("contested"), paint: { "fill-pattern": "contested", "fill-opacity": L.pattern } },
+      { id: "dfm-fill", type: "fill", source: "dfm-control", paint: { "fill-color": ["get", "col"], "fill-opacity": L.fill } },
+      { id: "dfm-occ", type: "fill", source: "dfm-control", filter: ["==", ["get", "k"], "occupation"], paint: { "fill-pattern": ["concat", "occ-", ["get", "c"]], "fill-opacity": 0.9 } },
+      { id: "dfm-contested", type: "fill", source: "dfm-control", filter: ["==", ["get", "k"], "contested"], paint: { "fill-pattern": "contested", "fill-opacity": 0.9 } },
+      { id: "dfm-presence", type: "fill", source: "dfm-presence", paint: { "fill-pattern": ["concat", "pres-", ["get", "c"]], "fill-opacity": 0.9 } },
       // Invisible copies that answer "what's under the pointer".
       { id: "dfm-hit", type: "fill", source: "dfm-control", paint: { "fill-opacity": 0 } },
-      { id: "dfm-presence", type: "fill", source: "dfm-presence", paint: { "fill-pattern": ["concat", "pres-", ["get", "c"]], "fill-opacity": L.pattern } },
-      { id: "dfm-presence-line", type: "line", source: "dfm-presence", paint: { "line-color": ["get", "col"], "line-width": 1, "line-opacity": 0.8 } },
-      {
-        id: "dfm-borders", type: "line", source: "dfm-borders", layout: { "line-join": "round" },
-        paint: { "line-color": L.border, "line-opacity": L.borderOpacity, "line-width": ["interpolate", ["linear"], ["zoom"], 1, 0.6, 5, 1.2, 10, 2] },
-      },
       { id: "dfm-claims-hit", type: "fill", source: "dfm-claims", paint: { "fill-opacity": 0 } },
-      { id: "dfm-claims-halo", type: "line", source: "dfm-claims", paint: { "line-color": L.halo, "line-width": 3, "line-opacity": 0.5 } },
-      { id: "dfm-claims", type: "line", source: "dfm-claims", paint: { "line-color": ["get", "ink"], "line-width": 1.6, "line-dasharray": [3, 2] } },
+    ]
+  }
+
+  private featureAreas(): LayerSpecification[] {
+    const sat = this.options.base === "satellite"
+    return [
       {
-        id: "dfm-stations", type: "circle", source: "dfm-stations",
-        paint: { "circle-radius": 4, "circle-color": ["get", "col"], "circle-stroke-color": "#1d2329", "circle-stroke-width": 0.8 },
+        id: "ref-parks-fill", type: "fill", source: "openmaptiles", "source-layer": "park",
+        paint: { "fill-color": "#3f9a4f", "fill-opacity": sat ? 0.18 : 0.22 },
+      },
+      { id: "ref-parks-line", type: "line", source: "openmaptiles", "source-layer": "park", paint: { "line-color": "#2f7a3e", "line-width": 0.8, "line-opacity": 0.8 } },
+      {
+        id: "ref-military-fill", type: "fill", source: "openmaptiles", "source-layer": "landuse",
+        filter: ["==", ["get", "class"], "military"], paint: { "fill-color": "#b03a2e", "fill-opacity": 0.22 },
+      },
+      {
+        id: "ref-military-line", type: "line", source: "openmaptiles", "source-layer": "landuse",
+        filter: ["==", ["get", "class"], "military"], paint: { "line-color": "#b03a2e", "line-width": 1, "line-dasharray": [2, 1] },
+      },
+      {
+        id: "ref-roads", type: "line", source: "openmaptiles", "source-layer": "transportation", minzoom: 4,
+        filter: ["all", ["match", ["get", "class"], ["motorway", "trunk", "primary"], true, false], ["!=", ["get", "brunnel"], "tunnel"]],
+        layout: { "line-join": "round", "line-cap": "round" },
+        paint: {
+          "line-color": this.look().road,
+          "line-width": ["interpolate", ["linear"], ["zoom"], 4, ["match", ["get", "class"], "motorway", 0.8, 0.4], 10, ["match", ["get", "class"], "motorway", 2.4, 1.4], 14, 4],
+        },
       },
     ]
   }
 
-  // Names appear once their country is wide enough on screen to hold
-  // them; each feature carries the zoom where that happens (mz), and one
-  // layer per whole zoom level shows those that fit from that level on.
+  private lines(): LayerSpecification[] {
+    const L = this.look()
+    return [
+      { id: "dfm-presence-line", type: "line", source: "dfm-presence", paint: { "line-color": ["get", "col"], "line-width": 1, "line-opacity": 0.8 } },
+      {
+        id: "ref-states-line", type: "line", source: "openmaptiles", "source-layer": "boundary", minzoom: 2,
+        filter: ["all", ["==", ["get", "admin_level"], 4], ["!=", ["get", "maritime"], 1]],
+        paint: { "line-color": L.border, "line-opacity": 0.55, "line-width": ["interpolate", ["linear"], ["zoom"], 3, 0.5, 8, 1.2], "line-dasharray": [3, 2] },
+      },
+      {
+        id: "ref-indigenous-line", type: "line", source: "openmaptiles", "source-layer": "boundary",
+        filter: ["==", ["get", "class"], "aboriginal_lands"],
+        paint: { "line-color": "#a0522d", "line-width": 1.4, "line-dasharray": [4, 2] },
+      },
+      // Each controller's edge drawn just inside its territory, so a shared
+      // border shows both sides' colors.
+      {
+        id: "dfm-outline", type: "line", source: "dfm-control", filter: ["!=", ["get", "c"], "none"],
+        layout: { "line-join": "round" },
+        paint: {
+          "line-color": ["get", "col"],
+          "line-width": ["interpolate", ["linear"], ["zoom"], 1, 1.2, 6, 2.6, 10, 3.5],
+          "line-offset": ["interpolate", ["linear"], ["zoom"], 1, 0.6, 6, 1.3, 10, 1.75],
+        },
+      },
+      {
+        id: "dfm-borders", type: "line", source: "dfm-borders", layout: { "line-join": "round" },
+        paint: { "line-color": L.border, "line-opacity": 0.9, "line-width": ["interpolate", ["linear"], ["zoom"], 1, 0.6, 5, 1.2, 10, 2] },
+      },
+      { id: "dfm-claims-halo", type: "line", source: "dfm-claims", paint: { "line-color": L.halo, "line-width": 3, "line-opacity": 0.5 } },
+      { id: "dfm-claims", type: "line", source: "dfm-claims", paint: { "line-color": ["get", "ink"], "line-width": 1.6, "line-dasharray": [3, 2] } },
+    ]
+  }
+
+  private points(): LayerSpecification[] {
+    return [
+      {
+        id: "dfm-stations", type: "circle", source: "dfm-stations",
+        paint: { "circle-radius": 4, "circle-color": ["get", "col"], "circle-stroke-color": "#1d2329", "circle-stroke-width": 0.8 },
+      },
+      {
+        id: "dfm-bases", type: "circle", source: "dfm-bases",
+        paint: {
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 2.6, 6, 4.5],
+          "circle-color": ["get", "col"], "circle-stroke-color": "#ffffff",
+          "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 1, 1, 6, 1.6],
+        },
+      },
+    ]
+  }
+
+  // Place names and the labels of the switchable features, from
+  // OpenFreeMap's tiles.
+  private featureLabels(ofm: StyleSpecification): LayerSpecification[] {
+    const L = this.look()
+    const text = { "text-color": L.ink, "text-halo-color": L.halo, "text-halo-width": 1.3 }
+    // City, town and village names follow the street style's own rules for
+    // when each class appears, recolored for the base. Names are in Latin
+    // script with the local script beneath.
+    const places = ofm.layers
+      .filter((l) => l.type === "symbol" && "source-layer" in l && l["source-layer"] === "place" && !/country|state/.test(l.id))
+      .map((l) => ({ ...l, id: `ref-cities-${l.id}`, paint: { ...(l as { paint?: object }).paint, ...text } }) as LayerSpecification)
+    this.cityLayers = places.map((l) => l.id)
+    const italic = (color: string) => ({ "text-color": color, "text-halo-color": L.halo, "text-halo-width": 1.2 })
+    const sat = this.options.base === "satellite"
+    return [
+      ...places,
+      {
+        id: "ref-states-label", type: "symbol", source: "openmaptiles", "source-layer": "place", minzoom: 3,
+        filter: ["==", ["get", "class"], "state"],
+        layout: { "text-field": PLACE_NAME, "text-font": ["Noto Sans Regular"], "text-size": ["interpolate", ["linear"], ["zoom"], 3, 10, 7, 13], "text-transform": "uppercase", "text-letter-spacing": 0.08, "text-max-width": 8 },
+        paint: { ...text, "text-opacity": 0.75 },
+      },
+      {
+        id: "ref-parks-label", type: "symbol", source: "openmaptiles", "source-layer": "park", minzoom: 6,
+        layout: { "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]], "text-font": ["Noto Sans Italic"], "text-size": 11, "text-max-width": 8 },
+        paint: italic(sat ? "#bdf0c4" : "#2f6b3a"),
+      },
+      {
+        id: "ref-indigenous-label", type: "symbol", source: "openmaptiles", "source-layer": "place", minzoom: 5,
+        filter: ["==", ["get", "class"], "aboriginal_lands"],
+        layout: { "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]], "text-font": ["Noto Sans Italic"], "text-size": 11.5, "text-max-width": 8 },
+        paint: italic(sat ? "#f3c9a8" : "#8a4422"),
+      },
+      {
+        id: "ref-military-label", type: "symbol", source: "openmaptiles", "source-layer": "aerodrome_label", minzoom: 6,
+        filter: ["==", ["get", "class"], "military"],
+        layout: { "text-field": ["concat", "✈ ", ["coalesce", ["get", "name_en"], ["get", "name"]]], "text-font": ["Noto Sans Regular"], "text-size": 11, "text-max-width": 9 },
+        paint: italic(sat ? "#ffb4ab" : "#9b2c22"),
+      },
+      {
+        id: "ref-airports", type: "symbol", source: "openmaptiles", "source-layer": "aerodrome_label", minzoom: 6,
+        filter: ["match", ["get", "class"], ["international", "public", "regional"], true, false],
+        layout: {
+          "text-field": ["concat", "✈ ", ["coalesce", ["get", "iata"], ["get", "name_en"], ["get", "name"]]],
+          "text-font": ["Noto Sans Regular"], "text-size": 11,
+        },
+        paint: text,
+      },
+    ]
+  }
+
+  // Country and region names appear once the area is wide enough on screen
+  // to hold them; each feature carries the zoom where that happens (mz),
+  // and one layer per whole zoom level shows those that fit from then on.
   private labelLayers(): LayerSpecification[] {
     const L = this.look()
-    return Array.from({ length: 10 }, (_, z) => ({
+    const countries = Array.from({ length: 10 }, (_, z): LayerSpecification => ({
       id: `dfm-labels-${z}`,
-      type: "symbol" as const,
+      type: "symbol",
       source: "dfm-labels",
       minzoom: z,
-      filter: ["==", ["get", "mz"], z] as ExpressionSpecification,
+      filter: ["==", ["get", "mz"], z],
       layout: {
-        "text-field": ["get", "name"] as ExpressionSpecification,
+        "text-field": ["get", "name"],
         "text-font": ["Noto Sans Bold"],
-        "text-size": ["get", "size"] as ExpressionSpecification,
-        "symbol-sort-key": ["-", 0, ["get", "km2"]] as ExpressionSpecification,
+        "text-size": ["get", "size"],
+        "symbol-sort-key": ["-", 0, ["get", "km2"]],
         "text-max-width": 8,
       },
       paint: { "text-color": L.ink, "text-halo-color": L.halo, "text-halo-width": 1.6 },
     }))
+    const regions = Array.from({ length: 12 }, (_, z): LayerSpecification => ({
+      id: `dfm-regions-${z}`,
+      type: "symbol",
+      source: "dfm-regions",
+      minzoom: z,
+      filter: ["==", ["get", "mz"], z],
+      layout: {
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Italic"],
+        "text-size": ["get", "size"],
+        "symbol-sort-key": ["-", 0, ["get", "km2"]],
+        "text-max-width": 7,
+      },
+      paint: { "text-color": ["get", L.regionInk], "text-halo-color": L.halo, "text-halo-width": 1.5 },
+    }))
+    return [...regions, ...countries]
   }
 
   private has(id: string) {
     return !!this.map.getLayer(id)
   }
 
+  private visibleLayers(ids: string[]) {
+    return ids.filter((id) => this.has(id) && this.map.getLayoutProperty(id, "visibility") !== "none")
+  }
+
   private applyLayers() {
     const vis = (ids: string[], on: boolean) => {
       for (const id of ids) if (this.has(id)) this.map.setLayoutProperty(id, "visibility", on ? "visible" : "none")
     }
+    const o = this.options
+    const shading = this.layers.has("shading")
+    const L = this.look()
+
+    // Countries: filled, outlined in their colors, borders only, or hidden.
+    // Without shading, occupied land shows as its occupier's and contested
+    // land as nobody's.
+    const kinds = ["control", "dependency", "lease", "international", ...(shading ? [] : ["occupation"])]
+    const controlled: FilterSpecification = ["all", ["match", ["get", "k"], kinds, true, false], ["!=", ["get", "c"], "none"]]
+    this.map.setFilter("dfm-fill", controlled)
+    vis(["dfm-fill"], o.countries === "fill")
+    vis(["dfm-outline"], o.countries === "outline")
+    vis(["dfm-borders"], o.countries !== "off")
+    const thin = o.countries === "outline"
+    this.map.setPaintProperty("dfm-borders", "line-color", thin ? (this.theme.dark || o.base === "satellite" ? "#0b0f14" : "#ffffff") : L.border)
+    this.map.setPaintProperty("dfm-borders", "line-opacity", thin ? 0.5 : 0.9)
+    vis(["dfm-occ", "dfm-contested"], shading)
+
     vis(Array.from({ length: 10 }, (_, z) => `dfm-labels-${z}`), this.layers.has("labels"))
+    vis(Array.from({ length: 12 }, (_, z) => `dfm-regions-${z}`), this.layers.has("regions"))
     vis(["dfm-claims", "dfm-claims-halo", "dfm-claims-hit"], this.layers.has("claims"))
     vis(["dfm-presence", "dfm-presence-line"], this.layers.has("presence"))
     vis(["dfm-stations"], this.layers.has("stations"))
-    this.map.setTerrain(this.layers.has("relief") ? { source: "dem3d", exaggeration: 1.5 } : null)
+    vis(["dfm-bases"], this.layers.has("bases"))
+    for (const [f, ids] of Object.entries(FEATURE_LAYERS) as [MapFeature, string[]][])
+      vis(f === "cities" ? this.cityLayers : ids, o.features.has(f) && !(f === "roads" && o.base === "streets"))
+    this.map.setTerrain(o.relief3d ? { source: "dem3d", exaggeration: 1.5 } : null)
   }
 
   // --------------------------------------------------------------- data
@@ -439,29 +692,37 @@ export class GlMap implements Renderer {
     const d = this.d
     const withColor = (fs: F[]): FeatureCollection<Geometry> => ({
       type: "FeatureCollection",
-      features: fs.map((f) => ({ ...f, properties: { ...f.properties, col: this.colorOf(f.properties.c), ink: darken(this.colorOf(f.properties.c), 0.15) } })),
+      features: fs.map((f) => ({ ...f, properties: { ...f.properties, col: this.colorOf(f.properties.c), ink: mix(this.colorOf(f.properties.c), "#000000", 0.15) } })),
     })
     const set = (id: string, fc: FeatureCollection<Geometry>) => (this.map.getSource(id) as GeoJSONSource | undefined)?.setData(fc)
+    const point = (coords: [number, number], properties: Record<string, unknown>): Feature<Geometry> => ({ type: "Feature", properties, geometry: { type: "Point", coordinates: coords } })
     set("dfm-control", withColor(d.control))
     set("dfm-borders", { type: "FeatureCollection", features: [{ type: "Feature", properties: {}, geometry: d.borders }] })
     set("dfm-claims", withColor(d.claims))
     set("dfm-presence", withColor(d.presence))
-    set("dfm-stations", {
-      type: "FeatureCollection",
-      features: this.data.stations.map((s) => ({ type: "Feature", properties: { name: s.name, col: this.colorOf(s.op) }, geometry: { type: "Point", coordinates: [s.lon, s.lat] } })),
-    })
+    set("dfm-stations", { type: "FeatureCollection", features: this.data.stations.map((s) => point([s.lon, s.lat], { name: s.name, col: this.colorOf(s.op) })) })
+    set("dfm-bases", { type: "FeatureCollection", features: this.data.abroad.map((b, i) => point([b.lon, b.lat], { i, col: this.colorOf(b.op) })) })
+
+    // The zoom at which a name of this length fits an area of this size:
+    // its width against the area's rough width at zoom 0 (512 px for the
+    // world's 40,075 km).
+    const fitZoom = (name: string, size: number, km2: number, max: number, slack: number) =>
+      Math.max(0, Math.min(max, Math.ceil(Math.log2((name.length * size * 0.56) / (((Math.sqrt(km2) * 512) / 40075) * slack)))))
     const labels: Feature<Geometry>[] = []
     for (const [c, e] of Object.entries(this.data.entities)) {
       if (!e.label || !e.km2) continue
       const name = e.short ?? e.name ?? c
       const size = labelSize(e.km2)
-      // Width of the name against the country's rough width at zoom 0
-      // (512 px for the world's 40,075 km).
-      const span = (Math.sqrt(e.km2) * 512) / 40075
-      const mz = Math.max(0, Math.min(9, Math.ceil(Math.log2((name.length * size * 0.56) / (span * 1.4)))))
-      labels.push({ type: "Feature", properties: { name, size, km2: e.km2, mz }, geometry: { type: "Point", coordinates: e.label } })
+      labels.push(point(e.label, { name, size, km2: e.km2, mz: fitZoom(name, size, e.km2, 9, 1.4) }))
     }
     set("dfm-labels", { type: "FeatureCollection", features: labels })
+    set("dfm-regions", {
+      type: "FeatureCollection",
+      features: regionNames(this.data).map((r) => {
+        const size = Math.max(9, labelSize(r.km2) - 1.5)
+        return point(r.at, { name: r.name, size, km2: r.km2, mz: fitZoom(r.name, size, r.km2, 11, 1.6), dark: mix(r.color, "#000000", 0.35), light: mix(r.color, "#ffffff", 0.5) })
+      }),
+    })
   }
 
   // Stripe images are made on demand, the first time a layer asks.
@@ -481,18 +742,18 @@ export class GlMap implements Renderer {
   // ---------------------------------------------------------- hit tests
 
   private hitAt(e: MapMouseEvent): Hit | null {
-    const q = (layer: string) =>
-      this.has(layer) && this.map.getLayoutProperty(layer, "visibility") !== "none"
-        ? this.map.queryRenderedFeatures(e.point, { layers: [layer] })
-        : []
-    const area = q("dfm-hit")[0]
+    const q = (layers: string[]) => {
+      const on = this.visibleLayers(layers)
+      return on.length ? this.map.queryRenderedFeatures(e.point, { layers: on }) : []
+    }
+    const area = q(["dfm-hit"])[0]
     if (!area) return null
     const unique = (fs: MapGeoJSONFeature[]) => [...new Map(fs.map((f) => [f.properties.a, f])).values()] as unknown as F[]
     return {
       lonLat: [e.lngLat.lng, e.lngLat.lat],
       area: area as unknown as F,
-      claims: unique(q("dfm-claims-hit")),
-      presence: this.layers.has("presence") ? unique(this.map.queryRenderedFeatures(e.point, { layers: ["dfm-presence"] })) : [],
+      claims: unique(q(["dfm-claims-hit"])),
+      presence: unique(q(["dfm-presence"])),
     }
   }
 }

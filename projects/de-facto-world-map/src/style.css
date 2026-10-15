@@ -50,7 +50,15 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(6px);
 }
-.controls { top: 12px; left: 12px; width: 236px; padding: 10px 12px; display: grid; gap: 8px; }
+.controls {
+  top: 12px; left: 12px; width: 248px; padding: 10px 12px; display: grid; gap: 8px;
+  max-height: calc(100% - 24px); overflow: auto; overscroll-behavior: contain;
+}
+#gl-options { display: grid; gap: 8px; }
+#gl-options[hidden], #features-box[hidden] { display: none; }
+fieldset.inline { display: flex; gap: 14px; }
+#features-box summary { cursor: pointer; color: var(--muted); font-size: 12px; }
+#features-box fieldset { margin-top: 4px; }
 .controls header { display: grid; gap: 1px; }
 .controls header strong { font-size: 15px; }
 #asof { color: var(--muted); font-size: 12px; }
@@ -83,6 +91,7 @@ fieldset label[hidden] { display: none; }
 .swatch.none { background: var(--none); }
 .swatch.dashed { background: none; border: 0; border-top: 2px dashed var(--c); height: 0; margin-top: 2px; }
 .swatch.dot { width: 9px; height: 9px; border-radius: 50%; background: #d0342c; margin: 0 4.5px; }
+.swatch.dot.base { background: #3d6fb6; border: 1.5px solid #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35); }
 
 .info {
   top: 12px; right: 12px; width: 320px; max-height: calc(100% - 24px); overflow: auto;

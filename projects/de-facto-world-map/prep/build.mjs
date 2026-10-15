@@ -376,6 +376,26 @@ topology("map-hi.topo.json", [], 2000000)
 const topo = readJson(path.join(OUT, "map.topo.json"))
 const controlOut = topoFeature(topo, topo.objects.control).features
 
+// Region names: occupied, contested and insurgent areas are labeled at the
+// pole of inaccessibility of their largest piece.
+function regionLabel(f) {
+  const polys = f.geometry.type === "MultiPolygon" ? f.geometry.coordinates : [f.geometry.coordinates]
+  let best = null, bestArea = -1, total = 0
+  for (const poly of polys) {
+    const a = turf.area(turf.polygon(poly)) / 1e6
+    total += a
+    if (a > bestArea) { bestArea = a; best = poly }
+  }
+  return { label: polylabel(best, 0.01).map((x) => +x.toFixed(3)), km2: Math.round(total) }
+}
+for (const f of controlOut) {
+  const { a, k } = f.properties
+  if ((k === "occupation" || k === "contested") && areaMeta[a]) Object.assign(areaMeta[a], regionLabel(f))
+}
+for (const f of topoFeature(topo, topo.objects.presence).features) {
+  if (presenceMeta[f.properties.a]) Object.assign(presenceMeta[f.properties.a], regionLabel(f))
+}
+
 // ---------------------------------------------------------------------------
 // Labels: one per controller, at the pole of inaccessibility of its largest
 // polygon, with its total area so the app can decide when it fits.
@@ -507,6 +527,15 @@ for (const f of comnap) {
 }
 for (const b of basesIn.bases) bases.push(b)
 
+// Military bases one country runs on another's soil (curated in
+// bases-abroad.json, compiled from Wikipedia's lists).
+const abroadIn = fs.existsSync(path.join(HERE, "bases-abroad.json")) ? readJson(path.join(HERE, "bases-abroad.json")) : []
+const abroad = []
+for (const b of abroadIn) {
+  if (!entities[b.operator]) { warn(`base abroad ${b.name}: unknown operator ${b.operator}`); continue }
+  abroad.push({ name: b.name, op: b.operator, host: b.host, lon: b.lon, lat: b.lat, type: b.type, status: b.status, note: b.note, source: b.source })
+}
+
 // ---------------------------------------------------------------------------
 // Write the app's data files.
 
@@ -518,7 +547,7 @@ for (const c of controllers) {
     color: final[c], label: labels[c].at.map((x) => +x.toFixed(3)), km2: Math.round(labels[c].total),
   }
 }
-for (const id of new Set([...claimFeatures, ...presenceFeatures].map((f) => f.properties.c).concat(bases.map((b) => b.op)))) {
+for (const id of new Set([...claimFeatures, ...presenceFeatures].map((f) => f.properties.c).concat(bases.map((b) => b.op), abroad.map((b) => b.op)))) {
   if (entitiesOut[id]) continue
   const e = entities[id] ?? {}
   entitiesOut[id] = { name: e.name, formal: e.formal, kind: e.kind, parent: e.parent, recognition: e.recognition, note: e.note, color: colorOf(id) }
@@ -526,6 +555,7 @@ for (const id of new Set([...claimFeatures, ...presenceFeatures].map((f) => f.pr
 fs.writeFileSync(path.join(OUT, "entities.json"), JSON.stringify(entitiesOut))
 fs.writeFileSync(path.join(OUT, "details.json"), JSON.stringify({ areas: areaMeta, claims: claimMeta, presence: presenceMeta }))
 fs.writeFileSync(path.join(OUT, "bases.json"), JSON.stringify(bases))
+fs.writeFileSync(path.join(OUT, "abroad.json"), JSON.stringify(abroad))
 fs.writeFileSync(path.join(OUT, "meta.json"), JSON.stringify({ asOf: areasIn.asOf, built: new Date().toISOString().slice(0, 10) }))
 
 const kb = (f) => (fs.statSync(path.join(OUT, f)).size / 1024).toFixed(0) + " KB"

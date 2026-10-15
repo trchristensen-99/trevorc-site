@@ -24,7 +24,7 @@ import { zoom, zoomIdentity, type D3ZoomEvent, type ZoomBehavior, type ZoomTrans
 import { feature, mesh } from "topojson-client"
 import type { Feature, FeatureCollection, Geometry, MultiLineString } from "geojson"
 import type { GeometryCollection, Topology } from "topojson-specification"
-import type { Entity, FeatureProps, Kind, Station } from "./types"
+import type { BaseAbroad, Details, Entity, FeatureProps, Kind, Station } from "./types"
 
 export type F = Feature<Geometry, FeatureProps>
 type SVGSel<T extends Element> = Selection<T, unknown, null, undefined>
@@ -48,7 +48,8 @@ function clampedMercator(): GeoProjection {
   return geoProjection(raw)
 }
 
-export type LayerId = "labels" | "claims" | "presence" | "stations" | "graticule" | "relief"
+// Layers both renderers share; the textured maps add the MapFeature ones.
+export type LayerId = "labels" | "regions" | "shading" | "claims" | "presence" | "stations" | "bases" | "graticule"
 
 export interface Theme {
   dark: boolean
@@ -88,7 +89,30 @@ export type MapTopology = Topology<{
 export interface MapData {
   topo: MapTopology
   entities: Record<string, Entity>
+  details: Details
   stations: Station[]
+  abroad: BaseAbroad[]
+}
+
+// A name drawn over an occupied, contested or insurgent region.
+export interface RegionName {
+  id: string
+  name: string
+  at: [number, number]
+  km2: number
+  color: string
+}
+
+export function regionNames(data: MapData): RegionName[] {
+  const out: RegionName[] = []
+  const color = (c: string) => data.entities[c]?.color ?? "#6b7178"
+  for (const [id, d] of Object.entries(data.details.areas))
+    if (d.label && d.km2) out.push({ id, name: d.name, at: d.label, km2: d.km2, color: d.k === "contested" ? "#6b7178" : color(d.c) })
+  for (const [id, d] of Object.entries(data.details.presence)) {
+    const e = data.entities[d.group]
+    if (d.label && d.km2) out.push({ id, name: e?.short ?? e?.name ?? d.group, at: d.label, km2: d.km2, color: color(d.group) })
+  }
+  return out
 }
 
 // What main.ts needs from a map renderer: this SVG one for the atlas
@@ -97,6 +121,7 @@ export interface Renderer {
   onHover: (hit: Hit | null, at: [number, number]) => void
   onSelect: (hit: Hit | null) => void
   onStation: (s: Station) => void
+  onBase: (b: BaseAbroad) => void
   onNeedDetail: () => void
   onViewChange: () => void
   readonly isGlobe: boolean
@@ -159,6 +184,7 @@ export class WorldMap implements Renderer {
   private lo: Detail
   private hi: Detail | null = null
   private labelFeature = new Map<string, F>()
+  private regions: RegionName[]
   private projection!: GeoProjection
   private path!: GeoPath
   private projectionId: ProjectionId = "winkel"
@@ -171,12 +197,13 @@ export class WorldMap implements Renderer {
   private frame = 0
   // Label sizes are tuned for a desktop-width map; shrink them on small maps.
   private labelScale = 1
-  private layers = new Set<LayerId>(["labels", "claims", "presence", "stations"])
+  private layers = new Set<LayerId>(["labels", "regions", "shading", "claims", "presence", "stations", "bases"])
   theme: Theme = LIGHT
 
   onHover: (hit: Hit | null, at: [number, number]) => void = () => {}
   onSelect: (hit: Hit | null) => void = () => {}
   onStation: (s: Station) => void = () => {}
+  onBase: (b: BaseAbroad) => void = () => {}
   onViewChange: () => void = () => {}
 
   constructor(
@@ -196,11 +223,12 @@ export class WorldMap implements Renderer {
       }
     }
 
+    this.regions = regionNames(data)
     this.svg = select(el)
     this.svg.selectAll("*").remove()
     this.defs = this.svg.append("defs")
     this.root = this.svg.append("g")
-    for (const g of ["ocean", "graticule", "control", "presence", "borders", "claims", "stations", "labels"])
+    for (const g of ["ocean", "graticule", "control", "presence", "borders", "claims", "stations", "bases", "labels"])
       this.root.append("g").attr("data-layer", g)
 
     this.zoomer = zoom<SVGSVGElement, unknown>()
@@ -215,7 +243,7 @@ export class WorldMap implements Renderer {
     })
     this.svg.on("pointerleave", () => this.onHover(null, [0, 0]))
     this.svg.on("click", (e: MouseEvent) => {
-      if ((e.target as Element).closest("[data-layer=stations]")) return
+      if ((e.target as Element).closest("[data-layer=stations], [data-layer=bases]")) return
       this.onSelect(this.hitAt(pointer(e, el) as [number, number]))
     })
   }
@@ -421,6 +449,12 @@ export class WorldMap implements Renderer {
 
   private fillFor(c: string, k: Kind | undefined): string {
     const t = this.theme
+    // Without shading, occupiers show as plain control and contested
+    // ground as nobody's.
+    if (!this.layers.has("shading")) {
+      if (k === "contested") return t.uncontrolled
+      if (k === "occupation") return this.colorOf(c)
+    }
     if (k === "uncontrolled" || c === "none") return k === "contested" ? this.pattern("contested", t.uncontrolled, t.contested, 1.2, 5) : t.uncontrolled
     if (k === "contested") return this.pattern(`contested-${c}`, t.uncontrolled, t.contested, 1.2, 5)
     const color = this.colorOf(c)
@@ -478,6 +512,7 @@ export class WorldMap implements Renderer {
       .attr("vector-effect", "non-scaling-stroke").attr("pointer-events", "none")
 
     this.renderStations()
+    this.renderBases()
     this.renderLabels()
     this.restyleForZoom()
   }
@@ -501,13 +536,28 @@ export class WorldMap implements Renderer {
       .text((d) => `${d.name} (${this.data.entities[d.op]?.name ?? d.op})`)
   }
 
+  private renderBases() {
+    const shown = this.layers.has("bases") ? this.data.abroad.filter((b) => this.visible([b.lon, b.lat])) : []
+    const g = this.root.select<SVGGElement>("[data-layer=bases]")
+    g.selectAll<SVGRectElement, BaseAbroad>("rect").data(shown, (d) => d.name + d.op).join("rect")
+      .attr("transform", (d) => {
+        const p = this.projection([d.lon, d.lat])
+        return p ? `translate(${p[0]},${p[1]}) rotate(45)` : "translate(-999,-999)"
+      })
+      .attr("fill", (d) => this.colorOf(d.op)).attr("stroke", this.theme.labelHalo).attr("stroke-width", 0.8)
+      .attr("vector-effect", "non-scaling-stroke").attr("cursor", "pointer")
+      .on("click", (e: MouseEvent, d) => { e.stopPropagation(); this.onBase(d) })
+      .selectAll("title").data((d) => [d]).join("title")
+      .text((d) => `${d.name} (${this.data.entities[d.op]?.name ?? d.op})`)
+  }
+
   private renderLabels() {
     const t = this.theme
     const items = this.layers.has("labels")
       ? Object.entries(this.data.entities).filter(([, e]) => e.label && (e.km2 ?? 0) > 0 && this.visible(e.label))
       : []
     this.root.select<SVGGElement>("[data-layer=labels]")
-      .selectAll<SVGTextElement, [string, Entity]>("text").data(items, (d) => d[0]).join("text")
+      .selectAll<SVGTextElement, [string, Entity]>("text.country").data(items, (d) => d[0]).join("text").attr("class", "country")
       .attr("text-anchor", "middle").attr("dominant-baseline", "central")
       .attr("font-family", "'Avenir Next', 'Segoe UI', system-ui, sans-serif")
       .attr("font-weight", 600).attr("fill", t.labelInk)
@@ -523,6 +573,30 @@ export class WorldMap implements Renderer {
       .attr("y", (d) => this.projection(d[1].label!)?.[1] ?? -999)
       .attr("data-km2", (d) => d[1].km2 ?? 0)
       .text((d) => d[1].short ?? d[1].name ?? d[0])
+
+    // Region names, smaller and in italics, in the region's own color.
+    const regions = this.layers.has("regions") ? this.regions.filter((r) => this.visible(r.at)) : []
+    this.root.select<SVGGElement>("[data-layer=labels]")
+      .selectAll<SVGTextElement, RegionName>("text.region").data(regions, (d) => d.id).join("text").attr("class", "region")
+      .attr("text-anchor", "middle").attr("dominant-baseline", "central")
+      .attr("font-family", "'Avenir Next', 'Segoe UI', system-ui, sans-serif")
+      .attr("font-style", "italic").attr("font-weight", 600)
+      .attr("fill", (d) => (t.dark ? mix(d.color, "#ffffff", 0.45) : darken(d.color, 0.35)))
+      .attr("stroke", t.labelHalo).attr("stroke-width", 2.5).attr("stroke-linejoin", "round")
+      .attr("paint-order", "stroke").attr("pointer-events", "none")
+      .attr("data-base", (d) => Math.max(8, labelSize(d.km2) - 1.5) * this.labelScale)
+      .attr("data-span", (d) => Math.sqrt(d.km2) * this.kmToPx(d.at) * 1.6)
+      .attr("x", (d) => this.projection(d.at)?.[0] ?? -999)
+      .attr("y", (d) => this.projection(d.at)?.[1] ?? -999)
+      .attr("data-km2", (d) => d.km2)
+      .text((d) => d.name)
+  }
+
+  // Screen pixels per kilometre at a point, at zoom 1.
+  private kmToPx(at: [number, number]) {
+    const a = this.projection(at)
+    const b = this.projection([at[0], at[1] + 0.09])
+    return a && b ? Math.hypot(a[0] - b[0], a[1] - b[1]) / 10 : 0
   }
 
   // Zoom-dependent styling for flat maps: keep text and stripe widths
@@ -530,7 +604,9 @@ export class WorldMap implements Renderer {
   private restyleForZoom() {
     const k = this.isGlobe ? 1 : this.transform.k
     const texts = this.root.select("[data-layer=labels]").selectAll<SVGTextElement, unknown>("text").nodes()
-    texts.sort((a, b) => +(b.getAttribute("data-km2") ?? 0) - +(a.getAttribute("data-km2") ?? 0))
+    // Country names claim their space before region names, larger first.
+    const rank = (t: Element) => (t.classList.contains("region") ? 1e12 : 0) - +(t.getAttribute("data-km2") ?? 0)
+    texts.sort((a, b) => rank(a) - rank(b))
     // Boxes in screen pixels; a label is shown only if it fits inside its
     // country and doesn't overlap a larger country's label.
     const placed: [number, number, number, number][] = []
@@ -552,6 +628,8 @@ export class WorldMap implements Renderer {
       t.setAttribute("display", show ? "inline" : "none")
     }
     this.root.select("[data-layer=stations]").selectAll("circle").attr("r", 3.2 / k)
+    this.root.select("[data-layer=bases]").selectAll("rect")
+      .attr("width", 5.5 / k).attr("height", 5.5 / k).attr("x", -2.75 / k).attr("y", -2.75 / k)
     this.defs.selectAll<SVGPatternElement, unknown>("pattern").each(function () {
       const gap = +(this.getAttribute("data-gap") ?? 5)
       this.setAttribute("patternTransform", `rotate(45) scale(${1 / k})`)

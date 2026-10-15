@@ -29,7 +29,14 @@ export type Kind =
   | "uncontrolled"
   | "international"
 
-export interface AreaDetail {
+// Where a region's own name goes (occupied, contested and insurgent
+// areas), and its size, which sets the label's size.
+interface RegionLabel {
+  label?: [number, number]
+  km2?: number
+}
+
+export interface AreaDetail extends RegionLabel {
   name: string
   c: string
   k: Kind
@@ -46,7 +53,7 @@ export interface ClaimDetail {
   sources?: Source[]
 }
 
-export interface PresenceDetail {
+export interface PresenceDetail extends RegionLabel {
   name: string
   group: string
   asOf?: string
@@ -68,6 +75,19 @@ export interface Station {
   lat: number
   year?: number
   season?: string
+}
+
+// A military base one country runs on another's soil.
+export interface BaseAbroad {
+  name: string
+  op: string
+  host: string
+  lon: number
+  lat: number
+  type?: string
+  status?: string
+  note?: string
+  source?: string
 }
 
 export interface Meta {

@@ -20,9 +20,17 @@
           <strong>De Facto World Map</strong>
           <span id="asof"></span>
         </header>
-        <label class="row">Base map <select id="base"></select></label>
         <label class="row">Projection <select id="projection"></select></label>
-        <fieldset id="layers"><legend>Layers</legend></fieldset>
+        <div id="gl-options" hidden>
+          <label class="row">Base map <select id="base"></select></label>
+          <label class="row">Countries <select id="countries"></select></label>
+          <fieldset id="gl-checks" class="inline"></fieldset>
+        </div>
+        <fieldset id="layers"><legend>De facto layers</legend></fieldset>
+        <details id="features-box" hidden>
+          <summary>Map features</summary>
+          <fieldset id="features"></fieldset>
+        </details>
         <div class="row actions">
           <button id="export" type="button">Download SVG</button>
           <a id="elsewhere"></a>
@@ -46,6 +54,7 @@
           <li><span class="swatch dashed" style="--c: #c8434f"></span>Claimed, not controlled</li>
           <li><span class="swatch hatch" style="--c: #8a4a7a"></span>Insurgent presence</li>
           <li><span class="swatch dot"></span>Antarctic station</li>
+          <li><span class="swatch dot base"></span>Military base abroad, in the operator's color</li>
         </ul>
       </details>
 

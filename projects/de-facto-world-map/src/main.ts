@@ -1,8 +1,19 @@
 import "./style.css"
 import type { Topology } from "topojson-specification"
-import { BASES, GL_PROJECTIONS, createGlMap, type BaseId } from "./gl"
+import {
+  BASES,
+  COUNTRY_STYLES,
+  GL_PROJECTIONS,
+  GlMap,
+  MAP_FEATURES,
+  createGlMap,
+  type BaseId,
+  type CountryStyle,
+  type GlOptions,
+  type MapFeature,
+} from "./gl"
 import { DARK, LIGHT, PROJECTIONS, WorldMap, type Hit, type LayerId, type MapData, type MapTopology, type ProjectionId, type Renderer } from "./map"
-import type { Details, Entity, Kind, Meta, Source, Station } from "./types"
+import type { BaseAbroad, Details, Entity, Kind, Meta, Source, Station } from "./types"
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
 
@@ -22,54 +33,85 @@ const ENTITY_KIND_LABEL: Record<string, string> = {
   "armed group": "Armed group administration",
   international: "International body",
 }
-// "atlas" is the flat-color SVG map; the others are MapLibre base maps.
-type Base = "atlas" | BaseId
-const BASE_LABEL: Record<Base, string> = { atlas: "Atlas", ...Object.fromEntries(Object.entries(BASES).map(([k, v]) => [k, v.label])) } as Record<Base, string>
-// `only` limits a layer to the atlas or to the textured base maps.
-const LAYERS: { id: LayerId; label: string; on: boolean; only?: "atlas" | "gl" }[] = [
-  { id: "labels", label: "Names", on: true },
-  { id: "claims", label: "Claims", on: true },
+// `atlas` marks layers only the flat-color atlas projections draw.
+const LAYERS: { id: LayerId; label: string; on: boolean; atlas?: boolean }[] = [
+  { id: "labels", label: "Country names", on: true },
+  { id: "regions", label: "Region names", on: true },
+  { id: "shading", label: "Occupied and contested shading", on: true },
   { id: "presence", label: "Insurgent presence", on: true },
+  { id: "claims", label: "Claims", on: true },
+  { id: "bases", label: "Military bases abroad", on: false },
   { id: "stations", label: "Antarctic stations", on: true },
-  { id: "graticule", label: "Graticule", on: false, only: "atlas" },
-  { id: "relief", label: "3D terrain", on: false, only: "gl" },
+  { id: "graticule", label: "Graticule", on: false, atlas: true },
 ]
+const DEFAULT_FEATURES: MapFeature[] = ["cities"]
+// The country style each base starts with: imagery reads best with
+// borders alone.
+const BASE_COUNTRIES: Record<BaseId, CountryStyle> = { plain: "fill", satellite: "lines", streets: "fill" }
 
-async function load(): Promise<{ data: MapData; details: Details; meta: Meta }> {
+const isGl = (p: ProjectionId) => GL_PROJECTIONS.includes(p)
+
+async function load(): Promise<{ data: MapData; meta: Meta }> {
   const get = (f: string) => fetch(`./data/${f}`).then((r) => {
     if (!r.ok) throw new Error(`${r.status} loading ${f}`)
     return r.json()
   })
-  const [topo, entities, details, stations, meta] = await Promise.all([
+  const [topo, entities, details, stations, abroad, meta] = await Promise.all([
     get("map.topo.json") as Promise<Topology>,
     get("entities.json") as Promise<Record<string, Entity>>,
     get("details.json") as Promise<Details>,
     get("bases.json") as Promise<Station[]>,
+    get("abroad.json").catch(() => []) as Promise<BaseAbroad[]>,
     get("meta.json") as Promise<Meta>,
   ])
-  return { data: { topo: topo as MapData["topo"], entities, stations }, details, meta }
+  return { data: { topo: topo as MapData["topo"], entities, details, stations, abroad }, meta }
 }
 
 // ------------------------------------------------------------ URL state
 
-function readHash() {
+interface State {
+  projection: ProjectionId
+  gl: GlOptions
+  layers: Set<string>
+  focus: [number, number, number] | null
+}
+
+function readHash(): State {
   const h = new URLSearchParams(location.hash.slice(1))
-  const b = h.get("b")
   const p = h.get("p")
-  const layers = h.get("l")
+  let b = h.get("b")
   const z = h.get("z")?.split(",").map(Number)
+  // Links from before the layer options had a separate terrain base.
+  const oldTerrain = b === "terrain"
+  if (oldTerrain) b = "plain"
+  const base = (b && b in BASES ? b : "plain") as BaseId
+  const c = h.get("c")
+  const layers = h.get("l")
+  const features = h.get("f")
   return {
-    base: (b && b in BASES ? b : "atlas") as Base,
     projection: (p && p in PROJECTIONS ? p : "winkel") as ProjectionId,
-    layers: layers === null ? null : new Set(layers.split(",").filter(Boolean)),
+    gl: {
+      base,
+      terrain: oldTerrain || h.get("t") === "1",
+      relief3d: h.get("d") === "1",
+      countries: (c && c in COUNTRY_STYLES ? c : BASE_COUNTRIES[base]) as CountryStyle,
+      features: new Set((features === null ? DEFAULT_FEATURES : features.split(",")).filter((f) => f in MAP_FEATURES) as MapFeature[]),
+    },
+    layers: new Set(layers === null ? LAYERS.filter((l) => l.on).map((l) => l.id) : layers.split(",").filter(Boolean)),
     // #z=lon,lat,zoom centres the map, so posts can link to a region.
-    focus: z && z.length === 3 && z.every(Number.isFinite) ? z : null,
+    focus: z && z.length === 3 && z.every(Number.isFinite) ? (z as [number, number, number]) : null,
   }
 }
-function writeHash(base: Base, projection: ProjectionId, layers: Set<string>, view?: [number, number, number] | null) {
-  const h = new URLSearchParams(base === "atlas" ? {} : { b: base })
-  h.set("p", projection)
-  h.set("l", [...layers].join(","))
+function writeHash(s: State, view?: [number, number, number] | null) {
+  const h = new URLSearchParams({ p: s.projection })
+  if (isGl(s.projection)) {
+    if (s.gl.base !== "plain") h.set("b", s.gl.base)
+    if (s.gl.countries !== BASE_COUNTRIES[s.gl.base]) h.set("c", s.gl.countries)
+    if (s.gl.terrain) h.set("t", "1")
+    if (s.gl.relief3d) h.set("d", "1")
+    h.set("f", [...s.gl.features].join(","))
+  }
+  h.set("l", [...s.layers].join(","))
   if (view && view[2] > 1.05) h.set("z", view.map((x, i) => x.toFixed(i < 2 ? 2 : 1)).join(","))
   history.replaceState(null, "", `#${h}`)
 }
@@ -98,7 +140,19 @@ function sourcesHTML(sources: Source[] | undefined) {
   return `<h3>Sources</h3><ul class="sources">${items.join("")}</ul>`
 }
 
-function main(data: MapData, details: Details, meta: Meta) {
+function checkbox(box: HTMLElement, label: string, checked: boolean, onChange: (on: boolean) => void) {
+  const row = document.createElement("label")
+  const input = document.createElement("input")
+  input.type = "checkbox"
+  input.checked = checked
+  input.addEventListener("change", () => onChange(input.checked))
+  row.append(input, ` ${label}`)
+  box.append(row)
+  return row
+}
+
+function main(data: MapData, meta: Meta) {
+  const { details } = data
   const app = $<HTMLElement>("#app")
   const svg = document.querySelector<SVGSVGElement>("#map")!
   const glBox = $<HTMLDivElement>("#gl")
@@ -109,7 +163,7 @@ function main(data: MapData, details: Details, meta: Meta) {
   let generation = 0
 
   // The full-detail file is several times larger, so it loads only once
-  // someone zooms in (or picks a textured base map).
+  // someone zooms in (or opens the globe or Mercator view).
   let hiTopo: MapTopology | null = null
   let hiRequested = false
   const needDetail = () => {
@@ -130,50 +184,82 @@ function main(data: MapData, details: Details, meta: Meta) {
   const ent = (c: string): Entity | undefined => data.entities[c]
   const nameOf = (c: string) => (c === "none" ? "No controlling state" : ent(c)?.name ?? c)
 
-  // Controls
+  // ---------------------------------------------------------- controls
   const state = readHash()
-  let base: Base = state.base
-  const baseSel = $<HTMLSelectElement>("#base")
-  for (const b of Object.keys(BASE_LABEL) as Base[]) baseSel.add(new Option(BASE_LABEL[b], b))
-  baseSel.value = base
-  const projSel = $<HTMLSelectElement>("#projection")
-  const fillProjections = () => {
-    const allowed = base === "atlas" ? (Object.keys(PROJECTIONS) as ProjectionId[]) : GL_PROJECTIONS
-    const current = projSel.value as ProjectionId
-    projSel.replaceChildren(...allowed.map((id) => new Option(id === "mercator" && base !== "atlas" ? "Flat (Mercator)" : PROJECTIONS[id].label, id)))
-    projSel.value = allowed.includes(current) ? current : allowed[0]
-  }
-  projSel.add(new Option("", state.projection))
-  projSel.value = state.projection
-  fillProjections()
-
-  const active = new Set<string>(state.layers ?? LAYERS.filter((l) => l.on).map((l) => l.id))
-  const layerBox = $<HTMLElement>("#layers")
-  const layerRows = new Map<LayerId, HTMLLabelElement>()
-  for (const l of LAYERS) {
-    const label = document.createElement("label")
-    const box = document.createElement("input")
-    box.type = "checkbox"
-    box.checked = active.has(l.id)
-    box.addEventListener("change", () => {
-      if (box.checked) active.add(l.id)
-      else active.delete(l.id)
-      map.setLayer(l.id, box.checked)
-      saveView()
-    })
-    label.append(box, ` ${l.label}`)
-    layerBox.append(label)
-    layerRows.set(l.id, label)
-  }
-  const showLayerRows = () => {
-    for (const l of LAYERS) layerRows.get(l.id)!.hidden = !!l.only && l.only !== (base === "atlas" ? "atlas" : "gl")
-  }
-
-  const saveView = () => writeHash(base, projSel.value as ProjectionId, active, map?.view())
+  const saveView = () => writeHash(state, map?.view())
   let pending = 0
   const saveSoon = () => {
     clearTimeout(pending)
     pending = window.setTimeout(saveView, 300)
+  }
+  const pushGl = () => {
+    if (map instanceof GlMap) map.setOptions(state.gl)
+    saveView()
+  }
+
+  const projSel = $<HTMLSelectElement>("#projection")
+  for (const id of [...GL_PROJECTIONS, ...(Object.keys(PROJECTIONS) as ProjectionId[]).filter((p) => !isGl(p))])
+    projSel.add(new Option(PROJECTIONS[id].label, id))
+  projSel.value = state.projection
+
+  const baseSel = $<HTMLSelectElement>("#base")
+  for (const [id, label] of Object.entries(BASES)) baseSel.add(new Option(label, id))
+  baseSel.value = state.gl.base
+  const countriesSel = $<HTMLSelectElement>("#countries")
+  for (const [id, label] of Object.entries(COUNTRY_STYLES)) countriesSel.add(new Option(label, id))
+  countriesSel.value = state.gl.countries
+  baseSel.addEventListener("change", () => {
+    const prev = state.gl.base
+    state.gl.base = baseSel.value as BaseId
+    // Follow the new base's usual country style unless it was changed.
+    if (state.gl.countries === BASE_COUNTRIES[prev]) {
+      state.gl.countries = BASE_COUNTRIES[state.gl.base]
+      countriesSel.value = state.gl.countries
+    }
+    pushGl()
+  })
+  countriesSel.addEventListener("change", () => {
+    state.gl.countries = countriesSel.value as CountryStyle
+    pushGl()
+  })
+  const glChecks = $<HTMLElement>("#gl-checks")
+  checkbox(glChecks, "Terrain", state.gl.terrain, (on) => {
+    state.gl.terrain = on
+    pushGl()
+  })
+  checkbox(glChecks, "3D", state.gl.relief3d, (on) => {
+    state.gl.relief3d = on
+    pushGl()
+  })
+
+  const layerBox = $<HTMLElement>("#layers")
+  const layerRows = new Map<LayerId, HTMLLabelElement>()
+  for (const l of LAYERS)
+    layerRows.set(l.id, checkbox(layerBox, l.label, state.layers.has(l.id), (on) => {
+      if (on) state.layers.add(l.id)
+      else state.layers.delete(l.id)
+      map.setLayer(l.id, on)
+      saveView()
+    }))
+  const featureBox = $<HTMLElement>("#features")
+  for (const [id, label] of Object.entries(MAP_FEATURES) as [MapFeature, string][])
+    checkbox(featureBox, label, state.gl.features.has(id), (on) => {
+      if (on) state.gl.features.add(id)
+      else state.gl.features.delete(id)
+      pushGl()
+    })
+
+  // The globe and Mercator views take base maps and map features; the
+  // other projections are the flat-color atlas.
+  const showControls = () => {
+    const gl = map instanceof GlMap
+    $("#gl-options").hidden = !gl
+    $("#features-box").hidden = !gl
+    for (const l of LAYERS) layerRows.get(l.id)!.hidden = (!!l.atlas && gl) || (l.id === "bases" && !data.abroad.length)
+    $("#hint").textContent = gl
+      ? "Drag to rotate, scroll to zoom, right-drag to tilt."
+      : `Drag to pan, scroll to zoom.${isGl(state.projection) ? "" : " Satellite, terrain and map features are on the Globe and Mercator projections."}`
+    $<HTMLButtonElement>("#export").textContent = gl ? "Download PNG" : "Download SVG"
   }
 
   $("#asof").textContent = `Control as of ${new Date(meta.asOf + "-01T12:00:00").toLocaleDateString("en-US", { month: "long", year: "numeric" })}`
@@ -199,7 +285,7 @@ function main(data: MapData, details: Details, meta: Meta) {
   }
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme)
 
-  // Hover: a small name tag that follows the pointer.
+  // ------------------------------------------------------------- hover
   const tip = $<HTMLDivElement>("#tooltip")
   const onHover = (hit: Hit | null, at: [number, number]) => {
     if (!hit || matchMedia("(hover: none)").matches) {
@@ -207,14 +293,17 @@ function main(data: MapData, details: Details, meta: Meta) {
       return
     }
     const { c, k } = hit.area.properties
-    tip.textContent = nameOf(c) + (k && k !== "control" && k !== "dependency" ? ` · ${KIND_LABEL[k].toLowerCase()}` : "")
+    const presence = [...new Set(hit.presence.map((f) => nameOf(f.properties.c)))]
+    tip.textContent =
+      nameOf(c) + (k && k !== "control" && k !== "dependency" ? ` · ${KIND_LABEL[k].toLowerCase()}` : "") +
+      (presence.length ? ` · ${presence.join(", ")} active` : "")
     tip.hidden = false
     const r = app.getBoundingClientRect()
     tip.style.left = `${Math.min(r.width - tip.offsetWidth - 8, at[0] + 14)}px`
     tip.style.top = `${at[1] + 14}px`
   }
 
-  // Click: full details.
+  // ------------------------------------------------------------- click
   const info = $<HTMLElement>("#info")
   const show = (html: string) => {
     info.innerHTML = `<button class="close" aria-label="Close">×</button>${html}`
@@ -255,83 +344,85 @@ function main(data: MapData, details: Details, meta: Meta) {
         sourcesHTML(d?.sources ?? [{ title: "Natural Earth 1:10m Admin 0 countries (v5.1.1)", url: "https://www.naturalearthdata.com/" }]),
     )
   }
+  const where = (lon: number, lat: number) =>
+    `${Math.abs(lat).toFixed(2)}° ${lat < 0 ? "S" : "N"}, ${Math.abs(lon).toFixed(2)}° ${lon < 0 ? "W" : "E"}`
   const onStation = (s: Station) => {
     show(
       `<h2>${esc(s.name)}</h2><dl><dt>Operated by</dt><dd>${esc(nameOf(s.op))}</dd>` +
         (s.year ? `<dt>Established</dt><dd>${s.year}</dd>` : "") +
-        `<dt>Location</dt><dd>${Math.abs(s.lat).toFixed(2)}° ${s.lat < 0 ? "S" : "N"}, ${Math.abs(s.lon).toFixed(2)}° ${s.lon < 0 ? "W" : "E"}</dd></dl>` +
+        `<dt>Location</dt><dd>${where(s.lon, s.lat)}</dd></dl>` +
         sourcesHTML([{ title: "COMNAP Antarctic Facilities", url: "https://github.com/PolarGeospatialCenter/comnap-antarctic-facilities" }]),
     )
   }
-
-  const hint = () => {
-    $("#hint").textContent = map.isGlobe
-      ? base === "atlas" ? "Drag to rotate, scroll to zoom." : "Drag to rotate, scroll to zoom, right-drag to tilt."
-      : "Drag to pan, scroll to zoom."
-    $<HTMLButtonElement>("#export").textContent = base === "atlas" ? "Download SVG" : "Download PNG"
+  const onBase = (b: BaseAbroad) => {
+    show(
+      `<h2>${esc(b.name)}</h2><dl><dt>Operated by</dt><dd>${esc(nameOf(b.op))}</dd>` +
+        `<dt>Host</dt><dd>${esc(nameOf(b.host))}</dd>` +
+        (b.type ? `<dt>Type</dt><dd>${esc(b.type[0].toUpperCase() + b.type.slice(1))}</dd>` : "") +
+        (b.status && b.status !== "active" ? `<dt>Status</dt><dd>${esc(b.status)}</dd>` : "") +
+        `<dt>Location</dt><dd>${where(b.lon, b.lat)}</dd></dl>` +
+        (b.note ? `<p>${esc(b.note)}</p>` : "") +
+        sourcesHTML(b.source ? [{ title: b.source.includes("wikipedia.org") ? "Wikipedia" : b.source, url: b.source }] : []),
+    )
   }
 
-  // Build the renderer for the current base map, carrying the view over.
+  // ------------------------------------------------------------ mount
+  // Build the renderer for the current projection, carrying the view over.
   const mount = async (view: [number, number, number] | null) => {
     const gen = ++generation
     let next: Renderer
-    if (base === "atlas") {
+    if (!isGl(state.projection)) {
       svg.style.display = ""
       glBox.hidden = true
       next = new WorldMap(svg, data)
     } else {
-      status.textContent = `Loading ${BASE_LABEL[base].toLowerCase()} map…`
+      status.textContent = "Loading the map…"
       try {
         glBox.hidden = false
-        next = await createGlMap(glBox, data, base, theme())
+        next = await createGlMap(glBox, data, state.gl, theme())
       } catch (err) {
+        // Without WebGL, the atlas draws its own globe and Mercator.
         console.error(err)
-        if (gen !== generation) return
-        status.textContent = ""
         glBox.hidden = true
-        alert(`The ${BASE_LABEL[base].toLowerCase()} map couldn't load (${(err as Error).message}). Showing the atlas instead.`)
-        base = "atlas"
-        baseSel.value = base
-        fillProjections()
-        return mount(view)
+        svg.style.display = ""
+        next = new WorldMap(svg, data)
       }
       if (gen !== generation) return next.destroy()
       status.textContent = ""
-      svg.style.display = "none"
+      if (next instanceof GlMap) svg.style.display = "none"
     }
     map?.destroy()
     map = next
     map.onHover = onHover
     map.onSelect = onSelect
     map.onStation = onStation
+    map.onBase = onBase
     map.onNeedDetail = needDetail
     map.onViewChange = saveSoon
-    for (const l of LAYERS) map.setLayer(l.id, active.has(l.id))
+    for (const l of LAYERS) map.setLayer(l.id, state.layers.has(l.id))
     map.setTheme(theme())
-    map.setProjection(projSel.value as ProjectionId)
+    map.setProjection(state.projection)
     if (hiTopo) map.setDetail(hiTopo)
     if (view) map.focus([view[0], view[1]], view[2])
-    else if (base !== "atlas") map.focus([15, 20], 1)
-    showLayerRows()
-    hint()
+    else if (map instanceof GlMap) map.focus([15, 20], 1)
+    showControls()
     saveView()
   }
 
-  baseSel.addEventListener("change", () => {
+  projSel.addEventListener("change", () => {
     const view = map.view()
-    const fromAtlas = base === "atlas"
-    base = baseSel.value as Base
-    // Textured maps open on the globe unless the flat map was already Mercator.
-    if (fromAtlas && base !== "atlas" && projSel.value !== "mercator") projSel.value = "globe"
-    fillProjections()
+    const next = projSel.value as ProjectionId
+    const sameRenderer = isGl(next) === map instanceof GlMap
+    state.projection = next
+    if (sameRenderer) {
+      map.setProjection(next)
+      showControls()
+      saveView()
+      return
+    }
     info.hidden = true
     tip.hidden = true
     void mount(view && view[2] > 1.05 ? view : null)
-  })
-  projSel.addEventListener("change", () => {
-    map.setProjection(projSel.value as ProjectionId)
-    hint()
-    saveView()
   })
 
   // Export what's on screen.
@@ -339,7 +430,7 @@ function main(data: MapData, details: Details, meta: Meta) {
     const { blob, ext } = await map.exportImage(`De facto world map, ${meta.asOf}`)
     const a = document.createElement("a")
     a.href = URL.createObjectURL(blob)
-    a.download = `de-facto-world-map-${meta.asOf}-${base === "atlas" ? projSel.value : base}.${ext}`
+    a.download = `de-facto-world-map-${meta.asOf}-${state.projection}${map instanceof GlMap ? `-${state.gl.base}` : ""}.${ext}`
     a.click()
     setTimeout(() => URL.revokeObjectURL(a.href), 1000)
   })
@@ -351,13 +442,13 @@ function main(data: MapData, details: Details, meta: Meta) {
   $("#toggle-controls").addEventListener("click", () => document.body.classList.toggle("controls-open"))
 
   new ResizeObserver(() => map?.resize()).observe(app)
-  return mount(state.focus ? [state.focus[0], state.focus[1], state.focus[2]] : null).then(() => applyTheme())
+  return mount(state.focus).then(() => applyTheme())
 }
 
 load()
-  .then(async ({ data, details, meta }) => {
+  .then(async ({ data, meta }) => {
     $("#status").textContent = ""
-    await main(data, details, meta)
+    await main(data, meta)
   })
   .catch((err) => {
     $("#status").textContent = `Couldn't load the map data (${err.message}).`
