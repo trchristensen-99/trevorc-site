@@ -17,6 +17,10 @@ import type {
   StyleSpecification,
 } from "maplibre-gl"
 import type { Feature, FeatureCollection, Geometry } from "geojson"
+import { GeoJSONVT, type GeoJSONVTTile } from "@maplibre/geojson-vt"
+import { fromGeojsonVt } from "@maplibre/vt-pbf"
+import { feature as topoFeature } from "topojson-client"
+import type { GeometryCollection, Topology } from "topojson-specification"
 import {
   detail,
   labelSize,
@@ -31,7 +35,7 @@ import {
   type Renderer,
   type Theme,
 } from "./map"
-import type { BaseAbroad, Station } from "./types"
+import type { BaseAbroad, FeatureProps, Station } from "./types"
 
 type MapLibre = typeof import("maplibre-gl")
 
@@ -83,7 +87,7 @@ const dem = (): SourceSpecification => ({
     `<a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" target="_blank">Terrain Tiles</a> ` +
     `(Mapzen; SRTM, GMTED2010, ETOPO1 and others)`,
 })
-const DATA_CREDIT = `De facto borders: <a href="/projects/de-facto-world-map" target="_top">trevorc.com</a>`
+const DATA_CREDIT = `De facto borders: <a href="/projects/de-facto-world-map" target="_top">trevorc.com</a>, from © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors`
 const OSM_CREDIT = "OpenFreeMap © OpenMapTiles, data © OpenStreetMap contributors"
 
 // OpenFreeMap's styles supply the street map, place names and fonts.
@@ -108,6 +112,61 @@ function loadLibrary(): Promise<MapLibre> {
     library = import(/* @vite-ignore */ new URL("maplibre-gl.mjs", base).href) as Promise<MapLibre>
   }
   return library
+}
+
+// --------------------------------------------------------- full detail
+
+// From this zoom on, the control layer comes from full-resolution cells
+// (one file per zoom-6 tile, written by prep/cells.mjs), cut into map tiles
+// here in the browser through a "dfm://" tile protocol. Below it, the 300 m
+// data in map-hi.topo.json is plenty.
+const DETAIL_Z = 6
+const cellUrl = (f: string) => new URL(`./data/cells/${f}`, import.meta.url).href
+let cellList: Promise<Set<string>> | null = null
+const cells = new Map<string, Promise<GeoJSONVT | null>>()
+let cellColors: Record<string, string> = {}
+
+type CellTopology = Topology<{
+  control: GeometryCollection<FeatureProps>
+  outline: GeometryCollection<{ c: string }>
+  borders: GeometryCollection
+}>
+
+function loadCell(key: string) {
+  if (!cells.has(key))
+    cells.set(key, (async () => {
+      cellList ??= fetch(cellUrl("index.json")).then((r) => r.json()).then((j: { cells: string[] }) => new Set(j.cells))
+      if (!(await cellList).has(key)) return null
+      const r = await fetch(cellUrl(`${key}.json`))
+      if (!r.ok) throw new Error(`${r.status} loading detail cell ${key}`)
+      const topo = (await r.json()) as CellTopology
+      const color = (c: string) => cellColors[c] ?? "#9a9a9a"
+      const control = (topoFeature(topo, topo.objects.control) as FeatureCollection<Geometry, FeatureProps>).features
+        .map((f) => ({ ...f, properties: { ...f.properties, _l: "control", col: color(f.properties.c) } }))
+      const outline = (topoFeature(topo, topo.objects.outline) as FeatureCollection<Geometry, { c: string }>).features
+        .map((f) => ({ ...f, properties: { _l: "outline", c: f.properties.c, col: color(f.properties.c) } }))
+      const borders = (topoFeature(topo, topo.objects.borders) as unknown as Feature<Geometry>).geometry
+      return new GeoJSONVT(
+        { type: "FeatureCollection", features: [...control, ...outline, { type: "Feature", properties: { _l: "borders" }, geometry: borders }] },
+        { maxZoom: 14, indexMaxZoom: DETAIL_Z, tolerance: 1, extent: 4096, buffer: 64 },
+      )
+    })())
+  return cells.get(key)!
+}
+
+let protocolAdded = false
+function addDetailProtocol(lib: MapLibre) {
+  if (protocolAdded) return
+  protocolAdded = true
+  lib.addProtocol("dfm", async (params) => {
+    const [z, x, y] = params.url.replace("dfm://", "").split("/").map(Number)
+    const shift = z - DETAIL_Z
+    const index = shift >= 0 ? await loadCell(`${x >> shift}-${y >> shift}`) : null
+    const tile = index?.getTile(z, x, y)
+    const layers: Record<string, { features: unknown[] }> = { control: { features: [] }, outline: { features: [] }, borders: { features: [] } }
+    for (const f of tile?.features ?? []) layers[(f.tags as { _l: string })._l]?.features.push(f)
+    return { data: fromGeojsonVt(layers as unknown as Record<string, GeoJSONVTTile>, { version: 2, extent: 4096 }) }
+  })
 }
 
 // ------------------------------------------------------------ appearance
@@ -182,6 +241,8 @@ const FEATURE_LAYERS: Record<MapFeature, string[]> = {
 
 export async function createGlMap(container: HTMLElement, data: MapData, options: GlOptions, theme: Theme) {
   const lib = await loadLibrary()
+  addDetailProtocol(lib)
+  cellColors = Object.fromEntries(Object.entries(data.entities).map(([c, e]) => [c, e.color]))
   const m = new GlMap(lib, container, data, options, theme)
   await m.ready
   return m
@@ -438,6 +499,7 @@ export class GlMap implements Renderer {
       sources: {
         ...sources,
         "dfm-control": { type: "geojson", data: empty(), attribution: DATA_CREDIT },
+        "dfm-detail": { type: "vector", tiles: ["dfm://{z}/{x}/{y}"], minzoom: DETAIL_Z, maxzoom: 14 },
         "dfm-borders": { type: "geojson", data: empty() },
         "dfm-claims": { type: "geojson", data: empty() },
         "dfm-presence": { type: "geojson", data: empty() },
@@ -462,13 +524,14 @@ export class GlMap implements Renderer {
 
   private fills(): LayerSpecification[] {
     const L = this.look()
+    const control = (id: string, rest: object) => both(id, "control", rest)
     return [
-      { id: "dfm-fill", type: "fill", source: "dfm-control", paint: { "fill-color": ["get", "col"], "fill-opacity": L.fill } },
-      { id: "dfm-occ", type: "fill", source: "dfm-control", filter: ["==", ["get", "k"], "occupation"], paint: { "fill-pattern": ["concat", "occ-", ["get", "c"]], "fill-opacity": 0.9 } },
-      { id: "dfm-contested", type: "fill", source: "dfm-control", filter: ["==", ["get", "k"], "contested"], paint: { "fill-pattern": "contested", "fill-opacity": 0.9 } },
+      ...control("dfm-fill", { type: "fill", paint: { "fill-color": ["get", "col"], "fill-opacity": L.fill } }),
+      ...control("dfm-occ", { type: "fill", filter: ["==", ["get", "k"], "occupation"], paint: { "fill-pattern": ["concat", "occ-", ["get", "c"]], "fill-opacity": 0.9 } }),
+      ...control("dfm-contested", { type: "fill", filter: ["==", ["get", "k"], "contested"], paint: { "fill-pattern": "contested", "fill-opacity": 0.9 } }),
       { id: "dfm-presence", type: "fill", source: "dfm-presence", paint: { "fill-pattern": ["concat", "pres-", ["get", "c"]], "fill-opacity": 0.9 } },
       // Invisible copies that answer "what's under the pointer".
-      { id: "dfm-hit", type: "fill", source: "dfm-control", paint: { "fill-opacity": 0 } },
+      ...control("dfm-hit", { type: "fill", paint: { "fill-opacity": 0 } }),
       { id: "dfm-claims-hit", type: "fill", source: "dfm-claims", paint: { "fill-opacity": 0 } },
     ]
   }
@@ -517,19 +580,19 @@ export class GlMap implements Renderer {
       },
       // Each controller's edge drawn just inside its territory, so a shared
       // border shows both sides' colors.
-      {
-        id: "dfm-outline", type: "line", source: "dfm-control", filter: ["!=", ["get", "c"], "none"],
+      ...both("dfm-outline", "outline", {
+        type: "line", filter: ["!=", ["get", "c"], "none"],
         layout: { "line-join": "round" },
         paint: {
           "line-color": ["get", "col"],
           "line-width": ["interpolate", ["linear"], ["zoom"], 1, 1.2, 6, 2.6, 10, 3.5],
           "line-offset": ["interpolate", ["linear"], ["zoom"], 1, 0.6, 6, 1.3, 10, 1.75],
         },
-      },
-      {
-        id: "dfm-borders", type: "line", source: "dfm-borders", layout: { "line-join": "round" },
+      }),
+      ...both("dfm-borders", "borders", {
+        type: "line", layout: { "line-join": "round" },
         paint: { "line-color": L.border, "line-opacity": 0.9, "line-width": ["interpolate", ["linear"], ["zoom"], 1, 0.6, 5, 1.2, 10, 2] },
-      },
+      }),
       { id: "dfm-claims-halo", type: "line", source: "dfm-claims", paint: { "line-color": L.halo, "line-width": 3, "line-opacity": 0.5 } },
       { id: "dfm-claims", type: "line", source: "dfm-claims", paint: { "line-color": ["get", "ink"], "line-width": 1.6, "line-dasharray": [3, 2] } },
     ]
@@ -662,14 +725,17 @@ export class GlMap implements Renderer {
     // land as nobody's.
     const kinds = ["control", "dependency", "lease", "international", ...(shading ? [] : ["occupation"])]
     const controlled: FilterSpecification = ["all", ["match", ["get", "k"], kinds, true, false], ["!=", ["get", "c"], "none"]]
-    this.map.setFilter("dfm-fill", controlled)
-    vis(["dfm-fill"], o.countries === "fill")
-    vis(["dfm-outline"], o.countries === "outline")
-    vis(["dfm-borders"], o.countries !== "off")
+    const pair = (id: string) => [id, `${id}-d`]
+    for (const id of pair("dfm-fill")) this.map.setFilter(id, controlled)
+    vis(pair("dfm-fill"), o.countries === "fill")
+    vis(pair("dfm-outline"), o.countries === "outline")
+    vis(pair("dfm-borders"), o.countries !== "off")
     const thin = o.countries === "outline"
-    this.map.setPaintProperty("dfm-borders", "line-color", thin ? (this.theme.dark || o.base === "satellite" ? "#0b0f14" : "#ffffff") : L.border)
-    this.map.setPaintProperty("dfm-borders", "line-opacity", thin ? 0.5 : 0.9)
-    vis(["dfm-occ", "dfm-contested"], shading)
+    for (const id of pair("dfm-borders")) {
+      this.map.setPaintProperty(id, "line-color", thin ? (this.theme.dark || o.base === "satellite" ? "#0b0f14" : "#ffffff") : L.border)
+      this.map.setPaintProperty(id, "line-opacity", thin ? 0.5 : 0.9)
+    }
+    vis([...pair("dfm-occ"), ...pair("dfm-contested")], shading)
 
     vis(Array.from({ length: 10 }, (_, z) => `dfm-labels-${z}`), this.layers.has("labels"))
     vis(Array.from({ length: 12 }, (_, z) => `dfm-regions-${z}`), this.layers.has("regions"))
@@ -746,7 +812,7 @@ export class GlMap implements Renderer {
       const on = this.visibleLayers(layers)
       return on.length ? this.map.queryRenderedFeatures(e.point, { layers: on }) : []
     }
-    const area = q(["dfm-hit"])[0]
+    const area = q(["dfm-hit", "dfm-hit-d"])[0]
     if (!area) return null
     const unique = (fs: MapGeoJSONFeature[]) => [...new Map(fs.map((f) => [f.properties.a, f])).values()] as unknown as F[]
     return {
@@ -759,3 +825,14 @@ export class GlMap implements Renderer {
 }
 
 const empty = (): FeatureCollection => ({ type: "FeatureCollection", features: [] })
+
+// A layer drawn from the 300 m GeoJSON below DETAIL_Z and from the
+// full-detail tiles above it ("-d"). The GeoJSON borders and outlines come
+// from their own sources; in the tiles they're layers of one source.
+function both(id: string, tileLayer: "control" | "outline" | "borders", rest: object): LayerSpecification[] {
+  const geojson = { control: "dfm-control", outline: "dfm-control", borders: "dfm-borders" }[tileLayer]
+  return [
+    { id, source: geojson, maxzoom: DETAIL_Z, ...rest } as LayerSpecification,
+    { id: `${id}-d`, source: "dfm-detail", "source-layer": tileLayer, minzoom: DETAIL_Z, ...rest } as LayerSpecification,
+  ]
+}

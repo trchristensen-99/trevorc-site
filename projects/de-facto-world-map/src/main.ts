@@ -402,7 +402,9 @@ function main(data: MapData, meta: Meta) {
     for (const l of LAYERS) map.setLayer(l.id, state.layers.has(l.id))
     map.setTheme(theme())
     map.setProjection(state.projection)
-    if (hiTopo) map.setDetail(hiTopo)
+    // The globe and Mercator views always use the 300 m data (the atlas
+    // asks for it itself once zoomed in).
+    if (hiTopo || map instanceof GlMap) needDetail()
     if (view) map.focus([view[0], view[1]], view[2])
     else if (map instanceof GlMap) map.focus([15, 20], 1)
     showControls()

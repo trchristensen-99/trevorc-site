@@ -57,3 +57,29 @@ await download(
   path.join(RAW, "comnap", "facilities.json"),
 )
 console.log("comnap facilities")
+
+// OpenStreetMap's country borders, by way of Overture Maps (ODbL): the land
+// and maritime boundary lines at full resolution, and the countries' land
+// areas (generalized, used only to tell which country a piece of land is in).
+{
+  const { DuckDBInstance } = await import("@duckdb/node-api")
+  const RELEASE = "2026-09-23.1"
+  const rel = `s3://overturemaps-us-west-2/release/${RELEASE}/theme=divisions`
+  const dir = path.join(RAW, "overture")
+  fs.mkdirSync(dir, { recursive: true })
+  const db = await (await DuckDBInstance.create()).connect()
+  await db.run("INSTALL httpfs; LOAD httpfs; INSTALL spatial; LOAD spatial; SET s3_region='us-west-2';")
+  await db.run(`CREATE TABLE div AS SELECT DISTINCT division_id, country FROM read_parquet('${rel}/type=division_area/*') WHERE subtype = 'country'`)
+  await db.run(`COPY (
+    SELECT b.class, b.is_disputed AS disputed,
+      (SELECT country FROM div WHERE div.division_id = b.division_ids[1]) AS "left",
+      (SELECT country FROM div WHERE div.division_id = b.division_ids[2]) AS "right",
+      b.geometry
+    FROM read_parquet('${rel}/type=division_boundary/*') b WHERE b.subtype = 'country'
+  ) TO '${path.join(dir, "borders.geojson")}' WITH (FORMAT GDAL, DRIVER 'GeoJSON')`)
+  await db.run(`COPY (
+    SELECT country, geometry FROM read_parquet('${rel}/type=division_area/*') WHERE subtype = 'country' AND class = 'land'
+  ) TO '${path.join(dir, "land.geojson")}' WITH (FORMAT GDAL, DRIVER 'GeoJSON')`)
+  fs.writeFileSync(path.join(dir, "meta.json"), JSON.stringify({ release: RELEASE, license: "ODbL 1.0 (OpenStreetMap contributors via Overture Maps)" }))
+  console.log(`overture ${RELEASE} borders and land`)
+}

@@ -153,27 +153,35 @@
    "controller": "ISR",
    "kind": "occupation",
    "geometry": {
-    "union": [
+    "intersect": [
      {
-      "gb": {
-       "set": "PSE-ADM2",
-       "names": [
-        "North Gaza",
-        "Gaza",
-        "Deir Al Balah",
-        "Khan Yunis",
-        "Rafah"
-       ]
-      }
+      "ne_country": "PSX"
      },
      {
-      "ne_disputed": "B53"
+      "polygon": [
+       [
+        34.1,
+        31.2
+       ],
+       [
+        34.62,
+        31.2
+       ],
+       [
+        34.62,
+        31.62
+       ],
+       [
+        34.1,
+        31.62
+       ]
+      ]
      }
     ]
    },
    "asOf": "2026-10",
    "confidence": "medium",
-   "note": "East of the 'yellow line' set by the October 2025 ceasefire, which Israel has since pushed westward. Israel holds about 63 to 65% of the Strip (64.9% by the UN's count in June 2026, about 63% by Israeli estimates in October) and says it will stay until Hamas disarms. The Strip's outline is from geoBoundaries, which is more accurate here than Natural Earth.",
+   "note": "East of the 'yellow line' set by the October 2025 ceasefire, which Israel has since pushed westward. Israel holds about 63 to 65% of the Strip (64.9% by the UN's count in June 2026, about 63% by Israeli estimates in October) and says it will stay until Hamas disarms. The Strip's outline follows OpenStreetMap.",
    "sources": [
     {
      "title": "Gisha: The Yellow Line",
@@ -325,6 +333,73 @@
     {
      "title": "Gisha: The Yellow Line",
      "url": "https://gisha.org/en/the-yellow-line/"
+    }
+   ],
+   "clip": {
+    "intersect": [
+     {
+      "ne_country": "PSX"
+     },
+     {
+      "polygon": [
+       [
+        34.1,
+        31.2
+       ],
+       [
+        34.62,
+        31.2
+       ],
+       [
+        34.62,
+        31.62
+       ],
+       [
+        34.1,
+        31.62
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "philadelphi",
+   "name": "Philadelphi corridor",
+   "controller": "ISR",
+   "kind": "occupation",
+   "geometry": {
+    "buffer": {
+     "of": {
+      "osm_border": [
+       "EG",
+       "XG"
+      ]
+     },
+     "km": 0.4
+    }
+   },
+   "clip": {
+    "union": [
+     {
+      "area": "gaza-israeli"
+     },
+     {
+      "area": "gaza-hamas"
+     }
+    ]
+   },
+   "asOf": "2026-10",
+   "confidence": "high",
+   "note": "The strip along Gaza's border with Egypt, held by Israel since May 2024, which separates Hamas-held Gaza from Egypt all the way to the sea. Drawn 400 m wide along OpenStreetMap's border line.",
+   "sources": [
+    {
+     "title": "Al Jazeera: How three years of war have changed Gaza (7 Oct 2026)",
+     "url": "https://aljazeera.com/news/2026/10/7/how-three-years-of-israels-genocidal-war-have-changed-gaza"
+    },
+    {
+     "title": "Wikipedia: Philadelphi Corridor",
+     "url": "https://en.wikipedia.org/wiki/Philadelphi_Corridor"
     }
    ]
   },

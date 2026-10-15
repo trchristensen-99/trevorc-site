@@ -37,6 +37,8 @@
   "dependencies": {
     "@clack/prompts": "^0.11.0",
     "@floating-ui/dom": "^1.7.4",
+    "@maplibre/geojson-vt": "6.1.1",
+    "@maplibre/vt-pbf": "4.3.2",
     "@myriaddreamin/rehype-typst": "^0.6.0",
     "@napi-rs/simple-git": "0.1.22",
     "@tweenjs/tween.js": "^25.0.0",

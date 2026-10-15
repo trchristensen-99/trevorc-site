@@ -25,15 +25,14 @@ const details = readJson(path.join(DATA, "details.json"))
 const stations = readJson(path.join(DATA, "bases.json"))
 const meta = readJson(path.join(DATA, "meta.json"))
 
-// Google My Maps takes files up to 5 MB, so the export keeps about a third
-// of the full-resolution vertices; that is still finer than Natural Earth's
-// 1:10m borders need.
+// Google My Maps takes files up to 5 MB, so the export is simplified to
+// about 600 m, close to what a printed atlas shows.
 fs.mkdirSync(TMP, { recursive: true })
 fs.mkdirSync(OUT, { recursive: true })
 const mid = path.join(TMP, "export.topo.json")
 execFileSync(MAPSHAPER, [
   "-i", path.join(DATA, "map-hi.topo.json"),
-  "-simplify", "weighted", "percentage=30%", "keep-shapes", "planar",
+  "-simplify", "weighted", "interval=600", "keep-shapes",
   "-o", mid, "format=topojson", "quantization=1000000", "target=*",
 ], { stdio: ["ignore", "ignore", "inherit"] })
 const topo = readJson(mid)
@@ -182,8 +181,8 @@ const folder = (name, desc, items, open = false) =>
   `<Folder><name>${esc(name)}</name><open>${open ? 1 : 0}</open><description>${esc(desc)}</description>${items.join("")}</Folder>`
 const credit =
   `Who actually controls territory, rather than who claims it, as of ${meta.asOf}. ` +
-  `By Trevor Christensen, ${PAGE}. Map data CC BY-SA 4.0 (Antarctic stations: COMNAP, non-commercial use). ` +
-  `Borders from Natural Earth and geoBoundaries.`
+  `By Trevor Christensen, ${PAGE}. Map data ODbL 1.0: borders © OpenStreetMap contributors (via Overture Maps), ` +
+  `with Natural Earth and geoBoundaries; Antarctic stations from COMNAP, non-commercial use.`
 const kml =
   `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document>` +
   `<name>De Facto World Map (${esc(meta.asOf)})</name><open>1</open><description>${esc(credit)}</description>` +
@@ -194,7 +193,8 @@ const kml =
   folder("Antarctic stations", "Year-round and seasonal research stations, colored by operator.", stationMarks) +
   `</Document></kml>\n`
 
-const kmz = zipSync({ "doc.kml": strToU8(kml) }, { level: 9 })
+// A fixed timestamp keeps the file identical when nothing changed.
+const kmz = zipSync({ "doc.kml": [strToU8(kml), { mtime: new Date("2026-01-01T00:00:00Z") }] }, { level: 9 })
 fs.writeFileSync(path.join(OUT, `${NAME}.kmz`), kmz)
 
 const geojson = {

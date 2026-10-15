@@ -15,6 +15,8 @@ import path from "node:path"
 import { execFileSync } from "node:child_process"
 import * as turf from "@turf/turf"
 import polylabel from "polylabel"
+import { preciseCountries } from "./base.mjs"
+import { writeCells } from "./cells.mjs"
 import { converter, differenceCiede2000, formatHex, clampChroma } from "culori"
 import { feature as topoFeature, neighbors as topoNeighbors } from "topojson-client"
 
@@ -27,7 +29,15 @@ const readJson = (p) => JSON.parse(fs.readFileSync(p, "utf8"))
 const curated = (name) => readJson(path.join(HERE, name))
 const ne = (name) => readJson(path.join(RAW, "ne", `${name}.geojson`)).features
 
+// Natural Earth's countries, redrawn with OpenStreetMap's borders (base.mjs).
 const countries = ne("admin_0_countries")
+{
+  const precise = new Map(preciseCountries(path.join(RAW, "ne", "admin_0_countries.geojson")).features.map((f) => [f.properties.id, f.geometry]))
+  for (const f of countries) {
+    const g = precise.get(f.properties.ADM0_A3)
+    if (g) f.geometry = g
+  }
+}
 const disputed = ne("admin_0_disputed_areas")
 const admin1 = ne("admin_1_states_provinces")
 const antarcticClaims = ne("admin_0_antarctic_claims")
@@ -86,6 +96,15 @@ for (const id of entitiesIn.remove ?? []) delete entities[id]
 //        units mostly inside a reference map (the reference itself isn't shipped)
 //   {"area": "ukraine-occupied"}                 the final shape of an area above
 //   {"union": [r, ...]}  {"minus": [r, r, ...]}  {"intersect": [r, r]}
+// and, to draw along real map features:
+//   {"osm_border": ["EG", "XG"]}                 OpenStreetMap's border line between
+//        two countries (Overture codes, as in raw/overture/borders.geojson)
+//   {"osm_relation": 1473938}                    any OpenStreetMap boundary relation
+//        (a district, neighbourhood, park...), fetched once into raw/osm/
+//   {"line": [[lon, lat], ...]}                  a hand-drawn line
+//   {"buffer": {"of": r, "km": 0.4}}             widen a line or area
+//   {"split": {"of": r, "by": line r, "keep": [lon, lat]}}
+//        cut an area along a line and keep the side containing a point
 
 const asFeature = (g) => (g.type === "Feature" ? g : turf.feature(g))
 const unionAll = (fs_) => {
@@ -163,6 +182,30 @@ function provinceOf(u) {
   return code
 }
 
+// OpenStreetMap relations used by the areas, fetched before the build.
+const OSM = path.join(RAW, "osm")
+{
+  const ids = new Set()
+  const walk = (x) => {
+    if (!x || typeof x !== "object") return
+    if (x.osm_relation) ids.add(x.osm_relation)
+    for (const v of Object.values(x)) walk(v)
+  }
+  walk(areasIn)
+  walk(claimsIn)
+  walk(presenceIn)
+  fs.mkdirSync(OSM, { recursive: true })
+  for (const id of ids) {
+    const file = path.join(OSM, `relation-${id}.geojson`)
+    if (fs.existsSync(file)) continue
+    const res = await fetch(`https://polygons.openstreetmap.fr/get_geojson.py?id=${id}&params=0`)
+    if (!res.ok) throw new Error(`${res.status} fetching OpenStreetMap relation ${id}`)
+    fs.writeFileSync(file, await res.text())
+  }
+}
+let osmBorders = null
+const asLines = (fs_) => fs_.flatMap((f) => (f.geometry.type === "LineString" ? [f.geometry.coordinates] : f.geometry.coordinates))
+
 function resolve(r, where) {
   if (r.ne_country) {
     const hits = countries.filter((f) => f.properties.ADM0_A3 === r.ne_country)
@@ -218,6 +261,29 @@ function resolve(r, where) {
     if (!areaShapes[r.area]) throw new Error(`${where}: area ${r.area} not built yet`)
     return areaShapes[r.area]
   }
+  if (r.osm_border) {
+    const [a, b] = r.osm_border
+    osmBorders ??= readJson(path.join(RAW, "overture", "borders.geojson")).features
+    const hits = osmBorders.filter((f) => (f.properties.left === a && f.properties.right === b) || (f.properties.left === b && f.properties.right === a))
+    if (!hits.length) throw new Error(`${where}: no OpenStreetMap border between ${a} and ${b}`)
+    return turf.multiLineString(asLines(hits))
+  }
+  if (r.osm_relation) {
+    const g = readJson(path.join(OSM, `relation-${r.osm_relation}.geojson`))
+    return asFeature(g.type === "GeometryCollection" ? g.geometries.find((x) => /Polygon/.test(x.type)) : g)
+  }
+  if (r.line) return turf.lineString(r.line)
+  if (r.buffer) return turf.buffer(resolve(r.buffer.of, where), r.buffer.km, { units: "kilometers" })
+  if (r.split) {
+    const area = resolve(r.split.of, where)
+    // A cut one metre wide along the line separates the two sides.
+    const cut = turf.buffer(resolve(r.split.by, where), 0.001, { units: "kilometers" })
+    const rest = turf.difference(turf.featureCollection([area, cut]))
+    const parts = rest ? (rest.geometry.type === "MultiPolygon" ? rest.geometry.coordinates : [rest.geometry.coordinates]) : []
+    const kept = parts.filter((p) => turf.booleanPointInPolygon(r.split.keep, turf.polygon(p)))
+    if (!kept.length) throw new Error(`${where}: split kept nothing`)
+    return kept.length === 1 ? turf.polygon(kept[0]) : turf.multiPolygon(kept)
+  }
   if (r.union) return unionAll(r.union.map((x) => resolve(x, where)))
   if (r.minus) {
     const [first, ...rest] = r.minus.map((x) => resolve(x, where))
@@ -238,6 +304,21 @@ function dropSlivers(geom) {
   const parts = geom.coordinates.filter((c) => turf.area(turf.polygon(c)) >= 5e4)
   if (parts.length === 0) return null
   return parts.length === 1 ? { type: "Polygon", coordinates: parts[0] } : { type: "MultiPolygon", coordinates: parts }
+}
+
+// Whether a recipe is built only from Natural Earth's own shapes.
+function fromNaturalEarthOnly(r) {
+  let ne = false, other = false
+  const walk = (x) => {
+    if (!x || typeof x !== "object") return
+    for (const [k, v] of Object.entries(x)) {
+      if (k === "ne_disputed" || k === "ne_country" || k === "ne_admin1") ne = true
+      else if (["polygon", "file", "gb", "reference_units", "osm_border", "osm_relation", "line"].includes(k)) other = true
+      else walk(v)
+    }
+  }
+  walk(r)
+  return ne && !other
 }
 
 const bboxOverlap = (a, b) => {
@@ -285,6 +366,22 @@ for (const area of areasIn.areas) {
   if (area.clip) {
     g = turf.intersect(turf.featureCollection([g, resolve(area.clip, where)]))
     if (!g) throw new Error(`${where}: nothing left after clipping`)
+  } else if (fromNaturalEarthOnly(area.geometry)) {
+    // Areas taken from Natural Earth's disputed areas don't follow the
+    // OpenStreetMap borders the countries now have. Grow them a little and
+    // clip them to the countries they mostly cover, so they meet those
+    // borders without leaving slivers or spilling over them.
+    const gArea = turf.area(g)
+    const parents = control.filter((f) => {
+      if (!bboxOverlap(f, g)) return false
+      const i = turf.intersect(turf.featureCollection([f, g]))
+      return i && turf.area(i) > Math.min(5e6, 0.01 * gArea)
+    })
+    if (parents.length) {
+      const grown = turf.buffer(g, area.snap_km ?? 1, { units: "kilometers" })
+      const clipped = turf.intersect(turf.featureCollection([grown, unionAll(parents.map((f) => turf.feature(f.geometry)))]))
+      if (clipped) g = clipped
+    }
   }
   const overlapping = control.filter((f) => bboxOverlap(f, g) && turf.booleanIntersects(f, g))
   // Paint land only: clip the area to the land it overlaps.
@@ -370,8 +467,32 @@ const topology = (file, simplify, quantization) =>
     ...simplify,
     "-o", path.join(OUT, file), "format=topojson", `quantization=${quantization}`, "target=*",
   ], { stdio: ["ignore", "ignore", "inherit"] })
-topology("map.topo.json", ["-simplify", "weighted", "percentage=9%", "keep-shapes", "planar"], 100000)
-topology("map-hi.topo.json", [], 2000000)
+// Light for the atlas and the whole-world view, 300 m for the globe and
+// Mercator views, and full detail in per-region cells for zooming in.
+topology("map.topo.json", ["-simplify", "weighted", "interval=6000", "keep-shapes"], 100000)
+topology("map-hi.topo.json", ["-simplify", "weighted", "interval=300", "keep-shapes"], 2000000)
+{
+  const full = path.join(TMP, "control-full.json")
+  execFileSync(MAPSHAPER, [
+    "-i", path.join(TMP, "control.json"),
+    "-snap", "interval=0.00002", "-clean", "allow-overlaps",
+    "-simplify", "weighted", "interval=5", "keep-shapes",
+    "-o", full, "format=geojson", "precision=0.000001",
+  ], { stdio: ["ignore", "ignore", "inherit"] })
+  // Each controller grown 2 km into the sea (but not onto other land).
+  const land = path.join(TMP, "land-all.json")
+  const seaward = path.join(TMP, "control-seaward.json")
+  execFileSync(MAPSHAPER, ["-i", full, "-dissolve", "-o", land], { stdio: ["ignore", "ignore", "inherit"] })
+  execFileSync(MAPSHAPER, [
+    "-i", full, "-buffer", "2", "units=km", "-erase", land, "-o", path.join(TMP, "sea-margin.json"),
+  ], { stdio: ["ignore", "ignore", "inherit"] })
+  execFileSync(MAPSHAPER, [
+    "-i", "combine-files", full, path.join(TMP, "sea-margin.json"), "-merge-layers", "force", "-dissolve", "a", "copy-fields=c,k",
+    "-o", seaward, "format=geojson", "precision=0.000001",
+  ], { stdio: ["ignore", "ignore", "inherit"] })
+  const { count, bytes } = writeCells(readJson(full).features, readJson(seaward).features, path.join(OUT, "cells"))
+  console.log(`detail cells: ${count} files, ${(bytes / 1048576).toFixed(1)} MB`)
+}
 
 const topo = readJson(path.join(OUT, "map.topo.json"))
 const controlOut = topoFeature(topo, topo.objects.control).features

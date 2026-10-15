@@ -9,11 +9,13 @@
     "export": "node export.mjs"
   },
   "devDependencies": {
+    "@duckdb/node-api": "1.5.5-r.5",
     "@turf/turf": "7.2.0",
     "culori": "4.0.1",
     "fflate": "0.8.2",
     "mapshaper": "0.6.102",
     "polylabel": "2.0.1",
-    "topojson-client": "3.1.0"
+    "topojson-client": "3.1.0",
+    "topojson-server": "3.0.1"
   }
 }
