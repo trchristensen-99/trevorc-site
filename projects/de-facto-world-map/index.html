@@ -11,6 +11,7 @@
   <body>
     <main id="app">
       <svg id="map" role="img" aria-label="World map of de facto territorial control"></svg>
+      <div id="gl" hidden></div>
       <p id="status" aria-live="polite">Loading map…</p>
 
       <button id="toggle-controls" class="panel" aria-label="Map options">☰</button>
@@ -19,6 +20,7 @@
           <strong>De Facto World Map</strong>
           <span id="asof"></span>
         </header>
+        <label class="row">Base map <select id="base"></select></label>
         <label class="row">Projection <select id="projection"></select></label>
         <fieldset id="layers"><legend>Layers</legend></fieldset>
         <div class="row actions">
@@ -26,6 +28,12 @@
           <a id="elsewhere"></a>
         </div>
         <p id="hint" class="hint"></p>
+        <p class="hint data">
+          Get the data:
+          <a href="./data/export/de-facto-world-map.kmz" download>Google Earth / My Maps (KMZ)</a> ·
+          <a href="./data/export/de-facto-world-map.geojson" download>GeoJSON</a> ·
+          <a href="/projects/de-facto-world-map#use-it-in-google-earth-or-google-maps" target="_top">how to</a>
+        </p>
       </section>
 
       <details class="panel legend" open>

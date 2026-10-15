@@ -26,7 +26,7 @@ import type { Feature, FeatureCollection, Geometry, MultiLineString } from "geoj
 import type { GeometryCollection, Topology } from "topojson-specification"
 import type { Entity, FeatureProps, Kind, Station } from "./types"
 
-type F = Feature<Geometry, FeatureProps>
+export type F = Feature<Geometry, FeatureProps>
 type SVGSel<T extends Element> = Selection<T, unknown, null, undefined>
 
 export const PROJECTIONS = {
@@ -48,9 +48,10 @@ function clampedMercator(): GeoProjection {
   return geoProjection(raw)
 }
 
-export type LayerId = "labels" | "claims" | "presence" | "stations" | "graticule"
+export type LayerId = "labels" | "claims" | "presence" | "stations" | "graticule" | "relief"
 
 export interface Theme {
+  dark: boolean
   ocean: string
   graticule: string
   border: string
@@ -61,10 +62,12 @@ export interface Theme {
   contested: string
 }
 export const LIGHT: Theme = {
+  dark: false,
   ocean: "#c9def0", graticule: "#b3cbe0", border: "#2f3640", coast: "#3a4652",
   labelInk: "#1d2329", labelHalo: "#ffffff", uncontrolled: "#f4f4ef", contested: "#9aa0a6",
 }
 export const DARK: Theme = {
+  dark: true,
   ocean: "#16222e", graticule: "#22313f", border: "#0b0f14", coast: "#0b0f14",
   labelInk: "#eef1f4", labelHalo: "#0e141a", uncontrolled: "#d9dbd4", contested: "#7c838a",
 }
@@ -88,9 +91,29 @@ export interface MapData {
   stations: Station[]
 }
 
+// What main.ts needs from a map renderer: this SVG one for the atlas
+// view, or the MapLibre one in gl.ts for satellite, terrain and streets.
+export interface Renderer {
+  onHover: (hit: Hit | null, at: [number, number]) => void
+  onSelect: (hit: Hit | null) => void
+  onStation: (s: Station) => void
+  onNeedDetail: () => void
+  onViewChange: () => void
+  readonly isGlobe: boolean
+  setProjection(id: ProjectionId): void
+  setLayer(id: LayerId, on: boolean): void
+  setTheme(t: Theme): void
+  setDetail(topo: MapTopology): void
+  resize(): void
+  focus(lonLat: [number, number], k: number): void
+  view(): [number, number, number] | null
+  exportImage(title: string): Promise<{ blob: Blob; ext: string }>
+  destroy(): void
+}
+
 // One level of detail: the same features at some resolution, plus the
 // lon/lat box of each so hit tests can skip most of them cheaply.
-interface Detail {
+export interface Detail {
   control: F[]
   claims: F[]
   presence: F[]
@@ -99,7 +122,7 @@ interface Detail {
   boxes: WeakMap<F, [[number, number], [number, number]]>
 }
 
-function detail(topo: MapTopology): Detail {
+export function detail(topo: MapTopology): Detail {
   const fc = (o: GeometryCollection<FeatureProps>) => (feature(topo, o) as FeatureCollection<Geometry, FeatureProps>).features
   const differs = (a: { properties?: FeatureProps | null }, b: { properties?: FeatureProps | null }) =>
     a !== b && (a.properties?.c !== b.properties?.c || a.properties?.k !== b.properties?.k)
@@ -129,7 +152,7 @@ const MERCATOR_EXTENT: GeoPermissibleObjects = {
   coordinates: [[[-179.9, -58], [179.9, -58], [179.9, 82], [-179.9, 82], [-179.9, -58]]],
 }
 
-export class WorldMap {
+export class WorldMap implements Renderer {
   private svg: SVGSel<SVGSVGElement>
   private defs: SVGSel<SVGDefsElement>
   private root: SVGSel<SVGGElement>
@@ -154,6 +177,7 @@ export class WorldMap {
   onHover: (hit: Hit | null, at: [number, number]) => void = () => {}
   onSelect: (hit: Hit | null) => void = () => {}
   onStation: (s: Station) => void = () => {}
+  onViewChange: () => void = () => {}
 
   constructor(
     private el: SVGSVGElement,
@@ -290,6 +314,16 @@ export class WorldMap {
     return new XMLSerializer().serializeToString(clone)
   }
 
+  async exportImage(title: string) {
+    return { blob: new Blob([this.exportSVG(title)], { type: "image/svg+xml" }), ext: "svg" }
+  }
+
+  destroy() {
+    if (this.frame) cancelAnimationFrame(this.frame)
+    this.svg.on(".zoom", null).on("pointermove", null).on("pointerleave", null).on("click", null)
+    this.svg.selectAll("*").remove()
+  }
+
   // ----------------------------------------------------------- projection
 
   private fit() {
@@ -308,6 +342,7 @@ export class WorldMap {
   private baseScale = 1
 
   private zoomed(e: D3ZoomEvent<SVGSVGElement, unknown>) {
+    this.onViewChange()
     const prev = this.transform
     this.transform = e.transform
     if (this.isGlobe) {
@@ -525,7 +560,7 @@ export class WorldMap {
   }
 }
 
-function labelSize(km2: number) {
+export function labelSize(km2: number) {
   return Math.max(8, Math.min(17, 6.5 + 2.4 * Math.log10(Math.max(1, km2 / 1000))))
 }
 

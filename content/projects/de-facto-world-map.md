@@ -16,7 +16,7 @@ Most world maps show borders as countries claim them. This one shows who actuall
   <iframe src="/apps/de-facto-world-map/" title="De Facto World Map" loading="lazy"></iframe>
 </div>
 
-[Open the map full screen](/apps/de-facto-world-map/). Click any area for who controls it, how confident the assessment is, and the sources behind it. You can switch between flat projections and a globe, toggle the claims and insurgent-presence layers, and download the current view as an SVG. Zooming in on a flat map loads the full-resolution borders. The address bar keeps track of the view, so a link like [this one](/apps/de-facto-world-map/#p=winkel&z=40,15,4) opens straight onto a region.
+[Open the map full screen](/apps/de-facto-world-map/). Click any area for who controls it, how confident the assessment is, and the sources behind it. The **Base map** menu switches between the flat-color atlas, with five projections, and satellite, terrain and street maps on a 3D globe or a flat Mercator map, with optional 3D terrain. You can toggle the claims and insurgent-presence layers and download the current view as an image. Zooming in on a flat map loads the full-resolution borders. The address bar keeps track of the view, so a link like [this one](/apps/de-facto-world-map/#p=winkel&z=40,15,4) opens straight onto a region.
 
 ## How to read it
 
@@ -25,6 +25,20 @@ Most world maps show borders as countries claim them. This one shows who actuall
 - **Dashed outlines:** territory someone claims but doesn't control, in the claimant's color.
 - **Thin hatching:** insurgent presence, where an armed group operates or governs the countryside without holding territory outright.
 - **Pale gray:** no controlling state. Antarctica's seven claims are drawn as dashed sectors and its research stations as dots in their operators' colors.
+
+## Use it in Google Earth or Google Maps
+
+The same layers are available as files you can open in Google's tools, with each area's controller, status, confidence, notes and sources attached:
+
+- [**KMZ**](/apps/de-facto-world-map/data/export/de-facto-world-map.kmz) for Google Earth and Google My Maps
+- [**GeoJSON**](/apps/de-facto-world-map/data/export/de-facto-world-map.geojson) for QGIS and other GIS tools
+- [**Live link**](/apps/de-facto-world-map/data/export/de-facto-world-map-live.kml) for Google Earth Pro, which re-downloads the map daily so a saved copy stays current
+
+To use them:
+
+- **Google Earth on the web:** open [earth.google.com](https://earth.google.com/web/), choose **Projects**, then **New project** › **Import KML file from computer**, and pick the KMZ.
+- **Google Earth Pro:** **File** › **Open** the KMZ, or the live link to keep it up to date.
+- **Google My Maps:** at [mymaps.google.com](https://www.google.com/maps/d/), create a map, click **Import** under the first layer, and upload the KMZ. If the areas all come in one color, choose **Style by data column** › **controller**. Maps made this way also appear in the Google Maps app under **Saved** › **Maps**.
 
 ## What counts as control
 
@@ -46,10 +60,12 @@ Some of the calls are judgment calls:
 - **Conflict zones:** assembled from administrative units in [geoBoundaries](https://www.geoboundaries.org/) (CC BY and CC BY-SA), each assigned to a controller based on current reporting. Every area lists its own sources, date, and a confidence level.
 - **Ukraine:** municipalities that are mostly occupied on [DeepStateMap](https://deepstatemap.live/)'s current map. DeepStateMap is the reference for which units are held, but its own geometry isn't redistributed here, so the front line is approximate at the scale of a municipality.
 - **Antarctic stations:** [COMNAP](https://github.com/PolarGeospatialCenter/comnap-antarctic-facilities) (COMNAP 2017), free for non-commercial use.
+- **Base maps:** satellite imagery from [EOxCloudless 2025](https://cloudless.eox.at) by EOX IT Services (modified Copernicus Sentinel-2 data, CC BY-NC-SA 4.0); elevation from [Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) (Mapzen, from SRTM, GMTED2010, ETOPO1 and others); streets and place names from [OpenFreeMap](https://openfreemap.org) and [OpenStreetMap](https://www.openstreetmap.org/copyright); drawn with [MapLibre](https://maplibre.org).
 
 The map data is released under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), except the Antarctic stations layer, which keeps COMNAP's non-commercial terms. The control assessments are mine, and front lines move; corrections are welcome through the [contact page](../contact).
 
 ## Changelog
 
+- **15 October 2026:** satellite, terrain and street base maps on a 3D globe, with optional 3D terrain; downloads for Google Earth, Google My Maps and GIS tools.
 - **8 October 2026:** Houthi gains on the Red Sea coast and around Taiz, and a Yemeni front-line layer; Israel's occupation of southern Lebanon; a retraced Gaza yellow line on a more accurate outline of the Strip; Sudan, Somalia, Congo and Myanmar updated to late-September reporting; full-resolution borders when zoomed in; Mercator fixed.
 - **October 2026:** first version, with control as of early October 2026.

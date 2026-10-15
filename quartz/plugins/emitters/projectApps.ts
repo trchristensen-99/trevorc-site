@@ -16,6 +16,10 @@
 //   src/main.ts      entry point; CSS it imports is emitted as main.css
 //   index.html       app shell, copied as-is
 //   data/**          prebuilt data files, copied as-is
+//   vendor.json      optional {"name": ["pkg/dist/file.mjs", ...]}: library
+//                    files copied unbundled from node_modules to
+//                    vendor/<name>/, for libraries that load their own
+//                    workers relative to themselves and so can't be bundled
 
 import fs from "fs"
 import path from "path"
@@ -68,6 +72,18 @@ export const ProjectApps: QuartzEmitterPlugin = () => ({
         const dest = path.join(out, "index.html")
         await fs.promises.copyFile(shell, dest)
         yield dest as FilePath
+      }
+      const vendor = path.join(dir, "vendor.json")
+      if (fs.existsSync(vendor)) {
+        const lists: Record<string, string[]> = JSON.parse(await fs.promises.readFile(vendor, "utf8"))
+        for (const [lib, files] of Object.entries(lists)) {
+          for (const file of files) {
+            const dest = path.join(out, "vendor", lib, path.basename(file))
+            await fs.promises.mkdir(path.dirname(dest), { recursive: true })
+            await fs.promises.copyFile(path.join("node_modules", file), dest)
+            yield dest as FilePath
+          }
+        }
       }
       const data = path.join(dir, "data")
       if (fs.existsSync(data)) yield* copyTree(data, path.join(out, "data"))

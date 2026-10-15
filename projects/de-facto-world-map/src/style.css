@@ -30,11 +30,20 @@ body {
 #app { position: relative; width: 100%; height: 100%; }
 #map { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
 #map:active { cursor: grabbing; }
+/* The textured maps' globe floats in space. */
+#gl { position: absolute; inset: 0; background: #05080c; }
+#gl[hidden] { display: none; }
+.hint.data a { color: var(--accent); text-decoration: none; }
+.hint.data a:hover { text-decoration: underline; }
+/* MapLibre's controls, in the panels' style. */
+.maplibregl-ctrl-group { border-radius: 8px !important; }
+.maplibregl-ctrl-attrib { font-size: 11px; }
 #status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: var(--muted); pointer-events: none; }
 #status:empty { display: none; }
 
 .panel {
   position: absolute;
+  z-index: 3; /* above MapLibre's controls */
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -52,6 +61,7 @@ select option { color: #111; }
 fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 2px; }
 legend { padding: 0; margin-bottom: 2px; color: var(--muted); font-size: 12px; }
 fieldset label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+fieldset label[hidden] { display: none; }
 .actions button {
   padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line);
   background: transparent; cursor: pointer;
@@ -95,7 +105,7 @@ fieldset label { display: flex; align-items: center; gap: 6px; cursor: pointer; 
   cursor: pointer; color: var(--muted);
 }
 #tooltip {
-  position: absolute; pointer-events: none; padding: 3px 8px; border-radius: 6px;
+  position: absolute; z-index: 4; pointer-events: none; padding: 3px 8px; border-radius: 6px;
   background: var(--panel); border: 1px solid var(--line); font-size: 12.5px; white-space: nowrap;
 }
 

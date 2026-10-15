@@ -1,0 +1,9 @@
+{
+  "maplibre": [
+    "maplibre-gl/dist/maplibre-gl.mjs",
+    "maplibre-gl/dist/maplibre-gl-shared.mjs",
+    "maplibre-gl/dist/maplibre-gl-worker.mjs",
+    "maplibre-gl/dist/maplibre-gl.css",
+    "maplibre-gl/LICENSE.txt"
+  ]
+}
