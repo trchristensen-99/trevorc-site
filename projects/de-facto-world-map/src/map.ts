@@ -22,7 +22,8 @@ import { geoRobinson, geoWinkel3 } from "d3-geo-projection"
 import { pointer, select, type Selection } from "d3-selection"
 import { zoom, zoomIdentity, type D3ZoomEvent, type ZoomBehavior, type ZoomTransform } from "d3-zoom"
 import { feature, mesh } from "topojson-client"
-import type { Feature, FeatureCollection, Geometry, MultiLineString } from "geojson"
+import type { Feature, FeatureCollection, Geometry, LineString, MultiLineString } from "geojson"
+import { edges } from "./edges"
 import type { GeometryCollection, Topology } from "topojson-specification"
 import type { BaseAbroad, Details, Entity, FeatureProps, Kind, Station } from "./types"
 
@@ -142,20 +143,23 @@ export interface Detail {
   control: F[]
   claims: F[]
   presence: F[]
-  borders: MultiLineString
+  borders: MultiLineString // between controllers
+  kinds: MultiLineString // between areas one controller holds differently
+  outlines: Feature<LineString, { c: string }>[]
   coast: MultiLineString
   boxes: WeakMap<F, [[number, number], [number, number]]>
 }
 
 export function detail(topo: MapTopology): Detail {
   const fc = (o: GeometryCollection<FeatureProps>) => (feature(topo, o) as FeatureCollection<Geometry, FeatureProps>).features
-  const differs = (a: { properties?: FeatureProps | null }, b: { properties?: FeatureProps | null }) =>
-    a !== b && (a.properties?.c !== b.properties?.c || a.properties?.k !== b.properties?.k)
+  const lines = edges(topo, topo.objects.control)
   const d: Detail = {
     control: fc(topo.objects.control),
     claims: fc(topo.objects.claims),
     presence: fc(topo.objects.presence),
-    borders: mesh(topo, topo.objects.control, (a, b) => differs(a as never, b as never)),
+    borders: lines.borders,
+    kinds: lines.kinds,
+    outlines: lines.outlines,
     coast: mesh(topo, topo.objects.control, (a, b) => a === b),
     boxes: new WeakMap(),
   }
@@ -494,7 +498,9 @@ export class WorldMap implements Renderer {
       .attr("d", (m) => this.path(m) ?? "")
       .attr("fill", "none").attr("stroke", t.coast).attr("stroke-width", 0.45).attr("stroke-opacity", 0.75)
       .attr("vector-effect", "non-scaling-stroke").attr("pointer-events", "none")
-    b.selectAll<SVGPathElement, MultiLineString>("path.border").data([d.borders]).join("path").attr("class", "border")
+    // Lines between, say, Russia and the Ukraine it occupies show only with
+    // the shading, so without it an occupier's land reads as one piece.
+    b.selectAll<SVGPathElement, MultiLineString>("path.border").data(this.layers.has("shading") ? [d.borders, d.kinds] : [d.borders]).join("path").attr("class", "border")
       .attr("d", (m) => this.path(m) ?? "")
       .attr("fill", "none").attr("stroke", t.border).attr("stroke-width", 0.7).attr("stroke-linejoin", "round")
       .attr("vector-effect", "non-scaling-stroke").attr("pointer-events", "none")

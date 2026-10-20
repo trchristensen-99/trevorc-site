@@ -479,18 +479,7 @@ topology("map-hi.topo.json", ["-simplify", "weighted", "interval=300", "keep-sha
     "-simplify", "weighted", "interval=5", "keep-shapes",
     "-o", full, "format=geojson", "precision=0.000001",
   ], { stdio: ["ignore", "ignore", "inherit"] })
-  // Each controller grown 2 km into the sea (but not onto other land).
-  const land = path.join(TMP, "land-all.json")
-  const seaward = path.join(TMP, "control-seaward.json")
-  execFileSync(MAPSHAPER, ["-i", full, "-dissolve", "-o", land], { stdio: ["ignore", "ignore", "inherit"] })
-  execFileSync(MAPSHAPER, [
-    "-i", full, "-buffer", "2", "units=km", "-erase", land, "-o", path.join(TMP, "sea-margin.json"),
-  ], { stdio: ["ignore", "ignore", "inherit"] })
-  execFileSync(MAPSHAPER, [
-    "-i", "combine-files", full, path.join(TMP, "sea-margin.json"), "-merge-layers", "force", "-dissolve", "a", "copy-fields=c,k",
-    "-o", seaward, "format=geojson", "precision=0.000001",
-  ], { stdio: ["ignore", "ignore", "inherit"] })
-  const { count, bytes } = writeCells(readJson(full).features, readJson(seaward).features, path.join(OUT, "cells"))
+  const { count, bytes } = writeCells(readJson(full).features, path.join(OUT, "cells"))
   console.log(`detail cells: ${count} files, ${(bytes / 1048576).toFixed(1)} MB`)
 }
 

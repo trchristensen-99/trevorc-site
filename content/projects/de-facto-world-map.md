@@ -1,6 +1,7 @@
 ---
 title: De Facto World Map
 date: 2026-10-08
+modified: 2026-10-20
 importance: 5
 status: in progress
 tags:

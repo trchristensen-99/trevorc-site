@@ -130,6 +130,7 @@ type CellTopology = Topology<{
   control: GeometryCollection<FeatureProps>
   outline: GeometryCollection<{ c: string }>
   borders: GeometryCollection
+  kinds: GeometryCollection
 }>
 
 function loadCell(key: string) {
@@ -145,9 +146,13 @@ function loadCell(key: string) {
         .map((f) => ({ ...f, properties: { ...f.properties, _l: "control", col: color(f.properties.c) } }))
       const outline = (topoFeature(topo, topo.objects.outline) as FeatureCollection<Geometry, { c: string }>).features
         .map((f) => ({ ...f, properties: { _l: "outline", c: f.properties.c, col: color(f.properties.c) } }))
-      const borders = (topoFeature(topo, topo.objects.borders) as unknown as Feature<Geometry>).geometry
+      const line = (name: "borders" | "kinds") => ({
+        type: "Feature" as const,
+        properties: { _l: name },
+        geometry: (topoFeature(topo, topo.objects[name]) as unknown as Feature<Geometry>).geometry,
+      })
       return new GeoJSONVT(
-        { type: "FeatureCollection", features: [...control, ...outline, { type: "Feature", properties: { _l: "borders" }, geometry: borders }] },
+        { type: "FeatureCollection", features: [...control, ...outline, line("borders"), line("kinds")] },
         { maxZoom: 14, indexMaxZoom: DETAIL_Z, tolerance: 1, extent: 4096, buffer: 64 },
       )
     })())
@@ -163,7 +168,7 @@ function addDetailProtocol(lib: MapLibre) {
     const shift = z - DETAIL_Z
     const index = shift >= 0 ? await loadCell(`${x >> shift}-${y >> shift}`) : null
     const tile = index?.getTile(z, x, y)
-    const layers: Record<string, { features: unknown[] }> = { control: { features: [] }, outline: { features: [] }, borders: { features: [] } }
+    const layers: Record<string, { features: unknown[] }> = { control: { features: [] }, outline: { features: [] }, borders: { features: [] }, kinds: { features: [] } }
     for (const f of tile?.features ?? []) layers[(f.tags as { _l: string })._l]?.features.push(f)
     return { data: fromGeojsonVt(layers as unknown as Record<string, GeoJSONVTTile>, { version: 2, extent: 4096 }) }
   })
@@ -484,9 +489,13 @@ export class GlMap implements Renderer {
           !("source" in l && l.source === "ne2_shaded") &&
           !(l.type === "symbol" && "source-layer" in l && l["source-layer"] === "place"),
       )
-      const bg = kept.findIndex((l) => l.type === "background")
-      under = kept.slice(0, bg + 1)
-      between = kept.slice(bg + 1)
+      // Its land cover (parks, forest, built-up areas) goes under the country
+      // fills, since most of it is opaque; water, buildings and roads go over.
+      const ground = (l: LayerSpecification) =>
+        l.type === "background" ||
+        (l.type === "fill" && "source-layer" in l && ["park", "landcover", "landuse"].includes(l["source-layer"] ?? ""))
+      under = kept.filter(ground)
+      between = kept.filter((l) => !ground(l))
       if (terrain) between.splice(between.findIndex((l) => l.id === "water") + 1, 0, hillshade(0.3))
     }
 
@@ -501,6 +510,8 @@ export class GlMap implements Renderer {
         "dfm-control": { type: "geojson", data: empty(), attribution: DATA_CREDIT },
         "dfm-detail": { type: "vector", tiles: ["dfm://{z}/{x}/{y}"], minzoom: DETAIL_Z, maxzoom: 14 },
         "dfm-borders": { type: "geojson", data: empty() },
+        "dfm-kinds": { type: "geojson", data: empty() },
+        "dfm-outline": { type: "geojson", data: empty() },
         "dfm-claims": { type: "geojson", data: empty() },
         "dfm-presence": { type: "geojson", data: empty() },
         "dfm-stations": { type: "geojson", data: empty() },
@@ -590,6 +601,10 @@ export class GlMap implements Renderer {
         },
       }),
       ...both("dfm-borders", "borders", {
+        type: "line", layout: { "line-join": "round" },
+        paint: { "line-color": L.border, "line-opacity": 0.9, "line-width": ["interpolate", ["linear"], ["zoom"], 1, 0.6, 5, 1.2, 10, 2] },
+      }),
+      ...both("dfm-kinds", "kinds", {
         type: "line", layout: { "line-join": "round" },
         paint: { "line-color": L.border, "line-opacity": 0.9, "line-width": ["interpolate", ["linear"], ["zoom"], 1, 0.6, 5, 1.2, 10, 2] },
       }),
@@ -730,8 +745,9 @@ export class GlMap implements Renderer {
     vis(pair("dfm-fill"), o.countries === "fill")
     vis(pair("dfm-outline"), o.countries === "outline")
     vis(pair("dfm-borders"), o.countries !== "off")
+    vis(pair("dfm-kinds"), o.countries !== "off" && shading)
     const thin = o.countries === "outline"
-    for (const id of pair("dfm-borders")) {
+    for (const id of [...pair("dfm-borders"), ...pair("dfm-kinds")]) {
       this.map.setPaintProperty(id, "line-color", thin ? (this.theme.dark || o.base === "satellite" ? "#0b0f14" : "#ffffff") : L.border)
       this.map.setPaintProperty(id, "line-opacity", thin ? 0.5 : 0.9)
     }
@@ -764,6 +780,11 @@ export class GlMap implements Renderer {
     const point = (coords: [number, number], properties: Record<string, unknown>): Feature<Geometry> => ({ type: "Feature", properties, geometry: { type: "Point", coordinates: coords } })
     set("dfm-control", withColor(d.control))
     set("dfm-borders", { type: "FeatureCollection", features: [{ type: "Feature", properties: {}, geometry: d.borders }] })
+    set("dfm-kinds", { type: "FeatureCollection", features: [{ type: "Feature", properties: {}, geometry: d.kinds }] })
+    set("dfm-outline", {
+      type: "FeatureCollection",
+      features: d.outlines.map((f) => ({ ...f, properties: { c: f.properties.c, col: this.colorOf(f.properties.c) } })),
+    })
     set("dfm-claims", withColor(d.claims))
     set("dfm-presence", withColor(d.presence))
     set("dfm-stations", { type: "FeatureCollection", features: this.data.stations.map((s) => point([s.lon, s.lat], { name: s.name, col: this.colorOf(s.op) })) })
@@ -827,10 +848,10 @@ export class GlMap implements Renderer {
 const empty = (): FeatureCollection => ({ type: "FeatureCollection", features: [] })
 
 // A layer drawn from the 300 m GeoJSON below DETAIL_Z and from the
-// full-detail tiles above it ("-d"). The GeoJSON borders and outlines come
-// from their own sources; in the tiles they're layers of one source.
-function both(id: string, tileLayer: "control" | "outline" | "borders", rest: object): LayerSpecification[] {
-  const geojson = { control: "dfm-control", outline: "dfm-control", borders: "dfm-borders" }[tileLayer]
+// full-detail tiles above it ("-d"). The GeoJSON lines come from their own
+// sources; in the tiles they're layers of one source.
+function both(id: string, tileLayer: "control" | "outline" | "borders" | "kinds", rest: object): LayerSpecification[] {
+  const geojson = { control: "dfm-control", outline: "dfm-outline", borders: "dfm-borders", kinds: "dfm-kinds" }[tileLayer]
   return [
     { id, source: geojson, maxzoom: DETAIL_Z, ...rest } as LayerSpecification,
     { id: `${id}-d`, source: "dfm-detail", "source-layer": tileLayer, minzoom: DETAIL_Z, ...rest } as LayerSpecification,
