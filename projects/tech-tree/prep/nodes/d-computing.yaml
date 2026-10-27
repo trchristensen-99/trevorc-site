@@ -1,0 +1,3676 @@
+# Part D: electronics, computing and AI from about 1945, the AI deep dive,
+# and quantum computing. Written 2026-10-27.
+
+# ---------------------------------------------------------------------------
+# Early electronic computers and the transistor
+# ---------------------------------------------------------------------------
+
+- id: electronic-computer
+  name: Electronic digital computer (ENIAC)
+  kind: device
+  fields: [computing, electronics]
+  date: 1945
+  status: achieved
+  tier: 1
+  summary: >-
+    ENIAC, finished at the University of Pennsylvania in late 1945 and unveiled
+    in February 1946, was the first general-purpose programmable electronic
+    computer, built from about 18,000 vacuum tubes and reprogrammed by
+    rewiring plugboards.
+  requires: [vacuum-tube, switching-circuit-theory]
+  helped_by: [boolean-logic, tabulating-machine, radar, relay]
+  efforts:
+    - who: J. Presper Eckert, John Mauchly (Moore School, for the US Army Ordnance Corps)
+      where: USA
+      when: 1945
+      outcome: achieved
+      note: Built to compute artillery firing tables; one of its first real jobs was a calculation for the hydrogen bomb.
+    - who: Tommy Flowers (Post Office Research Station, for Bletchley Park)
+      where: UK
+      when: 1944
+      outcome: independent
+      note: Colossus, an electronic but special-purpose code-breaking machine, kept secret until the 1970s.
+    - who: Konrad Zuse
+      where: Germany
+      when: 1941
+      outcome: independent
+      note: The Z3 was programmable but electromechanical, built from relays.
+    - who: John Atanasoff, Clifford Berry (Iowa State)
+      where: USA
+      when: 1942
+      outcome: independent
+      note: Electronic but not programmable; a 1973 court ruling cited it to void the ENIAC patent.
+  effort:
+    span: [1943, 1945]
+    people: 50
+    cost_usd: 8e6
+    note: "About $487,000 at the time (roughly $7 million in 2024 dollars per Wikipedia); 17,468 tubes, 30 tons, 150 to 200 kW."
+  sources:
+    - title: Wikipedia, ENIAC
+      url: https://en.wikipedia.org/wiki/ENIAC
+    - title: Computer History Museum, Timeline of Computer History, 1945
+      url: https://www.computerhistory.org/timeline/1945/
+
+- id: monte-carlo-method
+  name: Monte Carlo method
+  kind: technique
+  fields: [math, computing]
+  date: 1946
+  status: achieved
+  tier: 3
+  summary: >-
+    Stanislaw Ulam and John von Neumann's idea of estimating hard quantities
+    by running many random simulations, first run on ENIAC in 1948 for nuclear
+    weapons design and now used everywhere from physics to finance to AI.
+  requires: [probability-theory]
+  helped_by: [electronic-computer, nuclear-weapon]
+  efforts:
+    - who: Stanislaw Ulam, John von Neumann, Nicholas Metropolis (Los Alamos)
+      where: USA
+      when: 1946
+      outcome: achieved
+      note: Named by Metropolis after the casino; published 1949. The Metropolis algorithm followed in 1953.
+  sources:
+    - title: Wikipedia, Monte Carlo method
+      url: https://en.wikipedia.org/wiki/Monte_Carlo_method
+
+- id: transistor
+  name: Transistor
+  kind: device
+  fields: [electronics, physics]
+  date: 1947
+  status: achieved
+  tier: 1
+  summary: >-
+    A semiconductor switch and amplifier, first made at Bell Labs in December
+    1947 from germanium and gold foil. It replaced the vacuum tube and is now
+    the most-manufactured object in history.
+  requires: [semiconductor-physics, quantum-mechanics]
+  helped_by: [radar, vacuum-tube, electron]
+  uses: [res-germanium, res-silicon]
+  efforts:
+    - who: John Bardeen, Walter Brattain (Bell Labs)
+      where: USA
+      when: 1947
+      outcome: achieved
+      note: The point-contact transistor. Nobel Prize in Physics 1956, shared with Shockley.
+    - who: William Shockley (Bell Labs)
+      where: USA
+      when: 1948
+      outcome: achieved
+      note: Conceived the more manufacturable junction transistor in 1948; first made in 1951.
+    - who: Herbert Mataré, Heinrich Welker (Westinghouse, Paris)
+      where: France
+      when: 1948
+      outcome: independent
+      note: The "transistron", developed from wartime radar detector work.
+    - who: Gordon Teal (Texas Instruments)
+      where: USA
+      when: 1954
+      outcome: achieved
+      note: First commercial silicon transistor, which handled heat far better than germanium.
+  effort:
+    span: [1945, 1947]
+    people: 10
+    note: A small solid-state group set up by Mervin Kelly at Bell Labs after the war.
+  sources:
+    - title: Nobel Prize in Physics 1956
+      url: https://www.nobelprize.org/prizes/physics/1956/summary/
+    - title: Computer History Museum, Invention of the point-contact transistor
+      url: https://www.computerhistory.org/siliconengine/invention-of-the-point-contact-transistor/
+
+- id: stored-program-computer
+  name: Stored-program computer
+  kind: device
+  fields: [computing, electronics]
+  date: 1948
+  status: achieved
+  tier: 1
+  summary: >-
+    A computer that keeps its program in the same memory as its data, so it can
+    be reprogrammed by loading new instructions. The Manchester Baby ran the
+    first stored program on June 21, 1948, and nearly every computer since has
+    used this design.
+  requires: [electronic-computer, computability-theory]
+  helped_by: [boolean-logic, radar]
+  efforts:
+    - who: John von Neumann, with Eckert and Mauchly (Moore School)
+      where: USA
+      when: 1945
+      outcome: achieved
+      note: The "First Draft of a Report on the EDVAC" (June 1945) described the design; Turing's ACE proposal followed in 1946.
+    - who: Frederic Williams, Tom Kilburn, Geoff Tootill (University of Manchester)
+      where: UK
+      when: 1948
+      outcome: achieved
+      note: The Manchester Baby, with memory on a cathode-ray tube (the Williams tube).
+    - who: Maurice Wilkes (University of Cambridge)
+      where: UK
+      when: 1949
+      outcome: achieved
+      note: EDSAC, the first stored-program computer in regular service.
+    - who: Eckert-Mauchly Computer Corporation (Remington Rand)
+      where: USA
+      when: 1951
+      outcome: achieved
+      note: UNIVAC I, the first US commercial computer; the Ferranti Mark 1 shipped in the UK the same year.
+  sources:
+    - title: Wikipedia, Manchester Baby
+      url: https://en.wikipedia.org/wiki/Manchester_Baby
+    - title: Wikipedia, First Draft of a Report on the EDVAC
+      url: https://en.wikipedia.org/wiki/First_Draft_of_a_Report_on_the_EDVAC
+
+- id: single-crystal-growth
+  name: Semiconductor single crystals and zone refining
+  kind: technique
+  fields: [materials, electronics]
+  date: 1950
+  status: achieved
+  tier: 3
+  summary: >-
+    Pulling large single crystals of germanium and later silicon from a melt,
+    and purifying them by zone refining to impurity levels near one part per
+    billion, which made reliable transistors and then silicon wafers possible.
+  requires: [semiconductor-physics]
+  helped_by: [transistor]
+  uses: [res-germanium, res-silicon]
+  efforts:
+    - who: Gordon Teal, John Little (Bell Labs)
+      where: USA
+      when: 1950
+      outcome: achieved
+      note: Adapted Jan Czochralski's 1916 crystal-pulling method; William Pfann's zone refining followed in 1951 to 1952.
+  sources:
+    - title: Computer History Museum, Development of zone refining
+      url: https://www.computerhistory.org/siliconengine/development-of-zone-refining/
+
+- id: compiler
+  name: Compiler
+  kind: technique
+  fields: [computing]
+  date: 1952
+  status: achieved
+  tier: 2
+  summary: >-
+    A program that translates human-readable code into machine instructions,
+    so people no longer had to write raw machine code.
+  requires: [stored-program-computer]
+  efforts:
+    - who: Grace Hopper (Remington Rand)
+      where: USA
+      when: 1952
+      outcome: achieved
+      note: The A-0 system, an early linker-loader she called a compiler.
+    - who: Alick Glennie (University of Manchester)
+      where: UK
+      when: 1952
+      outcome: independent
+      note: Autocode for the Manchester Mark 1, often called the first compiled language.
+  sources:
+    - title: Wikipedia, History of compiler construction
+      url: https://en.wikipedia.org/wiki/History_of_compiler_construction
+
+- id: magnetic-core-memory
+  name: Magnetic-core memory
+  kind: device
+  fields: [electronics, computing]
+  date: 1953
+  status: achieved
+  tier: 3
+  summary: >-
+    Memory made of tiny magnetic rings threaded on wires, each storing one bit.
+    It was the main computer memory from the mid-1950s until DRAM chips
+    replaced it in the 1970s.
+  requires: [stored-program-computer]
+  efforts:
+    - who: Jay Forrester (MIT, Project Whirlwind)
+      where: USA
+      when: 1953
+      outcome: achieved
+      note: An Wang patented a related pulse-transfer memory in 1949.
+  sources:
+    - title: Wikipedia, Magnetic-core memory
+      url: https://en.wikipedia.org/wiki/Magnetic-core_memory
+
+- id: hard-disk-drive
+  name: Hard disk drive
+  kind: device
+  fields: [electronics, computing]
+  date: 1956
+  status: achieved
+  tier: 3
+  summary: >-
+    Spinning magnetic platters read by a moving head, giving computers fast
+    random access to large stored data. IBM's first, the RAMAC 350, held about
+    5 MB on fifty 24-inch disks.
+  requires: [stored-program-computer]
+  efforts:
+    - who: Reynold Johnson's team (IBM, San Jose)
+      where: USA
+      when: 1956
+      outcome: achieved
+  sources:
+    - title: Wikipedia, IBM 350
+      url: https://en.wikipedia.org/wiki/IBM_350
+
+- id: programming-languages
+  name: High-level programming languages (FORTRAN)
+  kind: technique
+  fields: [computing]
+  date: 1957
+  status: achieved
+  tier: 1
+  summary: >-
+    Languages that let people write programs in something close to math or
+    English and have a compiler produce efficient machine code. FORTRAN (1957)
+    proved compiled code could rival hand-written code, and LISP, COBOL and
+    ALGOL followed within three years.
+  requires: [compiler]
+  helped_by: [mathematical-logic]
+  efforts:
+    - who: John Backus's team (IBM)
+      where: USA
+      when: 1957
+      outcome: achieved
+      note: FORTRAN, for scientific computing.
+    - who: John McCarthy (MIT)
+      where: USA
+      when: 1958
+      outcome: achieved
+      note: LISP, see the lisp node.
+    - who: CODASYL committee, drawing on Grace Hopper's FLOW-MATIC
+      where: USA
+      when: 1959
+      outcome: achieved
+      note: COBOL, for business data processing.
+    - who: International committee (ALGOL 58 and ALGOL 60)
+      where: Europe and USA
+      when: 1960
+      outcome: achieved
+      note: Introduced block structure and formal grammar (BNF); ancestor of Pascal and C.
+  effort:
+    span: [1954, 1957]
+    people: 10
+    note: Backus estimated the first FORTRAN compiler took about 18 person-years.
+  sources:
+    - title: Wikipedia, Fortran
+      url: https://en.wikipedia.org/wiki/Fortran
+    - title: Backus, The History of FORTRAN I, II and III (1978)
+      url: https://dl.acm.org/doi/10.1145/960118.808380
+
+- id: photolithography
+  name: Photolithography for semiconductors
+  kind: technique
+  fields: [electronics, materials, chemistry]
+  date: 1957
+  status: achieved
+  tier: 2
+  summary: >-
+    Printing circuit patterns onto a wafer by shining light through a mask onto
+    a light-sensitive coating, then etching. It lets billions of devices be
+    made at once and has driven every shrink in chip feature size since.
+  requires: [photography, transistor]
+  efforts:
+    - who: Jay Lathrop, James Nall (US Army Diamond Ordnance Fuze Laboratories)
+      where: USA
+      when: 1957
+      outcome: achieved
+      note: Lathrop then joined Texas Instruments; Fairchild and Bell Labs developed it in parallel.
+  sources:
+    - title: Computer History Museum, Photolithography techniques are used to make silicon devices
+      url: https://www.computerhistory.org/siliconengine/photolithography-techniques-are-used-to-make-silicon-devices/
+
+- id: integrated-circuit
+  name: Integrated circuit
+  kind: device
+  fields: [electronics]
+  date: 1958
+  status: achieved
+  tier: 1
+  summary: >-
+    Many transistors and other parts made together on one piece of
+    semiconductor, wired up on the chip itself. It removed the hand-wiring
+    bottleneck and started the exponential growth of chip complexity.
+  requires: [transistor, photolithography, single-crystal-growth]
+  uses: [res-silicon, res-germanium]
+  efforts:
+    - who: Jack Kilby (Texas Instruments)
+      where: USA
+      when: 1958
+      outcome: achieved
+      note: A germanium chip with flying gold wires, demonstrated September 12, 1958. Nobel Prize in Physics 2000.
+    - who: Robert Noyce (Fairchild Semiconductor)
+      where: USA
+      when: 1959
+      outcome: independent
+      note: The monolithic silicon IC built with the planar process; patented 1959, first working chips 1960. This is the form that won.
+    - who: Geoffrey Dummer (UK Royal Radar Establishment)
+      where: UK
+      when: 1952
+      outcome: abandoned
+      note: Proposed the idea publicly in 1952 but could not get it built.
+  sources:
+    - title: Computer History Museum, All semiconductor solid circuit is demonstrated
+      url: https://www.computerhistory.org/siliconengine/all-semiconductor-solid-circuit-is-demonstrated/
+    - title: Nobel Prize in Physics 2000
+      url: https://www.nobelprize.org/prizes/physics/2000/summary/
+
+- id: planar-process
+  name: Planar process
+  kind: technique
+  fields: [electronics, materials]
+  date: 1959
+  status: achieved
+  tier: 3
+  summary: >-
+    Building transistors into a flat silicon surface protected by a grown layer
+    of silicon dioxide, so devices are reliable and can be wired together by a
+    deposited metal layer. Every modern chip is made this way.
+  requires: [photolithography, transistor]
+  uses: [res-silicon]
+  efforts:
+    - who: Jean Hoerni (Fairchild Semiconductor)
+      where: USA
+      when: 1959
+      outcome: achieved
+      note: Built on oxide masking found by Carl Frosch and Lincoln Derick at Bell Labs (1957) and Mohamed Atalla's surface passivation work.
+  sources:
+    - title: Computer History Museum, Invention of the planar manufacturing process
+      url: https://www.computerhistory.org/siliconengine/invention-of-the-planar-manufacturing-process/
+
+- id: mosfet
+  name: MOSFET
+  kind: device
+  fields: [electronics, physics]
+  date: 1959
+  status: achieved
+  tier: 2
+  summary: >-
+    The metal-oxide-semiconductor field-effect transistor, switched by voltage
+    on an insulated gate. It scales down well and uses little power, so it
+    became the building block of nearly all modern chips.
+  requires: [transistor]
+  helped_by: [planar-process]
+  uses: [res-silicon]
+  efforts:
+    - who: Mohamed Atalla, Dawon Kahng (Bell Labs)
+      where: USA
+      when: 1959
+      outcome: achieved
+      note: Demonstrated late 1959 and presented in 1960; Bell Labs at first saw little use for it.
+  sources:
+    - title: Computer History Museum, Metal oxide semiconductor (MOS) transistor demonstrated
+      url: https://www.computerhistory.org/siliconengine/metal-oxide-semiconductor-mos-transistor-demonstrated/
+
+- id: time-sharing
+  name: Time-sharing
+  kind: technique
+  fields: [computing]
+  date: 1961
+  status: achieved
+  tier: 3
+  summary: >-
+    Letting many users work interactively on one computer at once by switching
+    rapidly between them, which created the interactive computing culture that
+    led to networks, email and personal computers.
+  requires: [stored-program-computer]
+  efforts:
+    - who: Fernando Corbató's group (MIT)
+      where: USA
+      when: 1961
+      outcome: achieved
+      note: CTSS, demonstrated November 1961; John McCarthy had proposed time-sharing in 1959.
+  sources:
+    - title: Wikipedia, Compatible Time-Sharing System
+      url: https://en.wikipedia.org/wiki/Compatible_Time-Sharing_System
+
+- id: cmos
+  name: CMOS logic
+  kind: technique
+  fields: [electronics]
+  date: 1963
+  status: achieved
+  tier: 3
+  summary: >-
+    Pairing complementary n-type and p-type MOS transistors so a logic gate
+    draws almost no power except when it switches. It became the standard for
+    digital chips from the 1980s on.
+  requires: [mosfet]
+  efforts:
+    - who: Frank Wanlass, Chih-Tang Sah (Fairchild Semiconductor)
+      where: USA
+      when: 1963
+      outcome: achieved
+  sources:
+    - title: Computer History Museum, Complementary MOS circuit configuration is invented
+      url: https://www.computerhistory.org/siliconengine/complementary-mos-circuit-configuration-is-invented/
+
+- id: operating-systems
+  name: Operating systems
+  kind: technique
+  fields: [computing]
+  date: 1964
+  status: achieved
+  tier: 3
+  summary: >-
+    Software that manages a computer's memory, storage, devices and running
+    programs so applications do not each have to. IBM's OS/360 and MIT's
+    Multics in the mid-1960s set the template, and taught hard lessons about
+    large software projects.
+  requires: [stored-program-computer, programming-languages]
+  helped_by: [time-sharing]
+  efforts:
+    - who: General Motors and North American Aviation
+      where: USA
+      when: 1956
+      outcome: achieved
+      note: GM-NAA I/O for the IBM 704, an early batch-processing system.
+    - who: Fred Brooks and team (IBM)
+      where: USA
+      when: 1964
+      outcome: achieved
+      note: OS/360, announced 1964 and shipped from 1966; the source of "The Mythical Man-Month".
+    - who: MIT, Bell Labs, General Electric
+      where: USA
+      when: 1965
+      outcome: achieved
+      note: Multics, which introduced many security and file-system ideas; Bell Labs left in 1969 and built Unix.
+  effort:
+    span: [1963, 1966]
+    people: 1000
+    note: Brooks put OS/360 at roughly 5,000 person-years, with over 1,000 people at the peak.
+  sources:
+    - title: Wikipedia, OS/360 and successors
+      url: https://en.wikipedia.org/wiki/OS/360_and_successors
+
+- id: ibm-system-360
+  name: IBM System/360
+  kind: device
+  fields: [computing, society]
+  date: 1964
+  status: achieved
+  tier: 3
+  summary: >-
+    A family of compatible computers, from small to large, that all ran the
+    same software. It standardized the 8-bit byte and made software an asset
+    that outlived any single machine.
+  requires: [stored-program-computer, transistor, operating-systems]
+  efforts:
+    - who: Gene Amdahl, Fred Brooks, Gerrit Blaauw (IBM)
+      where: USA
+      when: 1964
+      outcome: achieved
+  effort:
+    span: [1961, 1965]
+    people: 10000
+    cost_usd: 5e10
+    note: "Fortune called it IBM's $5 billion gamble (1960s dollars), more than IBM's annual revenue at the time."
+  sources:
+    - title: Wikipedia, IBM System/360
+      url: https://en.wikipedia.org/wiki/IBM_System/360
+
+- id: moores-law
+  name: "Moore's law"
+  kind: discovery
+  fields: [electronics, society]
+  date: 1965
+  status: achieved
+  tier: 2
+  summary: >-
+    Gordon Moore's observation that the number of components on a chip was
+    doubling every year (revised in 1975 to every two years). It held for five
+    decades, partly because the industry planned its roadmaps around it.
+  requires: [integrated-circuit]
+  metric: transistors-per-chip
+  efforts:
+    - who: Gordon Moore (Fairchild Semiconductor)
+      where: USA
+      when: 1965
+      outcome: achieved
+      note: '"Cramming more components onto integrated circuits", Electronics, April 19, 1965.'
+  sources:
+    - title: Computer History Museum, Moore's Law predicts the future of integrated circuits
+      url: https://www.computerhistory.org/siliconengine/moores-law-predicts-the-future-of-integrated-circuits/
+
+- id: packet-switching
+  name: Packet switching
+  kind: technique
+  fields: [computing, electronics]
+  date: 1965
+  status: achieved
+  tier: 2
+  summary: >-
+    Breaking messages into small addressed packets that travel independently
+    through a shared network and are reassembled at the end, instead of holding
+    a dedicated circuit open. It is the basis of the internet.
+  requires: [stored-program-computer, information-theory]
+  helped_by: [telephone]
+  efforts:
+    - who: Paul Baran (RAND Corporation)
+      where: USA
+      when: 1964
+      outcome: achieved
+      note: '"On Distributed Communications" (1960 to 1964), aimed at a network that could survive nuclear attack.'
+    - who: Donald Davies (National Physical Laboratory)
+      where: UK
+      when: 1965
+      outcome: independent
+      note: Coined "packet"; the NPL network ran from 1969 to 1970.
+    - who: Leonard Kleinrock (MIT, then UCLA)
+      where: USA
+      when: 1964
+      outcome: independent
+      note: Queueing theory of message-switched networks.
+  sources:
+    - title: Wikipedia, Packet switching
+      url: https://en.wikipedia.org/wiki/Packet_switching
+
+- id: arpanet
+  name: ARPANET
+  kind: infrastructure
+  fields: [computing]
+  date: 1969
+  status: achieved
+  tier: 2
+  summary: >-
+    The US defense research agency's packet-switched network linking university
+    computers. The first message went from UCLA to SRI on October 29, 1969, and
+    it grew into the core of the early internet.
+  requires: [packet-switching, time-sharing]
+  helped_by: [darpa]
+  efforts:
+    - who: Larry Roberts and Bob Taylor (ARPA IPTO); Frank Heart's IMP team (BBN)
+      where: USA
+      when: 1969
+      outcome: achieved
+      note: BBN built the Interface Message Processors, the first packet routers.
+  effort:
+    span: [1966, 1969]
+    people: 30
+    cost_usd: 9e6
+    note: "BBN's first contract, for four IMPs, was about $1 million (1968 to 1969 dollars)."
+  sources:
+    - title: Engineering and Technology History Wiki, ARPANET
+      url: https://ethw.org/ARPANET
+    - title: Computer History Museum, BBN's IMP and Network Operations Center team
+      url: https://www.computerhistory.org/revolution/networking/19/407/2032
+
+- id: dram
+  name: Dynamic RAM (DRAM)
+  kind: device
+  fields: [electronics, computing]
+  date: 1970
+  status: achieved
+  tier: 2
+  summary: >-
+    Memory that stores each bit as charge on a tiny capacitor next to one
+    transistor, refreshed thousands of times a second. It is dense and cheap,
+    and has been computers' main working memory since the 1970s.
+  requires: [mosfet, integrated-circuit]
+  efforts:
+    - who: Robert Dennard (IBM)
+      where: USA
+      when: 1966
+      outcome: achieved
+      note: Invented the one-transistor cell in 1966; patented 1968.
+    - who: Intel
+      where: USA
+      when: 1970
+      outcome: achieved
+      note: The 1103, a 1-kilobit chip, the first commercial DRAM; by 1972 it was the best-selling chip in the world.
+  sources:
+    - title: Wikipedia, Dynamic random-access memory
+      url: https://en.wikipedia.org/wiki/Dynamic_random-access_memory
+
+- id: relational-database
+  name: Relational database
+  kind: technique
+  fields: [computing, society]
+  date: 1970
+  status: achieved
+  tier: 3
+  summary: >-
+    Storing data as tables queried by logical expressions, so programs ask for
+    what they want rather than how to find it. It runs most of the world's
+    business records through SQL.
+  requires: [stored-program-computer, hard-disk-drive, mathematical-logic]
+  efforts:
+    - who: Edgar F. Codd (IBM)
+      where: USA
+      when: 1970
+      outcome: achieved
+      note: '"A Relational Model of Data for Large Shared Data Banks"; IBM System R and SEQUEL (1974), Oracle (1979).'
+  sources:
+    - title: Codd 1970, Communications of the ACM
+      url: https://doi.org/10.1145/362384.362685
+
+- id: optical-fiber
+  name: Low-loss optical fiber
+  kind: device
+  fields: [electronics, materials, physics]
+  date: 1970
+  status: achieved
+  tier: 2
+  summary: >-
+    Ultra-pure glass strands that carry laser light over long distances. They
+    carry almost all intercontinental and backbone internet traffic.
+  requires: [laser, glassmaking]
+  efforts:
+    - who: Charles Kao, George Hockham (Standard Telecommunication Laboratories)
+      where: UK
+      when: 1966
+      outcome: achieved
+      note: Showed that losses came from impurities and could fall below 20 dB per km. Kao shared the 2009 Nobel Prize in Physics.
+    - who: Robert Maurer, Donald Keck, Peter Schultz (Corning)
+      where: USA
+      when: 1970
+      outcome: achieved
+      note: First fiber under 20 dB per km. The first transatlantic fiber cable, TAT-8, opened in 1988.
+  sources:
+    - title: Nobel Prize in Physics 2009
+      url: https://www.nobelprize.org/prizes/physics/2009/summary/
+
+- id: unix
+  name: Unix and C
+  kind: technique
+  fields: [computing]
+  date: 1971
+  status: achieved
+  tier: 2
+  summary: >-
+    A small, portable operating system and the C language it was rewritten in.
+    Its ideas (files, pipes, small tools) live on in Linux, macOS, iOS and
+    Android, which run most servers and phones.
+  requires: [operating-systems, programming-languages]
+  helped_by: [time-sharing]
+  efforts:
+    - who: Ken Thompson, Dennis Ritchie (Bell Labs)
+      where: USA
+      when: 1971
+      outcome: achieved
+      note: Begun in 1969 on a PDP-7; First Edition November 1971; C in 1972; kernel rewritten in C in 1973. Turing Award 1983.
+  effort:
+    span: [1969, 1973]
+    people: 5
+  sources:
+    - title: Ritchie and Thompson, The UNIX Time-Sharing System (1974)
+      url: https://doi.org/10.1145/361011.361061
+
+- id: microprocessor
+  name: Microprocessor
+  kind: device
+  fields: [electronics, computing]
+  date: 1971
+  status: achieved
+  tier: 1
+  summary: >-
+    A whole computer processor on one chip. Intel's 4004 (1971) had 2,300
+    transistors; today's largest chips have more than 100 billion.
+  requires: [integrated-circuit, mosfet]
+  helped_by: [moores-law, dram]
+  metric: transistors-per-chip
+  efforts:
+    - who: Federico Faggin, Ted Hoff, Stanley Mazor (Intel), Masatoshi Shima (Busicom)
+      where: USA and Japan
+      when: 1971
+      outcome: achieved
+      note: The 4004, built for a Busicom calculator; the 8-bit 8080 (1974) made personal computers possible.
+    - who: Ray Holt (Garrett AiResearch)
+      where: USA
+      when: 1970
+      outcome: independent
+      note: A multi-chip processor for the F-14 fighter, classified until 1998.
+    - who: Texas Instruments
+      where: USA
+      when: 1971
+      outcome: independent
+      note: TMS1802 and TMS1000 single-chip calculator processors.
+  effort:
+    span: [1969, 1971]
+    people: 5
+  sources:
+    - title: Computer History Museum, Microprocessor integrates CPU function onto a single chip
+      url: https://www.computerhistory.org/siliconengine/microprocessor-integrates-cpu-function-onto-a-single-chip/
+
+- id: email
+  name: Network email
+  kind: technique
+  fields: [computing, society]
+  date: 1971
+  status: achieved
+  tier: 3
+  summary: >-
+    Sending messages between users on different computers, with the @ sign
+    separating user and host. It quickly became the ARPANET's most popular use.
+  requires: [arpanet]
+  efforts:
+    - who: Ray Tomlinson (BBN)
+      where: USA
+      when: 1971
+      outcome: achieved
+  sources:
+    - title: Wikipedia, History of email
+      url: https://en.wikipedia.org/wiki/History_of_email
+
+- id: ethernet
+  name: Ethernet
+  kind: technique
+  fields: [computing, electronics]
+  date: 1973
+  status: achieved
+  tier: 3
+  summary: >-
+    A way for many computers to share one cable for local networking, listening
+    for collisions and retrying. Its descendants wire nearly every office and
+    data center.
+  requires: [packet-switching]
+  efforts:
+    - who: Robert Metcalfe, David Boggs (Xerox PARC)
+      where: USA
+      when: 1973
+      outcome: achieved
+      note: Inspired by Norman Abramson's ALOHAnet radio network in Hawaii (1971). Metcalfe won the 2022 Turing Award.
+  sources:
+    - title: Wikipedia, Ethernet
+      url: https://en.wikipedia.org/wiki/Ethernet
+
+- id: graphical-user-interface
+  name: Graphical user interface
+  kind: technique
+  fields: [computing, society]
+  date: 1973
+  status: achieved
+  tier: 2
+  summary: >-
+    Windows, icons, menus and a mouse pointer on a bitmapped screen. It made
+    computers usable by people who would never type commands.
+  requires: [stored-program-computer, cathode-ray-tube]
+  helped_by: [time-sharing]
+  efforts:
+    - who: Douglas Engelbart (SRI)
+      where: USA
+      when: 1968
+      outcome: achieved
+      note: The December 1968 "Mother of All Demos" showed the mouse, hypertext and shared editing.
+    - who: Alan Kay, Butler Lampson, Chuck Thacker and others (Xerox PARC)
+      where: USA
+      when: 1973
+      outcome: achieved
+      note: The Xerox Alto, with a bitmapped display and windowed interface.
+    - who: Apple
+      where: USA
+      when: 1984
+      outcome: achieved
+      note: The Macintosh brought the GUI to the mass market; Microsoft Windows 3.0 (1990) made it dominant.
+  sources:
+    - title: Wikipedia, Xerox Alto
+      url: https://en.wikipedia.org/wiki/Xerox_Alto
+
+- id: tcp-ip
+  name: TCP/IP
+  kind: technique
+  fields: [computing]
+  date: 1974
+  status: achieved
+  tier: 2
+  summary: >-
+    The pair of protocols that lets separate networks join into one network of
+    networks, with hosts, not the network, handling reliability. It is the
+    common language of the internet.
+  requires: [packet-switching, arpanet]
+  efforts:
+    - who: Vint Cerf (Stanford), Bob Kahn (ARPA)
+      where: USA
+      when: 1974
+      outcome: achieved
+      note: '"A Protocol for Packet Network Intercommunication", May 1974. Turing Award 2004.'
+    - who: International Organization for Standardization and national telecoms
+      where: Europe
+      when: 1984
+      outcome: rival
+      note: The OSI protocol suite, backed by governments, lost to TCP/IP by the early 1990s.
+  sources:
+    - title: Cerf and Kahn 1974, IEEE Transactions on Communications
+      url: https://doi.org/10.1109/TCOM.1974.1092259
+
+- id: dennard-scaling
+  name: Dennard scaling
+  kind: discovery
+  fields: [electronics, physics]
+  date: 1974
+  status: achieved
+  tier: 3
+  summary: >-
+    The rule that shrinking a MOSFET lets it run faster at the same power
+    density. It made chips faster every generation until about 2005, when
+    leakage current stopped voltage from falling and clock speeds stalled near
+    4 GHz.
+  requires: [mosfet]
+  efforts:
+    - who: Robert Dennard and colleagues (IBM)
+      where: USA
+      when: 1974
+      outcome: achieved
+  sources:
+    - title: Wikipedia, Dennard scaling
+      url: https://en.wikipedia.org/wiki/Dennard_scaling
+
+- id: public-key-cryptography
+  name: Public-key cryptography
+  kind: technique
+  fields: [math, computing]
+  date: 1976
+  status: achieved
+  tier: 2
+  summary: >-
+    Encryption with a public key anyone can use to lock a message and a private
+    key only the owner can use to unlock it, so strangers can communicate
+    securely without first sharing a secret. It secures web traffic, payments
+    and software updates.
+  requires: [information-theory]
+  helped_by: [arpanet]
+  efforts:
+    - who: Whitfield Diffie, Martin Hellman (Stanford), building on Ralph Merkle
+      where: USA
+      when: 1976
+      outcome: achieved
+      note: '"New Directions in Cryptography", November 1976. Turing Award 2015.'
+    - who: Ron Rivest, Adi Shamir, Leonard Adleman (MIT)
+      where: USA
+      when: 1977
+      outcome: achieved
+      note: RSA, the first practical public-key encryption and signature scheme. Turing Award 2002.
+    - who: James Ellis, Clifford Cocks, Malcolm Williamson (GCHQ)
+      where: UK
+      when: 1973
+      outcome: independent
+      note: Discovered equivalents of RSA and Diffie-Hellman in secret from 1970 to 1974; declassified in 1997.
+  sources:
+    - title: Diffie and Hellman 1976, IEEE Transactions on Information Theory
+      url: https://doi.org/10.1109/TIT.1976.1055638
+    - title: Rivest, Shamir and Adleman 1978, Communications of the ACM
+      url: https://doi.org/10.1145/359340.359342
+
+- id: personal-computer
+  name: Personal computer
+  kind: device
+  fields: [computing, society]
+  date: 1977
+  status: achieved
+  tier: 1
+  summary: >-
+    A computer cheap and small enough for one person to own. Hobby kits in 1975
+    were followed in 1977 by ready-made machines like the Apple II, and the IBM
+    PC (1981) made it standard office equipment.
+  requires: [microprocessor, dram]
+  helped_by: [programming-languages, graphical-user-interface]
+  efforts:
+    - who: MITS (Ed Roberts)
+      where: USA
+      when: 1975
+      outcome: achieved
+      note: The Altair 8800 kit; Microsoft's first product was a BASIC for it.
+    - who: Apple (Steve Wozniak, Steve Jobs), Commodore, Tandy
+      where: USA
+      when: 1977
+      outcome: achieved
+      note: The "1977 trinity" of Apple II, Commodore PET and TRS-80.
+    - who: IBM
+      where: USA
+      when: 1981
+      outcome: achieved
+      note: The IBM PC, with an Intel 8088 and Microsoft DOS; its open design was cloned into the dominant platform.
+  sources:
+    - title: Computer History Museum, Timeline of Computer History, 1977
+      url: https://www.computerhistory.org/timeline/1977/
+
+- id: cellular-network
+  name: Cellular mobile phone network
+  kind: infrastructure
+  fields: [electronics, society]
+  date: 1979
+  status: achieved
+  tier: 2
+  summary: >-
+    Dividing an area into small cells that reuse radio frequencies and hand
+    calls between towers as phones move. Automated networks opened in Tokyo in
+    1979, went digital with GSM in 1991, and reached most of humanity by the
+    2010s.
+  requires: [radio, integrated-circuit]
+  helped_by: [microprocessor]
+  efforts:
+    - who: Douglas Ring, Rae Young (Bell Labs)
+      where: USA
+      when: 1947
+      outcome: achieved
+      note: Proposed the hexagonal cell concept.
+    - who: Martin Cooper (Motorola)
+      where: USA
+      when: 1973
+      outcome: achieved
+      note: First handheld cellular call, April 3, 1973, on a DynaTAC prototype.
+    - who: NTT
+      where: Japan
+      when: 1979
+      outcome: achieved
+      note: First commercial automated cellular network; AMPS opened in Chicago in 1983.
+    - who: European GSM consortium
+      where: Europe
+      when: 1991
+      outcome: achieved
+      note: The digital 2G standard; 3G from 2001, 4G LTE from 2009, 5G from 2019.
+  sources:
+    - title: Wikipedia, History of mobile phones
+      url: https://en.wikipedia.org/wiki/History_of_mobile_phones
+
+- id: risc-architecture
+  name: RISC processors and ARM
+  kind: technique
+  fields: [electronics, computing]
+  date: 1980
+  status: achieved
+  tier: 3
+  summary: >-
+    Processors with a small set of simple, fast instructions, leaving
+    optimization to the compiler. The low-power ARM design that came out of it
+    is in nearly every phone and in hundreds of billions of chips.
+  requires: [microprocessor, compiler]
+  efforts:
+    - who: John Cocke (IBM 801)
+      where: USA
+      when: 1980
+      outcome: achieved
+    - who: David Patterson (Berkeley RISC), John Hennessy (Stanford MIPS)
+      where: USA
+      when: 1981
+      outcome: achieved
+      note: Turing Award 2017.
+    - who: Sophie Wilson, Steve Furber (Acorn Computers)
+      where: UK
+      when: 1985
+      outcome: achieved
+      note: ARM1. Arm licensees had shipped over 250 billion chips by the mid-2020s.
+  sources:
+    - title: Wikipedia, Reduced instruction set computer
+      url: https://en.wikipedia.org/wiki/Reduced_instruction_set_computer
+    - title: Wikipedia, ARM architecture family
+      url: https://en.wikipedia.org/wiki/ARM_architecture_family
+
+- id: deep-uv-lithography
+  name: Deep-ultraviolet excimer laser lithography
+  kind: technique
+  fields: [electronics, physics, materials]
+  date: 1982
+  status: achieved
+  tier: 3
+  summary: >-
+    Patterning chips with 248 nm and then 193 nm ultraviolet light from excimer
+    lasers. With water immersion (from about 2006) and multiple patterning,
+    193 nm light printed features far smaller than its wavelength, down to the
+    7 nm class.
+  requires: [photolithography, laser]
+  efforts:
+    - who: Kanti Jain (IBM Research)
+      where: USA
+      when: 1982
+      outcome: achieved
+      note: Demonstrated excimer laser lithography; KrF (248 nm) tools reached volume production in the 1990s.
+    - who: ASML, Nikon, Canon
+      where: Netherlands and Japan
+      when: 2006
+      outcome: achieved
+      note: 193 nm immersion scanners, first used in volume at the 45 nm node around 2007; ASML took most of the market.
+  sources:
+    - title: Wikipedia, Excimer laser lithography
+      url: https://en.wikipedia.org/wiki/Excimer_laser_lithography
+    - title: Wikipedia, Immersion lithography
+      url: https://en.wikipedia.org/wiki/Immersion_lithography
+
+- id: internet
+  name: The Internet
+  kind: infrastructure
+  fields: [computing, society]
+  date: 1983
+  status: achieved
+  tier: 1
+  summary: >-
+    The global network of networks, which began when the ARPANET switched to
+    TCP/IP on January 1, 1983. Opened to commercial traffic in 1995, it
+    connected about three quarters of humanity by 2025.
+  requires: [tcp-ip, arpanet]
+  helped_by: [ethernet, optical-fiber, personal-computer, communications-satellites, open-source]
+  efforts:
+    - who: ARPA, then the US National Science Foundation (NSFNET, 1986)
+      where: USA
+      when: 1983
+      outcome: achieved
+      note: NSFNET's backbone was retired in 1995 as commercial providers took over.
+    - who: French PTT
+      where: France
+      when: 1982
+      outcome: rival
+      note: Minitel, a centralized videotext network with millions of users, shut down in 2012.
+  sources:
+    - title: Internet Society, Brief History of the Internet
+      url: https://www.internetsociety.org/internet/history-internet/brief-history-internet/
+    - title: ITU, Facts and Figures 2025
+      url: https://www.itu.int/itu-d/reports/statistics/facts-figures-2025/
+
+- id: flash-memory
+  name: Flash memory
+  kind: device
+  fields: [electronics]
+  date: 1984
+  status: achieved
+  tier: 3
+  summary: >-
+    Chip memory that keeps data with the power off and can be erased in large
+    blocks at once. NAND flash replaced film, floppies and much of the hard
+    disk, and made phones and solid-state drives possible.
+  requires: [mosfet, integrated-circuit]
+  efforts:
+    - who: Fujio Masuoka (Toshiba)
+      where: Japan
+      when: 1984
+      outcome: achieved
+      note: NOR flash presented 1984 and NAND flash 1987; Intel shipped the first commercial NOR chip in 1988.
+  sources:
+    - title: Wikipedia, Flash memory
+      url: https://en.wikipedia.org/wiki/Flash_memory
+
+- id: world-wide-web
+  name: World Wide Web
+  kind: infrastructure
+  fields: [computing, society]
+  date: 1991
+  status: achieved
+  tier: 1
+  summary: >-
+    Linked hypertext pages addressed by URLs and fetched over HTTP, readable in
+    a browser on any computer. Released freely by CERN, it turned the internet
+    into a mass medium within a few years.
+  requires: [internet, personal-computer]
+  helped_by: [graphical-user-interface]
+  efforts:
+    - who: Tim Berners-Lee, Robert Cailliau (CERN)
+      where: Switzerland
+      when: 1991
+      outcome: achieved
+      note: Proposed March 1989; first server running late 1990; public August 1991; put in the public domain April 1993. Turing Award 2016.
+    - who: University of Minnesota
+      where: USA
+      when: 1991
+      outcome: rival
+      note: Gopher, a menu-based system, faded after the university sought license fees in 1993.
+    - who: Marc Andreessen, Eric Bina (NCSA)
+      where: USA
+      when: 1993
+      outcome: achieved
+      note: Mosaic, the browser that made the web popular; Netscape followed in 1994.
+  sources:
+    - title: Berners-Lee 1989, Information Management, A Proposal
+      url: https://www.w3.org/History/1989/proposal.html
+    - title: Wikipedia, World Wide Web
+      url: https://en.wikipedia.org/wiki/World_Wide_Web
+
+- id: search-engines
+  name: Web search engines
+  kind: technique
+  fields: [computing, society]
+  date: 1998
+  status: achieved
+  tier: 3
+  summary: >-
+    Crawling and indexing the whole web and ranking results, so anyone can find
+    pages by typing words. Google's PageRank (1998) ranked pages by the links
+    pointing to them.
+  requires: [world-wide-web]
+  efforts:
+    - who: Larry Page, Sergey Brin (Stanford, then Google)
+      where: USA
+      when: 1998
+      outcome: achieved
+    - who: AltaVista (DEC), Yahoo, Lycos and others
+      where: USA
+      when: 1995
+      outcome: rival
+  sources:
+    - title: Wikipedia, PageRank
+      url: https://en.wikipedia.org/wiki/PageRank
+
+- id: gpu
+  name: Graphics processing unit (GPU)
+  kind: device
+  fields: [electronics, computing]
+  date: 1999
+  status: achieved
+  tier: 2
+  summary: >-
+    A chip with many small cores doing the same math on lots of data at once,
+    built to draw 3D graphics for games. That same parallelism later made it
+    the engine of deep learning.
+  requires: [microprocessor, integrated-circuit]
+  helped_by: [personal-computer]
+  metric: gpu-flops-per-dollar
+  efforts:
+    - who: Nvidia
+      where: USA
+      when: 1999
+      outcome: achieved
+      note: GeForce 256, marketed as the first GPU because it did transform and lighting on the chip.
+    - who: 3dfx, ATI, Silicon Graphics
+      where: USA and Canada
+      when: 1996
+      outcome: rival
+      note: 3dfx Voodoo cards (1996) and SGI workstations came first; ATI became AMD's graphics division.
+  sources:
+    - title: Wikipedia, GeForce 256
+      url: https://en.wikipedia.org/wiki/GeForce_256
+
+- id: itanium
+  name: Itanium (IA-64)
+  kind: device
+  fields: [electronics, computing]
+  date: 2001
+  status: lost
+  tier: 3
+  summary: >-
+    Intel and HP's 64-bit processor family that relied on the compiler to
+    schedule instructions in parallel (EPIC). It was meant to replace x86 but
+    lost to AMD's backward-compatible x86-64 and was discontinued.
+  requires: [microprocessor, compiler]
+  competes: [x86-64]
+  efforts:
+    - who: Intel, Hewlett-Packard
+      where: USA
+      when: 2001
+      outcome: abandoned
+      note: First shipped May 2001; last shipments in 2021.
+  lost: >-
+    Compilers could not extract the parallelism the design depended on, x86
+    software ran slowly on it, and AMD's x86-64 gave 64 bits without breaking
+    compatibility. Intel adopted x86-64 in 2004, and Itanium faded to a niche
+    in HP servers until it ended in 2021.
+  sources:
+    - title: Wikipedia, Itanium
+      url: https://en.wikipedia.org/wiki/Itanium
+
+- id: x86-64
+  name: x86-64
+  kind: technique
+  fields: [electronics, computing]
+  date: 2003
+  status: achieved
+  tier: 3
+  summary: >-
+    AMD's 64-bit extension of the x86 instruction set, which ran old software
+    unchanged. Intel adopted it, and it still runs most PCs and servers.
+  requires: [microprocessor]
+  competes: [itanium]
+  efforts:
+    - who: AMD
+      where: USA
+      when: 2003
+      outcome: achieved
+      note: The Opteron, April 2003; Intel shipped its compatible version in 2004.
+  sources:
+    - title: Wikipedia, x86-64
+      url: https://en.wikipedia.org/wiki/X86-64
+
+- id: multicore-processors
+  name: Multicore processors
+  kind: device
+  fields: [electronics, computing]
+  date: 2005
+  status: achieved
+  tier: 3
+  summary: >-
+    Putting several processor cores on one chip once clock speeds stopped
+    rising. More speed now had to come from parallel software.
+  requires: [microprocessor, dennard-scaling]
+  efforts:
+    - who: IBM
+      where: USA
+      when: 2001
+      outcome: achieved
+      note: POWER4, the first commercial dual-core processor.
+    - who: AMD, Intel
+      where: USA
+      when: 2005
+      outcome: achieved
+      note: Athlon 64 X2 and Pentium D brought dual cores to desktops.
+  sources:
+    - title: Wikipedia, Multi-core processor
+      url: https://en.wikipedia.org/wiki/Multi-core_processor
+
+- id: cloud-computing
+  name: Cloud computing
+  kind: infrastructure
+  fields: [computing, society]
+  date: 2006
+  status: achieved
+  tier: 2
+  summary: >-
+    Renting computing, storage and software over the internet by the hour from
+    huge shared data centers instead of owning machines. It let small teams
+    scale instantly and later hosted most AI training and serving.
+  requires: [internet, world-wide-web]
+  helped_by: [open-source, multicore-processors]
+  efforts:
+    - who: Amazon Web Services
+      where: USA
+      when: 2006
+      outcome: achieved
+      note: S3 storage launched March 2006 and EC2 servers in August 2006.
+    - who: Google, Microsoft
+      where: USA
+      when: 2008
+      outcome: rival
+      note: Google App Engine (2008) and Microsoft Azure (2010).
+  sources:
+    - title: AWS, Announcing Amazon Elastic Compute Cloud (2006)
+      url: https://aws.amazon.com/about-aws/whats-new/2006/08/24/announcing-amazon-elastic-compute-cloud-amazon-ec2---beta/
+
+- id: gpu-computing
+  name: General-purpose GPU computing (CUDA)
+  kind: technique
+  fields: [computing, electronics]
+  date: 2007
+  status: achieved
+  tier: 2
+  summary: >-
+    Programming graphics chips for general math in an ordinary language.
+    Nvidia's CUDA (2007) made thousands of GPU cores easy to use for science,
+    and five years later for training neural networks.
+  requires: [gpu, programming-languages]
+  efforts:
+    - who: Ian Buck and team (Nvidia), building on Buck's Brook language at Stanford (2004)
+      where: USA
+      when: 2007
+      outcome: achieved
+      note: Announced November 2006 and released June 2007.
+    - who: Khronos Group (Apple, AMD and others)
+      where: USA
+      when: 2009
+      outcome: rival
+      note: OpenCL, an open standard that never matched CUDA's software ecosystem.
+  sources:
+    - title: Wikipedia, CUDA
+      url: https://en.wikipedia.org/wiki/CUDA
+
+- id: smartphone
+  name: Smartphone
+  kind: device
+  fields: [electronics, computing, society]
+  date: 2007
+  status: achieved
+  tier: 1
+  summary: >-
+    A pocket computer with a touchscreen, mobile internet, camera, GPS and app
+    store. The iPhone (2007) and Android (2008) put the internet in the hands
+    of most adults on Earth within about 15 years.
+  requires: [microprocessor, cellular-network, internet, flash-memory, lithium-ion-battery]
+  helped_by: [risc-architecture, gps, world-wide-web, cloud-computing]
+  efforts:
+    - who: Apple
+      where: USA
+      when: 2007
+      outcome: achieved
+      note: The iPhone, announced January 9 and released June 29, 2007; the App Store opened in 2008.
+    - who: Google and HTC
+      where: USA and Taiwan
+      when: 2008
+      outcome: achieved
+      note: Android, open-source, now on most of the world's phones.
+    - who: IBM and BellSouth; Nokia; Research In Motion
+      where: USA, Finland, Canada
+      when: 1994
+      outcome: rival
+      note: IBM Simon (1994), Nokia Communicator (1996) and BlackBerry (from 2002) came first; Nokia and BlackBerry lost the market after 2010.
+  sources:
+    - title: Wikipedia, Smartphone
+      url: https://en.wikipedia.org/wiki/Smartphone
+
+- id: cryptocurrency
+  name: Bitcoin and blockchains
+  kind: technique
+  fields: [computing, society]
+  date: 2009
+  status: achieved
+  tier: 3
+  summary: >-
+    A digital currency with no central issuer, kept honest by a shared ledger
+    that miners extend by spending computation (proof of work). It started a
+    large and volatile industry of cryptocurrencies.
+  requires: [public-key-cryptography, internet]
+  efforts:
+    - who: Satoshi Nakamoto (pseudonymous)
+      where: unknown
+      when: 2009
+      outcome: achieved
+      note: White paper October 31, 2008; first block January 3, 2009.
+  sources:
+    - title: Nakamoto 2008, Bitcoin, A Peer-to-Peer Electronic Cash System
+      url: https://bitcoin.org/bitcoin.pdf
+
+- id: finfet
+  name: FinFET transistors
+  kind: technique
+  fields: [electronics, materials]
+  date: 2011
+  status: achieved
+  tier: 3
+  summary: >-
+    Transistors whose channel is a thin vertical fin wrapped by the gate on
+    three sides, which cut leakage as planar transistors hit their limits. They
+    carried chipmaking from 22 nm down to the 3 nm class.
+  requires: [mosfet, deep-uv-lithography]
+  efforts:
+    - who: Digh Hisamoto (Hitachi); Chenming Hu, Tsu-Jae King Liu, Jeffrey Bokor (UC Berkeley)
+      where: Japan and USA
+      when: 1999
+      outcome: achieved
+      note: Hitachi's DELTA transistor (1989) and Berkeley's FinFET (1999).
+    - who: Intel
+      where: USA
+      when: 2011
+      outcome: achieved
+      note: First volume FinFETs ("Tri-Gate") at 22 nm, announced May 2011, shipped in 2012.
+  sources:
+    - title: Wikipedia, Fin field-effect transistor
+      url: https://en.wikipedia.org/wiki/Fin_field-effect_transistor
+
+- id: advanced-packaging
+  name: Advanced packaging and high-bandwidth memory
+  kind: technique
+  fields: [electronics, materials]
+  date: 2015
+  status: achieved
+  tier: 3
+  summary: >-
+    Stacking memory dies and placing several chips side by side on a silicon
+    interposer so they talk at very high bandwidth. HBM stacks and TSMC's
+    CoWoS packaging became a key bottleneck for AI chips in 2023 to 2026.
+  requires: [integrated-circuit, dram]
+  efforts:
+    - who: SK hynix, AMD
+      where: South Korea and USA
+      when: 2015
+      outcome: achieved
+      note: SK hynix made the first HBM in 2013; AMD's Fiji GPU (2015) was the first product to use it.
+    - who: TSMC
+      where: Taiwan
+      when: 2012
+      outcome: achieved
+      note: CoWoS (chip on wafer on substrate), used for most AI accelerators; AMD's chiplet CPUs followed from 2019.
+  sources:
+    - title: Wikipedia, High Bandwidth Memory
+      url: https://en.wikipedia.org/wiki/High_Bandwidth_Memory
+
+- id: euv-lithography
+  name: Extreme-ultraviolet (EUV) lithography
+  kind: technique
+  fields: [electronics, physics, materials]
+  date: 2019
+  status: achieved
+  tier: 2
+  summary: >-
+    Printing chips with 13.5 nm light made by hitting droplets of molten tin
+    with a laser about 50,000 times a second, focused by mirrors in a vacuum.
+    One Dutch company, ASML, makes the machines, which print the most advanced
+    chips.
+  requires: [deep-uv-lithography, laser]
+  helped_by: [moores-law]
+  uses: [res-tin]
+  efforts:
+    - who: Hiroo Kinoshita (NTT); US national labs in the EUV LLC consortium (1997 to 2003)
+      where: Japan and USA
+      when: 1985
+      outcome: achieved
+      note: Early soft X-ray projection lithography research.
+    - who: ASML, with Zeiss (optics) and Cymer (light source), co-funded by Intel, TSMC and Samsung
+      where: Netherlands, Germany, USA
+      when: 2019
+      outcome: achieved
+      note: Samsung's 7LPP (late 2018) and TSMC's N7+ (2019) were the first volume EUV processes.
+    - who: Nikon, Canon
+      where: Japan
+      when: 2010
+      outcome: abandoned
+      note: Dropped out of EUV development.
+  effort:
+    span: [1985, 2019]
+    people: 10000
+    cost_usd: 1e10
+    note: >-
+      Rough order of magnitude. ASML's customer co-investment program alone
+      raised about 1.4 billion euros of R&D funding in 2012. A production EUV
+      scanner costs about $180 million; a leading-edge fab using them costs
+      about $20 to 28 billion.
+  sources:
+    - title: ASML, EUV lithography systems
+      url: https://www.asml.com/en/products/euv-lithography-systems
+    - title: Wikipedia, Extreme ultraviolet lithography
+      url: https://en.wikipedia.org/wiki/Extreme_ultraviolet_lithography
+
+- id: gate-all-around
+  name: Gate-all-around transistors
+  kind: technique
+  fields: [electronics, materials]
+  date: 2022
+  status: achieved
+  tier: 3
+  summary: >-
+    Transistors whose channel is a stack of thin horizontal sheets with the
+    gate wrapped all the way around, the successor to FinFETs at the 2 to 3 nm
+    nodes.
+  requires: [finfet, euv-lithography]
+  efforts:
+    - who: Samsung
+      where: South Korea
+      when: 2022
+      outcome: achieved
+      note: First production at 3 nm, June 2022.
+    - who: TSMC
+      where: Taiwan
+      when: 2025
+      outcome: achieved
+      note: N2 entered volume production in the fourth quarter of 2025.
+    - who: Intel
+      where: USA
+      when: 2025
+      outcome: achieved
+      note: 18A, with RibbonFET transistors and backside power delivery (PowerVia).
+  effort:
+    cost_usd: 2.8e10
+    note: Consulting firm IBS estimated a 2 nm fab of 50,000 wafers a month at about $28 billion.
+  sources:
+    - title: Gigazine, TSMC quietly begins mass production of 2nm semiconductors (2026)
+      url: https://gigazine.net/gsc_news/en/20260105-tsmc-2nm/
+    - title: TechSpot, A 2nm-capable wafer fab will come with a $28 billion tag
+      url: https://www.techspot.com/community/topics/a-2nm-capable-wafer-fab-will-come-with-a-28-billion-tag-up-to-50-more-costly-than-3nm.283687/
+
+- id: high-na-euv
+  name: High-NA EUV lithography
+  kind: technique
+  fields: [electronics, physics]
+  date: 2025
+  status: ongoing
+  tier: 3
+  summary: >-
+    EUV scanners with larger-aperture optics (numerical aperture 0.55) that
+    print finer lines in one exposure. Each costs about $380 million, and chip
+    makers disagree on when they pay off.
+  requires: [euv-lithography]
+  efforts:
+    - who: ASML
+      where: Netherlands
+      when: 2023
+      outcome: achieved
+      note: First EXE:5000 shipped to Intel in December 2023.
+    - who: Intel
+      where: USA
+      when: 2027
+      outcome: ongoing
+      note: Plans High-NA on some layers of its 14A node, with risk production from 2027.
+    - who: TSMC
+      where: Taiwan
+      when: 2028
+      outcome: rival
+      note: Said it will not use High-NA for its A14 node, sticking with standard EUV and multiple patterning.
+  sources:
+    - title: Tom's Hardware, ASML's roadmap for chipmaking lithography tools examined
+      url: https://www.tomshardware.com/tech-industry/semiconductors/asml-lithograpy-roadmap-examined-from-duv-to-hyper-na
+    - title: Bits and Chips, Intel confirms High-NA EUV deployment for 14A node
+      url: https://bits-chips.com/article/intel-confirms-high-na-euv-deployment-for-14a-node
+
+# ---------------------------------------------------------------------------
+# AI deep dive: foundations, symbolic AI and the winters
+# ---------------------------------------------------------------------------
+
+- id: mcculloch-pitts-neuron
+  name: McCulloch-Pitts neuron
+  kind: discovery
+  fields: [computing, biology]
+  date: 1943
+  status: achieved
+  tier: 3
+  summary: >-
+    The first mathematical model of a neuron as a threshold logic unit, showing
+    that networks of such units can compute any logical function. It is the
+    common ancestor of neural networks and of von Neumann's computer design.
+  requires: [boolean-logic, computability-theory]
+  helped_by: [mathematical-logic]
+  efforts:
+    - who: Warren McCulloch, Walter Pitts (University of Illinois, University of Chicago)
+      where: USA
+      when: 1943
+      outcome: achieved
+      note: '"A Logical Calculus of the Ideas Immanent in Nervous Activity". Donald Hebb added a learning rule in 1949.'
+  sources:
+    - title: McCulloch and Pitts 1943, Bulletin of Mathematical Biophysics
+      url: https://doi.org/10.1007/BF02478259
+
+- id: turing-test
+  name: Turing test
+  kind: institution
+  fields: [computing, society]
+  date: 1950
+  status: achieved
+  tier: 3
+  summary: >-
+    Alan Turing's proposal to judge machine intelligence by whether a machine
+    can pass as human in text conversation. It framed the goal of AI for
+    decades; large language models passed controlled versions of it by 2025.
+  requires: [computability-theory]
+  helped_by: [stored-program-computer]
+  efforts:
+    - who: Alan Turing (University of Manchester)
+      where: UK
+      when: 1950
+      outcome: achieved
+      note: '"Computing Machinery and Intelligence", Mind. In a 2025 UC San Diego study, GPT-4.5 with a persona prompt was judged human 73% of the time.'
+  sources:
+    - title: Turing 1950, Computing Machinery and Intelligence, Mind
+      url: https://doi.org/10.1093/mind/LIX.236.433
+    - title: Jones and Bergen 2025, Large Language Models Pass the Turing Test
+      url: https://arxiv.org/abs/2503.23674
+
+- id: dartmouth-workshop
+  name: Dartmouth workshop (AI as a field)
+  kind: institution
+  fields: [computing, society]
+  date: 1956
+  status: achieved
+  tier: 2
+  summary: >-
+    A summer 1956 workshop at Dartmouth College whose 1955 proposal coined the
+    term "artificial intelligence" and claimed every aspect of intelligence
+    could in principle be simulated by a machine. It founded AI as a research
+    field.
+  requires: [stored-program-computer]
+  helped_by: [information-theory, mcculloch-pitts-neuron]
+  efforts:
+    - who: John McCarthy, Marvin Minsky, Nathaniel Rochester, Claude Shannon
+      where: USA
+      when: 1956
+      outcome: achieved
+      note: Ran about eight weeks, June 18 to August 17, 1956, funded by the Rockefeller Foundation; only McCarthy, Minsky and Ray Solomonoff stayed throughout.
+  effort:
+    span: [1955, 1956]
+    people: 20
+  sources:
+    - title: Wikipedia, Dartmouth workshop
+      url: https://en.wikipedia.org/wiki/Dartmouth_workshop
+
+- id: symbolic-ai
+  name: Symbolic AI
+  kind: technique
+  fields: [computing]
+  date: 1956
+  status: achieved
+  tier: 2
+  summary: >-
+    Building intelligence by manipulating explicit symbols with logical rules
+    and search, as in theorem provers, planners and chess programs. It was the
+    dominant approach to AI from 1956 to the late 1980s, in rivalry with
+    neural networks.
+  requires: [stored-program-computer, mathematical-logic]
+  helped_by: [dartmouth-workshop]
+  competes: [perceptron, backpropagation]
+  efforts:
+    - who: Allen Newell, Herbert Simon, Cliff Shaw (RAND, Carnegie Tech)
+      where: USA
+      when: 1956
+      outcome: achieved
+      note: Logic Theorist proved 38 of the first 52 theorems of Principia Mathematica; the General Problem Solver followed in 1957.
+    - who: Newell and Simon
+      where: USA
+      when: 1976
+      outcome: achieved
+      note: Stated the physical symbol system hypothesis; Turing Award 1975.
+  sources:
+    - title: Wikipedia, Symbolic artificial intelligence
+      url: https://en.wikipedia.org/wiki/Symbolic_artificial_intelligence
+
+- id: perceptron
+  name: Perceptron
+  kind: technique
+  fields: [computing, biology]
+  date: 1958
+  status: achieved
+  tier: 1
+  summary: >-
+    Frank Rosenblatt's learning machine, which adjusts the weights of
+    artificial neurons from examples until it classifies inputs correctly. It
+    was the first neural network that learned, and the start of the
+    connectionist tradition behind modern AI.
+  requires: [mcculloch-pitts-neuron, stored-program-computer]
+  competes: [symbolic-ai]
+  metric: ai-training-compute
+  efforts:
+    - who: Frank Rosenblatt (Cornell Aeronautical Laboratory), funded by the US Office of Naval Research
+      where: USA
+      when: 1958
+      outcome: achieved
+      note: First simulated on an IBM 704 (1957 report, 1958 paper); the Mark I Perceptron hardware used a 20 by 20 grid of photocells.
+    - who: Bernard Widrow, Ted Hoff (Stanford)
+      where: USA
+      when: 1960
+      outcome: independent
+      note: ADALINE and the least-mean-squares rule, still used in signal processing.
+  effort:
+    note: Epoch estimates the Mark I Perceptron's training at about 700,000 FLOP.
+  sources:
+    - title: Rosenblatt 1958, Psychological Review
+      url: https://doi.org/10.1037/h0042519
+    - title: Wikipedia, Perceptron
+      url: https://en.wikipedia.org/wiki/Perceptron
+
+- id: lisp
+  name: LISP
+  kind: technique
+  fields: [computing]
+  date: 1958
+  status: achieved
+  tier: 3
+  summary: >-
+    John McCarthy's language built on lists and recursive functions, which
+    introduced garbage collection and code that can treat itself as data. It
+    was the main language of AI research for about 30 years.
+  requires: [programming-languages, computability-theory]
+  efforts:
+    - who: John McCarthy (MIT)
+      where: USA
+      when: 1958
+      outcome: achieved
+      note: Paper 1960; Steve Russell wrote the first interpreter. McCarthy won the 1971 Turing Award.
+  sources:
+    - title: McCarthy 1960, Recursive Functions of Symbolic Expressions
+      url: https://doi.org/10.1145/367177.367199
+
+- id: perceptrons-book-limits
+  name: Limits of perceptrons and the first AI winter
+  kind: discovery
+  fields: [computing, society]
+  date: 1969
+  status: achieved
+  tier: 3
+  summary: >-
+    Minsky and Papert proved that single-layer perceptrons cannot compute
+    simple functions such as XOR or parity. With the UK Lighthill report
+    (1973) and US defense cuts, it led to the first AI winter of roughly 1974
+    to 1980, when funding for neural nets and much of AI dried up.
+  requires: [perceptron]
+  efforts:
+    - who: Marvin Minsky, Seymour Papert (MIT)
+      where: USA
+      when: 1969
+      outcome: achieved
+      note: The book "Perceptrons". Multi-layer networks could solve these problems, but no one yet knew how to train them.
+    - who: James Lighthill (for the UK Science Research Council)
+      where: UK
+      when: 1973
+      outcome: achieved
+      note: The Lighthill report criticized AI's failure to reach its goals and UK funding was cut.
+  sources:
+    - title: Wikipedia, Perceptrons (book)
+      url: https://en.wikipedia.org/wiki/Perceptrons_(book)
+    - title: Wikipedia, AI winter
+      url: https://en.wikipedia.org/wiki/AI_winter
+
+- id: reverse-mode-autodiff
+  name: Reverse-mode automatic differentiation
+  kind: technique
+  fields: [math, computing]
+  date: 1970
+  status: achieved
+  tier: 3
+  summary: >-
+    A method for computing the gradient of a function with respect to millions
+    of inputs at about the cost of evaluating it once, by applying the chain
+    rule backward through the computation. Backpropagation is its special case
+    for neural nets, and PyTorch and JAX are built on it.
+  requires: [calculus, stored-program-computer]
+  efforts:
+    - who: Seppo Linnainmaa (University of Helsinki)
+      where: Finland
+      when: 1970
+      outcome: achieved
+      note: Master's thesis on cumulative rounding error; Bert Speelpenning's 1980 thesis made it a practical tool.
+  sources:
+    - title: Wikipedia, Automatic differentiation
+      url: https://en.wikipedia.org/wiki/Automatic_differentiation
+
+- id: expert-systems
+  name: Expert systems
+  kind: technique
+  fields: [computing, medicine]
+  date: [1965, 1980]
+  status: achieved
+  tier: 2
+  summary: >-
+    Programs that capture a specialist's knowledge as hundreds or thousands of
+    if-then rules. They were AI's first commercial success in the early 1980s,
+    but proved brittle and costly to maintain, and the bust that followed
+    (about 1987 to 1993) was the second AI winter.
+  requires: [symbolic-ai, lisp]
+  competes: [bayesian-networks]
+  efforts:
+    - who: Edward Feigenbaum, Joshua Lederberg, Bruce Buchanan (Stanford)
+      where: USA
+      when: 1965
+      outcome: achieved
+      note: DENDRAL, inferring molecular structure from mass spectra.
+    - who: Edward Shortliffe (Stanford)
+      where: USA
+      when: 1974
+      outcome: achieved
+      note: MYCIN diagnosed blood infections about as well as specialists but was never used clinically.
+    - who: John McDermott (Carnegie Mellon) for Digital Equipment Corporation
+      where: USA
+      when: 1980
+      outcome: achieved
+      note: XCON (R1) configured VAX orders and was reported to save DEC tens of millions of dollars a year.
+  sources:
+    - title: Wikipedia, Expert system
+      url: https://en.wikipedia.org/wiki/Expert_system
+
+- id: lisp-machines
+  name: Lisp machines
+  kind: device
+  fields: [computing, electronics]
+  date: 1979
+  status: lost
+  tier: 3
+  summary: >-
+    Workstations with hardware built to run LISP fast, sold to AI labs and
+    companies during the expert-system boom. The market collapsed in 1987, a
+    marker of the second AI winter.
+  requires: [lisp, integrated-circuit]
+  efforts:
+    - who: Richard Greenblatt, Tom Knight (MIT AI Lab)
+      where: USA
+      when: 1979
+      outcome: achieved
+      note: The CADR machine; spun out as Symbolics and Lisp Machines Inc. in 1979 to 1980.
+    - who: Symbolics
+      where: USA
+      when: 1987
+      outcome: abandoned
+      note: Revenue collapsed after 1987; bankrupt in 1993. Symbolics.com was the first registered .com domain (1985).
+  lost: >-
+    General-purpose workstations from Sun and others, and then PCs, ran LISP
+    well enough at a fraction of the price, while the expert-system market they
+    served shrank. Their integrated development environments were admired and
+    not matched for years.
+  sources:
+    - title: Wikipedia, Lisp machine
+      url: https://en.wikipedia.org/wiki/Lisp_machine
+
+- id: neocognitron
+  name: Neocognitron
+  kind: technique
+  fields: [computing, biology]
+  date: 1980
+  status: achieved
+  tier: 3
+  summary: >-
+    A layered neural network for recognizing shapes, with alternating feature
+    and pooling layers modeled on the visual cortex cells found by Hubel and
+    Wiesel. It is the direct ancestor of convolutional networks, but it was not
+    trained by backpropagation.
+  requires: [perceptron]
+  efforts:
+    - who: Kunihiko Fukushima (NHK Science and Technology Research Laboratories)
+      where: Japan
+      when: 1980
+      outcome: achieved
+  sources:
+    - title: Fukushima 1980, Biological Cybernetics
+      url: https://doi.org/10.1007/BF00344251
+
+- id: fifth-generation-project
+  name: Fifth Generation Computer Systems project
+  kind: institution
+  fields: [computing, society]
+  date: 1982
+  status: lost
+  tier: 3
+  summary: >-
+    Japan's government program to build massively parallel logic-programming
+    computers for AI. It alarmed the US and Europe into rival programs, but
+    produced little commercial value and ended as specialized hardware was
+    overtaken by ordinary chips.
+  requires: [expert-systems]
+  efforts:
+    - who: MITI and ICOT
+      where: Japan
+      when: 1982
+      outcome: abandoned
+      note: Ran 1982 to about 1994 and built five Parallel Inference Machines based on Prolog-style logic programming.
+    - who: UK Alvey Programme, US MCC consortium, EU ESPRIT
+      where: UK, USA, Europe
+      when: 1983
+      outcome: rival
+  effort:
+    span: [1982, 1994]
+    cost_usd: 7e8
+    note: Just under 57 billion yen, about $320 million at the time.
+  lost: >-
+    Its premise that logic programming on special parallel machines was the
+    road to AI turned out wrong; commodity processors improved faster and
+    statistical methods took over. MITI stopped funding large computer
+    projects afterward.
+  sources:
+    - title: Wikipedia, Fifth Generation Computer Systems
+      url: https://en.wikipedia.org/wiki/Fifth_Generation_Computer_Systems
+
+- id: hopfield-network
+  name: Hopfield networks and Boltzmann machines
+  kind: technique
+  fields: [computing, physics]
+  date: 1982
+  status: achieved
+  tier: 3
+  summary: >-
+    Neural networks described by an energy function, borrowed from the physics
+    of magnets, that settle into stored memories. Boltzmann machines (1985)
+    added randomness and a learning rule, and the work won the 2024 Nobel Prize
+    in Physics.
+  requires: [perceptron, statistical-mechanics]
+  efforts:
+    - who: John Hopfield (Caltech)
+      where: USA
+      when: 1982
+      outcome: achieved
+    - who: David Ackley, Geoffrey Hinton, Terrence Sejnowski (Carnegie Mellon, Johns Hopkins)
+      where: USA
+      when: 1985
+      outcome: achieved
+      note: The Boltzmann machine.
+  sources:
+    - title: Hopfield 1982, PNAS
+      url: https://www.pnas.org/doi/10.1073/pnas.79.8.2554
+    - title: Nobel Prize in Physics 2024
+      url: https://www.nobelprize.org/prizes/physics/2024/summary/
+
+- id: backpropagation
+  name: Backpropagation
+  kind: technique
+  fields: [computing, math]
+  date: 1986
+  status: achieved
+  tier: 2
+  summary: >-
+    Training a multi-layer neural network by sending the error backward through
+    the layers to compute how each weight should change, then taking a small
+    gradient step. Shown to learn useful internal representations in 1986, it
+    still trains nearly every neural network.
+  requires: [reverse-mode-autodiff, perceptron]
+  helped_by: [hopfield-network]
+  competes: [symbolic-ai]
+  efforts:
+    - who: David Rumelhart, Geoffrey Hinton, Ronald Williams (UC San Diego, Carnegie Mellon)
+      where: USA
+      when: 1986
+      outcome: achieved
+      note: '"Learning representations by back-propagating errors", Nature, October 1986.'
+    - who: Paul Werbos (Harvard)
+      where: USA
+      when: 1974
+      outcome: independent
+      note: Proposed it for neural networks in his PhD thesis; little noticed.
+    - who: Shun-ichi Amari; David Parker; Yann LeCun
+      where: Japan, USA, France
+      when: 1985
+      outcome: independent
+      note: Amari trained multi-layer nets by gradient descent in 1967; Parker and LeCun found versions of backprop in 1985.
+  effort:
+    people: 3
+    note: Epoch puts the 1986 experiments at about 7e8 FLOP.
+  sources:
+    - title: Rumelhart, Hinton and Williams 1986, Nature
+      url: https://www.nature.com/articles/323533a0
+
+- id: bayesian-networks
+  name: Bayesian networks and probabilistic reasoning
+  kind: technique
+  fields: [computing, math]
+  date: 1988
+  status: achieved
+  tier: 3
+  summary: >-
+    Representing uncertain knowledge as a graph of variables with probability
+    tables, and reasoning by Bayes' rule. It replaced brittle certainty factors
+    in expert systems and led to the statistical turn in AI.
+  requires: [probability-theory, statistics]
+  competes: [expert-systems]
+  efforts:
+    - who: Judea Pearl (UCLA)
+      where: USA
+      when: 1988
+      outcome: achieved
+      note: Named in 1985; the book "Probabilistic Reasoning in Intelligent Systems" (1988). Turing Award 2011, which also cited his work on causal inference.
+  sources:
+    - title: Wikipedia, Bayesian network
+      url: https://en.wikipedia.org/wiki/Bayesian_network
+
+- id: reinforcement-learning
+  name: Reinforcement learning
+  kind: technique
+  fields: [computing, math]
+  date: 1988
+  status: achieved
+  tier: 2
+  summary: >-
+    Learning to act by trial and error from rewards, estimating how good each
+    situation and action is and improving the policy. Temporal-difference
+    learning (1988) and Q-learning (1989) made it practical, and it now trains
+    game players, robots and reasoning language models.
+  requires: [probability-theory, stored-program-computer]
+  helped_by: [statistics]
+  efforts:
+    - who: Richard Bellman (RAND)
+      where: USA
+      when: 1957
+      outcome: achieved
+      note: Dynamic programming and the Bellman equation.
+    - who: Arthur Samuel (IBM)
+      where: USA
+      when: 1959
+      outcome: achieved
+      note: A checkers program that improved by self-play; Samuel popularized the term "machine learning".
+    - who: Richard Sutton, Andrew Barto (UMass Amherst)
+      where: USA
+      when: 1988
+      outcome: achieved
+      note: Temporal-difference learning; their 1998 textbook defined the field. Turing Award 2024.
+    - who: Chris Watkins (Cambridge)
+      where: UK
+      when: 1989
+      outcome: achieved
+      note: Q-learning.
+    - who: Gerald Tesauro (IBM)
+      where: USA
+      when: 1992
+      outcome: achieved
+      note: TD-Gammon reached near world-class backgammon by self-play with a small neural net.
+  sources:
+    - title: Sutton 1988, Learning to predict by the methods of temporal differences, Machine Learning
+      url: https://doi.org/10.1007/BF00115009
+    - title: Sutton and Barto, Reinforcement Learning, An Introduction (2nd ed.)
+      url: http://incompleteideas.net/book/the-book-2nd.html
+
+- id: convolutional-networks
+  name: Convolutional neural networks
+  kind: technique
+  fields: [computing]
+  date: 1989
+  status: achieved
+  tier: 2
+  summary: >-
+    Neural networks that slide the same small learned filters across an image,
+    so they detect a feature anywhere with few parameters. Trained by
+    backprop, they read handwritten digits in 1989 and drove the deep learning
+    breakthrough in vision in 2012.
+  requires: [backpropagation, neocognitron]
+  efforts:
+    - who: Yann LeCun and colleagues (AT&T Bell Labs)
+      where: USA
+      when: 1989
+      outcome: achieved
+      note: Read handwritten zip codes; LeNet-5 (1998) was used to read a large share of US bank checks around 2000.
+    - who: Alex Waibel and colleagues (ATR)
+      where: Japan
+      when: 1987
+      outcome: independent
+      note: The time-delay neural network applied shared weights to speech.
+  effort:
+    note: Epoch estimates the 1989 zip-code network at about 1.5e12 FLOP.
+  sources:
+    - title: LeCun et al. 1989, Backpropagation Applied to Handwritten Zip Code Recognition, Neural Computation
+      url: https://doi.org/10.1162/neco.1989.1.4.541
+    - title: LeCun et al. 1998, Gradient-Based Learning Applied to Document Recognition
+      url: https://doi.org/10.1109/5.726791
+
+- id: support-vector-machines
+  name: Support vector machines and kernel methods
+  kind: technique
+  fields: [computing, math]
+  date: 1995
+  status: achieved
+  tier: 3
+  summary: >-
+    Classifiers that find the widest-margin boundary between classes, using a
+    kernel to work in a high-dimensional feature space. Backed by learning
+    theory, they outperformed neural nets on many tasks from the mid-1990s
+    until about 2012.
+  requires: [statistics]
+  competes: [convolutional-networks, deep-learning]
+  efforts:
+    - who: Bernhard Boser, Isabelle Guyon, Vladimir Vapnik (AT&T Bell Labs)
+      where: USA
+      when: 1992
+      outcome: achieved
+      note: The kernel trick for maximum-margin classifiers.
+    - who: Corinna Cortes, Vladimir Vapnik (AT&T Bell Labs)
+      where: USA
+      when: 1995
+      outcome: achieved
+      note: Soft-margin "support-vector networks". Random forests (Breiman, 2001) and boosting were other strong rivals.
+  sources:
+    - title: Cortes and Vapnik 1995, Support-vector networks, Machine Learning
+      url: https://doi.org/10.1007/BF00994018
+
+- id: lstm
+  name: Long short-term memory (LSTM)
+  kind: technique
+  fields: [computing]
+  date: 1997
+  status: achieved
+  tier: 2
+  summary: >-
+    A recurrent neural network with gated memory cells that can carry
+    information across long sequences, fixing the vanishing gradient problem.
+    It ran most speech recognition and machine translation from about 2015
+    until transformers replaced it.
+  requires: [backpropagation]
+  efforts:
+    - who: Sepp Hochreiter, Jurgen Schmidhuber (TU Munich, IDSIA)
+      where: Germany and Switzerland
+      when: 1997
+      outcome: achieved
+      note: Hochreiter analyzed vanishing gradients in his 1991 thesis; the forget gate was added by Felix Gers and colleagues in 1999 to 2000.
+    - who: Alex Graves and others (IDSIA, Toronto, Google)
+      where: Switzerland, Canada, USA
+      when: 2006
+      outcome: achieved
+      note: CTC training (2006) enabled LSTM speech recognition, deployed in Google voice search in 2015.
+  sources:
+    - title: Hochreiter and Schmidhuber 1997, Long Short-Term Memory, Neural Computation
+      url: https://doi.org/10.1162/neco.1997.9.8.1735
+
+- id: deep-blue
+  name: Deep Blue
+  kind: device
+  fields: [computing, electronics]
+  date: 1997
+  status: achieved
+  tier: 3
+  summary: >-
+    IBM's chess computer, which beat world champion Garry Kasparov 3.5 to 2.5
+    in May 1997. It won by brute-force search of about 200 million positions a
+    second on custom chips, with a hand-tuned evaluation, not by learning.
+  requires: [symbolic-ai, integrated-circuit]
+  efforts:
+    - who: Feng-hsiung Hsu, Murray Campbell, Joe Hoane and team (IBM Research)
+      where: USA
+      when: 1997
+      outcome: achieved
+      note: Grew from Hsu's ChipTest and Deep Thought at Carnegie Mellon (1985 to 1989); the 1997 machine had 480 custom chess chips.
+  effort:
+    span: [1985, 1997]
+    people: 10
+  sources:
+    - title: IBM, Deep Blue
+      url: https://www.ibm.com/history/deep-blue
+
+# ---------------------------------------------------------------------------
+# AI deep dive: the deep learning era
+# ---------------------------------------------------------------------------
+
+- id: deep-belief-networks
+  name: Deep belief networks and layer-wise pretraining
+  kind: technique
+  fields: [computing]
+  date: 2006
+  status: achieved
+  tier: 3
+  summary: >-
+    Training deep networks one layer at a time as unsupervised models before
+    fine-tuning with backprop. It revived interest in deep networks and the
+    name "deep learning", then was dropped after 2012 once better activations,
+    initialization and GPUs let plain backprop work.
+  requires: [backpropagation, hopfield-network]
+  efforts:
+    - who: Geoffrey Hinton, Simon Osindero, Yee-Whye Teh (University of Toronto)
+      where: Canada
+      when: 2006
+      outcome: achieved
+      note: Funded in part by the Canadian Institute for Advanced Research, which kept neural net research alive in the 2000s.
+    - who: Yoshua Bengio (Montreal); Yann LeCun (NYU)
+      where: Canada and USA
+      when: 2007
+      outcome: independent
+      note: Stacked autoencoders and other layer-wise schemes.
+  sources:
+    - title: Hinton, Osindero and Teh 2006, A Fast Learning Algorithm for Deep Belief Nets, Neural Computation
+      url: https://doi.org/10.1162/neco.2006.18.7.1527
+
+- id: imagenet
+  name: ImageNet
+  kind: institution
+  fields: [computing, society]
+  date: 2009
+  status: achieved
+  tier: 2
+  summary: >-
+    A dataset of millions of labeled photos in thousands of categories and an
+    annual recognition contest (2010 to 2017). It showed that large data could
+    matter as much as algorithms and became the proving ground for deep
+    learning.
+  requires: [internet, world-wide-web, search-engines]
+  efforts:
+    - who: Fei-Fei Li, Jia Deng, Kai Li and colleagues (Princeton, Stanford)
+      where: USA
+      when: 2009
+      outcome: achieved
+      note: Built on the WordNet hierarchy of categories; the contest used 1.2 million images in 1,000 classes.
+  effort:
+    span: [2007, 2010]
+    people: 10
+    note: About 14 million images were labeled by roughly 49,000 Amazon Mechanical Turk workers in 167 countries.
+  sources:
+    - title: Deng et al. 2009, ImageNet, A Large-Scale Hierarchical Image Database (CVPR)
+      url: https://doi.org/10.1109/CVPR.2009.5206848
+
+- id: deep-learning
+  name: Deep learning breakthrough (AlexNet)
+  kind: technique
+  fields: [computing]
+  date: 2012
+  status: achieved
+  tier: 1
+  summary: >-
+    Training large many-layered neural networks on GPUs with big datasets. In
+    2012 AlexNet cut the ImageNet error rate from about 26% to 15%, and within
+    a few years deep networks took over vision, speech, translation and much of
+    science.
+  requires: [convolutional-networks, gpu-computing, imagenet, backpropagation]
+  helped_by: [deep-belief-networks, lstm]
+  competes: [support-vector-machines]
+  metric: ai-training-compute
+  efforts:
+    - who: Alex Krizhevsky, Ilya Sutskever, Geoffrey Hinton (University of Toronto)
+      where: Canada
+      when: 2012
+      outcome: achieved
+      note: AlexNet, 60 million parameters, trained for about a week on two GeForce GTX 580 gaming GPUs; used ReLU and dropout. Their startup was bought by Google in 2013.
+    - who: Hinton's group with Microsoft, Google and IBM
+      where: Canada and USA
+      when: 2009
+      outcome: achieved
+      note: Deep networks for speech recognition (2009 to 2012) were the first big industrial win.
+    - who: Dan Ciresan, Jurgen Schmidhuber (IDSIA)
+      where: Switzerland
+      when: 2011
+      outcome: independent
+      note: GPU-trained CNNs won several image contests in 2011 to 2012 before AlexNet.
+  effort:
+    people: 3
+    cost_usd: 16
+    note: Epoch estimates AlexNet at 4.7e17 FLOP and about $16 of compute (2023 dollars). Hinton, LeCun and Bengio shared the 2018 Turing Award.
+  sources:
+    - title: Krizhevsky, Sutskever and Hinton 2012, NeurIPS
+      url: https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html
+    - title: Epoch AI, Notable AI Models
+      url: https://epoch.ai/data/notable-ai-models
+
+- id: word-embeddings
+  name: Word embeddings
+  kind: technique
+  fields: [computing]
+  date: 2013
+  status: achieved
+  tier: 3
+  summary: >-
+    Representing each word as a learned vector so that words used in similar
+    contexts sit close together, with directions that capture meaning (king
+    minus man plus woman lands near queen). Learned token embeddings are the
+    input layer of every language model.
+  requires: [backpropagation, internet]
+  helped_by: [deep-learning]
+  efforts:
+    - who: Yoshua Bengio and colleagues (Montreal)
+      where: Canada
+      when: 2003
+      outcome: achieved
+      note: A neural probabilistic language model that learned word vectors.
+    - who: Tomas Mikolov and colleagues (Google)
+      where: USA
+      when: 2013
+      outcome: achieved
+      note: word2vec, fast enough to train on billions of words.
+    - who: Jeffrey Pennington, Richard Socher, Christopher Manning (Stanford)
+      where: USA
+      when: 2014
+      outcome: rival
+      note: GloVe, based on global co-occurrence counts.
+  sources:
+    - title: Mikolov et al. 2013, Efficient Estimation of Word Representations in Vector Space
+      url: https://arxiv.org/abs/1301.3781
+
+- id: deep-reinforcement-learning
+  name: Deep reinforcement learning (DQN)
+  kind: technique
+  fields: [computing]
+  date: 2013
+  status: achieved
+  tier: 3
+  summary: >-
+    Combining reinforcement learning with deep networks that learn straight
+    from raw input. DeepMind's DQN learned dozens of Atari games from screen
+    pixels and score alone.
+  requires: [reinforcement-learning, deep-learning, convolutional-networks]
+  efforts:
+    - who: Volodymyr Mnih, Koray Kavukcuoglu, David Silver and colleagues (DeepMind)
+      where: UK
+      when: 2013
+      outcome: achieved
+      note: Preprint December 2013; Nature paper on 49 games in 2015. Google bought DeepMind in January 2014, reportedly for about $500 million or more.
+  sources:
+    - title: Mnih et al. 2013, Playing Atari with Deep Reinforcement Learning
+      url: https://arxiv.org/abs/1312.5602
+
+- id: gans
+  name: Generative adversarial networks
+  kind: technique
+  fields: [computing]
+  date: 2014
+  status: achieved
+  tier: 3
+  summary: >-
+    Training a generator network to fool a discriminator network that tries to
+    tell real data from fakes. GANs made the first photorealistic synthetic
+    faces, then were largely replaced by diffusion models for images after
+    2021.
+  requires: [deep-learning, backpropagation]
+  competes: [diffusion-models]
+  efforts:
+    - who: Ian Goodfellow and colleagues (University of Montreal)
+      where: Canada
+      when: 2014
+      outcome: achieved
+    - who: Diederik Kingma, Max Welling (University of Amsterdam)
+      where: Netherlands
+      when: 2013
+      outcome: rival
+      note: The variational autoencoder, a rival generative model whose encoder later became part of latent diffusion.
+    - who: Tero Karras and colleagues (Nvidia)
+      where: Finland and USA
+      when: 2018
+      outcome: achieved
+      note: StyleGAN, the peak of GAN image quality.
+  sources:
+    - title: Goodfellow et al. 2014, Generative Adversarial Networks
+      url: https://arxiv.org/abs/1406.2661
+
+- id: attention-mechanism
+  name: Sequence-to-sequence learning and attention
+  kind: technique
+  fields: [computing]
+  date: 2014
+  status: achieved
+  tier: 2
+  summary: >-
+    Encoding one sequence with a neural network and decoding another from it,
+    with an attention step that lets the decoder look back at the most
+    relevant input positions. It made neural machine translation work and was
+    the seed of the transformer.
+  requires: [lstm, deep-learning, word-embeddings]
+  efforts:
+    - who: Ilya Sutskever, Oriol Vinyals, Quoc Le (Google)
+      where: USA
+      when: 2014
+      outcome: achieved
+      note: Sequence-to-sequence LSTMs, about 5.6e19 FLOP per Epoch.
+    - who: Dzmitry Bahdanau, Kyunghyun Cho, Yoshua Bengio (Montreal)
+      where: Canada
+      when: 2014
+      outcome: achieved
+      note: Additive attention for translation.
+    - who: Google Translate team
+      where: USA
+      when: 2016
+      outcome: achieved
+      note: GNMT replaced phrase-based statistical translation in Google Translate in September 2016.
+  sources:
+    - title: Bahdanau, Cho and Bengio 2014, Neural Machine Translation by Jointly Learning to Align and Translate
+      url: https://arxiv.org/abs/1409.0473
+    - title: Sutskever, Vinyals and Le 2014, Sequence to Sequence Learning with Neural Networks
+      url: https://arxiv.org/abs/1409.3215
+
+- id: residual-networks
+  name: Residual networks
+  kind: technique
+  fields: [computing]
+  date: 2015
+  status: achieved
+  tier: 3
+  summary: >-
+    Adding shortcut connections so each layer learns a change to its input,
+    which let networks grow to over 100 layers and still train. Residual
+    connections, together with batch normalization and the Adam optimizer from
+    the same years, are in nearly every modern model, including transformers.
+  requires: [deep-learning, imagenet]
+  efforts:
+    - who: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun (Microsoft Research Asia)
+      where: China
+      when: 2015
+      outcome: achieved
+      note: A 152-layer ResNet won ImageNet 2015 with 3.57% top-5 error.
+    - who: Rupesh Srivastava, Klaus Greff, Jurgen Schmidhuber (IDSIA)
+      where: Switzerland
+      when: 2015
+      outcome: independent
+      note: Highway networks, gated shortcuts published months earlier.
+  sources:
+    - title: He et al. 2015, Deep Residual Learning for Image Recognition
+      url: https://arxiv.org/abs/1512.03385
+
+- id: alphago
+  name: AlphaGo and AlphaZero
+  kind: device
+  fields: [computing]
+  date: 2016
+  status: achieved
+  tier: 2
+  summary: >-
+    DeepMind's Go program, which combined deep networks for move choice and
+    position value with tree search, and beat Lee Sedol 4 to 1 in March 2016,
+    a decade earlier than many expected. Its successors learned Go, chess and
+    shogi from self-play alone.
+  requires: [deep-reinforcement-learning, convolutional-networks]
+  helped_by: [deep-blue, ai-accelerators]
+  efforts:
+    - who: David Silver, Aja Huang, Demis Hassabis and colleagues (DeepMind)
+      where: UK
+      when: 2016
+      outcome: achieved
+      note: Beat Fan Hui 5 to 0 in October 2015, then Lee Sedol in Seoul in March 2016.
+    - who: DeepMind
+      where: UK
+      when: 2017
+      outcome: achieved
+      note: AlphaGo Zero (October 2017) learned with no human games; AlphaZero (December 2017) generalized to chess and shogi; MuZero (2019) learned its own model of the rules.
+    - who: Facebook AI Research; Tencent
+      where: USA and China
+      when: 2016
+      outcome: rival
+      note: Darkforest and Fine Art (Jueyi) were strong rival Go programs.
+  effort:
+    people: 20
+    note: Epoch estimates AlphaGo Lee at about 1.9e21 FLOP (speculative) and AlphaGo Zero at about 6.5e20 FLOP.
+  sources:
+    - title: Silver et al. 2016, Mastering the game of Go with deep neural networks and tree search, Nature
+      url: https://www.nature.com/articles/nature16961
+    - title: Silver et al. 2017, Mastering the game of Go without human knowledge, Nature
+      url: https://www.nature.com/articles/nature24270
+
+- id: ai-accelerators
+  name: AI accelerator chips
+  kind: device
+  fields: [electronics, computing]
+  date: 2016
+  status: achieved
+  tier: 2
+  summary: >-
+    Chips built for the dense matrix math of neural networks, with low-precision
+    arithmetic units and very fast memory. Google's TPU (2016) and Nvidia's
+    tensor-core GPUs from 2017 on became the industrial base of modern AI.
+  requires: [gpu-computing, deep-learning, integrated-circuit]
+  helped_by: [advanced-packaging, euv-lithography]
+  metric: gpu-flops-per-dollar
+  efforts:
+    - who: Norman Jouppi and team (Google)
+      where: USA
+      when: 2016
+      outcome: achieved
+      note: TPU v1, in Google's data centers since 2015 and announced May 2016; TPU v7 Ironwood in 2025.
+    - who: Nvidia
+      where: USA
+      when: 2017
+      outcome: achieved
+      note: V100 tensor cores (2017), A100 (2020), H100 (2022), Blackwell B200 and GB200 (2024 to 2025); Vera Rubin began shipping in the second half of 2026.
+    - who: AMD, AWS (Trainium), Huawei (Ascend), Cerebras (wafer-scale), Groq and others
+      where: USA and China
+      when: 2019
+      outcome: rival
+      note: Huawei's Ascend became China's main alternative under US export controls.
+  sources:
+    - title: Jouppi et al. 2017, In-Datacenter Performance Analysis of a Tensor Processing Unit
+      url: https://arxiv.org/abs/1704.04760
+    - title: Epoch AI, Machine Learning Hardware
+      url: https://epoch.ai/data/machine-learning-hardware
+
+- id: transformer
+  name: Transformer
+  kind: technique
+  fields: [computing]
+  date: 2017
+  status: achieved
+  tier: 1
+  summary: >-
+    A neural network built entirely from attention, in which every position in
+    a sequence looks directly at every other, with no recurrence. It
+    parallelizes well on accelerators and scales with data and compute, and is
+    the architecture of nearly all large language, vision and protein models.
+  requires: [attention-mechanism, gpu-computing, residual-networks]
+  helped_by: [ai-accelerators]
+  competes: [lstm]
+  efforts:
+    - who: Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan Gomez, Lukasz Kaiser, Illia Polosukhin (Google Brain and Google Research)
+      where: USA
+      when: 2017
+      outcome: achieved
+      note: '"Attention Is All You Need", June 2017. All eight authors later left Google, several to found companies.'
+    - who: Albert Gu, Tri Dao and others
+      where: USA
+      when: 2023
+      outcome: rival
+      note: State-space models such as Mamba, used in some hybrid architectures but not displacing attention at the frontier.
+  effort:
+    people: 8
+    cost_usd: 440
+    note: The big model trained for 3.5 days on 8 P100 GPUs, about 7.4e18 FLOP and $440 of compute per Epoch.
+  sources:
+    - title: Vaswani et al. 2017, Attention Is All You Need
+      url: https://arxiv.org/abs/1706.03762
+
+- id: mixture-of-experts
+  name: Sparse mixture of experts
+  kind: technique
+  fields: [computing]
+  date: 2017
+  status: achieved
+  tier: 3
+  summary: >-
+    Splitting a network's layers into many expert sub-networks and routing
+    each token to only a few, so a model can have trillions of parameters
+    while using a small fraction per token. Most frontier and open models of
+    2024 to 2026 are built this way.
+  requires: [deep-learning, lstm]
+  helped_by: [transformer]
+  efforts:
+    - who: Robert Jacobs, Michael Jordan, Steven Nowlan, Geoffrey Hinton
+      where: USA and Canada
+      when: 1991
+      outcome: achieved
+      note: Adaptive mixtures of local experts.
+    - who: Noam Shazeer and colleagues (Google Brain)
+      where: USA
+      when: 2017
+      outcome: achieved
+      note: The sparsely gated MoE layer; then GShard (2020) and Switch Transformer (2021).
+    - who: Mistral AI; DeepSeek
+      where: France and China
+      when: 2023
+      outcome: achieved
+      note: Mixtral (December 2023); DeepSeek-V3 (671 billion total, 37 billion active parameters, 2024); DeepSeek-V4-Pro (1.6 trillion total, 49 billion active, 2026).
+  sources:
+    - title: Shazeer et al. 2017, Outrageously Large Neural Networks
+      url: https://arxiv.org/abs/1701.06538
+
+- id: rlhf
+  name: Reinforcement learning from human feedback (RLHF)
+  kind: technique
+  fields: [computing]
+  date: 2017
+  status: achieved
+  tier: 2
+  summary: >-
+    Training a reward model on human judgments of which of two outputs is
+    better, then optimizing a policy against it. Applied to language models in
+    2020 to 2022, it turned raw text predictors into helpful assistants.
+  requires: [reinforcement-learning, deep-reinforcement-learning]
+  helped_by: [large-language-models]
+  efforts:
+    - who: Paul Christiano, Jan Leike and colleagues (OpenAI and DeepMind)
+      where: USA and UK
+      when: 2017
+      outcome: achieved
+      note: Deep reinforcement learning from human preferences, demonstrated on simulated robots and Atari.
+    - who: Long Ouyang and colleagues (OpenAI)
+      where: USA
+      when: 2022
+      outcome: achieved
+      note: InstructGPT; labelers preferred a 1.3 billion parameter RLHF model to the 175 billion parameter GPT-3. Followed Stiennon et al. on summarization (2020).
+    - who: Yuntao Bai and colleagues (Anthropic)
+      where: USA
+      when: 2022
+      outcome: achieved
+      note: Constitutional AI, using AI feedback guided by written principles (RLAIF).
+    - who: Rafael Rafailov and colleagues (Stanford)
+      where: USA
+      when: 2023
+      outcome: rival
+      note: Direct preference optimization (DPO), which skips the separate reward model.
+  sources:
+    - title: Christiano et al. 2017, Deep Reinforcement Learning from Human Preferences
+      url: https://arxiv.org/abs/1706.03741
+    - title: Ouyang et al. 2022, Training language models to follow instructions with human feedback
+      url: https://arxiv.org/abs/2203.02155
+
+- id: generative-pretraining
+  name: Generative pretraining (GPT-1 and GPT-2)
+  kind: technique
+  fields: [computing]
+  date: 2018
+  status: achieved
+  tier: 3
+  summary: >-
+    Pretraining a transformer to predict the next word on large amounts of
+    text, then adapting it to tasks. GPT-2 (2019) showed that scale alone
+    produced fluent text and some zero-shot ability.
+  requires: [transformer, word-embeddings]
+  efforts:
+    - who: Alec Radford, Ilya Sutskever and colleagues (OpenAI)
+      where: USA
+      when: 2018
+      outcome: achieved
+      note: GPT-1 (June 2018, 117 million parameters); GPT-2 (February 2019, 1.5 billion), released in stages over misuse concerns.
+    - who: Jeremy Howard, Sebastian Ruder (fast.ai); Matthew Peters and colleagues (Allen Institute for AI)
+      where: USA and Ireland
+      when: 2018
+      outcome: independent
+      note: ULMFiT and ELMo showed pretrained language models transfer to many tasks.
+  sources:
+    - title: Radford et al. 2018, Improving Language Understanding by Generative Pre-Training
+      url: https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf
+    - title: Radford et al. 2019, Language Models are Unsupervised Multitask Learners
+      url: https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf
+
+- id: bert
+  name: BERT
+  kind: device
+  fields: [computing]
+  date: 2018
+  status: achieved
+  tier: 3
+  summary: >-
+    Google's bidirectional transformer encoder, pretrained by filling in masked
+    words. It set records on most language-understanding benchmarks and
+    entered Google Search in 2019; its approach spread to biology as protein
+    and DNA language models.
+  requires: [transformer, generative-pretraining]
+  efforts:
+    - who: Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova (Google)
+      where: USA
+      when: 2018
+      outcome: achieved
+      note: 340 million parameters. RoBERTa (Meta) and T5 (Google) followed in 2019.
+  effort:
+    people: 4
+    cost_usd: 1800
+    note: About 2.9e20 FLOP on 64 TPU v2 chips over four days, about $1,750 per Epoch.
+  sources:
+    - title: Devlin et al. 2018, BERT
+      url: https://arxiv.org/abs/1810.04805
+
+- id: scaling-laws
+  name: Neural scaling laws
+  kind: discovery
+  fields: [computing]
+  date: 2020
+  status: achieved
+  tier: 2
+  summary: >-
+    The finding that language model loss falls as a smooth power law in model
+    size, data and compute across many orders of magnitude. It let labs predict
+    the payoff of bigger runs and justified spending billions on them.
+  requires: [transformer, generative-pretraining]
+  metric: ai-training-compute
+  efforts:
+    - who: Jared Kaplan, Sam McCandlish and colleagues (OpenAI)
+      where: USA
+      when: 2020
+      outcome: achieved
+      note: '"Scaling Laws for Neural Language Models", January 2020. Several authors later co-founded Anthropic.'
+    - who: Joel Hestness and colleagues (Baidu)
+      where: USA
+      when: 2017
+      outcome: achieved
+      note: Found predictable power-law scaling across translation, speech and vision in 2017.
+  sources:
+    - title: Kaplan et al. 2020, Scaling Laws for Neural Language Models
+      url: https://arxiv.org/abs/2001.08361
+    - title: Hestness et al. 2017, Deep Learning Scaling is Predictable, Empirically
+      url: https://arxiv.org/abs/1712.00409
+
+- id: large-language-models
+  name: Large language models (GPT-3)
+  kind: device
+  fields: [computing, society]
+  date: 2020
+  status: achieved
+  tier: 1
+  summary: >-
+    Transformers with billions of parameters trained to predict the next token
+    on much of the public internet. GPT-3 (2020) showed that such a model can
+    do new tasks from a few examples in its prompt, with no retraining.
+  requires: [transformer, scaling-laws, generative-pretraining, ai-accelerators, internet]
+  helped_by: [mixture-of-experts, cloud-computing]
+  metric: ai-training-compute
+  efforts:
+    - who: Tom Brown, Dario Amodei and colleagues (OpenAI, on Microsoft Azure)
+      where: USA
+      when: 2020
+      outcome: achieved
+      note: GPT-3, 175 billion parameters, 300 billion tokens, May 2020.
+    - who: Google
+      where: USA
+      when: 2021
+      outcome: rival
+      note: LaMDA (2021) and PaLM (540 billion parameters, 2.5e24 FLOP, April 2022).
+    - who: DeepMind; Microsoft and Nvidia; Meta; BigScience; Baidu
+      where: UK, USA, France, China
+      when: 2021
+      outcome: rival
+      note: Gopher (280 billion), Megatron-Turing NLG (530 billion), OPT, BLOOM and ERNIE, 2021 to 2022.
+  effort:
+    people: 31
+    cost_usd: 2.2e6
+    note: GPT-3 used about 3.1e23 FLOP on V100 GPUs, about $2.1 million of compute in 2023 dollars per Epoch (other estimates run to $4.6 million).
+  sources:
+    - title: Brown et al. 2020, Language Models are Few-Shot Learners
+      url: https://arxiv.org/abs/2005.14165
+    - title: Epoch AI, Notable AI Models
+      url: https://epoch.ai/data/notable-ai-models
+
+- id: diffusion-models
+  name: Diffusion models
+  kind: technique
+  fields: [computing, physics]
+  date: 2020
+  status: achieved
+  tier: 2
+  summary: >-
+    Generating data by learning to reverse a process that gradually adds
+    noise, starting from pure noise and denoising step by step. Since 2020 they
+    have produced the best images, video and audio, and are used for molecule
+    and protein design.
+  requires: [deep-learning, statistical-mechanics]
+  competes: [gans]
+  efforts:
+    - who: Jascha Sohl-Dickstein and colleagues (Stanford)
+      where: USA
+      when: 2015
+      outcome: achieved
+      note: Proposed diffusion probabilistic models, inspired by nonequilibrium thermodynamics.
+    - who: Yang Song, Stefano Ermon (Stanford)
+      where: USA
+      when: 2019
+      outcome: independent
+      note: Score-based generative modeling; unified with diffusion as stochastic differential equations in 2020.
+    - who: Jonathan Ho, Ajay Jain, Pieter Abbeel (UC Berkeley)
+      where: USA
+      when: 2020
+      outcome: achieved
+      note: DDPM, the paper that made diffusion competitive with GANs.
+    - who: Robin Rombach, Bjorn Ommer and colleagues (LMU Munich, Runway)
+      where: Germany
+      when: 2021
+      outcome: achieved
+      note: Latent diffusion, the basis of Stable Diffusion; flow matching (2022) became a common variant.
+  sources:
+    - title: Ho, Jain and Abbeel 2020, Denoising Diffusion Probabilistic Models
+      url: https://arxiv.org/abs/2006.11239
+    - title: Sohl-Dickstein et al. 2015, Deep Unsupervised Learning using Nonequilibrium Thermodynamics
+      url: https://arxiv.org/abs/1503.03585
+
+- id: multimodal-models
+  name: Multimodal models
+  kind: device
+  fields: [computing]
+  date: 2021
+  status: achieved
+  tier: 3
+  summary: >-
+    Models that learn from and produce several kinds of data, such as text,
+    images, audio and video, in one network. CLIP (2021) linked images and
+    text, and by 2024 frontier assistants could see, listen and speak in real
+    time.
+  requires: [transformer, large-language-models]
+  efforts:
+    - who: Alec Radford and colleagues (OpenAI)
+      where: USA
+      when: 2021
+      outcome: achieved
+      note: CLIP, trained on 400 million image-caption pairs; the Vision Transformer (Google, 2020) showed transformers work on images.
+    - who: DeepMind
+      where: UK
+      when: 2022
+      outcome: achieved
+      note: Flamingo, a visual language model.
+    - who: OpenAI; Google DeepMind
+      where: USA and UK
+      when: 2023
+      outcome: achieved
+      note: GPT-4 with vision (2023); Gemini 1.0 trained natively multimodal (December 2023); GPT-4o with native speech (May 2024).
+  sources:
+    - title: Radford et al. 2021, Learning Transferable Visual Models From Natural Language Supervision
+      url: https://arxiv.org/abs/2103.00020
+    - title: Gemini Team 2023, Gemini, A Family of Highly Capable Multimodal Models
+      url: https://arxiv.org/abs/2312.11805
+
+- id: ai-coding-assistants
+  name: AI coding assistants
+  kind: device
+  fields: [computing]
+  date: 2021
+  status: achieved
+  tier: 3
+  summary: >-
+    Language models trained on public code that complete, write and fix
+    programs. They went from autocomplete in 2021 to agents that carry out
+    multi-hour software tasks by 2025 to 2026, and became the largest
+    commercial use of AI.
+  requires: [large-language-models, open-source]
+  efforts:
+    - who: OpenAI and GitHub (Microsoft)
+      where: USA
+      when: 2021
+      outcome: achieved
+      note: Codex and GitHub Copilot (preview June 2021).
+    - who: DeepMind
+      where: UK
+      when: 2022
+      outcome: achieved
+      note: AlphaCode reached about median human level in programming contests.
+    - who: Anthropic; OpenAI; Cursor (Anysphere); Google
+      where: USA
+      when: 2025
+      outcome: achieved
+      note: Claude Code (February 2025), OpenAI Codex agent (May 2025), Cursor's in-house Composer models (2025 to 2026), Gemini CLI.
+  sources:
+    - title: Chen et al. 2021, Evaluating Large Language Models Trained on Code
+      url: https://arxiv.org/abs/2107.03374
+
+- id: chinchilla-scaling
+  name: Compute-optimal scaling (Chinchilla)
+  kind: discovery
+  fields: [computing]
+  date: 2022
+  status: achieved
+  tier: 3
+  summary: >-
+    DeepMind's finding that for a fixed compute budget, models should be
+    trained on far more data than earlier practice, about 20 tokens per
+    parameter. Its 70 billion parameter Chinchilla beat the 280 billion
+    parameter Gopher using the same compute.
+  requires: [scaling-laws, large-language-models]
+  efforts:
+    - who: Jordan Hoffmann, Sebastian Borgeaud, Arthur Mensch, Laurent Sifre and colleagues (DeepMind)
+      where: UK
+      when: 2022
+      outcome: achieved
+      note: Chinchilla, 70 billion parameters on 1.4 trillion tokens, about 5.8e23 FLOP. Later models trained even longer than this optimum to cut inference cost, such as Llama 3 8B on 15 trillion tokens.
+  sources:
+    - title: Hoffmann et al. 2022, Training Compute-Optimal Large Language Models
+      url: https://arxiv.org/abs/2203.15556
+
+- id: generative-media
+  name: Text-to-image and video generation
+  kind: device
+  fields: [computing, society]
+  date: 2022
+  status: achieved
+  tier: 3
+  summary: >-
+    Models that make images, and then video with sound, from a text prompt.
+    In 2022 DALL-E 2, Midjourney and the open Stable Diffusion brought them to
+    millions of users, and video models followed from 2024.
+  requires: [diffusion-models, multimodal-models]
+  efforts:
+    - who: OpenAI
+      where: USA
+      when: 2022
+      outcome: achieved
+      note: DALL-E (January 2021), DALL-E 2 (April 2022), Sora (preview February 2024).
+    - who: Stability AI, Runway, LMU Munich
+      where: UK and Germany
+      when: 2022
+      outcome: achieved
+      note: Stable Diffusion, open weights, August 2022, about 5e22 FLOP and $110,000 of compute per Epoch.
+    - who: Midjourney; Google
+      where: USA
+      when: 2022
+      outcome: rival
+      note: Midjourney (open beta July 2022); Google's Imagen (May 2022) and Veo 3 (May 2025, video with synchronized audio).
+  sources:
+    - title: Rombach et al. 2021, High-Resolution Image Synthesis with Latent Diffusion Models
+      url: https://arxiv.org/abs/2112.10752
+
+- id: chatgpt
+  name: ChatGPT and chat assistants
+  kind: device
+  fields: [computing, society]
+  date: 2022
+  status: achieved
+  tier: 2
+  summary: >-
+    A language model tuned with RLHF to follow instructions in conversation,
+    offered free on the web on November 30, 2022. It became the fastest-growing
+    consumer app in history and made AI a mass technology.
+  requires: [large-language-models, rlhf, cloud-computing]
+  efforts:
+    - who: OpenAI
+      where: USA
+      when: 2022
+      outcome: achieved
+      note: Built on GPT-3.5. An estimated 100 million users within two months; OpenAI reported 800 million weekly users in October 2025.
+    - who: Google; Anthropic; Baidu
+      where: USA and China
+      when: 2023
+      outcome: rival
+      note: Bard (later Gemini), Claude and Ernie Bot all launched in March 2023.
+    - who: Meta, xAI, DeepSeek, Mistral, Alibaba, Moonshot and others
+      where: USA, China, France
+      when: 2023
+      outcome: rival
+      note: Meta AI, Grok, the DeepSeek app (top of app stores in January 2025), Le Chat, Qwen and Kimi.
+  sources:
+    - title: Wikipedia, ChatGPT
+      url: https://en.wikipedia.org/wiki/ChatGPT
+
+# ---------------------------------------------------------------------------
+# AI deep dive: the frontier, 2023 to 2026
+# ---------------------------------------------------------------------------
+
+- id: frontier-models
+  name: Frontier AI models (GPT-4 class and beyond)
+  kind: device
+  fields: [computing, society]
+  date: 2023
+  status: achieved
+  tier: 2
+  summary: >-
+    The most capable general models, trained with 1e25 FLOP or more from 2023
+    and near 1e27 FLOP by 2026, each costing tens to hundreds of millions of
+    dollars to train. A handful of labs in the US and China leapfrog each other
+    every few months.
+  requires: [large-language-models, rlhf, ai-accelerators]
+  helped_by: [mixture-of-experts, multimodal-models, chinchilla-scaling]
+  metric: ai-training-compute
+  efforts:
+    - who: OpenAI
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: GPT-4 (March 2023, about 2.1e25 FLOP on about 25,000 A100s, per Epoch); GPT-4.5 (February 2025, about 3.8e26 FLOP); GPT-5 (August 2025); GPT-6 Astra (September 3, 2026, about 9.4e26 FLOP on at least 100,000 GB200s in Abilene, Texas, per Epoch; first model rated "Critical" for cybersecurity under OpenAI's framework).
+    - who: Anthropic
+      where: USA
+      when: 2023
+      outcome: rival
+      note: Claude (March 2023), Claude 3 Opus (March 2024), Claude 4 (May 2025), Opus 4.6 and 4.8 (2026); Claude Mythos Preview (April 2026) was withheld from public release for its cyberattack ability and shared with defenders through Project Glasswing; Claude Fable 5 (June 2026) and the 5.1 and 5.5 models (September to October 2026) followed.
+    - who: Google DeepMind
+      where: UK and USA
+      when: 2023
+      outcome: rival
+      note: Gemini 1.0 Ultra (December 2023, about 5e25 FLOP per Epoch, speculative), Gemini 2.5 Pro (2025), Gemini 3 Pro (November 2025); Gemini 4 was in post-training as of late September 2026.
+    - who: xAI
+      where: USA
+      when: 2025
+      outcome: rival
+      note: Grok 3 (February 2025, about 3.5e26 FLOP on 80,000 H100s) and Grok 4 (July 2025, about 5e26 FLOP, speculative); Grok 4.7 (September 2026).
+    - who: Meta
+      where: USA
+      when: 2024
+      outcome: rival
+      note: Llama 3.1 405B (July 2024, 3.8e25 FLOP on 16,384 H100s), the largest openly disclosed run of 2024; Llama 4 (April 2025) disappointed and Meta reorganized its AI effort.
+  effort:
+    people: 1000
+    cost_usd: 4e8
+    note: >-
+      Epoch's amortized compute costs (2023 dollars) are about $37 million for
+      GPT-4, $30 million for Gemini 1.0 Ultra, $53 million for Llama 3.1 405B,
+      $366 million for GPT-4.5 and $390 million for Grok 4 (speculative); total
+      development costs are several times higher. Frontier training cost has
+      grown about 2.4 times a year since 2016. Technical reports list hundreds
+      (GPT-4) to over a thousand (Gemini) contributors.
+  sources:
+    - title: OpenAI 2023, GPT-4 Technical Report
+      url: https://arxiv.org/abs/2303.08774
+    - title: Epoch AI, Notable AI Models
+      url: https://epoch.ai/data/notable-ai-models
+    - title: Cottier et al. 2024, The rising costs of training frontier AI models
+      url: https://arxiv.org/abs/2405.21015
+    - title: Wikipedia, Claude Mythos
+      url: https://en.wikipedia.org/wiki/Claude_Mythos
+    - title: Constellation Research, OpenAI launches GPT-6 Astra
+      url: https://www.constellationr.com/insights/news/openai-launches-gpt-6-astra
+
+- id: open-weight-llms
+  name: Open-weight language models
+  kind: device
+  fields: [computing, society]
+  date: 2023
+  status: achieved
+  tier: 3
+  summary: >-
+    Large models whose trained weights are published for anyone to run and
+    modify. Led first by Meta and then by Chinese labs such as DeepSeek and
+    Alibaba, they trail the closed frontier by months rather than years.
+  requires: [large-language-models, open-source]
+  competes: [frontier-models]
+  efforts:
+    - who: Meta
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: LLaMA (February 2023, weights leaked within a week), Llama 2 (July 2023, commercial use allowed), Llama 3 (2024).
+    - who: Mistral AI
+      where: France
+      when: 2023
+      outcome: achieved
+      note: Mistral 7B (September 2023) and Mixtral (December 2023).
+    - who: DeepSeek
+      where: China
+      when: 2024
+      outcome: achieved
+      note: DeepSeek-V3 (December 2024, final run on 2,048 H800s for about $5.6 million) and R1 (January 2025), after which Nvidia lost about $590 billion of market value in one day; V4 (April 2026), adapted to Huawei Ascend chips.
+    - who: Alibaba (Qwen), Moonshot (Kimi), Zhipu (GLM), OpenAI (gpt-oss, August 2025), Nvidia (Nemotron)
+      where: China and USA
+      when: 2025
+      outcome: achieved
+  effort:
+    cost_usd: 5.4e6
+    note: Epoch puts DeepSeek-V3 at 3.3e24 FLOP and about $5.4 million, the final run only; DeepSeek's total hardware investment was far larger.
+  sources:
+    - title: Touvron et al. 2023, LLaMA
+      url: https://arxiv.org/abs/2302.13971
+    - title: DeepSeek-AI 2024, DeepSeek-V3 Technical Report
+      url: https://arxiv.org/abs/2412.19437
+    - title: The Register, DeepSeek V4 (April 2026)
+      url: https://www.theregister.com/2026/04/24/deepseek_v4/
+
+- id: reasoning-models
+  name: Reasoning models trained with reinforcement learning
+  kind: technique
+  fields: [computing]
+  date: 2024
+  status: achieved
+  tier: 2
+  summary: >-
+    Language models trained by reinforcement learning on problems with
+    checkable answers to think in long chains of thought before replying. Their
+    accuracy grows with thinking time, adding a second scaling axis
+    (test-time compute) and large gains in math and coding.
+  requires: [large-language-models, reinforcement-learning, rlhf]
+  efforts:
+    - who: Jason Wei and colleagues (Google); Takeshi Kojima and colleagues (Tokyo, Google)
+      where: USA and Japan
+      when: 2022
+      outcome: achieved
+      note: Chain-of-thought prompting and "let's think step by step" showed models reason better when they write out steps.
+    - who: OpenAI
+      where: USA
+      when: 2024
+      outcome: achieved
+      note: o1-preview (September 12, 2024) and o3 (announced December 2024, scoring 75.7% to 87.5% on ARC-AGI-1; released April 2025).
+    - who: DeepSeek
+      where: China
+      when: 2025
+      outcome: achieved
+      note: R1 (January 20, 2025) published the recipe, RL with verifiable rewards using GRPO; R1-Zero showed reasoning emerging from RL alone. Its Nature paper put the RL stage at about $294,000.
+    - who: Google DeepMind; Anthropic; xAI; Alibaba
+      where: USA, UK, China
+      when: 2025
+      outcome: rival
+      note: Gemini 2.0 Flash Thinking (December 2024) and Deep Think, Claude 3.7 Sonnet extended thinking (February 2025), Grok 3 Think, QwQ and Qwen3.
+  sources:
+    - title: DeepSeek-AI 2025, DeepSeek-R1
+      url: https://arxiv.org/abs/2501.12948
+    - title: Wei et al. 2022, Chain-of-Thought Prompting Elicits Reasoning in Large Language Models
+      url: https://arxiv.org/abs/2201.11903
+    - title: OpenAI, Learning to reason with LLMs
+      url: https://openai.com/index/learning-to-reason-with-llms/
+
+- id: ai-mathematics
+  name: AI at olympiad-level mathematics
+  kind: discovery
+  fields: [computing, math]
+  date: 2025
+  status: achieved
+  tier: 3
+  summary: >-
+    AI systems that solve hard competition problems and contribute to research
+    math. In July 2025 general reasoning models from Google DeepMind and OpenAI
+    reached gold-medal scores at the International Mathematical Olympiad.
+  requires: [reasoning-models]
+  efforts:
+    - who: Google DeepMind
+      where: UK
+      when: 2024
+      outcome: achieved
+      note: AlphaProof and AlphaGeometry 2 scored 28 of 42 (silver) at IMO 2024 using formal Lean proofs; AlphaEvolve (May 2025) found improved algorithms, including 4 by 4 complex matrix multiplication with 48 multiplications.
+    - who: Google DeepMind; OpenAI
+      where: UK and USA
+      when: 2025
+      outcome: achieved
+      note: Gemini Deep Think and an experimental OpenAI model each scored 35 of 42 at IMO 2025, in natural language within the time limits.
+  sources:
+    - title: Google DeepMind, AI achieves silver-medal standard solving IMO problems
+      url: https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/
+    - title: Wikipedia, International Mathematical Olympiad (AI section)
+      url: https://en.wikipedia.org/wiki/International_Mathematical_Olympiad
+
+- id: ai-agents
+  name: AI agents
+  kind: technique
+  fields: [computing, society]
+  date: 2025
+  status: ongoing
+  tier: 2
+  summary: >-
+    Language models that act on their own over many steps, using tools, code,
+    browsers and whole computers to finish tasks. The length of software task
+    they can finish has doubled roughly every 4 to 7 months, reaching around
+    half a day of expert work by 2026.
+  requires: [reasoning-models, ai-coding-assistants, multimodal-models]
+  efforts:
+    - who: Shunyu Yao and colleagues (Princeton, Google)
+      where: USA
+      when: 2022
+      outcome: achieved
+      note: ReAct, interleaving reasoning and tool use.
+    - who: Anthropic
+      where: USA
+      when: 2024
+      outcome: achieved
+      note: Computer use (October 2024), the Model Context Protocol for tools (November 2024), Claude Code (February 2025).
+    - who: OpenAI
+      where: USA
+      when: 2025
+      outcome: achieved
+      note: Operator (January 2025), Deep Research (February 2025), Codex (May 2025), ChatGPT agent (July 2025).
+    - who: Google DeepMind, xAI, Moonshot, Cursor, Cognition and many startups
+      where: USA and China
+      when: 2025
+      outcome: ongoing
+  effort:
+    note: >-
+      METR's 2025 study found the 50%-success task length doubling about every
+      7 months since 2019, and faster (about 4 months) since 2024; its 2026
+      measurements put frontier models around 12 to 16 hours, with wide
+      uncertainty.
+  sources:
+    - title: Kwa et al. 2025 (METR), Measuring AI Ability to Complete Long Tasks
+      url: https://arxiv.org/abs/2503.14499
+    - title: Anthropic, Introducing computer use
+      url: https://www.anthropic.com/news/3-5-models-and-computer-use
+
+- id: ai-datacenters
+  name: Gigawatt-scale AI data centers
+  kind: infrastructure
+  fields: [computing, energy]
+  date: 2024
+  status: ongoing
+  tier: 2
+  summary: >-
+    Purpose-built campuses with hundreds of thousands of AI chips, drawing
+    hundreds of megawatts to gigawatts, for training and serving frontier
+    models. Power and chip supply, more than algorithms, now set the pace of
+    scaling.
+  requires: [ai-accelerators, cloud-computing, power-grid]
+  helped_by: [advanced-packaging]
+  uses: [res-silicon, res-copper]
+  metric: ai-training-compute
+  efforts:
+    - who: xAI
+      where: USA
+      when: 2024
+      outcome: achieved
+      note: Colossus in Memphis, about 100,000 H100s built in about four months in 2024, then expanded.
+    - who: OpenAI, SoftBank, Oracle, MGX (Stargate)
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: Announced January 2025 with a $500 billion target; the Abilene, Texas site trained GPT-6 Astra.
+    - who: Anthropic and Amazon; Google; Meta; Microsoft
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: Project Rainier (Trainium2), Google TPU campuses, Meta's Prometheus and Hyperion, Microsoft's Fairwater.
+  effort:
+    cost_usd: 4e9
+    note: >-
+      Epoch estimates the hardware for GPT-6 Astra's 100,000-plus GB200 run at
+      about $4.2 billion, drawing about 230 MW. Epoch projected in 2024 that
+      runs of about 2e29 FLOP would be feasible by 2030, with power the
+      tightest constraint.
+  sources:
+    - title: Epoch AI, Can AI scaling continue through 2030?
+      url: https://epoch.ai/blog/can-ai-scaling-continue-through-2030
+    - title: Epoch AI, Training compute of frontier AI models grows by 4-5x per year
+      url: https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
+
+- id: autonomous-vehicles
+  name: Driverless cars (robotaxis)
+  kind: device
+  fields: [engineering, computing]
+  date: 2020
+  status: ongoing
+  tier: 3
+  summary: >-
+    Cars that drive themselves with no human ready to take over, using cameras,
+    lidar, radar and neural networks. Waymo began fully driverless public rides
+    in 2020 and was giving hundreds of thousands of paid rides a week by 2025.
+  requires: [deep-learning, convolutional-networks, gps]
+  efforts:
+    - who: Sebastian Thrun's team (Stanford)
+      where: USA
+      when: 2005
+      outcome: achieved
+      note: Won the DARPA Grand Challenge desert race; no car finished in 2004.
+    - who: Waymo (from Google's 2009 project)
+      where: USA
+      when: 2020
+      outcome: achieved
+      note: Driverless service in Phoenix from October 2020, then San Francisco, Los Angeles and other cities.
+    - who: Baidu (Apollo Go), Pony.ai, WeRide
+      where: China
+      when: 2022
+      outcome: ongoing
+    - who: Tesla
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: Camera-only approach; robotaxi pilot in Austin from June 2025.
+    - who: Cruise (General Motors)
+      where: USA
+      when: 2024
+      outcome: abandoned
+      note: Shut down in December 2024 after a 2023 crash and permit suspension.
+  sources:
+    - title: Wikipedia, Waymo
+      url: https://en.wikipedia.org/wiki/Waymo
+    - title: Wikipedia, DARPA Grand Challenge
+      url: https://en.wikipedia.org/wiki/DARPA_Grand_Challenge
+
+- id: robot-foundation-models
+  name: Robot foundation models
+  kind: device
+  fields: [computing, engineering]
+  date: 2023
+  status: ongoing
+  tier: 3
+  summary: >-
+    Vision-language-action models that turn camera images and instructions
+    directly into robot motions and transfer across tasks and robot bodies.
+    Paired with a wave of humanoid robots, they are an active but not yet
+    reliable frontier.
+  requires: [multimodal-models, deep-reinforcement-learning, transformer]
+  efforts:
+    - who: Google DeepMind
+      where: USA and UK
+      when: 2023
+      outcome: achieved
+      note: RT-2 (July 2023); Gemini Robotics (March 2025).
+    - who: Physical Intelligence; Nvidia; Figure; Tesla; Unitree
+      where: USA and China
+      when: 2024
+      outcome: ongoing
+      note: pi0 (October 2024), Nvidia GR00T, and humanoids from Figure, Tesla (Optimus) and Unitree.
+  sources:
+    - title: Brohan et al. 2023, RT-2
+      url: https://arxiv.org/abs/2307.15818
+
+# ---------------------------------------------------------------------------
+# Quantum computing
+# ---------------------------------------------------------------------------
+
+- id: shor-algorithm
+  name: "Shor's algorithm"
+  kind: technique
+  fields: [math, computing, physics]
+  date: 1994
+  status: achieved
+  tier: 3
+  summary: >-
+    A quantum algorithm that factors large numbers exponentially faster than
+    any known classical method, which would break RSA and elliptic-curve
+    encryption. It turned quantum computing from a curiosity into a strategic
+    goal.
+  requires: [quantum-mechanics, computability-theory]
+  helped_by: [public-key-cryptography]
+  efforts:
+    - who: Peter Shor (AT&T Bell Labs)
+      where: USA
+      when: 1994
+      outcome: achieved
+      note: Built on Richard Feynman (1981 to 1982) and David Deutsch (1985), who proposed quantum computers; Lov Grover's search algorithm followed in 1996.
+  sources:
+    - title: Shor 1995, Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer
+      url: https://arxiv.org/abs/quant-ph/9508027
+
+- id: quantum-error-correction
+  name: Quantum error correction
+  kind: technique
+  fields: [physics, computing]
+  date: 1995
+  status: achieved
+  tier: 3
+  summary: >-
+    Spreading one logical qubit across many physical qubits so errors can be
+    detected and fixed without measuring the stored information. The threshold
+    theorem says arbitrarily long computations are possible once physical
+    error rates fall below a fixed level.
+  requires: [shor-algorithm, information-theory]
+  efforts:
+    - who: Peter Shor (1995); Andrew Steane (1996)
+      where: USA and UK
+      when: 1995
+      outcome: achieved
+      note: The first quantum codes.
+    - who: Dorit Aharonov, Michael Ben-Or; Emanuel Knill, Raymond Laflamme, Wojciech Zurek; Alexei Kitaev
+      where: Israel, USA, Russia
+      when: 1997
+      outcome: achieved
+      note: The threshold theorem (1996 to 1997) and Kitaev's toric code, ancestor of the surface code; IBM's qLDPC "gross" codes (2024) cut the overhead.
+  sources:
+    - title: Wikipedia, Quantum error correction
+      url: https://en.wikipedia.org/wiki/Quantum_error_correction
+
+- id: quantum-computing
+  name: Quantum computers
+  kind: device
+  fields: [computing, physics]
+  date: 1998
+  status: ongoing
+  tier: 2
+  summary: >-
+    Machines that compute with qubits held in superposition and entanglement.
+    First demonstrated with two qubits in 1998, they reached hundreds to
+    thousands of physical qubits by 2026, but none yet does broadly useful work
+    better than classical computers.
+  requires: [quantum-mechanics, shor-algorithm, integrated-circuit]
+  helped_by: [quantum-error-correction, superconductivity, laser]
+  uses: [res-helium]
+  efforts:
+    - who: Isaac Chuang, Neil Gershenfeld, Mark Kubinec (IBM, MIT, Berkeley); Jonathan Jones, Michele Mosca (Oxford)
+      where: USA and UK
+      when: 1998
+      outcome: achieved
+      note: First two-qubit algorithms, using nuclear spins in liquid NMR; Yasunobu Nakamura's superconducting qubit followed in 1999.
+    - who: Google Quantum AI (superconducting)
+      where: USA
+      when: 2024
+      outcome: ongoing
+      note: Sycamore (2019), Willow (105 qubits, December 2024); "Quantum Echoes" (October 2025) claimed a verifiable advantage on a physics simulation.
+    - who: IBM (superconducting)
+      where: USA
+      when: 2023
+      outcome: ongoing
+      note: Condor (1,121 qubits, 2023), Heron and Nighthawk processors; Starling, a fault-tolerant machine, targeted for 2029.
+    - who: Quantinuum (trapped ions)
+      where: USA and UK
+      when: 2025
+      outcome: ongoing
+      note: Helios (November 2025), 98 barium-ion qubits with 99.92% two-qubit gate fidelity; its 2026 IPO filing claims 48 logical qubits from those 98.
+    - who: IonQ (trapped ions)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Bought Oxford Ionics in 2025; sold its first 256-qubit chip-based system in 2026; targets 1,600 logical qubits in 2028 (company claim).
+    - who: PsiQuantum (photonic)
+      where: USA and Australia
+      when: 2025
+      outcome: ongoing
+      note: Raised $1 billion in September 2025; building utility-scale sites in Brisbane and Chicago; selected with Microsoft for the final phase of DARPA's US2QC program.
+    - who: Microsoft (topological)
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: Majorana 1 (February 2025) claimed eight topological qubits; many physicists say the evidence that they are truly topological is not yet convincing.
+    - who: QuEra and Harvard, Atom Computing, Pasqal (neutral atoms); USTC (superconducting and photonic); D-Wave (annealing)
+      where: USA, France, China, Canada
+      when: 2023
+      outcome: rival
+      note: Harvard and QuEra ran 48 logical qubits in December 2023; USTC built Jiuzhang (2020) and Zuchongzhi 3.0 (2025).
+  sources:
+    - title: Chuang, Gershenfeld and Kubinec 1998, Experimental Implementation of Fast Quantum Searching, Physical Review Letters
+      url: https://doi.org/10.1103/PhysRevLett.80.3408
+    - title: Quantinuum, Introducing Helios
+      url: https://www.quantinuum.com/blog/introducing-helios-the-most-accurate-quantum-computer-in-the-world
+    - title: Quantinuum Form S-1 (2026)
+      url: https://www.sec.gov/Archives/edgar/data/0002110105/000162828026032836/quantinuum-sx1.htm
+    - title: NBC News, Microsoft reveals its first quantum computing chip, the Majorana 1
+      url: https://www.nbcnews.com/business/business-news/microsoft-reveals-first-quantum-computing-chip-majorana-1-rcna192871
+
+- id: quantum-supremacy
+  name: Quantum advantage on a sampling task
+  kind: discovery
+  fields: [physics, computing]
+  date: 2019
+  status: achieved
+  tier: 3
+  summary: >-
+    The first demonstration of a quantum computer doing a calculation, sampling
+    from random circuits, far faster than the best classical supercomputers
+    could. The task has no practical use, and better classical algorithms
+    later narrowed the gap.
+  requires: [quantum-computing]
+  efforts:
+    - who: Google AI Quantum (John Martinis and colleagues)
+      where: USA
+      when: 2019
+      outcome: achieved
+      note: Sycamore, 53 qubits, 200 seconds versus a claimed 10,000 years; IBM disputed the estimate.
+    - who: Jian-Wei Pan and colleagues (USTC)
+      where: China
+      when: 2020
+      outcome: independent
+      note: Jiuzhang, a photonic boson-sampling machine.
+  sources:
+    - title: Arute et al. 2019, Quantum supremacy using a programmable superconducting processor, Nature
+      url: https://www.nature.com/articles/s41586-019-1666-5
+
+- id: below-threshold-error-correction
+  name: Error correction below threshold
+  kind: discovery
+  fields: [physics, computing]
+  date: 2024
+  status: achieved
+  tier: 3
+  summary: >-
+    The first proof that adding more physical qubits to an error-correcting
+    code makes a logical qubit better rather than worse. It is the basic
+    requirement for scaling to a fault-tolerant machine.
+  requires: [quantum-error-correction, quantum-supremacy]
+  efforts:
+    - who: Google Quantum AI
+      where: USA
+      when: 2024
+      outcome: achieved
+      note: On Willow, each step up in surface code size (distance 3 to 5 to 7) cut the logical error rate by about 2.14 times, to 0.143% per cycle.
+    - who: Quantinuum and Microsoft; Harvard and QuEra
+      where: USA
+      when: 2024
+      outcome: independent
+      note: Logical qubits with lower error rates than their physical qubits on trapped ions and neutral atoms.
+  sources:
+    - title: Google Quantum AI 2024, Quantum error correction below the surface code threshold, Nature
+      url: https://www.nature.com/articles/s41586-024-08449-y
+    - title: Google, Meet Willow, our state-of-the-art quantum chip
+      url: https://blog.google/technology/research/google-willow-quantum-chip/
+
+- id: post-quantum-cryptography
+  name: Post-quantum cryptography
+  kind: technique
+  fields: [math, computing]
+  date: 2024
+  status: achieved
+  tier: 3
+  summary: >-
+    Public-key schemes based on math problems, such as lattices, that quantum
+    computers are not known to solve. NIST standardized the first three in
+    August 2024, and browsers and messaging apps have begun switching.
+  requires: [public-key-cryptography, shor-algorithm]
+  efforts:
+    - who: NIST, with cryptographers worldwide (Kyber and Dilithium from the CRYSTALS team, SPHINCS+)
+      where: USA and worldwide
+      when: 2024
+      outcome: achieved
+      note: FIPS 203, 204 and 205 (August 13, 2024) after a competition begun in 2016; NIST's draft IR 8547 deprecates RSA and elliptic curves by 2030 and disallows them by 2035.
+    - who: Signal, Apple, Google, Cloudflare
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: Signal's PQXDH (2023), iMessage PQ3 (2024) and hybrid key exchange in Chrome.
+  sources:
+    - title: NIST, Post-quantum cryptography FIPS approved
+      url: https://csrc.nist.gov/news/2024/postquantum-cryptography-fips-approved
+    - title: NIST IR 8547 (draft), Transition to Post-Quantum Cryptography Standards
+      url: https://csrc.nist.gov/pubs/ir/8547/ipd
+
+- id: fault-tolerant-quantum-computer
+  name: Fault-tolerant quantum computer
+  kind: device
+  fields: [computing, physics]
+  date: { window: [2028, 2040], likely: 2031 }
+  status: speculative
+  tier: 2
+  summary: >-
+    A quantum computer with about 100 or more error-corrected logical qubits
+    that can run millions of operations reliably, enough for useful chemistry
+    and materials simulation. Several companies target the end of the 2020s.
+  requires: [below-threshold-error-correction, quantum-computing]
+  efforts:
+    - who: IBM
+      where: USA
+      when: 2029
+      outcome: ongoing
+      note: Starling, about 200 logical qubits running 100 million gates, planned for Poughkeepsie by 2029 using qLDPC codes.
+    - who: Google Quantum AI
+      where: USA
+      when: 2029
+      outcome: ongoing
+      note: Aims for a useful error-corrected computer by the end of the decade.
+    - who: Quantinuum
+      where: USA and UK
+      when: 2029
+      outcome: ongoing
+      note: Apollo, a universal fault-tolerant machine, targeted for 2029.
+    - who: PsiQuantum
+      where: Australia and USA
+      when: 2029
+      outcome: ongoing
+      note: Utility-scale photonic machines in Brisbane (once promised for end of 2027) and Chicago.
+    - who: IonQ; Microsoft; QuEra; DARPA Quantum Benchmarking Initiative
+      where: USA
+      when: 2028
+      outcome: ongoing
+      note: DARPA's program aims to judge by 2033 whether any approach can reach utility scale.
+  forecast:
+    note: >-
+      Logical qubit counts went from 1 to about 12 to 48 between 2023 and 2026,
+      but at small code distances and short circuit depths. Getting to 100
+      logical qubits with error rates near one in a million needs roughly
+      tens of thousands of good physical qubits, or far fewer with qLDPC codes
+      and high-fidelity ions or atoms. Company roadmaps cluster at 2028 to
+      2029, and such roadmaps have historically slipped by a few years, so my
+      best guess is 2031, with a wide tail if a key platform stalls.
+    sources:
+      - title: IBM, Starling large-scale fault-tolerant quantum computer roadmap
+        url: https://www.ibm.com/quantum/blog/large-scale-ftqc
+      - title: Global Risk Institute, 2024 Quantum Threat Timeline Report
+        url: https://globalriskinstitute.org/publication/2024-quantum-threat-timeline-report/
+  sources:
+    - title: IBM, How IBM will build the world's first large-scale fault-tolerant quantum computer
+      url: https://www.ibm.com/quantum/blog/large-scale-ftqc
+
+- id: cryptographically-relevant-quantum-computer
+  name: Quantum computer that breaks RSA-2048
+  kind: device
+  fields: [computing, physics, society]
+  date: { window: [2030, 2045], likely: 2035 }
+  status: speculative
+  tier: 3
+  summary: >-
+    A quantum computer able to run Shor's algorithm on 2048-bit RSA keys,
+    breaking much of today's internet encryption, including data recorded now
+    and decrypted later. Estimates of the hardware needed fell sharply in 2025.
+  requires: [fault-tolerant-quantum-computer, shor-algorithm]
+  competes: [post-quantum-cryptography]
+  forecast:
+    note: >-
+      Craig Gidney (Google) estimated in May 2025 that RSA-2048 could be
+      factored in under a week with fewer than a million noisy qubits at 0.1%
+      error, about 20 times fewer than his 2019 estimate. That is still roughly
+      a thousand times larger than 2026 machines. Experts surveyed by the
+      Global Risk Institute in 2024 put a meaningful but minority chance on it
+      within 10 years. I put the median about four years after the first
+      fault-tolerant machines.
+    sources:
+      - title: Gidney 2025, How to factor 2048 bit RSA integers with less than a million noisy qubits
+        url: https://arxiv.org/abs/2505.15917
+      - title: Global Risk Institute, 2024 Quantum Threat Timeline Report
+        url: https://globalriskinstitute.org/publication/2024-quantum-threat-timeline-report/
+  sources:
+    - title: Gidney 2025, How to factor 2048 bit RSA integers with less than a million noisy qubits
+      url: https://arxiv.org/abs/2505.15917
+
+# ---------------------------------------------------------------------------
+# Brain-computer interfaces
+# ---------------------------------------------------------------------------
+
+- id: brain-computer-interfaces
+  name: Implanted brain-computer interfaces
+  kind: device
+  fields: [electronics, medicine]
+  date: 2004
+  status: ongoing
+  tier: 3
+  summary: >-
+    Electrode arrays in the brain whose signals are decoded, increasingly by
+    neural networks, to move cursors and robot arms or produce speech for
+    paralyzed people. Fewer than a hundred people had high-channel implants by
+    2026.
+  requires: [integrated-circuit]
+  helped_by: [deep-learning]
+  efforts:
+    - who: John Donoghue and colleagues (Brown University, BrainGate)
+      where: USA
+      when: 2004
+      outcome: achieved
+      note: The first person to control a cursor with a Utah array implant, Matt Nagle.
+    - who: UCSF (Edward Chang) and Stanford (Francis Willett, Jaimie Henderson) groups
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: Speech neuroprostheses decoding about 60 to 80 words a minute.
+    - who: Neuralink; Synchron; Precision Neuroscience; Paradromics
+      where: USA
+      when: 2024
+      outcome: ongoing
+      note: Neuralink's first human implant was in January 2024; secondary reports put its total near 26 people by mid-2026.
+  sources:
+    - title: Wikipedia, Brain-computer interface
+      url: https://en.wikipedia.org/wiki/Brain%E2%80%93computer_interface
+
+- id: bci-at-scale
+  name: Brain-computer interfaces at scale
+  kind: device
+  fields: [electronics, medicine, society]
+  date: { window: [2032, 2050], likely: 2038 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Implanted high-bandwidth brain interfaces in routine medical use, with
+    tens of thousands of people restored to fluent communication or movement.
+    Elective use by healthy people would come later, if at all.
+  requires: [brain-computer-interfaces]
+  helped_by: [ai-agents]
+  forecast:
+    note: >-
+      Implant counts grew from a handful to a few dozen between 2023 and 2026,
+      against Neuralink's 2024 talk of over 1,000 implants in 2026. Reaching
+      tens of thousands needs pivotal trials, regulatory approval (likely late
+      2020s for the first devices), reimbursement and surgical capacity.
+      Medical devices such as cochlear implants took about 15 to 20 years from
+      approval to that scale, which points to the late 2030s.
+    sources:
+      - title: Basenor, Neuralink reaches 26th patient (June 2026, secondary)
+        url: https://www.basenor.com/blogs/news/neuralink-reaches-26th-patient-in-ongoing-brain-computer-interface-trials
+      - title: Wikipedia, Cochlear implant
+        url: https://en.wikipedia.org/wiki/Cochlear_implant
+  sources:
+    - title: Wikipedia, Brain-computer interface
+      url: https://en.wikipedia.org/wiki/Brain%E2%80%93computer_interface
+
+# ---------------------------------------------------------------------------
+# AI futures
+# ---------------------------------------------------------------------------
+
+- id: automated-ai-research
+  name: Automated AI research
+  kind: technique
+  fields: [computing, society]
+  date: { window: [2027, 2038], likely: 2030 }
+  status: speculative
+  tier: 3
+  summary: >-
+    AI systems that can do the work of top AI research engineers on their own,
+    from running experiments to designing new methods, so AI progress itself
+    speeds up. Labs openly aim for it, and it is the main mechanism in fast
+    takeoff scenarios.
+  requires: [ai-agents, ai-coding-assistants, reasoning-models]
+  helped_by: [ai-datacenters]
+  forecast:
+    note: >-
+      Coding agents already finish many-hour software tasks, and METR's task
+      horizons doubled about every 4 to 7 months through 2026. Research needs
+      month-long autonomy, judgment about which experiments matter, and high
+      reliability; extrapolating horizons from about 12 hours in 2026 to about
+      a work-month gives roughly 2027 to 2029, and I add a year or two for the
+      reliability and taste gap. The AI 2027 scenario put a superhuman coder in
+      2027, and its authors' own median forecasts were later.
+    sources:
+      - title: Kwa et al. 2025 (METR), Measuring AI Ability to Complete Long Tasks
+        url: https://arxiv.org/abs/2503.14499
+      - title: Kokotajlo et al. 2025, AI 2027
+        url: https://ai-2027.com/
+      - title: Epoch AI, Training compute of frontier AI models grows by 4-5x per year
+        url: https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
+  sources:
+    - title: Kokotajlo et al. 2025, AI 2027
+      url: https://ai-2027.com/
+
+- id: agi
+  name: Artificial general intelligence (transformative AI)
+  kind: device
+  fields: [computing, society]
+  date: { window: [2028, 2045], likely: 2032 }
+  status: speculative
+  tier: 1
+  summary: >-
+    AI that can do essentially any cognitive work a skilled human can do
+    remotely, at similar or lower cost. It would transform the economy and
+    science, and how to make it safe is one of the central open problems of the
+    time.
+  requires: [frontier-models, reasoning-models, ai-agents, ai-datacenters]
+  helped_by: [automated-ai-research, robot-foundation-models, multimodal-models]
+  efforts:
+    - who: OpenAI, Google DeepMind, Anthropic, xAI, Meta Superintelligence Labs
+      where: USA and UK
+      when: 2026
+      outcome: ongoing
+      note: All state AGI or superintelligence as a goal; OpenAI presented GPT-6 Astra (September 2026) as the start of an "AGI era".
+    - who: DeepSeek, Alibaba, Moonshot, Zhipu and others
+      where: China
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Frontier training compute has grown about 4 to 5 times a year (Epoch),
+      reaching about 1e27 FLOP in 2026, and Epoch judged about 2e29 FLOP
+      feasible by 2030, limited mainly by power. METR's task horizons doubled
+      about every 4 to 7 months to around half a working day by 2026. If those
+      trends hold, systems that handle month-long projects arrive around 2028
+      to 2030; the gap from there to broadly human-level work across messy,
+      long-horizon and physical-world-adjacent jobs is the main uncertainty.
+      Metaculus's strong-AGI question had a community median around 2030 to
+      2033 in 2025 to 2026 snapshots (down from the 2050s in 2020), while the
+      2023 survey of 2,778 AI researchers gave a 50% chance of human-level
+      machine intelligence by 2047, a date that has moved earlier with each
+      survey. I weight the trend extrapolations most and put the median at
+      2032, with a long tail if scaling slows when compute growth hits power
+      and capital limits around 2030.
+    sources:
+      - title: Metaculus, When will the first general AI system be devised, tested, and publicly announced?
+        url: https://www.metaculus.com/questions/5121/
+      - title: Metaculus, When will the first weakly general AI system be devised, tested, and publicly announced?
+        url: https://www.metaculus.com/questions/3479/
+      - title: Grace et al. 2024, Thousands of AI Authors on the Future of AI (2023 ESPAI survey)
+        url: https://arxiv.org/abs/2401.02843
+      - title: Epoch AI, Training compute of frontier AI models grows by 4-5x per year
+        url: https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
+      - title: Epoch AI, Can AI scaling continue through 2030?
+        url: https://epoch.ai/blog/can-ai-scaling-continue-through-2030
+      - title: Kwa et al. 2025 (METR), Measuring AI Ability to Complete Long Tasks
+        url: https://arxiv.org/abs/2503.14499
+  sources:
+    - title: Wikipedia, Artificial general intelligence
+      url: https://en.wikipedia.org/wiki/Artificial_general_intelligence

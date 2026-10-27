@@ -1,0 +1,78 @@
+# Nodes the parts referenced but none defined, added when merging.
+- id: electrolysis
+  name: Electrolysis
+  kind: technique
+  fields: [chemistry, energy]
+  date: 1800
+  status: achieved
+  tier: 3
+  summary: >-
+    Splitting compounds with electric current, first done to water weeks
+    after Volta announced his pile. Humphry Davy used it to isolate sodium
+    and potassium in 1807, and Faraday worked out its laws in 1833.
+  requires: [electric-battery]
+  efforts:
+    - who: William Nicholson, Anthony Carlisle
+      where: England
+      when: 1800
+      outcome: achieved
+    - who: Humphry Davy
+      where: England
+      when: 1807
+      outcome: achieved
+      note: Isolated potassium and sodium.
+  sources:
+    - title: Wikipedia, Electrolysis
+      url: https://en.wikipedia.org/wiki/Electrolysis
+- id: chromatography
+  name: Chromatography
+  kind: technique
+  fields: [chemistry, biology]
+  date: [1903, 1941]
+  status: achieved
+  tier: 3
+  summary: >-
+    Separating a mixture by how fast its parts move through a medium. Mikhail
+    Tsvet separated plant pigments this way in 1903; Martin and Synge's
+    partition chromatography (1941) made it a general laboratory tool.
+  efforts:
+    - who: Mikhail Tsvet
+      where: Russia
+      when: 1903
+      outcome: achieved
+    - who: Archer Martin, Richard Synge
+      where: England
+      when: 1941
+      outcome: achieved
+      note: Nobel Prize in Chemistry, 1952.
+  sources:
+    - title: Nobel Prize in Chemistry 1952
+      url: https://www.nobelprize.org/prizes/chemistry/1952/summary/
+- id: particle-accelerator
+  name: Synchrotrons and particle colliders
+  kind: device
+  fields: [physics, engineering]
+  date: [1945, 1971]
+  status: achieved
+  tier: 3
+  summary: >-
+    Accelerators that keep particles in step as they gain energy, then rings
+    that collide two beams head on. They made the particle discoveries behind
+    the Standard Model possible.
+  requires: [cyclotron]
+  efforts:
+    - who: Edwin McMillan; Vladimir Veksler
+      where: USA; USSR
+      when: 1945
+      outcome: independent
+      note: Phase stability, the principle behind the synchrotron.
+    - who: CERN Intersecting Storage Rings
+      where: Switzerland
+      when: 1971
+      outcome: achieved
+      note: The first hadron collider.
+  sources:
+    - title: Wikipedia, Synchrotron
+      url: https://en.wikipedia.org/wiki/Synchrotron
+    - title: CERN, The Intersecting Storage Rings
+      url: https://home.cern/science/accelerators/intersecting-storage-rings

@@ -1,0 +1,38 @@
+id: ai-training-compute
+name: Training compute of notable AI models
+unit: FLOP
+better: higher
+log: true
+points:                           # [year, value]; a representative set of landmark and frontier models
+  - [1950, 40]                    # Theseus (Shannon's maze-solving mouse)
+  - [1957, 694894.9377361819]     # Perceptron Mark I
+  - [1980, 273738240]             # Neocognitron
+  - [1986, 673920000]             # MLP with back-propagation (Rumelhart et al.)
+  - [1987, 28328002560]           # NETtalk
+  - [1989, 1496338054440]         # LeCun's zip-code CNN
+  - [1992, 18232157622832.703]    # TD-Gammon (speculative)
+  - [1997, 31512000000000]        # LSTM
+  - [2000, 6339000000000000]      # Bengio neural language model
+  - [2012, 4.7e17]                # AlexNet
+  - [2014, 5.6e19]                # Seq2Seq LSTM
+  - [2016, 6.62e21]               # GNMT (Google Neural Machine Translation)
+  - [2017, 6.49439910290227e20]   # AlphaGo Zero
+  - [2018, 2.85e20]               # BERT-Large
+  - [2019, 1.07734e23]            # AlphaStar
+  - [2020, 3.14e23]               # GPT-3 175B
+  - [2021, 8.586e23]              # Megatron-Turing NLG 530B
+  - [2022, 2.5272e24]             # PaLM 540B
+  - [2023, 5.0e25]                # Gemini 1.0 Ultra (speculative); GPT-4 is 2.1e25
+  - [2024, 3.8e25]                # Llama 3.1 405B (largest disclosed; closed 2024 models undisclosed)
+  - [2025, 5.0e26]                # Grok 4 (speculative); GPT-4.5 is 3.8e26
+  - [2026, 9.4e26]                # GPT-6 Astra (likely; CI about 5e26 to 2e27)
+source:
+  title: Epoch AI, Notable AI Models dataset
+  url: https://epoch.ai/data/notable-ai-models
+license: CC BY 4.0
+note: >-
+  Exact values from Epoch AI's notable_ai_models.csv, downloaded 2026-10-27.
+  Most frontier values after 2022 are Epoch estimates, not lab disclosures, and
+  the confidence labels range from confident to speculative. Epoch finds
+  frontier training compute growing about 4 to 5 times per year since 2010
+  (https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year).

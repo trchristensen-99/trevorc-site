@@ -1,0 +1,3504 @@
+# Part E: other fields since 1945 (energy, space, transport, materials,
+# environment, agriculture, physics, institutions) and the future frontier.
+# Status as of 2026-10-27. cost_usd values are rough, in 2025 US dollars.
+
+# ---------------------------------------------------------------- ENERGY
+
+- id: nuclear-power
+  name: Nuclear power
+  kind: infrastructure
+  fields: [energy, physics]
+  date: 1954
+  status: achieved
+  tier: 1
+  summary: >-
+    Fission reactors that boil water to drive turbines, first feeding a grid at
+    Obninsk in 1954. About 440 reactors now supply roughly 9 percent of the
+    world's electricity with almost no carbon emissions.
+  requires: [nuclear-fission, power-grid, electric-generator]
+  helped_by: [nuclear-weapon, stored-program-computer]
+  competes: [fusion-power]
+  uses: [res-uranium]
+  efforts:
+    - who: Argonne National Laboratory, EBR-I
+      where: USA
+      when: 1951
+      outcome: achieved
+      note: First electricity from fission, enough to light four bulbs (December 20, 1951).
+    - who: Obninsk AM-1
+      where: USSR
+      when: 1954
+      outcome: achieved
+      note: First reactor to feed a power grid (5 MW), June 27, 1954.
+    - who: Calder Hall (UKAEA)
+      where: UK
+      when: 1956
+      outcome: independent
+      note: First commercial-scale nuclear station, opened October 1956.
+    - who: Shippingport (Rickover, Westinghouse, Duquesne Light)
+      where: USA
+      when: 1957
+      outcome: independent
+      note: >-
+        First full-scale US plant, a pressurized water reactor adapted from the
+        naval program that powered USS Nautilus (1955). The PWR became the
+        world's dominant design.
+    - who: China (CNNC, CGN; Hualong One fleet)
+      where: China
+      when: 2026
+      outcome: ongoing
+      note: Builds more reactors than the rest of the world combined in the 2020s.
+  effort:
+    span: [1942, 1957]
+    people: 100000
+    note: >-
+      Rides on the Manhattan Project (about 130,000 people, about $30 billion in
+      2025 dollars). Vogtle 3 and 4 in Georgia cost about $35 billion for two
+      units and Hinkley Point C is estimated near 46 billion pounds, which is
+      why cost, not physics, is the constraint in the West.
+  sources:
+    - title: IAEA, Obninsk, the world's first nuclear power plant
+      url: https://www.iaea.org/newscenter/news/the-worlds-first-nuclear-power-plant-celebrates-70-years
+    - title: World Nuclear Association, Nuclear Power in the World Today
+      url: https://world-nuclear.org/information-library/current-and-future-generation/nuclear-power-in-the-world-today
+
+- id: small-modular-reactors
+  name: Small modular reactors and advanced fission
+  kind: device
+  fields: [energy, engineering]
+  date: 2020
+  status: ongoing
+  tier: 2
+  summary: >-
+    Factory-built reactors under about 300 MW, meant to cut nuclear costs through
+    series production rather than one-off megaprojects. A handful run in Russia
+    and China; the first Western units are under construction.
+  requires: [nuclear-power]
+  helped_by: [research-grant-system, 3d-printing]
+  competes: [fusion-power, enhanced-geothermal]
+  uses: [res-uranium]
+  efforts:
+    - who: Rosatom, Akademik Lomonosov floating plant
+      where: Russia
+      when: 2020
+      outcome: achieved
+      note: Two 35 MWe KLT-40S reactors on a barge at Pevek, commercial since May 2020.
+    - who: China Huaneng, Tsinghua University, HTR-PM
+      where: China
+      when: 2023
+      outcome: achieved
+      note: High-temperature gas-cooled pebble-bed reactor, commercial operation December 2023.
+    - who: CNNC, Linglong One (ACP100)
+      where: China
+      when: 2026
+      outcome: ongoing
+      note: 125 MWe land-based PWR at Changjiang, Hainan; commissioning in 2026.
+    - who: Ontario Power Generation and GE Vernova Hitachi, BWRX-300 at Darlington
+      where: Canada
+      when: 2025
+      outcome: ongoing
+      note: Construction license April 2025; first unit grid power expected 2029 to 2030, three more planned.
+    - who: TerraPower Natrium (Kemmerer, Wyoming); X-energy with Dow; Kairos Power Hermes
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Sodium-cooled, pebble-bed and molten-salt-cooled designs under construction or licensing.
+    - who: NuScale (with ENTRA1 and TVA)
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: First US SMR design certified (2023 for 50 MWe module, uprate approved 2025); the first planned plant (CFPP, Utah) was cancelled in 2023 over cost.
+    - who: US DOE Reactor Pilot Program (Antares, Valar Atomics, Deployable Energy, Aalo)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Four test reactors reached criticality by July 2026 against a July 4 goal of three.
+    - who: Rolls-Royce SMR
+      where: UK
+      when: 2025
+      outcome: ongoing
+      note: Selected by Great British Energy, Nuclear in June 2025.
+  sources:
+    - title: IAEA, Small Modular Reactors
+      url: https://www.iaea.org/topics/small-modular-reactors
+    - title: US DOE, Fourth criticality ahead of July 4th goal (2026)
+      url: https://www.energy.gov/articles/department-energy-celebrates-fourth-criticality-ahead-july-4th-goal
+    - title: World Nuclear News, Additional SMRs in the pipeline for Darlington
+      url: https://www.world-nuclear-news.org/articles/additional-smrs-in-the-pipeline-for-darlington
+
+- id: molten-salt-thorium
+  name: Thorium molten salt reactors
+  kind: device
+  fields: [energy, chemistry]
+  date: { window: [2030, 2045], likely: 2036 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Reactors with fuel dissolved in molten fluoride salt that can breed fissile
+    uranium-233 from abundant thorium. Oak Ridge ran a test reactor in the 1960s;
+    China's Wuwei reactor converted thorium to uranium in 2025.
+  requires: [nuclear-power]
+  competes: [small-modular-reactors]
+  uses: [res-uranium]
+  efforts:
+    - who: Oak Ridge National Laboratory, Molten Salt Reactor Experiment
+      where: USA
+      when: 1965
+      outcome: abandoned
+      note: Ran 1965 to 1969, including on U-233; program cut in favor of sodium fast breeders.
+    - who: Shanghai Institute of Applied Physics (CAS), TMSR-LF1
+      where: China
+      when: 2025
+      outcome: ongoing
+      note: 2 MWt; critical October 2023, thorium added October 2024, first thorium-to-uranium conversion announced November 2025. A 373 MWt follow-on is planned around 2030.
+    - who: Copenhagen Atomics, Terrestrial Energy, Flibe Energy
+      where: Denmark, Canada, USA
+      when: 2026
+      outcome: ongoing
+    - who: India's three-stage thorium program (BARC)
+      where: India
+      when: 2026
+      outcome: ongoing
+      note: Solid-fuel route through fast breeders rather than molten salt.
+  forecast:
+    note: >-
+      Read as a thorium-fueled molten salt reactor delivering grid power. China
+      has moved fastest, from construction start (2018) to thorium conversion
+      (2025) in seven years, and plans a 10 MWe class demo near 2030. Salt
+      corrosion, tritium handling and fuel reprocessing are unsolved at
+      commercial scale, and thorium is not needed while uranium is cheap, so
+      Western efforts lag. Best guess mid-2030s in China, later elsewhere.
+    sources:
+      - title: World Nuclear News, Chinese MSR achieves conversion of thorium-uranium fuel
+        url: https://world-nuclear-news.org/articles/chinese-msr-achieves-conversion-of-thorium-uranium-fuel
+  sources:
+    - title: World Nuclear News, Chinese MSR achieves conversion of thorium-uranium fuel
+      url: https://world-nuclear-news.org/articles/chinese-msr-achieves-conversion-of-thorium-uranium-fuel
+    - title: ORNL, Molten Salt Reactor Experiment
+      url: https://www.ornl.gov/molten-salt-reactor/history
+
+- id: laser
+  name: Laser
+  kind: device
+  fields: [physics, electronics]
+  date: 1960
+  status: achieved
+  tier: 2
+  summary: >-
+    A light source that amplifies light by stimulated emission into an intense,
+    coherent beam, first built by Theodore Maiman with a ruby crystal in 1960. It
+    underlies fiber optics, precision measurement, laser fusion and much of modern
+    manufacturing.
+  requires: [quantum-mechanics]
+  helped_by: [radar]
+  efforts:
+    - who: Charles Townes and colleagues (Columbia), maser
+      where: USA
+      when: 1954
+      outcome: achieved
+      note: The microwave precursor; Townes and Schawlow proposed the optical version in 1958.
+    - who: Nikolay Basov and Alexander Prokhorov (Lebedev Institute)
+      where: USSR
+      when: 1955
+      outcome: independent
+      note: Shared the 1964 Nobel with Townes.
+    - who: Theodore Maiman (Hughes Research Laboratories)
+      where: USA
+      when: 1960
+      outcome: achieved
+      note: First working laser, May 16, 1960.
+  sources:
+    - title: APS Physics History, Maiman builds first working laser
+      url: https://www.aps.org/publications/apsnews/200305/history.cfm
+    - title: Nobel Prize in Physics 1964
+      url: https://www.nobelprize.org/prizes/physics/1964/summary/
+
+- id: tokamak
+  name: Tokamak magnetic confinement
+  kind: technique
+  fields: [physics, energy]
+  date: 1968
+  status: achieved
+  tier: 2
+  summary: >-
+    A doughnut-shaped magnetic bottle that holds plasma hot enough for fusion,
+    proposed by Tamm and Sakharov in 1951. Soviet T-3 results in 1968 made it the
+    world's main fusion approach.
+  requires: [quantum-mechanics, electromagnetism]
+  helped_by: [nuclear-weapon, stored-program-computer]
+  competes: [fusion-ignition-nif]
+  efforts:
+    - who: Kurchatov Institute, T-3
+      where: USSR
+      when: 1968
+      outcome: achieved
+      note: Reported 10 million degree plasmas; a British Culham team confirmed with laser scattering in 1969.
+    - who: JET (EUROfusion, Culham)
+      where: UK / EU
+      when: 2023
+      outcome: achieved
+      note: Record 69 MJ of fusion energy in its final experiments before closing in December 2023.
+    - who: EAST (ASIPP, Hefei)
+      where: China
+      when: 2025
+      outcome: achieved
+      note: 1,066 seconds of high-confinement plasma, January 2025.
+    - who: WEST (CEA)
+      where: France
+      when: 2025
+      outcome: achieved
+      note: 1,337 second plasma, February 2025.
+    - who: Princeton Plasma Physics Laboratory stellarator program; Wendelstein 7-X (Max Planck)
+      where: USA, Germany
+      when: 2015
+      outcome: rival
+      note: Stellarators, the twisted alternative, revived by W7-X (first plasma 2015).
+  sources:
+    - title: Tokamak, Wikipedia
+      url: https://en.wikipedia.org/wiki/Tokamak
+    - title: Joint European Torus, Wikipedia
+      url: https://en.wikipedia.org/wiki/Joint_European_Torus
+
+- id: fusion-ignition-nif
+  name: Laser fusion ignition
+  kind: discovery
+  fields: [physics, energy]
+  date: 2022
+  status: achieved
+  tier: 3
+  summary: >-
+    On December 5, 2022, the National Ignition Facility got more fusion energy out
+    of a fuel pellet (3.15 MJ) than its lasers put in (2.05 MJ), the first
+    controlled fusion ignition. By 2025 shots reached 8.6 MJ, a target gain above 4.
+  requires: [laser, nuclear-weapon]
+  helped_by: [stored-program-computer]
+  efforts:
+    - who: Lawrence Livermore National Laboratory, National Ignition Facility
+      where: USA
+      when: 2022
+      outcome: achieved
+      note: >-
+        Gain counts laser energy at the target only; the lasers drew about 300 MJ
+        from the grid. Record 8.6 MJ from 2.08 MJ in April 2025.
+  effort:
+    span: [1997, 2022]
+    people: 3000
+    cost_usd: 7000000000
+    note: About $3.5 billion to build (finished 2009), plus over a decade of operation, mostly funded for weapons stewardship.
+  sources:
+    - title: LLNL, Achieving fusion ignition
+      url: https://lasers.llnl.gov/science/achieving-fusion-ignition
+    - title: Physics World, NIF laser fusion milestone ignites debate
+      url: https://physicsworld.com/a/national-ignition-facilitys-laser-fusion-milestone-ignites-debate/
+
+- id: fusion-power
+  name: Fusion power plant
+  kind: infrastructure
+  fields: [energy, physics]
+  date: { window: [2032, 2055], likely: 2039 }
+  status: ongoing
+  tier: 1
+  summary: >-
+    A power plant that makes net electricity by fusing hydrogen isotopes, with
+    abundant fuel and no long-lived high-level waste. Science gain has been shown,
+    but no device has yet made net electricity.
+  requires: [tokamak, superconductors-high-temp]
+  helped_by: [fusion-ignition-nif, laser, deep-learning, stored-program-computer]
+  competes: [small-modular-reactors, solar-photovoltaic]
+  uses: [res-lithium, res-helium]
+  efforts:
+    - who: ITER (EU, China, India, Japan, Korea, Russia, USA)
+      where: France
+      when: 2034
+      outcome: ongoing
+      note: 2024 baseline moved start of research operations to 2034 and deuterium-tritium to 2039, adding about 5 billion euros. Aims at Q=10, not electricity.
+    - who: Lawrence Livermore National Laboratory, NIF
+      where: USA
+      when: 2022
+      outcome: ongoing
+      note: Ignition December 2022; laser drivers need roughly 100 times better wall-plug efficiency for a plant.
+    - who: Commonwealth Fusion Systems, SPARC then ARC
+      where: USA
+      when: 2027
+      outcome: ongoing
+      note: High-field REBCO tokamak; 20 T magnet test 2021, SPARC first plasma targeted 2027, ARC plant in Virginia early 2030s.
+    - who: Helion Energy, Polaris then Orion
+      where: USA
+      when: 2028
+      outcome: ongoing
+      note: Pulsed field-reversed configuration with direct energy recovery; broke ground on Orion in Malaga, Washington in 2025 for a 50 MW Microsoft contract by 2028.
+    - who: TAE Technologies
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Beam-driven FRC; announced a merger with Trump Media and Technology Group in December 2025 and plans a 50 MWe plant.
+    - who: ASIPP Hefei, EAST and BEST
+      where: China
+      when: 2027
+      outcome: ongoing
+      note: BEST, a compact superconducting tokamak aiming at burning plasma with Q above 1 (design Q=5), due end of 2027; CFEDR demo to follow.
+    - who: Tokamak Energy; UKAEA STEP
+      where: UK
+      when: 2040
+      outcome: ongoing
+      note: Spherical tokamaks; STEP prototype plant at West Burton targeted 2040.
+    - who: General Fusion, Zap Energy, Type One Energy, Proxima Fusion, Marvel Fusion, Pacific Fusion
+      where: Canada, USA, Germany
+      when: 2026
+      outcome: ongoing
+    - who: Energy Singularity; China Fusion Energy Co.
+      where: China
+      when: 2026
+      outcome: ongoing
+      note: Chinese private and state HTS tokamaks (HH70 first plasma 2024).
+  effort:
+    span: [1951, 2026]
+    people: 30000
+    cost_usd: 80000000000
+    note: >-
+      ITER alone is officially over 20 billion euros plus the 2024 overrun; the
+      US DOE once estimated the full in-kind total near $65 billion. Private
+      fusion firms raised roughly $10 billion by 2025 (Fusion Industry
+      Association). Public fusion research worldwide has run on the order of
+      $1 to 2 billion a year since the 1970s.
+  forecast:
+    note: >-
+      Read as first fusion electricity sold to a grid from a plant with net
+      electric gain. Company dates (Helion 2028, CFS early 2030s, TAE, STEP
+      2040) have a poor record: SPARC slipped from 2025 to 2027, ITER first
+      plasma from 2016 to 2034, and Helion has missed earlier stated dates.
+      Metaculus's 100 MW question sits near 2041 (quartiles about 2034 to
+      2055). The Fusion Industry Association survey says most firms expect
+      grid power in the 2030s, but that is self-reported. Tritium breeding,
+      materials under neutron flux and plant availability are untested. I put
+      a first small net-electric plant late 2030s, meaningful share of world
+      power after 2050.
+    sources:
+      - title: Metaculus, When will the first 100 MW fusion electrical facility come into service?
+        url: https://www.metaculus.com/questions/363/when-will-the-first-100-megawatt-fusion-based-electrical-generation-facility-come-into-service
+      - title: Physics World, Fusion industry predicts electricity generation by the 2030s (FIA survey)
+        url: https://physicsworld.com/a/fusion-industry-predicts-electricity-generation-by-the-2030s/
+      - title: Physics World, ITER hit by decade-long delay and 5 billion euro price hike
+        url: https://physicsworld.com/a/iter-fusion-reactor-hit-by-massive-decade-long-delay-and-e5bn-price-hike/
+      - title: DatacenterDynamics, Helion begins work at fusion plant for Microsoft by 2028
+        url: https://datacenterdynamics.com/en/news/helion-begins-work-at-fusion-plant-expects-to-deliver-power-to-microsoft-by-2028/
+  sources:
+    - title: ITER, Wikipedia
+      url: https://en.wikipedia.org/wiki/ITER
+    - title: SPARC (tokamak), Wikipedia
+      url: https://en.wikipedia.org/wiki/SPARC_(tokamak)
+    - title: ANS, Trump Media to merge with TAE Technologies
+      url: https://www.ans.org/news/article-7632/trump-media-to-merge-with-fusion-startup-tae-technologies-in-6b-deal/
+
+- id: solar-photovoltaic
+  name: Silicon solar cell
+  kind: device
+  fields: [energy, electronics]
+  date: 1954
+  status: achieved
+  tier: 1
+  summary: >-
+    A semiconductor junction that turns sunlight directly into electricity, first
+    made practical at Bell Labs in 1954 at about 6 percent efficiency. Module
+    prices fell over 99 percent since 1975, making it the cheapest new
+    electricity in much of the world.
+  requires: [quantum-mechanics, transistor]
+  helped_by: [satellites, integrated-circuit, research-grant-system]
+  uses: [res-silicon, res-silver]
+  metric: solar-pv-module-price
+  efforts:
+    - who: Daryl Chapin, Calvin Fuller, Gerald Pearson (Bell Labs)
+      where: USA
+      when: 1954
+      outcome: achieved
+      note: Announced April 25, 1954.
+    - who: Vanguard 1
+      where: USA
+      when: 1958
+      outcome: achieved
+      note: First solar-powered satellite; space was PV's first real market.
+    - who: Germany's feed-in tariff (EEG, 2000) and Chinese manufacturers (LONGi, Jinko, Trina, Tongwei)
+      where: Germany, China
+      when: 2000
+      outcome: achieved
+      note: German demand then Chinese scale drove the learning curve; China makes over 80 percent of the world's modules.
+  effort:
+    note: >-
+      Price fell about 20 percent per doubling of cumulative capacity (Wright's
+      law), from about $132/W in 1975 to $0.27/W in 2024 (2025 dollars). The
+      world added about 510 GW in 2025, past 2.4 TW cumulative. Silver paste is
+      a constraint at terawatt scale; makers are shifting to copper
+      metallization.
+  sources:
+    - title: APS Physics History, Bell Labs demonstrates the first practical silicon solar cell
+      url: https://www.aps.org/publications/apsnews/200904/physicshistory.cfm
+    - title: Our World in Data, Solar PV prices
+      url: https://ourworldindata.org/grapher/solar-pv-prices
+
+- id: perovskite-solar-cells
+  name: Perovskite solar cells
+  kind: discovery
+  fields: [energy, materials]
+  date: 2009
+  status: achieved
+  tier: 3
+  summary: >-
+    Solar cells made from cheap, solution-processed metal halide perovskite
+    crystals, first reported at 3.8 percent efficiency in 2009 and above 26
+    percent within 15 years. Their weakness is degradation under heat, light and
+    moisture.
+  requires: [solar-photovoltaic]
+  efforts:
+    - who: Akihiro Kojima, Tsutomu Miyasaka and colleagues (Toin University of Yokohama)
+      where: Japan
+      when: 2009
+      outcome: achieved
+    - who: Henry Snaith (Oxford) and Nam-Gyu Park (Sungkyunkwan) groups
+      where: UK, South Korea
+      when: 2012
+      outcome: achieved
+      note: Solid-state cells near 10 percent launched the field.
+  sources:
+    - title: Kojima et al. 2009, J. Am. Chem. Soc. 131, 6050
+      url: https://pubs.acs.org/doi/10.1021/ja809598r
+    - title: NREL, Best research-cell efficiency chart
+      url: https://www.nrel.gov/pv/cell-efficiency.html
+
+- id: perovskite-silicon-tandem
+  name: Perovskite-silicon tandem solar cells
+  kind: device
+  fields: [energy, materials]
+  date: 2024
+  status: ongoing
+  tier: 3
+  summary: >-
+    A perovskite layer stacked on a silicon cell to harvest blue and red light
+    separately, beating silicon's practical limit of about 27 percent. Lab cells
+    reached 35.5 percent in 2026; durable mass production is the open problem.
+  requires: [perovskite-solar-cells, solar-photovoltaic]
+  uses: [res-silicon]
+  efforts:
+    - who: LONGi Green Energy
+      where: China
+      when: 2026
+      outcome: ongoing
+      note: Certified 35.5 percent cell (ESTI, July 2026); 31.4 percent tandem module.
+    - who: Oxford PV
+      where: UK / Germany
+      when: 2024
+      outcome: ongoing
+      note: First commercial tandem module shipments, September 2024, from Brandenburg.
+    - who: Helmholtz-Zentrum Berlin, KAUST, EPFL/CSEM, Fraunhofer ISE
+      where: Germany, Saudi Arabia, Switzerland
+      when: 2026
+      outcome: ongoing
+    - who: Hanwha Qcells, Trina, JinkoSolar, GCL
+      where: South Korea, China
+      when: 2026
+      outcome: ongoing
+      note: Pilot lines; Qcells targeted mass production around 2026 to 2027.
+  sources:
+    - title: LONGi, 35.5 percent tandem cell world record (2026)
+      url: https://www.longi.com/en/news/crystalline-silicon-perovskite-tandem-solar-cell-new-world-efficiency-2026/
+    - title: NREL, Best research-cell efficiency chart
+      url: https://www.nrel.gov/pv/cell-efficiency.html
+
+- id: wind-power
+  name: Utility-scale wind turbines
+  kind: device
+  fields: [energy, engineering]
+  date: 1979
+  status: achieved
+  tier: 2
+  summary: >-
+    Three-bladed, upwind, grid-connected turbines on the Danish design, scaled
+    from tens of kilowatts in the late 1970s to 15 MW machines today. Global
+    capacity passed about 1,300 GW in 2025.
+  requires: [electric-generator, power-grid, windmill]
+  helped_by: [carbon-fiber, stored-program-computer]
+  uses: [res-rare-earths]
+  efforts:
+    - who: Johannes Juul, Gedser turbine
+      where: Denmark
+      when: 1957
+      outcome: achieved
+      note: 200 kW three-bladed prototype that set the "Danish concept".
+    - who: Vestas, Bonus (now Siemens Gamesa), Nordtank
+      where: Denmark
+      when: 1979
+      outcome: achieved
+      note: Small commercial turbines sold into the California wind rush of the early 1980s.
+    - who: NASA/DOE MOD series
+      where: USA
+      when: 1975
+      outcome: abandoned
+      note: Large two-bladed government turbines that mostly failed; incremental Danish scaling won.
+    - who: Goldwind, Envision, Mingyang
+      where: China
+      when: 2025
+      outcome: achieved
+      note: China added about 120 GW in 2025 alone and holds over half of world capacity.
+  effort:
+    note: >-
+      Direct-drive generators use neodymium-iron-boron magnets (roughly 600 kg of
+      magnet per MW, about a third of it rare earths); geared designs with induction generators avoid them
+      at some cost in maintenance.
+  sources:
+    - title: GWEC, Global Wind Report 2026
+      url: https://www.gwec.net/reports/globalwindreport
+    - title: Gedser wind turbine, Wikipedia
+      url: https://en.wikipedia.org/wiki/Gedser_wind_turbine
+
+- id: offshore-wind
+  name: Offshore wind
+  kind: infrastructure
+  fields: [energy, engineering]
+  date: 1991
+  status: achieved
+  tier: 3
+  summary: >-
+    Wind farms built at sea, where winds are stronger and steadier, starting with
+    Vindeby in Denmark in 1991. Floating platforms now open deep water.
+  requires: [wind-power]
+  uses: [res-rare-earths]
+  efforts:
+    - who: Vindeby (DONG Energy, now Orsted)
+      where: Denmark
+      when: 1991
+      outcome: achieved
+      note: Eleven 450 kW turbines.
+    - who: Equinor, Hywind Scotland
+      where: UK
+      when: 2017
+      outcome: achieved
+      note: First floating wind farm.
+    - who: China Three Gorges, Mingyang
+      where: China
+      when: 2025
+      outcome: achieved
+      note: China has about half of world offshore capacity.
+  sources:
+    - title: Vindeby Offshore Wind Farm, Wikipedia
+      url: https://en.wikipedia.org/wiki/Vindeby_Offshore_Wind_Farm
+
+- id: lithium-ion-battery
+  name: Lithium-ion battery
+  kind: device
+  fields: [energy, chemistry]
+  date: 1991
+  status: achieved
+  tier: 1
+  summary: >-
+    A rechargeable battery that shuttles lithium ions between a layered oxide
+    cathode and a carbon anode, commercialized by Sony in 1991. Cell prices fell
+    about 99 percent since then, enabling phones, laptops, electric cars and grid
+    storage.
+  requires: [electric-battery, periodic-table]
+  helped_by: [research-grant-system, personal-computer]
+  uses: [res-lithium, res-cobalt, res-nickel]
+  metric: lithium-ion-battery-price
+  efforts:
+    - who: M. Stanley Whittingham (Exxon)
+      where: USA
+      when: 1976
+      outcome: achieved
+      note: Lithium titanium disulfide cathode; metallic lithium anode was a fire risk.
+    - who: John Goodenough and Koichi Mizushima (Oxford)
+      where: UK
+      when: 1980
+      outcome: achieved
+      note: Lithium cobalt oxide cathode, doubling voltage.
+    - who: Akira Yoshino (Asahi Kasei)
+      where: Japan
+      when: 1985
+      outcome: achieved
+      note: Carbon (petroleum coke) anode, the first safe practical cell.
+    - who: Sony
+      where: Japan
+      when: 1991
+      outcome: achieved
+      note: First commercial cells, in a camcorder.
+    - who: CATL, BYD, LG Energy Solution, Panasonic, Samsung SDI, SK On
+      where: China, South Korea, Japan
+      when: 2026
+      outcome: achieved
+      note: Demand passed 1 TWh a year in 2024; Chinese makers hold about three quarters of production.
+  effort:
+    note: >-
+      Whittingham, Goodenough and Yoshino shared the 2019 Chemistry Nobel. The
+      graphite anode and the cobalt in early cathodes are supply risks; nickel-
+      rich and cobalt-free chemistries (LFP) and sodium-ion substitute.
+  sources:
+    - title: Nobel Prize in Chemistry 2019
+      url: https://www.nobelprize.org/prizes/chemistry/2019/popular-information/
+    - title: Ziegler and Trancik 2021, Re-examining rates of lithium-ion battery technology improvement
+      url: https://pubs.rsc.org/en/content/articlelanding/2021/ee/d0ee02681f
+
+- id: lithium-iron-phosphate
+  name: Lithium iron phosphate (LFP) cathode
+  kind: technique
+  fields: [chemistry, energy]
+  date: 1997
+  status: achieved
+  tier: 3
+  summary: >-
+    A lithium-ion cathode of iron phosphate, reported by Goodenough's group in
+    1997, that needs no cobalt or nickel and resists fire. Cheap and long-lived,
+    it now powers nearly half of new electric cars and most grid batteries.
+  requires: [lithium-ion-battery]
+  uses: [res-lithium, res-phosphate]
+  efforts:
+    - who: Akshaya Padhi, John Goodenough and colleagues (University of Texas)
+      where: USA
+      when: 1997
+      outcome: achieved
+    - who: BYD (Blade battery, 2020), CATL, A123 Systems
+      where: China, USA
+      when: 2020
+      outcome: achieved
+      note: Cell-to-pack designs closed the energy density gap.
+  sources:
+    - title: Padhi et al. 1997, J. Electrochem. Soc. 144, 1188
+      url: https://iopscience.iop.org/article/10.1149/1.1837571
+    - title: IEA, Global EV Outlook 2025, batteries
+      url: https://www.iea.org/reports/global-ev-outlook-2025
+
+- id: sodium-ion-battery
+  name: Sodium-ion battery
+  kind: device
+  fields: [energy, chemistry]
+  date: 2024
+  status: ongoing
+  tier: 3
+  summary: >-
+    A battery chemistry like lithium-ion but using abundant sodium, trading some
+    energy density for lower cost and good cold-weather performance. Chinese
+    makers began putting it in cars in 2024 to 2026.
+  requires: [lithium-ion-battery]
+  competes: [lithium-iron-phosphate]
+  uses: [res-salt]
+  efforts:
+    - who: CATL (Naxtra) with Changan
+      where: China
+      when: 2026
+      outcome: ongoing
+      note: 175 Wh/kg cells; first mass-production car unveiled February 2026, 10,000 to 20,000 cars expected in 2026.
+    - who: BYD, HiNa Battery (with JAC Yiwei, 2024)
+      where: China
+      when: 2024
+      outcome: ongoing
+    - who: Natron Energy
+      where: USA
+      when: 2025
+      outcome: abandoned
+      note: Prussian-blue sodium startup that shut down in 2025.
+  sources:
+    - title: CnEVPost, CATL sodium batteries begin deployment in production passenger vehicles
+      url: https://cnevpost.com/2026/02/05/catl-sodium-batteries-begin-deployment-in-production-passenger-vehicles/
+
+- id: solid-state-batteries
+  name: Solid-state batteries
+  kind: device
+  fields: [energy, materials]
+  date: { window: [2027, 2033], likely: 2029 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Batteries with a solid ceramic or sulfide electrolyte instead of a flammable
+    liquid, allowing a lithium-metal anode for more energy and less fire risk.
+    Prototype cells exist; making them cheaply at scale is the hurdle.
+  requires: [lithium-ion-battery]
+  competes: [sodium-ion-battery, lithium-iron-phosphate]
+  uses: [res-lithium, res-nickel]
+  efforts:
+    - who: Toyota with Idemitsu Kosan
+      where: Japan
+      when: 2027
+      outcome: ongoing
+      note: Sulfide electrolyte; production for EVs targeted 2027 to 2028. Toyota once aimed at the 2020 Olympics.
+    - who: QuantumScape with Volkswagen PowerCo
+      where: USA / Germany
+      when: 2026
+      outcome: ongoing
+      note: Anode-free ceramic separator; B-sample cells 2025, Eagle line 2026, license up to 80 GWh.
+    - who: Samsung SDI with BMW and Solid Power
+      where: South Korea, USA
+      when: 2027
+      outcome: ongoing
+    - who: CATL, BYD, Gotion, WeLion, Qingtao
+      where: China
+      when: 2027
+      outcome: ongoing
+      note: Semi-solid packs already ship (NIO 150 kWh); all-solid targets 2027 to 2030.
+    - who: Factorial Energy with Mercedes-Benz and Stellantis
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: Road tests of a semi-solid pack in 2025.
+  forecast:
+    note: >-
+      Read as all-solid-state cells in a series-production car sold in volume
+      (tens of thousands a year). Every major player now points to 2027 to 2028
+      for small runs, but these dates have slipped repeatedly (Toyota's from
+      2020, QuantumScape's from 2024). Liquid LFP and sodium keep getting
+      cheaper, which raises the bar. Small runs late 2020s; mass market early
+      2030s.
+    sources:
+      - title: EEPower, Solid-state batteries race to mass production
+        url: https://eepower.com/market-insights/solid-state-batteries-race-to-mass-production/
+      - title: IEA, Global EV Outlook 2026
+        url: https://www.iea.org/reports/global-ev-outlook-2026
+  sources:
+    - title: Janek and Zeier 2016, A solid future for battery development, Nature Energy
+      url: https://www.nature.com/articles/nenergy2016141
+
+- id: electric-vehicles
+  name: Modern electric cars
+  kind: device
+  fields: [engineering, energy]
+  date: 2008
+  status: achieved
+  tier: 2
+  summary: >-
+    Highway-capable cars powered by lithium-ion packs, beginning with the Tesla
+    Roadster in 2008. Sales passed 20 million in 2025, a quarter of new cars, led
+    by China.
+  requires: [lithium-ion-battery, automobile, power-grid]
+  helped_by: [integrated-circuit, venture-capital]
+  competes: [internal-combustion-engine]
+  uses: [res-lithium, res-nickel, res-cobalt, res-rare-earths]
+  efforts:
+    - who: General Motors EV1
+      where: USA
+      when: 1996
+      outcome: abandoned
+      note: Lead-acid then NiMH; recalled and crushed by 2003.
+    - who: Tesla (Roadster 2008, Model S 2012)
+      where: USA
+      when: 2008
+      outcome: achieved
+    - who: Nissan Leaf
+      where: Japan
+      when: 2010
+      outcome: achieved
+    - who: BYD and other Chinese makers
+      where: China
+      when: 2025
+      outcome: achieved
+      note: Chinese firms made about 60 percent of EVs sold in 2025; EVs were nearly 55 percent of China's car sales.
+  effort:
+    note: >-
+      Most motors use rare-earth permanent magnets; induction and externally
+      excited motors (Tesla, BMW, Renault) substitute.
+  sources:
+    - title: IEA, Global EV Outlook 2026, trends in electric cars
+      url: https://www.iea.org/reports/global-ev-outlook-2026/trends-in-electric-cars
+
+- id: grid-batteries
+  name: Grid-scale battery storage
+  kind: infrastructure
+  fields: [energy, engineering]
+  date: 2017
+  status: achieved
+  tier: 3
+  summary: >-
+    Large lithium-ion installations that store solar and wind power for hours and
+    stabilize grid frequency, made economic by falling cell prices. South
+    Australia's Hornsdale reserve in 2017 showed what they could do.
+  requires: [lithium-ion-battery, power-grid]
+  helped_by: [lithium-iron-phosphate]
+  efforts:
+    - who: Tesla and Neoen, Hornsdale Power Reserve
+      where: Australia
+      when: 2017
+      outcome: achieved
+      note: 100 MW / 129 MWh, built in under 100 days.
+    - who: California (CAISO)
+      where: USA
+      when: 2024
+      outcome: achieved
+      note: Over 10 GW of batteries shifting solar into the evening peak.
+    - who: China
+      where: China
+      when: 2025
+      outcome: achieved
+      note: Largest installer of new-type storage in the 2020s.
+  sources:
+    - title: Hornsdale Power Reserve
+      url: https://hornsdalepowerreserve.com.au/
+    - title: IEA, Batteries and Secure Energy Transitions (2024)
+      url: https://www.iea.org/reports/batteries-and-secure-energy-transitions
+
+- id: long-duration-storage
+  name: Long-duration energy storage
+  kind: device
+  fields: [energy, chemistry]
+  date: 2022
+  status: ongoing
+  tier: 3
+  summary: >-
+    Storage that holds energy for days rather than hours, using flow batteries,
+    iron-air cells, compressed air or heat, to cover windless, dark weeks on a
+    renewable grid. Pumped hydro already does this where geography allows.
+  requires: [power-grid]
+  helped_by: [grid-batteries]
+  competes: [green-hydrogen, enhanced-geothermal]
+  efforts:
+    - who: Dalian Rongke Power, vanadium flow battery
+      where: China
+      when: 2022
+      outcome: achieved
+      note: 100 MW / 400 MWh in Dalian.
+    - who: Form Energy, iron-air
+      where: USA
+      when: 2027
+      outcome: ongoing
+      note: 100-hour batteries; first Great River Energy system now due 2027 after slipping from 2024.
+    - who: Hydrostor; China's Hubei Yingcheng plant
+      where: Canada, China
+      when: 2025
+      outcome: ongoing
+      note: Compressed air storage at hundreds of megawatts.
+    - who: Antora, Rondo
+      where: USA
+      when: 2024
+      outcome: ongoing
+      note: Thermal batteries for industrial heat.
+  sources:
+    - title: MIT Technology Review, Form Energy (2026 climate tech companies to watch)
+      url: https://www.technologyreview.com/2026/10/06/1145020/2026-climate-tech-companies-to-watch-form-energy-iron-batteries/
+    - title: LDES Council, Net-zero power report
+      url: https://www.ldescouncil.com/
+
+- id: shale-fracking
+  name: Horizontal drilling and hydraulic fracturing
+  kind: technique
+  fields: [energy, engineering]
+  date: 1998
+  status: achieved
+  tier: 2
+  summary: >-
+    Drilling sideways through shale and cracking it with pressurized water and
+    sand to release trapped gas and oil. Proven in Texas's Barnett Shale around
+    1998, it made the US the world's largest oil and gas producer.
+  requires: [oil-refining, steel-bessemer]
+  helped_by: [research-grant-system, stored-program-computer]
+  uses: [res-oil, res-natural-gas, res-fresh-water]
+  efforts:
+    - who: Stanolind Oil (Halliburton), Hugoton field
+      where: USA
+      when: 1947
+      outcome: achieved
+      note: First experimental hydraulic fracture.
+    - who: DOE Eastern Gas Shales Project and Gas Research Institute
+      where: USA
+      when: 1976
+      outcome: achieved
+      note: Public research on shale, microseismic mapping and horizontal wells.
+    - who: George Mitchell (Mitchell Energy), slickwater fracturing
+      where: USA
+      when: 1998
+      outcome: achieved
+      note: About 17 years of persistence in the Barnett before it paid.
+    - who: Devon Energy and others, horizontal multistage wells
+      where: USA
+      when: 2005
+      outcome: achieved
+  effort:
+    span: [1981, 1998]
+    note: Mitchell Energy drilled for about 17 years before the economics worked.
+  sources:
+    - title: Breakthrough Institute, Where the shale gas revolution came from
+      url: https://thebreakthrough.org/issues/energy/where-the-shale-gas-revolution-came-from
+    - title: US EIA, Hydraulic fracturing accounts for most US oil and gas production
+      url: https://www.eia.gov/todayinenergy/detail.php?id=26112
+
+- id: green-hydrogen
+  name: Green hydrogen from electrolysis
+  kind: technique
+  fields: [energy, chemistry]
+  date: 2023
+  status: ongoing
+  tier: 3
+  summary: >-
+    Splitting water with renewable electricity to make hydrogen for steel,
+    ammonia and fuels without fossil carbon. It works but costs two to four
+    times hydrogen from natural gas, and many announced projects were cancelled
+    in 2024 and 2025.
+  requires: [electrolysis, solar-photovoltaic, wind-power]
+  competes: [long-duration-storage, carbon-capture]
+  uses: [res-platinum-group, res-nickel, res-fresh-water]
+  efforts:
+    - who: Sinopec, Kuqa solar hydrogen plant
+      where: China
+      when: 2023
+      outcome: achieved
+      note: About 260 MW of electrolyzers, then the largest.
+    - who: NEOM Green Hydrogen Company (ACWA Power, Air Products)
+      where: Saudi Arabia
+      when: 2027
+      outcome: ongoing
+      note: About 2.2 GW for ammonia export.
+    - who: Stegra (formerly H2 Green Steel), Boden
+      where: Sweden
+      when: 2026
+      outcome: ongoing
+      note: Hydrogen-reduced steel; hit funding trouble in 2025.
+    - who: LONGi Hydrogen, Peric, thyssenkrupp nucera, Electric Hydrogen
+      where: China, Germany, USA
+      when: 2026
+      outcome: ongoing
+      note: Electrolyzer makers; PEM types need iridium, alkaline use nickel.
+  sources:
+    - title: IEA, Global Hydrogen Review 2025
+      url: https://www.iea.org/reports/global-hydrogen-review-2025
+
+- id: enhanced-geothermal
+  name: Enhanced geothermal systems
+  kind: technique
+  fields: [energy, engineering]
+  date: 2023
+  status: ongoing
+  tier: 3
+  summary: >-
+    Making geothermal power almost anywhere by drilling into hot dry rock and
+    fracturing it to circulate water, borrowing shale drilling methods. Fervo
+    Energy's Cape Station in Utah delivered first utility-scale power in 2026.
+  requires: [shale-fracking, electric-generator]
+  helped_by: [research-grant-system]
+  competes: [small-modular-reactors, long-duration-storage]
+  efforts:
+    - who: Los Alamos, Fenton Hill hot dry rock project
+      where: USA
+      when: 1974
+      outcome: abandoned
+      note: Proved the concept but not the economics; ended 1995.
+    - who: Soultz-sous-Forets
+      where: France
+      when: 2008
+      outcome: achieved
+      note: Small EGS plant, about 1.5 MW.
+    - who: Fervo Energy, Project Red and Cape Station
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Project Red on the grid in 2023; Cape Station first power September 2026, about 100 MW by early 2027 and 500 MW by 2028.
+    - who: DOE Utah FORGE; Eavor (closed loop, Geretsried); Quaise Energy (millimeter-wave drilling); Sage Geosystems
+      where: USA, Germany, Canada
+      when: 2026
+      outcome: ongoing
+  sources:
+    - title: Fervo Energy, Cape Station first power (2026)
+      url: https://www.power-eng.com/?p=136858
+    - title: Enhanced geothermal system, Wikipedia
+      url: https://en.wikipedia.org/wiki/Enhanced_geothermal_system
+
+- id: superconductors-high-temp
+  name: High-temperature superconductors
+  kind: discovery
+  fields: [materials, physics]
+  date: 1986
+  status: achieved
+  tier: 2
+  summary: >-
+    Copper oxide ceramics that lose all electrical resistance at far higher
+    temperatures than metals, found by Bednorz and Muller in 1986; YBCO works in
+    cheap liquid nitrogen. REBCO tapes now enable compact fusion magnets.
+  requires: [superconductivity, quantum-mechanics]
+  uses: [res-rare-earths, res-copper, res-helium]
+  efforts:
+    - who: Georg Bednorz and K. Alex Muller (IBM Zurich)
+      where: Switzerland
+      when: 1986
+      outcome: achieved
+      note: Lanthanum barium copper oxide at 35 K; Nobel 1987.
+    - who: Maw-Kuen Wu and Paul Chu (Alabama, Houston)
+      where: USA
+      when: 1987
+      outcome: achieved
+      note: YBCO at 93 K, above liquid nitrogen's 77 K.
+    - who: Commonwealth Fusion Systems and MIT PSFC
+      where: USA
+      when: 2021
+      outcome: achieved
+      note: 20 tesla large-bore REBCO fusion magnet.
+    - who: Faraday Factory Japan, Shanghai Superconductor, SuperPower (Furukawa), Fujikura
+      where: Japan, China, USA
+      when: 2026
+      outcome: ongoing
+      note: REBCO tape makers scaling for fusion and cables.
+  effort:
+    note: >-
+      Older niobium superconductors need liquid helium at 4 K; HTS at 20 K or
+      77 K cuts helium demand, a real substitution since helium is scarce.
+  sources:
+    - title: Nobel Prize in Physics 1987
+      url: https://www.nobelprize.org/prizes/physics/1987/summary/
+    - title: MIT News, Tests show high-temperature superconducting magnets are ready for fusion
+      url: https://news.mit.edu/2024/tests-show-high-temperature-superconducting-magnets-fusion-ready-0304
+
+- id: room-temperature-superconductor
+  name: Room-temperature, ambient-pressure superconductor
+  kind: discovery
+  fields: [materials, physics]
+  date: { window: [2035, 2100], likely: 2065 }
+  status: speculative
+  tier: 3
+  summary: >-
+    A material that superconducts at everyday temperature and pressure, which
+    would transform power lines, motors, magnets and computing. Hydrides come close
+    only under crushing pressures, and recent claims (LK-99, Dias) collapsed.
+  requires: [superconductors-high-temp]
+  helped_by: [deep-learning, quantum-computing]
+  efforts:
+    - who: Mikhail Eremets (Max Planck Mainz), hydrides H3S and LaH10
+      where: Germany
+      when: 2019
+      outcome: achieved
+      note: Superconductivity up to about 250 K, but at about 1.7 million atmospheres.
+    - who: Ranga Dias (Rochester)
+      where: USA
+      when: 2023
+      outcome: abandoned
+      note: Room-temperature claims retracted from Nature in 2022 and 2023 after misconduct findings.
+    - who: Quantum Energy Research Centre, LK-99
+      where: South Korea
+      when: 2023
+      outcome: abandoned
+      note: Viral claim; replications found copper sulfide impurities, not superconductivity.
+    - who: Nickelate and materials-discovery AI efforts (Google DeepMind GNoME, Microsoft)
+      where: USA, UK, China
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      The record critical temperature at ambient pressure has been stuck near
+      133 to 138 K (mercury cuprates) since 1993. No theory rules out room
+      temperature, but none predicts how to get it, and the field has a history
+      of false claims. AI-guided materials search raises the search rate, not
+      the odds per candidate. Low confidence; it may never happen.
+    sources:
+      - title: Nature, LK-99 isn't a superconductor (2023)
+        url: https://www.nature.com/articles/d41586-023-02585-7
+      - title: Drozdov et al. 2019, Superconductivity at 250 K in lanthanum hydride, Nature
+        url: https://www.nature.com/articles/s41586-019-1201-8
+  sources:
+    - title: Nature, LK-99 isn't a superconductor (2023)
+      url: https://www.nature.com/articles/d41586-023-02585-7
+
+# ----------------------------------------------------------------- SPACE
+
+- id: satellites
+  name: Artificial satellites
+  kind: device
+  fields: [engineering, electronics]
+  date: 1957
+  status: achieved
+  tier: 1
+  summary: >-
+    Objects placed in orbit around Earth, beginning with the Soviet Sputnik 1 on
+    October 4, 1957. Satellites now carry the world's navigation, weather
+    forecasting, broadband and Earth imaging.
+  requires: [rocketry, radio]
+  helped_by: [nuclear-weapon, transistor]
+  efforts:
+    - who: Sergei Korolev's OKB-1, Sputnik 1 on an R-7 missile
+      where: USSR
+      when: 1957
+      outcome: achieved
+    - who: JPL and Army Ballistic Missile Agency, Explorer 1
+      where: USA
+      when: 1958
+      outcome: achieved
+      note: Found the Van Allen radiation belts.
+    - who: China (Dong Fang Hong 1, 1970), Japan (Ohsumi, 1970), France (Asterix, 1965), India (Rohini, 1980)
+      where: China, Japan, France, India
+      when: 1965
+      outcome: independent
+  effort:
+    note: >-
+      Built on the R-7 ICBM program. By 2026 roughly 19,000 payloads were in
+      orbit, over half of them Starlink.
+  sources:
+    - title: NASA, Sputnik and the origins of the Space Age
+      url: https://www.nasa.gov/history/sputnik/
+    - title: Explorer 1, NASA JPL
+      url: https://www.jpl.nasa.gov/missions/explorer-1
+
+- id: communications-satellites
+  name: Communications satellites
+  kind: infrastructure
+  fields: [electronics, engineering]
+  date: 1962
+  status: achieved
+  tier: 2
+  summary: >-
+    Satellites that relay telephone, television and data across oceans, first
+    with Telstar in 1962 and from geostationary orbit by 1964, as Arthur C.
+    Clarke had proposed in 1945. Intelsat made them a global utility.
+  requires: [satellites, transistor]
+  helped_by: [solar-photovoltaic]
+  efforts:
+    - who: Arthur C. Clarke, Extra-Terrestrial Relays (Wireless World)
+      where: UK
+      when: 1945
+      outcome: achieved
+      note: Proposed three geostationary relays.
+    - who: AT&T Bell Labs and NASA, Telstar 1
+      where: USA
+      when: 1962
+      outcome: achieved
+    - who: Hughes (Harold Rosen), Syncom 2 and 3
+      where: USA
+      when: 1964
+      outcome: achieved
+      note: Syncom 3 broadcast the Tokyo Olympics from geostationary orbit.
+    - who: Intelsat consortium, Early Bird
+      where: International
+      when: 1965
+      outcome: achieved
+    - who: USSR, Molniya
+      where: USSR
+      when: 1965
+      outcome: independent
+      note: Highly elliptical orbits to cover high latitudes.
+  sources:
+    - title: Communications satellite, Wikipedia (Clarke 1945 and early history)
+      url: https://en.wikipedia.org/wiki/Communications_satellite
+    - title: Telstar 1, Wikipedia
+      url: https://en.wikipedia.org/wiki/Telstar_1
+
+- id: earth-observation
+  name: Weather and Earth-observation satellites
+  kind: infrastructure
+  fields: [engineering, society]
+  date: 1960
+  status: achieved
+  tier: 3
+  summary: >-
+    Satellites that image clouds, land, ice and oceans, from TIROS-1 in 1960 and
+    Landsat in 1972 to daily whole-Earth imaging today. They made global weather
+    forecasts and climate records possible.
+  requires: [satellites]
+  helped_by: [stored-program-computer, integrated-circuit]
+  efforts:
+    - who: NASA, TIROS-1
+      where: USA
+      when: 1960
+      outcome: achieved
+      note: First weather satellite images.
+    - who: NASA and USGS, Landsat 1
+      where: USA
+      when: 1972
+      outcome: achieved
+      note: The longest continuous record of Earth's land surface; free data since 2008.
+    - who: ESA Copernicus Sentinels; China Fengyun; Planet Labs
+      where: EU, China, USA
+      when: 2017
+      outcome: achieved
+      note: Planet's cubesat flock images the whole land surface daily.
+  sources:
+    - title: NASA, TIROS
+      url: https://science.nasa.gov/mission/tiros/
+    - title: USGS, Landsat history
+      url: https://www.usgs.gov/landsat-missions/landsat-1
+
+- id: human-spaceflight
+  name: Human spaceflight
+  kind: technique
+  fields: [engineering, medicine]
+  date: 1961
+  status: achieved
+  tier: 1
+  summary: >-
+    Sending people into space and returning them alive, first done by Yuri
+    Gagarin on April 12, 1961. Russia, the US and China fly crews on their own
+    rockets, and private companies now fly them too.
+  requires: [satellites, rocketry]
+  helped_by: [radar, stored-program-computer]
+  efforts:
+    - who: Yuri Gagarin, Vostok 1 (OKB-1)
+      where: USSR
+      when: 1961
+      outcome: achieved
+    - who: Alan Shepard (suborbital, May 1961), John Glenn (orbital, 1962), Project Mercury
+      where: USA
+      when: 1961
+      outcome: rival
+    - who: Yang Liwei, Shenzhou 5
+      where: China
+      when: 2003
+      outcome: independent
+    - who: SpaceX Crew Dragon (NASA Commercial Crew)
+      where: USA
+      when: 2020
+      outcome: achieved
+      note: First private company to fly astronauts to orbit, May 30, 2020.
+    - who: ISRO Gaganyaan
+      where: India
+      when: 2027
+      outcome: ongoing
+  sources:
+    - title: ESA, Yuri Gagarin, first man in space
+      url: https://www.esa.int/About_Us/ESA_history/50_years_of_humans_in_space/The_flight_of_Vostok_1
+    - title: Crew Dragon Demo-2, Wikipedia
+      url: https://en.wikipedia.org/wiki/Crew_Dragon_Demo-2
+
+- id: moon-landing
+  name: Crewed Moon landing
+  kind: technique
+  fields: [engineering, society]
+  date: 1969
+  status: achieved
+  tier: 1
+  summary: >-
+    Apollo 11 landed Neil Armstrong and Buzz Aldrin on the Moon on July 20, 1969.
+    Twelve people walked on the Moon in six landings through 1972, and no one has
+    returned since.
+  requires: [human-spaceflight, rocketry, integrated-circuit]
+  helped_by: [stored-program-computer, research-grant-system]
+  efforts:
+    - who: NASA Apollo program (with North American, Grumman, Boeing, MIT Instrumentation Lab and others)
+      where: USA
+      when: 1969
+      outcome: achieved
+    - who: Soviet N1-L3 lunar program
+      where: USSR
+      when: 1972
+      outcome: abandoned
+      note: Four N1 launch failures 1969 to 1972; Luna 9 made the first soft landing (uncrewed) in 1966.
+  effort:
+    span: [1961, 1972]
+    people: 400000
+    cost_usd: 309000000000
+    note: >-
+      $25.8 billion in then-year dollars, about $309 billion in 2025 dollars
+      (Planetary Society, NASA New Start Index), peaking near 4 percent of the
+      federal budget in 1966. The Apollo Guidance Computer was the largest
+      early buyer of integrated circuits.
+  sources:
+    - title: Planetary Society, How much did the Apollo program cost?
+      url: https://www.planetary.org/space-policy/cost-of-apollo
+    - title: NASA, Apollo 11 mission overview
+      url: https://www.nasa.gov/mission/apollo-11/
+
+- id: planetary-probes
+  name: Planetary probes
+  kind: device
+  fields: [engineering, physics]
+  date: 1962
+  status: achieved
+  tier: 2
+  summary: >-
+    Robotic spacecraft sent to other worlds, from Mariner 2 passing Venus in 1962
+    to Voyager leaving the solar system. Every planet, and Pluto, has now been
+    visited.
+  requires: [satellites, newtonian-mechanics]
+  helped_by: [stored-program-computer, radio]
+  efforts:
+    - who: Luna 2 and Luna 3
+      where: USSR
+      when: 1959
+      outcome: achieved
+      note: First impact on the Moon and first images of its far side.
+    - who: NASA JPL, Mariner 2
+      where: USA
+      when: 1962
+      outcome: achieved
+    - who: Venera 7
+      where: USSR
+      when: 1970
+      outcome: achieved
+      note: First soft landing on another planet.
+    - who: NASA JPL, Voyager 1 and 2
+      where: USA
+      when: 1977
+      outcome: achieved
+      note: Grand tour of the outer planets; Voyager 1 reached interstellar space in 2012.
+    - who: ESA, JAXA, ISRO, CNSA
+      where: Europe, Japan, India, China
+      when: 2014
+      outcome: achieved
+      note: Rosetta comet landing (2014), Mangalyaan (2014), Chang'e 4 far-side landing (2019).
+  sources:
+    - title: NASA, Mariner 2
+      url: https://science.nasa.gov/mission/mariner-2/
+    - title: NASA JPL, Voyager
+      url: https://science.nasa.gov/mission/voyager/
+
+- id: space-stations
+  name: Space stations
+  kind: infrastructure
+  fields: [engineering, biology]
+  date: 1971
+  status: achieved
+  tier: 2
+  summary: >-
+    Crewed outposts in orbit for long stays and research, starting with Salyut 1
+    in 1971. The International Space Station has been occupied without a break
+    since November 2000, and China runs its own Tiangong.
+  requires: [human-spaceflight]
+  helped_by: [space-shuttle, solar-photovoltaic]
+  efforts:
+    - who: Salyut 1, then Mir (1986 to 2001)
+      where: USSR / Russia
+      when: 1971
+      outcome: achieved
+    - who: NASA, Skylab
+      where: USA
+      when: 1973
+      outcome: achieved
+    - who: International Space Station (NASA, Roscosmos, ESA, JAXA, CSA)
+      where: International
+      when: 1998
+      outcome: achieved
+      note: To be deorbited around 2030.
+    - who: CMSA, Tiangong
+      where: China
+      when: 2022
+      outcome: achieved
+    - who: Axiom Space, Vast (Haven-1), Starlab, Blue Origin Orbital Reef
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Commercial successors to the ISS.
+  effort:
+    span: [1984, 2011]
+    cost_usd: 150000000000
+    note: The ISS is often cited at about $150 billion across partners, the most expensive single object ever built.
+  sources:
+    - title: NASA, International Space Station facts
+      url: https://www.nasa.gov/international-space-station/space-station-facts-and-figures/
+
+- id: space-shuttle
+  name: Space Shuttle
+  kind: device
+  fields: [engineering]
+  date: 1981
+  status: achieved
+  tier: 3
+  summary: >-
+    NASA's partly reusable winged spacecraft, flown 135 times from 1981 to 2011.
+    It built the ISS and launched Hubble, but refurbishment made it far more
+    expensive per kilogram than promised, and two orbiters were lost with crews.
+  requires: [human-spaceflight, rocketry]
+  competes: [reusable-rockets]
+  efforts:
+    - who: NASA, Rockwell, Thiokol, Martin Marietta
+      where: USA
+      when: 1981
+      outcome: achieved
+      note: Challenger (1986) and Columbia (2003) disasters killed 14 astronauts.
+    - who: Buran
+      where: USSR
+      when: 1988
+      outcome: abandoned
+      note: One uncrewed orbital flight.
+  effort:
+    span: [1972, 2011]
+    cost_usd: 300000000000
+    note: About $209 billion in 2010 dollars over the program, roughly $1.5 billion per flight; CSIS puts it at about $65,400 per kg to LEO.
+  sources:
+    - title: NASA, Space Shuttle program
+      url: https://www.nasa.gov/space-shuttle/
+    - title: Space.com, NASA's shuttle program cost $209 billion
+      url: https://www.space.com/12166-space-shuttle-program-cost-promises-209-billion.html
+
+- id: atomic-clock
+  name: Atomic clock
+  kind: device
+  fields: [physics, electronics]
+  date: 1955
+  status: achieved
+  tier: 3
+  summary: >-
+    A clock that counts the microwave frequency of a cesium atom's transition,
+    first built by Louis Essen in 1955. Since 1967 the second has been defined
+    this way, and satellite navigation depends on such clocks.
+  requires: [quantum-mechanics, radar]
+  efforts:
+    - who: Louis Essen and Jack Parry (National Physical Laboratory)
+      where: UK
+      when: 1955
+      outcome: achieved
+    - who: NIST, JILA; optical lattice clocks
+      where: USA, Japan, Germany
+      when: 2020
+      outcome: ongoing
+      note: Optical clocks 100 times more precise may redefine the second around 2030.
+  sources:
+    - title: Atomic clock, Wikipedia
+      url: https://en.wikipedia.org/wiki/Atomic_clock
+
+- id: gps
+  name: Global Positioning System
+  kind: infrastructure
+  fields: [engineering, electronics]
+  date: 1978
+  status: achieved
+  tier: 1
+  summary: >-
+    A US military constellation of satellites with atomic clocks that lets any
+    receiver compute its position to meters, first launched in 1978 and fully
+    operational in 1995. Opened fully to civilians in 2000, it now times phone
+    networks, power grids and finance as well as guiding people.
+  requires: [satellites, atomic-clock, relativity, integrated-circuit]
+  helped_by: [stored-program-computer, smartphone]
+  efforts:
+    - who: US Air Force NAVSTAR program (Bradford Parkinson and others)
+      where: USA
+      when: 1978
+      outcome: achieved
+      note: First Block I satellite February 1978; full operational capability 1995; Selective Availability turned off May 2000.
+    - who: GLONASS
+      where: USSR / Russia
+      when: 1995
+      outcome: rival
+    - who: Galileo (EU), BeiDou (China, global 2020), NavIC (India), QZSS (Japan)
+      where: EU, China, India, Japan
+      when: 2020
+      outcome: rival
+  effort:
+    span: [1973, 1995]
+    people: 10000
+    cost_usd: 20000000000
+    note: >-
+      About $7.2 billion in R&D and procurement through 1994 in then-year dollars
+      (roughly $15 to 20 billion today), and about $1.5 to 2 billion a year since.
+      Relativity matters: uncorrected, clocks would drift about 38 microseconds a
+      day, about 10 km of position error.
+  sources:
+    - title: Global Positioning System, Wikipedia
+      url: https://en.wikipedia.org/wiki/Global_Positioning_System
+    - title: National Academies, The Global Positioning System (1995), costs
+      url: https://nap.nationalacademies.org/read/4920/chapter/86
+
+- id: space-telescopes
+  name: Space telescopes
+  kind: device
+  fields: [physics, engineering]
+  date: 1990
+  status: achieved
+  tier: 2
+  summary: >-
+    Telescopes above the atmosphere, which blurs visible light and blocks
+    infrared, X-rays and ultraviolet. Hubble (1990) and the James Webb Space
+    Telescope (2021) changed what we know about the universe's age, expansion and
+    first galaxies.
+  requires: [telescope, satellites]
+  helped_by: [space-shuttle, integrated-circuit]
+  efforts:
+    - who: NASA and ESA, Hubble Space Telescope
+      where: USA / Europe
+      when: 1990
+      outcome: achieved
+      note: Launched with a flawed mirror, fixed by astronauts in 1993.
+    - who: NASA, ESA, CSA, James Webb Space Telescope
+      where: International
+      when: 2021
+      outcome: achieved
+    - who: NASA Chandra (1999), ESA Gaia (2013), Euclid (2023)
+      where: USA, Europe
+      when: 1999
+      outcome: achieved
+    - who: NASA Nancy Grace Roman; China's Xuntian
+      where: USA, China
+      when: 2027
+      outcome: ongoing
+  effort:
+    cost_usd: 10000000000
+    note: Hubble cost about $1.5 billion at launch (about $16 billion over its life); JWST about $10 billion, from 1996 to 2021.
+  sources:
+    - title: NASA, Hubble Space Telescope
+      url: https://science.nasa.gov/mission/hubble/
+    - title: NASA, James Webb Space Telescope
+      url: https://science.nasa.gov/mission/webb/
+
+- id: exoplanet-detection
+  name: Exoplanet detection
+  kind: discovery
+  fields: [physics]
+  date: 1995
+  status: achieved
+  tier: 3
+  summary: >-
+    The discovery of planets around other stars, first around a normal Sun-like
+    star (51 Pegasi b) by Mayor and Queloz in 1995. More than 6,000 are now
+    confirmed, many by the Kepler and TESS space telescopes.
+  requires: [telescope]
+  helped_by: [space-telescopes, integrated-circuit]
+  efforts:
+    - who: Aleksander Wolszczan and Dale Frail
+      where: USA
+      when: 1992
+      outcome: achieved
+      note: Planets around a pulsar.
+    - who: Michel Mayor and Didier Queloz (Geneva)
+      where: Switzerland
+      when: 1995
+      outcome: achieved
+      note: Nobel 2019.
+    - who: NASA Kepler (2009) and TESS (2018)
+      where: USA
+      when: 2009
+      outcome: achieved
+  sources:
+    - title: Nobel Prize in Physics 2019
+      url: https://www.nobelprize.org/prizes/physics/2019/summary/
+    - title: NASA Exoplanet Archive
+      url: https://exoplanetarchive.ipac.caltech.edu/
+
+- id: nasa-cots
+  name: Fixed-price commercial space contracts (COTS)
+  kind: institution
+  fields: [society, engineering]
+  date: 2006
+  status: achieved
+  tier: 3
+  summary: >-
+    NASA's 2006 Commercial Orbital Transportation Services program paid companies
+    fixed sums for milestones instead of owning rocket designs. It funded Falcon
+    9 and Dragon, and became the model for commercial crew and lunar landers.
+  requires: [research-grant-system]
+  helped_by: [venture-capital, inducement-prizes]
+  efforts:
+    - who: NASA (Alan Lindenmoyer), SpaceX and Orbital Sciences
+      where: USA
+      when: 2006
+      outcome: achieved
+      note: Dragon reached the ISS in May 2012.
+  effort:
+    cost_usd: 1200000000
+    note: NASA paid about $800 million across COTS partners (then-year dollars).
+  sources:
+    - title: NASA, Commercial Orbital Transportation Services, a new era in spaceflight
+      url: https://www.nasa.gov/wp-content/uploads/2016/08/sp-2014-617.pdf
+
+- id: reusable-rockets
+  name: Reusable orbital rocket boosters
+  kind: technique
+  fields: [engineering]
+  date: 2015
+  status: achieved
+  tier: 1
+  summary: >-
+    Rocket first stages that fly back and land upright to be reused, first done
+    by a SpaceX Falcon 9 on December 21, 2015. Some boosters have flown more than
+    35 times, and SpaceX now launches most of the world's mass to orbit.
+  requires: [rocketry, satellites, stored-program-computer]
+  helped_by: [nasa-cots, venture-capital, gps]
+  competes: [space-shuttle]
+  uses: [res-oil]
+  metric: launch-cost-per-kg
+  efforts:
+    - who: McDonnell Douglas DC-X
+      where: USA
+      when: 1993
+      outcome: abandoned
+      note: Suborbital vertical-landing test vehicle.
+    - who: Blue Origin, New Shepard (suborbital) and New Glenn
+      where: USA
+      when: 2015
+      outcome: rival
+      note: New Shepard landed November 2015; New Glenn's orbital booster first landed November 13, 2025.
+    - who: SpaceX, Falcon 9
+      where: USA
+      when: 2015
+      outcome: achieved
+      note: First landing December 2015; first reflight March 2017; booster B1067 flew its 37th mission in August 2026.
+    - who: LandSpace (Zhuque-3), Space Pioneer, CALT (Long March 12A); Rocket Lab Neutron; ArianeGroup Themis
+      where: China, USA, Europe
+      when: 2026
+      outcome: ongoing
+  effort:
+    span: [2005, 2017]
+    people: 3000
+    cost_usd: 2000000000
+    note: >-
+      SpaceX put Falcon 9 v1.0 development at about $300 million (2011), and
+      reusability at roughly $1 billion more. A 2011 NASA cost model estimated
+      $1.7 to 4 billion for the same rocket under NASA practices.
+  sources:
+    - title: NASA, Falcon 9 cost analysis with NAFCOM (2011)
+      url: https://www.nasa.gov/wp-content/uploads/2015/01/586023main_8-3-11_NAFCOM.pdf
+    - title: Spaceflight Now, Falcon 9 booster's record-breaking 35th flight (2026)
+      url: https://spaceflightnow.com/2026/06/07/live-coverage-spacex-to-launch-falcon-9-rocket-booster-on-record-breaking-35th-flight/
+    - title: Blue Origin, New Glenn lands booster on ESCAPADE launch
+      url: https://www.blueorigin.com/news/new-glenn-launches-nasa-escapade-lands-fully-reusable-booster
+
+- id: satellite-megaconstellations
+  name: Satellite internet megaconstellations
+  kind: infrastructure
+  fields: [electronics, engineering]
+  date: 2019
+  status: achieved
+  tier: 2
+  summary: >-
+    Thousands of mass-produced satellites in low orbit that give broadband to
+    anywhere on Earth through phased-array dishes. Starlink passed 11,000
+    satellites in orbit and about 10 million subscribers in 2026.
+  requires: [reusable-rockets, communications-satellites, integrated-circuit]
+  helped_by: [internet, solar-photovoltaic]
+  efforts:
+    - who: SpaceX, Starlink
+      where: USA
+      when: 2019
+      outcome: achieved
+      note: First batch May 2019; 10.3 million subscribers at March 2026 per SpaceX's IPO filing.
+    - who: Eutelsat OneWeb
+      where: UK / France
+      when: 2020
+      outcome: rival
+    - who: Amazon Project Kuiper (Amazon Leo)
+      where: USA
+      when: 2025
+      outcome: rival
+    - who: China SatNet (Guowang) and Spacesail (Qianfan)
+      where: China
+      when: 2024
+      outcome: rival
+  effort:
+    note: Raises orbital debris and astronomy concerns; most satellites deorbit within about five years.
+  sources:
+    - title: Azernews, Starlink reaches 11,000 satellites (2026)
+      url: https://www.azernews.az/region/262729.html
+    - title: Jonathan McDowell, Starlink statistics
+      url: https://planet4589.org/space/con/star/stats.html
+
+- id: mars-rovers
+  name: Mars rovers
+  kind: device
+  fields: [engineering, physics]
+  date: 1997
+  status: achieved
+  tier: 3
+  summary: >-
+    Wheeled robots exploring the Martian surface, from Sojourner in 1997 to
+    Perseverance, which is caching samples for return. They found evidence of
+    past liquid water and habitable lakes.
+  requires: [planetary-probes]
+  helped_by: [integrated-circuit, nuclear-power]
+  efforts:
+    - who: NASA JPL (Sojourner 1997, Spirit and Opportunity 2004, Curiosity 2012, Perseverance 2021)
+      where: USA
+      when: 1997
+      outcome: achieved
+      note: Perseverance's Ingenuity made the first powered flight on another planet, April 2021.
+    - who: CNSA, Zhurong
+      where: China
+      when: 2021
+      outcome: independent
+    - who: CNSA Tianwen-3; NASA/ESA Mars Sample Return
+      where: China, USA / Europe
+      when: 2028
+      outcome: ongoing
+      note: China aims to return samples around 2031; the NASA plan faced cancellation over cost.
+  sources:
+    - title: NASA, Mars exploration rovers
+      url: https://science.nasa.gov/planetary-science/programs/mars-exploration/
+
+- id: asteroid-sample-return
+  name: Asteroid sample return
+  kind: technique
+  fields: [engineering, physics]
+  date: 2010
+  status: achieved
+  tier: 3
+  summary: >-
+    Spacecraft that collect rock from an asteroid and bring it to Earth, first
+    done by Japan's Hayabusa in 2010. Hayabusa2 and OSIRIS-REx returned grams of
+    pristine carbon-rich material with amino acids.
+  requires: [planetary-probes]
+  efforts:
+    - who: JAXA, Hayabusa (Itokawa)
+      where: Japan
+      when: 2010
+      outcome: achieved
+    - who: JAXA, Hayabusa2 (Ryugu)
+      where: Japan
+      when: 2020
+      outcome: achieved
+    - who: NASA, OSIRIS-REx (Bennu)
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: 121.6 grams returned.
+    - who: CNSA, Tianwen-2 (Kamo'oalewa)
+      where: China
+      when: 2027
+      outcome: ongoing
+      note: Launched May 2025.
+  sources:
+    - title: NASA, OSIRIS-REx
+      url: https://science.nasa.gov/mission/osiris-rex/
+    - title: JAXA, Hayabusa2
+      url: https://www.hayabusa2.jaxa.jp/en/
+
+- id: planetary-defense
+  name: Asteroid deflection
+  kind: technique
+  fields: [engineering, physics]
+  date: 2022
+  status: achieved
+  tier: 3
+  summary: >-
+    Changing an asteroid's path by hitting it with a spacecraft. NASA's DART
+    struck Dimorphos in September 2022 and shortened its orbit by about 33
+    minutes, the first time humans moved a celestial body on purpose.
+  requires: [planetary-probes]
+  efforts:
+    - who: NASA and Johns Hopkins APL, DART
+      where: USA
+      when: 2022
+      outcome: achieved
+    - who: ESA, Hera
+      where: Europe
+      when: 2026
+      outcome: ongoing
+      note: Arrives at Didymos in late 2026 to measure the result.
+    - who: Vera C. Rubin Observatory; NASA NEO Surveyor
+      where: Chile / USA
+      when: 2027
+      outcome: ongoing
+      note: Finding the asteroids comes first.
+  sources:
+    - title: NASA, DART
+      url: https://science.nasa.gov/mission/dart/
+
+- id: fully-reusable-rockets
+  name: Fully reusable super-heavy launch (Starship)
+  kind: device
+  fields: [engineering]
+  date: { window: [2026, 2031], likely: 2028 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    A rocket whose booster and upper stage both return and refly, aiming to cut
+    launch cost per kilogram another tenfold or more. SpaceX's Starship has caught
+    boosters in the launch tower, but its ship has not yet been recovered and
+    reflown.
+  requires: [reusable-rockets]
+  helped_by: [nasa-cots, venture-capital]
+  uses: [res-natural-gas]
+  metric: launch-cost-per-kg
+  efforts:
+    - who: SpaceX, Starship and Super Heavy
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: First flight April 2023; first tower catch October 2024; V3 debut (Flight 12) May 22, 2026, reached its suborbital target despite engine losses. Orbital refueling not yet shown.
+    - who: CALT, Long March 9 (reusable redesign); LandSpace
+      where: China
+      when: 2033
+      outcome: ongoing
+    - who: Stoke Space (Nova), Relativity (Terran R)
+      where: USA
+      when: 2026
+      outcome: ongoing
+  effort:
+    span: [2019, 2026]
+    cost_usd: 15000000000
+    note: Very rough; SpaceX said in 2023 it was spending about $2 billion a year on Starship. NASA's lunar lander contracts cover about $4 billion.
+  forecast:
+    note: >-
+      Read as a Starship ship recovered and reflown to orbit, with the booster
+      also reused. Booster catches and reuse are done; the ship needs a working
+      heat shield and catch. SpaceX tends to meet its technical goals 2 to 3
+      times later than Musk's stated dates (Falcon Heavy, crewed Dragon,
+      Starship orbit). Musk's 2026 target suggests about 2028.
+    sources:
+      - title: TechCrunch, SpaceX wraps Starship V2 era
+        url: https://techcrunch.com/2025/10/14/spacex-wraps-action-packed-starship-v2-era-as-program-moves-to-v3/
+      - title: NSS, SpaceX Starship Flight 12
+        url: https://nss.org/the-national-space-society-congratulates-spacex-on-successful-starship-flight-12-test/
+  sources:
+    - title: SpaceX, Starship
+      url: https://www.spacex.com/vehicles/starship/
+
+- id: crewed-lunar-return
+  name: Return of people to the Moon
+  kind: technique
+  fields: [engineering, society]
+  date: { window: [2028, 2033], likely: 2029 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Landing people on the Moon for the first time since 1972, this time near the
+    south pole where ice may supply water and fuel. Artemis II flew four
+    astronauts around the Moon in April 2026; the US and China both aim to land
+    by about 2030.
+  requires: [moon-landing, fully-reusable-rockets]
+  helped_by: [nasa-cots, space-stations]
+  competes: []
+  efforts:
+    - who: NASA Artemis (SLS, Orion; SpaceX Starship HLS and Blue Origin Blue Moon landers)
+      where: USA
+      when: 2028
+      outcome: ongoing
+      note: Artemis II crewed flyby April 1 to 10, 2026. In 2026 NASA made Artemis III a 2027 Earth-orbit lander docking test and moved the first landing to Artemis IV, targeted 2028.
+    - who: CMSA (Long March 10, Mengzhou, Lanyue)
+      where: China
+      when: 2030
+      outcome: ongoing
+      note: Abort and low-altitude rocket tests done in 2026; landing planned before 2030, then the ILRS base with Russia by 2035.
+  effort:
+    cost_usd: 93000000000
+    note: NASA's Inspector General estimated Artemis at about $93 billion through 2025.
+  forecast:
+    note: >-
+      Read as any crewed landing. US landings depend on in-orbit propellant
+      transfer with Starship or Blue Moon, not yet demonstrated, and Artemis
+      dates have slipped from 2024 to 2028. China's program has met its
+      milestones on schedule so far and targets before 2030, though its
+      first uncrewed Long March 10 orbital flight is still ahead. Best guess
+      2029, by either.
+    sources:
+      - title: CSIS, Artemis rewritten, NASA's new Moon plan
+        url: https://aerospace.csis.org/artemis-rewritten-nasas-new-moon-plan-its-risks-and-whether-the-u-s-can-still-beat-china/
+      - title: Scientific American, How China could still win the new moon race
+        url: https://www.scientificamerican.com/article/how-china-could-still-win-the-new-moon-race
+  sources:
+    - title: NASA, Artemis II
+      url: https://www.nasa.gov/mission/artemis-ii/
+    - title: NASA OIG, NASA's management of the Artemis missions (2021)
+      url: https://oig.nasa.gov/docs/IG-22-003.pdf
+
+- id: crewed-mars-landing
+  name: People on Mars
+  kind: technique
+  fields: [engineering, medicine]
+  date: { window: [2033, 2055], likely: 2041 }
+  status: speculative
+  tier: 2
+  summary: >-
+    Landing a crew on Mars and bringing them home, a trip of about two to three
+    years through deep-space radiation. It needs heavy lift, orbital refueling,
+    propellant made from Martian air and reliable life support.
+  requires: [fully-reusable-rockets, space-stations, mars-rovers]
+  helped_by: [nuclear-power, crewed-lunar-return]
+  uses: [res-natural-gas]
+  efforts:
+    - who: SpaceX, Starship
+      where: USA
+      when: 2029
+      outcome: ongoing
+      note: Musk long promised uncrewed Starships to Mars in the late-2026 window; reports in 2026 say that was shelved to focus on the Moon.
+    - who: NASA Moon to Mars architecture
+      where: USA
+      when: 2040
+      outcome: ongoing
+    - who: CNSA
+      where: China
+      when: 2033
+      outcome: ongoing
+      note: Officials have floated crewed missions in the 2030s.
+  forecast:
+    note: >-
+      Metaculus's question on the first human Mars landing had a median near
+      2035 to 2037 (quartiles about 2030 to 2046). I am later: orbital refueling,
+      in-situ propellant and ship reentry are all undemonstrated, launch windows
+      come every 26 months, and Musk's Mars dates have slipped by a window
+      almost every cycle since 2016. Mid-2030s is possible if Starship matures
+      quickly; early 2040s is my median.
+    sources:
+      - title: Metaculus, Date first human lands on Mars
+        url: https://www.metaculus.com/questions/17154/date-first-human-lands-on-mars
+      - title: Analytics Insight, SpaceX delays 2026 Mars mission
+        url: https://www.analyticsinsight.net/amp/story/news/spacex-delays-2026-mars-mission-shifts-starship-focus-to-nasa-moon-landing
+  sources:
+    - title: NASA, Moon to Mars architecture
+      url: https://www.nasa.gov/moontomarsarchitecture/
+
+- id: mars-settlement
+  name: Permanent Mars settlement
+  kind: infrastructure
+  fields: [engineering, society]
+  date: { window: [2050, 2120], likely: 2070 }
+  status: speculative
+  tier: 2
+  summary: >-
+    A permanently inhabited, growing settlement on Mars that could in time
+    survive without supply ships from Earth. Beyond rockets, it needs closed-loop
+    life support, local manufacturing, radiation shelter and an answer to whether
+    people can raise children in 38 percent gravity.
+  requires: [crewed-mars-landing]
+  helped_by: [3d-printing, nuclear-power, molecular-nanotechnology]
+  efforts:
+    - who: SpaceX
+      where: USA
+      when: 2050
+      outcome: ongoing
+      note: Musk's stated goal of a self-sustaining city of a million people.
+  forecast:
+    note: >-
+      Read as a continuously inhabited base of at least about 100 people. The
+      Antarctic analog took 50 years from first landing to permanent stations,
+      with no rocket needed. Self-sufficiency is far harder: no closed
+      ecological system (Biosphere 2) has run for years. Cheap launch is
+      necessary, not sufficient. Very uncertain.
+    sources:
+      - title: Metaculus, Date first human lands on Mars
+        url: https://www.metaculus.com/questions/17154/date-first-human-lands-on-mars
+      - title: Weinersmith and Weinersmith, A City on Mars (2023)
+        url: https://www.acityonmars.com/
+  sources:
+    - title: SpaceX, Mars
+      url: https://www.spacex.com/humanspaceflight/mars/
+
+- id: space-based-solar
+  name: Space-based solar power
+  kind: infrastructure
+  fields: [energy, engineering]
+  date: { window: [2035, 2065], likely: 2047 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Large solar arrays in orbit that beam power to Earth as microwaves, catching
+    sunlight around the clock. Proposed by Peter Glaser in 1968, it has only been
+    shown in tiny demonstrations; launch cost is the deciding factor.
+  requires: [solar-photovoltaic, satellites]
+  helped_by: [fully-reusable-rockets]
+  competes: [solar-photovoltaic, grid-batteries]
+  efforts:
+    - who: Caltech Space Solar Power Project, MAPLE
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: First wireless power beamed in space and detected on Earth, milliwatts.
+    - who: JAXA and Japan Space Systems, OHISAMA
+      where: Japan
+      when: 2026
+      outcome: ongoing
+      note: Small satellite to beam about 1 kW-class power to Usuda.
+    - who: CAST / Xidian University
+      where: China
+      when: 2030
+      outcome: ongoing
+      note: Plans MW-scale orbital demo in the 2030s.
+    - who: ESA SOLARIS; Space Solar (UK); Aetherflux (USA)
+      where: Europe, UK, USA
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Read as first MW-scale power delivered to a grid from orbit. NASA's 2024
+      Office of Technology, Policy and Strategy study found it costlier than
+      ground renewables unless launch and in-space assembly costs fall
+      dramatically. Starship-class launch could change that, but ground solar
+      plus batteries keep getting cheaper too. China is the most likely first
+      mover.
+    sources:
+      - title: NASA OTPS, Space-based solar power (2024)
+        url: https://www.nasa.gov/organizations/otps/space-based-solar-power-report/
+      - title: Caltech, In a first, Caltech's space solar power demonstrator beams power to Earth
+        url: https://www.caltech.edu/about/news/in-a-first-caltechs-space-solar-power-demonstrator-wirelessly-transmits-power-in-space
+  sources:
+    - title: Glaser 1968, Power from the Sun, its future, Science
+      url: https://www.science.org/doi/10.1126/science.162.3856.857
+
+- id: asteroid-mining
+  name: Asteroid mining
+  kind: technique
+  fields: [engineering, materials]
+  date: { window: [2035, 2080], likely: 2050 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Extracting water, metals or platinum-group elements from asteroids, most
+    likely first as water for rocket fuel in space rather than metal shipped to
+    Earth. Sample-return missions show the access, not the economics.
+  requires: [asteroid-sample-return, reusable-rockets]
+  helped_by: [fully-reusable-rockets, orbital-manufacturing]
+  uses: [res-platinum-group]
+  efforts:
+    - who: Planetary Resources; Deep Space Industries
+      where: USA
+      when: 2018
+      outcome: abandoned
+      note: Both well-funded startups were sold off in 2018 to 2019 without mining.
+    - who: AstroForge
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: Odin flyby probe lost contact after launch in February 2025.
+    - who: Origin Space; Karman+
+      where: China, USA
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Read as first commercial sale of material mined from an asteroid. Two
+      earlier waves of startups failed for lack of buyers; in-space customers
+      (depots, stations) do not yet exist, and shipping metal to Earth would
+      crash its price. Depends on cheap launch and a space economy that needs
+      local water.
+    sources:
+      - title: The Space Review, What happened to asteroid mining?
+        url: https://www.thespacereview.com/article/3896/1
+  sources:
+    - title: AstroForge, Odin mission
+      url: https://www.astroforge.com/
+
+- id: orbital-manufacturing
+  name: In-space manufacturing
+  kind: technique
+  fields: [engineering, chemistry]
+  date: 2024
+  status: ongoing
+  tier: 3
+  summary: >-
+    Making products in orbit that benefit from microgravity, such as pure drug
+    crystals, optical fiber and semiconductor crystals, and returning them to
+    Earth. Varda Space returned the first commercially made drug crystals in 2024.
+  requires: [satellites, reusable-rockets]
+  helped_by: [space-stations]
+  efforts:
+    - who: Varda Space Industries, W-series capsules
+      where: USA
+      when: 2024
+      outcome: ongoing
+      note: W-1 crystallized ritonavir and landed in Utah, February 2024.
+    - who: Space Forge
+      where: UK
+      when: 2025
+      outcome: ongoing
+    - who: ISS National Lab, Redwire, Flawless Photonics
+      where: USA
+      when: 2024
+      outcome: ongoing
+      note: ZBLAN optical fiber drawn in orbit.
+  sources:
+    - title: Varda Space Industries
+      url: https://www.varda.com/
+
+- id: interstellar-probe
+  name: Probe to another star
+  kind: device
+  fields: [engineering, physics]
+  date: { window: [2060, 2200], likely: 2100 }
+  status: speculative
+  tier: 3
+  summary: >-
+    A spacecraft sent to reach another star system within a human lifetime, for
+    example gram-scale light sails pushed to a fifth of light speed by
+    ground-based lasers. Voyager 1, the fastest-leaving probe, would take about
+    75,000 years to reach the nearest star.
+  requires: [laser, planetary-probes]
+  helped_by: [fusion-power, molecular-nanotechnology]
+  efforts:
+    - who: Breakthrough Starshot (Yuri Milner, Avi Loeb)
+      where: USA
+      when: 2016
+      outcome: ongoing
+      note: $100 million research program; work largely paused after 2022.
+    - who: Johns Hopkins APL, Interstellar Probe concept
+      where: USA
+      when: 2019
+      outcome: ongoing
+      note: Heliopause probe, not a star mission.
+  forecast:
+    note: >-
+      Read as launching a probe designed to reach another star within a century.
+      Laser sails need gigawatt-class phased lasers and materials that survive
+      thousands of g; nothing is funded at that scale. Pure judgment.
+    sources:
+      - title: Breakthrough Initiatives, Starshot
+        url: https://breakthroughinitiatives.org/initiative/3
+  sources:
+    - title: Breakthrough Initiatives, Starshot
+      url: https://breakthroughinitiatives.org/initiative/3
+
+# ------------------------------------------------- PHYSICS AND EARTH SCIENCE
+
+- id: standard-model
+  name: Standard Model of particle physics
+  kind: discovery
+  fields: [physics, math]
+  date: 1973
+  status: achieved
+  tier: 2
+  summary: >-
+    The theory of the known elementary particles and three of the four forces,
+    assembled from electroweak unification (1967) and quantum chromodynamics
+    (1973). Every collider test since has agreed with it, though it leaves out
+    gravity and dark matter.
+  requires: [quantum-mechanics, relativity]
+  helped_by: [particle-accelerator, stored-program-computer]
+  efforts:
+    - who: Sheldon Glashow, Steven Weinberg, Abdus Salam
+      where: USA, UK / Pakistan
+      when: 1967
+      outcome: achieved
+      note: Electroweak theory; Nobel 1979.
+    - who: David Gross, Frank Wilczek, David Politzer
+      where: USA
+      when: 1973
+      outcome: achieved
+      note: Asymptotic freedom in QCD; Nobel 2004.
+    - who: CERN (W and Z bosons, 1983), Fermilab (top quark, 1995)
+      where: Switzerland, USA
+      when: 1983
+      outcome: achieved
+  sources:
+    - title: CERN, The Standard Model
+      url: https://home.cern/science/physics/standard-model
+
+- id: higgs-boson
+  name: Higgs boson discovery
+  kind: discovery
+  fields: [physics]
+  date: 2012
+  status: achieved
+  tier: 3
+  summary: >-
+    The particle that confirms how other particles get mass, predicted in 1964
+    and found at CERN's Large Hadron Collider on July 4, 2012. It completed the
+    Standard Model.
+  requires: [standard-model, cern, superconductivity]
+  helped_by: [world-wide-web, stored-program-computer]
+  efforts:
+    - who: ATLAS and CMS collaborations, LHC (CERN)
+      where: Switzerland / France
+      when: 2012
+      outcome: achieved
+      note: Peter Higgs and Francois Englert shared the 2013 Nobel.
+    - who: Fermilab Tevatron
+      where: USA
+      when: 2011
+      outcome: rival
+    - who: CERN Future Circular Collider; China CEPC
+      where: Europe, China
+      when: 2040
+      outcome: ongoing
+      note: Proposed Higgs factories of about 15 billion Swiss francs.
+  effort:
+    span: [1994, 2012]
+    people: 10000
+    cost_usd: 13000000000
+    note: The LHC machine cost about 4.6 billion Swiss francs to build; ATLAS and CMS each have about 3,000 to 5,000 members.
+  sources:
+    - title: CERN, The Higgs boson
+      url: https://home.cern/science/physics/higgs-boson
+    - title: CERN, LHC facts and figures
+      url: https://home.cern/resources/faqs/facts-and-figures-about-lhc
+
+- id: gravitational-wave-detection
+  name: Gravitational-wave detection
+  kind: discovery
+  fields: [physics]
+  date: 2015
+  status: achieved
+  tier: 2
+  summary: >-
+    Measuring ripples in spacetime from colliding black holes with laser
+    interferometers 4 km long, sensitive to a thousandth of a proton's width. LIGO
+    made the first detection on September 14, 2015, a century after Einstein's
+    prediction.
+  requires: [relativity, laser]
+  helped_by: [research-grant-system, stored-program-computer]
+  efforts:
+    - who: LIGO (Caltech, MIT; Rainer Weiss, Kip Thorne, Barry Barish)
+      where: USA
+      when: 2015
+      outcome: achieved
+      note: Nobel 2017.
+    - who: Virgo (Italy, France), KAGRA (Japan)
+      where: Italy, Japan
+      when: 2017
+      outcome: achieved
+    - who: ESA and NASA, LISA
+      where: Europe
+      when: 2035
+      outcome: ongoing
+      note: Space-based detector.
+  effort:
+    span: [1972, 2015]
+    people: 1000
+    cost_usd: 2000000000
+    note: NSF's largest single investment, about $1.1 billion over four decades.
+  sources:
+    - title: Nobel Prize in Physics 2017
+      url: https://www.nobelprize.org/prizes/physics/2017/summary/
+    - title: Caltech LIGO, Facts
+      url: https://www.ligo.caltech.edu/page/facts
+
+- id: plate-tectonics
+  name: Plate tectonics
+  kind: discovery
+  fields: [physics, society]
+  date: 1967
+  status: achieved
+  tier: 2
+  summary: >-
+    The theory that Earth's surface is made of moving plates that spread at ocean
+    ridges and sink at trenches, settled by seafloor magnetic stripes between
+    1962 and 1968. It explains earthquakes, volcanoes, mountains and where ores
+    and oil form.
+  requires: [scientific-method]
+  helped_by: [radar, nuclear-weapon]
+  efforts:
+    - who: Harry Hess (Princeton), seafloor spreading
+      where: USA
+      when: 1962
+      outcome: achieved
+    - who: Fred Vine and Drummond Matthews (Cambridge); Lawrence Morley
+      where: UK, Canada
+      when: 1963
+      outcome: achieved
+      note: Magnetic stripes on the seafloor, mapped with Navy magnetometers.
+    - who: J. Tuzo Wilson, Dan McKenzie, Jason Morgan, Xavier Le Pichon
+      where: Canada, UK, USA, France
+      when: 1967
+      outcome: achieved
+  effort:
+    note: Built on Alfred Wegener's rejected continental drift (1912) and Cold War ocean surveys and seismograph networks set up to detect nuclear tests.
+  sources:
+    - title: USGS, This Dynamic Earth, developing the theory
+      url: https://pubs.usgs.gov/gip/dynamic/developing.html
+
+- id: climate-science
+  name: Modern climate science
+  kind: discovery
+  fields: [physics, chemistry]
+  date: 1967
+  status: achieved
+  tier: 2
+  summary: >-
+    Measurements and models showing that carbon dioxide from fossil fuels is
+    accumulating and warming Earth, from the Keeling curve (1958) to Manabe and
+    Wetherald's 1967 model. Its predictions of about 3 degrees C per doubling of
+    CO2 have held up.
+  requires: [thermodynamics, quantum-mechanics]
+  helped_by: [stored-program-computer, earth-observation]
+  efforts:
+    - who: Charles David Keeling (Scripps), Mauna Loa CO2 record
+      where: USA
+      when: 1958
+      outcome: achieved
+    - who: Syukuro Manabe and Richard Wetherald (GFDL)
+      where: USA
+      when: 1967
+      outcome: achieved
+      note: Manabe shared the 2021 Nobel.
+    - who: Charney report (US National Academy)
+      where: USA
+      when: 1979
+      outcome: achieved
+      note: Estimated 1.5 to 4.5 C of warming per CO2 doubling.
+  sources:
+    - title: NOAA, The Keeling Curve
+      url: https://gml.noaa.gov/ccgg/trends/
+    - title: Nobel Prize in Physics 2021
+      url: https://www.nobelprize.org/prizes/physics/2021/summary/
+
+- id: scanning-tunneling-microscope
+  name: Scanning tunneling microscope
+  kind: device
+  fields: [physics, materials]
+  date: 1981
+  status: achieved
+  tier: 3
+  summary: >-
+    A microscope that images individual atoms by measuring the quantum tunneling
+    current to a sharp tip, built at IBM Zurich in 1981. In 1989 IBM used one to
+    spell its name in 35 xenon atoms.
+  requires: [quantum-mechanics]
+  helped_by: [stored-program-computer]
+  efforts:
+    - who: Gerd Binnig and Heinrich Rohrer (IBM Zurich)
+      where: Switzerland
+      when: 1981
+      outcome: achieved
+      note: Nobel 1986; the atomic force microscope followed in 1986.
+    - who: Don Eigler (IBM Almaden)
+      where: USA
+      when: 1989
+      outcome: achieved
+      note: Positioned single atoms.
+  sources:
+    - title: Nobel Prize in Physics 1986
+      url: https://www.nobelprize.org/prizes/physics/1986/summary/
+
+# ------------------------------------------------- TRANSPORT AND LOGISTICS
+
+- id: jet-airliner
+  name: Jet airliner
+  kind: device
+  fields: [engineering]
+  date: 1952
+  status: achieved
+  tier: 1
+  summary: >-
+    Passenger aircraft powered by jet engines, starting with the de Havilland
+    Comet in 1952 and the Boeing 707 in 1958. Jets made intercontinental travel
+    routine; airlines carried about 5 billion passengers in 2025.
+  requires: [airplane, jet-engine]
+  helped_by: [radar, carbon-fiber]
+  uses: [res-oil]
+  efforts:
+    - who: de Havilland Comet
+      where: UK
+      when: 1952
+      outcome: achieved
+      note: Grounded after 1954 crashes from metal fatigue around square windows; the lessons reshaped aircraft design.
+    - who: Tupolev Tu-104
+      where: USSR
+      when: 1956
+      outcome: independent
+    - who: Boeing 707 (Pan Am)
+      where: USA
+      when: 1958
+      outcome: achieved
+    - who: Boeing 747 (1970) and Airbus (A300, 1974)
+      where: USA, Europe
+      when: 1970
+      outcome: achieved
+      note: Wide-bodies and high-bypass turbofans cut cost per seat.
+  sources:
+    - title: de Havilland Comet, Wikipedia
+      url: https://en.wikipedia.org/wiki/De_Havilland_Comet
+    - title: IATA, global air passenger outlook
+      url: https://www.iata.org/en/publications/economics/
+
+- id: concorde
+  name: Supersonic airliner
+  kind: device
+  fields: [engineering]
+  date: 1976
+  status: lost
+  tier: 3
+  summary: >-
+    Concorde flew passengers at twice the speed of sound from 1976 to 2003, but
+    noise, fuel cost and a 2000 crash ended it, and no one flies supersonic
+    passengers today. Quieter designs are being tested to revive the idea.
+  requires: [jet-airliner]
+  uses: [res-oil]
+  lost: >-
+    Retired October 24, 2003 after the Air France crash (2000) and the post-2001
+    travel slump; only 14 aircraft ever flew in service. Overland supersonic
+    flight is banned in the US since 1973 because of sonic booms.
+  efforts:
+    - who: BAC and Aerospatiale (Air France, British Airways)
+      where: UK, France
+      when: 1976
+      outcome: achieved
+    - who: Tupolev Tu-144
+      where: USSR
+      when: 1977
+      outcome: abandoned
+      note: Passenger service lasted 55 flights.
+    - who: Boom Supersonic (XB-1 broke the sound barrier January 2025); NASA and Lockheed X-59 low-boom demonstrator (first flight October 2025)
+      where: USA
+      when: 2025
+      outcome: ongoing
+  effort:
+    span: [1962, 1976]
+    note: Development cost about 1.3 billion pounds by 1976, several times the 1962 estimate, all paid by the two governments.
+  sources:
+    - title: British Airways, Concorde history
+      url: https://www.britishairways.com/en-gb/information/about-ba/history-and-heritage/celebrating-concorde
+    - title: AIAA, NASA's X-59 performs first flight
+      url: https://aiaa.org/2025/10/29/nasas-x-59-quiet-supersonic-research-aircraft-performs-first-flight/
+
+- id: container-shipping
+  name: Container shipping
+  kind: infrastructure
+  fields: [engineering, society]
+  date: 1956
+  status: achieved
+  tier: 1
+  summary: >-
+    Moving goods in standard steel boxes that transfer unopened between ships,
+    trains and trucks, launched by Malcom McLean's Ideal X in 1956. It cut port
+    labor and loading costs by over 90 percent and made global supply chains
+    possible.
+  requires: [steel-bessemer, internal-combustion-engine, railway]
+  helped_by: [iso-standards, stored-program-computer]
+  efforts:
+    - who: Malcom McLean, Pan-Atlantic (Sea-Land), Ideal X
+      where: USA
+      when: 1956
+      outcome: achieved
+      note: 58 containers, Newark to Houston, April 26, 1956.
+    - who: ISO 668 container standards
+      where: International
+      when: 1968
+      outcome: achieved
+    - who: Maersk, MSC, CMA CGM, COSCO
+      where: Denmark, Switzerland, France, China
+      when: 2023
+      outcome: achieved
+      note: The largest ships now carry about 24,000 twenty-foot boxes.
+  effort:
+    note: >-
+      Loading cost fell from about $5.86 per ton loose to about 16 cents by
+      container in 1956 (Levinson). Bernhofen et al. (2016) estimate
+      containerization raised trade among rich countries more than all trade
+      agreements of the era.
+  sources:
+    - title: Levinson, The Box (Princeton University Press)
+      url: https://press.princeton.edu/books/paperback/9780691170817/the-box
+    - title: Bernhofen, El-Sahli and Kneller 2016, Estimating the effects of the container revolution on world trade
+      url: https://doi.org/10.1016/j.jinteco.2015.09.001
+
+- id: high-speed-rail
+  name: High-speed rail
+  kind: infrastructure
+  fields: [engineering, energy]
+  date: 1964
+  status: achieved
+  tier: 2
+  summary: >-
+    Electric trains on dedicated track running at 200 to 350 km/h, starting with
+    Japan's Tokaido Shinkansen on October 1, 1964. China built about 50,000 km by
+    2025, over two thirds of the world's network.
+  requires: [railway, power-grid]
+  helped_by: [stored-program-computer]
+  efforts:
+    - who: Japanese National Railways, Tokaido Shinkansen (Hideo Shima)
+      where: Japan
+      when: 1964
+      outcome: achieved
+      note: No passenger deaths from train accidents in over 60 years.
+    - who: SNCF, TGV
+      where: France
+      when: 1981
+      outcome: achieved
+    - who: China Railway (CRH, Fuxing)
+      where: China
+      when: 2008
+      outcome: achieved
+      note: 4.28 billion high-speed trips in 2025.
+    - who: Shanghai Transrapid maglev (2004); JR Central Chuo Shinkansen maglev
+      where: China, Japan
+      when: 2004
+      outcome: rival
+      note: The Chuo line, 500 km/h, is delayed to the mid-2030s or later.
+  effort:
+    note: The Tokaido line cost about 380 billion yen (about $1 billion then), roughly double its budget, with a World Bank loan.
+  sources:
+    - title: Tokaido Shinkansen, Wikipedia
+      url: https://en.wikipedia.org/wiki/Tokaido_Shinkansen
+    - title: Railway News, China high-speed rail completes 50,000 km by 2025
+      url: https://railwaynews.net/china-high-speed-rail-completes-50000-km-by-2025.html
+
+- id: electric-aviation
+  name: Electric air taxis (eVTOL)
+  kind: device
+  fields: [engineering, energy]
+  date: 2025
+  status: ongoing
+  tier: 3
+  summary: >-
+    Small battery-powered aircraft that take off and land vertically on many
+    rotors, aimed at short city hops. China certified the first for commercial
+    passenger operations in 2025; Western makers are in final certification.
+  requires: [lithium-ion-battery, airplane]
+  helped_by: [deep-learning, gps]
+  uses: [res-lithium, res-rare-earths]
+  efforts:
+    - who: EHang, EH216-S
+      where: China
+      when: 2025
+      outcome: ongoing
+      note: Type certificate 2023, operating certificate for passenger flights March 2025.
+    - who: Joby Aviation; Archer Aviation; Beta Technologies
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Joby in the final stage of FAA type certification in 2026; Dubai launch planned.
+    - who: Lilium; Volocopter
+      where: Germany
+      when: 2025
+      outcome: abandoned
+      note: Lilium shut down in 2025; Volocopter went insolvent and was sold.
+  sources:
+    - title: Gulf News, Joby enters final stages of FAA certification
+      url: https://gulfnews.com/business/aviation/air-taxi-maker-joby-aviation-enters-final-stages-of-faa-certification-ahead-of-dubai-launch-1.500337553
+    - title: EHang, Wikipedia
+      url: https://en.wikipedia.org/wiki/EHang
+
+# --------------------------------------------------------------- MATERIALS
+
+- id: carbon-fiber
+  name: Carbon fiber composites
+  kind: technique
+  fields: [materials, chemistry]
+  date: 1963
+  status: achieved
+  tier: 3
+  summary: >-
+    Fibers of nearly pure carbon, made by baking acrylic (PAN) filaments, set in
+    epoxy to give parts stronger than steel at a fifth of the weight. Developed in
+    Japan and Britain in the early 1960s, they now make up half of a Boeing 787.
+  requires: [plastics]
+  uses: [res-oil]
+  efforts:
+    - who: Roger Bacon (Union Carbide)
+      where: USA
+      when: 1958
+      outcome: achieved
+      note: High-performance graphite whiskers.
+    - who: Akio Shindo (Osaka Government Industrial Research Institute)
+      where: Japan
+      when: 1961
+      outcome: achieved
+      note: PAN-based carbon fiber.
+    - who: William Watt, Leslie Phillips, William Johnson (Royal Aircraft Establishment)
+      where: UK
+      when: 1963
+      outcome: independent
+    - who: Toray (T300, 1971), Hexcel, Teijin
+      where: Japan, USA
+      when: 1971
+      outcome: achieved
+  sources:
+    - title: Carbon fibers, Wikipedia
+      url: https://en.wikipedia.org/wiki/Carbon_fibers
+
+- id: synthetic-diamond
+  name: Synthetic diamond
+  kind: technique
+  fields: [materials, chemistry]
+  date: 1954
+  status: achieved
+  tier: 3
+  summary: >-
+    Diamond made from graphite at high pressure and temperature, first
+    reproducibly at General Electric in 1954, later grown from gas by vapor
+    deposition. Synthetic grit cuts and drills most of the world's hard materials.
+  requires: [thermodynamics]
+  efforts:
+    - who: ASEA (Baltzar von Platen)
+      where: Sweden
+      when: 1953
+      outcome: independent
+      note: Made diamonds but did not publish.
+    - who: Tracy Hall and colleagues (General Electric)
+      where: USA
+      when: 1954
+      outcome: achieved
+    - who: Chemical vapor deposition (Soviet and Japanese groups, 1970s to 1980s); Henan and Indian growers
+      where: USSR, Japan, China, India
+      when: 1982
+      outcome: achieved
+      note: Lab-grown gems passed half of US engagement rings in the 2020s.
+  sources:
+    - title: Synthetic diamond, Wikipedia
+      url: https://en.wikipedia.org/wiki/Synthetic_diamond
+
+- id: graphene
+  name: Graphene
+  kind: discovery
+  fields: [materials, physics]
+  date: 2004
+  status: achieved
+  tier: 2
+  summary: >-
+    A single layer of carbon atoms in a honeycomb, isolated with sticky tape by
+    Andre Geim and Konstantin Novoselov in 2004. It is the strongest, most
+    conductive thin material known, though mass-market uses are still mostly
+    additives and coatings.
+  requires: [scanning-tunneling-microscope, quantum-mechanics]
+  efforts:
+    - who: Andre Geim and Konstantin Novoselov (University of Manchester)
+      where: UK
+      when: 2004
+      outcome: achieved
+      note: Nobel 2010.
+    - who: EU Graphene Flagship
+      where: EU
+      when: 2013
+      outcome: ongoing
+      note: About 1 billion euros over ten years.
+    - who: Pablo Jarillo-Herrero (MIT), twisted bilayer graphene
+      where: USA
+      when: 2018
+      outcome: achieved
+      note: Superconductivity at a "magic angle".
+  sources:
+    - title: Nobel Prize in Physics 2010
+      url: https://www.nobelprize.org/prizes/physics/2010/summary/
+    - title: Novoselov et al. 2004, Science 306, 666
+      url: https://www.science.org/doi/10.1126/science.1102896
+
+- id: carbon-nanotubes
+  name: Carbon nanotubes and fullerenes
+  kind: discovery
+  fields: [materials, chemistry]
+  date: 1991
+  status: achieved
+  tier: 3
+  summary: >-
+    Hollow molecules of pure carbon: soccer-ball fullerenes found in 1985 and the
+    tubes Sumio Iijima imaged in 1991. They are used to strengthen materials and
+    in battery electrodes, but never became the wonder cables once hoped.
+  requires: [quantum-mechanics]
+  helped_by: [scanning-tunneling-microscope]
+  efforts:
+    - who: Harold Kroto, Robert Curl, Richard Smalley (Rice), fullerenes
+      where: USA / UK
+      when: 1985
+      outcome: achieved
+      note: Nobel in Chemistry 1996.
+    - who: Sumio Iijima (NEC)
+      where: Japan
+      when: 1991
+      outcome: achieved
+    - who: Iijima and Ichihashi; Donald Bethune (IBM), single-wall tubes
+      where: Japan, USA
+      when: 1993
+      outcome: achieved
+  sources:
+    - title: Iijima 1991, Helical microtubules of graphitic carbon, Nature
+      url: https://www.nature.com/articles/354056a0
+
+- id: 3d-printing
+  name: 3D printing (additive manufacturing)
+  kind: technique
+  fields: [engineering, materials]
+  date: 1984
+  status: achieved
+  tier: 2
+  summary: >-
+    Building objects layer by layer from a digital model, first with
+    stereolithography in the 1980s and now in plastic, metal, concrete and cells.
+    It turned prototyping into a desktop task and makes rocket engines and
+    implants that could not be machined.
+  requires: [stored-program-computer, laser, plastics]
+  helped_by: [personal-computer, open-source]
+  efforts:
+    - who: Hideo Kodama (Nagoya Municipal Industrial Research Institute)
+      where: Japan
+      when: 1981
+      outcome: independent
+      note: Published photopolymer layering but let the patent lapse.
+    - who: Chuck Hull (3D Systems), stereolithography
+      where: USA
+      when: 1984
+      outcome: achieved
+      note: Patent filed 1984, granted 1986.
+    - who: Carl Deckard and Joe Beaman (UT Austin), selective laser sintering; Scott Crump (Stratasys), fused deposition
+      where: USA
+      when: 1989
+      outcome: achieved
+    - who: RepRap (Adrian Bowyer, Bath)
+      where: UK
+      when: 2005
+      outcome: achieved
+      note: Open-source self-copying printers; cheap printers spread after FDM patents expired in 2009.
+    - who: SpaceX, Relativity, GE Aerospace (LEAP fuel nozzles), Rocket Lab
+      where: USA
+      when: 2015
+      outcome: achieved
+      note: Printed metal engine parts in flight.
+  sources:
+    - title: 3D Systems, Our story
+      url: https://www.3dsystems.com/our-story
+    - title: Hull, US Patent 4,575,330
+      url: https://patents.google.com/patent/US4575330A/en
+
+- id: molecular-nanotechnology
+  name: Molecular nanotechnology
+  kind: technique
+  fields: [materials, chemistry]
+  date: { window: [2040, 2100], likely: 2065 }
+  status: speculative
+  tier: 2
+  summary: >-
+    Building things atom by atom with programmable molecular machines, as Richard
+    Feynman suggested in 1959 and Eric Drexler argued in 1986. Today's partial
+    steps are DNA origami, molecular motors and designed proteins.
+  requires: [scanning-tunneling-microscope, recombinant-dna]
+  helped_by: [protein-structure-prediction, deep-learning, 3d-printing]
+  efforts:
+    - who: Richard Feynman, There's Plenty of Room at the Bottom
+      where: USA
+      when: 1959
+      outcome: achieved
+      note: The founding lecture.
+    - who: Eric Drexler, Engines of Creation (1986) and Nanosystems (1992)
+      where: USA
+      when: 1986
+      outcome: ongoing
+      note: Disputed by Richard Smalley in 2003 over "fat fingers" and "sticky fingers".
+    - who: Paul Rothemund (Caltech), DNA origami
+      where: USA
+      when: 2006
+      outcome: achieved
+    - who: Ben Feringa, Fraser Stoddart, Jean-Pierre Sauvage
+      where: Netherlands, UK / USA, France
+      when: 2016
+      outcome: achieved
+      note: Nobel for molecular machines.
+    - who: David Baker (UW Institute for Protein Design); UK ARIA programmable matter
+      where: USA, UK
+      when: 2026
+      outcome: ongoing
+      note: AI-designed proteins as nanoscale parts.
+  forecast:
+    note: >-
+      Read as general-purpose machines that position atoms to build macroscopic
+      products. Progress runs through biology (designed proteins, DNA
+      nanostructures) rather than Drexler's diamond mechanosynthesis, which has
+      had little experimental work. AI protein design (2024 Nobel) speeds parts
+      design, not assembly. Pure judgment; the range is very wide.
+    sources:
+      - title: Chemical and Engineering News, Drexler and Smalley debate (2003)
+        url: https://pubsapp.acs.org/cen/coverstory/8148/8148counterpoint.html
+      - title: Nobel Prize in Chemistry 2016
+        url: https://www.nobelprize.org/prizes/chemistry/2016/summary/
+  sources:
+    - title: Feynman 1959, There's Plenty of Room at the Bottom
+      url: https://web.pa.msu.edu/people/yang/RFeynman_plentySpace.pdf
+
+# ------------------------------------------------ ENVIRONMENT AND AGRICULTURE
+
+- id: desalination
+  name: Reverse-osmosis desalination
+  kind: technique
+  fields: [chemistry, engineering]
+  date: 1960
+  status: achieved
+  tier: 2
+  summary: >-
+    Pushing seawater through membranes that pass water but not salt, made
+    practical by Loeb and Sourirajan's membrane around 1960. About 95 million
+    cubic meters a day are now desalinated, supplying most drinking water in
+    Israel and the Gulf.
+  requires: [plastics, power-grid]
+  helped_by: [research-grant-system, nuclear-power]
+  uses: [res-oil, res-natural-gas]
+  efforts:
+    - who: Sidney Loeb and Srinivasa Sourirajan (UCLA)
+      where: USA
+      when: 1960
+      outcome: achieved
+      note: Asymmetric cellulose acetate membrane; first commercial RO plant at Coalinga, California in 1965.
+    - who: Multi-stage flash distillation (Kuwait, Saudi Arabia)
+      where: Kuwait
+      when: 1957
+      outcome: rival
+      note: Thermal desalination, still common where fuel is cheap.
+    - who: John Cadotte (FilmTec), thin-film composite polyamide membrane
+      where: USA
+      when: 1977
+      outcome: achieved
+    - who: IDE Technologies (Sorek, 2013); ACWA Power; Saudi Water Authority
+      where: Israel, Saudi Arabia
+      when: 2013
+      outcome: achieved
+      note: Seawater RO now takes about 3 kWh per cubic meter.
+  sources:
+    - title: Jones et al. 2019, The state of desalination and brine production, Science of the Total Environment
+      url: https://doi.org/10.1016/j.scitotenv.2018.12.076
+    - title: Reverse osmosis, Wikipedia
+      url: https://en.wikipedia.org/wiki/Reverse_osmosis
+
+- id: carbon-capture
+  name: Carbon capture and storage
+  kind: technique
+  fields: [energy, chemistry]
+  date: 1996
+  status: achieved
+  tier: 2
+  summary: >-
+    Capturing CO2 from gas processing, power plants or factories and burying it
+    deep underground. Norway's Sleipner has stored about a million metric tons a year
+    since 1996, but global capture is only about 50 million metric tons a year, a
+    tiny fraction of emissions.
+  requires: [oil-refining, plate-tectonics]
+  helped_by: [shale-fracking, carbon-pricing]
+  uses: [res-natural-gas]
+  efforts:
+    - who: SACROC, CO2 enhanced oil recovery
+      where: USA
+      when: 1972
+      outcome: achieved
+      note: CO2 injected to push out more oil, not for climate.
+    - who: Statoil (Equinor), Sleipner
+      where: Norway
+      when: 1996
+      outcome: achieved
+      note: Driven by Norway's 1991 carbon tax.
+    - who: SaskPower, Boundary Dam
+      where: Canada
+      when: 2014
+      outcome: achieved
+      note: First power plant CCS; below design capture rate.
+    - who: Northern Lights (Equinor, Shell, TotalEnergies)
+      where: Norway
+      when: 2025
+      outcome: ongoing
+      note: First cross-border CO2 shipping and storage service.
+  sources:
+    - title: Global CCS Institute, Global Status of CCS 2024
+      url: https://www.globalccsinstitute.com/resources/global-status-report/
+    - title: Equinor, Sleipner
+      url: https://www.equinor.com/energy/sleipner
+
+- id: direct-air-capture
+  name: Direct air capture
+  kind: technique
+  fields: [chemistry, energy]
+  date: 2017
+  status: ongoing
+  tier: 2
+  summary: >-
+    Machines that pull CO2 straight out of the air with sorbents or solvents so it
+    can be buried, proposed by Klaus Lackner in 1999. Plants exist but capture
+    thousands, not millions, of tons and cost several hundred dollars a ton.
+  requires: [carbon-capture]
+  helped_by: [enhanced-geothermal, solar-photovoltaic]
+  efforts:
+    - who: Climeworks (Capricorn 2017, Orca 2021, Mammoth 2024)
+      where: Switzerland / Iceland
+      when: 2024
+      outcome: ongoing
+      note: Mammoth's nameplate is 36,000 t a year, but it removed only 675 net tons in the first half of 2026.
+    - who: 1PointFive (Occidental), Stratos, with Carbon Engineering technology
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Designed for 500,000 t a year; Phase 1 commissioning hit a delay in mid-2026.
+    - who: Heirloom; CarbonCapture Inc.; Sirona
+      where: USA, Kenya
+      when: 2023
+      outcome: ongoing
+  effort:
+    cost_usd: 1300000000
+    note: Stratos alone cost about $1.3 billion. Frontier's buyers (Stripe, Google, Shopify and others) pledged $1 billion in advance purchases from 2022.
+  sources:
+    - title: Gasworld, Climeworks upgrades DAC at Iceland facility after low capture
+      url: https://www.gasworld.com/story/climeworks-upgrades-dac-tech-at-iceland-facility-after-low-co2-capture-record/2259464.article/
+    - title: RBN Energy, Stratos DAC project targets Q2 2026 startup
+      url: https://rbnenergy.com/daily-posts/analyst-insight/stratos-dac-project-target-q2-2026-startup
+
+- id: gigaton-carbon-removal
+  name: Gigaton-scale carbon removal
+  kind: infrastructure
+  fields: [energy, society]
+  date: { window: [2042, 2075], likely: 2055 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Removing a billion metric tons or more of CO2 a year with engineered methods such
+    as direct air capture, bioenergy with capture, enhanced weathering and biochar.
+    Climate pathways call for 7 to 9 billion metric tons a year of total removal by
+    2050; novel methods remove about 1.3 million today.
+  requires: [direct-air-capture, carbon-capture]
+  helped_by: [carbon-pricing, solar-photovoltaic, enhanced-geothermal]
+  efforts:
+    - who: Frontier advance market commitment (Stripe, Alphabet, Shopify, Meta, McKinsey)
+      where: USA
+      when: 2022
+      outcome: ongoing
+    - who: Microsoft carbon removal purchases
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: Largest single buyer, tens of millions of tons contracted, mostly BECCS and forestry.
+    - who: US DAC hubs (DOE); EU Carbon Removal Certification
+      where: USA, EU
+      when: 2024
+      outcome: ongoing
+  forecast:
+    note: >-
+      Read as 1 Gt a year of durable novel removal. From 1.3 Mt (2024) that is
+      a roughly 770-fold scale-up. Solar took about 20 years to grow that much
+      at 30 to 40 percent a year, but solar sells a product people want; removal
+      only sells if policy pays for it. Plants are underperforming nameplate
+      (Mammoth). If carbon prices or mandates arrive in the 2030s, mid-2050s
+      is plausible; otherwise much later.
+    sources:
+      - title: The State of Carbon Dioxide Removal, 2nd edition (2024)
+        url: https://www.stateofcdr.org/
+      - title: Carbon Brief, Nine key takeaways about the state of CO2 removal in 2024
+        url: https://www.carbonbrief.org/nine-key-takeaways-about-the-state-of-co2-removal-in-2024/
+  sources:
+    - title: The State of Carbon Dioxide Removal, 2nd edition (2024)
+      url: https://www.stateofcdr.org/
+
+- id: solar-geoengineering
+  name: Solar geoengineering
+  kind: technique
+  fields: [physics, society]
+  date: { window: [2035, 2080], likely: 2052 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Cooling the planet by reflecting a little sunlight, most plausibly with
+    aerosols sprayed into the stratosphere the way the 1991 Pinatubo eruption
+    cooled Earth by about half a degree. It would be cheap and fast but would not
+    remove CO2, and its governance is unresolved.
+  requires: [climate-science]
+  helped_by: [stored-program-computer, earth-observation]
+  competes: [gigaton-carbon-removal]
+  efforts:
+    - who: Paul Crutzen (2006 essay); Mikhail Budyko (1974)
+      where: Germany, USSR
+      when: 2006
+      outcome: achieved
+    - who: Harvard SCoPEx
+      where: USA / Sweden
+      when: 2024
+      outcome: abandoned
+      note: Balloon test cancelled after opposition in Sweden.
+    - who: UK ARIA Exploring Climate Cooling program
+      where: UK
+      when: 2025
+      outcome: ongoing
+      note: About 57 million pounds, including small outdoor experiments.
+    - who: Stardust Solutions; Make Sunsets
+      where: Israel, USA
+      when: 2025
+      outcome: ongoing
+      note: Startups; Mexico banned solar geoengineering experiments in 2023.
+  forecast:
+    note: >-
+      Read as deliberate deployment large enough to change global temperature.
+      Technically feasible within about a decade of a decision (Smith and
+      Wagner estimated about $2 billion a year for the first years). The
+      barrier is political: a single country could act, which makes timing
+      depend on climate damage and governance. Very uncertain.
+    sources:
+      - title: Smith and Wagner 2018, Stratospheric aerosol injection tactics and costs, Environmental Research Letters
+        url: https://iopscience.iop.org/article/10.1088/1748-9326/aae98d
+      - title: National Academies, Reflecting Sunlight (2021)
+        url: https://nap.nationalacademies.org/catalog/25762/reflecting-sunlight-recommendations-for-solar-geoengineering-research-and-research-governance
+  sources:
+    - title: National Academies, Reflecting Sunlight (2021)
+      url: https://nap.nationalacademies.org/catalog/25762/reflecting-sunlight-recommendations-for-solar-geoengineering-research-and-research-governance
+
+- id: nitrogen-fertilizer-scale
+  name: Synthetic nitrogen fertilizer at global scale
+  kind: infrastructure
+  fields: [agriculture, chemistry]
+  date: 1960
+  status: achieved
+  tier: 3
+  summary: >-
+    The postwar spread of Haber-Bosch ammonia plants, many converted from
+    explosives factories, that took nitrogen fertilizer from about 11 million
+    tons a year in 1961 to over 100 million. Roughly half the world's people are
+    fed by it.
+  requires: [haber-bosch]
+  helped_by: [shale-fracking]
+  uses: [res-natural-gas, res-coal, res-phosphate, res-potash]
+  efforts:
+    - who: US wartime ammonia plants converted to fertilizer
+      where: USA
+      when: 1946
+      outcome: achieved
+    - who: Yara, CF Industries, Sinopec and Chinese coal-based plants, Nutrien
+      where: Norway, USA, China, Canada
+      when: 2024
+      outcome: achieved
+      note: About 1 to 2 percent of world energy goes into ammonia.
+  effort:
+    note: Erisman et al. (2008) estimate about 48 percent of humanity depends on synthetic nitrogen. Green ammonia from electrolysis is the main substitute for gas feedstock.
+  sources:
+    - title: Erisman et al. 2008, How a century of ammonia synthesis changed the world, Nature Geoscience
+      url: https://www.nature.com/articles/ngeo325
+    - title: Our World in Data, Fertilizers
+      url: https://ourworldindata.org/fertilizers
+
+- id: center-pivot-irrigation
+  name: Center-pivot irrigation
+  kind: device
+  fields: [agriculture, engineering]
+  date: 1948
+  status: achieved
+  tier: 3
+  summary: >-
+    A long sprinkler arm that rotates around a well, watering a circle of up to a
+    square kilometer, invented by Nebraska farmer Frank Zybach. It turned
+    semi-arid plains into cropland and made the green circles seen from planes.
+  requires: [irrigation, internal-combustion-engine]
+  uses: [res-fresh-water]
+  efforts:
+    - who: Frank Zybach
+      where: USA
+      when: 1948
+      outcome: achieved
+      note: Patented 1952; Valmont and Lindsay industrialized it.
+  effort:
+    note: Draws down aquifers such as the Ogallala faster than they recharge.
+  sources:
+    - title: Smithsonian, How center-pivot irrigation changed the landscape
+      url: https://www.smithsonianmag.com/innovation/the-inventor-of-center-pivot-irrigation-180967486/
+
+- id: drip-irrigation
+  name: Drip irrigation
+  kind: technique
+  fields: [agriculture, engineering]
+  date: 1965
+  status: achieved
+  tier: 3
+  summary: >-
+    Delivering water drop by drop to each plant's roots through plastic tubes and
+    emitters, using far less water than flooding or sprinklers. Simcha Blass and
+    Kibbutz Hatzerim commercialized it as Netafim in 1965.
+  requires: [plastics, irrigation]
+  uses: [res-fresh-water]
+  efforts:
+    - who: Simcha Blass and Kibbutz Hatzerim (Netafim)
+      where: Israel
+      when: 1965
+      outcome: achieved
+    - who: Jain Irrigation; Rivulis
+      where: India, Israel
+      when: 1990
+      outcome: achieved
+  sources:
+    - title: Netafim, Wikipedia
+      url: https://en.wikipedia.org/wiki/Netafim
+
+- id: precision-agriculture
+  name: Precision agriculture
+  kind: technique
+  fields: [agriculture, electronics]
+  date: 1996
+  status: achieved
+  tier: 3
+  summary: >-
+    Farming field by field and meter by meter with GPS-steered tractors, yield
+    maps, soil sensors and variable-rate seeding and spraying. It saves seed,
+    fertilizer and fuel and is now standard on large farms.
+  requires: [gps, stored-program-computer]
+  helped_by: [earth-observation, deep-learning]
+  efforts:
+    - who: John Deere, Trimble, CNH
+      where: USA
+      when: 1996
+      outcome: achieved
+      note: Yield monitors (1992) and GPS autosteer (late 1990s to 2000s).
+    - who: Blue River Technology (Deere, See and Spray)
+      where: USA
+      when: 2022
+      outcome: ongoing
+      note: Camera-guided spot spraying of weeds.
+  sources:
+    - title: USDA ERS, Precision agriculture in the digital era (2023)
+      url: https://www.ers.usda.gov/publications/pub-details?pubid=105893
+
+- id: cultivated-meat
+  name: Cultivated meat
+  kind: technique
+  fields: [agriculture, biology]
+  date: 2020
+  status: ongoing
+  tier: 3
+  summary: >-
+    Growing animal muscle and fat cells in bioreactors instead of raising animals.
+    Singapore first approved sales in 2020 and the US in 2023, but costs and scale
+    remain far from conventional meat, and several US states have banned it.
+  requires: [cell-culture]
+  helped_by: [recombinant-dna]
+  efforts:
+    - who: Mark Post (Maastricht University), first cultured burger
+      where: Netherlands
+      when: 2013
+      outcome: achieved
+      note: Cost about $330,000.
+    - who: Eat Just (GOOD Meat)
+      where: Singapore
+      when: 2020
+      outcome: ongoing
+    - who: UPSIDE Foods; Mosa Meat; Aleph Farms; Vow
+      where: USA, Netherlands, Israel, Australia
+      when: 2023
+      outcome: ongoing
+      note: Florida and Alabama banned sales in 2024.
+  sources:
+    - title: GFI, State of the industry, cultivated meat
+      url: https://gfi.org/resource/cultivated-meat-seafood-and-ingredients-state-of-the-industry/
+
+# ------------------------------------------------------------ INSTITUTIONS
+
+- id: research-grant-system
+  name: Federal research grants and the research university
+  kind: institution
+  fields: [society]
+  date: 1945
+  status: achieved
+  tier: 1
+  summary: >-
+    Governments paying universities, through competitive peer-reviewed grants,
+    to do basic research and train scientists, as Vannevar Bush proposed in 1945.
+    The model created the modern research university and was copied worldwide.
+  requires: [universities, peer-review]
+  helped_by: [nuclear-weapon, radar]
+  efforts:
+    - who: Vannevar Bush, Science, the Endless Frontier
+      where: USA
+      when: 1945
+      outcome: achieved
+      note: Report to President Truman, July 1945, after the wartime OSRD.
+    - who: NIH extramural grants (1946), Office of Naval Research (1946), National Science Foundation (1950)
+      where: USA
+      when: 1950
+      outcome: achieved
+    - who: Bayh-Dole Act
+      where: USA
+      when: 1980
+      outcome: achieved
+      note: Let universities patent federally funded inventions, spurring tech transfer.
+    - who: Deutsche Forschungsgemeinschaft, UK Research Councils, Japan JSPS, China NSFC (1986), European Research Council (2007)
+      where: Germany, UK, Japan, China, EU
+      when: 1986
+      outcome: independent
+  effort:
+    note: >-
+      US federal R&D runs about $200 billion a year; world R&D spending passed
+      about $2.5 trillion. Grant writing and administration take a large share
+      of researchers' time; a 2007 US survey put administrative work at about
+      42 percent.
+  sources:
+    - title: NSF, Science, the Endless Frontier
+      url: https://www.nsf.gov/about/history/vbush1945.htm
+    - title: NSF, National Center for Science and Engineering Statistics
+      url: https://ncses.nsf.gov/
+
+- id: darpa
+  name: DARPA model of research funding
+  kind: institution
+  fields: [society, computing]
+  date: 1958
+  status: achieved
+  tier: 3
+  summary: >-
+    A small agency of temporary program managers with broad freedom to fund risky
+    projects toward specific goals, founded as ARPA in 1958 after Sputnik. It
+    seeded the internet, GPS receivers, stealth and self-driving cars, and has been
+    copied as ARPA-E, ARPA-H and the UK's ARIA.
+  requires: [research-grant-system]
+  helped_by: [satellites]
+  efforts:
+    - who: US Department of Defense, ARPA
+      where: USA
+      when: 1958
+      outcome: achieved
+    - who: ARPA-E (2009), IARPA (2006), ARPA-H (2022), UK ARIA (2023), Germany SPRIND (2019)
+      where: USA, UK, Germany
+      when: 2009
+      outcome: achieved
+    - who: Convergent Research, focused research organizations
+      where: USA
+      when: 2021
+      outcome: ongoing
+      note: Time-limited nonprofit teams for tools no lab or startup would build.
+  sources:
+    - title: DARPA, About
+      url: https://www.darpa.mil/about
+    - title: Azoulay et al. 2019, Funding breakthrough research, the ARPA model
+      url: https://www.journals.uchicago.edu/doi/10.1086/699933
+
+- id: cern
+  name: International big-science laboratories
+  kind: institution
+  fields: [society, physics]
+  date: 1954
+  status: achieved
+  tier: 3
+  summary: >-
+    Treaty-based labs where many countries pool money for machines none could
+    build alone, starting with CERN in 1954. The model was reused for ITER, the
+    European Southern Observatory and the ISS.
+  requires: [research-grant-system]
+  helped_by: [nuclear-weapon]
+  efforts:
+    - who: CERN (12 founding states)
+      where: Switzerland / France
+      when: 1954
+      outcome: achieved
+      note: Tim Berners-Lee invented the web there in 1989.
+    - who: ESO (1962), EMBL (1974), ITER (2006), SKA Observatory (2021)
+      where: International
+      when: 1962
+      outcome: achieved
+  sources:
+    - title: CERN, Our history
+      url: https://home.cern/about/who-we-are/our-history
+
+- id: iso-standards
+  name: International standards bodies (ISO)
+  kind: institution
+  fields: [society, engineering]
+  date: 1947
+  status: achieved
+  tier: 3
+  summary: >-
+    The International Organization for Standardization, founded in 1947, which
+    sets shared specifications so parts, containers, screws and paperwork work
+    across borders. Its 1968 container standard made global intermodal shipping
+    work.
+  requires: [factory-system]
+  efforts:
+    - who: ISO, 25 founding national bodies
+      where: Switzerland
+      when: 1947
+      outcome: achieved
+    - who: IEC (1906), ITU (1865), IETF (1986)
+      where: International
+      when: 1986
+      outcome: achieved
+      note: Electrical, telecom and internet standards bodies.
+  sources:
+    - title: ISO, About us
+      url: https://www.iso.org/about
+
+- id: venture-capital
+  name: Venture capital
+  kind: institution
+  fields: [society]
+  date: 1946
+  status: achieved
+  tier: 2
+  summary: >-
+    Funds that buy stakes in young, risky technology companies and expect most to
+    fail and a few to pay for all, begun by Georges Doriot's American Research
+    and Development in 1946. It funded much of semiconductors, computing,
+    biotech and now space and fusion.
+  requires: [joint-stock-company, stock-exchange]
+  helped_by: [research-grant-system, patents]
+  efforts:
+    - who: Georges Doriot, American Research and Development Corporation
+      where: USA
+      when: 1946
+      outcome: achieved
+      note: A $70,000 stake in Digital Equipment (1957) became hundreds of millions.
+    - who: Arthur Rock; Kleiner Perkins and Sequoia (1972)
+      where: USA
+      when: 1972
+      outcome: achieved
+      note: The 1979 ERISA prudent-man rule let pension funds invest.
+    - who: Israel Yozma (1993); China state guidance funds
+      where: Israel, China
+      when: 1993
+      outcome: independent
+  sources:
+    - title: Nicholas, VC, An American History (Harvard University Press)
+      url: https://www.hup.harvard.edu/books/9780674988002
+
+- id: outer-space-treaty
+  name: Outer Space Treaty
+  kind: institution
+  fields: [society]
+  date: 1967
+  status: achieved
+  tier: 3
+  summary: >-
+    The 1967 UN treaty that declares space free for all to explore, bans claims
+    of national sovereignty and nuclear weapons in orbit, and makes states
+    responsible for their companies' activities. It still frames debates over
+    lunar bases and asteroid mining.
+  requires: [satellites]
+  efforts:
+    - who: United Nations (US, USSR, UK first signers)
+      where: International
+      when: 1967
+      outcome: achieved
+    - who: Artemis Accords
+      where: USA and partners
+      when: 2020
+      outcome: ongoing
+      note: Over 50 signatories by 2025; China and Russia stand apart.
+  sources:
+    - title: UNOOSA, Outer Space Treaty
+      url: https://www.unoosa.org/oosa/en/ourwork/spacelaw/treaties/outerspacetreaty.html
+
+- id: montreal-protocol
+  name: Montreal Protocol
+  kind: institution
+  fields: [society, chemistry]
+  date: 1987
+  status: achieved
+  tier: 3
+  summary: >-
+    The 1987 treaty that phased out ozone-destroying CFCs, ratified by every UN
+    member state. The ozone layer is on track to recover by about 2066, making it
+    the most successful global environmental agreement.
+  requires: [climate-science]
+  efforts:
+    - who: Mario Molina and F. Sherwood Rowland (1974); Joe Farman, British Antarctic Survey (1985)
+      where: USA, UK
+      when: 1985
+      outcome: achieved
+      note: Predicted, then found, the ozone hole.
+    - who: UNEP and signatories; Kigali Amendment (2016) on HFCs
+      where: International
+      when: 1987
+      outcome: achieved
+  sources:
+    - title: UNEP Ozone Secretariat, The Montreal Protocol
+      url: https://ozone.unep.org/treaties/montreal-protocol
+    - title: WMO, Ozone layer on track to recover within four decades (2023)
+      url: https://wmo.int/news/media-centre/ozone-layer-recovery-track-helping-avoid-global-warming-05degc
+
+- id: ipcc
+  name: Intergovernmental Panel on Climate Change
+  kind: institution
+  fields: [society, physics]
+  date: 1988
+  status: achieved
+  tier: 2
+  summary: >-
+    A UN body, founded in 1988, in which thousands of volunteer scientists assess
+    published climate research and governments approve the summaries line by
+    line. Its reports set the scientific basis for the Paris Agreement.
+  requires: [climate-science, peer-review]
+  efforts:
+    - who: World Meteorological Organization and UN Environment Programme
+      where: International
+      when: 1988
+      outcome: achieved
+      note: Shared the 2007 Nobel Peace Prize; Sixth Assessment 2021 to 2023, Seventh cycle under way.
+  sources:
+    - title: IPCC, History of the IPCC
+      url: https://www.ipcc.ch/about/history/
+
+- id: open-source
+  name: Free and open-source software
+  kind: institution
+  fields: [society, computing]
+  date: 1983
+  status: achieved
+  tier: 2
+  summary: >-
+    Licensing software so anyone may use, study, change and share it, organized
+    around Richard Stallman's GNU project (1983) and the term "open source"
+    (1998). Linux and other open projects now run most servers, phones and cloud
+    infrastructure.
+  requires: [programming-languages, internet]
+  helped_by: [personal-computer, world-wide-web]
+  efforts:
+    - who: Richard Stallman, GNU project and GPL (1989)
+      where: USA
+      when: 1983
+      outcome: achieved
+    - who: Linus Torvalds, Linux
+      where: Finland
+      when: 1991
+      outcome: achieved
+    - who: Open Source Initiative (Bruce Perens, Eric Raymond)
+      where: USA
+      when: 1998
+      outcome: achieved
+    - who: GitHub (2008); open-weight AI models (Llama, DeepSeek, Qwen)
+      where: USA, China
+      when: 2023
+      outcome: ongoing
+  sources:
+    - title: GNU, Initial announcement (1983)
+      url: https://www.gnu.org/gnu/initial-announcement.html
+    - title: Open Source Initiative, History
+      url: https://opensource.org/history
+
+- id: prediction-markets
+  name: Prediction markets and forecasting platforms
+  kind: institution
+  fields: [society, math]
+  date: 1988
+  status: achieved
+  tier: 3
+  summary: >-
+    Markets where people bet on future events, so prices act as probabilities,
+    plus scored forecasting communities. From the Iowa Electronic Markets in 1988
+    to Kalshi and Polymarket, they often beat polls and pundits.
+  requires: [probability-theory, internet]
+  helped_by: [statistics, world-wide-web]
+  efforts:
+    - who: University of Iowa, Iowa Electronic Markets
+      where: USA
+      when: 1988
+      outcome: achieved
+    - who: Robin Hanson (idea futures); DARPA Policy Analysis Market (cancelled 2003)
+      where: USA
+      when: 1990
+      outcome: abandoned
+    - who: IARPA ACE tournament, Good Judgment Project (Philip Tetlock); Metaculus (2015)
+      where: USA, Canada
+      when: 2011
+      outcome: achieved
+    - who: Kalshi (CFTC-designated 2020), Polymarket
+      where: USA
+      when: 2020
+      outcome: ongoing
+  sources:
+    - title: Wolfers and Zitzewitz 2004, Prediction Markets, Journal of Economic Perspectives
+      url: https://www.aeaweb.org/articles?id=10.1257/0895330041371321
+    - title: Iowa Electronic Markets
+      url: https://iemweb.biz.uiowa.edu/
+
+- id: inducement-prizes
+  name: Inducement prizes and advance market commitments
+  kind: institution
+  fields: [society]
+  date: 2004
+  status: achieved
+  tier: 3
+  summary: >-
+    Paying for results instead of effort: a prize for the first to hit a goal, or
+    a promise to buy a product if someone makes it. The Ansari XPRIZE was won by
+    SpaceShipOne in 2004; a 2009 vaccine commitment and the 2022 Frontier carbon
+    removal fund used the buyer's version.
+  requires: [joint-stock-company]
+  helped_by: [venture-capital]
+  efforts:
+    - who: XPRIZE Foundation (Peter Diamandis), Ansari X Prize
+      where: USA
+      when: 2004
+      outcome: achieved
+      note: Won by Scaled Composites, funded by Paul Allen.
+    - who: Gavi pneumococcal advance market commitment
+      where: International
+      when: 2009
+      outcome: achieved
+      note: $1.5 billion; vaccines reached low-income countries years faster.
+    - who: Frontier (Stripe and partners)
+      where: USA
+      when: 2022
+      outcome: ongoing
+  effort:
+    note: Echoes the 1714 British Longitude Prize.
+  sources:
+    - title: XPRIZE, Ansari X Prize
+      url: https://www.xprize.org/prizes/ansari
+    - title: Kremer, Levin and Snyder 2020, Advance Market Commitments, AEA Papers and Proceedings
+      url: https://www.aeaweb.org/articles?id=10.1257/pandp.20201017
+
+- id: carbon-pricing
+  name: Carbon pricing
+  kind: institution
+  fields: [society, energy]
+  date: 2005
+  status: achieved
+  tier: 3
+  summary: >-
+    Making emitters pay for CO2, through taxes or capped tradeable permits, so
+    markets find the cheapest cuts. The EU Emissions Trading System began in 2005;
+    about a quarter of world emissions now face some carbon price.
+  requires: [climate-science, stock-exchange]
+  helped_by: [ipcc]
+  efforts:
+    - who: Finland and Sweden carbon taxes
+      where: Finland, Sweden
+      when: 1990
+      outcome: achieved
+    - who: EU Emissions Trading System
+      where: EU
+      when: 2005
+      outcome: achieved
+    - who: China national ETS
+      where: China
+      when: 2021
+      outcome: ongoing
+      note: Largest by covered emissions, at low prices.
+    - who: EU Carbon Border Adjustment Mechanism
+      where: EU
+      when: 2026
+      outcome: ongoing
+  sources:
+    - title: World Bank, State and Trends of Carbon Pricing
+      url: https://www.worldbank.org/en/publication/state-and-trends-of-carbon-pricing

@@ -1,0 +1,19 @@
+# Links added when merging the parts: prerequisites a part left out, or
+# links between nodes that different parts wrote. Each entry adds to the
+# node's own lists.
+- {id: jacquard-loom, requires: [weaving]}
+- {id: blood-circulation, requires: [scientific-method]}
+- {id: vaccination, requires: [scientific-method], helped_by: [germ-theory]}
+- {id: anesthesia, requires: [distillation]}
+- {id: epidemiology, requires: [statistics]}
+- {id: evolution-natural-selection, requires: [scientific-method]}
+- {id: mendelian-genetics, requires: [scientific-method], helped_by: [statistics]}
+- {id: blood-transfusion, requires: [blood-circulation]}
+- {id: insulin-therapy, requires: [scientific-method]}
+- {id: oral-contraceptive, requires: [chemical-structure-theory, randomized-controlled-trial]}
+- {id: protein-sequencing-classical, requires: [chromatography]}
+- {id: chromatography, requires: [scientific-method]}
+- {id: open-source, requires: [programming-languages, internet]}
+- {id: stone-tools, requires: [touch, vision]}
+- {id: art-symbolic, requires: [vision]}
+- {id: haber-bosch, helped_by: [guano-trade, agricultural-chemistry]}

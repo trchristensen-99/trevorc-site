@@ -1,0 +1,12 @@
+{
+  "name": "tech-tree-prep",
+  "private": true,
+  "description": "Builds ../data/tree.json from the curated node and metric files. Not installed by the site build.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "yaml": "2.9.1"
+  }
+}

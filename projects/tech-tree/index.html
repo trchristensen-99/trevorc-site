@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Real Life Tech Tree</title>
+    <meta name="description" content="How human technology actually developed: the net of discoveries, techniques and institutions behind it, and what people are working on now." />
+    <link rel="icon" href="/static/icon.png" />
+    <link rel="stylesheet" href="./main.css" />
+  </head>
+  <body>
+    <main id="app">
+      <svg id="tree" role="img" aria-label="Real Life Tech Tree"></svg>
+      <p id="status" aria-live="polite">Loading the tree…</p>
+
+      <button id="toggle-controls" class="panel" aria-label="Options">☰</button>
+      <section class="panel controls" aria-label="Options">
+        <header>
+          <strong>Real Life Tech Tree</strong>
+          <span id="counts"></span>
+        </header>
+        <input id="search" type="search" placeholder="Find a technology…" autocomplete="off" list="names" />
+        <datalist id="names"></datalist>
+        <details id="filters">
+          <summary>Filter</summary>
+          <fieldset id="f-fields"><legend>Fields</legend></fieldset>
+          <fieldset id="f-status"><legend>Status</legend></fieldset>
+          <fieldset id="f-kinds"><legend>Kind</legend></fieldset>
+        </details>
+        <label class="check"><input id="all-links" type="checkbox" /> Show every link</label>
+        <div class="row actions">
+          <button id="frontier" type="button">The frontier</button>
+          <a id="elsewhere"></a>
+        </div>
+        <p class="hint">Scroll to zoom: more technologies appear as you go. Click one to light up what it needs and what it led to.</p>
+      </section>
+
+      <details class="panel legend">
+        <summary>Legend</summary>
+        <ul id="legend"></ul>
+      </details>
+
+      <aside id="info" class="panel info" hidden aria-live="polite"></aside>
+      <div id="tooltip" hidden></div>
+    </main>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

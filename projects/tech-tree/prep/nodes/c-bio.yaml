@@ -1,0 +1,3515 @@
+# Part C: biology, medicine and agriculture science, all eras,
+# plus the DNA sequencing deep dive.
+# Costs in effort.cost_usd are rough, in 2025 US dollars (CPI-U adjusted).
+
+# ---------------------------------------------------------------------------
+# Early life science and medicine
+# ---------------------------------------------------------------------------
+
+- id: microscope
+  name: Compound microscope
+  kind: device
+  fields: [biology, physics]
+  date: [1590, 1625]
+  status: achieved
+  tier: 1
+  summary: >-
+    Two lenses in a tube magnify tiny things far beyond a single loupe. Dutch
+    spectacle makers built the first ones around 1590 to 1620, and Robert
+    Hooke's Micrographia (1665) showed what they could reveal.
+  requires: [lenses, glassmaking]
+  helped_by: [printing-press]
+  efforts:
+    - who: Hans and Zacharias Janssen (attributed), Cornelis Drebbel
+      where: Netherlands
+      when: [1590, 1620]
+      outcome: achieved
+      note: Priority is disputed; the earliest documented compound microscopes date to about 1620.
+    - who: Robert Hooke
+      where: England
+      when: 1665
+      outcome: independent
+      note: Micrographia named the "cell" after the pores he saw in cork.
+  sources:
+    - title: Microscope (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Microscope
+    - title: "Micrographia (Wikipedia)"
+      url: https://en.wikipedia.org/wiki/Micrographia
+
+- id: microorganisms-discovered
+  name: Discovery of microorganisms
+  kind: discovery
+  fields: [biology]
+  date: 1676
+  status: achieved
+  tier: 2
+  summary: >-
+    Antonie van Leeuwenhoek, grinding tiny high-power single lenses, saw and
+    described bacteria and protists ("animalcules") in letters to the Royal
+    Society.
+  requires: [microscope]
+  efforts:
+    - who: Antonie van Leeuwenhoek
+      where: Delft, Netherlands
+      when: [1674, 1683]
+      outcome: achieved
+      note: His single-lens instruments reached about 270x; the 1676 letter described bacteria in pepper water.
+  sources:
+    - title: Antonie van Leeuwenhoek (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Antonie_van_Leeuwenhoek
+
+- id: blood-circulation
+  name: Circulation of the blood
+  kind: discovery
+  fields: [medicine, biology]
+  date: 1628
+  status: achieved
+  tier: 2
+  summary: >-
+    William Harvey showed by measurement and experiment that the heart pumps
+    blood in a closed loop, overturning 1,400 years of Galenic physiology.
+  helped_by: [scientific-method]
+  efforts:
+    - who: William Harvey
+      where: England
+      when: 1628
+      outcome: achieved
+      note: De Motu Cordis. Ibn al-Nafis had described pulmonary circulation in the 13th century; Malpighi saw the capillaries with a microscope in 1661.
+  sources:
+    - title: William Harvey (Wikipedia)
+      url: https://en.wikipedia.org/wiki/William_Harvey
+
+- id: vaccination
+  name: Vaccination (smallpox)
+  kind: technique
+  fields: [medicine, biology]
+  date: 1796
+  status: achieved
+  tier: 1
+  summary: >-
+    Edward Jenner showed that inoculating cowpox protects against smallpox.
+    It replaced the older and riskier practice of variolation with live
+    smallpox and became the template for every later vaccine.
+  helped_by: [scientific-method, printing-press]
+  efforts:
+    - who: Variolation practitioners
+      where: China, India, Ottoman Empire
+      when: [1500, 1721]
+      outcome: independent
+      note: Inoculation with smallpox material was practiced in China by the 1500s; Lady Mary Wortley Montagu brought it to England in 1721. It killed about 1 to 2 percent of recipients.
+    - who: Edward Jenner
+      where: England
+      when: 1796
+      outcome: achieved
+      note: Inoculated James Phipps with cowpox, then challenged him with smallpox. Benjamin Jesty had done similar inoculations in 1774.
+  sources:
+    - title: Edward Jenner (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Edward_Jenner
+    - title: Variolation (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Variolation
+
+- id: cell-theory
+  name: Cell theory
+  kind: discovery
+  fields: [biology]
+  date: [1838, 1855]
+  status: achieved
+  tier: 1
+  summary: >-
+    All living things are made of cells, and every cell comes from another
+    cell. Schleiden (plants, 1838) and Schwann (animals, 1839) proposed it;
+    Virchow and Remak added "omnis cellula e cellula" in 1855.
+  requires: [microscope]
+  helped_by: [microorganisms-discovered]
+  efforts:
+    - who: Matthias Schleiden, Theodor Schwann
+      where: Germany
+      when: [1838, 1839]
+      outcome: achieved
+    - who: Robert Remak, Rudolf Virchow
+      where: Germany
+      when: 1855
+      outcome: achieved
+      note: Cells arise only by division of other cells.
+  sources:
+    - title: Cell theory (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Cell_theory
+
+- id: anesthesia
+  name: Surgical anesthesia
+  kind: technique
+  fields: [medicine, chemistry]
+  date: 1846
+  status: achieved
+  tier: 2
+  summary: >-
+    Ether, demonstrated publicly at Massachusetts General Hospital in October
+    1846, made painless surgery possible; chloroform followed in 1847.
+  efforts:
+    - who: William T. G. Morton
+      where: Boston, USA
+      when: 1846
+      outcome: achieved
+      note: Public "Ether Dome" demonstration on October 16, 1846.
+    - who: Crawford Long
+      where: Georgia, USA
+      when: 1842
+      outcome: independent
+      note: Used ether earlier but did not publish until 1849.
+    - who: Hanaoka Seishu
+      where: Japan
+      when: 1804
+      outcome: independent
+      note: General anesthesia with an herbal mixture (tsusensan) for a mastectomy.
+  sources:
+    - title: History of general anesthesia (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_general_anesthesia
+
+- id: epidemiology
+  name: Epidemiology (Snow's cholera map)
+  kind: technique
+  fields: [medicine, society]
+  date: 1854
+  status: achieved
+  tier: 2
+  summary: >-
+    John Snow traced a London cholera outbreak to the Broad Street water pump
+    by mapping deaths and comparing water companies, founding the
+    quantitative study of disease in populations.
+  helped_by: [statistics]
+  efforts:
+    - who: John Snow
+      where: London, England
+      when: 1854
+      outcome: achieved
+      note: His "grand experiment" compared death rates in households supplied by two water companies.
+  sources:
+    - title: 1854 Broad Street cholera outbreak (Wikipedia)
+      url: https://en.wikipedia.org/wiki/1854_Broad_Street_cholera_outbreak
+
+- id: germ-theory
+  name: Germ theory of disease
+  kind: discovery
+  fields: [medicine, biology]
+  date: 1862
+  status: achieved
+  tier: 1
+  summary: >-
+    Specific microbes cause fermentation, decay and specific diseases.
+    Pasteur's swan-neck flasks refuted spontaneous generation, and Koch's pure
+    cultures and postulates (anthrax 1876, tuberculosis 1882) tied single
+    microbes to single diseases.
+  requires: [microorganisms-discovered, microscope]
+  helped_by: [cell-theory]
+  efforts:
+    - who: Louis Pasteur
+      where: France
+      when: [1857, 1865]
+      outcome: achieved
+      note: Fermentation studies, swan-neck flask experiments (1859 to 1862), and pasteurization (1864).
+    - who: Robert Koch
+      where: Germany
+      when: [1876, 1884]
+      outcome: achieved
+      note: Anthrax life cycle (1876), solid-media pure cultures on agar (with Fanny and Walther Hesse, 1881), tuberculosis bacillus (1882), and Koch's postulates. Nobel Prize 1905.
+    - who: Ignaz Semmelweis
+      where: Vienna, Austria
+      when: 1847
+      outcome: independent
+      note: Cut maternal deaths with chlorine handwashing, but his idea was rejected.
+  sources:
+    - title: Germ theory of disease (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Germ_theory_of_disease
+    - title: Nobel Prize in Physiology or Medicine 1905
+      url: https://www.nobelprize.org/prizes/medicine/1905/summary/
+
+- id: antiseptic-surgery
+  name: Antiseptic surgery
+  kind: technique
+  fields: [medicine]
+  date: 1867
+  status: achieved
+  tier: 2
+  summary: >-
+    Joseph Lister, reading Pasteur, sprayed carbolic acid on wounds and
+    instruments and sharply cut post-operative infection; aseptic technique
+    (sterile gowns, steam autoclaves) followed by the 1890s.
+  requires: [germ-theory]
+  helped_by: [anesthesia]
+  efforts:
+    - who: Joseph Lister
+      where: Glasgow, Scotland
+      when: 1867
+      outcome: achieved
+  sources:
+    - title: Joseph Lister (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Joseph_Lister
+
+- id: evolution-natural-selection
+  name: Evolution by natural selection
+  kind: discovery
+  fields: [biology]
+  date: 1859
+  status: achieved
+  tier: 1
+  summary: >-
+    Heritable variation plus differential survival and reproduction explains
+    the diversity and adaptation of life. Darwin and Wallace presented it in
+    1858, and On the Origin of Species appeared in 1859.
+  helped_by: [printing-press]
+  efforts:
+    - who: Charles Darwin
+      where: England
+      when: [1837, 1859]
+      outcome: achieved
+      note: About 20 years of notebooks, Beagle collections and breeding studies before publication.
+    - who: Alfred Russel Wallace
+      where: Malay Archipelago
+      when: 1858
+      outcome: independent
+      note: His Ternate essay prompted the joint Linnean Society presentation.
+  effort:
+    span: [1837, 1859]
+    people: 2
+    note: Essentially two naturalists, drawing on a wide network of correspondents and breeders.
+  sources:
+    - title: On the Origin of Species (Wikipedia)
+      url: https://en.wikipedia.org/wiki/On_the_Origin_of_Species
+
+- id: mendelian-genetics
+  name: Mendelian inheritance
+  kind: discovery
+  fields: [biology, agriculture]
+  date: 1866
+  status: achieved
+  tier: 1
+  summary: >-
+    Gregor Mendel's pea crosses showed that traits are passed on as discrete
+    units in predictable ratios. Ignored for 34 years, the work was
+    rediscovered in 1900 by de Vries, Correns and Tschermak.
+  helped_by: [probability-theory, agriculture]
+  efforts:
+    - who: Gregor Mendel
+      where: Brno, Moravia
+      when: [1856, 1866]
+      outcome: achieved
+      note: About 28,000 pea plants over eight years.
+    - who: Hugo de Vries, Carl Correns, Erich von Tschermak
+      where: Netherlands, Germany, Austria
+      when: 1900
+      outcome: independent
+      note: Rediscovery.
+  effort:
+    span: [1856, 1863]
+    people: 1
+    note: One monk and a monastery garden.
+  sources:
+    - title: Mendelian inheritance (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Mendelian_inheritance
+
+- id: nuclein-discovery
+  name: Discovery of nucleic acid
+  kind: discovery
+  fields: [chemistry, biology]
+  date: 1869
+  status: achieved
+  tier: 3
+  summary: >-
+    Friedrich Miescher isolated a phosphorus-rich substance he called nuclein
+    from the nuclei of white blood cells in pus-soaked bandages. Kossel later
+    identified its four bases (Nobel 1910).
+  requires: [cell-theory]
+  efforts:
+    - who: Friedrich Miescher
+      where: Tubingen, Germany
+      when: 1869
+      outcome: achieved
+  sources:
+    - title: Friedrich Miescher (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Friedrich_Miescher
+
+- id: blood-transfusion
+  name: Blood groups and safe transfusion
+  kind: discovery
+  fields: [medicine]
+  date: 1901
+  status: achieved
+  tier: 2
+  summary: >-
+    Karl Landsteiner found the ABO blood groups, explaining why many
+    transfusions killed. With citrate anticoagulation (1914) and blood banks
+    (1937), transfusion became routine.
+  helped_by: [germ-theory]
+  efforts:
+    - who: Karl Landsteiner
+      where: Vienna, Austria
+      when: 1901
+      outcome: achieved
+      note: Nobel Prize 1930.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 1930
+      url: https://www.nobelprize.org/prizes/medicine/1930/summary/
+
+- id: chromosome-theory
+  name: Chromosome theory of inheritance
+  kind: discovery
+  fields: [biology]
+  date: [1902, 1915]
+  status: achieved
+  tier: 2
+  summary: >-
+    Mendel's factors ride on chromosomes. Sutton and Boveri proposed it in
+    1902 to 1903, and Thomas Hunt Morgan's fruit-fly lab proved it with
+    sex-linked traits and the first genetic maps.
+  requires: [mendelian-genetics, cell-theory, microscope]
+  efforts:
+    - who: Walter Sutton, Theodor Boveri
+      where: USA, Germany
+      when: [1902, 1903]
+      outcome: achieved
+    - who: Thomas Hunt Morgan, Alfred Sturtevant, Calvin Bridges, Hermann Muller
+      where: Columbia University, USA
+      when: [1910, 1915]
+      outcome: achieved
+      note: Sturtevant drew the first genetic linkage map in 1913. Morgan's Nobel Prize came in 1933.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 1933
+      url: https://www.nobelprize.org/prizes/medicine/1933/summary/
+    - title: Boveri-Sutton chromosome theory (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Boveri%E2%80%93Sutton_chromosome_theory
+
+- id: cell-culture
+  name: Cell and tissue culture
+  kind: technique
+  fields: [biology, medicine]
+  date: [1907, 1951]
+  status: achieved
+  tier: 2
+  summary: >-
+    Growing living cells outside the body, from Ross Harrison's frog nerve
+    cultures (1907) to the immortal HeLa line (1951). It made virus vaccines,
+    monoclonal antibodies, IVF and stem cell work possible.
+  requires: [cell-theory, germ-theory]
+  efforts:
+    - who: Ross Harrison
+      where: Johns Hopkins, USA
+      when: 1907
+      outcome: achieved
+    - who: John Enders, Thomas Weller, Frederick Robbins
+      where: Boston, USA
+      when: 1949
+      outcome: achieved
+      note: Grew poliovirus in non-nerve tissue culture; Nobel Prize 1954.
+    - who: George Gey (cells from Henrietta Lacks, taken without consent)
+      where: Johns Hopkins, USA
+      when: 1951
+      outcome: achieved
+      note: HeLa, the first immortal human cell line.
+  sources:
+    - title: Cell culture (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Cell_culture
+    - title: Nobel Prize in Physiology or Medicine 1954
+      url: https://www.nobelprize.org/prizes/medicine/1954/summary/
+
+- id: hybrid-corn
+  name: Hybrid corn
+  kind: technique
+  fields: [agriculture, biology]
+  date: [1908, 1935]
+  status: achieved
+  tier: 3
+  summary: >-
+    Crossing inbred maize lines gives vigorous, uniform hybrids. George Shull
+    described it in 1908, Donald Jones's double cross (1918) made seed
+    affordable, and by the 1940s hybrids covered the US Corn Belt.
+  requires: [mendelian-genetics, agriculture]
+  efforts:
+    - who: George Shull, Edward East
+      where: Cold Spring Harbor and Connecticut, USA
+      when: 1908
+      outcome: achieved
+      note: Shull's inbred-hybrid work was done at Cold Spring Harbor.
+    - who: Donald F. Jones
+      where: Connecticut Agricultural Experiment Station
+      when: 1918
+      outcome: achieved
+    - who: Henry A. Wallace (Hi-Bred Corn Company, later Pioneer)
+      where: Iowa, USA
+      when: 1926
+      outcome: achieved
+  sources:
+    - title: Hybrid seed (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Hybrid_seed
+
+- id: insulin-therapy
+  name: Insulin therapy
+  kind: technique
+  fields: [medicine, biology]
+  date: 1922
+  status: achieved
+  tier: 2
+  summary: >-
+    Purified pancreatic extract turned type 1 diabetes from a death sentence
+    into a manageable disease. Leonard Thompson, 14, was the first patient
+    treated, in January 1922.
+  efforts:
+    - who: Frederick Banting, Charles Best, J. J. R. Macleod, James Collip
+      where: University of Toronto, Canada
+      when: [1921, 1922]
+      outcome: achieved
+      note: Nobel Prize 1923 (Banting and Macleod). Eli Lilly scaled production in 1923.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 1923
+      url: https://www.nobelprize.org/prizes/medicine/1923/summary/
+
+- id: electron-microscope
+  name: Electron microscope
+  kind: device
+  fields: [physics, biology]
+  date: 1931
+  status: achieved
+  tier: 2
+  summary: >-
+    Focusing electron beams with magnetic lenses resolves far smaller
+    structures than light can, eventually down to atoms. It revealed viruses,
+    organelles and, much later, protein structures by cryo-EM.
+  requires: [microscope, quantum-mechanics]
+  efforts:
+    - who: Ernst Ruska, Max Knoll
+      where: Berlin, Germany
+      when: 1931
+      outcome: achieved
+      note: Ruska's Nobel Prize in Physics came in 1986. Cryo-electron microscopy earned the 2017 Chemistry prize, after direct electron detectors (about 2013) set off a "resolution revolution".
+  sources:
+    - title: Nobel Prize in Physics 1986
+      url: https://www.nobelprize.org/prizes/physics/1986/summary/
+    - title: Nobel Prize in Chemistry 2017
+      url: https://www.nobelprize.org/prizes/chemistry/2017/summary/
+
+- id: sulfa-drugs
+  name: Sulfonamide drugs
+  kind: technique
+  fields: [medicine, chemistry]
+  date: 1935
+  status: achieved
+  tier: 3
+  summary: >-
+    Prontosil, a red dye found by systematic screening at Bayer, was the
+    first drug to cure systemic bacterial infections. Its active part,
+    sulfanilamide, spawned a family of sulfa drugs.
+  requires: [germ-theory]
+  efforts:
+    - who: Gerhard Domagk (Bayer)
+      where: Germany
+      when: [1932, 1935]
+      outcome: achieved
+      note: Nobel Prize 1939, which the Nazi government forced him to decline.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 1939
+      url: https://www.nobelprize.org/prizes/medicine/1939/summary/
+
+- id: antibiotics-penicillin
+  name: Penicillin
+  kind: technique
+  fields: [medicine, biology, chemistry]
+  date: [1928, 1943]
+  status: achieved
+  tier: 1
+  summary: >-
+    Alexander Fleming noticed in 1928 that a Penicillium mold killed bacteria.
+    Florey and Chain's Oxford team purified it and proved it in 1940 to 1941,
+    and a wartime US-British industrial program made it a mass-produced drug
+    by 1943 to 1944.
+  requires: [germ-theory]
+  helped_by: [sulfa-drugs]
+  efforts:
+    - who: Alexander Fleming
+      where: St Mary's Hospital, London
+      when: 1928
+      outcome: achieved
+    - who: Howard Florey, Ernst Chain, Norman Heatley
+      where: Oxford, England
+      when: [1939, 1941]
+      outcome: achieved
+      note: Nobel Prize 1945 (Fleming, Chain, Florey).
+    - who: USDA Northern Regional Research Laboratory, Pfizer, Merck, Squibb and others
+      where: Peoria and elsewhere, USA
+      when: [1941, 1944]
+      outcome: achieved
+      note: Corn-steep liquor, deep-tank fermentation and a high-yield strain from a moldy cantaloupe raised output enough to supply D-Day.
+  effort:
+    span: [1939, 1945]
+    people: 1000
+    note: A wartime crash program across about 20 US and British companies plus government labs.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 1945
+      url: https://www.nobelprize.org/prizes/medicine/1945/summary/
+    - title: "Discovery and Development of Penicillin (ACS National Historic Chemical Landmark)"
+      url: https://www.acs.org/education/whatischemistry/landmarks/flemingpenicillin.html
+
+- id: streptomycin
+  name: Streptomycin
+  kind: technique
+  fields: [medicine, biology]
+  date: 1943
+  status: achieved
+  tier: 3
+  summary: >-
+    Albert Schatz in Selman Waksman's lab found the first antibiotic active
+    against tuberculosis by screening soil bacteria, a method that yielded
+    many later antibiotics.
+  requires: [germ-theory]
+  helped_by: [antibiotics-penicillin]
+  efforts:
+    - who: Albert Schatz, Selman Waksman
+      where: Rutgers University, USA
+      when: 1943
+      outcome: achieved
+      note: Waksman alone received the 1952 Nobel Prize.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 1952
+      url: https://www.nobelprize.org/prizes/medicine/1952/summary/
+
+- id: randomized-controlled-trial
+  name: Randomized controlled trial
+  kind: institution
+  fields: [medicine, society]
+  date: 1948
+  status: achieved
+  tier: 1
+  summary: >-
+    Assigning patients to treatment or control by chance removes the doctor's
+    bias from the comparison. The British Medical Research Council's
+    streptomycin trial for tuberculosis (1948) set the template for evidence
+    in medicine.
+  requires: [statistics, streptomycin]
+  helped_by: [scientific-method, epidemiology]
+  efforts:
+    - who: James Lind
+      where: HMS Salisbury, Royal Navy
+      when: 1747
+      outcome: independent
+      note: A controlled (not randomized) comparison of six scurvy remedies; citrus won.
+    - who: Ronald Fisher
+      where: Rothamsted, England
+      when: 1925
+      outcome: achieved
+      note: Developed randomization for agricultural field trials.
+    - who: Austin Bradford Hill, Medical Research Council
+      where: UK
+      when: 1948
+      outcome: achieved
+      note: Streptomycin in pulmonary tuberculosis, BMJ 1948. Random allocation by sealed envelopes.
+  sources:
+    - title: "Streptomycin treatment of pulmonary tuberculosis (BMJ 1948)"
+      url: https://doi.org/10.1136/bmj.2.4582.769
+    - title: Randomized controlled trial (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Randomized_controlled_trial
+
+- id: one-gene-one-enzyme
+  name: One gene, one enzyme
+  kind: discovery
+  fields: [biology]
+  date: 1941
+  status: achieved
+  tier: 3
+  summary: >-
+    Beadle and Tatum irradiated bread mold and found that each mutant lacked a
+    single enzyme, linking genes to the specific proteins they make.
+  requires: [chromosome-theory]
+  helped_by: [x-rays]
+  efforts:
+    - who: George Beadle, Edward Tatum
+      where: Stanford University, USA
+      when: 1941
+      outcome: achieved
+      note: Nobel Prize 1958.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 1958
+      url: https://www.nobelprize.org/prizes/medicine/1958/summary/
+
+- id: dna-genetic-material
+  name: DNA is the genetic material
+  kind: discovery
+  fields: [biology]
+  date: [1944, 1952]
+  status: achieved
+  tier: 2
+  summary: >-
+    Avery, MacLeod and McCarty showed in 1944 that purified DNA transforms
+    harmless pneumococcus into a virulent strain. Hershey and Chase confirmed
+    it with radiolabeled phage in 1952.
+  requires: [nuclein-discovery, chromosome-theory]
+  helped_by: [one-gene-one-enzyme]
+  efforts:
+    - who: Oswald Avery, Colin MacLeod, Maclyn McCarty
+      where: Rockefeller Institute, USA
+      when: 1944
+      outcome: achieved
+      note: Built on Frederick Griffith's 1928 transformation experiment.
+    - who: Alfred Hershey, Martha Chase
+      where: Cold Spring Harbor, USA
+      when: 1952
+      outcome: achieved
+      note: Hershey shared the 1969 Nobel Prize.
+  sources:
+    - title: "Avery, MacLeod, McCarty (J Exp Med 1944)"
+      url: https://doi.org/10.1084/jem.79.2.137
+    - title: Hershey-Chase experiment (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Hershey%E2%80%93Chase_experiment
+
+- id: dna-double-helix
+  name: DNA double helix
+  kind: discovery
+  fields: [biology, chemistry]
+  date: 1953
+  status: achieved
+  tier: 1
+  summary: >-
+    DNA is two antiparallel strands wound in a helix, held together by A-T
+    and G-C base pairs. The pairing immediately suggested how genetic
+    information is copied.
+  requires: [dna-genetic-material, x-rays]
+  efforts:
+    - who: James Watson, Francis Crick
+      where: Cavendish Laboratory, Cambridge
+      when: 1953
+      outcome: achieved
+      note: Model building using Chargaff's base ratios (1950) and King's College X-ray data.
+    - who: Rosalind Franklin, Raymond Gosling, Maurice Wilkins
+      where: King's College London
+      when: [1951, 1953]
+      outcome: achieved
+      note: Franklin's diffraction data (including Photo 51) were essential. Watson, Crick and Wilkins shared the 1962 Nobel Prize; Franklin died in 1958.
+    - who: Linus Pauling
+      where: Caltech, USA
+      when: 1953
+      outcome: rival
+      note: Proposed an incorrect triple helix weeks earlier.
+  sources:
+    - title: "Watson and Crick, Nature 171:737 (1953)"
+      url: https://doi.org/10.1038/171737a0
+    - title: Nobel Prize in Physiology or Medicine 1962
+      url: https://www.nobelprize.org/prizes/medicine/1962/summary/
+
+- id: polio-vaccine
+  name: Polio vaccine
+  kind: technique
+  fields: [medicine]
+  date: 1955
+  status: achieved
+  tier: 2
+  summary: >-
+    Jonas Salk's inactivated vaccine, grown in monkey kidney cell culture,
+    was proven in a 1954 field trial of about 1.8 million children. Albert
+    Sabin's oral live vaccine followed around 1961.
+  requires: [vaccination, cell-culture]
+  helped_by: [randomized-controlled-trial]
+  competes: []
+  efforts:
+    - who: Jonas Salk (University of Pittsburgh); Thomas Francis (trial)
+      where: USA
+      when: [1952, 1955]
+      outcome: achieved
+    - who: Albert Sabin
+      where: Cincinnati, USA; trials in USSR
+      when: [1957, 1961]
+      outcome: rival
+      note: Oral attenuated vaccine, cheaper and easier to give; became the workhorse of global eradication.
+  effort:
+    span: [1948, 1955]
+    people: 300000
+    note: The Francis field trial enlisted roughly 20,000 physicians, 40,000 nurses and 200,000 volunteers, funded by the March of Dimes.
+  sources:
+    - title: Polio vaccine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Polio_vaccine
+
+- id: protein-crystallography
+  name: Protein X-ray crystallography
+  kind: technique
+  fields: [biology, chemistry, physics]
+  date: 1958
+  status: achieved
+  tier: 3
+  summary: >-
+    Diffracting X-rays through protein crystals gives atomic structures. John
+    Kendrew's myoglobin (1958) and Max Perutz's hemoglobin (1959) were the
+    first; tens of thousands followed.
+  requires: [x-rays]
+  efforts:
+    - who: John Kendrew, Max Perutz
+      where: Cambridge, England
+      when: [1937, 1959]
+      outcome: achieved
+      note: Perutz worked on hemoglobin for 22 years; the heavy-atom phasing trick (1953) unlocked it. Nobel Prize in Chemistry 1962.
+  effort:
+    span: [1937, 1959]
+    people: 10
+    note: Decades of work by a small MRC group, with early electronic computers (EDSAC) for the Fourier sums.
+  sources:
+    - title: Nobel Prize in Chemistry 1962
+      url: https://www.nobelprize.org/prizes/chemistry/1962/summary/
+
+- id: messenger-rna
+  name: Messenger RNA
+  kind: discovery
+  fields: [biology]
+  date: 1961
+  status: achieved
+  tier: 3
+  summary: >-
+    Short-lived RNA copies carry the gene's message from DNA to the ribosome.
+    Found in 1961 by Brenner, Jacob and Meselson and by Gros, Gilbert and
+    colleagues.
+  requires: [dna-double-helix]
+  efforts:
+    - who: Sydney Brenner, Francois Jacob, Matthew Meselson
+      where: Caltech, USA
+      when: 1961
+      outcome: achieved
+    - who: Francois Gros, Walter Gilbert, James Watson and others
+      where: Harvard, USA
+      when: 1961
+      outcome: independent
+  sources:
+    - title: Messenger RNA (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Messenger_RNA
+
+- id: genetic-code
+  name: Genetic code
+  kind: discovery
+  fields: [biology, chemistry]
+  date: [1961, 1966]
+  status: achieved
+  tier: 2
+  summary: >-
+    Three-base codons specify the 20 amino acids. Nirenberg and Matthaei's
+    poly-U experiment (1961) cracked the first codon, and Khorana's and
+    Nirenberg's labs finished the table by 1966.
+  requires: [dna-double-helix, messenger-rna]
+  efforts:
+    - who: Marshall Nirenberg, Heinrich Matthaei
+      where: NIH, USA
+      when: 1961
+      outcome: achieved
+    - who: Har Gobind Khorana
+      where: University of Wisconsin, USA
+      when: [1963, 1966]
+      outcome: achieved
+      note: Nobel Prize 1968 with Nirenberg and Robert Holley.
+    - who: Francis Crick, Sydney Brenner
+      where: Cambridge, England
+      when: 1961
+      outcome: achieved
+      note: Frameshift genetics showed the code is read in triplets.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 1968
+      url: https://www.nobelprize.org/prizes/medicine/1968/summary/
+
+- id: oral-contraceptive
+  name: Oral contraceptive pill
+  kind: technique
+  fields: [medicine, society]
+  date: 1960
+  status: achieved
+  tier: 2
+  summary: >-
+    Synthetic progestins (norethindrone, 1951) made a daily birth-control
+    pill possible. The US approved Enovid for contraception in 1960, giving
+    women reliable control of fertility.
+  efforts:
+    - who: Gregory Pincus, John Rock, Min Chueh Chang; Carl Djerassi (Syntex)
+      where: USA, Mexico
+      when: [1951, 1960]
+      outcome: achieved
+      note: Funded largely by Katharine McCormick at Margaret Sanger's urging; large trials in Puerto Rico.
+  sources:
+    - title: Combined oral contraceptive pill (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Combined_oral_contraceptive_pill
+
+- id: green-revolution
+  name: Green Revolution
+  kind: technique
+  fields: [agriculture, biology]
+  date: [1944, 1970]
+  status: achieved
+  tier: 1
+  summary: >-
+    Semi-dwarf, disease-resistant wheat and rice that could take heavy
+    fertilizer without falling over, plus irrigation and agrochemicals,
+    roughly doubled cereal yields in Mexico, South Asia and beyond.
+  requires: [mendelian-genetics, haber-bosch, irrigation]
+  helped_by: [hybrid-corn, agricultural-chemistry, tractor]
+  efforts:
+    - who: Norman Borlaug (Rockefeller Foundation, later CIMMYT)
+      where: Mexico, India, Pakistan
+      when: [1944, 1970]
+      outcome: achieved
+      note: Bred semi-dwarf wheat using the Japanese Norin 10 dwarfing genes; shuttle breeding gave two generations a year. Nobel Peace Prize 1970.
+    - who: International Rice Research Institute
+      where: Philippines
+      when: 1966
+      outcome: achieved
+      note: Released IR8, the "miracle rice", carrying the sd1 semi-dwarf gene from Dee-geo-woo-gen.
+    - who: M. S. Swaminathan
+      where: India
+      when: [1963, 1971]
+      outcome: achieved
+  effort:
+    span: [1944, 1970]
+    people: 1000
+    note: Rockefeller and Ford Foundation programs, national breeding services and agricultural extension in many countries.
+  sources:
+    - title: Nobel Peace Prize 1970
+      url: https://www.nobelprize.org/prizes/peace/1970/summary/
+    - title: Green Revolution (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Green_Revolution
+
+- id: smallpox-eradication
+  name: Smallpox eradication
+  kind: institution
+  fields: [medicine, society]
+  date: 1980
+  status: achieved
+  tier: 2
+  summary: >-
+    A WHO campaign of surveillance and ring vaccination ended smallpox; the
+    last natural case was in Somalia in 1977, and eradication was certified
+    in 1980. It is the only human disease ever eradicated.
+  requires: [vaccination, epidemiology]
+  efforts:
+    - who: WHO Intensified Smallpox Eradication Programme (D. A. Henderson and others)
+      where: Worldwide
+      when: [1967, 1980]
+      outcome: achieved
+  effort:
+    span: [1967, 1980]
+    people: 150000
+    cost_usd: 1.5e9
+    note: Roughly $300 million in 1967 to 1979 dollars (about a third international aid, the rest from endemic countries); hundreds of thousands of national health workers at peak.
+  sources:
+    - title: Smallpox eradication (WHO)
+      url: https://www.who.int/health-topics/smallpox
+    - title: Eradication of smallpox (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Smallpox#Eradication
+
+# ---------------------------------------------------------------------------
+# Agricultural technology, 1450 to 1945
+# ---------------------------------------------------------------------------
+
+- id: columbian-exchange
+  name: Columbian exchange
+  kind: discovery
+  fields: [agriculture, biology, society]
+  date: [1492, 1600]
+  status: achieved
+  tier: 2
+  summary: >-
+    After 1492, crops, livestock and diseases crossed the Atlantic in both
+    directions. Maize, potatoes and cassava fed Europe, Africa and Asia,
+    while wheat, cattle and horses remade the Americas and Old World
+    diseases killed most of the Indigenous population.
+  requires: [agriculture, animal-domestication]
+  helped_by: [compass]
+  efforts:
+    - who: Spanish and Portuguese voyages, then global trade
+      where: Atlantic world
+      when: [1492, 1600]
+      outcome: achieved
+      note: Potatoes reached Spain by about 1570; maize and sweet potatoes reached China in the 16th century. Alfred Crosby named the exchange in 1972.
+  sources:
+    - title: Columbian exchange (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Columbian_exchange
+
+- id: seed-drill
+  name: Seed drill
+  kind: device
+  fields: [agriculture, engineering]
+  date: 1701
+  status: achieved
+  tier: 3
+  summary: >-
+    A horse-drawn machine that sows seed in evenly spaced rows at a set
+    depth instead of scattering it by hand, saving seed and allowing
+    weeding between rows.
+  requires: [agriculture]
+  efforts:
+    - who: Jethro Tull
+      where: Berkshire, England
+      when: 1701
+      outcome: achieved
+      note: Described in Horse-Hoeing Husbandry (1731).
+    - who: Chinese multi-tube seed drills
+      where: China
+      when: [-200, -100]
+      outcome: independent
+      note: Iron-shared seed drills were in use under the Han dynasty.
+  sources:
+    - title: Seed drill (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Seed_drill
+
+- id: norfolk-four-course-rotation
+  name: Norfolk four-course rotation
+  kind: technique
+  fields: [agriculture]
+  date: 1730
+  status: achieved
+  tier: 2
+  summary: >-
+    Rotating wheat, turnips, barley and clover eliminated the fallow year:
+    clover fixed nitrogen and turnips fed livestock through winter, whose
+    manure fed the soil. It was a core of the British Agricultural
+    Revolution.
+  requires: [agriculture, animal-domestication]
+  helped_by: [columbian-exchange]
+  efforts:
+    - who: Charles "Turnip" Townshend and Norfolk farmers
+      where: Norfolk, England
+      when: [1730, 1760]
+      outcome: achieved
+      note: Built on Flemish practice; Thomas Coke of Holkham promoted it later in the century.
+  sources:
+    - title: Crop rotation, Norfolk four-course system (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Crop_rotation
+    - title: British Agricultural Revolution (Wikipedia)
+      url: https://en.wikipedia.org/wiki/British_Agricultural_Revolution
+
+- id: mechanical-reaper
+  name: Mechanical reaper
+  kind: device
+  fields: [agriculture, engineering]
+  date: 1831
+  status: achieved
+  tier: 2
+  summary: >-
+    A horse-drawn machine that cut grain with a reciprocating blade, letting
+    one farmer harvest as much as several hand crews with scythes. It opened
+    the American prairie to grain farming.
+  requires: [iron-smelting]
+  helped_by: [factory-system, railway]
+  efforts:
+    - who: Cyrus McCormick
+      where: Virginia, then Chicago, USA
+      when: [1831, 1847]
+      outcome: achieved
+      note: Demonstrated in 1831, patented in 1834, mass-produced in Chicago from 1847.
+    - who: Obed Hussey
+      where: Ohio and Maryland, USA
+      when: 1833
+      outcome: rival
+      note: Patented first, in 1833; the two fought in field trials and courts.
+    - who: Patrick Bell
+      where: Scotland
+      when: 1828
+      outcome: independent
+  sources:
+    - title: Reaper (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Reaper
+
+- id: steel-plow
+  name: Steel plow
+  kind: device
+  fields: [agriculture, engineering, materials]
+  date: 1837
+  status: achieved
+  tier: 3
+  summary: >-
+    A polished steel moldboard that sheds sticky prairie soil, which clogged
+    cast-iron plows. It let farmers break the deep-rooted sod of the American
+    Midwest.
+  requires: [iron-smelting]
+  efforts:
+    - who: John Deere
+      where: Grand Detour, Illinois, USA
+      when: 1837
+      outcome: achieved
+      note: First made from a broken saw blade; Deere moved to Moline in 1848.
+    - who: Charles Newbold, Jethro Wood
+      where: USA
+      when: [1797, 1819]
+      outcome: achieved
+      note: Cast-iron plows with replaceable parts.
+  sources:
+    - title: Plough, modern plows (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Plough
+    - title: John Deere (inventor) (Wikipedia)
+      url: https://en.wikipedia.org/wiki/John_Deere_(inventor)
+
+- id: agricultural-chemistry
+  name: Agricultural chemistry (mineral theory of plant nutrition)
+  kind: discovery
+  fields: [agriculture, chemistry]
+  date: 1840
+  status: achieved
+  tier: 2
+  summary: >-
+    Plants take nitrogen, phosphorus and potassium from the soil as mineral
+    salts rather than from humus, and growth is limited by the scarcest one.
+    It turned fertilizing into a chemistry problem.
+  requires: [atomic-theory]
+  efforts:
+    - who: Justus von Liebig
+      where: Giessen, Germany
+      when: 1840
+      outcome: achieved
+      note: Organic Chemistry in its Application to Agriculture and Physiology. He popularized Carl Sprengel's law of the minimum (1828).
+    - who: Jean-Baptiste Boussingault
+      where: Alsace, France
+      when: [1834, 1838]
+      outcome: achieved
+      note: Field experiments showing legumes gain nitrogen; Hellriegel and Wilfarth tied it to root-nodule bacteria in 1886.
+  sources:
+    - title: Justus von Liebig (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Justus_von_Liebig
+    - title: Liebig's law of the minimum (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Liebig%27s_law_of_the_minimum
+
+- id: superphosphate-fertilizer
+  name: Superphosphate fertilizer
+  kind: technique
+  fields: [agriculture, chemistry]
+  date: 1842
+  status: achieved
+  tier: 3
+  summary: >-
+    Treating bones or phosphate rock with sulfuric acid makes the phosphorus
+    soluble enough for crops to use. John Bennet Lawes patented it in 1842,
+    founding the artificial fertilizer industry.
+  requires: [agricultural-chemistry]
+  uses: [res-phosphate, res-sulfur]
+  efforts:
+    - who: John Bennet Lawes, Joseph Henry Gilbert
+      where: Rothamsted, England
+      when: [1842, 1843]
+      outcome: achieved
+      note: Lawes founded Rothamsted Experimental Station in 1843; its Broadbalk wheat experiment has run continuously since then. Ronald Fisher developed randomized designs there in the 1920s.
+  sources:
+    - title: Superphosphate (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Superphosphate
+    - title: Rothamsted Research (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Rothamsted_Research
+
+- id: guano-trade
+  name: Guano and Chilean nitrate trade
+  kind: infrastructure
+  fields: [agriculture, society]
+  date: [1840, 1914]
+  status: achieved
+  tier: 3
+  summary: >-
+    Seabird guano mined from Peru's islands, and later sodium nitrate from
+    Chile's Atacama desert, were shipped worldwide as nitrogen fertilizer.
+    The fear of running out drove the search for synthetic ammonia.
+  requires: [agricultural-chemistry]
+  helped_by: [steam-engine]
+  uses: [res-phosphate]
+  efforts:
+    - who: Peruvian state and British merchants (Antony Gibbs and Sons)
+      where: Chincha Islands, Peru
+      when: [1840, 1879]
+      outcome: achieved
+      note: Millions of tonnes exported, largely by indentured Chinese laborers in brutal conditions; the US Guano Islands Act (1856) followed.
+    - who: Chilean nitrate industry
+      where: Atacama, Chile
+      when: [1880, 1930]
+      outcome: achieved
+      note: Chile won the nitrate fields in the War of the Pacific (1879 to 1884). Synthetic ammonia from Haber-Bosch collapsed the trade after World War I.
+  sources:
+    - title: Guano era (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Guano_Era
+    - title: Saltpeter War / War of the Pacific (Wikipedia)
+      url: https://en.wikipedia.org/wiki/War_of_the_Pacific
+
+- id: tractor
+  name: Farm tractor
+  kind: device
+  fields: [agriculture, engineering]
+  date: [1892, 1917]
+  status: achieved
+  tier: 2
+  summary: >-
+    Gasoline-powered tractors replaced horses and mules for plowing and
+    hauling. Cheap mass-produced models like the Fordson (1917) and the power
+    take-off and three-point hitch freed the land once used to grow feed for
+    draft animals.
+  requires: [internal-combustion-engine]
+  helped_by: [steel-bessemer, factory-system, automobile]
+  efforts:
+    - who: John Froelich
+      where: Iowa, USA
+      when: 1892
+      outcome: achieved
+      note: First practical gasoline traction engine; steam traction engines came before.
+    - who: Hart-Parr Company
+      where: Charles City, Iowa, USA
+      when: 1901
+      outcome: achieved
+    - who: Henry Ford (Fordson)
+      where: USA
+      when: 1917
+      outcome: achieved
+    - who: Harry Ferguson
+      where: Northern Ireland
+      when: [1926, 1938]
+      outcome: achieved
+      note: The three-point hitch.
+  sources:
+    - title: Tractor (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Tractor
+
+# ---------------------------------------------------------------------------
+# Molecular biology tools (shared roots of biotech and sequencing)
+# ---------------------------------------------------------------------------
+
+- id: gel-electrophoresis
+  name: Gel electrophoresis
+  kind: technique
+  fields: [chemistry, biology]
+  date: [1937, 1959]
+  status: achieved
+  tier: 2
+  summary: >-
+    An electric field pulls charged molecules through a gel, separating them
+    by size. Polyacrylamide gels (1959) could resolve DNA fragments differing
+    by a single base, the readout for every early sequencing method.
+  requires: [electric-battery]
+  efforts:
+    - who: Arne Tiselius
+      where: Uppsala, Sweden
+      when: 1937
+      outcome: achieved
+      note: Moving-boundary electrophoresis in free solution; Nobel Prize in Chemistry 1948.
+    - who: Oliver Smithies
+      where: Toronto, Canada
+      when: 1955
+      outcome: achieved
+      note: Starch gels.
+    - who: Samuel Raymond, Lewis Weintraub
+      where: USA
+      when: 1959
+      outcome: achieved
+      note: Polyacrylamide gels.
+  sources:
+    - title: Nobel Prize in Chemistry 1948
+      url: https://www.nobelprize.org/prizes/chemistry/1948/summary/
+    - title: Gel electrophoresis (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Gel_electrophoresis
+
+- id: protein-sequencing-classical
+  name: Protein sequencing (Sanger, Edman)
+  kind: technique
+  fields: [chemistry, biology]
+  date: [1950, 1955]
+  status: achieved
+  tier: 3
+  summary: >-
+    Frederick Sanger determined the complete amino acid sequence of insulin,
+    proving proteins have a defined sequence. Pehr Edman's stepwise
+    degradation (1950) became the standard way to read proteins one residue
+    at a time.
+  helped_by: [chromatography]
+  efforts:
+    - who: Frederick Sanger
+      where: Cambridge, England
+      when: [1945, 1955]
+      outcome: achieved
+      note: Ten years for 51 amino acids. First Nobel Prize in Chemistry, 1958.
+    - who: Pehr Edman
+      where: Lund, Sweden
+      when: 1950
+      outcome: achieved
+      note: Automated in the Edman sequenator (1967).
+  effort:
+    span: [1945, 1955]
+    people: 5
+    note: A tiny group; about a decade for one small protein.
+  sources:
+    - title: Nobel Prize in Chemistry 1958
+      url: https://www.nobelprize.org/prizes/chemistry/1958/summary/
+    - title: Edman degradation (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Edman_degradation
+
+- id: dna-polymerase
+  name: DNA polymerase
+  kind: discovery
+  fields: [biology, chemistry]
+  date: 1956
+  status: achieved
+  tier: 2
+  summary: >-
+    Arthur Kornberg purified the enzyme that copies DNA from a template in a
+    test tube. Every sequencing-by-synthesis method, and PCR, is built on
+    polymerases.
+  requires: [dna-double-helix]
+  efforts:
+    - who: Arthur Kornberg
+      where: Washington University, St. Louis, USA
+      when: [1956, 1958]
+      outcome: achieved
+      note: Nobel Prize 1959, shared with Severo Ochoa (RNA synthesis).
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 1959
+      url: https://www.nobelprize.org/prizes/medicine/1959/summary/
+
+- id: dideoxynucleotides
+  name: Dideoxynucleotide chain terminators
+  kind: discovery
+  fields: [chemistry, biology]
+  date: 1969
+  status: achieved
+  tier: 3
+  summary: >-
+    Nucleotides missing the 3' hydroxyl can be added by DNA polymerase but
+    nothing can be added after them, so they stop the chain. Kornberg's group
+    and Toji and Cohen showed this in 1969; Sanger turned it into a
+    sequencing method.
+  requires: [dna-polymerase]
+  efforts:
+    - who: M. R. Atkinson, M. P. Deutscher, Arthur Kornberg, A. F. Russell, J. G. Moffatt
+      where: Stanford and Syntex, USA
+      when: 1969
+      outcome: achieved
+      note: "Biochemistry 8:4897 (1969): termination of chain growth by a 2',3'-dideoxyribonucleotide."
+    - who: L. Toji, S. S. Cohen
+      where: USA
+      when: 1969
+      outcome: independent
+  sources:
+    - title: Dideoxynucleotide (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Dideoxynucleotide
+    - title: "Sanger, Nicklen, Coulson (PNAS 1977), which cites the 1969 work"
+      url: https://doi.org/10.1073/pnas.74.12.5463
+
+- id: restriction-enzymes
+  name: Restriction enzymes
+  kind: discovery
+  fields: [biology]
+  date: 1970
+  status: achieved
+  tier: 2
+  summary: >-
+    Bacterial enzymes that cut DNA at specific short sequences, part of their
+    defense against viruses. They gave biologists molecular scissors for
+    mapping, cloning and preparing DNA for sequencing.
+  requires: [dna-double-helix]
+  helped_by: [gel-electrophoresis]
+  efforts:
+    - who: Werner Arber
+      where: Geneva, Switzerland
+      when: [1962, 1968]
+      outcome: achieved
+      note: Explained restriction and modification of phage.
+    - who: Hamilton Smith, Kent Wilcox
+      where: Johns Hopkins, USA
+      when: 1970
+      outcome: achieved
+      note: Isolated HindII, the first site-specific (type II) enzyme.
+    - who: Daniel Nathans, Kathleen Danna
+      where: Johns Hopkins, USA
+      when: 1971
+      outcome: achieved
+      note: First restriction map (SV40). Nobel Prize 1978 to Arber, Nathans and Smith.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 1978
+      url: https://www.nobelprize.org/prizes/medicine/1978/summary/
+
+- id: reverse-transcriptase
+  name: Reverse transcriptase
+  kind: discovery
+  fields: [biology]
+  date: 1970
+  status: achieved
+  tier: 3
+  summary: >-
+    Retroviruses carry an enzyme that copies RNA back into DNA, breaking the
+    one-way central dogma. It became the tool for making cDNA, the basis of
+    RNA-seq, and the target of the first HIV drugs.
+  requires: [dna-polymerase, messenger-rna]
+  efforts:
+    - who: Howard Temin, Satoshi Mizutani
+      where: University of Wisconsin, USA
+      when: 1970
+      outcome: achieved
+    - who: David Baltimore
+      where: MIT, USA
+      when: 1970
+      outcome: independent
+      note: Published back to back in Nature; Nobel Prize 1975 with Renato Dulbecco.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 1975
+      url: https://www.nobelprize.org/prizes/medicine/1975/summary/
+
+- id: recombinant-dna
+  name: Recombinant DNA (gene cloning)
+  kind: technique
+  fields: [biology]
+  date: 1973
+  status: achieved
+  tier: 1
+  summary: >-
+    Cutting DNA with restriction enzymes, joining pieces with ligase and
+    growing them in bacteria lets anyone copy and move genes. It launched
+    genetic engineering and the biotech industry.
+  requires: [restriction-enzymes, dna-polymerase, gel-electrophoresis]
+  efforts:
+    - who: Paul Berg, David Jackson, Robert Symons
+      where: Stanford, USA
+      when: 1972
+      outcome: achieved
+      note: First recombinant DNA molecule (SV40 plus lambda). Berg shared the 1980 Chemistry Nobel.
+    - who: Stanley Cohen, Herbert Boyer, Annie Chang, Robert Helling
+      where: Stanford and UCSF, USA
+      when: 1973
+      outcome: achieved
+      note: Cloned DNA in E. coli plasmids. The 1975 Asilomar conference set voluntary safety rules.
+  sources:
+    - title: "Cohen et al., PNAS 70:3240 (1973)"
+      url: https://doi.org/10.1073/pnas.70.11.3240
+    - title: Nobel Prize in Chemistry 1980
+      url: https://www.nobelprize.org/prizes/chemistry/1980/summary/
+
+- id: monoclonal-antibodies
+  name: Monoclonal antibodies
+  kind: technique
+  fields: [medicine, biology]
+  date: 1975
+  status: achieved
+  tier: 2
+  summary: >-
+    Fusing an antibody-making B cell with a myeloma cell gives an immortal
+    hybridoma making one antibody forever. They became the core of
+    diagnostics and, after humanization, the largest class of drugs.
+  requires: [cell-culture]
+  efforts:
+    - who: Georges Kohler, Cesar Milstein
+      where: MRC LMB, Cambridge
+      when: 1975
+      outcome: achieved
+      note: Not patented. Nobel Prize 1984.
+  sources:
+    - title: "Kohler and Milstein, Nature 256:495 (1975)"
+      url: https://doi.org/10.1038/256495a0
+    - title: Nobel Prize in Physiology or Medicine 1984
+      url: https://www.nobelprize.org/prizes/medicine/1984/summary/
+
+- id: recombinant-insulin
+  name: Recombinant human insulin (first biotech drug)
+  kind: technique
+  fields: [medicine, biology]
+  date: 1978
+  status: achieved
+  tier: 3
+  summary: >-
+    Genentech, founded in 1976, made human insulin in E. coli in 1978; Eli
+    Lilly's Humulin, approved in 1982, was the first drug made by genetic
+    engineering.
+  requires: [recombinant-dna, insulin-therapy]
+  helped_by: [joint-stock-company, patents]
+  efforts:
+    - who: Genentech (Herbert Boyer, Robert Swanson), City of Hope (Arthur Riggs, Keiichi Itakura)
+      where: California, USA
+      when: [1976, 1978]
+      outcome: achieved
+    - who: Walter Gilbert's group
+      where: Harvard, USA
+      when: 1978
+      outcome: rival
+      note: Raced Genentech to make insulin by cloning rat cDNA.
+  sources:
+    - title: Genentech (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Genentech
+
+- id: ivf
+  name: In vitro fertilization
+  kind: technique
+  fields: [medicine, biology]
+  date: 1978
+  status: achieved
+  tier: 2
+  summary: >-
+    Eggs fertilized in a dish and returned to the uterus. Louise Brown, the
+    first IVF baby, was born in July 1978; more than 12 million people have
+    since been born this way.
+  requires: [cell-culture]
+  efforts:
+    - who: Robert Edwards, Patrick Steptoe, Jean Purdy
+      where: Oldham, England
+      when: [1968, 1978]
+      outcome: achieved
+      note: Edwards received the 2010 Nobel Prize.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 2010
+      url: https://www.nobelprize.org/prizes/medicine/2010/summary/
+
+- id: hiv-antiretroviral-therapy
+  name: Combination antiretroviral therapy
+  kind: technique
+  fields: [medicine]
+  date: 1996
+  status: achieved
+  tier: 2
+  summary: >-
+    Three-drug cocktails combining reverse-transcriptase and protease
+    inhibitors suppress HIV so fully that AIDS became a chronic, manageable
+    condition. HIV itself was identified in 1983.
+  requires: [reverse-transcriptase, randomized-controlled-trial]
+  helped_by: [protein-crystallography]
+  efforts:
+    - who: Luc Montagnier, Francoise Barre-Sinoussi (Pasteur Institute)
+      where: France
+      when: 1983
+      outcome: achieved
+      note: Discovered HIV; Nobel Prize 2008.
+    - who: Many academic and industry groups (AZT 1987; protease inhibitors 1995 to 1996)
+      where: USA, Europe
+      when: [1987, 1996]
+      outcome: achieved
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 2008
+      url: https://www.nobelprize.org/prizes/medicine/2008/summary/
+    - title: Management of HIV/AIDS (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Management_of_HIV/AIDS
+
+- id: gm-crops
+  name: Genetically modified crops
+  kind: technique
+  fields: [agriculture, biology]
+  date: [1994, 1996]
+  status: achieved
+  tier: 2
+  summary: >-
+    Agrobacterium and gene-gun transformation put new genes into crops. The
+    Flavr Savr tomato (1994) came first, and Bt insect-resistant and
+    herbicide-tolerant soy, maize and cotton (1996) now cover about 190
+    million hectares.
+  requires: [recombinant-dna]
+  helped_by: [green-revolution]
+  efforts:
+    - who: Mary-Dell Chilton, Marc Van Montagu, Jeff Schell, Monsanto
+      where: USA, Belgium
+      when: 1983
+      outcome: achieved
+      note: First transgenic plants via Agrobacterium tumefaciens.
+    - who: Calgene (Flavr Savr); Monsanto (Roundup Ready, Bt crops)
+      where: USA
+      when: [1994, 1996]
+      outcome: achieved
+  sources:
+    - title: Genetically modified crops (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Genetically_modified_crops
+
+- id: rna-interference
+  name: RNA interference
+  kind: discovery
+  fields: [biology, medicine]
+  date: 1998
+  status: achieved
+  tier: 3
+  summary: >-
+    Double-stranded RNA silences matching genes. Found in worms in 1998, it
+    became a standard knockdown tool and, delivered in lipid nanoparticles,
+    the first siRNA drug (patisiran, 2018).
+  requires: [messenger-rna]
+  efforts:
+    - who: Andrew Fire, Craig Mello
+      where: Carnegie Institution and UMass, USA
+      when: 1998
+      outcome: achieved
+      note: Nobel Prize 2006.
+  sources:
+    - title: "Fire et al., Nature 391:806 (1998)"
+      url: https://doi.org/10.1038/35888
+    - title: Nobel Prize in Physiology or Medicine 2006
+      url: https://www.nobelprize.org/prizes/medicine/2006/summary/
+
+- id: induced-pluripotent-stem-cells
+  name: Induced pluripotent stem cells
+  kind: technique
+  fields: [biology, medicine]
+  date: 2006
+  status: achieved
+  tier: 2
+  summary: >-
+    Four transcription factors (Oct4, Sox2, Klf4, c-Myc) reprogram adult
+    cells back to an embryonic-like state. It showed cell identity is
+    reversible and underlies today's partial-reprogramming work on aging.
+  requires: [cell-culture, recombinant-dna]
+  efforts:
+    - who: Kazutoshi Takahashi, Shinya Yamanaka
+      where: Kyoto University, Japan
+      when: 2006
+      outcome: achieved
+      note: Nobel Prize 2012 with John Gurdon, whose 1962 frog nuclear transfer and Dolly the sheep (1996) showed adult nuclei keep a full genome.
+  sources:
+    - title: "Takahashi and Yamanaka, Cell 126:663 (2006)"
+      url: https://doi.org/10.1016/j.cell.2006.07.024
+    - title: Nobel Prize in Physiology or Medicine 2012
+      url: https://www.nobelprize.org/prizes/medicine/2012/summary/
+
+- id: gene-therapy
+  name: Gene therapy
+  kind: technique
+  fields: [medicine, biology]
+  date: [1990, 2017]
+  status: achieved
+  tier: 2
+  summary: >-
+    Delivering working genes to a patient's cells, usually with engineered
+    viruses. After a first trial in 1990 and setbacks in 1999 to 2002, it
+    matured with approvals for inherited blindness and CAR-T cell cancer
+    therapy in 2017.
+  requires: [recombinant-dna]
+  helped_by: [monoclonal-antibodies]
+  efforts:
+    - who: W. French Anderson, Michael Blaese (NIH)
+      where: USA
+      when: 1990
+      outcome: achieved
+      note: Treated Ashanti DeSilva for ADA-SCID.
+    - who: University of Pennsylvania
+      where: USA
+      when: 1999
+      outcome: abandoned
+      note: Jesse Gelsinger died in an adenovirus trial, stalling the field for years.
+    - who: Spark Therapeutics (Luxturna); Novartis and Penn, Carl June (Kymriah, CAR-T)
+      where: USA
+      when: 2017
+      outcome: achieved
+  sources:
+    - title: Gene therapy (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Gene_therapy
+
+- id: crispr-cas9
+  name: CRISPR-Cas9 genome editing
+  kind: technique
+  fields: [biology, medicine, agriculture]
+  date: 2012
+  status: achieved
+  tier: 1
+  summary: >-
+    A bacterial immune system repurposed as programmable DNA scissors: a
+    guide RNA steers Cas9 to any matching sequence. It made precise editing
+    cheap and routine, and the first CRISPR therapy (Casgevy, for sickle cell
+    disease) was approved in 2023.
+  requires: [recombinant-dna, next-generation-sequencing]
+  helped_by: [rna-interference]
+  efforts:
+    - who: Francisco Mojica; Rodolphe Barrangou and Philippe Horvath (Danisco)
+      where: Spain, France, USA
+      when: [2005, 2007]
+      outcome: achieved
+      note: Found CRISPR spacers match phage genomes and confer immunity.
+    - who: Martin Jinek, Emmanuelle Charpentier, Jennifer Doudna
+      where: Berkeley and Umea
+      when: 2012
+      outcome: achieved
+      note: Nobel Prize in Chemistry 2020.
+    - who: Virginijus Siksnys
+      where: Vilnius, Lithuania
+      when: 2012
+      outcome: independent
+    - who: Feng Zhang (Broad Institute); George Church (Harvard)
+      where: USA
+      when: 2013
+      outcome: rival
+      note: First editing in human cells; the resulting patent fight with Berkeley ran for a decade.
+  sources:
+    - title: "Jinek et al., Science 337:816 (2012)"
+      url: https://doi.org/10.1126/science.1225829
+    - title: Nobel Prize in Chemistry 2020
+      url: https://www.nobelprize.org/prizes/chemistry/2020/summary/
+
+- id: modified-nucleoside-mrna
+  name: Nucleoside-modified mRNA
+  kind: discovery
+  fields: [biology, medicine]
+  date: 2005
+  status: achieved
+  tier: 3
+  summary: >-
+    Swapping uridine for pseudouridine lets injected mRNA slip past innate
+    immune sensors and make far more protein. It was the key fix that made
+    mRNA drugs and vaccines practical.
+  requires: [messenger-rna]
+  efforts:
+    - who: Katalin Kariko, Drew Weissman
+      where: University of Pennsylvania, USA
+      when: 2005
+      outcome: achieved
+      note: Nobel Prize 2023. N1-methylpseudouridine (2015) improved it further.
+  sources:
+    - title: "Kariko et al., Immunity 23:165 (2005)"
+      url: https://doi.org/10.1016/j.immuni.2005.06.008
+    - title: Nobel Prize in Physiology or Medicine 2023
+      url: https://www.nobelprize.org/prizes/medicine/2023/summary/
+
+- id: mrna-vaccines
+  name: mRNA vaccines
+  kind: technique
+  fields: [medicine, biology]
+  date: 2020
+  status: achieved
+  tier: 2
+  summary: >-
+    Modified mRNA encoding a viral protein, wrapped in lipid nanoparticles,
+    makes the body produce its own antigen. The Pfizer-BioNTech and Moderna
+    COVID-19 vaccines went from sequence to authorization in under a year.
+  requires: [modified-nucleoside-mrna, vaccination, randomized-controlled-trial]
+  helped_by: [next-generation-sequencing, rna-interference]
+  efforts:
+    - who: BioNTech (Ugur Sahin, Ozlem Tureci) and Pfizer
+      where: Germany, USA
+      when: 2020
+      outcome: achieved
+      note: UK authorization December 2, 2020; US emergency use December 11, 2020.
+    - who: Moderna and NIH Vaccine Research Center (Barney Graham, Kizzmekia Corbett)
+      where: USA
+      when: 2020
+      outcome: achieved
+      note: The prefusion-stabilized spike design (2P mutations, from MERS work) was key.
+    - who: CureVac
+      where: Germany
+      when: 2021
+      outcome: abandoned
+      note: Its unmodified-mRNA vaccine reached only 48 percent efficacy.
+    - who: Pieter Cullis and others
+      where: Canada
+      when: [1995, 2018]
+      outcome: achieved
+      note: Ionizable lipid nanoparticles, first approved in the siRNA drug patisiran (2018).
+  effort:
+    span: [2020, 2020]
+    people: 100000
+    cost_usd: 2e10
+    note: The trials enrolled about 74,000 volunteers. Operation Warp Speed committed about $18 billion across several vaccines, on top of the companies' own spending.
+  sources:
+    - title: Nobel Prize in Physiology or Medicine 2023
+      url: https://www.nobelprize.org/prizes/medicine/2023/summary/
+    - title: mRNA vaccine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/MRNA_vaccine
+
+- id: protein-data-bank
+  name: Protein Data Bank
+  kind: infrastructure
+  fields: [biology, computing]
+  date: 1971
+  status: achieved
+  tier: 3
+  summary: >-
+    An open archive of experimentally determined macromolecular structures,
+    started with seven entries in 1971. Its roughly 200,000 structures were
+    the training set for AlphaFold.
+  requires: [protein-crystallography]
+  sources:
+    - title: RCSB Protein Data Bank history
+      url: https://www.rcsb.org/pages/about-us/history
+
+- id: protein-structure-prediction
+  name: Protein structure prediction (AlphaFold)
+  kind: technique
+  fields: [biology, computing]
+  date: 2020
+  status: achieved
+  tier: 2
+  summary: >-
+    Deep networks trained on known structures and evolutionary sequence
+    alignments predict a protein's 3D shape from its sequence, often to near
+    experimental accuracy. AlphaFold2 won the CASP14 blind test in 2020.
+  requires: [protein-data-bank, deep-learning]
+  helped_by: [transformer, gpu, next-generation-sequencing]
+  efforts:
+    - who: John Moult, Krzysztof Fidelis (CASP)
+      where: USA
+      when: 1994
+      outcome: achieved
+      note: The biennial blind prediction contest that measured progress for 26 years.
+    - who: John Jumper, Demis Hassabis and team (DeepMind)
+      where: London, England
+      when: [2016, 2020]
+      outcome: achieved
+      note: AlphaFold2 at CASP14 (median GDT about 92). Nobel Prize in Chemistry 2024, shared with David Baker for protein design.
+    - who: David Baker, Minkyung Baek (RoseTTAFold)
+      where: University of Washington, USA
+      when: 2021
+      outcome: independent
+  effort:
+    span: [2016, 2020]
+    people: 30
+    note: About 30 core researchers; training used about 128 TPUv3 cores for weeks.
+  sources:
+    - title: "Jumper et al., Nature 596:583 (2021)"
+      url: https://doi.org/10.1038/s41586-021-03819-2
+    - title: Nobel Prize in Chemistry 2024
+      url: https://www.nobelprize.org/prizes/chemistry/2024/summary/
+
+- id: synthetic-bacterial-genome
+  name: Synthetic genomes (bacteria and yeast)
+  kind: technique
+  fields: [biology, chemistry]
+  date: 2010
+  status: achieved
+  tier: 3
+  summary: >-
+    A chemically synthesized 1.08 Mb Mycoplasma genome booted up a cell
+    (JCVI-syn1.0, 2010). Synthetic E. coli (Syn61, 4 Mb, 2019) and the
+    12 Mb synthetic yeast genome (Sc2.0, all chromosomes by 2023) followed.
+  requires: [recombinant-dna, sanger-sequencing]
+  efforts:
+    - who: J. Craig Venter Institute (Daniel Gibson, Hamilton Smith, Craig Venter)
+      where: USA
+      when: 2010
+      outcome: achieved
+      note: About $40 million and 15 years of work, by the team's account.
+    - who: Jason Chin (MRC LMB)
+      where: Cambridge, England
+      when: 2019
+      outcome: achieved
+    - who: Sc2.0 consortium (Jef Boeke and others)
+      where: International
+      when: [2011, 2023]
+      outcome: achieved
+  sources:
+    - title: "Gibson et al., Science 329:52 (2010)"
+      url: https://doi.org/10.1126/science.1190719
+    - title: Synthetic genomics (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Synthetic_genomics
+
+# ---------------------------------------------------------------------------
+# DNA sequencing deep dive
+# ---------------------------------------------------------------------------
+
+- id: plus-minus-sequencing
+  name: Plus and minus sequencing
+  kind: technique
+  fields: [biology, chemistry]
+  date: 1975
+  status: achieved
+  tier: 3
+  summary: >-
+    Sanger and Coulson's first DNA sequencing method: polymerase extension
+    with nucleotides added or withheld, read on a gel. It sequenced the first
+    DNA genome, phage phiX174 (5,386 bases), in 1977.
+  requires: [dna-polymerase, gel-electrophoresis]
+  helped_by: [protein-sequencing-classical]
+  efforts:
+    - who: Frederick Sanger, Alan Coulson
+      where: MRC LMB, Cambridge
+      when: [1975, 1977]
+      outcome: achieved
+      note: Before this, Robert Holley's tRNA (1965, 77 nucleotides) took years, and Ray Wu read short DNA ends by primer extension (1970).
+  sources:
+    - title: "Sanger et al., phiX174 sequence (Nature 1977)"
+      url: https://doi.org/10.1038/265687a0
+    - title: DNA sequencing history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/DNA_sequencing#History
+
+- id: maxam-gilbert-sequencing
+  name: Maxam-Gilbert sequencing
+  kind: technique
+  fields: [chemistry, biology]
+  date: 1977
+  status: achieved
+  tier: 3
+  summary: >-
+    Chemical sequencing: end-labeled DNA is broken at specific bases by four
+    base-specific reactions and the fragments are read on a gel. Popular in
+    the late 1970s, it lost to Sanger's simpler, less toxic method.
+  requires: [gel-electrophoresis, restriction-enzymes]
+  competes: [sanger-sequencing]
+  efforts:
+    - who: Allan Maxam, Walter Gilbert
+      where: Harvard, USA
+      when: 1977
+      outcome: rival
+      note: Gilbert shared the 1980 Chemistry Nobel with Sanger. Used hydrazine and dimethyl sulfate; abandoned by most labs by the mid-1980s.
+  sources:
+    - title: "Maxam and Gilbert, PNAS 74:560 (1977)"
+      url: https://doi.org/10.1073/pnas.74.2.560
+
+- id: sanger-sequencing
+  name: Sanger (dideoxy) sequencing
+  kind: technique
+  fields: [biology, chemistry]
+  date: 1977
+  status: achieved
+  tier: 1
+  summary: >-
+    Copy DNA with polymerase in the presence of a few chain-terminating
+    dideoxynucleotides, then sort the stopped fragments by length to read
+    the sequence. It was the dominant method for 30 years and produced the
+    first human genome.
+  requires: [dideoxynucleotides, dna-polymerase, gel-electrophoresis]
+  helped_by: [plus-minus-sequencing]
+  competes: [maxam-gilbert-sequencing]
+  efforts:
+    - who: Frederick Sanger, Steve Nicklen, Alan Coulson
+      where: MRC LMB, Cambridge
+      when: 1977
+      outcome: achieved
+      note: Sanger's second Nobel Prize in Chemistry (1980), shared with Gilbert and Berg.
+  effort:
+    span: [1975, 1977]
+    people: 3
+    note: A three-person group with a lab budget.
+  sources:
+    - title: "Sanger, Nicklen, Coulson, PNAS 74:5463 (1977)"
+      url: https://doi.org/10.1073/pnas.74.12.5463
+    - title: Nobel Prize in Chemistry 1980
+      url: https://www.nobelprize.org/prizes/chemistry/1980/summary/
+
+- id: m13-cloning-vectors
+  name: M13 cloning vectors
+  kind: technique
+  fields: [biology]
+  date: 1981
+  status: achieved
+  tier: 3
+  summary: >-
+    Joachim Messing engineered the filamentous phage M13 to carry inserted DNA
+    and spit out single-stranded copies, the ideal template for Sanger
+    sequencing with one universal primer. The mp series and pUC plasmids were
+    given away freely.
+  requires: [recombinant-dna]
+  efforts:
+    - who: Joachim Messing
+      where: Munich and University of Minnesota
+      when: [1977, 1982]
+      outcome: achieved
+  sources:
+    - title: M13 bacteriophage (Wikipedia)
+      url: https://en.wikipedia.org/wiki/M13_bacteriophage
+
+- id: shotgun-sequencing
+  name: Shotgun sequencing and assembly
+  kind: technique
+  fields: [biology, computing]
+  date: [1979, 1982]
+  status: achieved
+  tier: 3
+  summary: >-
+    Shear DNA into random fragments, sequence many of them, and let a
+    computer reassemble the overlaps. Rodger Staden wrote the first assembly
+    programs; Sanger's group used the approach on phage lambda (48.5 kb) in
+    1982.
+  requires: [sanger-sequencing, stored-program-computer]
+  helped_by: [m13-cloning-vectors]
+  efforts:
+    - who: Rodger Staden
+      where: MRC LMB, Cambridge
+      when: 1979
+      outcome: achieved
+    - who: Frederick Sanger, Alan Coulson, Bart Barrell and others
+      where: MRC LMB, Cambridge
+      when: 1982
+      outcome: achieved
+  sources:
+    - title: Shotgun sequencing (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Shotgun_sequencing
+
+- id: genbank
+  name: GenBank and sequence databases
+  kind: infrastructure
+  fields: [biology, computing]
+  date: 1982
+  status: achieved
+  tier: 3
+  summary: >-
+    A free public archive of every published DNA sequence, at Los Alamos and
+    then NCBI, synchronized with the EMBL and Japanese databases. BLAST
+    (1990) made it searchable in seconds.
+  requires: [sanger-sequencing, stored-program-computer]
+  helped_by: [internet]
+  efforts:
+    - who: Walter Goad (Los Alamos)
+      where: USA
+      when: 1982
+      outcome: achieved
+      note: Margaret Dayhoff's protein Atlas (1965) came first.
+    - who: Stephen Altschul, Warren Gish, Webb Miller, Eugene Myers, David Lipman (NCBI)
+      where: USA
+      when: 1990
+      outcome: achieved
+      note: BLAST, one of the most cited papers in science.
+  sources:
+    - title: GenBank (Wikipedia)
+      url: https://en.wikipedia.org/wiki/GenBank
+    - title: "Altschul et al., BLAST (J Mol Biol 1990)"
+      url: https://doi.org/10.1016/S0022-2836(05)80360-2
+
+- id: pcr
+  name: Polymerase chain reaction (PCR)
+  kind: technique
+  fields: [biology, chemistry]
+  date: 1985
+  status: achieved
+  tier: 1
+  summary: >-
+    Repeated cycles of heating and polymerase copying double a chosen DNA
+    stretch each round, turning a single molecule into billions in hours.
+    It is the workhorse of molecular biology, diagnostics, forensics and
+    sequencing library prep.
+  requires: [dna-polymerase]
+  helped_by: [dideoxynucleotides]
+  efforts:
+    - who: Kary Mullis, Randall Saiki, Stephen Scharf, Fred Faloona, Henry Erlich, Norman Arnheim (Cetus)
+      where: Emeryville, California, USA
+      when: [1983, 1985]
+      outcome: achieved
+      note: Mullis conceived it while driving in 1983; Saiki et al. published the first application (sickle cell diagnosis) in Science in 1985. Mullis's Nobel Prize in Chemistry came in 1993.
+    - who: Kjell Kleppe, H. Gobind Khorana
+      where: MIT, USA
+      when: 1971
+      outcome: independent
+      note: Described a repair-replication cycle like PCR but never pursued it.
+  effort:
+    span: [1983, 1988]
+    people: 10
+    cost_usd: 1.5e7
+    note: A small Cetus team; rough guess of a few million 1985 dollars. Cetus sold the patents to Roche in 1991 for $300 million.
+  sources:
+    - title: "Saiki et al., Science 230:1350 (1985)"
+      url: https://doi.org/10.1126/science.2999980
+    - title: Nobel Prize in Chemistry 1993
+      url: https://www.nobelprize.org/prizes/chemistry/1993/summary/
+
+- id: automated-sequencing
+  name: Automated fluorescent sequencing
+  kind: technique
+  fields: [biology, electronics, chemistry]
+  date: 1986
+  status: achieved
+  tier: 2
+  summary: >-
+    Replacing radioactive labels with four fluorescent dyes let a laser and
+    detector read Sanger fragments as they ran past, one lane per sample, with
+    a computer calling the bases. It made sequencing an industrial process.
+  requires: [sanger-sequencing, laser]
+  helped_by: [stored-program-computer]
+  efforts:
+    - who: Lloyd Smith, Leroy Hood, Michael Hunkapiller, Tim Hunkapiller and others
+      where: Caltech, USA
+      when: 1986
+      outcome: achieved
+      note: Four dye-labeled primers, one color per base.
+    - who: James Prober and colleagues (DuPont)
+      where: USA
+      when: 1987
+      outcome: rival
+      note: Fluorescent dye terminators (Genesis 2000 instrument). Energy-transfer "BigDye" terminators (Mathies, Glazer, Ju; ABI 1997) later became standard.
+    - who: Wilhelm Ansorge (EMBL)
+      where: Germany
+      when: 1986
+      outcome: independent
+  sources:
+    - title: "Smith et al., Nature 321:674 (1986)"
+      url: https://doi.org/10.1038/321674a0
+
+- id: abi-370
+  name: ABI 370A DNA sequencer
+  kind: device
+  fields: [biology, electronics]
+  date: 1987
+  status: achieved
+  tier: 3
+  summary: >-
+    Applied Biosystems' first commercial automated sequencer, a slab-gel
+    machine reading 16 to 24 samples in parallel. Craig Venter's NIH lab used
+    it to churn out expressed sequence tags in 1991.
+  requires: [automated-sequencing]
+  efforts:
+    - who: Applied Biosystems (Michael Hunkapiller)
+      where: Foster City, California, USA
+      when: 1987
+      outcome: achieved
+      note: The slab-gel ABI 377 (1995) followed.
+  sources:
+    - title: Applied Biosystems (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Applied_Biosystems
+
+- id: taq-polymerase
+  name: Taq polymerase and thermal cyclers
+  kind: technique
+  fields: [biology]
+  date: 1988
+  status: achieved
+  tier: 3
+  summary: >-
+    A DNA polymerase from the hot-spring bacterium Thermus aquaticus survives
+    the boiling step of PCR, so it no longer has to be added fresh every
+    cycle. With Perkin-Elmer Cetus's thermal cycler (1987), PCR became
+    automatic.
+  requires: [pcr]
+  efforts:
+    - who: Thomas Brock, Hudson Freeze
+      where: Yellowstone, USA
+      when: 1969
+      outcome: achieved
+      note: Isolated Thermus aquaticus; Alice Chien and colleagues purified its polymerase in 1976.
+    - who: Randall Saiki and colleagues (Cetus)
+      where: USA
+      when: 1988
+      outcome: achieved
+  sources:
+    - title: "Saiki et al., Science 239:487 (1988)"
+      url: https://doi.org/10.1126/science.2448875
+    - title: Taq polymerase (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Taq_polymerase
+
+- id: human-genome-project
+  name: Human Genome Project
+  kind: institution
+  fields: [biology, society]
+  date: [1990, 2003]
+  status: achieved
+  tier: 1
+  summary: >-
+    An international public consortium mapped and sequenced the human genome
+    clone by clone, released a draft in 2001 and an essentially complete
+    sequence (about 92 percent, 99.99 percent accurate) in 2003. All data was
+    released freely within 24 hours under the Bermuda Principles.
+  requires: [sanger-sequencing, automated-sequencing, genbank]
+  helped_by: [bac-vectors, pcr, capillary-electrophoresis, phred-phrap, internet]
+  competes: [celera-genomics]
+  efforts:
+    - who: International Human Genome Sequencing Consortium (NIH and DOE, Wellcome Trust Sanger Centre, Whitehead/Broad, Washington University, Baylor, JGI, and 15 other centers)
+      where: USA, UK, France, Germany, Japan, China
+      when: [1990, 2003]
+      outcome: achieved
+      note: Led by James Watson, then Francis Collins at NHGRI, with John Sulston at the Sanger Centre. Draft in Nature, February 2001.
+  effort:
+    span: [1990, 2003]
+    people: 3000
+    cost_usd: 6.4e9
+    note: >-
+      About $2.7 billion in US funding (NHGRI cites FY1991 dollars), roughly
+      $6.4 billion in 2025 dollars, covering mapping, model organisms,
+      technology and ethics, not just sequencing. The sequence itself cost
+      $500 million to $1 billion. UK Wellcome spending added several hundred
+      million more. Thousands of researchers at 20 centers.
+  metric: sequencing-cost-per-genome
+  sources:
+    - title: Human Genome Project fact sheet (NHGRI)
+      url: https://www.genome.gov/about-genomics/educational-resources/fact-sheets/human-genome-project
+    - title: The cost of sequencing a human genome (NHGRI)
+      url: https://www.genome.gov/about-genomics/fact-sheets/Sequencing-Human-Genome-cost
+    - title: "Lander et al., Nature 409:860 (2001)"
+      url: https://doi.org/10.1038/35057062
+
+- id: bac-vectors
+  name: Bacterial artificial chromosomes (BACs)
+  kind: technique
+  fields: [biology]
+  date: 1992
+  status: achieved
+  tier: 3
+  summary: >-
+    Vectors based on the E. coli F plasmid that stably carry 100 to 300 kb of
+    DNA. They replaced yeast artificial chromosomes (1987), which held more
+    but scrambled inserts, and became the tiles of the public genome
+    project's clone-by-clone map.
+  requires: [recombinant-dna]
+  efforts:
+    - who: Hiroaki Shizuya, Melvin Simon and colleagues
+      where: Caltech, USA
+      when: 1992
+      outcome: achieved
+    - who: David Burke, Georges Carle, Maynard Olson (YACs)
+      where: Washington University, USA
+      when: 1987
+      outcome: rival
+      note: YACs carried up to 1 Mb but many were chimeric or unstable.
+    - who: Pieter de Jong (PAC vectors and BAC libraries)
+      where: Roswell Park, USA
+      when: 1994
+      outcome: independent
+  sources:
+    - title: "Shizuya et al., PNAS 89:8794 (1992)"
+      url: https://doi.org/10.1073/pnas.89.18.8794
+
+- id: capillary-electrophoresis
+  name: Capillary array electrophoresis
+  kind: technique
+  fields: [chemistry, engineering]
+  date: 1992
+  status: achieved
+  tier: 3
+  summary: >-
+    Running DNA through dozens of hair-thin, polymer-filled glass capillaries
+    instead of a slab gel allows high voltage, fast runs and automatic
+    loading. It ended the gel-pouring bottleneck of genome sequencing.
+  requires: [gel-electrophoresis, automated-sequencing]
+  efforts:
+    - who: James Jorgenson, Krynn Lukacs
+      where: University of North Carolina, USA
+      when: 1981
+      outcome: achieved
+      note: Capillary zone electrophoresis.
+    - who: Xiaohua Huang, Mark Quesada, Richard Mathies
+      where: UC Berkeley, USA
+      when: 1992
+      outcome: achieved
+      note: Capillary arrays with confocal fluorescence scanning (basis of MegaBACE).
+    - who: Hideki Kambara (Hitachi); Norman Dovichi
+      where: Japan; Canada
+      when: [1993, 1994]
+      outcome: independent
+      note: Sheath-flow detection, used in the ABI 3700.
+  sources:
+    - title: "Huang, Quesada, Mathies, Anal Chem 64:2149 (1992)"
+      url: https://doi.org/10.1021/ac00041a030
+    - title: Capillary electrophoresis (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Capillary_electrophoresis
+
+- id: first-bacterial-genome
+  name: First free-living genome (H. influenzae)
+  kind: discovery
+  fields: [biology]
+  date: 1995
+  status: achieved
+  tier: 3
+  summary: >-
+    TIGR sequenced the 1.83 Mb genome of Haemophilus influenzae by
+    whole-genome shotgun in about a year, proving that a whole genome could
+    be assembled from random reads without a map.
+  requires: [shotgun-sequencing, automated-sequencing]
+  efforts:
+    - who: Robert Fleischmann, Craig Venter, Hamilton Smith, Claire Fraser and others (TIGR)
+      where: Rockville, Maryland, USA
+      when: 1995
+      outcome: achieved
+      note: Yeast (1996) and C. elegans (1998) followed by clone-based methods.
+  sources:
+    - title: "Fleischmann et al., Science 269:496 (1995)"
+      url: https://doi.org/10.1126/science.7542800
+
+- id: microarrays
+  name: DNA microarrays
+  kind: technique
+  fields: [biology, electronics]
+  date: 1995
+  status: achieved
+  tier: 3
+  summary: >-
+    Thousands of DNA probes on a glass slide or chip measure expression of
+    every gene, or genotype a million SNPs, by hybridization. SNP arrays
+    powered GWAS; RNA-seq displaced expression arrays after 2008.
+  requires: [recombinant-dna, pcr]
+  helped_by: [integrated-circuit]
+  efforts:
+    - who: Mark Schena, Dari Shalon, Ron Davis, Patrick Brown
+      where: Stanford, USA
+      when: 1995
+      outcome: achieved
+      note: Spotted cDNA arrays.
+    - who: Stephen Fodor (Affymetrix)
+      where: USA
+      when: 1991
+      outcome: independent
+      note: Photolithographic oligonucleotide synthesis on chips.
+  sources:
+    - title: "Schena et al., Science 270:467 (1995)"
+      url: https://doi.org/10.1126/science.270.5235.467
+
+- id: pyrosequencing
+  name: Pyrosequencing
+  kind: technique
+  fields: [biology, chemistry]
+  date: [1996, 1998]
+  status: achieved
+  tier: 3
+  summary: >-
+    Each time polymerase adds a base it releases pyrophosphate, which an
+    enzyme cascade turns into a flash of light. Adding one nucleotide type at
+    a time reads the sequence in real time with no gel.
+  requires: [dna-polymerase]
+  efforts:
+    - who: Mostafa Ronaghi, Mathias Uhlen, Pal Nyren
+      where: KTH Royal Institute of Technology, Stockholm
+      when: [1996, 1998]
+      outcome: achieved
+      note: Nyren had proposed the idea in 1987; Hyman described a related scheme in 1988.
+  sources:
+    - title: "Ronaghi, Uhlen, Nyren, Science 281:363 (1998)"
+      url: https://doi.org/10.1126/science.281.5375.363
+
+- id: abi-3700
+  name: ABI Prism 3700 capillary sequencer
+  kind: device
+  fields: [biology, engineering]
+  date: 1998
+  status: achieved
+  tier: 3
+  summary: >-
+    A 96-capillary, fully automated sequencer that ran around the clock with
+    little hands-on time. Hundreds of them produced most of both human genome
+    drafts.
+  requires: [capillary-electrophoresis, automated-sequencing]
+  efforts:
+    - who: PE Biosystems (Applied Biosystems) with Hitachi
+      where: USA, Japan
+      when: 1998
+      outcome: achieved
+      note: About $300,000 each. Later the 3730xl (2002) became the Sanger workhorse.
+    - who: Molecular Dynamics / Amersham (MegaBACE 1000)
+      where: USA
+      when: 1998
+      outcome: rival
+      note: Based on Mathies's capillary array; used heavily by the Whitehead and Sanger centers.
+  sources:
+    - title: "Venter et al., Science 291:1304 (2001), methods"
+      url: https://doi.org/10.1126/science.1058040
+    - title: Applied Biosystems (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Applied_Biosystems
+
+- id: phred-phrap
+  name: Phred base calling and Phrap assembly
+  kind: technique
+  fields: [computing, biology]
+  date: 1998
+  status: achieved
+  tier: 3
+  summary: >-
+    Phred called bases from sequencer traces and gave each one a quality
+    score, Q = -10 log10(error), so Q20 means 1 percent error. Phrap used
+    those scores to assemble reads. Phred scores remain the universal
+    currency of sequence quality.
+  requires: [automated-sequencing, stored-program-computer]
+  helped_by: [shotgun-sequencing]
+  efforts:
+    - who: Brent Ewing, LaDeana Hillier, Michael Wendl, Phil Green
+      where: University of Washington, USA
+      when: 1998
+      outcome: achieved
+  sources:
+    - title: "Ewing and Green, Genome Research 8:186 (1998)"
+      url: https://doi.org/10.1101/gr.8.3.186
+    - title: "Ewing et al., Genome Research 8:175 (1998)"
+      url: https://doi.org/10.1101/gr.8.3.175
+
+- id: celera-genomics
+  name: Celera whole-genome shotgun of the human genome
+  kind: institution
+  fields: [biology, society]
+  date: [1998, 2001]
+  status: achieved
+  tier: 2
+  summary: >-
+    A private company founded by Craig Venter and Perkin-Elmer set out in
+    1998 to shotgun the whole human genome in three years. The race pushed
+    the public project to speed up, and both drafts were published in
+    February 2001.
+  requires: [abi-3700, first-bacterial-genome, shotgun-sequencing]
+  helped_by: [human-genome-project]
+  competes: [human-genome-project]
+  efforts:
+    - who: J. Craig Venter, Hamilton Smith, Gene Myers (Celera Genomics)
+      where: Rockville, Maryland, USA
+      when: [1998, 2001]
+      outcome: rival
+      note: Gene Myers's Celera Assembler proved whole-genome shotgun on Drosophila (2000). Celera's human assembly also used the public data; the public clone-by-clone sequence became the reference.
+  effort:
+    span: [1998, 2001]
+    people: 500
+    cost_usd: 6e8
+    note: Venter projected $200 to $300 million in 1998 dollars, about $500 to $600 million in 2025 dollars, with 200 to 300 ABI 3700 machines.
+  sources:
+    - title: "Venter et al., Science 291:1304 (2001)"
+      url: https://doi.org/10.1126/science.1058040
+    - title: Celera Corporation (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Celera_Corporation
+
+- id: bridge-amplification
+  name: Bridge amplification (DNA clusters)
+  kind: technique
+  fields: [biology, chemistry]
+  date: [1997, 2000]
+  status: achieved
+  tier: 3
+  summary: >-
+    PCR on a glass surface: DNA fragments bend over and anneal to
+    surface-bound primers, so each molecule grows into a tight cluster of
+    about a thousand copies, bright enough to image. It is the amplification
+    step of Illumina sequencing.
+  requires: [pcr]
+  efforts:
+    - who: Pascal Mayer, Celine Adessi and colleagues (Glaxo Wellcome, then Manteia)
+      where: Geneva, Switzerland
+      when: [1997, 2000]
+      outcome: achieved
+      note: Solexa bought Manteia's cluster technology in 2004.
+  sources:
+    - title: "Adessi et al., Nucleic Acids Research 28:e87 (2000)"
+      url: https://doi.org/10.1093/nar/28.20.e87
+    - title: History of sequencing by synthesis (Illumina)
+      url: https://www.illumina.com/technology/next-generation-sequencing/solexa-technology.html
+
+- id: de-bruijn-assembly
+  name: De Bruijn graph assembly
+  kind: technique
+  fields: [computing, math, biology]
+  date: [2001, 2008]
+  status: achieved
+  tier: 3
+  summary: >-
+    Breaking reads into k-mers and walking a de Bruijn graph turns assembly
+    into an Eulerian path problem that scales to billions of short reads,
+    where pairwise overlap methods choke.
+  requires: [shotgun-sequencing]
+  efforts:
+    - who: Ramana Idury, Michael Waterman
+      where: USC, USA
+      when: 1995
+      outcome: achieved
+    - who: Pavel Pevzner, Haixu Tang, Michael Waterman (EULER)
+      where: USA
+      when: 2001
+      outcome: achieved
+    - who: Daniel Zerbino, Ewan Birney (Velvet)
+      where: EMBL-EBI, UK
+      when: 2008
+      outcome: achieved
+      note: SOAPdenovo assembled the panda genome from short reads in 2010.
+  sources:
+    - title: "Pevzner, Tang, Waterman, PNAS 98:9748 (2001)"
+      url: https://doi.org/10.1073/pnas.171285098
+    - title: "Zerbino and Birney, Genome Research 18:821 (2008)"
+      url: https://doi.org/10.1101/gr.074492.107
+
+- id: zero-mode-waveguides
+  name: Zero-mode waveguides
+  kind: technique
+  fields: [physics, engineering, biology]
+  date: 2003
+  status: achieved
+  tier: 3
+  summary: >-
+    Holes in a metal film smaller than the wavelength of light confine
+    illumination to a zeptoliter volume, so a single polymerase at the bottom
+    can be watched incorporating fluorescent nucleotides against the
+    background of free ones.
+  requires: [laser]
+  helped_by: [integrated-circuit]
+  efforts:
+    - who: Michael Levene, Jonas Korlach, Stephen Turner, Harold Craighead, Watt Webb
+      where: Cornell University, USA
+      when: 2003
+      outcome: achieved
+      note: Turner and Korlach founded Pacific Biosciences on it.
+  sources:
+    - title: "Levene et al., Science 299:682 (2003)"
+      url: https://doi.org/10.1126/science.1079700
+
+- id: emulsion-pcr
+  name: Emulsion PCR
+  kind: technique
+  fields: [biology, chemistry]
+  date: 2003
+  status: achieved
+  tier: 3
+  summary: >-
+    Single DNA molecules and beads are trapped in millions of water droplets
+    in oil, so each bead comes out coated with copies of one template. It is
+    the clonal amplification step for 454, SOLiD and Ion Torrent.
+  requires: [pcr]
+  efforts:
+    - who: Dan Tawfik, Andrew Griffiths
+      where: MRC LMB, Cambridge
+      when: 1998
+      outcome: achieved
+      note: In vitro compartmentalization in emulsions.
+    - who: Devin Dressman, Hai Yan, Bert Vogelstein, Kenneth Kinzler (BEAMing)
+      where: Johns Hopkins, USA
+      when: 2003
+      outcome: achieved
+  sources:
+    - title: "Dressman et al., PNAS 100:8817 (2003)"
+      url: https://doi.org/10.1073/pnas.1133470100
+    - title: "Tawfik and Griffiths, Nature Biotechnology 16:652 (1998)"
+      url: https://doi.org/10.1038/nbt0798-652
+
+- id: reversible-terminators
+  name: Reversible terminator nucleotides
+  kind: technique
+  fields: [chemistry, biology]
+  date: [1994, 2006]
+  status: achieved
+  tier: 3
+  summary: >-
+    Nucleotides carrying a removable 3' block and a cleavable dye: the
+    polymerase adds exactly one, the camera reads its color, and the block
+    and dye are chemically removed before the next cycle. It solved the
+    homopolymer problem of pyrosequencing.
+  requires: [dideoxynucleotides, automated-sequencing]
+  helped_by: [pyrosequencing]
+  efforts:
+    - who: Bruno Canard, Simon Sarfati
+      where: Pasteur Institute, Paris
+      when: 1994
+      outcome: achieved
+      note: Patented the reversible-terminator concept.
+    - who: Shankar Balasubramanian, David Klenerman (Solexa)
+      where: Cambridge, England
+      when: [1998, 2006]
+      outcome: achieved
+      note: 3'-O-azidomethyl nucleotides with an engineered polymerase.
+    - who: Jingyue Ju and colleagues
+      where: Columbia University, USA
+      when: 2006
+      outcome: independent
+  sources:
+    - title: "Ju et al., PNAS 103:19635 (2006)"
+      url: https://doi.org/10.1073/pnas.0609513103
+    - title: "Bentley et al., Nature 456:53 (2008)"
+      url: https://doi.org/10.1038/nature07517
+
+- id: protein-nanopores
+  name: Protein nanopores for DNA sensing
+  kind: discovery
+  fields: [biology, physics]
+  date: 1996
+  status: achieved
+  tier: 3
+  summary: >-
+    Single-stranded DNA pulled by voltage through the alpha-hemolysin pore in
+    a lipid membrane blocks the ionic current in a measurable way. Engineered
+    pores (MspA 2010, CsgG 2016) later gave current levels that distinguish
+    bases.
+  requires: [electric-battery]
+  helped_by: [recombinant-dna]
+  efforts:
+    - who: David Deamer, Daniel Branton, George Church
+      where: UC Santa Cruz and Harvard, USA
+      when: 1989
+      outcome: achieved
+      note: Deamer's original 1989 notebook sketch of nanopore sequencing.
+    - who: John Kasianowicz, Eric Brandin, Daniel Branton, David Deamer
+      where: NIST, Harvard, UCSC
+      when: 1996
+      outcome: achieved
+    - who: Hagan Bayley
+      where: Texas A&M and Oxford
+      when: [1994, 2009]
+      outcome: achieved
+      note: Engineered alpha-hemolysin; base identification with an adapter in 2009.
+    - who: Jens Gundlach and colleagues (MspA)
+      where: University of Washington, USA
+      when: 2010
+      outcome: achieved
+    - who: Jene Golovchenko, Cees Dekker and others (solid-state pores)
+      where: USA, Netherlands
+      when: 2001
+      outcome: rival
+  sources:
+    - title: "Kasianowicz et al., PNAS 93:13770 (1996)"
+      url: https://doi.org/10.1073/pnas.93.24.13770
+    - title: "Deamer, Akeson, Branton, Nature Biotechnology 34:518 (2016)"
+      url: https://doi.org/10.1038/nbt.3423
+
+- id: roche-454
+  name: 454 pyrosequencing (GS20)
+  kind: device
+  fields: [biology, engineering]
+  date: 2005
+  status: achieved
+  tier: 3
+  summary: >-
+    The first commercial massively parallel sequencer: emulsion-PCR beads in
+    a fiber-optic plate of picoliter wells, read by pyrosequencing. It
+    sequenced James Watson's genome in 2007, then lost to Illumina and was
+    shut down in 2016.
+  requires: [pyrosequencing, emulsion-pcr]
+  helped_by: [integrated-circuit]
+  competes: [solexa-illumina, solid-sequencing]
+  efforts:
+    - who: Jonathan Rothberg, Marcel Margulies, Michael Egholm and others (454 Life Sciences)
+      where: Branford, Connecticut, USA
+      when: [2000, 2005]
+      outcome: abandoned
+      note: Spun out of CuraGen in 2000. Roche bought 454 in 2007 for $155 million, announced the shutdown in 2013, and ended support in 2016. Homopolymer errors were its weakness.
+  effort:
+    span: [2000, 2005]
+    people: 100
+    note: Funded mostly by CuraGen; cost not public.
+  sources:
+    - title: "Margulies et al., Nature 437:376 (2005)"
+      url: https://doi.org/10.1038/nature03959
+    - title: 454 Life Sciences (Wikipedia)
+      url: https://en.wikipedia.org/wiki/454_Life_Sciences
+
+- id: next-generation-sequencing
+  name: Next-generation (massively parallel) sequencing
+  kind: technique
+  fields: [biology, engineering]
+  date: 2005
+  status: achieved
+  tier: 1
+  summary: >-
+    Instead of running fragments down capillaries one by one, read millions
+    of clonally amplified molecules at once on a surface by imaging. From
+    2008 the cost per base fell far faster than Moore's law, from about $10
+    million per genome to under $1,000 in a decade.
+  requires: [roche-454]
+  helped_by: [human-genome-project, pcr]
+  efforts:
+    - who: 454 Life Sciences
+      where: USA
+      when: 2005
+      outcome: achieved
+    - who: Solexa, then Illumina
+      where: UK, USA
+      when: 2006
+      outcome: achieved
+      note: Won the market.
+    - who: Applied Biosystems (SOLiD)
+      where: USA
+      when: 2007
+      outcome: rival
+    - who: Helicos BioSciences
+      where: USA
+      when: 2008
+      outcome: abandoned
+    - who: George Church's lab (polony sequencing)
+      where: Harvard, USA
+      when: 2005
+      outcome: independent
+      note: Shendure et al., Science 2005; the open-source Polonator followed.
+  metric: sequencing-cost-per-megabase
+  sources:
+    - title: NHGRI DNA Sequencing Costs Data
+      url: https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data
+    - title: "Shendure and Ji, Next-generation DNA sequencing, Nature Biotechnology 26:1135 (2008)"
+      url: https://doi.org/10.1038/nbt1486
+
+- id: solexa-illumina
+  name: Solexa/Illumina sequencing by synthesis
+  kind: device
+  fields: [biology, engineering, chemistry]
+  date: 2006
+  status: achieved
+  tier: 2
+  summary: >-
+    Bridge-amplified clusters on a flow cell, read one base per cycle with
+    four-color reversible terminators and a camera. The Genome Analyzer
+    (2006) and its successors (HiSeq, NovaSeq) produce most of the world's
+    DNA sequence.
+  requires: [bridge-amplification, reversible-terminators]
+  helped_by: [laser, integrated-circuit, next-generation-sequencing]
+  competes: [roche-454, solid-sequencing, ion-torrent, dna-nanoball-sequencing]
+  efforts:
+    - who: Shankar Balasubramanian, David Klenerman (Solexa)
+      where: Cambridge, England
+      when: [1998, 2006]
+      outcome: achieved
+      note: Founded in 1998 with Abingworth seed money; merged with Lynx Therapeutics in 2005. First Genome Analyzer shipped in 2006 (1 Gb per run).
+    - who: Illumina
+      where: San Diego, USA
+      when: 2007
+      outcome: achieved
+      note: Announced the acquisition in November 2006 for about $600 million in stock, closed January 2007. Balasubramanian and Klenerman won the 2020 Millennium Technology Prize and the 2022 Breakthrough Prize.
+  effort:
+    span: [1998, 2008]
+    people: 200
+    cost_usd: 4e8
+    note: Rough order of magnitude for Solexa's venture and public funding plus Lynx and Manteia before the merger; not a published figure. The purchase price was about $600 million in 2006 dollars.
+  metric: sequencing-cost-per-genome
+  sources:
+    - title: "Bentley et al., Nature 456:53 (2008)"
+      url: https://doi.org/10.1038/nature07517
+    - title: Illumina to acquire Solexa (Illumina press release, 2006)
+      url: https://investor.illumina.com/news/press-release-details/2006/Illumina-Signs-Definitive-Agreement-to-Acquire-Solexa/default.aspx
+
+- id: solid-sequencing
+  name: SOLiD sequencing by ligation
+  kind: device
+  fields: [biology, chemistry]
+  date: 2007
+  status: achieved
+  tier: 3
+  summary: >-
+    Applied Biosystems' platform read emulsion-PCR beads by ligating
+    fluorescent two-base-encoded probes, so each base was interrogated twice.
+    Accurate but awkward to analyze, it faded by about 2016.
+  requires: [emulsion-pcr]
+  competes: [solexa-illumina, roche-454]
+  efforts:
+    - who: Kevin McKernan and colleagues (Agencourt Personal Genomics, then Applied Biosystems)
+      where: Massachusetts, USA
+      when: [2005, 2007]
+      outcome: abandoned
+      note: Rooted in Church lab polony ligation chemistry; ABI bought Agencourt Personal Genomics in 2006 for about $120 million.
+  sources:
+    - title: "McKernan et al., Genome Research 19:1527 (2009)"
+      url: https://doi.org/10.1101/gr.091868.109
+    - title: "Shendure et al., Science 309:1728 (2005)"
+      url: https://doi.org/10.1126/science.1117389
+
+- id: chip-seq
+  name: ChIP-seq
+  kind: technique
+  fields: [biology]
+  date: 2007
+  status: achieved
+  tier: 3
+  summary: >-
+    Pulling down the DNA bound by a transcription factor or histone mark with
+    an antibody and sequencing it maps protein-DNA binding genome wide. It
+    became a core assay of regulatory genomics.
+  requires: [next-generation-sequencing, monoclonal-antibodies]
+  helped_by: [microarrays]
+  efforts:
+    - who: David Johnson, Ali Mortazavi, Richard Myers, Barbara Wold
+      where: Stanford and Caltech, USA
+      when: 2007
+      outcome: achieved
+    - who: Artem Barski, Keji Zhao (NIH); Gordon Robertson (BC Cancer)
+      where: USA, Canada
+      when: 2007
+      outcome: independent
+  sources:
+    - title: "Johnson et al., Science 316:1497 (2007)"
+      url: https://doi.org/10.1126/science.1141319
+
+- id: helicos
+  name: Helicos single-molecule sequencing
+  kind: device
+  fields: [biology, physics]
+  date: 2008
+  status: achieved
+  tier: 3
+  summary: >-
+    The first instrument to sequence single DNA molecules without
+    amplification, imaging one fluorescent nucleotide at a time. Reads were
+    short and error prone, the machine cost about $1 million, and the company
+    went bankrupt in 2012.
+  requires: [reversible-terminators, laser]
+  competes: [solexa-illumina]
+  efforts:
+    - who: Stephen Quake, Stanley Lapidus (Helicos BioSciences)
+      where: Cambridge, Massachusetts, USA
+      when: [2003, 2008]
+      outcome: abandoned
+      note: Quake sequenced his own genome on it in 2009. Chapter 11 in November 2012.
+  sources:
+    - title: "Harris et al., Science 320:106 (2008)"
+      url: https://doi.org/10.1126/science.1150427
+    - title: Helicos Biosciences (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Helicos_Biosciences
+
+- id: rna-seq
+  name: RNA-seq
+  kind: technique
+  fields: [biology]
+  date: 2008
+  status: achieved
+  tier: 2
+  summary: >-
+    Converting a cell's RNA to cDNA and sequencing it measures expression of
+    every gene and isoform by counting reads, without the probe design limits
+    of microarrays.
+  requires: [next-generation-sequencing, reverse-transcriptase]
+  competes: [microarrays]
+  efforts:
+    - who: Ali Mortazavi, Brian Williams, Barbara Wold and colleagues
+      where: Caltech, USA
+      when: 2008
+      outcome: achieved
+    - who: Ugrappa Nagalakshmi, Michael Snyder and colleagues
+      where: Yale, USA
+      when: 2008
+      outcome: independent
+  sources:
+    - title: "Mortazavi et al., Nature Methods 5:621 (2008)"
+      url: https://doi.org/10.1038/nmeth.1226
+
+- id: short-read-alignment
+  name: Short-read alignment (BWT/FM-index)
+  kind: technique
+  fields: [computing, biology]
+  date: 2009
+  status: achieved
+  tier: 3
+  summary: >-
+    Compressed full-text indexes based on the Burrows-Wheeler transform let a
+    laptop align hundreds of millions of short reads to a 3 Gb genome in
+    hours. Bowtie and BWA became the standard tools.
+  requires: [next-generation-sequencing, human-genome-project]
+  efforts:
+    - who: Ben Langmead, Cole Trapnell, Mihai Pop, Steven Salzberg (Bowtie)
+      where: University of Maryland, USA
+      when: 2009
+      outcome: achieved
+    - who: Heng Li, Richard Durbin (BWA)
+      where: Wellcome Trust Sanger Institute, UK
+      when: 2009
+      outcome: achieved
+      note: Li also wrote the SAM format and samtools (2009) and minimap2 (2018) for long reads.
+  sources:
+    - title: "Li and Durbin, Bioinformatics 25:1754 (2009)"
+      url: https://doi.org/10.1093/bioinformatics/btp324
+    - title: "Langmead et al., Genome Biology 10:R25 (2009)"
+      url: https://doi.org/10.1186/gb-2009-10-3-r25
+
+- id: dna-nanoball-sequencing
+  name: DNA nanoball sequencing (Complete Genomics, MGI)
+  kind: device
+  fields: [biology, chemistry]
+  date: 2009
+  status: achieved
+  tier: 3
+  summary: >-
+    Rolling-circle replication makes compact "nanoballs" of DNA copies that
+    pack onto a patterned array, avoiding PCR. Complete Genomics sold human
+    genomes as a service; after BGI bought it in 2013, it became MGI's
+    DNBSEQ, the main rival to Illumina.
+  requires: [dna-polymerase, next-generation-sequencing]
+  competes: [solexa-illumina]
+  efforts:
+    - who: Radoje Drmanac, Clifford Reid (Complete Genomics)
+      where: Mountain View, California, USA
+      when: 2009
+      outcome: achieved
+      note: Bought by BGI in 2013 for about $118 million.
+    - who: MGI Tech (BGI Group)
+      where: Shenzhen, China
+      when: [2015, 2026]
+      outcome: ongoing
+      note: DNBSEQ instruments; the T20 claims genomes near $100.
+  sources:
+    - title: "Drmanac et al., Science 327:78 (2010)"
+      url: https://doi.org/10.1126/science.1181498
+
+- id: single-cell-rna-seq
+  name: Single-cell RNA-seq
+  kind: technique
+  fields: [biology]
+  date: 2009
+  status: achieved
+  tier: 3
+  summary: >-
+    Sequencing the transcriptome of individual cells, scaled by droplet and
+    barcoding methods (2015) to millions of cells. It powers cell atlases
+    such as the Human Cell Atlas.
+  requires: [rna-seq, pcr]
+  efforts:
+    - who: Fuchou Tang, Azim Surani and colleagues
+      where: Cambridge, England
+      when: 2009
+      outcome: achieved
+    - who: Evan Macosko, Steven McCarroll (Drop-seq); Allon Klein, Marc Kirschner (inDrop)
+      where: Harvard, USA
+      when: 2015
+      outcome: achieved
+      note: 10x Genomics Chromium (2016) commercialized droplet barcoding.
+  sources:
+    - title: "Tang et al., Nature Methods 6:377 (2009)"
+      url: https://doi.org/10.1038/nmeth.1315
+    - title: "Macosko et al., Cell 161:1202 (2015)"
+      url: https://doi.org/10.1016/j.cell.2015.05.002
+
+- id: ion-torrent
+  name: Ion Torrent semiconductor sequencing
+  kind: device
+  fields: [biology, electronics]
+  date: 2010
+  status: achieved
+  tier: 3
+  summary: >-
+    Detects the hydrogen ion released when a base is added, with a pH sensor
+    under each well of a CMOS chip, so no optics or labels are needed. Fast
+    and cheap per run, it found a niche in targeted clinical panels.
+  requires: [emulsion-pcr, integrated-circuit]
+  helped_by: [roche-454]
+  competes: [solexa-illumina, roche-454]
+  efforts:
+    - who: Jonathan Rothberg (Ion Torrent Systems)
+      where: Guilford, Connecticut, USA
+      when: [2007, 2010]
+      outcome: achieved
+      note: Life Technologies bought it in 2010 for $375 million plus up to $350 million in milestones; the PGM launched in December 2010. Now part of Thermo Fisher.
+    - who: Chris Toumazou (DNA Electronics)
+      where: London, England
+      when: 2003
+      outcome: independent
+      note: ISFET-based pH sensing of nucleotide incorporation.
+  sources:
+    - title: "Rothberg et al., Nature 475:348 (2011)"
+      url: https://doi.org/10.1038/nature10242
+    - title: Ion semiconductor sequencing (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Ion_semiconductor_sequencing
+
+- id: pacbio-smrt
+  name: PacBio single-molecule real-time sequencing
+  kind: device
+  fields: [biology, physics, engineering]
+  date: 2011
+  status: achieved
+  tier: 3
+  summary: >-
+    A single polymerase in each zero-mode waveguide incorporates
+    phospholinked fluorescent nucleotides while a camera watches in real
+    time, giving reads of 10,000 bases or more. Early raw accuracy was only
+    about 85 to 90 percent.
+  requires: [zero-mode-waveguides, dna-polymerase, laser]
+  helped_by: [helicos]
+  competes: [nanopore-sequencing]
+  efforts:
+    - who: Stephen Turner, Jonas Korlach, John Eid and others (Pacific Biosciences)
+      where: Menlo Park, California, USA
+      when: [2004, 2011]
+      outcome: achieved
+      note: The PacBio RS reached customers in 2011 after limited release in 2010.
+  effort:
+    span: [2004, 2011]
+    people: 300
+    cost_usd: 6e8
+    note: Rough, about $370 million in private funding before a $200 million IPO in 2010; not an audited development cost.
+  sources:
+    - title: "Eid et al., Science 323:133 (2009)"
+      url: https://doi.org/10.1126/science.1162986
+
+- id: long-read-sequencing
+  name: Long-read sequencing
+  kind: technique
+  fields: [biology]
+  date: 2011
+  status: achieved
+  tier: 2
+  summary: >-
+    Single-molecule reads of tens of thousands to millions of bases span
+    repeats, structural variants and whole haplotypes that short reads cannot
+    place. It was Nature Methods' Method of the Year for 2022.
+  requires: [pacbio-smrt]
+  helped_by: [nanopore-sequencing]
+  competes: [solexa-illumina]
+  efforts:
+    - who: Pacific Biosciences
+      where: USA
+      when: 2011
+      outcome: achieved
+    - who: Oxford Nanopore Technologies
+      where: UK
+      when: 2014
+      outcome: achieved
+  sources:
+    - title: "Method of the Year 2022: long-read sequencing (Nature Methods)"
+      url: https://doi.org/10.1038/s41592-022-01759-x
+
+- id: nanopore-motor-proteins
+  name: Motor-controlled DNA translocation
+  kind: technique
+  fields: [biology, physics]
+  date: 2012
+  status: achieved
+  tier: 3
+  summary: >-
+    Free DNA zips through a pore far too fast to read. Using a phi29 DNA
+    polymerase (and later helicases) as a ratchet slowed it to a few
+    milliseconds per step, making nanopore sequencing possible.
+  requires: [protein-nanopores, dna-polymerase]
+  efforts:
+    - who: Gerald Cherf, Mark Akeson and colleagues
+      where: UC Santa Cruz, USA
+      when: 2012
+      outcome: achieved
+    - who: Elizabeth Manrao, Jens Gundlach and colleagues
+      where: University of Washington, USA
+      when: 2012
+      outcome: achieved
+      note: Back-to-back papers in Nature Biotechnology.
+  sources:
+    - title: "Cherf et al., Nature Biotechnology 30:344 (2012)"
+      url: https://doi.org/10.1038/nbt.2147
+    - title: "Manrao et al., Nature Biotechnology 30:349 (2012)"
+      url: https://doi.org/10.1038/nbt.2171
+
+- id: encode-project
+  name: ENCODE project
+  kind: institution
+  fields: [biology]
+  date: [2003, 2012]
+  status: achieved
+  tier: 3
+  summary: >-
+    An NHGRI consortium to map every functional element in the human genome
+    with ChIP-seq, DNase-seq, RNA-seq and other assays. Its 2012 papers
+    assigned biochemical activity to much of the genome and it remains a key
+    data source for regulatory genomics.
+  requires: [human-genome-project]
+  helped_by: [chip-seq, rna-seq, next-generation-sequencing]
+  efforts:
+    - who: ENCODE Consortium (NHGRI)
+      where: USA, UK, Spain, Japan and others
+      when: [2003, 2012]
+      outcome: achieved
+      note: Pilot on 1 percent of the genome (2003 to 2007), then genome wide; phases 3 and 4 continued after 2012.
+  effort:
+    span: [2003, 2012]
+    people: 440
+    note: The 2012 main paper listed about 440 scientists in 32 labs.
+  sources:
+    - title: "ENCODE Project Consortium, Nature 489:57 (2012)"
+      url: https://doi.org/10.1038/nature11247
+
+- id: gwas
+  name: Genome-wide association studies
+  kind: technique
+  fields: [medicine, biology]
+  date: 2005
+  status: achieved
+  tier: 3
+  summary: >-
+    Genotyping hundreds of thousands of SNPs in thousands of people finds
+    common variants linked to disease. Most hits lie in non-coding
+    regulatory DNA, which drove the field to model gene regulation.
+  requires: [human-genome-project, microarrays, statistics]
+  efforts:
+    - who: Robert Klein, Josephine Hoh and colleagues
+      where: Rockefeller and Yale, USA
+      when: 2005
+      outcome: achieved
+      note: Complement factor H variant in macular degeneration. The International HapMap Project (2002 to 2005) supplied the variant map.
+    - who: Wellcome Trust Case Control Consortium
+      where: UK
+      when: 2007
+      outcome: achieved
+  sources:
+    - title: "Klein et al., Science 308:385 (2005)"
+      url: https://doi.org/10.1126/science.1109557
+
+- id: nanopore-sequencing
+  name: Oxford Nanopore sequencing
+  kind: device
+  fields: [biology, physics, electronics]
+  date: 2014
+  status: achieved
+  tier: 2
+  summary: >-
+    A motor protein feeds DNA or RNA through an array of protein pores while
+    an ASIC records the current, and software decodes the bases. The
+    USB-sized MinION made sequencing portable, and reads can exceed a
+    million bases.
+  requires: [protein-nanopores, nanopore-motor-proteins, integrated-circuit]
+  helped_by: [long-read-sequencing]
+  competes: [pacbio-smrt]
+  efforts:
+    - who: Hagan Bayley, Gordon Sanghera, Spike Willcocks (Oxford Nanopore Technologies)
+      where: Oxford, England
+      when: [2005, 2015]
+      outcome: achieved
+      note: MinION Access Programme from spring 2014; commercial in 2015. GridION and PromethION followed; used for field Ebola and Zika surveillance.
+  effort:
+    span: [2005, 2015]
+    people: 300
+    cost_usd: 4e8
+    note: The company reported £180 million ($302 million) raised from 2005 to 2016.
+  sources:
+    - title: Oxford Nanopore history
+      url: https://nanoporetech.com/about/history
+    - title: "Jain et al., Nature Biotechnology 36:338 (2018)"
+      url: https://doi.org/10.1038/nbt.4060
+
+- id: thousand-dollar-genome
+  name: The $1,000 genome
+  kind: technique
+  fields: [biology, medicine]
+  date: 2014
+  status: achieved
+  tier: 3
+  summary: >-
+    Illumina's HiSeq X Ten, sold as sets of ten machines, brought a 30x human
+    genome near $1,000 including amortization, a target NHGRI set in 2004.
+    NHGRI's own production cost crossed $1,000 around 2019.
+  requires: [solexa-illumina]
+  helped_by: [short-read-alignment]
+  efforts:
+    - who: Illumina (HiSeq X Ten)
+      where: USA
+      when: 2014
+      outcome: achieved
+      note: NovaSeq (2017) and NovaSeq X (2022, about $200 per genome at list price) followed.
+    - who: NHGRI Advanced Sequencing Technology program
+      where: USA
+      when: [2004, 2014]
+      outcome: achieved
+      note: Grants for the "$100,000 genome" and "$1,000 genome".
+  metric: sequencing-cost-per-genome
+  sources:
+    - title: NHGRI DNA Sequencing Costs Data
+      url: https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data
+    - title: "Hayden, Is the $1,000 genome for real? (Nature news, 2014)"
+      url: https://doi.org/10.1038/nature.2014.14530
+
+- id: deep-learning-genomics
+  name: Sequence-to-function deep learning
+  kind: technique
+  fields: [biology, computing]
+  date: 2015
+  status: achieved
+  tier: 2
+  summary: >-
+    Neural networks trained on ENCODE-style data predict chromatin,
+    transcription factor binding and gene expression directly from DNA
+    sequence, and so score the effect of any variant. They grew from
+    DeepSEA and DeepBind (2015) to Enformer (2021) and AlphaGenome (2026).
+  requires: [deep-learning, encode-project]
+  helped_by: [convolutional-networks, transformer, gwas, gpu, single-cell-rna-seq]
+  efforts:
+    - who: Jian Zhou, Olga Troyanskaya (DeepSEA); Babak Alipanahi, Brendan Frey (DeepBind)
+      where: Princeton, USA; Toronto, Canada
+      when: 2015
+      outcome: achieved
+    - who: David Kelley and colleagues (Basset 2016, Basenji 2018)
+      where: Harvard and Calico, USA
+      when: [2016, 2018]
+      outcome: achieved
+    - who: Ziga Avsec and colleagues (Enformer, AlphaGenome)
+      where: DeepMind, UK
+      when: [2021, 2026]
+      outcome: achieved
+      note: AlphaGenome takes 1 Mb of sequence and predicts 11 assay types at base resolution; Nature, January 2026.
+    - who: ATAC-seq (Jason Buenrostro, William Greenleaf, 2013) and single-cell assays
+      where: Stanford, USA
+      when: 2013
+      outcome: achieved
+      note: Cheap chromatin accessibility data became a main training signal.
+  sources:
+    - title: "Zhou and Troyanskaya, Nature Methods 12:931 (2015)"
+      url: https://doi.org/10.1038/nmeth.3547
+    - title: "Avsec et al., Enformer, Nature Methods 18:1196 (2021)"
+      url: https://doi.org/10.1038/s41592-021-01252-x
+    - title: "Avsec et al., AlphaGenome, Nature (2026)"
+      url: https://doi.org/10.1038/s41586-025-10014-0
+
+- id: neural-basecalling
+  name: Neural network base calling and variant calling
+  kind: technique
+  fields: [computing, biology]
+  date: [2016, 2018]
+  status: achieved
+  tier: 3
+  summary: >-
+    Recurrent and later transformer networks translate raw nanopore current
+    into bases far better than hidden Markov models, and deep nets also call
+    variants (DeepVariant) and polish PacBio reads (DeepConsensus).
+  requires: [deep-learning, nanopore-sequencing]
+  helped_by: [gpu, phred-phrap, transformer]
+  efforts:
+    - who: Oxford Nanopore (Nanonet, Albacore, Guppy, Bonito, Dorado)
+      where: UK
+      when: [2016, 2022]
+      outcome: achieved
+      note: Raw read accuracy rose from about 85 percent to over 99 percent with chemistry (R10.4.1) and basecaller gains.
+    - who: Ryan Poplin, Mark DePristo and colleagues (Google, DeepVariant)
+      where: USA
+      when: 2018
+      outcome: achieved
+  sources:
+    - title: "Poplin et al., Nature Biotechnology 36:983 (2018)"
+      url: https://doi.org/10.1038/nbt.4235
+    - title: "Wick, Judd, Holt, Genome Biology 20:129 (2019), basecaller benchmark"
+      url: https://doi.org/10.1186/s13059-019-1727-y
+
+- id: pacbio-hifi
+  name: PacBio HiFi circular consensus reads
+  kind: technique
+  fields: [biology]
+  date: 2019
+  status: achieved
+  tier: 3
+  summary: >-
+    Circularizing each 15 to 20 kb molecule and reading it many times gives
+    a consensus above 99.9 percent accuracy, combining long-read length with
+    short-read accuracy. HiFi plus ultra-long nanopore reads made the T2T
+    genome possible.
+  requires: [pacbio-smrt]
+  efforts:
+    - who: Aaron Wenger, Michael Hunkapiller and colleagues (PacBio), with NIH and others
+      where: USA
+      when: 2019
+      outcome: achieved
+      note: The hifiasm assembler (Haoyu Cheng, Heng Li, 2021) made phased HiFi assemblies routine.
+  sources:
+    - title: "Wenger et al., Nature Biotechnology 37:1155 (2019)"
+      url: https://doi.org/10.1038/s41587-019-0217-9
+
+- id: t2t-complete-genome
+  name: Telomere-to-telomere human genome
+  kind: discovery
+  fields: [biology]
+  date: 2022
+  status: achieved
+  tier: 2
+  summary: >-
+    The first truly complete, gapless human genome sequence (CHM13, 3.055
+    billion bases), adding about 200 million bases missing from the reference
+    for 19 years, including centromeres and the short arms of acrocentric
+    chromosomes.
+  requires: [pacbio-hifi, nanopore-sequencing, human-genome-project]
+  helped_by: [neural-basecalling, de-bruijn-assembly]
+  efforts:
+    - who: Telomere-to-Telomere Consortium (Karen Miga, Adam Phillippy, Evan Eichler and others)
+      where: USA and international
+      when: [2019, 2022]
+      outcome: achieved
+      note: Published in Science, April 1, 2022. A complete Y chromosome followed in 2023.
+  effort:
+    span: [2019, 2022]
+    people: 100
+    note: About 100 authors; a fraction of the HGP's resources. Cost not published.
+  sources:
+    - title: "Nurk et al., Science 376:44 (2022)"
+      url: https://doi.org/10.1126/science.abj6987
+
+- id: human-pangenome
+  name: Human pangenome reference
+  kind: discovery
+  fields: [biology]
+  date: 2023
+  status: achieved
+  tier: 3
+  summary: >-
+    A graph-based reference built from phased assemblies of 47 diverse
+    people, adding about 119 million bases missing from the linear reference
+    and capturing far more structural variation.
+  requires: [pacbio-hifi, t2t-complete-genome]
+  helped_by: [nanopore-sequencing]
+  efforts:
+    - who: Human Pangenome Reference Consortium
+      where: International
+      when: 2023
+      outcome: achieved
+      note: Builds on the 1000 Genomes Project (2008 to 2015, 2,504 people by short reads); expansion toward hundreds of genomes is ongoing.
+  sources:
+    - title: "Liao et al., Nature 617:312 (2023)"
+      url: https://doi.org/10.1038/s41586-023-05896-x
+
+- id: ultima-genomics
+  name: Ultima Genomics UG 100
+  kind: device
+  fields: [biology, engineering]
+  date: 2022
+  status: ongoing
+  tier: 3
+  summary: >-
+    Replaces the flow cell with an open, spinning 200 mm silicon wafer and
+    uses "mostly natural" nucleotides in a flow-based chemistry, aiming at
+    the $100 genome. The Solaris upgrade (2025) claims about $80 per 30x
+    genome at list price.
+  requires: [emulsion-pcr, solexa-illumina]
+  competes: [solexa-illumina, dna-nanoball-sequencing, element-aviti]
+  efforts:
+    - who: Gilad Almogy (Ultima Genomics)
+      where: Fremont, California, USA
+      when: [2016, 2026]
+      outcome: ongoing
+      note: Emerged from stealth in 2022 with about $600 million raised; homopolymer accuracy remains a known weakness of flow-based reads.
+  metric: sequencing-cost-per-genome
+  sources:
+    - title: Ultima Genomics
+      url: https://www.ultimagenomics.com/
+    - title: "Ultima upgrades sequencer to enable $80 genome (GenomeWeb, 2025)"
+      url: https://www.genomeweb.com/sequencing/ultima-genomics-upgrades-sequencer-serve-data-hungry-applications-enable-80-human-genome
+
+- id: element-aviti
+  name: Element AVITI avidity sequencing
+  kind: device
+  fields: [biology, chemistry]
+  date: 2022
+  status: ongoing
+  tier: 3
+  summary: >-
+    Separates the stepping and reading of sequencing by synthesis: a
+    multivalent fluorescent "avidite" binds to read each base, so very little
+    labeled reagent is used and accuracy is high (often above Q40). A
+    higher-throughput VITARI system targeting the $100 genome is due to ship
+    in late 2026.
+  requires: [reversible-terminators, dna-polymerase]
+  competes: [solexa-illumina, ultima-genomics]
+  efforts:
+    - who: Molly He, Michael Previte and colleagues (Element Biosciences)
+      where: San Diego, USA
+      when: [2017, 2026]
+      outcome: ongoing
+      note: Founded by Illumina alumni; AVITI launched in 2022.
+  sources:
+    - title: "Arslan et al., Nature Biotechnology 42:132 (2024)"
+      url: https://doi.org/10.1038/s41587-023-01750-7
+    - title: "Element launches benchtop capable of $100 genome (San Diego Business Journal)"
+      url: https://www.sdbj.com/life-sciences/biotech-life-sciences/element-launches-benchtop-capable-of-100-genome-sequencing/
+
+- id: roche-sbx
+  name: Roche sequencing by expansion (SBX)
+  kind: device
+  fields: [biology, chemistry, electronics]
+  date: 2025
+  status: ongoing
+  tier: 3
+  summary: >-
+    A polymerase copies DNA into an "Xpandomer", a surrogate polymer about 50
+    times longer with large reporter groups, which is then read through
+    nanopores on a CMOS chip at high speed. Roche launched it as the AXELIOS 1
+    in June 2026.
+  requires: [protein-nanopores, dna-polymerase, integrated-circuit]
+  helped_by: [nanopore-sequencing]
+  competes: [solexa-illumina, nanopore-sequencing]
+  efforts:
+    - who: Mark Kokoris and colleagues (Stratos Genomics, acquired by Roche in 2020)
+      where: Seattle, USA
+      when: [2007, 2025]
+      outcome: achieved
+      note: Unveiled February 2025 after Roche's earlier failed bid to buy Illumina (2012) and its Genia nanopore effort.
+    - who: Roche Diagnostics (AXELIOS 1)
+      where: Switzerland, USA
+      when: 2026
+      outcome: ongoing
+      note: Global research-use launch June 29, 2026, claiming same-day whole genomes.
+  sources:
+    - title: "Roche launches AXELIOS 1 (press release, June 29, 2026)"
+      url: https://www.roche.com/media/releases/med-cor-2026-06-29
+    - title: "Roche rolls out sequencing-by-expansion (Fierce Biotech)"
+      url: https://www.fiercebiotech.com/medtech/roche-rolls-out-new-dna-sequencing-expansion-approach
+
+- id: single-molecule-protein-sequencing
+  name: Single-molecule protein sequencing
+  kind: technique
+  fields: [biology, chemistry, physics]
+  date: [2022, 2026]
+  status: ongoing
+  tier: 3
+  summary: >-
+    Reading proteins one molecule at a time, the way DNA is read, rather than
+    inferring them from mass spectrometry. Quantum-Si's Platinum (2022)
+    reads peptides with fluorescent amino acid recognizers; nanopore reading
+    of full-length proteins is an active race but not yet de novo.
+  requires: [protein-sequencing-classical]
+  helped_by: [protein-nanopores, nanopore-motor-proteins, zero-mode-waveguides]
+  efforts:
+    - who: Quantum-Si (Jonathan Rothberg)
+      where: USA
+      when: [2022, 2026]
+      outcome: ongoing
+      note: Platinum (2022) and Platinum Pro (2025); recognizers distinguish only a subset of amino acids.
+    - who: Jeff Nivala and colleagues; Cees Dekker; Giovanni Maglia; Hagan Bayley
+      where: USA, Netherlands, UK
+      when: [2021, 2026]
+      outcome: ongoing
+      note: Motor-driven, multi-pass nanopore reading of long protein strands (Nature 2024) and detection of all 20 amino acids in engineered pores.
+    - who: Erisyon (fluorosequencing, Edward Marcotte)
+      where: Austin, USA
+      when: [2018, 2026]
+      outcome: ongoing
+  sources:
+    - title: "Reed et al., Science 378:186 (2022)"
+      url: https://doi.org/10.1126/science.abo7651
+    - title: Quantum-Si Platinum Pro launch (2025)
+      url: https://ir.quantum-si.com/news-releases/news-release-details/quantum-si-launches-platinumr-pro-end-end-solution-deeper
+
+# ---------------------------------------------------------------------------
+# Future (speculative)
+# ---------------------------------------------------------------------------
+
+- id: ten-dollar-genome
+  name: The $10 genome
+  kind: technique
+  fields: [biology, medicine]
+  date: { window: [2032, 2048], likely: 2038 }
+  status: speculative
+  tier: 3
+  summary: >-
+    A 30x human genome for about $10 in sequencing cost (reagents plus
+    instrument time), cheaper than most single blood tests.
+  requires: [solexa-illumina]
+  helped_by: [ultima-genomics, element-aviti, roche-sbx, nanopore-sequencing]
+  forecast:
+    note: >-
+      NHGRI's cost per genome fell about 10x every 2 years in 2008 to 2011,
+      then slowed: $1,245 (late 2015) to $525 (2022), a halving about every
+      five years. Vendor list prices now claim $80 to $200 (Ultima Solaris
+      2025, Illumina NovaSeq X 2022, Element and MGI targets near $100). From
+      about $100 in 2025, a halving every 3 to 5 years reaches $10 between
+      about 2035 and 2042. Metaculus forecasters expect about $118 for 2026
+      and about $64 for 2031 (2021 dollars), which extrapolates to the 2040s.
+      Library prep and analysis (now $20 to $50 per sample) would need to
+      fall too for an all-in $10 genome, so I put the likely date at 2038.
+    sources:
+      - title: NHGRI DNA Sequencing Costs Data
+        url: https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data
+      - title: "Metaculus: human genome sequencing cost in 2026"
+        url: https://www.metaculus.com/questions/8909/human-genome-sequencing-cost-in-2026
+      - title: "Metaculus: human genome sequencing cost in 2031"
+        url: https://www.metaculus.com/questions/11371/human-genome-sequencing-cost-in-2031
+  metric: sequencing-cost-per-genome
+  sources:
+    - title: NHGRI DNA Sequencing Costs Data
+      url: https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data
+
+- id: newborn-genome-sequencing
+  name: Routine whole-genome sequencing at birth
+  kind: institution
+  fields: [medicine, biology, society]
+  date: { window: [2030, 2045], likely: 2035 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Every newborn in a national health system is offered whole-genome
+    sequencing as standard screening, replacing or extending the heel-prick
+    blood spot test.
+  requires: [thousand-dollar-genome, randomized-controlled-trial]
+  helped_by: [ten-dollar-genome, deep-learning-genomics]
+  efforts:
+    - who: Genomics England Generation Study
+      where: England
+      when: [2024, 2027]
+      outcome: ongoing
+      note: Aims to sequence 100,000 newborns for about 200 treatable conditions; about half recruited by March 2026.
+    - who: BabySeq (Boston), GUARDIAN (New York), and programs in Australia and elsewhere
+      where: USA, Australia
+      when: [2015, 2026]
+      outcome: ongoing
+  forecast:
+    note: >-
+      The technology and cost (about $200 to $500 per genome) are already
+      there; the bottlenecks are evidence of benefit, interpretation, consent
+      and health-system budgets. England's 10-Year Health Plan states an
+      ambition to offer genomic sequencing to all newborns, with reporting
+      that it should be universal by about 2035, after the Generation Study
+      reports in 2027 to 2028. National programs usually slip, so I put the
+      first country-wide routine offer around 2035 and routine use in most
+      high-income countries in the 2040s.
+    sources:
+      - title: Genomics England Generation Study
+        url: https://www.genomicsengland.co.uk/initiatives/newborns
+      - title: "Generation Study recruitment milestone (Digital Health, March 2026)"
+        url: https://www.digitalhealth.net/2026/03/major-genomics-data-study-hits-recruitment-milestone/
+  sources:
+    - title: Genomics England Generation Study
+      url: https://www.genomicsengland.co.uk/initiatives/newborns
+
+- id: synthetic-mammalian-genome
+  name: De novo synthesis of a mammalian genome
+  kind: technique
+  fields: [biology, chemistry]
+  date: { window: [2040, 2075], likely: 2052 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Chemically writing an entire mammalian genome (about 3 billion base
+    pairs) and booting it in a cell, a step beyond reading or editing.
+  requires: [synthetic-bacterial-genome, t2t-complete-genome]
+  helped_by: [crispr-cas9, long-read-sequencing]
+  efforts:
+    - who: Synthetic Human Genome Project (SynHG; Jason Chin and others, Wellcome-funded)
+      where: UK
+      when: [2025, 2030]
+      outcome: ongoing
+      note: £10 million over five years for tools, aiming at a synthetic human chromosome (about 2 percent of the genome) in five to ten years.
+  forecast:
+    note: >-
+      The largest synthetic genomes grew from 1.08 Mb (2010) to 4 Mb (E. coli,
+      2019) and 12 Mb (yeast Sc2.0, 2023): roughly 10x per decade. A mammalian
+      genome is about 250x larger than yeast, which at that pace is about 2.4
+      decades past 2023, around 2047 to 2050. Repeats, centromeres, chromatin
+      and delivery into mammalian cells are much harder than in yeast, while
+      DNA synthesis costs (about $0.07 per base for gene-length fragments) must
+      fall about 100x more for the cost to be tolerable. SynHG's chromosome
+      target in the early 2030s is the next checkpoint.
+    sources:
+      - title: "Wellcome: new project to pioneer human genome synthesis (2025)"
+        url: https://wellcome.org/news/new-project-pioneer-principles-human-genome-synthesis
+      - title: "Gibson et al., Science 329:52 (2010)"
+        url: https://doi.org/10.1126/science.1190719
+  sources:
+    - title: "Wellcome: new project to pioneer human genome synthesis (2025)"
+      url: https://wellcome.org/news/new-project-pioneer-principles-human-genome-synthesis
+
+- id: aging-reversal
+  name: Aging reversal
+  kind: technique
+  fields: [medicine, biology]
+  date: { window: [2040, 2100], likely: 2065 }
+  status: speculative
+  tier: 2
+  summary: >-
+    Therapies that reverse biological aging across many tissues, shown in
+    trials to restore function and extend healthy human lifespan by a decade
+    or more, not just treat single age-related diseases.
+  requires: [induced-pluripotent-stem-cells, gene-therapy, randomized-controlled-trial]
+  helped_by: [crispr-cas9, deep-learning-genomics, mrna-vaccines]
+  efforts:
+    - who: Life Biosciences (ER-100, OSK partial reprogramming)
+      where: Boston, USA
+      when: 2026
+      outcome: ongoing
+      note: First human trial of partial epigenetic reprogramming, in optic nerve diseases (glaucoma, NAION).
+    - who: Altos Labs, Retro Biosciences, NewLimit, Calico
+      where: USA
+      when: [2013, 2026]
+      outcome: ongoing
+      note: Altos launched in 2022 with about $3 billion.
+  forecast:
+    note: >-
+      Partial reprogramming reversed aging marks in mice (Ocampo 2016) and
+      the first human trial started in 2026, in the eye, where delivery is
+      easy. Whole-body rejuvenation needs safe systemic delivery and
+      decade-long trials to show lifespan benefit, and no intervention has
+      yet extended maximum human lifespan. Metaculus forecasters put
+      longevity escape velocity (life expectancy rising a year per year) in
+      roughly the 2050s to 2060s. I put a demonstrated, multi-tissue
+      rejuvenation therapy with lifespan evidence around 2065, with very wide
+      uncertainty.
+    sources:
+      - title: "Metaculus: when will a country reach longevity escape velocity?"
+        url: https://www.metaculus.com/questions/6592/date-life-expectancy-hits-escape-velocity
+      - title: "Ocampo et al., Cell 167:1719 (2016)"
+        url: https://doi.org/10.1016/j.cell.2016.11.052
+      - title: "FDA clears first human trial of epigenetic reprogramming therapy (Longevity.Technology)"
+        url: https://longevity.technology/news/fda-clears-first-human-trial-of-epigenetic-reprogramming-therapy/
+  sources:
+    - title: "Ocampo et al., Cell 167:1719 (2016)"
+      url: https://doi.org/10.1016/j.cell.2016.11.052
+
+- id: whole-brain-emulation
+  name: Whole-brain emulation
+  kind: technique
+  fields: [biology, computing]
+  date: { window: [2050, 2150], likely: 2085 }
+  status: speculative
+  tier: 2
+  summary: >-
+    Scanning a human brain at synaptic resolution and simulating it closely
+    enough that the simulation behaves like the person.
+  requires: [electron-microscope, deep-learning, single-cell-rna-seq]
+  helped_by: [gpu, agi]
+  efforts:
+    - who: FlyWire Consortium
+      where: Princeton and international
+      when: 2024
+      outcome: achieved
+      note: Complete connectome of an adult fruit fly brain, about 140,000 neurons and 50 million synapses.
+    - who: MICrONS Consortium
+      where: USA
+      when: 2025
+      outcome: achieved
+      note: A cubic millimeter of mouse visual cortex, about 200,000 cells and 500 million synapses, with matched activity recordings.
+  forecast:
+    note: >-
+      The largest complete connectome is a fly brain (2024); a human brain
+      has about 600,000 times more neurons and about 10 million times more
+      synapses. Mapping volumes have grown about 10x every 5 years with
+      automated electron microscopy and AI segmentation, so a mouse brain is
+      plausible in the 2030s and a human brain scan in the 2050s to 2060s.
+      Knowing the wiring is not enough: molecular state and learning rules
+      must be measured too, and it is unproven that a connectome plus models
+      reproduces behavior. The Metaculus community median is in the early
+      2070s (interquartile range about 2041 to 2200). I lean later, around
+      2085.
+    sources:
+      - title: "Metaculus: when will the first whole human brain be emulated?"
+        url: https://www.metaculus.com/questions/2813/date-of-first-human-whole-brain-emulation
+      - title: "Dorkenwald et al., FlyWire, Nature 634:124 (2024)"
+        url: https://doi.org/10.1038/s41586-024-07558-y
+      - title: Mind uploading (Wikipedia, includes Sandberg and Bostrom 2008 roadmap)
+        url: https://en.wikipedia.org/wiki/Mind_uploading
+  sources:
+    - title: "Dorkenwald et al., FlyWire, Nature 634:124 (2024)"
+      url: https://doi.org/10.1038/s41586-024-07558-y

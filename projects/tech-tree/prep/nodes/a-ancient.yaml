@@ -1,0 +1,3004 @@
+# Part A: roots, natural resources, and technology from prehistory to about 1450 CE.
+# Dates are years; negative = BCE. For deep prehistory the BCE/BP offset (~2000 years) is ignored.
+
+# ---------------------------------------------------------------------------
+# Preconditions: biological givens
+# ---------------------------------------------------------------------------
+
+- id: bipedalism
+  name: Upright walking
+  kind: precondition
+  fields: [biology]
+  date: [-7000000, -3700000]
+  status: achieved
+  tier: 2
+  summary: >-
+    Walking on two legs freed the hands from locomotion. Possible signs appear in fossils about 7 to 6 million
+    years old (debated), and the Laetoli footprints show fully upright walking by about 3.7 million years ago.
+  sources:
+    - title: Smithsonian Human Origins, Walking Upright
+      url: https://humanorigins.si.edu/human-characteristics/walking-upright
+    - title: Laetoli footprints (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Laetoli
+
+- id: precision-grip
+  name: Precision grip
+  kind: precondition
+  fields: [biology]
+  date: [-3500000, -1800000]
+  status: achieved
+  tier: 2
+  summary: >-
+    A long thumb opposing the fingertips lets a hand pinch, turn and strike accurately, the basis of toolmaking.
+    Hand bones suggest human-like grips in australopiths by about 3 million years ago and a near-modern hand by
+    about 1.8 million.
+  requires: [bipedalism]
+  sources:
+    - title: Skinner et al. 2015, Human-like hand use in Australopithecus africanus (Science)
+      url: https://www.science.org/doi/10.1126/science.1261735
+    - title: Smithsonian Human Origins, Stone Tools
+      url: https://humanorigins.si.edu/evidence/behavior/stone-tools
+
+- id: vision
+  name: Color and stereo vision
+  kind: precondition
+  fields: [biology]
+  date: [-55000000, -30000000]
+  status: achieved
+  tier: 2
+  summary: >-
+    Forward-facing eyes with overlapping fields (depth perception) arose in early primates, and three-color vision
+    evolved in the ancestors of Old World monkeys and apes about 30 to 40 million years ago. Humans inherited both.
+  sources:
+    - title: Evolution of color vision in primates (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Evolution_of_color_vision_in_primates
+    - title: Binocular vision (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Binocular_vision
+
+- id: touch
+  name: Fine touch
+  kind: precondition
+  fields: [biology]
+  date: [-60000000, -50000000]
+  status: achieved
+  tier: 2
+  summary: >-
+    Primate fingertips carry flat nails, friction ridges and dense touch receptors, inherited from early primates.
+    Fine touch lets people judge texture, pressure and fit when working materials.
+  sources:
+    - title: Primate, anatomy and physiology (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Primate
+    - title: Somatosensory system (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Somatosensory_system
+
+- id: hearing
+  name: Speech-tuned hearing
+  kind: precondition
+  fields: [biology]
+  date: [-2000000, -430000]
+  status: achieved
+  tier: 2
+  summary: >-
+    Human ears are most sensitive in the 1 to 5 kHz band that carries speech sounds. Australopiths heard much like
+    chimpanzees; ear bones from Sima de los Huesos, about 430,000 years old, already approach the modern pattern.
+  sources:
+    - title: Quam et al. 2015, Early hominin auditory capacities (Science Advances)
+      url: https://www.science.org/doi/10.1126/sciadv.1500355
+
+- id: large-brain
+  name: Large brain
+  kind: precondition
+  fields: [biology]
+  date: [-2000000, -300000]
+  status: achieved
+  tier: 1
+  summary: >-
+    Brain size roughly tripled over two million years, from about 450 cc in australopiths through Homo erectus to
+    modern volumes by about 300,000 years ago. A big, slow-maturing brain made learning and culture central to
+    human life.
+  sources:
+    - title: Smithsonian Human Origins, Brains
+      url: https://humanorigins.si.edu/human-characteristics/brains
+
+- id: cooperation
+  name: Cooperation and social learning
+  kind: precondition
+  fields: [biology, society]
+  date: [-2000000, -300000]
+  status: achieved
+  tier: 2
+  summary: >-
+    Humans share food, care for each other's children, teach, and copy skills with high fidelity, so knowledge
+    accumulates across generations instead of being reinvented. When this became distinctly human is uncertain;
+    the spread of standardized Acheulean handaxes after 1.7 million years ago is one sign.
+  sources:
+    - title: Dual inheritance theory (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Dual_inheritance_theory
+    - title: Cumulative culture (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Cumulative_culture
+
+- id: vocal-tract
+  name: Speech-capable vocal tract
+  kind: precondition
+  fields: [biology]
+  date: [-800000, -300000]
+  status: achieved
+  tier: 2
+  summary: >-
+    A low larynx, a mobile tongue and fine breath control let humans make a wide range of distinct vowels and
+    consonants. Hyoid bones from Sima de los Huesos (about 430,000 years ago) and Neanderthals are modern in shape,
+    though how fluent their speech was is debated.
+  sources:
+    - title: Origin of speech (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Origin_of_speech
+
+- id: language-capacity
+  name: Language capacity
+  kind: precondition
+  fields: [biology]
+  date: [-600000, -135000]
+  status: achieved
+  tier: 1
+  summary: >-
+    The mental ability to build unlimited meanings from words and grammar. Estimates range widely; all living human
+    populations share it, so it existed before they began to split, at least about 135,000 years ago, and it may
+    be much older.
+  requires: [large-brain]
+  helped_by: [cooperation]
+  sources:
+    - title: Origin of language (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Origin_of_language
+
+# ---------------------------------------------------------------------------
+# Resources
+# ---------------------------------------------------------------------------
+
+- id: res-flint
+  name: Flint and knappable stone
+  kind: resource
+  fields: [materials]
+  date: -3300000
+  status: achieved
+  tier: 3
+  scarcity: abundant
+  summary: >-
+    Fine-grained stones that break with sharp, predictable edges: flint, chert, obsidian, quartzite and volcanic
+    rock. They were the main material for cutting tools for over three million years.
+  note: >-
+    The oldest tools, at Lomekwi, used local lavas; later toolmakers sought high-quality flint and obsidian and
+    traded it hundreds of kilometers. Good nodules near the surface were used up in some regions, so Neolithic
+    people dug shaft mines over 10 m deep, as at Grimes Graves in England (about 2600 BCE) and Spiennes in Belgium.
+    Globally the stone was never scarce; it was displaced by metal.
+  sources:
+    - title: Grime's Graves (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Grime%27s_Graves
+    - title: Flint (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Flint
+
+- id: res-wood
+  name: Wood and charcoal
+  kind: resource
+  fields: [energy, materials]
+  date: [-3300000, -1500000]
+  status: achieved
+  tier: 3
+  scarcity: limited
+  summary: >-
+    The first fuel and building material, and as charcoal the fuel for all smelting until coke. Use-wear on early
+    stone tools shows woodworking by at least 1.5 million years ago.
+  note: >-
+    Renewable but easily overcut. Smelting consumed whole forests around ancient mining centers in Cyprus, the
+    Levant and Iberia. In 16th and 17th century England rising timber and charcoal prices pushed industry toward
+    coal (the extent of this "timber crisis" is debated). The world has lost about a third of its forests since
+    the last ice age, half of that in the last century.
+  sources:
+    - title: Our World in Data, The world has lost one-third of its forest
+      url: https://ourworldindata.org/world-lost-one-third-forests
+    - title: Charcoal, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Charcoal
+
+- id: res-clay
+  name: Clay
+  kind: resource
+  fields: [materials]
+  date: -29000
+  status: achieved
+  tier: 3
+  scarcity: abundant
+  summary: >-
+    Fine plastic earth that hardens when fired. It made pottery, bricks, writing tablets and kilns possible; the
+    earliest fired-clay objects are figurines from Dolni Vestonice, about 29,000 BCE.
+  note: >-
+    Common clays are effectively unlimited. Special clays are more localized: high-purity kaolin for porcelain and
+    paper coatings, and the palygorskite used in Maya blue.
+  sources:
+    - title: Venus of Dolni Vestonice (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Venus_of_Doln%C3%AD_V%C4%9Bstonice
+    - title: Clay (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Clay
+
+- id: res-fertile-soil
+  name: Fertile soil
+  kind: resource
+  fields: [agriculture]
+  date: -9500
+  status: achieved
+  tier: 2
+  scarcity: limited
+  summary: >-
+    Topsoil rich in organic matter and nutrients, built up over centuries to millennia. Farming began on the
+    alluvial and loess soils of a few river valleys and hill flanks.
+  note: >-
+    Soil forms at roughly a centimeter per century and erodes much faster under plowing. Irrigated fields in
+    southern Mesopotamia grew salty: records suggest wheat gave way to more salt-tolerant barley between about
+    3500 and 1700 BCE as yields fell. The FAO estimates about a third of the world's soils are moderately to
+    highly degraded.
+  sources:
+    - title: Soil degradation (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Soil_degradation
+    - title: Soil salinity, Mesopotamia (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Soil_salinity
+
+- id: res-fresh-water
+  name: Fresh water
+  kind: resource
+  fields: [agriculture]
+  date: [-9500, -8500]
+  status: achieved
+  tier: 3
+  scarcity: limited
+  summary: >-
+    Water for drinking, crops, animals, mills and industry. It became a managed resource with farming; the
+    earliest known wells, on Cyprus, date to about 8500 BCE.
+  note: >-
+    Renewable in rivers and rain, but groundwater can be mined faster than it refills. The Ogallala aquifer under
+    the US Great Plains has fallen by over 30 m in parts of Kansas and Texas since pumping began in the 1940s, and
+    aquifers in north India, the North China Plain and the Middle East show similar declines.
+  sources:
+    - title: Ogallala Aquifer (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Ogallala_Aquifer
+    - title: Water well, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Water_well
+
+- id: res-salt
+  name: Salt
+  kind: resource
+  fields: [chemistry]
+  date: -6000
+  status: achieved
+  tier: 3
+  scarcity: abundant
+  summary: >-
+    Needed by people and livestock and for preserving food, later the base of the chlorine and soda industries.
+    Salt was boiled from springs at Poiana Slatinei in Romania and Lake Yuncheng in China by about 6000 BCE.
+  note: >-
+    Rock salt deposits are vast and seawater is nearly unlimited; world production is about 280 million tonnes a
+    year. Salt was scarce only locally and historically, which made it a major traded and taxed good.
+  sources:
+    - title: History of salt (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_salt
+    - title: USGS Mineral Commodity Summaries 2025, Salt
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-salt.pdf
+
+- id: res-copper
+  name: Copper
+  kind: resource
+  fields: [materials]
+  date: -8700
+  status: achieved
+  tier: 2
+  scarcity: limited
+  summary: >-
+    The first metal worked by people, first as native copper hammered into beads (a pendant from Shanidar, Iraq,
+    about 8700 BCE), then smelted from ore. Today it carries most of the world's electricity.
+  note: >-
+    Early metalworkers took native copper and rich, colorful surface oxide ores (Timna, Cyprus, the Great Lakes).
+    Those are long gone, and grades keep falling: ores of several percent copper were common in the 19th century,
+    while Chile's average grade fell from about 0.93 percent in 2005 to around 0.6 percent, and Calvo et al.
+    found global copper grades fell about 25 percent in ten years. Lower grades mean more rock, energy and water
+    per tonne. USGS reserves are about 980 million tonnes (Chile largest), against mining of 23 million tonnes a
+    year.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Copper
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-copper.pdf
+    - title: Calvo et al. 2016, Decreasing Ore Grades in Global Metallic Mining (Resources)
+      url: https://ideas.repec.org/a/gam/jresou/v5y2016i4p36-d82270.html
+    - title: Copper mining in Chile (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Copper_mining_in_Chile
+
+- id: res-tin
+  name: Tin
+  kind: resource
+  fields: [materials]
+  date: -4650
+  status: achieved
+  tier: 3
+  scarcity: scarce
+  summary: >-
+    Alloyed with copper to make bronze, later used for solder and tin plate. The earliest tin bronze, a foil from
+    Plocnik in Serbia, dates to about 4650 BCE.
+  note: >-
+    Tin ore is rare and patchy, so Bronze Age cities depended on long trade routes to a few sources: Cornwall,
+    the Erzgebirge, Iberia and Central Asia. The Uluburun shipwreck (about 1300 BCE) carried about 10 tonnes of
+    copper and 1 tonne of tin, the 10 to 1 bronze ratio. Cornish mining ended in 1998. Today China, Indonesia and
+    Myanmar lead; known reserves of about 4.2 million tonnes are only about 14 years of current production, and
+    much of it is used in electronics solder.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Tin
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-tin.pdf
+    - title: Tin sources and trade in ancient times (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Tin_sources_and_trade_in_ancient_times
+    - title: Uluburun shipwreck (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Uluburun_shipwreck
+
+- id: res-iron-ore
+  name: Iron ore (and ochre)
+  kind: resource
+  fields: [materials]
+  date: -300000
+  status: achieved
+  tier: 2
+  scarcity: abundant
+  summary: >-
+    Iron oxides were first used as red ochre pigment, by about 300,000 years ago in Africa. Meteoritic iron was
+    worked by about 3200 BCE and ore was smelted from the 2nd millennium BCE.
+  note: >-
+    Iron is about 5 percent of the crust and reserves are some 200 billion tonnes of crude ore, so the metal is not
+    scarce, but rich ore is. The Mesabi Range's natural ores, 51 to 57 percent iron, were mostly exhausted by the
+    end of World War II, and the industry switched to taconite of 30 percent iron that must be crushed,
+    concentrated and pelletized. High-grade supply now comes mostly from Australia's Pilbara and Brazil.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Iron Ore
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-iron-ore.pdf
+    - title: Mesabi Range (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Mesabi_Range
+    - title: Ochre, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Ochre
+
+- id: res-gold
+  name: Gold
+  kind: resource
+  fields: [materials, society]
+  date: -4600
+  status: achieved
+  tier: 3
+  scarcity: scarce
+  summary: >-
+    Found as nuggets and river grains, gold was the first metal of display and money. The oldest large gold hoard
+    is from the Varna necropolis in Bulgaria, about 4600 to 4400 BCE.
+  note: >-
+    About 216,000 tonnes have been mined in all history, two thirds since 1950. Easy placer gold was worked out
+    first in each gold rush. South Africa's Witwatersrand produced about 1,000 tonnes in 1970 and only about 100
+    tonnes in 2024, from mines up to 4 km deep. Reserves are about 64,000 tonnes.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Gold
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-gold.pdf
+    - title: Varna Necropolis (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Varna_Necropolis
+    - title: World Gold Council, How much gold has been mined
+      url: https://www.gold.org/goldhub/data/how-much-gold
+
+- id: res-silver
+  name: Silver
+  kind: resource
+  fields: [materials, society]
+  date: -4000
+  status: achieved
+  tier: 3
+  scarcity: scarce
+  summary: >-
+    Extracted from lead ores by cupellation from about the 4th millennium BCE in Anatolia and Mesopotamia, silver
+    became the standard of value in the ancient Near East and later of coinage.
+  note: >-
+    Great historic mines ran out or became uneconomic: Laurion funded Athens' fleet in the 5th century BCE; Potosi
+    in Bolivia flooded the world with silver after 1545. Today most silver is a byproduct of lead, zinc and copper
+    mining. Reserves are about 640,000 tonnes, against mining of 25,000 tonnes a year.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Silver
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-silver.pdf
+    - title: Silver, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Silver
+
+- id: res-coal
+  name: Coal
+  kind: resource
+  fields: [energy]
+  date: -1600
+  status: achieved
+  tier: 2
+  scarcity: abundant
+  summary: >-
+    Fossil carbon that burns hotter and denser than wood. Systematic coal mining and burning is known from
+    Jirentaigoukou in Xinjiang, China, about 3,600 years ago, apparently as local wood ran short.
+  note: >-
+    The easiest coal, at outcrops and in shallow seams, was used first; mines then went deeper and costs rose. In
+    "The Coal Question" (1865) Jevons warned that Britain's cheap coal would run out; British output peaked in 1913
+    at 287 million tonnes and the last deep mine closed in 2015. World proven reserves are still about a trillion
+    tonnes, concentrated in the US, Russia, Australia, China and India, so the limit on coal today is climate, not
+    supply.
+  sources:
+    - title: Qiu et al. 2023, Earliest systematic coal exploitation for fuel extended to 3600 BP (Science Advances)
+      url: https://www.science.org/doi/10.1126/sciadv.adh0549
+    - title: The Coal Question (Wikipedia)
+      url: https://en.wikipedia.org/wiki/The_Coal_Question
+    - title: Coal mining in the United Kingdom (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Coal_mining_in_the_United_Kingdom
+
+- id: res-oil
+  name: Petroleum
+  kind: resource
+  fields: [energy, chemistry]
+  date: [-70000, -40000]
+  status: achieved
+  tier: 2
+  scarcity: limited
+  summary: >-
+    Natural bitumen seeping to the surface was used by Neanderthals as a glue for hafting stone tools in Syria and
+    later to waterproof boats and bind bricks in Mesopotamia. Drilled oil became the main fuel of the 20th century.
+  note: >-
+    Chinese wells reached oil by the 4th century CE; the modern industry dates from 1859. The giant, shallow,
+    high-pressure fields were found first. Hall and colleagues estimate the energy return on US oil production
+    fell from roughly 100 to 1 in the 1930s to about 10 to 20 to 1 by the 2000s, as supply shifted to deep water,
+    oil sands and shale. About half of proven reserves are in the Middle East.
+  sources:
+    - title: Bitumen, Neanderthal use (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Bitumen
+    - title: Hall, Lambert and Balogh 2014, EROI of different fuels (Energy Policy)
+      url: https://doi.org/10.1016/j.enpol.2013.05.049
+    - title: Energy Institute Statistical Review of World Energy
+      url: https://www.energyinst.org/statistical-review
+
+- id: res-natural-gas
+  name: Natural gas
+  kind: resource
+  fields: [energy]
+  date: [-500, -200]
+  status: achieved
+  tier: 3
+  scarcity: limited
+  summary: >-
+    In Sichuan, China, gas from deep brine wells was piped through bamboo and burned to evaporate salt by the Han
+    dynasty at the latest. It is now about a quarter of world energy and the feedstock for nitrogen fertilizer.
+  note: >-
+    Conventional fields in the US and North Sea declined from the 1970s; hydraulic fracturing of shale reversed US
+    decline after 2008 at higher drilling intensity. Reserves are concentrated in Russia, Iran and Qatar. Gas is
+    also the only commercial source of helium.
+  sources:
+    - title: Natural gas, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Natural_gas
+    - title: Zigong, salt and gas wells (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Zigong
+
+- id: res-sulfur
+  name: Sulfur
+  kind: resource
+  fields: [chemistry]
+  date: -800
+  status: achieved
+  tier: 3
+  scarcity: abundant
+  summary: >-
+    Yellow volcanic sulfur was burned for fumigation and bleaching in the ancient Mediterranean (Homer mentions it)
+    and is one of the three ingredients of gunpowder. As sulfuric acid it is now the most-made industrial chemical.
+  note: >-
+    Sicilian mines dominated supply until the Frasch process tapped Gulf Coast salt domes in the 1890s. Today most
+    of the 85 million tonnes a year is recovered from cleaning sulfur out of oil and natural gas, so supply is tied
+    to fossil fuel refining and could tighten as that declines, while demand for fertilizer and metal leaching
+    grows.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Sulfur
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-sulfur.pdf
+    - title: Sulfur, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Sulfur
+
+- id: res-saltpeter
+  name: Saltpeter (nitrates)
+  kind: resource
+  fields: [chemistry, agriculture]
+  date: 500
+  status: achieved
+  tier: 3
+  scarcity: abundant
+  summary: >-
+    Potassium nitrate, scraped from soils, caves and manure heaps. Chinese alchemists identified it around 500 CE,
+    and it became the oxidizer in gunpowder and a prized fertilizer.
+  note: >-
+    For centuries natural saltpeter was scarce and strategic; states ran nitre beds to secure gunpowder. In the
+    19th century Chile's caliche deposits supplied the world's nitrate fertilizer and explosives, and the War of the
+    Pacific (1879 to 1884) was fought partly over them. The Haber-Bosch process made nitrogen effectively
+    unlimited, given energy.
+  sources:
+    - title: Potassium nitrate, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Potassium_nitrate
+    - title: Saltpeter War, War of the Pacific (Wikipedia)
+      url: https://en.wikipedia.org/wiki/War_of_the_Pacific
+
+- id: res-potash
+  name: Potash
+  kind: resource
+  fields: [agriculture, chemistry]
+  date: -2800
+  status: achieved
+  tier: 3
+  scarcity: abundant
+  summary: >-
+    Potassium salts, first made by soaking wood or plant ash in pots, used for soap, glass and dyeing since at least
+    the 3rd millennium BCE. Today it is one of the three main fertilizer nutrients.
+  note: >-
+    Ash potash drove forest clearing in colonial North America (the first US patent, in 1790, was for a potash
+    process). Mined potash began at Stassfurt, Germany, in 1861. Reserves exceed 4.8 billion tonnes of K2O,
+    concentrated in Canada, Belarus and Russia, which makes supply politically exposed though not geologically
+    scarce.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Potash
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-potash.pdf
+    - title: Potash (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Potash
+
+- id: res-phosphate
+  name: Phosphate
+  kind: resource
+  fields: [agriculture]
+  date: 1842
+  status: achieved
+  tier: 3
+  scarcity: limited
+  summary: >-
+    Phosphorus is essential to all life and cannot be substituted in fertilizer. Andean farmers spread seabird guano
+    for centuries; industrial use began with superphosphate made from bones and phosphate rock in the 1840s.
+  note: >-
+    The resource has been depleted in stages: Peru's guano islands were stripped in a few decades after 1840, and
+    the phosphate island of Nauru was mined nearly bare in the 20th century. USGS reserves are about 74 billion
+    tonnes of rock, but about 50 billion (two thirds) are in Morocco and Western Sahara. Researchers debate whether
+    high-grade rock will peak this century.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Phosphate Rock
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-phosphate.pdf
+    - title: Peak phosphorus (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Peak_phosphorus
+    - title: Phosphate mining in Nauru (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Phosphate_mining_in_Nauru
+
+- id: res-silicon
+  name: Silica (quartz sand)
+  kind: resource
+  fields: [materials, electronics]
+  date: -2500
+  status: achieved
+  tier: 3
+  scarcity: abundant
+  summary: >-
+    Silica sand is the raw material of glass, first made in Mesopotamia about 2500 BCE, and later of silicon metal
+    for alloys, solar cells and chips.
+  note: >-
+    Silicon is the second most common element in the crust, but chipmaking depends on rare ultra-pure quartz:
+    mines at Spruce Pine, North Carolina, supply most quartz for the crucibles that grow silicon crystals, and
+    Hurricane Helene shut them briefly in 2024. China made almost 80 percent of the world's silicon materials in
+    2024.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Silicon
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-silicon.pdf
+    - title: Spruce Pine, North Carolina, quartz (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Spruce_Pine,_North_Carolina
+
+- id: res-cobalt
+  name: Cobalt
+  kind: resource
+  fields: [materials]
+  date: [-1550, -1300]
+  status: achieved
+  tier: 3
+  scarcity: critical
+  summary: >-
+    Cobalt ores colored Egyptian and Mycenaean glass deep blue in the late Bronze Age. Today it is used in
+    superalloys and in many lithium-ion battery cathodes.
+  note: >-
+    Mostly a byproduct of copper and nickel mining. Congo (Kinshasa) mined about 220,000 of the world's 290,000
+    tonnes in 2024 and holds over half of reserves, and China refines most of it, so supply is highly concentrated;
+    Congo suspended and then capped exports in 2025 to support prices.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Cobalt
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-cobalt.pdf
+    - title: Cobalt, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Cobalt
+
+- id: res-nickel
+  name: Nickel
+  kind: resource
+  fields: [materials]
+  date: -180
+  status: achieved
+  tier: 3
+  scarcity: limited
+  summary: >-
+    Bactrian kings struck copper-nickel coins around 180 BCE, and China made nickel-bearing paktong alloys. Nickel
+    was isolated in 1751 and is now used mainly in stainless steel and battery cathodes.
+  note: >-
+    The rich sulfide ores of Sudbury and Norilsk are being supplemented by lower-grade tropical laterites that need
+    energy-hungry processing. Indonesia mined about 2.2 of the world's 3.7 million tonnes in 2024, with large
+    deforestation and coal-power costs. Reserves exceed 130 million tonnes.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Nickel
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-nickel.pdf
+    - title: Nickel, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Nickel
+
+- id: res-platinum-group
+  name: Platinum-group metals
+  kind: resource
+  fields: [materials, chemistry]
+  date: [-600, 200]
+  status: achieved
+  tier: 3
+  scarcity: scarce
+  summary: >-
+    Craftsmen of the La Tolita culture on the coast of Ecuador and Colombia worked platinum-gold alloys between
+    about 600 BCE and 200 CE. Platinum, palladium and rhodium are now essential catalysts for cars, refining and
+    hydrogen.
+  note: >-
+    Extremely concentrated: South Africa's Bushveld Complex holds about three quarters of world reserves and South
+    Africa mines about 70 percent of platinum; Russia and South Africa dominate palladium. Mines are deep and
+    energy-intensive, and South African output has been held back by power shortages.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Platinum-Group Metals
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-platinum-group.pdf
+    - title: Platinum, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Platinum
+
+- id: res-uranium
+  name: Uranium
+  kind: resource
+  fields: [energy]
+  date: 1830
+  status: achieved
+  tier: 3
+  scarcity: limited
+  summary: >-
+    Identified in 1789, uranium was first used to color glass and ceramic glazes yellow-green from the 1830s.
+    After fission was discovered in 1938 it became the fuel of nuclear power and weapons.
+  note: >-
+    Identified resources recoverable at moderate cost are about 6 million tonnes, roughly 90 years of current
+    reactor demand. Kazakhstan mines about 40 percent. Ore grades vary enormously: Cigar Lake in Canada averages
+    around 15 percent uranium oxide, while many mines work ores of 0.1 percent or less.
+  sources:
+    - title: World Nuclear Association, Supply of Uranium
+      url: https://world-nuclear.org/information-library/nuclear-fuel-cycle/uranium-resources/supply-of-uranium
+    - title: Uranium glass (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Uranium_glass
+
+- id: res-rare-earths
+  name: Rare earth elements
+  kind: resource
+  fields: [materials]
+  date: 1885
+  status: achieved
+  tier: 3
+  scarcity: critical
+  summary: >-
+    Seventeen chemically similar metals first found in a Swedish quarry at Ytterby in 1787. Their first major use was
+    Welsbach's gas mantle (patented 1885); now they make the strongest permanent magnets, for motors and wind
+    turbines.
+  note: >-
+    Not rare in the crust, but minable concentrations are uncommon and separating them is chemically dirty. China
+    mined about 270,000 of 390,000 tonnes in 2024 and does about 90 percent of separation and magnet making, and it
+    has used export controls on them as leverage. Reserves exceed 90 million tonnes.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Rare Earths
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-rare-earths.pdf
+    - title: Rare-earth element (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Rare-earth_element
+
+- id: res-helium
+  name: Helium
+  kind: resource
+  fields: [physics, energy]
+  date: 1921
+  status: achieved
+  tier: 3
+  scarcity: scarce
+  summary: >-
+    Found in the Sun's spectrum in 1868 and in Kansas natural gas in 1903, helium was first used in quantity to
+    lift the US Navy airship C-7 in 1921. Liquid helium now cools MRI magnets and is used in chipmaking and
+    research.
+  note: >-
+    Helium forms slowly from radioactive decay and escapes to space once released, so it is truly non-renewable.
+    It is recovered only from a few gas fields; the US and Qatar lead production of about 180 million cubic
+    meters a year. The US government sold its Federal Helium Reserve near Amarillo in 2024, ending a century-old
+    strategic stockpile.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Helium
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-helium.pdf
+    - title: Helium, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Helium
+
+- id: res-lithium
+  name: Lithium
+  kind: resource
+  fields: [materials, energy]
+  date: 1923
+  status: achieved
+  tier: 3
+  scarcity: limited
+  summary: >-
+    Discovered in 1817, lithium was first produced commercially in Germany in 1923. It went into greases, glass and
+    psychiatric medicine before lithium-ion batteries made it a major commodity after 1991.
+  note: >-
+    Not geologically scarce: reserves are about 30 million tonnes and identified resources keep growing. Mining
+    (about 240,000 tonnes in 2024) is concentrated in Australia (hard rock) and Chile and Argentina (brines), and
+    China refines most of it, so processing capacity, water use in desert brines and price swings are the
+    constraints.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Lithium
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-lithium.pdf
+    - title: Lithium, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Lithium
+
+- id: res-germanium
+  name: Germanium
+  kind: resource
+  fields: [electronics]
+  date: 1942
+  status: achieved
+  tier: 3
+  scarcity: critical
+  summary: >-
+    Predicted by Mendeleev and found in 1886, germanium had no use until wartime radar crystal detectors and the
+    first transistor in 1947. It is now used in fiber optics, infrared optics and some solar cells.
+  note: >-
+    Recovered in small amounts from zinc ore and coal ash, not mined for itself. China dominates refining; it
+    required export licenses from August 2023 and banned exports to the United States in December 2024.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Germanium
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-germanium.pdf
+    - title: Germanium (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Germanium
+
+- id: res-silphium
+  name: Silphium
+  kind: resource
+  fields: [medicine, agriculture]
+  date: -630
+  status: lost
+  tier: 3
+  scarcity: critical
+  summary: >-
+    A plant of the Libyan coast, prized across the Greek and Roman world as a seasoning and medicine, perhaps as a
+    contraceptive. It was the wealth of the city of Cyrene, founded about 630 BCE, and appeared on its coins.
+  note: >-
+    It resisted cultivation and grew only in a narrow strip near Cyrene. Overharvesting, grazing and perhaps
+    climate change wiped it out; Pliny the Elder reports the last known stalk was sent to Nero in the 1st century
+    CE. It is often called the first recorded extinction caused by people. A claim (2022) that a Turkish Ferula
+    species is silphium is unconfirmed.
+  lost: Extinct by the 1st century CE; the plant's identity is still uncertain.
+  sources:
+    - title: Silphium (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Silphium
+
+- id: res-limestone
+  name: Limestone
+  kind: resource
+  fields: [materials]
+  date: [-12000, -10000]
+  status: achieved
+  tier: 3
+  scarcity: abundant
+  summary: >-
+    Rock made of calcium carbonate, burned to quicklime for plaster and mortar from about 12,000 years ago in the
+    Levant. It is the raw material of lime, cement and concrete and the flux in iron smelting.
+  note: >-
+    Limestone and dolomite cover a large share of the continents and are effectively unlimited. The constraint is
+    climate: heating limestone releases its own carbon dioxide, so cement and lime making emit about 8 percent of
+    global CO2.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Lime
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-lime.pdf
+    - title: Limestone (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Limestone
+
+- id: res-zinc
+  name: Zinc
+  kind: resource
+  fields: [materials]
+  date: -100
+  status: achieved
+  tier: 3
+  scarcity: limited
+  summary: >-
+    Zinc ore heated with copper makes brass, which the Romans used for coins from the 1st century BCE. Metallic zinc
+    boils off before it can be smelted normally, so it was first produced in quantity by distillation at Zawar in
+    India from about the 9th century CE.
+  note: >-
+    Used today mainly to galvanize steel against rust. Mining is about 12 million tonnes a year, led by China, Peru
+    and Australia, against USGS reserves of about 230 million tonnes, under 20 years of output, though identified
+    resources are about 1.9 billion tonnes. Zinc ores are also the main source of germanium, gallium and indium.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Zinc
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-zinc.pdf
+    - title: Zinc, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Zinc
+    - title: Zawar, ancient zinc mines (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Zawar
+
+- id: res-natural-rubber
+  name: Natural rubber
+  kind: resource
+  fields: [materials, agriculture]
+  date: -1600
+  status: achieved
+  tier: 3
+  scarcity: limited
+  summary: >-
+    Latex from tropical trees, which Mesoamericans processed with morning glory juice into tough, bouncy rubber by
+    about 1600 BCE for balls, bindings and figurines. Vulcanized rubber later became essential for tires, seals and
+    insulation.
+  note: >-
+    Almost all supply comes from one species, Hevea brasiliensis, grown from a narrow genetic base taken from Brazil
+    to Asia in 1876. Thailand, Indonesia and Vietnam produce most of the world's 14 million or so tonnes a year;
+    South American leaf blight prevents plantations in the tree's native range (Ford's Fordlandia failed), and its
+    arrival in Asia could be catastrophic. Synthetic rubber covers much demand, but aircraft and heavy truck tires
+    still need natural rubber.
+  sources:
+    - title: Hosler, Burkett and Tarkanian 1999, Prehistoric polymers (Science); MIT News summary
+      url: https://news.mit.edu/1999/rubber-0714
+    - title: Natural rubber (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Natural_rubber
+    - title: Fordlandia (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Fordl%C3%A2ndia
+
+- id: res-bauxite
+  name: Bauxite
+  kind: resource
+  fields: [materials]
+  date: 1888
+  status: achieved
+  tier: 3
+  scarcity: abundant
+  summary: >-
+    The ore of aluminum, named for Les Baux in France where it was identified in 1821. It became a major resource
+    after the Hall-Heroult smelting process (1886) and the Bayer refining process (1888) made aluminum cheap.
+  note: >-
+    Aluminum is the most common metal in the crust, and bauxite reserves are about 29 billion tonnes against mining
+    of about 450 million tonnes a year, with Guinea and Australia the largest producers and China refining most of
+    the alumina. The real limit is energy: smelting takes roughly 14 to 15 MWh of electricity per tonne of metal,
+    which is why smelters sit near cheap hydro, gas or coal power.
+  sources:
+    - title: USGS Mineral Commodity Summaries 2025, Bauxite and Alumina
+      url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-bauxite-alumina.pdf
+    - title: Bauxite (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Bauxite
+    - title: Hall-Heroult process (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Hall%E2%80%93H%C3%A9roult_process
+
+# ---------------------------------------------------------------------------
+# Paleolithic
+# ---------------------------------------------------------------------------
+
+- id: stone-tools
+  name: Stone tools
+  kind: technique
+  fields: [materials, engineering]
+  date: -3300000
+  status: achieved
+  tier: 1
+  summary: >-
+    Striking flakes off a stone core makes sharp cutting edges. The oldest known tools, from Lomekwi in Kenya, are
+    about 3.3 million years old, older than the genus Homo.
+  requires: [precision-grip]
+  helped_by: [bipedalism, cooperation]
+  uses: [res-flint]
+  efforts:
+    - who: Unknown hominins (possibly Kenyanthropus or Australopithecus)
+      where: Lomekwi 3, West Turkana, Kenya
+      when: -3300000
+      outcome: achieved
+      note: Large, crudely knapped cores and flakes; whether this tradition continued is unknown.
+    - who: Oldowan toolmakers (early Homo, also Paranthropus)
+      where: Ledi-Geraru, Ethiopia; Nyayanga, Kenya
+      when: [-2900000, -2580000]
+      outcome: achieved
+      note: Systematic flake production used to butcher hippos and pound plants.
+    - who: Homo erectus (Acheulean)
+      where: Kokiselei, West Turkana, Kenya
+      when: -1760000
+      outcome: achieved
+      note: Shaped bifacial handaxes, made to a standard plan for over a million years.
+  sources:
+    - title: Harmand et al. 2015, 3.3-million-year-old stone tools from Lomekwi 3 (Nature)
+      url: https://www.nature.com/articles/nature14464
+    - title: Smithsonian Human Origins, Stone Tools
+      url: https://humanorigins.si.edu/evidence/behavior/stone-tools
+    - title: Plummer et al. 2023, Expanded geographic distribution and dietary strategies of the earliest Oldowan hominins and Paranthropus (Science)
+      url: https://doi.org/10.1126/science.abo7452
+
+- id: woodworking
+  name: Woodworking and wooden spears
+  kind: technique
+  fields: [engineering, materials]
+  date: -476000
+  status: achieved
+  tier: 3
+  summary: >-
+    Shaping wood with stone tools. The oldest worked structure, interlocking logs at Kalambo Falls in Zambia, is
+    about 476,000 years old; the Schoningen spears in Germany are the oldest complete hunting weapons.
+  requires: [stone-tools]
+  uses: [res-wood]
+  efforts:
+    - who: Unknown hominins
+      where: Kalambo Falls, Zambia
+      when: -476000
+      outcome: achieved
+      note: Two logs joined by a cut notch, perhaps part of a platform.
+    - who: Neanderthals or their ancestors
+      where: Schoningen, Germany
+      when: -200000
+      outcome: achieved
+      note: About ten balanced throwing spears; redated in 2025 from about 300,000 to about 200,000 years. The Clacton spear tip from England is about 400,000 years old.
+  sources:
+    - title: Barham et al. 2023, Evidence for the earliest structural use of wood (Nature)
+      url: https://www.nature.com/articles/s41586-023-06557-9
+    - title: University of York 2025, Age of Schoningen spears revised
+      url: https://www.york.ac.uk/news-and-events/news/2025/research/age-schoningen-spears/
+
+- id: control-of-fire
+  name: Control of fire
+  kind: technique
+  fields: [energy, chemistry]
+  date: [-1000000, -400000]
+  status: achieved
+  tier: 1
+  summary: >-
+    Keeping and later making fire, for warmth, light, protection and cooking. When it began is contested: burned
+    remains inside Wonderwerk Cave date to about 1 million years ago, and the earliest evidence of fire-making
+    itself, at Barnham in England, is about 400,000 years old.
+  requires: [stone-tools, large-brain, cooperation]
+  uses: [res-wood]
+  efforts:
+    - who: Homo erectus
+      where: Wonderwerk Cave, South Africa
+      when: -1000000
+      outcome: achieved
+      note: Ashed plants and burned bone deep inside the cave; whether fire was made or carried in from wildfires is unknown. Claims from Koobi Fora and Chesowanja (about 1.5 million years) are disputed.
+    - who: Homo erectus or a successor
+      where: Gesher Benot Ya'aqov, Israel
+      when: -790000
+      outcome: achieved
+      note: Burned flint and seeds clustered in hearth-like patches across many layers.
+    - who: Early Neanderthals
+      where: Barnham, Suffolk, England
+      when: -400000
+      outcome: achieved
+      note: Reported in Nature in 2025; heated sediments, fire-cracked flint and pyrite, a mineral struck with flint to make sparks.
+    - who: Middle Paleolithic people
+      where: Qesem Cave, Israel
+      when: -300000
+      outcome: achieved
+      note: A central hearth used repeatedly; from here on habitual fire use is widespread.
+  sources:
+    - title: Berna et al. 2012, Microstratigraphic evidence of in situ fire at Wonderwerk Cave (PNAS)
+      url: https://www.pnas.org/doi/10.1073/pnas.1117620109
+    - title: Control of fire by early humans (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Control_of_fire_by_early_humans
+    - title: British Museum 2025, Groundbreaking discovery shows earliest evidence of fire-making
+      url: https://www.britishmuseum.org/about-us/press/press-releases/groundbreaking-discovery-shows-earliest-evidence-fire-making
+
+- id: spoken-language
+  name: Spoken language
+  kind: technique
+  fields: [society]
+  date: [-300000, -100000]
+  status: achieved
+  tier: 1
+  summary: >-
+    Full spoken language let people share plans, teach skills, and pass on knowledge of things not present. Speech
+    leaves no fossils, so its timing is inferred from anatomy, genetics and symbolic artifacts; a range of 300,000
+    to 100,000 years ago fits most views.
+  requires: [language-capacity, vocal-tract, hearing]
+  helped_by: [cooperation]
+  sources:
+    - title: Origin of language (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Origin_of_language
+    - title: Smithsonian Human Origins, Language
+      url: https://humanorigins.si.edu/human-characteristics/language
+
+- id: clothing
+  name: Clothing
+  kind: technique
+  fields: [materials]
+  date: [-170000, -90000]
+  status: achieved
+  tier: 2
+  summary: >-
+    Hides and later sewn garments let people live in cold climates. Body lice, which live in clothing, split from
+    head lice about 170,000 to 83,000 years ago, and bone tools for scraping hides from Morocco date to about
+    120,000 to 90,000 years ago.
+  requires: [stone-tools]
+  helped_by: [control-of-fire]
+  efforts:
+    - who: Homo sapiens
+      where: Contrebandiers Cave, Morocco
+      when: [-120000, -90000]
+      outcome: achieved
+      note: Specialized bone tools and cut-marked carnivore bones suggest fur and hide working.
+    - who: Homo sapiens and Denisovans
+      where: Eurasia
+      when: [-50000, -40000]
+      outcome: achieved
+      note: Eyed bone needles appear, implying tailored, sewn clothing.
+  sources:
+    - title: Toups et al. 2011, Origin of clothing lice (Molecular Biology and Evolution)
+      url: https://doi.org/10.1093/molbev/msq234
+    - title: Hallett et al. 2021, Earliest clothing evidence at Contrebandiers Cave (iScience)
+      url: https://doi.org/10.1016/j.isci.2021.103071
+
+- id: art-symbolic
+  name: Symbolic art and ornament
+  kind: technique
+  fields: [society]
+  date: [-140000, -70000]
+  status: achieved
+  tier: 1
+  summary: >-
+    Beads, engraved patterns and paintings show people storing meaning outside their heads, a step toward
+    writing. Shell beads from Morocco date to about 140,000 years ago; a hand stencil on Muna Island, Indonesia,
+    at least 67,800 years old, is the oldest known cave art.
+  requires: [language-capacity]
+  uses: [res-iron-ore]
+  efforts:
+    - who: Homo sapiens
+      where: Bizmoune Cave, Morocco
+      when: -140000
+      outcome: achieved
+      note: Perforated shell beads, about 142,000 to 150,000 years old.
+    - who: Homo sapiens
+      where: Blombos Cave, South Africa
+      when: [-100000, -73000]
+      outcome: achieved
+      note: Engraved ochre and the oldest known drawing, a crosshatched pattern about 73,000 years old.
+    - who: Homo sapiens
+      where: Liang Metanduno, Muna Island, Indonesia
+      when: -67800
+      outcome: achieved
+      note: Minimum age from uranium-series dating of overlying calcite (Nature, 2026). Neanderthal hand stencils in Spain dated to about 64,000 years are disputed.
+    - who: Homo sapiens
+      where: Sulawesi, Indonesia
+      when: -51200
+      outcome: achieved
+      note: The oldest known narrative scene, humanlike figures with a pig.
+    - who: Aurignacian people
+      where: Swabian Jura, Germany; Chauvet, France
+      when: [-40000, -36000]
+      outcome: achieved
+      note: Carved figurines (the Lion-man), the Hohle Fels bone flute (the oldest musical instrument), and Chauvet's painted animals.
+  sources:
+    - title: Henshilwood et al. 2018, An abstract drawing from Blombos Cave (Nature)
+      url: https://www.nature.com/articles/s41586-018-0514-3
+    - title: Al Jazeera 2026, World's oldest cave art discovered in Indonesia's Muna island
+      url: https://www.aljazeera.com/news/2026/1/22/worlds-oldest-cave-art-discovered-in-indonesias-muna-island
+    - title: Sehasseh et al. 2021, Early Middle Stone Age personal ornaments from Bizmoune Cave (Science Advances)
+      url: https://www.science.org/doi/10.1126/sciadv.abi8620
+
+- id: watercraft
+  name: Watercraft
+  kind: device
+  fields: [engineering]
+  date: [-65000, -50000]
+  status: achieved
+  tier: 3
+  summary: >-
+    Rafts or canoes carried people across open sea to Australia and New Guinea at least 50,000 and possibly 65,000
+    years ago, a crossing never in sight of land. The oldest surviving boat, the Pesse canoe from the Netherlands,
+    dates to about 8000 BCE.
+  requires: [woodworking]
+  uses: [res-wood]
+  sources:
+    - title: Prehistory of Australia, arrival (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Prehistory_of_Australia
+    - title: Pesse canoe (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Pesse_canoe
+
+- id: bow-and-arrow
+  name: Bow and arrow
+  kind: device
+  fields: [engineering]
+  date: [-64000, -54000]
+  status: achieved
+  tier: 2
+  summary: >-
+    The first device to store energy slowly in a spring and release it fast. Impact-damaged stone and bone points
+    from Sibudu Cave, South Africa (about 64,000 to 62,000 years ago), are the oldest likely arrowheads.
+  requires: [woodworking, stone-tools]
+  efforts:
+    - who: Homo sapiens
+      where: Sibudu Cave, South Africa
+      when: [-64000, -61700]
+      outcome: achieved
+      note: Small stone points with residues of glue; a bone point dated to about 61,700 years ago.
+    - who: Homo sapiens
+      where: Grotte Mandrin, France
+      when: -54000
+      outcome: achieved
+      note: Hundreds of tiny points with impact damage, the earliest likely archery in Europe.
+    - who: Homo sapiens
+      where: Fa-Hien Lena, Sri Lanka
+      when: -48000
+      outcome: achieved
+      note: Bone arrow points in a tropical rainforest setting.
+  sources:
+    - title: Backwell et al. 2018, The antiquity of bow-and-arrow technology (Antiquity)
+      url: https://doi.org/10.15184/aqy.2018.11
+    - title: Metz et al. 2023, Bow-and-arrow technology at Mandrin (Science Advances)
+      url: https://www.science.org/doi/10.1126/sciadv.add4675
+
+- id: weaving
+  name: Cordage and weaving
+  kind: technique
+  fields: [materials]
+  date: [-50000, -28000]
+  status: achieved
+  tier: 3
+  summary: >-
+    Twisting fibers into string and interlacing them into nets, baskets and cloth. A three-ply cord fragment made by
+    Neanderthals in France is about 41,000 to 52,000 years old, and dyed flax fibers from Dzudzuana Cave in Georgia
+    are about 30,000 years old.
+  requires: [stone-tools]
+  efforts:
+    - who: Neanderthals
+      where: Abri du Maras, France
+      when: [-50000, -39000]
+      outcome: achieved
+      note: Bark fibers twisted into a three-ply cord on a stone tool.
+    - who: Upper Paleolithic people
+      where: Dzudzuana Cave, Georgia
+      when: -28000
+      outcome: achieved
+      note: Spun, knotted and dyed wild flax.
+    - who: Neolithic farmers
+      where: Near East
+      when: -6000
+      outcome: achieved
+      note: Loom-woven linen and later wool cloth.
+  sources:
+    - title: Hardy et al. 2020, Direct evidence of Neanderthal fibre technology (Scientific Reports)
+      url: https://www.nature.com/articles/s41598-020-61839-w
+    - title: Kvavadze et al. 2009, 30,000-year-old wild flax fibers (Science)
+      url: https://www.science.org/doi/10.1126/science.1175404
+
+- id: tally-marks
+  name: Tally marks
+  kind: technique
+  fields: [math]
+  date: [-41000, -18000]
+  status: achieved
+  tier: 3
+  summary: >-
+    Notches cut in bone to keep count, the oldest record-keeping. The Lebombo bone (about 43,000 years old) and the
+    Ishango bone (about 20,000 years old) are often cited, though whether their marks are counts is debated.
+  requires: [language-capacity]
+  helped_by: [art-symbolic]
+  sources:
+    - title: Lebombo bone (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Lebombo_bone
+    - title: Ishango bone (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Ishango_bone
+
+- id: domestication-dogs
+  name: Domestication of dogs
+  kind: technique
+  fields: [agriculture, biology]
+  date: [-28000, -13800]
+  status: achieved
+  tier: 3
+  summary: >-
+    Wolves became dogs while people were still hunter-gatherers, the first domesticated animal. Genetic estimates
+    for the split range from about 40,000 to 20,000 years ago; the oldest genetically confirmed dog, from Pinarbasi
+    in Turkey, is about 15,800 years old.
+  requires: [cooperation]
+  efforts:
+    - who: Ice Age hunter-gatherers
+      where: Eurasia (possibly Siberia)
+      when: [-28000, -18000]
+      outcome: achieved
+      note: Inferred from genetics; one hypothesis places it in Siberia about 23,000 years ago.
+    - who: Late Paleolithic people
+      where: Pinarbasi, Turkey; Gough's Cave, England
+      when: [-13800, -12300]
+      outcome: achieved
+      note: Ancient DNA study (Nature, 2026) found dogs of distinct ancestries across Eurasia by 15,000 years ago. The Bonn-Oberkassel dog, buried with people about 14,200 years ago, is the oldest such burial.
+  sources:
+    - title: UCL 2026, Humans kept dogs 5,000 years earlier than thought
+      url: https://www.ucl.ac.uk/news/2026/mar/humans-kept-dogs-5000-years-earlier-thought
+    - title: Domestication of the dog (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Domestication_of_the_dog
+
+- id: pottery
+  name: Pottery
+  kind: technique
+  fields: [materials, chemistry]
+  date: -18000
+  status: achieved
+  tier: 2
+  summary: >-
+    Fired clay vessels for cooking and storage, the first synthetic material. The oldest known pots, from
+    Xianrendong Cave in China, are about 20,000 years old, made by hunter-gatherers well before farming.
+  requires: [control-of-fire]
+  uses: [res-clay, res-wood]
+  efforts:
+    - who: Hunter-gatherers
+      where: Xianrendong Cave, Jiangxi, China
+      when: -18000
+      outcome: achieved
+      note: Fired clay figurines are older still, from Dolni Vestonice, Czechia, about 29,000 BCE.
+    - who: Jomon culture
+      where: Japan
+      when: -14500
+      outcome: independent
+      note: Possibly linked to the Chinese tradition.
+    - who: Hunter-gatherers
+      where: Ounjougou, Mali (Sahara)
+      when: -9400
+      outcome: independent
+    - who: Amazonian fisher-foragers
+      where: Taperinha, Brazil
+      when: -5500
+      outcome: independent
+  sources:
+    - title: Wu et al. 2012, Early pottery at 20,000 years ago in Xianrendong Cave (Science)
+      url: https://www.science.org/doi/10.1126/science.1218643
+    - title: Pottery, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_pottery
+
+# ---------------------------------------------------------------------------
+# Neolithic
+# ---------------------------------------------------------------------------
+
+- id: lime-plaster
+  name: Lime plaster
+  kind: technique
+  fields: [materials, chemistry]
+  date: [-12000, -10000]
+  status: achieved
+  tier: 3
+  summary: >-
+    Burning limestone to quicklime and mixing it with water gives a plaster that hardens back into stone, the first
+    deliberate chemical transformation used in building. It appears in the Natufian and early Neolithic Levant.
+  requires: [control-of-fire]
+  uses: [res-limestone, res-wood]
+  sources:
+    - title: Lime plaster (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Lime_plaster
+    - title: Kingery et al. 1988, Pre-pottery Neolithic lime plaster (Journal of Field Archaeology)
+      url: https://doi.org/10.1179/009346988791974501
+
+- id: agriculture
+  name: Agriculture
+  kind: technique
+  fields: [agriculture]
+  date: -9500
+  status: achieved
+  tier: 1
+  summary: >-
+    Planting and selecting crops until they depend on people, which fed far denser populations and made permanent
+    villages, surpluses and cities possible. It arose independently in at least seven regions over several
+    thousand years.
+  requires: [stone-tools, spoken-language, cooperation]
+  uses: [res-fertile-soil, res-fresh-water]
+  efforts:
+    - who: Pre-Pottery Neolithic farmers
+      where: Fertile Crescent (Levant, Anatolia, Zagros)
+      when: -9500
+      outcome: achieved
+      note: Wheat, barley, lentils, peas and flax; fully domesticated forms by about 8500 BCE.
+    - who: Early Holocene people
+      where: Northern China (Yellow River)
+      when: -8000
+      outcome: independent
+      note: Broomcorn and foxtail millet.
+    - who: Early Holocene people
+      where: Yangtze valley, China
+      when: -7000
+      outcome: independent
+      note: Rice; domestication was gradual and complete by about 4000 BCE.
+    - who: Archaic peoples
+      where: Mesoamerica
+      when: -8000
+      outcome: independent
+      note: Squash about 8000 BCE (Guila Naquitz); maize from teosinte by about 7000 BCE.
+    - who: Archaic peoples
+      where: Andes and Amazonia
+      when: -8000
+      outcome: independent
+      note: Squash, then potatoes, quinoa and manioc.
+    - who: Highland farmers
+      where: Kuk Swamp, New Guinea
+      when: [-7000, -5000]
+      outcome: independent
+      note: Taro, yams and bananas with drainage ditches.
+    - who: Woodland-era peoples
+      where: Eastern North America
+      when: -3000
+      outcome: independent
+      note: Squash, sunflower, sumpweed and goosefoot.
+    - who: Sahel farmers
+      where: West Africa
+      when: -2500
+      outcome: independent
+      note: Pearl millet, then sorghum and African rice.
+  sources:
+    - title: Neolithic Revolution (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Neolithic_Revolution
+    - title: Larson et al. 2014, Current perspectives and the future of domestication studies (PNAS)
+      url: https://www.pnas.org/doi/10.1073/pnas.1323964111
+
+- id: monumental-architecture
+  name: Monumental architecture
+  kind: technique
+  fields: [engineering, society]
+  date: -9500
+  status: achieved
+  tier: 3
+  summary: >-
+    Large buildings that need many people organized over years. Gobekli Tepe in Turkey, with carved pillars up to
+    5.5 m tall, was built about 9500 BCE by people still largely hunting and gathering.
+  requires: [stone-tools, cooperation]
+  helped_by: [agriculture]
+  efforts:
+    - who: Pre-Pottery Neolithic people
+      where: Gobekli Tepe, Turkey
+      when: -9500
+      outcome: achieved
+    - who: Neolithic Britons
+      where: Stonehenge, England
+      when: [-3000, -2000]
+      outcome: achieved
+      note: Sarsen stones of about 25 tonnes moved some 25 km and bluestones about 225 km from Wales.
+    - who: Norte Chico civilization
+      where: Caral, Peru
+      when: -2600
+      outcome: independent
+    - who: Egyptian Fourth Dynasty
+      where: Giza, Egypt
+      when: [-2580, -2560]
+      outcome: achieved
+      note: The Great Pyramid of Khufu, about 2.3 million blocks, the tallest building on Earth for some 3,800 years.
+  effort:
+    span: [-2580, -2560]
+    people: 20000
+    note: >-
+      The Great Pyramid. Excavations of the workers' town at Giza suggest a paid, rotating workforce; modern
+      estimates range from about 10,000 to 30,000 at a time over roughly 20 years.
+  sources:
+    - title: Gobekli Tepe (Wikipedia)
+      url: https://en.wikipedia.org/wiki/G%C3%B6bekli_Tepe
+    - title: Great Pyramid of Giza (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Great_Pyramid_of_Giza
+
+- id: animal-domestication
+  name: Livestock domestication
+  kind: technique
+  fields: [agriculture]
+  date: -8500
+  status: achieved
+  tier: 2
+  summary: >-
+    Herding and breeding goats, sheep, cattle and pigs gave meat, milk, wool, leather, dung fuel and, later,
+    pulling power. It began in the Fertile Crescent around 8500 BCE and arose separately elsewhere.
+  requires: [cooperation]
+  helped_by: [agriculture, domestication-dogs]
+  efforts:
+    - who: Neolithic herders
+      where: Zagros and Taurus mountains, upper Euphrates
+      when: -8500
+      outcome: achieved
+      note: Goats, sheep, cattle (from aurochs) and pigs within a few centuries of each other.
+    - who: Neolithic farmers
+      where: China
+      when: -6000
+      outcome: independent
+      note: Pigs, separately from western Asia.
+    - who: Andean herders
+      where: Central Andes
+      when: [-5000, -4000]
+      outcome: independent
+      note: Llama and alpaca, plus guinea pigs.
+    - who: Rice and millet farmers
+      where: Mainland Southeast Asia
+      when: -1500
+      outcome: independent
+      note: Chickens, from red junglefowl.
+  sources:
+    - title: Domestication of animals (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Domestication_of_animals
+    - title: Zeder 2008, Domestication and early agriculture in the Mediterranean Basin (PNAS)
+      url: https://www.pnas.org/doi/10.1073/pnas.0801317105
+
+- id: clay-tokens
+  name: Clay counting tokens
+  kind: technique
+  fields: [society, math]
+  date: -8000
+  status: achieved
+  tier: 3
+  summary: >-
+    Small clay shapes standing for measures of grain, animals or oil, used across the Near East from about 8000
+    BCE. Sealed in clay envelopes and impressed on their surfaces, they are the leading theory for how writing
+    began.
+  requires: [agriculture, tally-marks]
+  uses: [res-clay]
+  sources:
+    - title: Denise Schmandt-Besserat, token theory (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Denise_Schmandt-Besserat
+    - title: Bulla (seal), clay envelopes for tokens (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Bulla_(seal)
+
+- id: irrigation
+  name: Irrigation
+  kind: technique
+  fields: [agriculture, engineering]
+  date: -6000
+  status: achieved
+  tier: 2
+  summary: >-
+    Canals that bring river water to fields let farming spread into dry lands and supported the first states. The
+    earliest known canals are at Choga Mami in eastern Iraq, about 6000 BCE.
+  requires: [agriculture]
+  uses: [res-fresh-water, res-fertile-soil]
+  efforts:
+    - who: Samarran culture
+      where: Choga Mami, Mesopotamia
+      when: -6000
+      outcome: achieved
+    - who: Early Andean farmers
+      where: Zana Valley, Peru
+      when: [-4700, -3400]
+      outcome: independent
+      note: Small canals dated to about 6,700 to 5,400 years ago.
+    - who: Pharaonic Egypt
+      where: Nile valley
+      when: -3100
+      outcome: achieved
+      note: Basin irrigation using the annual flood.
+    - who: Li Bing, Qin state
+      where: Dujiangyan, Sichuan, China
+      when: -256
+      outcome: achieved
+      note: A diversion system that still irrigates over 5,000 square km.
+  sources:
+    - title: History of irrigation (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Irrigation
+    - title: Dillehay et al. 2005, Preceramic irrigation canals in the Peruvian Andes (PNAS)
+      url: https://doi.org/10.1073/pnas.0508583102
+
+- id: copper-smelting
+  name: Copper smelting
+  kind: technique
+  fields: [materials, chemistry]
+  date: -5000
+  status: achieved
+  tier: 2
+  summary: >-
+    Heating ore with charcoal to about 1,100 C reduces it to metal, the start of extractive metallurgy. The
+    earliest securely dated smelting is at Belovode in Serbia, about 5000 BCE, after millennia of hammering native
+    copper.
+  requires: [control-of-fire, pottery]
+  uses: [res-copper, res-wood]
+  efforts:
+    - who: Early Neolithic people
+      where: Shanidar, Iraq; Cayonu, Turkey
+      when: [-8700, -8200]
+      outcome: achieved
+      note: Native copper hammered and annealed into beads and awls, without smelting.
+    - who: Vinca culture
+      where: Belovode, Serbia
+      when: -5000
+      outcome: achieved
+      note: Slag and malachite show smelting far from the Near East, suggesting more than one origin.
+    - who: Early villagers
+      where: Tal-i Iblis, Iran
+      when: [-5000, -4500]
+      outcome: independent
+      note: Slagged crucibles; dating less certain.
+    - who: Old Copper Complex
+      where: Great Lakes, North America
+      when: [-5000, -3000]
+      outcome: independent
+      note: Large-scale cold working of native copper, never smelted.
+  sources:
+    - title: Radivojevic et al. 2010, On the origins of extractive metallurgy (Journal of Archaeological Science)
+      url: https://doi.org/10.1016/j.jas.2010.06.012
+    - title: Copper metallurgy, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Copper_Age
+
+- id: plow
+  name: Plow
+  kind: device
+  fields: [agriculture, engineering]
+  date: [-4000, -3500]
+  status: achieved
+  tier: 2
+  summary: >-
+    The ard, a pointed beam dragged by oxen to break soil, multiplied the land one family could farm. It appears in
+    Mesopotamia and Europe in the 4th millennium BCE; the heavy moldboard plow that turns the soil came later.
+  requires: [agriculture, animal-domestication]
+  helped_by: [woodworking]
+  efforts:
+    - who: Early Mesopotamian and European farmers
+      where: Near East and Europe
+      when: [-4000, -3500]
+      outcome: achieved
+    - who: Han dynasty
+      where: China
+      when: -100
+      outcome: achieved
+      note: Iron plowshares with curved moldboards.
+    - who: Medieval farmers
+      where: Northern Europe
+      when: [700, 1000]
+      outcome: achieved
+      note: The heavy wheeled moldboard plow opened clay soils of the north.
+  sources:
+    - title: Plough, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Plough
+
+- id: sailing-ships
+  name: Sailing ships
+  kind: technique
+  fields: [engineering, energy]
+  date: [-5500, -3200]
+  status: achieved
+  tier: 2
+  summary: >-
+    Using wind on a sail, the first use of a non-muscle energy source to move things. Ubaid-period boats in the
+    Persian Gulf (about 5500 BCE) and sails painted on Egyptian pottery (about 3200 BCE) are the earliest evidence.
+  requires: [watercraft, weaving]
+  efforts:
+    - who: Ubaid culture
+      where: Persian Gulf (Kuwait)
+      when: -5500
+      outcome: achieved
+      note: Bitumen-coated reed boats; a model with a mast socket from Eridu.
+    - who: Predynastic Egyptians
+      where: Nile
+      when: -3200
+      outcome: achieved
+    - who: Austronesian voyagers
+      where: Island Southeast Asia and the Pacific
+      when: [-1500, 1300]
+      outcome: independent
+      note: Outrigger and double-hulled canoes settled the Pacific, reaching Hawaii and New Zealand by about 1300 CE.
+  sources:
+    - title: Sailing, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_sailing
+    - title: Austronesian peoples, voyaging (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Austronesian_peoples
+
+# ---------------------------------------------------------------------------
+# Bronze Age
+# ---------------------------------------------------------------------------
+
+- id: cities
+  name: Cities
+  kind: institution
+  fields: [society]
+  date: [-4000, -3100]
+  status: achieved
+  tier: 1
+  summary: >-
+    Dense settlements of tens of thousands with full-time specialists, temples, rulers and markets. Uruk in
+    southern Mesopotamia grew to perhaps 40,000 or more people by about 3100 BCE; cities then arose independently
+    in several regions.
+  requires: [agriculture]
+  helped_by: [irrigation, pottery, animal-domestication]
+  efforts:
+    - who: Neolithic townspeople
+      where: Catalhoyuk, Turkey
+      when: [-7400, -6000]
+      outcome: achieved
+      note: A large town of several thousand, without clear specialists or public buildings; often called proto-urban.
+    - who: Sumerians
+      where: Uruk and Tell Brak, Mesopotamia
+      when: [-4000, -3100]
+      outcome: achieved
+    - who: Harappan civilization
+      where: Indus valley (Mohenjo-daro, Harappa)
+      when: -2600
+      outcome: independent
+      note: Planned grids, drains and standardized bricks.
+    - who: Norte Chico civilization
+      where: Caral, Peru
+      when: -2600
+      outcome: independent
+    - who: Erlitou culture
+      where: Yellow River, China
+      when: -1900
+      outcome: independent
+    - who: Olmec
+      where: San Lorenzo, Mexico
+      when: -1200
+      outcome: independent
+      note: Later Teotihuacan (about 100 BCE to 550 CE) held perhaps 100,000 people.
+  sources:
+    - title: Uruk (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Uruk
+    - title: Cradle of civilization (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Cradle_of_civilization
+
+- id: numerals
+  name: Written numerals
+  kind: institution
+  fields: [math, society]
+  date: [-3500, -3300]
+  status: achieved
+  tier: 2
+  summary: >-
+    Signs for numbers impressed on clay tablets in Uruk and Susa recorded quantities of goods before writing
+    recorded words. Sumerian counting was sexagesimal (base 60), which survives in our hours and degrees.
+  requires: [clay-tokens, tally-marks]
+  efforts:
+    - who: Sumerians and Elamites
+      where: Uruk and Susa
+      when: [-3500, -3300]
+      outcome: achieved
+      note: Numerical tablets with impressed signs, followed by proto-cuneiform.
+    - who: Egyptians
+      where: Egypt
+      when: -3200
+      outcome: independent
+      note: Decimal hieroglyphic numerals.
+    - who: Shang dynasty
+      where: China
+      when: -1250
+      outcome: independent
+      note: Decimal numerals on oracle bones.
+    - who: Inca and predecessors
+      where: Andes
+      when: [1000, 1500]
+      outcome: independent
+      note: Khipu, knotted cords recording decimal numbers.
+  sources:
+    - title: Sumerian numerals, Babylonian cuneiform numerals (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Babylonian_cuneiform_numerals
+    - title: Proto-cuneiform (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Proto-cuneiform
+
+- id: writing
+  name: Writing
+  kind: institution
+  fields: [society]
+  date: [-3400, -3200]
+  status: achieved
+  tier: 1
+  summary: >-
+    A system of signs that records language, so knowledge, laws and accounts can outlast memory and travel without a
+    messenger. It was invented at least three or four times; the earliest is proto-cuneiform at Uruk, about 3300
+    BCE, which grew out of accounting.
+  requires: [numerals, clay-tokens, cities]
+  uses: [res-clay]
+  efforts:
+    - who: Sumerians
+      where: Uruk, Mesopotamia
+      when: [-3400, -3200]
+      outcome: achieved
+      note: Proto-cuneiform administrative tablets; full cuneiform could write sentences by about 2600 BCE.
+    - who: Egyptians
+      where: Abydos, Egypt
+      when: -3250
+      outcome: independent
+      note: Labels in tomb U-j; whether hieroglyphs were fully independent of Mesopotamia or inspired by it is debated.
+    - who: Shang dynasty
+      where: Anyang, China
+      when: -1250
+      outcome: independent
+      note: Oracle bone script, the ancestor of Chinese characters.
+    - who: Olmec, Zapotec and Maya
+      where: Mesoamerica
+      when: [-900, -300]
+      outcome: independent
+      note: The Cascajal block (about 900 BCE) is contested; Zapotec inscriptions date to about 600 BCE and Maya writing to about 300 BCE.
+    - who: Harappan civilization
+      where: Indus valley
+      when: -2600
+      outcome: abandoned
+      note: The Indus script is undeciphered and may not be full writing; it disappeared about 1900 BCE.
+  sources:
+    - title: History of writing (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_writing
+    - title: Britannica, Cuneiform
+      url: https://www.britannica.com/topic/cuneiform
+
+- id: wheel
+  name: Wheel and axle
+  kind: device
+  fields: [engineering]
+  date: [-3600, -3300]
+  status: achieved
+  tier: 1
+  summary: >-
+    A wheel turning on an axle cuts rolling friction, enabling carts, and the same principle runs the potter's
+    wheel, pulleys and gears. Wheeled vehicles appear almost at once across Mesopotamia, the steppe and Europe
+    around 3500 BCE.
+  requires: [woodworking]
+  helped_by: [animal-domestication, copper-smelting]
+  efforts:
+    - who: Mesopotamian potters
+      where: Mesopotamia
+      when: [-4500, -3500]
+      outcome: achieved
+      note: The slow potter's wheel probably came before vehicle wheels.
+    - who: Funnelbeaker culture
+      where: Bronocice, Poland
+      when: -3500
+      outcome: achieved
+      note: The oldest picture of a wheeled wagon, on a pot.
+    - who: Late Neolithic people
+      where: Ljubljana Marshes, Slovenia
+      when: -3150
+      outcome: achieved
+      note: The oldest surviving wooden wheel and axle.
+    - who: Mesoamerican peoples
+      where: Veracruz, Mexico
+      when: [100, 900]
+      outcome: independent
+      note: Wheeled figurines, but no wheeled vehicles, probably for lack of draft animals.
+  sources:
+    - title: Wheel, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Wheel
+    - title: Ljubljana Marshes Wooden Wheel (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Ljubljana_Marshes_Wooden_Wheel
+
+- id: bronze
+  name: Bronze
+  kind: technique
+  fields: [materials]
+  date: [-4650, -3300]
+  status: achieved
+  tier: 1
+  summary: >-
+    Copper alloyed with about 10 percent tin is harder than copper and casts well, giving durable tools, weapons
+    and bells. Isolated tin bronze appears at Plocnik in Serbia about 4650 BCE; the Bronze Age proper begins in the
+    Near East about 3300 BCE.
+  requires: [copper-smelting]
+  uses: [res-copper, res-tin]
+  efforts:
+    - who: Vinca culture
+      where: Plocnik, Serbia
+      when: -4650
+      outcome: achieved
+      note: A tin bronze foil, probably smelted from mixed copper-tin ore.
+    - who: Near Eastern smiths
+      where: Mesopotamia, Anatolia, Levant
+      when: [-4000, -3300]
+      outcome: achieved
+      note: Arsenical copper first, then tin bronze with tin traded from afar.
+    - who: Erlitou and Shang China
+      where: Yellow River, China
+      when: -1900
+      outcome: achieved
+      note: Large-scale piece-mold casting of ritual vessels; probably stimulated by contact via the steppe.
+    - who: Andean metalworkers
+      where: Bolivia and Peru
+      when: [600, 1000]
+      outcome: independent
+      note: Arsenical and later tin bronzes, used widely under the Inca.
+  sources:
+    - title: Radivojevic et al. 2013, Tainted ores and the rise of tin bronzes in Eurasia (Antiquity)
+      url: https://doi.org/10.1017/S0003598X00049553
+    - title: Bronze Age (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Bronze_Age
+
+- id: calendar
+  name: Calendar
+  kind: institution
+  fields: [society, math]
+  date: -3000
+  status: achieved
+  tier: 2
+  summary: >-
+    A counted year that tracks seasons for planting, festivals and taxes. Egypt's 365-day civil calendar of 12
+    months of 30 days plus 5 extra days was in use by early in the 3rd millennium BCE.
+  requires: [numerals]
+  helped_by: [agriculture, writing]
+  efforts:
+    - who: Early dynastic Egypt
+      where: Egypt
+      when: -3000
+      outcome: achieved
+    - who: Sumerians and Babylonians
+      where: Mesopotamia
+      when: [-2100, -500]
+      outcome: independent
+      note: Lunisolar calendar; by about 500 BCE a regular 19-year intercalation cycle.
+    - who: Maya and predecessors
+      where: Mesoamerica
+      when: -36
+      outcome: independent
+      note: The Long Count; the earliest dated monument, Chiapa de Corzo Stela 2, records 36 BCE.
+    - who: Julius Caesar, Sosigenes
+      where: Rome
+      when: -45
+      outcome: achieved
+      note: The Julian calendar with leap years, used in Europe until the Gregorian reform of 1582.
+  sources:
+    - title: Egyptian calendar (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Egyptian_calendar
+    - title: Julian calendar (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Julian_calendar
+
+- id: libraries
+  name: Archives and libraries
+  kind: institution
+  fields: [society]
+  date: -2500
+  status: achieved
+  tier: 3
+  summary: >-
+    Organized collections of texts let knowledge accumulate beyond what any one scribe knew. Ebla in Syria kept an
+    archive of thousands of tablets about 2500 to 2250 BCE; Ashurbanipal's library at Nineveh and the Library of
+    Alexandria followed.
+  requires: [writing]
+  efforts:
+    - who: Kingdom of Ebla
+      where: Ebla, Syria
+      when: [-2500, -2250]
+      outcome: achieved
+    - who: Ashurbanipal
+      where: Nineveh, Assyria
+      when: -650
+      outcome: achieved
+      note: Tens of thousands of tablet fragments, including the Epic of Gilgamesh.
+    - who: Ptolemaic kings
+      where: Alexandria, Egypt
+      when: -285
+      outcome: achieved
+      note: A research library and museum; it declined over centuries rather than in one fire.
+    - who: Abbasid caliphate
+      where: Baghdad
+      when: 830
+      outcome: achieved
+      note: The House of Wisdom, a center for translating Greek, Persian and Indian works.
+  sources:
+    - title: Ebla tablets (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Ebla_tablets
+    - title: Library of Alexandria (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Library_of_Alexandria
+
+- id: glassmaking
+  name: Glassmaking
+  kind: technique
+  fields: [materials, chemistry]
+  date: -2500
+  status: achieved
+  tier: 2
+  summary: >-
+    Melting sand with plant ash or natron makes glass. Beads appear in Mesopotamia about 2500 BCE, vessels about
+    1500 BCE, and glassblowing on the Levant coast in the 1st century BCE made glass cheap.
+  requires: [control-of-fire, pottery]
+  uses: [res-silicon, res-potash, res-cobalt, res-wood]
+  efforts:
+    - who: Mesopotamian craftsmen
+      where: Mesopotamia
+      when: -2500
+      outcome: achieved
+    - who: Egyptian and Mesopotamian workshops
+      where: Egypt, Mesopotamia
+      when: -1500
+      outcome: achieved
+      note: Core-formed vessels, colored with cobalt and copper.
+    - who: Syro-Palestinian glassworkers
+      where: Levant coast
+      when: -50
+      outcome: achieved
+      note: Glassblowing, quickly spread by Rome.
+    - who: Venetian glassmakers
+      where: Murano, Venice
+      when: [1290, 1450]
+      outcome: achieved
+      note: Clear cristallo glass by about 1450, the material for better lenses.
+  sources:
+    - title: History of glass (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_glass
+
+- id: law-codes
+  name: Written law codes
+  kind: institution
+  fields: [society]
+  date: -2100
+  status: achieved
+  tier: 2
+  summary: >-
+    Publishing fixed rules and penalties made justice more predictable and less dependent on a ruler's mood. The
+    Code of Ur-Nammu (about 2100 BCE) is the oldest surviving; Hammurabi's code (about 1754 BCE) is the best
+    known.
+  requires: [writing, cities]
+  efforts:
+    - who: Ur-Nammu of Ur
+      where: Sumer
+      when: -2100
+      outcome: achieved
+    - who: Hammurabi of Babylon
+      where: Babylon
+      when: -1754
+      outcome: achieved
+      note: 282 laws on a basalt stele, with fixed penalties for injury, fees and prices.
+    - who: Roman Republic
+      where: Rome
+      when: -450
+      outcome: achieved
+      note: The Twelve Tables, later developed into Roman law and Justinian's code (529 to 534 CE).
+  sources:
+    - title: Code of Ur-Nammu (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Code_of_Ur-Nammu
+    - title: Code of Hammurabi (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Code_of_Hammurabi
+
+- id: horse-domestication
+  name: Horse domestication
+  kind: technique
+  fields: [agriculture, engineering]
+  date: -2200
+  status: achieved
+  tier: 2
+  summary: >-
+    Horses for riding and pulling chariots made land travel several times faster and reshaped warfare and trade.
+    Ancient DNA traces modern domestic horses to the western Eurasian steppe around 2200 BCE.
+  requires: [animal-domestication]
+  helped_by: [wheel]
+  efforts:
+    - who: Botai culture
+      where: Kazakhstan
+      when: -3500
+      outcome: abandoned
+      note: Horses kept or herded, but they belong to the Przewalski's lineage, not modern domestic horses.
+    - who: Steppe herders
+      where: Lower Volga and Don region
+      when: -2200
+      outcome: achieved
+      note: The DOM2 lineage spread across Eurasia within a few centuries, with spoke-wheeled chariots by about 2000 BCE.
+  sources:
+    - title: Librado et al. 2021, The origins and spread of domestic horses from the Western Eurasian steppes (Nature)
+      url: https://www.nature.com/articles/s41586-021-04018-9
+    - title: Domestication of the horse (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Domestication_of_the_horse
+
+- id: geometry
+  name: Geometry
+  kind: discovery
+  fields: [math]
+  date: [-1800, -300]
+  status: achieved
+  tier: 2
+  summary: >-
+    Rules for areas, volumes and right triangles were worked out for surveying and building in Babylon and Egypt by
+    about 1800 BCE. Greek mathematicians turned them into proofs from axioms, collected in Euclid's Elements about
+    300 BCE.
+  requires: [numerals, writing]
+  efforts:
+    - who: Babylonian scribes
+      where: Mesopotamia
+      when: -1800
+      outcome: achieved
+      note: Plimpton 322 lists Pythagorean triples; YBC 7289 gives the square root of 2 to six decimal places.
+    - who: Egyptian scribes
+      where: Egypt
+      when: -1550
+      outcome: achieved
+      note: The Rhind papyrus, with areas and the volume of a pyramid.
+    - who: Vedic priests
+      where: India
+      when: [-800, -500]
+      outcome: independent
+      note: The Sulba Sutras on altar construction state the Pythagorean theorem.
+    - who: Euclid
+      where: Alexandria
+      when: -300
+      outcome: achieved
+      note: The Elements, used as a textbook for over 2,000 years.
+  sources:
+    - title: History of geometry (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_geometry
+    - title: Euclid's Elements (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Euclid%27s_Elements
+
+- id: astronomy-ancient
+  name: Systematic astronomy
+  kind: discovery
+  fields: [physics, math]
+  date: -1650
+  status: achieved
+  tier: 2
+  summary: >-
+    Long written records of planets and eclipses let astronomers find cycles and predict the sky with arithmetic,
+    and later geometric models. The Venus tablet of Ammisaduqa records observations from the 17th century BCE.
+  requires: [writing, numerals, calendar]
+  helped_by: [geometry]
+  efforts:
+    - who: Babylonian astronomers
+      where: Mesopotamia
+      when: [-1650, -100]
+      outcome: achieved
+      note: Astronomical diaries kept from 652 BCE for six centuries; arithmetic lunar and planetary theory by about 400 BCE.
+    - who: Hipparchus, Ptolemy
+      where: Rhodes, Alexandria
+      when: [-130, 150]
+      outcome: achieved
+      note: Precession of the equinoxes; Ptolemy's Almagest (about 150 CE) was standard for 1,400 years.
+    - who: Maya astronomers
+      where: Mesoamerica
+      when: [600, 1200]
+      outcome: independent
+      note: Venus and eclipse tables in the Dresden Codex.
+    - who: Islamic astronomers
+      where: Baghdad, Maragheh, Samarkand
+      when: [830, 1440]
+      outcome: achieved
+      note: Improved tables and instruments such as the astrolabe; Ulugh Beg's observatory in the 1420s.
+  sources:
+    - title: Babylonian astronomy (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Babylonian_astronomy
+    - title: Venus tablet of Ammisaduqa (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Venus_tablet_of_Ammisaduqa
+
+- id: water-clock
+  name: Water clock
+  kind: device
+  fields: [engineering, physics]
+  date: -1500
+  status: achieved
+  tier: 3
+  summary: >-
+    A vessel that drains or fills at a steady rate measures hours at night and indoors. Egyptian examples date to
+    about 1500 to 1400 BCE; Ctesibius of Alexandria added a float regulator about 270 BCE.
+  requires: [pottery]
+  helped_by: [calendar]
+  efforts:
+    - who: Egyptian priests
+      where: Karnak, Egypt
+      when: -1400
+      outcome: achieved
+    - who: Ctesibius
+      where: Alexandria
+      when: -270
+      outcome: achieved
+      note: A feedback-regulated inflow clock.
+    - who: Al-Jazari
+      where: Artuqid Anatolia
+      when: 1206
+      outcome: achieved
+      note: Elaborate automata clocks described in his Book of Knowledge of Ingenious Mechanical Devices.
+  sources:
+    - title: Water clock (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Water_clock
+
+- id: alphabet
+  name: Alphabet
+  kind: institution
+  fields: [society]
+  date: [-1900, -1800]
+  status: achieved
+  tier: 2
+  summary: >-
+    About two dozen signs for single sounds replaced hundreds of word and syllable signs, so literacy no longer took
+    years of scribal training. Proto-Sinaitic, adapted from Egyptian hieroglyphs by Semitic-speaking workers, is
+    the ancestor of almost all alphabets.
+  requires: [writing]
+  efforts:
+    - who: Semitic-speaking workers
+      where: Wadi el-Hol and Serabit el-Khadim, Egypt
+      when: [-1900, -1800]
+      outcome: achieved
+      note: Clay cylinders from Umm el-Marra, Syria (about 2400 BCE), proposed in 2024 as older alphabetic writing, are disputed.
+    - who: Phoenicians
+      where: Levant
+      when: -1050
+      outcome: achieved
+      note: The standardized consonant alphabet spread by trade.
+    - who: Greeks
+      where: Greece
+      when: -800
+      outcome: achieved
+      note: Added letters for vowels; parent of Latin and Cyrillic.
+    - who: King Sejong's scholars
+      where: Korea
+      when: 1443
+      outcome: independent
+      note: Hangul, a featural alphabet designed from scratch.
+  sources:
+    - title: History of the alphabet (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_the_alphabet
+    - title: Proto-Sinaitic script (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Proto-Sinaitic_script
+
+# ---------------------------------------------------------------------------
+# Iron Age and classical antiquity
+# ---------------------------------------------------------------------------
+
+- id: iron-smelting
+  name: Iron smelting
+  kind: technique
+  fields: [materials]
+  date: [-2000, -1200]
+  status: achieved
+  tier: 1
+  summary: >-
+    Reducing iron ore in a charcoal bloomery gives a spongy metal that is hammered into tools. Iron ore is
+    everywhere, unlike tin, so once smiths learned to carburize and quench it, cheap iron spread to farmers and
+    armies across Eurasia and Africa after about 1200 BCE.
+  requires: [copper-smelting]
+  uses: [res-iron-ore, res-wood]
+  efforts:
+    - who: Bronze Age Anatolians
+      where: Kaman-Kalehoyuk, Turkey
+      when: [-2500, -1800]
+      outcome: achieved
+      note: Scattered early smelted iron and steel finds; experimental, prestige use only.
+    - who: Hittites and neighbors
+      where: Anatolia and the Levant
+      when: [-1400, -1200]
+      outcome: achieved
+      note: Iron became common after the Late Bronze Age collapse disrupted tin trade.
+    - who: Nok culture and others
+      where: West and Central Africa
+      when: [-800, -500]
+      outcome: independent
+      note: Whether African iron smelting was invented independently is debated; some sites have earlier contested dates.
+    - who: Zhou dynasty
+      where: China
+      when: -800
+      outcome: achieved
+  sources:
+    - title: Iron Age (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Iron_Age
+    - title: Ferrous metallurgy, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_ferrous_metallurgy
+    - title: Archaeology Magazine 2019, New thoughts on the origins of iron smelting in Anatolia
+      url: https://www.archaeology.org/news/7495-190325-anatolia-iron-smelting
+
+- id: blast-furnace
+  name: Blast furnace and cast iron
+  kind: technique
+  fields: [materials]
+  date: -500
+  status: achieved
+  tier: 3
+  summary: >-
+    Tall furnaces hot enough to fully melt iron let Chinese founders pour it into molds, making cheap tools and
+    pots in bulk. China cast iron from about the 5th century BCE; Europe only from about the 12th century CE.
+  requires: [iron-smelting]
+  helped_by: [bronze]
+  uses: [res-iron-ore, res-wood, res-coal, res-limestone]
+  efforts:
+    - who: Warring States foundries
+      where: China
+      when: -500
+      outcome: achieved
+      note: Later Song dynasty furnaces burned coal and produced perhaps 100,000 tonnes of iron a year by 1078.
+    - who: Medieval European smelters
+      where: Lapphyttan, Sweden; Rhineland
+      when: [1150, 1350]
+      outcome: independent
+  sources:
+    - title: Cast iron, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Cast_iron
+    - title: Blast furnace, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Blast_furnace
+
+- id: coinage
+  name: Coinage
+  kind: institution
+  fields: [society]
+  date: [-650, -600]
+  status: achieved
+  tier: 2
+  summary: >-
+    Stamped pieces of metal of guaranteed weight let strangers trade without weighing and assaying, and let states
+    pay soldiers and collect taxes. The first coins were struck from electrum in Lydia in western Turkey in the late
+    7th century BCE.
+  requires: [cities, numerals]
+  helped_by: [writing]
+  uses: [res-gold, res-silver, res-copper]
+  efforts:
+    - who: Mesopotamian merchants
+      where: Mesopotamia
+      when: -2500
+      outcome: achieved
+      note: Weighed silver (the shekel) as money, a precursor to coins.
+    - who: Kingdom of Lydia
+      where: Sardis and Ephesus, Anatolia
+      when: [-650, -600]
+      outcome: achieved
+    - who: Zhou states
+      where: China
+      when: [-600, -500]
+      outcome: independent
+      note: Cast bronze spade and knife money.
+    - who: Mahajanapadas
+      where: Ganges valley, India
+      when: [-600, -500]
+      outcome: independent
+      note: Punch-marked silver coins.
+  sources:
+    - title: History of coins (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_coins
+    - title: Britannica, Coin
+      url: https://www.britannica.com/topic/coin
+
+- id: crucible-steel-wootz
+  name: Wootz crucible steel (Damascus blades)
+  kind: technique
+  fields: [materials]
+  date: -500
+  status: lost
+  tier: 3
+  summary: >-
+    Iron and plant matter sealed in clay crucibles in southern India and Sri Lanka made high-carbon steel cakes,
+    traded as wootz. Forged in the Middle East into Damascus blades, it showed a watery pattern and was famed for
+    sharpness and toughness.
+  requires: [iron-smelting, pottery]
+  uses: [res-iron-ore]
+  lost: >-
+    Production of patterned blades faded by the late 18th century, possibly as the ores with trace vanadium ran
+    out, and the method was forgotten. Verhoeven and Pendray reproduced the pattern in the 1990s by showing that
+    trace impurities and repeated forging cycles were the key; Reibold and colleagues found carbon nanotubes in a
+    17th century saber in 2006.
+  efforts:
+    - who: South Indian smiths
+      where: Tamil Nadu, Karnataka, Sri Lanka
+      when: -500
+      outcome: achieved
+    - who: Persian and Arab bladesmiths
+      where: Damascus and Persia
+      when: [900, 1750]
+      outcome: achieved
+  sources:
+    - title: Wootz steel (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Wootz_steel
+    - title: Reibold et al. 2006, Carbon nanotubes in an ancient Damascus sabre (Nature)
+      url: https://www.nature.com/articles/444286a
+
+- id: formal-logic
+  name: Formal logic
+  kind: discovery
+  fields: [math]
+  date: -350
+  status: achieved
+  tier: 3
+  summary: >-
+    Rules for which arguments are valid by their form alone. Aristotle's syllogistic, written about 350 BCE, was the
+    core of logic until the 19th century, when Boole and Frege turned it into algebra.
+  requires: [writing]
+  helped_by: [geometry]
+  efforts:
+    - who: Aristotle
+      where: Athens
+      when: -350
+      outcome: achieved
+    - who: Mohist school
+      where: China
+      when: -300
+      outcome: independent
+    - who: Nyaya school
+      where: India
+      when: [-200, 200]
+      outcome: independent
+    - who: Stoic logicians (Chrysippus)
+      where: Athens
+      when: -250
+      outcome: achieved
+      note: An early propositional logic.
+  sources:
+    - title: History of logic (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_logic
+    - title: Stanford Encyclopedia of Philosophy, Aristotle's Logic
+      url: https://plato.stanford.edu/entries/aristotle-logic/
+
+- id: abacus
+  name: Abacus and counting board
+  kind: device
+  fields: [computing, math]
+  date: -300
+  status: achieved
+  tier: 3
+  summary: >-
+    Pebbles or beads in columns let people add, subtract and multiply large numbers quickly, the first calculating
+    machine. The Salamis tablet, a Greek counting board, dates to about 300 BCE; the Chinese bead suanpan and
+    Japanese soroban came later.
+  requires: [numerals]
+  sources:
+    - title: Abacus (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Abacus
+    - title: Salamis Tablet (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Salamis_Tablet
+
+- id: watermill
+  name: Watermill
+  kind: device
+  fields: [energy, engineering]
+  date: -250
+  status: achieved
+  tier: 2
+  summary: >-
+    A wheel turned by flowing water and geared to millstones, the first widely used machine powered by something
+    other than muscle. Described by Philo of Byzantium in the 3rd century BCE; England's Domesday Book of 1086
+    counts over 5,600 mills.
+  requires: [wheel, woodworking]
+  helped_by: [irrigation]
+  uses: [res-fresh-water]
+  efforts:
+    - who: Hellenistic engineers
+      where: Eastern Mediterranean
+      when: -250
+      outcome: achieved
+    - who: Han dynasty engineers
+      where: China
+      when: 30
+      outcome: independent
+      note: Water-powered trip hammers, and by 31 CE Du Shi's water-powered bellows for iron furnaces.
+    - who: Roman engineers
+      where: Barbegal, France
+      when: 120
+      outcome: achieved
+      note: Sixteen wheels in two parallel cascades, perhaps the largest ancient mill complex.
+  sources:
+    - title: Watermill (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Watermill
+    - title: Barbegal aqueduct and mills (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Barbegal_aqueduct_and_mills
+
+- id: concrete-roman
+  name: Roman concrete
+  kind: technique
+  fields: [materials, engineering]
+  date: -200
+  status: lost
+  tier: 2
+  summary: >-
+    Lime mixed with volcanic ash (pozzolana) and rubble set into a strong, even underwater, artificial stone. It let
+    Rome build harbors, aqueducts and the Pantheon dome (about 125 CE), still the largest unreinforced concrete dome.
+  requires: [lime-plaster]
+  helped_by: [monumental-architecture]
+  uses: [res-limestone]
+  lost: >-
+    Pozzolanic concrete largely fell out of use after the western empire, and modern Portland cement (1824) works
+    differently. Why Roman concrete lasts so long was understood only recently: harbor concrete grows new
+    minerals in seawater (Jackson, 2017), and MIT researchers (2023) showed that hot mixing with quicklime left
+    lime clasts that seal cracks. An unfinished building site at Pompeii (2025) confirmed hot mixing directly.
+  efforts:
+    - who: Roman builders
+      where: Italy
+      when: -200
+      outcome: achieved
+      note: Vitruvius described the materials about 30 to 15 BCE.
+    - who: Masic group, MIT
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: Explained self-healing lime clasts; a 2025 Nature Communications study of Pompeii followed.
+  sources:
+    - title: Seymour et al. 2023, Hot mixing and self-healing ancient Roman concrete (Science Advances)
+      url: https://www.science.org/doi/10.1126/sciadv.add1602
+    - title: MIT News 2023, Riddle solved, why was Roman concrete so durable
+      url: https://news.mit.edu/2023/roman-concrete-durability-lime-casts-0106
+    - title: Smithsonian Magazine 2025, Pompeii construction site and Roman concrete
+      url: https://www.smithsonianmag.com/smart-news/this-ancient-construction-site-in-the-ruins-of-pompeii-is-revealing-new-secrets-about-the-2000-year-old-recipe-for-roman-concrete-180987845/
+
+- id: trigonometry
+  name: Trigonometry
+  kind: discovery
+  fields: [math]
+  date: -140
+  status: achieved
+  tier: 3
+  summary: >-
+    Tables relating angles to lengths let astronomers and surveyors compute distances they could not measure.
+    Hipparchus built the first chord table about 140 BCE; Indian astronomers introduced the sine about 500 CE.
+  requires: [geometry, astronomy-ancient]
+  efforts:
+    - who: Hipparchus
+      where: Rhodes
+      when: -140
+      outcome: achieved
+    - who: Aryabhata
+      where: India
+      when: 499
+      outcome: achieved
+      note: Sine tables in the Aryabhatiya.
+    - who: Al-Battani, Nasir al-Din al-Tusi
+      where: Syria, Persia
+      when: [900, 1260]
+      outcome: achieved
+      note: Trigonometry made a separate subject, with spherical trigonometry for astronomy.
+  sources:
+    - title: History of trigonometry (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_trigonometry
+
+- id: antikythera-mechanism
+  name: Antikythera mechanism
+  kind: device
+  fields: [engineering, computing]
+  date: [-205, -87]
+  status: lost
+  tier: 3
+  summary: >-
+    A hand-cranked bronze box of at least 30 gears that modeled the motions of the Sun, Moon and probably planets
+    and predicted eclipses, an analog computer. It was found in a shipwreck off Antikythera that sank about 70 to
+    60 BCE.
+  requires: [astronomy-ancient, bronze, geometry]
+  lost: >-
+    No similar device survives and texts mention only a few. Gearing of this complexity did not appear again until
+    astronomical clocks in 14th century Europe. The fragments were recovered in 1901 and fully decoded only with
+    X-ray tomography in the 2000s.
+  sources:
+    - title: Antikythera mechanism (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Antikythera_mechanism
+    - title: Freeth et al. 2021, A Model of the Cosmos in the ancient Greek Antikythera Mechanism (Scientific Reports)
+      url: https://www.nature.com/articles/s41598-021-84310-w
+
+# ---------------------------------------------------------------------------
+# Post-classical: 1 CE to about 1450
+# ---------------------------------------------------------------------------
+
+- id: paper
+  name: Paper
+  kind: technique
+  fields: [materials, society]
+  date: [-179, -141]
+  status: achieved
+  tier: 1
+  summary: >-
+    Plant fibers beaten to pulp in water and dried on a screen make a cheap, light writing surface. A map on paper
+    from Fangmatan in China dates to the 2nd century BCE; Cai Lun improved the process in 105 CE.
+  helped_by: [writing, weaving]
+  uses: [res-fresh-water]
+  efforts:
+    - who: Western Han papermakers
+      where: Fangmatan, Gansu, China
+      when: [-179, -141]
+      outcome: achieved
+    - who: Cai Lun
+      where: Luoyang, China
+      when: 105
+      outcome: achieved
+      note: Bark, hemp, rags and fishnets; reported to the emperor.
+    - who: Abbasid papermakers
+      where: Samarkand, Baghdad
+      when: [751, 794]
+      outcome: achieved
+      note: Papermaking spread west via the Islamic world, reaching Spain by about 1100 and Italy (Fabriano) by 1264.
+  sources:
+    - title: History of paper (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_paper
+    - title: Britannica, Paper
+      url: https://www.britannica.com/technology/paper
+
+- id: place-value-zero
+  name: Place value and zero
+  kind: discovery
+  fields: [math]
+  date: [458, 628]
+  status: achieved
+  tier: 1
+  summary: >-
+    Ten digits whose value depends on position, with zero as a number in its own right, make arithmetic on paper
+    easy for anyone. Indian mathematicians had it by the 5th century CE, and Brahmagupta gave rules for computing
+    with zero in 628.
+  requires: [numerals]
+  helped_by: [abacus, astronomy-ancient]
+  efforts:
+    - who: Babylonian scribes
+      where: Mesopotamia
+      when: [-2000, -300]
+      outcome: achieved
+      note: Sexagesimal place value; a placeholder sign for an empty place by about 300 BCE, never used alone.
+    - who: Maya
+      where: Mesoamerica
+      when: [-36, 350]
+      outcome: independent
+      note: Vigesimal (base 20) place value with a zero glyph in the Long Count.
+    - who: Indian mathematicians (Brahmagupta)
+      where: India
+      when: [458, 628]
+      outcome: achieved
+      note: The Lokavibhaga (458) uses decimal place value; the Bakhshali manuscript may be older but its dating is disputed.
+    - who: Al-Khwarizmi, Fibonacci
+      where: Baghdad, Pisa
+      when: [825, 1202]
+      outcome: achieved
+      note: Spread through the Islamic world and to Europe in Liber Abaci (1202).
+  sources:
+    - title: 0 (number), history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/0
+    - title: Hindu-Arabic numeral system (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Hindu%E2%80%93Arabic_numeral_system
+
+- id: greek-fire
+  name: Greek fire
+  kind: technique
+  fields: [chemistry, engineering]
+  date: 672
+  status: lost
+  tier: 3
+  summary: >-
+    A liquid incendiary that burned on water, sprayed from pressurized siphons on Byzantine warships. Credited to
+    Kallinikos, a refugee from Syria, about 672, it helped break the Arab sieges of Constantinople.
+  helped_by: [sailing-ships]
+  uses: [res-oil]
+  lost: >-
+    The formula was a state secret known to a few families and was lost, perhaps by 1203, when it was not used
+    against the Fourth Crusade. It was probably based on crude petroleum from the Black Sea, but the exact recipe
+    and siphon design are unknown.
+  sources:
+    - title: Greek fire (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Greek_fire
+    - title: Britannica, Greek fire
+      url: https://www.britannica.com/technology/Greek-fire
+
+- id: woodblock-printing
+  name: Woodblock printing
+  kind: technique
+  fields: [society, engineering]
+  date: [650, 750]
+  status: achieved
+  tier: 3
+  summary: >-
+    Carving a whole page in relief on a wooden block and inking it to print many copies. It spread in Tang China
+    and Korea for Buddhist texts; the Diamond Sutra of 868 is the oldest dated printed book.
+  requires: [paper, writing]
+  sources:
+    - title: Woodblock printing (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Woodblock_printing
+    - title: Diamond Sutra, the 868 printed copy (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Diamond_Sutra
+
+- id: maya-blue
+  name: Maya blue
+  kind: technique
+  fields: [chemistry, materials]
+  date: 800
+  status: lost
+  tier: 3
+  summary: >-
+    A brilliant blue pigment made by heating indigo with palygorskite clay, which binds the dye so tightly that it
+    survives centuries of tropical weather and acids. Mesoamerican painters used it from about the 8th century CE.
+  requires: [control-of-fire]
+  uses: [res-clay]
+  lost: >-
+    Use continued in colonial Mexico into the 16th century, then the method was lost there. Its composition was
+    worked out by X-ray diffraction in the 1950s and 1960s, and a working recipe was published in 1993. It has been
+    a model for durable hybrid organic-mineral pigments.
+  sources:
+    - title: Maya blue (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Maya_blue
+
+- id: algebra
+  name: Algebra
+  kind: discovery
+  fields: [math]
+  date: 820
+  status: achieved
+  tier: 2
+  summary: >-
+    General methods for solving equations by manipulating unknowns. Al-Khwarizmi's book al-Jabr (about 820), written
+    in Baghdad, gave algebra its name and treated it as its own subject.
+  requires: [place-value-zero, geometry]
+  efforts:
+    - who: Babylonian scribes
+      where: Mesopotamia
+      when: -1800
+      outcome: achieved
+      note: Solved quadratic problems by recipe.
+    - who: Diophantus
+      where: Alexandria
+      when: 250
+      outcome: achieved
+      note: Arithmetica, with symbols for unknowns.
+    - who: Brahmagupta
+      where: India
+      when: 628
+      outcome: achieved
+      note: General solution of quadratics, negative numbers.
+    - who: Muhammad ibn Musa al-Khwarizmi
+      where: Baghdad
+      when: 820
+      outcome: achieved
+    - who: Omar Khayyam
+      where: Persia
+      when: 1070
+      outcome: achieved
+      note: Geometric solutions of cubic equations.
+  sources:
+    - title: History of algebra (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_algebra
+    - title: The Compendious Book on Calculation by Completion and Balancing (Wikipedia)
+      url: https://en.wikipedia.org/wiki/The_Compendious_Book_on_Calculation_by_Completion_and_Balancing
+
+- id: windmill
+  name: Windmill
+  kind: device
+  fields: [energy, engineering]
+  date: [700, 900]
+  status: achieved
+  tier: 3
+  summary: >-
+    Sails turned by wind to grind grain and pump water, useful where rivers are weak or freeze. Vertical-axis
+    windmills in eastern Persia are reported in the 9th century; the European post mill appears in England by 1185.
+  requires: [wheel]
+  helped_by: [watermill, sailing-ships]
+  efforts:
+    - who: Persian millers
+      where: Khorasan and Sistan
+      when: [700, 900]
+      outcome: achieved
+      note: Horizontal panemone mills behind walls.
+    - who: English millers
+      where: Weedley, Yorkshire
+      when: 1185
+      outcome: independent
+      note: The post mill, with sails on a horizontal axis, probably developed independently.
+  sources:
+    - title: Windmill, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Windmill
+
+- id: gunpowder
+  name: Gunpowder
+  kind: technique
+  fields: [chemistry, engineering]
+  date: 850
+  status: achieved
+  tier: 1
+  summary: >-
+    A mix of saltpeter, sulfur and charcoal that burns explosively, the first chemical explosive. Chinese alchemists
+    noted its danger in the 9th century; the Wujing Zongyao of 1044 gives the first recipes, and guns followed.
+  requires: [control-of-fire]
+  uses: [res-saltpeter, res-sulfur, res-wood]
+  efforts:
+    - who: Tang dynasty alchemists
+      where: China
+      when: 850
+      outcome: achieved
+    - who: Song dynasty military
+      where: China
+      when: [1044, 1288]
+      outcome: achieved
+      note: Written formulas (1044), fire lances (about 1132), bombs, and metal hand cannons by about 1288.
+    - who: Roger Bacon; European gunners
+      where: England, Italy
+      when: [1267, 1326]
+      outcome: achieved
+      note: A European recipe by 1267 and the first European image of a cannon in 1326.
+  sources:
+    - title: History of gunpowder (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_gunpowder
+    - title: Britannica, Gunpowder
+      url: https://www.britannica.com/technology/gunpowder
+
+- id: bills-of-exchange
+  name: Bills of exchange and credit transfer
+  kind: institution
+  fields: [society]
+  date: [800, 1200]
+  status: achieved
+  tier: 3
+  summary: >-
+    A written order to pay money in another place lets merchants move value without carrying coin. Tang China's
+    flying money, the Islamic suftaja, and the bills of Italian merchant-bankers after about 1150 made long-distance
+    trade and banking possible.
+  requires: [writing, coinage]
+  efforts:
+    - who: Tang dynasty merchants and state
+      where: China
+      when: 810
+      outcome: independent
+      note: Feiqian (flying money) drafts.
+    - who: Abbasid merchants
+      where: Islamic world
+      when: [800, 1000]
+      outcome: achieved
+      note: The suftaja and hawala transfer systems.
+    - who: Genoese and Florentine merchant-bankers
+      where: Italy, Champagne fairs
+      when: [1150, 1300]
+      outcome: achieved
+      note: Bills of exchange underlay the Medici bank and later central banking.
+  sources:
+    - title: Bill of exchange (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Bill_of_exchange
+    - title: Flying cash (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Flying_cash
+
+- id: optics-alhazen
+  name: Ibn al-Haytham's optics
+  kind: discovery
+  fields: [physics]
+  date: [1011, 1021]
+  status: achieved
+  tier: 3
+  summary: >-
+    Ibn al-Haytham's Book of Optics showed that we see by light entering the eye, analyzed reflection and
+    refraction, and tested claims with controlled experiments. In Latin translation it shaped European optics and
+    experimental method.
+  requires: [geometry]
+  helped_by: [glassmaking]
+  sources:
+    - title: Book of Optics (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Book_of_Optics
+    - title: Britannica, Ibn al-Haytham
+      url: https://www.britannica.com/biography/Ibn-al-Haytham
+
+- id: paper-money
+  name: Paper money
+  kind: institution
+  fields: [society]
+  date: 1024
+  status: achieved
+  tier: 3
+  summary: >-
+    Printed notes backed by the state replaced heavy iron coins. Merchants in Sichuan issued notes in the 10th
+    century, and the Song government took over issuing the jiaozi in 1024.
+  requires: [paper, woodblock-printing, coinage]
+  helped_by: [bills-of-exchange]
+  efforts:
+    - who: Song dynasty government
+      where: Chengdu, Sichuan, China
+      when: 1024
+      outcome: achieved
+      note: Yuan dynasty overissue later caused inflation, an early lesson in monetary policy.
+  sources:
+    - title: Jiaozi (currency) (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Jiaozi_(currency)
+    - title: History of paper money in China (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_Chinese_currency
+
+- id: movable-type
+  name: Movable type
+  kind: technique
+  fields: [society, engineering]
+  date: 1040
+  status: achieved
+  tier: 3
+  summary: >-
+    Separate reusable characters arranged into pages and reset for the next job. Bi Sheng made ceramic type in China
+    about 1040, and Korean printers cast metal type; Jikji (1377) is the oldest surviving book printed with it.
+  requires: [woodblock-printing]
+  efforts:
+    - who: Bi Sheng
+      where: China
+      when: 1040
+      outcome: achieved
+      note: Clay type, described by Shen Kuo. Chinese scripts' thousands of characters limited the advantage over woodblocks.
+    - who: Goryeo printers
+      where: Korea
+      when: [1234, 1377]
+      outcome: achieved
+      note: Bronze type; Jikji is held in the National Library of France.
+  sources:
+    - title: Movable type (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Movable_type
+    - title: Jikji (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Jikji
+
+- id: compass
+  name: Magnetic compass
+  kind: device
+  fields: [physics, engineering]
+  date: [1040, 1120]
+  status: achieved
+  tier: 2
+  summary: >-
+    A magnetized iron needle points north, giving direction under clouds and at sea. Shen Kuo described the needle
+    compass in 1088, and Zhu Yu reported its use by ships in 1117; it reached Europe by about 1190.
+  requires: [iron-smelting]
+  uses: [res-iron-ore]
+  efforts:
+    - who: Han dynasty diviners
+      where: China
+      when: [1, 100]
+      outcome: achieved
+      note: A lodestone spoon on a board for geomancy, if the descriptions are read that way; the evidence is debated.
+    - who: Song dynasty scholars and sailors
+      where: China
+      when: [1044, 1117]
+      outcome: achieved
+      note: Wujing Zongyao (1044) describes a magnetized iron fish; Shen Kuo the needle (1088).
+    - who: Alexander Neckam
+      where: England
+      when: 1190
+      outcome: achieved
+      note: The first European description, perhaps an independent invention.
+  sources:
+    - title: History of the compass (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_the_compass
+
+- id: universities
+  name: Universities
+  kind: institution
+  fields: [society]
+  date: 1088
+  status: achieved
+  tier: 2
+  summary: >-
+    Self-governing corporations of teachers and students granting degrees, with set curricula and legal privileges.
+    Bologna (1088) and Paris (about 1150) set the pattern that spread across Europe and, later, the world.
+  requires: [writing, libraries]
+  helped_by: [paper]
+  efforts:
+    - who: Buddhist monastic scholars
+      where: Nalanda, India
+      when: 427
+      outcome: achieved
+      note: A large residential center of learning until it was sacked about 1200.
+    - who: Fatima al-Fihri
+      where: Fez, Morocco
+      when: 859
+      outcome: achieved
+      note: Al-Qarawiyyin, a mosque school that became a university in the 20th century.
+    - who: Law students of Bologna
+      where: Bologna, Italy
+      when: 1088
+      outcome: achieved
+      note: The model of the student-run university; Paris and Oxford followed with master-run models.
+  sources:
+    - title: Medieval university (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Medieval_university
+    - title: University of Bologna (Wikipedia)
+      url: https://en.wikipedia.org/wiki/University_of_Bologna
+
+- id: lenses
+  name: Eyeglasses
+  kind: device
+  fields: [physics, materials]
+  date: 1286
+  status: achieved
+  tier: 3
+  summary: >-
+    Convex glass lenses in a frame, invented near Pisa about 1286, doubled the working life of scribes and
+    craftsmen. Lens grinding was the craft from which telescopes and microscopes came three centuries later.
+  requires: [glassmaking]
+  helped_by: [optics-alhazen]
+  efforts:
+    - who: Unknown craftsman
+      where: Pisa or Venice, Italy
+      when: 1286
+      outcome: achieved
+      note: In 1306 the friar Giordano da Pisa said spectacles had been invented less than 20 years earlier.
+    - who: Unknown makers
+      where: Europe and the Islamic world
+      when: [1000, 1250]
+      outcome: achieved
+      note: Reading stones, polished glass or crystal laid on a page.
+  sources:
+    - title: Glasses, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Glasses
+
+- id: mechanical-clock
+  name: Mechanical clock
+  kind: device
+  fields: [engineering, physics]
+  date: [1275, 1300]
+  status: achieved
+  tier: 2
+  summary: >-
+    A falling weight held back by a verge-and-foliot escapement drives gears that count time. It appeared in
+    European monasteries and towns around 1280 to 1300, and set the standard of regular hours for work and
+    science.
+  requires: [water-clock]
+  helped_by: [watermill, astronomy-ancient]
+  efforts:
+    - who: Yi Xing, Liang Lingzan
+      where: Tang China
+      when: 725
+      outcome: independent
+      note: A water-driven escapement in an armillary sphere.
+    - who: Su Song
+      where: Kaifeng, Song China
+      when: 1092
+      outcome: independent
+      note: A 12 m astronomical clock tower driven by a water wheel with an escapement; dismantled after the Jin conquest.
+    - who: European clockmakers
+      where: England, Italy
+      when: [1275, 1300]
+      outcome: achieved
+      note: Weight-driven verge escapement; Dunstable Priory had a clock by 1283, and Richard of Wallingford and Giovanni de Dondi built astronomical clocks in the 14th century.
+  sources:
+    - title: History of timekeeping devices, mechanical clocks (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_timekeeping_devices
+    - title: Verge escapement (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Verge_escapement
+
+- id: double-entry-bookkeeping
+  name: Double-entry bookkeeping
+  kind: institution
+  fields: [society, math]
+  date: [1299, 1340]
+  status: achieved
+  tier: 2
+  summary: >-
+    Recording every transaction as both a debit and a credit, so the books must balance and errors show. Italian
+    merchants used it by about 1300; Luca Pacioli's printed description of 1494 spread it across Europe.
+  requires: [writing, numerals, coinage]
+  helped_by: [place-value-zero, bills-of-exchange, paper]
+  efforts:
+    - who: Amatino Manucci, Farolfi company
+      where: Salon, Provence (Florentine firm)
+      when: 1299
+      outcome: achieved
+      note: The oldest surviving double-entry ledger.
+    - who: Massari (treasurers) of Genoa
+      where: Genoa, Italy
+      when: 1340
+      outcome: achieved
+      note: The city's accounts in full double-entry form.
+  sources:
+    - title: Double-entry bookkeeping, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Double-entry_bookkeeping
+    - title: History of accounting (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_accounting
+
+- id: distillation
+  name: Distillation
+  kind: technique
+  fields: [chemistry]
+  date: -1200
+  status: achieved
+  tier: 3
+  summary: >-
+    Boiling a liquid and condensing the vapor separates substances by volatility. Akkadian tablets of about 1200 BCE
+    describe a perfumer, Tapputi, refining scents; Alexandrian alchemists built the alembic, and distilled alcohol
+    appears at Salerno about 1150.
+  requires: [pottery, control-of-fire]
+  efforts:
+    - who: Tapputi and Mesopotamian perfumers
+      where: Babylonia
+      when: -1200
+      outcome: achieved
+      note: An early, simple form of distillation and extraction for perfume.
+    - who: Mary the Jewess, Zosimos of Panopolis
+      where: Alexandria, Egypt
+      when: [100, 400]
+      outcome: achieved
+      note: The alembic and still, described in alchemical texts.
+    - who: Islamic chemists (the Jabirian corpus, al-Kindi)
+      where: Baghdad and Persia
+      when: [800, 900]
+      outcome: achieved
+      note: Distilled rosewater, essential oils and possibly alcohol.
+    - who: Physicians of Salerno
+      where: Salerno, Italy
+      when: 1150
+      outcome: achieved
+      note: The first clear evidence of distilled alcohol in Europe; later the basis of oil refining.
+  sources:
+    - title: Distillation, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Distillation
+    - title: Tapputi (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Tapputi
+
+- id: spinning-wheel
+  name: Spinning wheel
+  kind: device
+  fields: [engineering, materials]
+  date: [1000, 1237]
+  status: achieved
+  tier: 3
+  summary: >-
+    A hand- or foot-turned wheel drives the spindle, making thread several times faster than a hand spindle. Its
+    origin (China, India or Persia) is debated; the earliest clear picture is from Baghdad in 1237, and it reached
+    Europe in the 13th century.
+  requires: [weaving, wheel]
+  efforts:
+    - who: Unknown (Persia or the Middle East)
+      where: Middle East
+      when: [1000, 1237]
+      outcome: achieved
+      note: Known in the Middle East by about 1030; illustrated in al-Wasiti's Maqamat of 1237.
+    - who: Song and Yuan dynasty spinners
+      where: China
+      when: [1090, 1270]
+      outcome: achieved
+      note: Some scholars argue for a much older Chinese origin; the earliest clear Chinese picture is about 1270.
+    - who: European spinners
+      where: Europe
+      when: 1280
+      outcome: achieved
+      note: Hand spindles stayed common until the 18th century, when mechanized spinning began the factory age.
+  sources:
+    - title: Spinning wheel (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Spinning_wheel

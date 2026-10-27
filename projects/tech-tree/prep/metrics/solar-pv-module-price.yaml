@@ -1,0 +1,68 @@
+id: solar-pv-module-price
+name: Solar photovoltaic module price
+unit: USD per watt (constant 2025 US$)
+better: lower
+cumulative: solar-pv-cumulative-capacity
+log: true
+points:                           # [year, value]
+  - [1975, 132.3757]
+  - [1976, 99.5976]
+  - [1977, 72.6611]
+  - [1978, 51.4082]
+  - [1979, 43.1951]
+  - [1980, 36.605]
+  - [1981, 29.2664]
+  - [1982, 26.2952]
+  - [1983, 21.2281]
+  - [1984, 19.725]
+  - [1985, 17.2204]
+  - [1986, 14.2447]
+  - [1987, 12.1104]
+  - [1988, 11.3116]
+  - [1989, 11.6901]
+  - [1990, 12.0911]
+  - [1991, 11.2008]
+  - [1992, 10.4351]
+  - [1993, 9.7587]
+  - [1994, 9.2315]
+  - [1995, 8.5355]
+  - [1996, 7.9798]
+  - [1997, 7.952]
+  - [1998, 7.1656]
+  - [1999, 6.6193]
+  - [2000, 6.4959]
+  - [2001, 6.2844]
+  - [2002, 5.7473]
+  - [2003, 5.4638]
+  - [2004, 4.6955]
+  - [2005, 4.7457]
+  - [2006, 5.1727]
+  - [2007, 5.2111]
+  - [2008, 4.7492]
+  - [2009, 3.1743]
+  - [2010, 2.5118]
+  - [2011, 2.0609]
+  - [2012, 1.1107]
+  - [2013, 0.8566]
+  - [2014, 0.7905]
+  - [2015, 0.7357]
+  - [2016, 0.6803]
+  - [2017, 0.5714]
+  - [2018, 0.5091]
+  - [2019, 0.4669]
+  - [2020, 0.3697]
+  - [2021, 0.3319]
+  - [2022, 0.3658]
+  - [2023, 0.3218]
+  - [2024, 0.2652]
+source:
+  title: "Our World in Data, Solar photovoltaic panel prices (IRENA 2025; Nemet 2009; Farmer and Lafond 2016)"
+  url: https://ourworldindata.org/grapher/solar-pv-prices
+license: CC BY 4.0
+note: >-
+  Module price only, excluding installation and balance of system. Nemet (2009)
+  for 1975 to 2003, Farmer and Lafond (2016) for 2004 to 2009, IRENA's Global
+  Price Index (pvXchange European benchmark) from 2010. Deflated to 2025 US$ by
+  OWID with the World Bank US GDP deflator. Values rounded to 4 decimals from
+  the OWID CSV downloaded 2026-10-27. Pair with solar-pv-cumulative-capacity
+  to fit Wright's law (roughly a 20 percent price drop per doubling).

@@ -1,0 +1,3621 @@
+# Part B: 1450 to 1945. Physical sciences, mathematics, energy, industry,
+# transport, materials, chemistry, communications, nuclear physics and the
+# institutions of the period.
+
+# ---------------------------------------------------------------- print, method, institutions of science
+
+- id: printing-press
+  name: Movable-type printing press
+  kind: device
+  fields: [society, engineering]
+  date: 1450
+  status: achieved
+  tier: 1
+  summary: >-
+    Gutenberg combined cast metal type, oil-based ink and a screw press, making books cheap
+    enough that knowledge could be copied exactly and spread across Europe within decades.
+  requires: [paper, alphabet]
+  helped_by: [coinage]
+  uses: [res-tin]
+  efforts:
+    - who: Johannes Gutenberg, financed by Johann Fust
+      where: Mainz, Germany
+      when: 1450
+      outcome: achieved
+      note: The 42-line Bible was finished around 1454 to 1455. The hand mold for casting type drew on goldsmiths' punch-cutting.
+    - who: Bi Sheng
+      where: China
+      when: 1040
+      outcome: independent
+      note: Ceramic movable type, described by Shen Kuo. It did not displace woodblock printing.
+    - who: Printers of the Jikji
+      where: Goryeo, Korea
+      when: 1377
+      outcome: independent
+      note: The oldest surviving book printed with movable metal type.
+  effort:
+    span: [1440, 1455]
+    people: 10
+    note: Gutenberg borrowed at least 1,600 guilders from Fust and lost the workshop to him in a lawsuit in 1455.
+  sources:
+    - title: Printing press (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Printing_press
+    - title: Johannes Gutenberg (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Johannes_Gutenberg
+
+- id: scientific-method
+  name: Experimental scientific method
+  kind: institution
+  fields: [society, physics]
+  date: 1620
+  status: achieved
+  tier: 1
+  summary: >-
+    The practice of testing claims about nature with controlled experiment, measurement and
+    mathematics, rather than deferring to ancient authority, took shape with Galileo and Bacon.
+  requires: [printing-press, universities]
+  helped_by: [heliocentrism, telescope]
+  efforts:
+    - who: Francis Bacon
+      where: England
+      when: 1620
+      outcome: achieved
+      note: Novum Organum argued for systematic induction from experiment.
+    - who: Galileo Galilei
+      where: Italy
+      when: 1610
+      outcome: achieved
+      note: Combined experiment, instruments and mathematical description.
+    - who: Ibn al-Haytham
+      where: Cairo
+      when: 1021
+      outcome: independent
+      note: His Book of Optics used controlled experiments centuries earlier.
+  sources:
+    - title: Scientific method (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Scientific_method
+    - title: Novum Organum (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Novum_Organum
+
+- id: scientific-societies
+  name: Scientific societies and journals
+  kind: institution
+  fields: [society, physics]
+  date: 1660
+  status: achieved
+  tier: 2
+  summary: >-
+    Standing bodies such as the Royal Society and the Paris Academy, and the first scientific
+    journals in 1665, gave natural philosophers a shared venue to report, replicate and argue.
+  requires: [scientific-method, printing-press]
+  efforts:
+    - who: Accademia dei Lincei
+      where: Rome
+      when: 1603
+      outcome: achieved
+      note: An early society; Galileo was a member.
+    - who: Royal Society of London
+      where: England
+      when: 1660
+      outcome: achieved
+      note: Chartered 1662. Philosophical Transactions began in March 1665.
+    - who: Academie des sciences
+      where: Paris
+      when: 1666
+      outcome: achieved
+      note: State-funded; the Journal des scavans also began in 1665.
+  sources:
+    - title: Royal Society (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Royal_Society
+    - title: Philosophical Transactions of the Royal Society (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Philosophical_Transactions_of_the_Royal_Society
+
+- id: peer-review
+  name: Peer review
+  kind: institution
+  fields: [society]
+  date: 1731
+  status: achieved
+  tier: 2
+  summary: >-
+    Having other experts judge a paper before publication began with 18th-century society
+    journals and became the standard gate for scientific publishing in the 20th century.
+  requires: [scientific-societies]
+  efforts:
+    - who: Royal Society of Edinburgh, Medical Essays and Observations
+      where: Scotland
+      when: 1731
+      outcome: achieved
+      note: Submissions were sent to members judged knowledgeable on the topic.
+    - who: Royal Society Committee on Papers
+      where: London
+      when: 1752
+      outcome: achieved
+      note: Written referee reports followed in the 1830s. Universal external review only became normal after 1945.
+  sources:
+    - title: Scholarly peer review (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Scholarly_peer_review
+    - title: "Csiszar, Peer review: Troubled from the start (Nature, 2016)"
+      url: https://www.nature.com/articles/532306a
+
+- id: industrial-research-lab
+  name: Industrial research laboratory
+  kind: institution
+  fields: [society, chemistry]
+  date: 1876
+  status: achieved
+  tier: 2
+  summary: >-
+    Firms began paying teams of scientists to invent on purpose, starting with Edison's Menlo
+    Park and the German dye companies, then GE, DuPont and Bell Labs.
+  requires: [scientific-method, patents]
+  helped_by: [synthetic-dyes, universities]
+  efforts:
+    - who: Thomas Edison
+      where: Menlo Park, New Jersey, USA
+      when: 1876
+      outcome: achieved
+      note: An "invention factory" with machinists, chemists and glassblowers.
+    - who: BASF, Bayer, Hoechst
+      where: Germany
+      when: 1877
+      outcome: independent
+      note: Dye firms built in-house research labs staffed by university chemists in the 1870s and 1880s.
+    - who: General Electric Research Laboratory
+      where: Schenectady, New York, USA
+      when: 1900
+      outcome: achieved
+      note: Followed by DuPont (1903) and Bell Telephone Laboratories (1925).
+  sources:
+    - title: Thomas Edison (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Thomas_Edison
+    - title: Research and development (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Research_and_development
+
+- id: big-science
+  name: State-funded big science
+  kind: institution
+  fields: [society, physics]
+  date: 1941
+  status: achieved
+  tier: 3
+  summary: >-
+    In the Second World War governments organized science as a national project, contracting
+    universities and firms through bodies like the US Office of Scientific Research and Development.
+  requires: [industrial-research-lab, universities]
+  helped_by: [cyclotron]
+  efforts:
+    - who: Vannevar Bush, NDRC (1940) and OSRD (1941)
+      where: USA
+      when: 1941
+      outcome: achieved
+      note: Funded radar, the proximity fuze, penicillin production and the early atomic program. Bush's 1945 report Science, the Endless Frontier led to the NSF.
+    - who: Ernest Lawrence's Radiation Laboratory
+      where: Berkeley, USA
+      when: 1931
+      outcome: achieved
+      note: A prewar model of large team physics built around big machines.
+  sources:
+    - title: Office of Scientific Research and Development (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Office_of_Scientific_Research_and_Development
+    - title: Big science (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Big_science
+
+# ---------------------------------------------------------------- economic institutions
+
+- id: patents
+  name: Patent system
+  kind: institution
+  fields: [society]
+  date: 1474
+  status: achieved
+  tier: 2
+  summary: >-
+    A legal right to exclusive use of an invention for a fixed term, in exchange for disclosing
+    it, first codified in Venice and later in England's Statute of Monopolies and the US Constitution.
+  requires: [law-codes]
+  helped_by: [printing-press]
+  efforts:
+    - who: Venetian Senate
+      where: Venice
+      when: 1474
+      outcome: achieved
+      note: The Venetian Patent Statute granted 10-year privileges for new devices.
+    - who: English Parliament
+      where: England
+      when: 1624
+      outcome: achieved
+      note: The Statute of Monopolies limited patents to true inventions for 14 years.
+    - who: US Congress
+      where: USA
+      when: 1790
+      outcome: achieved
+      note: The Patent Act of 1790.
+  sources:
+    - title: History of patent law (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_patent_law
+
+- id: joint-stock-company
+  name: Joint-stock company
+  kind: institution
+  fields: [society]
+  date: 1553
+  status: achieved
+  tier: 1
+  summary: >-
+    Pooling capital from many investors into transferable shares of one permanent enterprise let
+    merchants fund long, risky ventures like ocean trade that no single family could afford.
+  requires: [double-entry-bookkeeping, coinage]
+  helped_by: [transoceanic-voyages, printing-press]
+  efforts:
+    - who: Muscovy Company
+      where: London
+      when: 1553
+      outcome: achieved
+      note: Chartered 1555. An early English joint-stock trading company.
+    - who: English East India Company
+      where: London
+      when: 1600
+      outcome: achieved
+    - who: Dutch East India Company (VOC)
+      where: Amsterdam
+      when: 1602
+      outcome: achieved
+      note: First company with permanent capital and freely traded shares.
+  sources:
+    - title: Joint-stock company (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Joint-stock_company
+    - title: Dutch East India Company (Britannica)
+      url: https://www.britannica.com/money/Dutch-East-India-Company
+
+- id: stock-exchange
+  name: Stock exchange
+  kind: institution
+  fields: [society]
+  date: 1602
+  status: achieved
+  tier: 2
+  summary: >-
+    A standing market where shares of companies could be bought and sold at any time, which made
+    long-lived company capital liquid for individual investors.
+  requires: [joint-stock-company]
+  efforts:
+    - who: Amsterdam Stock Exchange
+      where: Amsterdam
+      when: 1602
+      outcome: achieved
+      note: Trading in VOC shares; a dedicated exchange building opened in 1611.
+    - who: London coffee houses, later the London Stock Exchange
+      where: London
+      when: 1698
+      outcome: achieved
+      note: Formally organized in 1801.
+  sources:
+    - title: Amsterdam Stock Exchange (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Amsterdam_Stock_Exchange
+
+- id: central-banking
+  name: Central bank
+  kind: institution
+  fields: [society]
+  date: 1668
+  status: achieved
+  tier: 2
+  summary: >-
+    A bank chartered by the state to manage government debt, issue currency and act as lender of
+    last resort, beginning with Sweden's Riksbank and the Bank of England.
+  requires: [coinage, double-entry-bookkeeping]
+  helped_by: [joint-stock-company]
+  efforts:
+    - who: Sveriges Riksbank
+      where: Stockholm
+      when: 1668
+      outcome: achieved
+      note: Successor to Stockholms Banco, which issued Europe's first banknotes in 1661.
+    - who: Bank of England
+      where: London
+      when: 1694
+      outcome: achieved
+      note: Founded as a joint-stock company to lend to the government. Bagehot's Lombard Street (1873) set out the lender-of-last-resort role.
+    - who: US Federal Reserve
+      where: USA
+      when: 1913
+      outcome: achieved
+  sources:
+    - title: Central bank (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Central_bank
+    - title: Sveriges Riksbank (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Sveriges_Riksbank
+
+- id: insurance-modern
+  name: Modern insurance
+  kind: institution
+  fields: [society, math]
+  date: 1762
+  status: achieved
+  tier: 3
+  summary: >-
+    Insurance priced from data and probability, so that premiums match measured risk, grew from
+    marine underwriting at Lloyd's and fire offices to actuarial life insurance.
+  requires: [probability-theory, statistics]
+  helped_by: [joint-stock-company]
+  efforts:
+    - who: Nicholas Barbon's Fire Office
+      where: London
+      when: 1680
+      outcome: achieved
+      note: Set up after the Great Fire of 1666.
+    - who: Edward Lloyd's coffee house
+      where: London
+      when: 1688
+      outcome: achieved
+      note: Center of marine underwriting, later Lloyd's of London.
+    - who: Equitable Life Assurance Society
+      where: London
+      when: 1762
+      outcome: achieved
+      note: First mutual life insurer to set premiums by age from mortality tables.
+  sources:
+    - title: History of insurance (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_insurance
+    - title: Equitable Life Assurance Society (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Equitable_Life_Assurance_Society
+
+- id: factory-system
+  name: Factory system
+  kind: institution
+  fields: [society, engineering]
+  date: 1771
+  status: achieved
+  tier: 2
+  summary: >-
+    Gathering workers and powered machines under one roof, with set hours and division of labor,
+    replaced home spinning and weaving and became the template for industrial production.
+  requires: [water-frame, watermill]
+  helped_by: [spinning-jenny, joint-stock-company]
+  efforts:
+    - who: John and Thomas Lombe
+      where: Derby, England
+      when: 1721
+      outcome: achieved
+      note: A water-powered silk mill, an early precursor.
+    - who: Richard Arkwright
+      where: Cromford, England
+      when: 1771
+      outcome: achieved
+      note: Cromford Mill ran water frames around the clock in shifts and became the model copied across Britain and America.
+  sources:
+    - title: Factory system (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Factory_system
+    - title: Cromford Mill (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Cromford_Mill
+
+# ---------------------------------------------------------------- mathematics
+
+- id: analytic-geometry
+  name: Analytic geometry
+  kind: discovery
+  fields: [math]
+  date: 1637
+  status: achieved
+  tier: 3
+  summary: >-
+    Describing curves with algebraic equations in coordinates joined geometry and algebra, and
+    gave calculus its working language.
+  requires: [algebra, geometry]
+  helped_by: [printing-press]
+  efforts:
+    - who: Rene Descartes
+      where: Netherlands
+      when: 1637
+      outcome: achieved
+      note: La Geometrie, an appendix to the Discourse on Method.
+    - who: Pierre de Fermat
+      where: France
+      when: 1636
+      outcome: independent
+      note: Circulated in manuscript, published after his death.
+  sources:
+    - title: Analytic geometry (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Analytic_geometry
+
+- id: calculus
+  name: Calculus
+  kind: discovery
+  fields: [math, physics]
+  date: 1666
+  status: achieved
+  tier: 1
+  summary: >-
+    The mathematics of rates of change and accumulation, which let physics state laws as
+    equations of motion and solve them.
+  requires: [analytic-geometry]
+  efforts:
+    - who: Isaac Newton
+      where: England
+      when: 1666
+      outcome: achieved
+      note: Developed fluxions in 1665 to 1666; published much later.
+    - who: Gottfried Wilhelm Leibniz
+      where: Germany
+      when: 1675
+      outcome: independent
+      note: Published first, in 1684, with the notation still used today. A bitter priority dispute followed.
+    - who: Kerala school (Madhava)
+      where: India
+      when: 1400
+      outcome: independent
+      note: Infinite series for trigonometric functions, without a general calculus.
+  effort:
+    span: [1664, 1666]
+    people: 2
+    note: Two people, each working largely alone, on the shoulders of Fermat, Barrow and Wallis.
+  sources:
+    - title: History of calculus (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_calculus
+    - title: Leibniz-Newton calculus controversy (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Leibniz%E2%80%93Newton_calculus_controversy
+
+- id: probability-theory
+  name: Probability theory
+  kind: discovery
+  fields: [math]
+  date: 1654
+  status: achieved
+  tier: 2
+  summary: >-
+    A mathematics of chance, begun in letters about gambling problems, that became the basis of
+    insurance, statistics, statistical physics and information theory.
+  requires: [algebra]
+  helped_by: [printing-press]
+  efforts:
+    - who: Blaise Pascal, Pierre de Fermat
+      where: France
+      when: 1654
+      outcome: achieved
+      note: Correspondence solving the problem of points.
+    - who: Gerolamo Cardano
+      where: Italy
+      when: 1564
+      outcome: independent
+      note: Liber de ludo aleae, written about 1564, published 1663.
+    - who: Christiaan Huygens
+      where: Netherlands
+      when: 1657
+      outcome: achieved
+      note: First printed treatise. Jacob Bernoulli's Ars Conjectandi (1713) proved the law of large numbers.
+  sources:
+    - title: History of probability (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_probability
+
+- id: statistics
+  name: Statistics
+  kind: technique
+  fields: [math, society]
+  date: 1662
+  status: achieved
+  tier: 2
+  summary: >-
+    Drawing conclusions from counts and measurements, from Graunt's mortality tables through
+    least squares and the normal curve to Fisher's significance tests and experimental design.
+  requires: [place-value-zero]
+  helped_by: [probability-theory, printing-press]
+  efforts:
+    - who: John Graunt
+      where: London
+      when: 1662
+      outcome: achieved
+      note: Natural and Political Observations on the Bills of Mortality. Edmond Halley's life table followed in 1693.
+    - who: Adrien-Marie Legendre, Carl Friedrich Gauss
+      where: France, Germany
+      when: 1805
+      outcome: achieved
+      note: Least squares (Legendre 1805, Gauss 1809) and the normal error curve.
+    - who: Karl Pearson, Ronald Fisher
+      where: England
+      when: 1925
+      outcome: achieved
+      note: Correlation and chi-squared (1900); Fisher's Statistical Methods for Research Workers (1925) and randomized experimental design.
+  sources:
+    - title: History of statistics (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_statistics
+    - title: John Graunt (Wikipedia)
+      url: https://en.wikipedia.org/wiki/John_Graunt
+
+- id: fourier-analysis
+  name: Fourier analysis
+  kind: discovery
+  fields: [math, physics]
+  date: 1807
+  status: achieved
+  tier: 3
+  summary: >-
+    Any periodic signal can be written as a sum of sine waves. Fourier found it while studying
+    heat flow, and it became basic to acoustics, radio, quantum mechanics and signal processing.
+  requires: [calculus]
+  efforts:
+    - who: Joseph Fourier
+      where: France
+      when: 1807
+      outcome: achieved
+      note: Memoir on heat in 1807; Theorie analytique de la chaleur in 1822.
+  sources:
+    - title: Fourier series (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Fourier_series
+
+- id: non-euclidean-geometry
+  name: Non-Euclidean and Riemannian geometry
+  kind: discovery
+  fields: [math]
+  date: 1829
+  status: achieved
+  tier: 3
+  summary: >-
+    Consistent geometries in which Euclid's parallel postulate fails, generalized by Riemann to
+    curved spaces of any dimension, later the language of general relativity.
+  requires: [geometry, calculus]
+  efforts:
+    - who: Nikolai Lobachevsky
+      where: Russia
+      when: 1829
+      outcome: achieved
+    - who: Janos Bolyai
+      where: Hungary
+      when: 1832
+      outcome: independent
+    - who: Carl Friedrich Gauss
+      where: Germany
+      when: 1824
+      outcome: independent
+      note: Worked it out but did not publish.
+    - who: Bernhard Riemann
+      where: Germany
+      when: 1854
+      outcome: achieved
+      note: Habilitation lecture on the foundations of geometry. Ricci and Levi-Civita's tensor calculus (1900) made it usable.
+  sources:
+    - title: Non-Euclidean geometry (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Non-Euclidean_geometry
+    - title: Riemannian geometry (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Riemannian_geometry
+
+- id: boolean-logic
+  name: Boolean logic
+  kind: discovery
+  fields: [math, computing]
+  date: 1847
+  status: achieved
+  tier: 2
+  summary: >-
+    George Boole showed that logical reasoning could be done as algebra on true and false values,
+    the mathematics that every digital circuit now implements.
+  requires: [algebra]
+  efforts:
+    - who: George Boole
+      where: England and Ireland
+      when: 1847
+      outcome: achieved
+      note: The Mathematical Analysis of Logic (1847) and The Laws of Thought (1854).
+    - who: Augustus De Morgan
+      where: England
+      when: 1847
+      outcome: independent
+      note: Formal Logic, same year; De Morgan's laws.
+  sources:
+    - title: Boolean algebra (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Boolean_algebra
+    - title: George Boole (Stanford Encyclopedia of Philosophy)
+      url: https://plato.stanford.edu/entries/boole/
+
+- id: mathematical-logic
+  name: Formal mathematical logic
+  kind: discovery
+  fields: [math, computing]
+  date: 1879
+  status: achieved
+  tier: 3
+  summary: >-
+    A precise symbolic language for quantifiers and proofs, built to put all of mathematics on
+    logical foundations, which raised the question of what can be proved or computed.
+  requires: [boolean-logic]
+  efforts:
+    - who: Gottlob Frege
+      where: Jena, Germany
+      when: 1879
+      outcome: achieved
+      note: Begriffsschrift, the first full predicate logic.
+    - who: Giuseppe Peano
+      where: Italy
+      when: 1889
+      outcome: achieved
+      note: Axioms for arithmetic.
+    - who: Bertrand Russell, Alfred North Whitehead
+      where: England
+      when: 1910
+      outcome: achieved
+      note: Principia Mathematica, 1910 to 1913. David Hilbert's program of the 1920s sought a complete and decidable foundation.
+  sources:
+    - title: Begriffsschrift (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Begriffsschrift
+    - title: Mathematical logic (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Mathematical_logic
+
+- id: computability-theory
+  name: Computability theory
+  kind: discovery
+  fields: [computing, math]
+  date: 1936
+  status: achieved
+  tier: 2
+  summary: >-
+    Turing and Church defined precisely what an algorithm is and proved some problems can never
+    be solved by one; Turing's universal machine is the abstract model of the stored-program computer.
+  requires: [mathematical-logic]
+  efforts:
+    - who: Kurt Godel
+      where: Vienna
+      when: 1931
+      outcome: achieved
+      note: Incompleteness theorems showed Hilbert's complete foundation was impossible.
+    - who: Alan Turing
+      where: Cambridge, England
+      when: 1936
+      outcome: achieved
+      note: On Computable Numbers, with an Application to the Entscheidungsproblem.
+    - who: Alonzo Church
+      where: Princeton, USA
+      when: 1936
+      outcome: independent
+      note: Lambda calculus; Emil Post's similar model appeared the same year.
+  sources:
+    - title: Turing machine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Turing_machine
+    - title: Church-Turing thesis (Stanford Encyclopedia of Philosophy)
+      url: https://plato.stanford.edu/entries/church-turing/
+
+- id: switching-circuit-theory
+  name: Switching circuit theory
+  kind: discovery
+  fields: [computing, electronics]
+  date: 1937
+  status: achieved
+  tier: 3
+  summary: >-
+    Claude Shannon showed that networks of relays and switches compute Boolean algebra, so logic
+    could be designed on paper and built in hardware.
+  requires: [boolean-logic, relay]
+  helped_by: [telephone]
+  efforts:
+    - who: Claude Shannon
+      where: MIT, USA
+      when: 1937
+      outcome: achieved
+      note: Master's thesis A Symbolic Analysis of Relay and Switching Circuits, published 1938.
+    - who: Akira Nakashima
+      where: NEC, Japan
+      when: 1935
+      outcome: independent
+    - who: Victor Shestakov
+      where: Moscow
+      when: 1935
+      outcome: independent
+      note: Proposed in 1935, published 1941.
+  sources:
+    - title: A Symbolic Analysis of Relay and Switching Circuits (Wikipedia)
+      url: https://en.wikipedia.org/wiki/A_Symbolic_Analysis_of_Relay_and_Switching_Circuits
+    - title: Switching circuit theory (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Switching_circuit_theory
+
+- id: information-theory
+  name: Information theory
+  kind: discovery
+  fields: [computing, math, electronics]
+  date: 1948
+  status: achieved
+  tier: 2
+  summary: >-
+    Shannon defined information in bits and proved how much can be sent through a noisy channel,
+    setting the limits for all later communication, compression and coding.
+  requires: [probability-theory, fourier-analysis, telephone]
+  helped_by: [statistical-mechanics, switching-circuit-theory, radar]
+  efforts:
+    - who: Claude Shannon (Bell Labs)
+      where: USA
+      when: 1948
+      outcome: achieved
+      note: A Mathematical Theory of Communication.
+    - who: Harry Nyquist, Ralph Hartley (Bell Labs)
+      where: USA
+      when: 1928
+      outcome: achieved
+      note: Earlier results on telegraph speed and a logarithmic measure of information.
+    - who: Vladimir Kotelnikov
+      where: USSR
+      when: 1933
+      outcome: independent
+      note: The sampling theorem.
+    - who: Norbert Wiener
+      where: MIT, USA
+      when: 1948
+      outcome: independent
+      note: A related statistical theory of communication in Cybernetics.
+  sources:
+    - title: A Mathematical Theory of Communication (Wikipedia)
+      url: https://en.wikipedia.org/wiki/A_Mathematical_Theory_of_Communication
+    - title: Information theory (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Information_theory
+
+# ---------------------------------------------------------------- pre-electronic computing
+
+- id: jacquard-loom
+  name: Jacquard loom
+  kind: device
+  fields: [computing, engineering]
+  date: 1804
+  status: achieved
+  tier: 3
+  summary: >-
+    A loom controlled by chains of punched cards, so a pattern became a stored program; the cards
+    inspired Babbage's engine and Hollerith's tabulators.
+  helped_by: [factory-system]
+  efforts:
+    - who: Joseph Marie Jacquard
+      where: Lyon, France
+      when: 1804
+      outcome: achieved
+    - who: Basile Bouchon, Jean-Baptiste Falcon, Jacques de Vaucanson
+      where: France
+      when: 1725
+      outcome: achieved
+      note: Punched paper and card loom controls from 1725 to 1745.
+  sources:
+    - title: Jacquard machine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Jacquard_machine
+
+- id: analytical-engine
+  name: Difference and Analytical Engines
+  kind: device
+  fields: [computing]
+  date: 1837
+  status: achieved
+  tier: 3
+  summary: >-
+    Charles Babbage designed a steam-age mechanical computer with memory, a processing unit and
+    card input; Ada Lovelace wrote programs for it, but it was never built.
+  requires: [jacquard-loom, machine-tools]
+  efforts:
+    - who: Charles Babbage
+      where: London
+      when: 1822
+      outcome: abandoned
+      note: Difference Engine No. 1, funded by the British government, abandoned in 1842.
+    - who: Charles Babbage, Ada Lovelace
+      where: London
+      when: 1837
+      outcome: abandoned
+      note: Analytical Engine design; Lovelace's 1843 notes include the first published program.
+    - who: Pascal, Leibniz
+      where: France, Germany
+      when: 1642
+      outcome: achieved
+      note: Mechanical calculators (Pascaline 1642, stepped reckoner 1673).
+  effort:
+    span: [1822, 1842]
+    people: 10
+    cost_usd: 3e6
+    note: The government spent about 17,000 pounds on the Difference Engine before abandoning it; the 2025-dollar figure is a rough conversion.
+  sources:
+    - title: Analytical engine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Analytical_engine
+    - title: The Engines (Computer History Museum)
+      url: https://www.computerhistory.org/babbage/engines/
+
+- id: tabulating-machine
+  name: Punched-card tabulator
+  kind: device
+  fields: [computing, society]
+  date: 1890
+  status: achieved
+  tier: 3
+  summary: >-
+    Herman Hollerith's electric card readers tallied the 1890 US census in a fraction of the time
+    of the hand-counted 1880 census, founding the data-processing industry that became IBM.
+  requires: [jacquard-loom, relay]
+  helped_by: [statistics]
+  efforts:
+    - who: Herman Hollerith
+      where: USA
+      when: 1890
+      outcome: achieved
+      note: Patented 1889. His company merged into CTR in 1911, renamed IBM in 1924.
+  sources:
+    - title: Tabulating machine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Tabulating_machine
+    - title: The Hollerith Machine (US Census Bureau)
+      url: https://www.census.gov/history/www/innovations/technology/the_hollerith_tabulator.html
+
+# ---------------------------------------------------------------- astronomy and mechanics
+
+- id: heliocentrism
+  name: Heliocentric model
+  kind: discovery
+  fields: [physics]
+  date: 1543
+  status: achieved
+  tier: 1
+  summary: >-
+    Copernicus put the Sun at the center with Earth as one moving planet, which Kepler and
+    Galileo later confirmed and which opened the road to Newton.
+  requires: [astronomy-ancient, geometry]
+  helped_by: [printing-press]
+  efforts:
+    - who: Nicolaus Copernicus
+      where: Poland
+      when: 1543
+      outcome: achieved
+      note: De revolutionibus orbium coelestium.
+    - who: Aristarchus of Samos
+      where: Greece
+      when: -270
+      outcome: independent
+      note: Proposed a Sun-centered cosmos that did not catch on.
+  effort:
+    span: [1510, 1543]
+    people: 1
+    note: About three decades of one astronomer's work.
+  sources:
+    - title: Copernican heliocentrism (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Copernican_heliocentrism
+
+- id: telescope
+  name: Telescope
+  kind: device
+  fields: [physics]
+  date: 1608
+  status: achieved
+  tier: 2
+  summary: >-
+    Two lenses in a tube magnified distant objects; turned to the sky, it showed Jupiter's moons
+    and the phases of Venus, evidence for a Sun-centered system.
+  requires: [lenses, glassmaking]
+  efforts:
+    - who: Hans Lipperhey
+      where: Middelburg, Netherlands
+      when: 1608
+      outcome: achieved
+      note: First patent application; Jacob Metius and Zacharias Janssen made rival claims.
+    - who: Galileo Galilei
+      where: Padua, Italy
+      when: 1609
+      outcome: achieved
+      note: Improved it to about 20x and published Sidereus Nuncius in 1610.
+    - who: Isaac Newton
+      where: England
+      when: 1668
+      outcome: achieved
+      note: The reflecting telescope.
+  sources:
+    - title: History of the telescope (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_the_telescope
+
+- id: keplers-laws
+  name: Kepler's laws of planetary motion
+  kind: discovery
+  fields: [physics]
+  date: 1609
+  status: achieved
+  tier: 3
+  summary: >-
+    Planets move in ellipses, sweep equal areas in equal times, and have periods tied to orbit
+    size; Kepler fit these to Tycho Brahe's naked-eye data.
+  requires: [heliocentrism, geometry]
+  efforts:
+    - who: Johannes Kepler, using Tycho Brahe's observations
+      where: Prague
+      when: 1609
+      outcome: achieved
+      note: Astronomia nova (1609) gave the first two laws; Harmonices Mundi (1619) the third.
+  effort:
+    span: [1601, 1609]
+    people: 1
+    note: About eight years of hand calculation on the orbit of Mars, from data Tycho's observatory gathered over some 20 years.
+  sources:
+    - title: Kepler's laws of planetary motion (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion
+
+- id: galilean-kinematics
+  name: Galilean kinematics
+  kind: discovery
+  fields: [physics]
+  date: 1638
+  status: achieved
+  tier: 3
+  summary: >-
+    Galileo measured falling and rolling bodies and found uniform acceleration, parabolic
+    trajectories and the principle of inertia.
+  requires: [scientific-method, geometry]
+  efforts:
+    - who: Galileo Galilei
+      where: Italy
+      when: 1638
+      outcome: achieved
+      note: Two New Sciences, written under house arrest and printed in Leiden.
+  sources:
+    - title: Two New Sciences (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Two_New_Sciences
+
+- id: vacuum-pump
+  name: Vacuum pump
+  kind: device
+  fields: [physics, engineering]
+  date: 1650
+  status: achieved
+  tier: 3
+  summary: >-
+    Pumps that removed air from a vessel showed that the atmosphere has weight and pressure, an
+    idea behind the steam engine, and later made light bulbs and vacuum tubes possible.
+  requires: [scientific-method]
+  helped_by: [glassmaking]
+  efforts:
+    - who: Evangelista Torricelli
+      where: Florence
+      when: 1643
+      outcome: achieved
+      note: The mercury barometer showed air pressure and made a vacuum.
+    - who: Otto von Guericke
+      where: Magdeburg, Germany
+      when: 1650
+      outcome: achieved
+      note: First air pump; Magdeburg hemispheres demonstration in 1654.
+    - who: Robert Boyle, Robert Hooke
+      where: Oxford
+      when: 1659
+      outcome: achieved
+      note: An improved pump and Boyle's law (1662). Sprengel's mercury pump (1865) later gave the hard vacuum for light bulbs.
+  sources:
+    - title: Vacuum pump (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Vacuum_pump
+    - title: Otto von Guericke (Britannica)
+      url: https://www.britannica.com/biography/Otto-von-Guericke
+
+- id: newtonian-mechanics
+  name: Newtonian mechanics and gravitation
+  kind: discovery
+  fields: [physics]
+  date: 1687
+  status: achieved
+  tier: 1
+  summary: >-
+    Three laws of motion and universal gravitation explained both falling apples and planetary
+    orbits with one set of equations, the model for all later physics.
+  requires: [calculus, keplers-laws, galilean-kinematics]
+  helped_by: [scientific-societies, telescope]
+  efforts:
+    - who: Isaac Newton
+      where: Cambridge, England
+      when: 1687
+      outcome: achieved
+      note: Philosophiae Naturalis Principia Mathematica, published with Edmond Halley's funding.
+    - who: Robert Hooke
+      where: London
+      when: 1679
+      outcome: rival
+      note: Suggested an inverse-square law of attraction to Newton but could not derive orbits.
+  sources:
+    - title: Philosophiae Naturalis Principia Mathematica (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Philosophi%C3%A6_Naturalis_Principia_Mathematica
+
+- id: aerodynamics
+  name: Aerodynamics of the fixed wing
+  kind: discovery
+  fields: [engineering, physics]
+  date: 1804
+  status: achieved
+  tier: 3
+  summary: >-
+    George Cayley separated lift from thrust and flew fixed-wing gliders; Lilienthal's
+    measured glider flights and wind tunnel data then showed how to build and control wings.
+  requires: [newtonian-mechanics]
+  efforts:
+    - who: George Cayley
+      where: England
+      when: 1804
+      outcome: achieved
+      note: Model glider in 1804, a crewed glider in 1853.
+    - who: Otto Lilienthal
+      where: Germany
+      when: 1891
+      outcome: achieved
+      note: About 2,000 glider flights before his fatal crash in 1896.
+    - who: Francis Wenham
+      where: England
+      when: 1871
+      outcome: achieved
+      note: First wind tunnel.
+  sources:
+    - title: George Cayley (Wikipedia)
+      url: https://en.wikipedia.org/wiki/George_Cayley
+    - title: Otto Lilienthal (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Otto_Lilienthal
+
+# ---------------------------------------------------------------- navigation
+
+- id: transoceanic-voyages
+  name: Transoceanic navigation
+  kind: technique
+  fields: [engineering, society]
+  date: 1492
+  status: achieved
+  tier: 2
+  summary: >-
+    Ocean-going carracks and caravels, the compass and celestial navigation let European
+    sailors cross the Atlantic, round Africa to India and circle the globe.
+  requires: [compass, astronomy-ancient, sailing-ships]
+  helped_by: [printing-press]
+  efforts:
+    - who: Christopher Columbus
+      where: Spain
+      when: 1492
+      outcome: achieved
+      note: Three ships and about 90 men.
+    - who: Vasco da Gama
+      where: Portugal
+      when: 1498
+      outcome: achieved
+      note: Sea route to India.
+    - who: Ferdinand Magellan, Juan Sebastian Elcano
+      where: Spain
+      when: 1522
+      outcome: achieved
+      note: First circumnavigation. Five ships and about 270 men left; one ship and 18 men returned.
+    - who: Zheng He
+      where: Ming China
+      when: 1405
+      outcome: independent
+      note: Large fleets sailed the Indian Ocean from 1405 to 1433, then were stopped.
+  sources:
+    - title: Age of Discovery (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Age_of_Discovery
+    - title: Magellan expedition (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Magellan_expedition
+
+- id: longitude-chronometer
+  name: Marine chronometer
+  kind: device
+  fields: [engineering, physics]
+  date: 1761
+  status: achieved
+  tier: 3
+  summary: >-
+    A clock accurate enough at sea to carry home-port time let navigators find longitude, a
+    problem Britain had offered a large prize to solve.
+  requires: [mechanical-clock]
+  helped_by: [transoceanic-voyages, newtonian-mechanics]
+  competes: []
+  efforts:
+    - who: John Harrison
+      where: England
+      when: 1761
+      outcome: achieved
+      note: H4 lost about 5 seconds on the voyage to Jamaica.
+    - who: Nevil Maskelyne and others
+      where: England
+      when: 1767
+      outcome: rival
+      note: The lunar distance method, a rival astronomical solution, published in the Nautical Almanac.
+  effort:
+    span: [1730, 1761]
+    people: 2
+    note: About 30 years and four clocks (H1 to H4) by Harrison, chasing the 20,000-pound prize of the Longitude Act of 1714.
+  sources:
+    - title: Marine chronometer (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Marine_chronometer
+    - title: John Harrison (Royal Museums Greenwich)
+      url: https://www.rmg.co.uk/stories/topics/harrisons-clocks-longitude-problem
+
+# ---------------------------------------------------------------- electricity and magnetism
+
+- id: leyden-jar
+  name: Leyden jar
+  kind: device
+  fields: [physics, electronics]
+  date: 1745
+  status: achieved
+  tier: 3
+  summary: >-
+    A glass jar lined with metal foil stored static electric charge, the first capacitor, and
+    let experimenters study electricity with strong sparks; Franklin used it to show lightning is electric.
+  requires: [glassmaking]
+  helped_by: [scientific-societies]
+  efforts:
+    - who: Ewald Georg von Kleist
+      where: Pomerania
+      when: 1745
+      outcome: achieved
+    - who: Pieter van Musschenbroek
+      where: Leiden, Netherlands
+      when: 1746
+      outcome: independent
+    - who: Otto von Guericke, Francis Hauksbee
+      where: Germany, England
+      when: 1663
+      outcome: achieved
+      note: Friction machines that generated the charge.
+  sources:
+    - title: Leyden jar (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Leyden_jar
+
+- id: electric-battery
+  name: Electric battery (voltaic pile)
+  kind: device
+  fields: [physics, chemistry, electronics]
+  date: 1800
+  status: achieved
+  tier: 2
+  summary: >-
+    Stacked zinc and copper discs in brine gave the first steady electric current, enabling
+    electrochemistry (Davy isolated sodium and potassium in 1807) and electromagnetism.
+  requires: [leyden-jar]
+  uses: [res-copper, res-zinc]
+  efforts:
+    - who: Alessandro Volta
+      where: Pavia, Italy
+      when: 1800
+      outcome: achieved
+      note: Built to refute Luigi Galvani's animal electricity (1791).
+    - who: William Nicholson, Anthony Carlisle
+      where: London
+      when: 1800
+      outcome: achieved
+      note: Electrolysis of water weeks after Volta's report.
+    - who: Humphry Davy
+      where: London
+      when: 1807
+      outcome: achieved
+      note: Isolated potassium, sodium and later several other elements by electrolysis.
+  sources:
+    - title: Voltaic pile (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Voltaic_pile
+
+- id: electromagnetism
+  name: Electromagnetism
+  kind: discovery
+  fields: [physics, electronics]
+  date: 1820
+  status: achieved
+  tier: 2
+  summary: >-
+    An electric current deflects a compass needle; electricity and magnetism are linked, and a
+    coil of wire around iron makes a strong controllable electromagnet.
+  requires: [electric-battery, compass]
+  efforts:
+    - who: Hans Christian Orsted
+      where: Copenhagen
+      when: 1820
+      outcome: achieved
+    - who: Andre-Marie Ampere
+      where: Paris
+      when: 1820
+      outcome: achieved
+      note: Mathematical law of forces between currents, weeks after Orsted.
+    - who: William Sturgeon, Joseph Henry
+      where: England, USA
+      when: 1824
+      outcome: achieved
+      note: The electromagnet (Sturgeon 1824); Henry's much stronger insulated-coil magnets around 1830.
+  sources:
+    - title: Hans Christian Orsted (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Hans_Christian_%C3%98rsted
+    - title: Electromagnet (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Electromagnet
+
+- id: electric-motor
+  name: Electric motor
+  kind: device
+  fields: [electronics, engineering]
+  date: 1834
+  status: achieved
+  tier: 3
+  summary: >-
+    Electromagnetic forces turned into continuous rotation; practical motors arrived when the
+    dynamo could supply cheap current, and they later freed factories from line shafts.
+  requires: [electromagnetism]
+  efforts:
+    - who: Michael Faraday
+      where: London
+      when: 1821
+      outcome: achieved
+      note: Electromagnetic rotation demonstration.
+    - who: Moritz von Jacobi
+      where: Konigsberg and St. Petersburg
+      when: 1834
+      outcome: achieved
+      note: First useful rotating motor; powered a boat on the Neva in 1839.
+    - who: Thomas Davenport
+      where: Vermont, USA
+      when: 1837
+      outcome: independent
+      note: First US motor patent.
+  sources:
+    - title: Electric motor (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Electric_motor
+
+- id: electromagnetic-induction
+  name: Electromagnetic induction
+  kind: discovery
+  fields: [physics, electronics]
+  date: 1831
+  status: achieved
+  tier: 1
+  summary: >-
+    A changing magnetic field produces an electric current, the principle behind every
+    generator, transformer and induction coil.
+  requires: [electromagnetism, electric-battery]
+  efforts:
+    - who: Michael Faraday
+      where: Royal Institution, London
+      when: 1831
+      outcome: achieved
+      note: The induction ring experiment of 29 August 1831.
+    - who: Joseph Henry
+      where: Albany, USA
+      when: 1832
+      outcome: independent
+      note: Found it independently and also discovered self-induction.
+  sources:
+    - title: Electromagnetic induction (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Electromagnetic_induction
+    - title: Faraday's law of induction (Britannica)
+      url: https://www.britannica.com/science/Faradays-law-of-induction
+
+- id: electric-generator
+  name: Dynamo (electric generator)
+  kind: device
+  fields: [energy, electronics]
+  date: 1866
+  status: achieved
+  tier: 2
+  summary: >-
+    Machines that turn mechanical rotation into current; the self-exciting dynamo made
+    electricity cheap and plentiful enough for lighting, electroplating and industry.
+  requires: [electromagnetic-induction]
+  helped_by: [steam-engine]
+  efforts:
+    - who: Hippolyte Pixii
+      where: Paris
+      when: 1832
+      outcome: achieved
+      note: Hand-cranked magneto generator.
+    - who: Werner von Siemens; Charles Wheatstone; Samuel Varley
+      where: Berlin and London
+      when: 1866
+      outcome: independent
+      note: Self-excited dynamos announced almost simultaneously in 1866 to 1867. Anyos Jedlik had the idea earlier.
+    - who: Zenobe Gramme
+      where: Paris
+      when: 1871
+      outcome: achieved
+      note: The ring-armature dynamo, the first commercially successful design.
+  sources:
+    - title: Electric generator (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Electric_generator
+    - title: Dynamo (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Dynamo
+
+- id: maxwell-equations
+  name: Maxwell's equations
+  kind: discovery
+  fields: [physics, electronics]
+  date: 1865
+  status: achieved
+  tier: 1
+  summary: >-
+    Maxwell unified electricity, magnetism and light into one field theory and predicted
+    electromagnetic waves traveling at the speed of light.
+  requires: [electromagnetic-induction, calculus]
+  helped_by: [newtonian-mechanics]
+  efforts:
+    - who: James Clerk Maxwell
+      where: London and Glenlair, Scotland
+      when: 1865
+      outcome: achieved
+      note: A Dynamical Theory of the Electromagnetic Field (1865); Treatise on Electricity and Magnetism (1873).
+    - who: Oliver Heaviside
+      where: England
+      when: 1884
+      outcome: achieved
+      note: Recast Maxwell's 20 equations into the four vector equations used today.
+  effort:
+    span: [1855, 1873]
+    people: 1
+    note: Built on Faraday's field lines, worked out over about 18 years.
+  sources:
+    - title: "A Dynamical Theory of the Electromagnetic Field (Wikipedia)"
+      url: https://en.wikipedia.org/wiki/A_Dynamical_Theory_of_the_Electromagnetic_Field
+    - title: Maxwell's equations (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Maxwell%27s_equations
+
+- id: electromagnetic-waves
+  name: Radio waves (Hertz)
+  kind: discovery
+  fields: [physics, electronics]
+  date: 1887
+  status: achieved
+  tier: 2
+  summary: >-
+    Heinrich Hertz generated and detected electromagnetic waves with spark gaps, confirming
+    Maxwell's prediction and showing that invisible waves could carry energy across a room.
+  requires: [maxwell-equations, electromagnetic-induction]
+  efforts:
+    - who: Heinrich Hertz
+      where: Karlsruhe, Germany
+      when: 1887
+      outcome: achieved
+    - who: Oliver Lodge
+      where: Liverpool
+      when: 1888
+      outcome: independent
+      note: Detected waves along wires about the same time.
+  sources:
+    - title: Heinrich Hertz (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Heinrich_Hertz
+
+# ---------------------------------------------------------------- communications
+
+- id: relay
+  name: Electromechanical relay
+  kind: device
+  fields: [electronics, computing]
+  date: 1835
+  status: achieved
+  tier: 3
+  summary: >-
+    An electromagnet that opens and closes another circuit, first used to extend telegraph lines,
+    later the switching element of telephone exchanges and the first programmable computers.
+  requires: [electromagnetism]
+  efforts:
+    - who: Joseph Henry
+      where: Princeton, USA
+      when: 1835
+      outcome: achieved
+    - who: Edward Davy
+      where: England
+      when: 1837
+      outcome: independent
+    - who: Samuel Morse, Alfred Vail
+      where: USA
+      when: 1840
+      outcome: achieved
+      note: Repeaters for long telegraph lines.
+  sources:
+    - title: Relay (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Relay
+
+- id: telegraph
+  name: Electric telegraph
+  kind: device
+  fields: [electronics, society]
+  date: 1837
+  status: achieved
+  tier: 1
+  summary: >-
+    Coded pulses of current over wires sent messages across countries in seconds; by 1866
+    an Atlantic cable linked Europe and America, the first instant long-distance communication.
+  requires: [electric-battery, electromagnetism]
+  helped_by: [relay, railway]
+  efforts:
+    - who: William Cooke, Charles Wheatstone
+      where: England
+      when: 1837
+      outcome: achieved
+      note: Needle telegraph, patented 1837, first used along railway lines.
+    - who: Samuel Morse, Alfred Vail
+      where: USA
+      when: 1837
+      outcome: independent
+      note: Morse code; Washington to Baltimore line in 1844.
+    - who: Carl Friedrich Gauss, Wilhelm Weber
+      where: Gottingen, Germany
+      when: 1833
+      outcome: independent
+    - who: Pavel Schilling
+      where: St. Petersburg
+      when: 1832
+      outcome: independent
+    - who: Claude Chappe
+      where: France
+      when: 1794
+      outcome: rival
+      note: Optical semaphore telegraph network, displaced by the electric telegraph.
+    - who: Atlantic Telegraph Company, Cyrus Field
+      where: Atlantic Ocean
+      when: 1866
+      outcome: achieved
+      note: The 1858 cable failed in weeks; the Great Eastern laid a lasting one in 1866.
+  sources:
+    - title: Electrical telegraph (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Electrical_telegraph
+    - title: Transatlantic telegraph cable (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Transatlantic_telegraph_cable
+
+- id: telephone
+  name: Telephone
+  kind: device
+  fields: [electronics, society]
+  date: 1876
+  status: achieved
+  tier: 2
+  summary: >-
+    Converting voice into a varying electric current and back carried speech over wires, and
+    grew into switched networks run by the Bell System.
+  requires: [telegraph, electromagnetic-induction]
+  efforts:
+    - who: Alexander Graham Bell
+      where: Boston, USA
+      when: 1876
+      outcome: achieved
+      note: Patent filed 14 February 1876 and granted 7 March 1876.
+    - who: Elisha Gray
+      where: USA
+      when: 1876
+      outcome: rival
+      note: Filed a caveat for a liquid transmitter the same day as Bell's application.
+    - who: Antonio Meucci
+      where: New York, USA
+      when: 1871
+      outcome: independent
+      note: Filed a caveat in 1871 but could not afford to renew it.
+    - who: Philipp Reis
+      where: Germany
+      when: 1861
+      outcome: independent
+      note: Transmitted tones and some speech.
+    - who: Thomas Edison
+      where: USA
+      when: 1877
+      outcome: achieved
+      note: The carbon microphone made long-distance calls practical.
+  sources:
+    - title: Invention of the telephone (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Invention_of_the_telephone
+
+- id: photography
+  name: Photography
+  kind: technique
+  fields: [chemistry, physics]
+  date: 1839
+  status: achieved
+  tier: 2
+  summary: >-
+    Light-sensitive silver chemistry fixed camera images permanently, a new record for science
+    and the detector behind spectroscopy, astronomy and the discovery of X-rays and radioactivity.
+  requires: [lenses, chemical-revolution]
+  uses: [res-silver]
+  efforts:
+    - who: Nicephore Niepce
+      where: France
+      when: 1826
+      outcome: achieved
+      note: The oldest surviving camera photograph, on bitumen.
+    - who: Louis Daguerre
+      where: Paris
+      when: 1839
+      outcome: achieved
+      note: The daguerreotype, released by the French state as a free gift to the world.
+    - who: William Henry Fox Talbot
+      where: England
+      when: 1839
+      outcome: independent
+      note: Paper negatives; the calotype (1841) allowed copies.
+  sources:
+    - title: History of photography (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_photography
+
+- id: radio
+  name: Radio
+  kind: device
+  fields: [electronics, society]
+  date: 1895
+  status: achieved
+  tier: 1
+  summary: >-
+    Wireless telegraphy, then voice and broadcasting, carried messages through the air by radio
+    waves, first to ships and across oceans, then into homes from 1920.
+  requires: [electromagnetic-waves, telegraph]
+  efforts:
+    - who: Guglielmo Marconi
+      where: Italy and England
+      when: 1895
+      outcome: achieved
+      note: British patent in 1896, transatlantic signal in December 1901. Nobel Prize 1909 with Karl Ferdinand Braun.
+    - who: Alexander Popov
+      where: St. Petersburg
+      when: 1895
+      outcome: independent
+    - who: Jagadish Chandra Bose
+      where: Calcutta
+      when: 1895
+      outcome: independent
+      note: Millimeter-wave experiments and crystal detectors.
+    - who: Nikola Tesla
+      where: USA
+      when: 1897
+      outcome: rival
+      note: His US patents were upheld over Marconi's by the Supreme Court in 1943.
+    - who: Reginald Fessenden
+      where: USA
+      when: 1906
+      outcome: achieved
+      note: Amplitude-modulated voice transmission; KDKA began scheduled broadcasting in 1920.
+  sources:
+    - title: Invention of radio (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Invention_of_radio
+    - title: Nobel Prize in Physics 1909
+      url: https://www.nobelprize.org/prizes/physics/1909/summary/
+
+- id: vacuum-tube
+  name: Vacuum tube (diode and triode)
+  kind: device
+  fields: [electronics]
+  date: 1906
+  status: achieved
+  tier: 2
+  summary: >-
+    A heated filament emits electrons into a vacuum; the diode rectified radio signals and the
+    triode amplified them, the active component of electronics until the transistor.
+  requires: [electric-light, vacuum-pump, electron, radio]
+  efforts:
+    - who: Thomas Edison
+      where: USA
+      when: 1883
+      outcome: achieved
+      note: Patented the Edison effect, current from a hot filament, without explaining it.
+    - who: John Ambrose Fleming
+      where: London
+      when: 1904
+      outcome: achieved
+      note: The thermionic diode valve.
+    - who: Lee de Forest
+      where: USA
+      when: 1906
+      outcome: achieved
+      note: The Audion, a triode, though he did not understand how it amplified.
+    - who: Irving Langmuir (GE), Harold Arnold (AT&T)
+      where: USA
+      when: 1913
+      outcome: achieved
+      note: Hard-vacuum tubes made reliable amplifiers, enabling transcontinental telephony in 1915.
+  sources:
+    - title: Vacuum tube (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Vacuum_tube
+    - title: Audion (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Audion
+
+- id: radar
+  name: Radar
+  kind: device
+  fields: [electronics, physics]
+  date: 1935
+  status: achieved
+  tier: 2
+  summary: >-
+    Pulsed radio echoes locate aircraft and ships; British chain stations and then
+    microwave radar using the cavity magnetron shaped the Second World War.
+  requires: [radio, vacuum-tube]
+  helped_by: [big-science]
+  efforts:
+    - who: Robert Watson-Watt, Arnold Wilkins
+      where: England
+      when: 1935
+      outcome: achieved
+      note: The Daventry experiment; the Chain Home network was operating by 1939.
+    - who: US Naval Research Laboratory
+      where: USA
+      when: 1934
+      outcome: independent
+      note: Pulse radar by Robert Page and colleagues.
+    - who: Germany, France, USSR, Japan, Netherlands
+      where: several
+      when: 1935
+      outcome: independent
+      note: Several nations developed radar in secret in the mid-1930s.
+    - who: John Randall, Harry Boot
+      where: Birmingham, England
+      when: 1940
+      outcome: achieved
+      note: The cavity magnetron, taken to the US by the Tizard Mission in September 1940.
+    - who: MIT Radiation Laboratory
+      where: Cambridge, Massachusetts, USA
+      when: 1940
+      outcome: achieved
+      note: Developed about half of US wartime radar systems.
+  effort:
+    span: [1935, 1945]
+    people: 4000
+    cost_usd: 5e10
+    note: The Rad Lab grew to about 4,000 staff. US wartime radar spending was roughly 2.7 billion 1940s dollars (Rad Lab designs were about 1.35 billion), roughly 50 billion 2025 dollars; this excludes the British program.
+  sources:
+    - title: History of radar (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_radar
+    - title: MIT Radiation Laboratory (Wikipedia)
+      url: https://en.wikipedia.org/wiki/MIT_Radiation_Laboratory
+    - title: Cavity magnetron (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Cavity_magnetron
+
+# ---------------------------------------------------------------- energy: steam
+
+- id: deep-coal-mining
+  name: Deep coal mining
+  kind: technique
+  fields: [energy, engineering]
+  date: 1600
+  status: achieved
+  tier: 3
+  summary: >-
+    As English forests were cut, coal replaced wood as fuel; mines went deeper and flooded, and
+    the need to pump them dry created the first market for steam engines.
+  requires: [iron-smelting]
+  uses: [res-coal]
+  efforts:
+    - who: English and Scottish coal industry
+      where: Britain
+      when: 1600
+      outcome: achieved
+      note: British coal output grew roughly tenfold between 1560 and 1700 by most estimates.
+  sources:
+    - title: History of coal mining (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_coal_mining
+
+- id: steam-engine
+  name: Steam engine (atmospheric)
+  kind: device
+  fields: [energy, engineering]
+  date: 1712
+  status: achieved
+  tier: 1
+  summary: >-
+    Newcomen's engine condensed steam under a piston so air pressure pushed it down, pumping
+    water from mines; the first practical machine to turn fuel into work.
+  requires: [vacuum-pump, deep-coal-mining, iron-smelting, bronze]
+  uses: [res-coal]
+  efforts:
+    - who: Thomas Newcomen, John Calley
+      where: Dudley, England
+      when: 1712
+      outcome: achieved
+      note: Hundreds were built in the 18th century, wasteful but cheap to fuel at the pithead.
+    - who: Thomas Savery
+      where: England
+      when: 1698
+      outcome: achieved
+      note: A pistonless steam pump, whose broad patent Newcomen had to work under.
+    - who: Denis Papin
+      where: France and Germany
+      when: 1690
+      outcome: achieved
+      note: Piston-and-cylinder model.
+  sources:
+    - title: Newcomen atmospheric engine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Newcomen_atmospheric_engine
+
+- id: precision-cylinder-boring
+  name: Precision cylinder boring
+  kind: technique
+  fields: [engineering, materials]
+  date: 1774
+  status: achieved
+  tier: 3
+  summary: >-
+    John Wilkinson's boring mill, built for cannon, cut iron cylinders round and true enough to
+    seal a steam piston, which made Watt's engine work.
+  requires: [coke-iron-smelting]
+  helped_by: [watermill]
+  efforts:
+    - who: John Wilkinson
+      where: Bersham, Wales
+      when: 1774
+      outcome: achieved
+      note: Patented a cannon-boring method; his cylinders were accurate to roughly the thickness of a thin shilling.
+  sources:
+    - title: John Wilkinson (industrialist) (Wikipedia)
+      url: https://en.wikipedia.org/wiki/John_Wilkinson_(industrialist)
+
+- id: watt-steam-engine
+  name: Watt steam engine
+  kind: device
+  fields: [energy, engineering]
+  date: 1776
+  status: achieved
+  tier: 2
+  summary: >-
+    A separate condenser roughly doubled or tripled efficiency, and rotary motion let steam
+    drive mills and factories anywhere, not only at mines and rivers.
+  requires: [steam-engine, precision-cylinder-boring]
+  helped_by: [patents, scientific-societies]
+  efforts:
+    - who: James Watt, Matthew Boulton
+      where: Glasgow and Birmingham
+      when: 1776
+      outcome: achieved
+      note: Separate condenser conceived in 1765, patented 1769; first commercial engines 1776; sun-and-planet rotary gear 1781.
+    - who: Richard Trevithick, Oliver Evans
+      where: England, USA
+      when: 1801
+      outcome: achieved
+      note: High-pressure engines, light enough for locomotives and boats, after Watt's patent expired in 1800.
+  effort:
+    span: [1765, 1776]
+    people: 10
+    note: About eleven years from idea to commercial engine, rescued by Boulton's capital and a patent extension to 1800.
+  sources:
+    - title: Watt steam engine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Watt_steam_engine
+
+- id: carnot-heat-engine-theory
+  name: Carnot's theory of heat engines
+  kind: discovery
+  fields: [physics, energy]
+  date: 1824
+  status: achieved
+  tier: 3
+  summary: >-
+    Sadi Carnot showed that a heat engine's maximum efficiency depends only on the temperatures
+    between which it runs, the seed of thermodynamics.
+  requires: [watt-steam-engine, calculus]
+  efforts:
+    - who: Sadi Carnot
+      where: Paris
+      when: 1824
+      outcome: achieved
+      note: Reflections on the Motive Power of Fire, largely ignored until Clapeyron (1834) and Kelvin revived it.
+  sources:
+    - title: Reflections on the Motive Power of Fire (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Reflections_on_the_Motive_Power_of_Fire
+
+- id: thermodynamics
+  name: Thermodynamics
+  kind: discovery
+  fields: [physics, energy, chemistry]
+  date: 1850
+  status: achieved
+  tier: 1
+  summary: >-
+    Energy is conserved and heat flows from hot to cold, with entropy never decreasing; the laws
+    that govern every engine, refrigerator, power plant and chemical reaction.
+  requires: [carnot-heat-engine-theory]
+  helped_by: [electromagnetic-induction]
+  efforts:
+    - who: Julius Robert Mayer
+      where: Germany
+      when: 1842
+      outcome: independent
+      note: Mechanical equivalent of heat.
+    - who: James Prescott Joule
+      where: Manchester
+      when: 1843
+      outcome: achieved
+      note: Precise experiments on the mechanical equivalent of heat.
+    - who: Hermann von Helmholtz
+      where: Germany
+      when: 1847
+      outcome: achieved
+      note: General statement of conservation of energy.
+    - who: Rudolf Clausius, William Thomson (Lord Kelvin)
+      where: Germany, Scotland
+      when: 1850
+      outcome: achieved
+      note: The second law (1850 to 1851); Clausius named entropy in 1865. Gibbs extended it to chemistry in 1876.
+  sources:
+    - title: History of thermodynamics (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_thermodynamics
+
+- id: statistical-mechanics
+  name: Kinetic theory and statistical mechanics
+  kind: discovery
+  fields: [physics, math]
+  date: 1860
+  status: achieved
+  tier: 3
+  summary: >-
+    Treating heat as the statistics of countless moving molecules explained gas laws and entropy
+    from probability, and later guided Planck to the quantum.
+  requires: [thermodynamics, probability-theory, newtonian-mechanics, atomic-theory]
+  efforts:
+    - who: James Clerk Maxwell
+      where: Scotland
+      when: 1860
+      outcome: achieved
+      note: Distribution of molecular speeds.
+    - who: Ludwig Boltzmann
+      where: Vienna
+      when: 1877
+      outcome: achieved
+      note: Entropy as the logarithm of the number of microstates.
+    - who: Josiah Willard Gibbs
+      where: Yale, USA
+      when: 1902
+      outcome: achieved
+      note: Elementary Principles in Statistical Mechanics.
+  sources:
+    - title: Statistical mechanics (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Statistical_mechanics
+
+- id: steamboat
+  name: Steamboat and steamship
+  kind: device
+  fields: [engineering, energy]
+  date: 1807
+  status: achieved
+  tier: 3
+  summary: >-
+    Steam engines driving paddle wheels and later screw propellers made river and ocean travel
+    independent of wind and current.
+  requires: [watt-steam-engine]
+  efforts:
+    - who: Claude de Jouffroy
+      where: France
+      when: 1783
+      outcome: achieved
+      note: The Pyroscaphe ran briefly on the Saone.
+    - who: John Fitch
+      where: Philadelphia, USA
+      when: 1787
+      outcome: achieved
+      note: Ran a commercial service in 1790 that failed financially.
+    - who: Robert Fulton
+      where: New York, USA
+      when: 1807
+      outcome: achieved
+      note: The Clermont, the first commercially successful steamboat.
+    - who: Isambard Kingdom Brunel
+      where: England
+      when: 1843
+      outcome: achieved
+      note: SS Great Britain, an iron-hulled, screw-driven ocean liner.
+  sources:
+    - title: Steamboat (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Steamboat
+
+- id: railway
+  name: Steam railway
+  kind: infrastructure
+  fields: [engineering, energy]
+  date: 1830
+  status: achieved
+  tier: 1
+  summary: >-
+    High-pressure steam locomotives on iron rails moved goods and people overland faster and
+    cheaper than ever, knitting together markets and reshaping time and geography.
+  requires: [watt-steam-engine, puddling-process, coke-iron-smelting]
+  helped_by: [joint-stock-company, telegraph]
+  efforts:
+    - who: Richard Trevithick
+      where: Penydarren, Wales
+      when: 1804
+      outcome: achieved
+      note: First steam locomotive to haul a load on rails.
+    - who: George Stephenson
+      where: England
+      when: 1825
+      outcome: achieved
+      note: Stockton and Darlington Railway (1825).
+    - who: George and Robert Stephenson
+      where: England
+      when: 1830
+      outcome: achieved
+      note: The Liverpool and Manchester, the first intercity line run entirely by steam on a timetable, after the Rocket won the Rainhill Trials in 1829.
+  sources:
+    - title: Liverpool and Manchester Railway (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Liverpool_and_Manchester_Railway
+    - title: History of rail transport (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_rail_transport
+
+- id: transcontinental-railroad
+  name: First transcontinental railroad
+  kind: infrastructure
+  fields: [engineering, society]
+  date: 1869
+  status: achieved
+  tier: 3
+  summary: >-
+    About 1,800 miles of new line linking the US rail network to the Pacific, built largely by Chinese and
+    Irish laborers through the Sierra Nevada with black powder and nitroglycerin.
+  requires: [railway]
+  helped_by: [telegraph, joint-stock-company]
+  efforts:
+    - who: Central Pacific and Union Pacific railroads
+      where: USA
+      when: 1869
+      outcome: achieved
+      note: Joined at Promontory Summit, Utah, on 10 May 1869.
+    - who: Canadian Pacific Railway
+      where: Canada
+      when: 1885
+      outcome: achieved
+    - who: Trans-Siberian Railway
+      where: Russia
+      when: 1916
+      outcome: achieved
+      note: Built 1891 to 1916, about 9,300 km.
+  effort:
+    span: [1863, 1869]
+    people: 30000
+    cost_usd: 2.5e9
+    note: The Central Pacific employed perhaps 15,000 to 20,000 Chinese workers at peak, the Union Pacific about 10,000. Cost estimates vary widely (roughly 60 to 110 million 1860s dollars, plus land grants and federal bonds); the 2025 figure is a rough conversion.
+  sources:
+    - title: First transcontinental railroad (Wikipedia)
+      url: https://en.wikipedia.org/wiki/First_transcontinental_railroad
+    - title: Chinese Railroad Workers in North America Project (Stanford)
+      url: https://web.stanford.edu/group/chineserailroad/cgi-bin/website/
+
+- id: steam-turbine
+  name: Steam turbine
+  kind: device
+  fields: [energy, engineering]
+  date: 1884
+  status: achieved
+  tier: 2
+  summary: >-
+    Steam expanding through rows of blades spins a shaft directly at high speed, ideal for
+    driving generators and ship propellers; it still produces most of the world's electricity.
+  requires: [thermodynamics, watt-steam-engine, machine-tools]
+  efforts:
+    - who: Charles Parsons
+      where: Newcastle, England
+      when: 1884
+      outcome: achieved
+      note: Multistage reaction turbine; the turbine ship Turbinia (1897) outran the navy.
+    - who: Gustaf de Laval
+      where: Sweden
+      when: 1887
+      outcome: independent
+      note: Impulse turbine.
+  sources:
+    - title: Steam turbine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Steam_turbine
+
+# ---------------------------------------------------------------- textiles
+
+- id: spinning-jenny
+  name: Spinning jenny
+  kind: device
+  fields: [engineering, society]
+  date: 1765
+  status: achieved
+  tier: 3
+  summary: >-
+    A hand-cranked frame that spun many threads at once, multiplying a spinner's output and
+    starting the mechanization of cotton.
+  requires: [spinning-wheel]
+  efforts:
+    - who: James Hargreaves
+      where: Lancashire, England
+      when: 1765
+      outcome: achieved
+      note: Patented 1770. John Kay's flying shuttle (1733) had made weavers outpace spinners.
+    - who: Samuel Crompton
+      where: England
+      when: 1779
+      outcome: achieved
+      note: The spinning mule combined the jenny and water frame.
+  sources:
+    - title: Spinning jenny (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Spinning_jenny
+
+- id: water-frame
+  name: Water frame
+  kind: device
+  fields: [engineering, society]
+  date: 1769
+  status: achieved
+  tier: 3
+  summary: >-
+    A water-powered spinning machine using rollers that made strong cotton thread, too big for
+    a cottage, so it was housed in mills.
+  requires: [watermill]
+  helped_by: [spinning-jenny, patents]
+  efforts:
+    - who: Richard Arkwright, John Kay (clockmaker)
+      where: England
+      when: 1769
+      outcome: achieved
+      note: Based partly on Thomas Highs's design; Arkwright's patent was overturned in 1785. Edmund Cartwright's power loom (1785) mechanized weaving.
+  sources:
+    - title: Water frame (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Water_frame
+
+# ---------------------------------------------------------------- iron and steel, materials
+
+- id: coke-iron-smelting
+  name: Coke iron smelting
+  kind: technique
+  fields: [materials, energy]
+  date: 1709
+  status: achieved
+  tier: 2
+  summary: >-
+    Smelting iron with coke made from coal instead of charcoal freed ironmaking from shrinking
+    forests and made cheap cast iron in large quantity.
+  requires: [iron-smelting, blast-furnace]
+  uses: [res-coal, res-iron-ore]
+  efforts:
+    - who: Abraham Darby I
+      where: Coalbrookdale, England
+      when: 1709
+      outcome: achieved
+      note: Spread slowly until the 1750s; the Iron Bridge (1779) was cast there.
+  sources:
+    - title: Abraham Darby I (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Abraham_Darby_I
+    - title: Coalbrookdale (Britannica)
+      url: https://www.britannica.com/place/Coalbrookdale
+
+- id: puddling-process
+  name: Puddling (wrought iron)
+  kind: technique
+  fields: [materials]
+  date: 1784
+  status: achieved
+  tier: 3
+  summary: >-
+    Stirring molten pig iron in a coal-fired reverberatory furnace burned out carbon to make
+    tough wrought iron in bulk, used for rails, bridges and ships until steel took over.
+  requires: [coke-iron-smelting]
+  uses: [res-coal]
+  efforts:
+    - who: Henry Cort
+      where: England
+      when: 1784
+      outcome: achieved
+      note: Patented puddling with grooved rolling mills.
+    - who: Peter Onions
+      where: England
+      when: 1783
+      outcome: independent
+  sources:
+    - title: Puddling (metallurgy) (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Puddling_(metallurgy)
+
+- id: machine-tools
+  name: Precision machine tools
+  kind: device
+  fields: [engineering, materials]
+  date: 1800
+  status: achieved
+  tier: 3
+  summary: >-
+    Screw-cutting lathes, planers and milling machines made accurate metal parts by machine rather
+    than by hand, the base of all later mechanical industry.
+  requires: [precision-cylinder-boring, coke-iron-smelting]
+  efforts:
+    - who: Henry Maudslay
+      where: London
+      when: 1800
+      outcome: achieved
+      note: Screw-cutting lathe with slide rest; trained Whitworth, Nasmyth and Roberts.
+    - who: Joseph Whitworth
+      where: Manchester
+      when: 1841
+      outcome: achieved
+      note: Standard screw threads and precise measurement.
+  sources:
+    - title: Machine tool (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Machine_tool
+    - title: Henry Maudslay (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Henry_Maudslay
+
+- id: interchangeable-parts
+  name: Interchangeable parts
+  kind: technique
+  fields: [engineering]
+  date: 1824
+  status: achieved
+  tier: 3
+  summary: >-
+    Making parts to gauges so any one fits any product, the "American system" of manufacture,
+    first achieved in US armories with special-purpose machine tools.
+  requires: [machine-tools]
+  efforts:
+    - who: Honore Blanc
+      where: France
+      when: 1778
+      outcome: achieved
+      note: Interchangeable musket locks, demonstrated 1785; not adopted widely.
+    - who: Eli Whitney
+      where: USA
+      when: 1798
+      outcome: rival
+      note: Promoted the idea, but his muskets were largely not interchangeable.
+    - who: John Hall, Harpers Ferry and Springfield armories
+      where: USA
+      when: 1824
+      outcome: achieved
+      note: Hall's rifles were certified interchangeable in 1827.
+  sources:
+    - title: Interchangeable parts (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Interchangeable_parts
+    - title: American system of manufacturing (Wikipedia)
+      url: https://en.wikipedia.org/wiki/American_system_of_manufacturing
+
+- id: steel-bessemer
+  name: Bessemer steel
+  kind: technique
+  fields: [materials]
+  date: 1856
+  status: achieved
+  tier: 2
+  summary: >-
+    Blowing air through molten pig iron burned out carbon in minutes, making steel cheap enough
+    for rails, bridges, ships and skyscrapers.
+  requires: [coke-iron-smelting]
+  helped_by: [chemical-revolution]
+  competes: [open-hearth-steel]
+  uses: [res-iron-ore, res-coal]
+  efforts:
+    - who: Henry Bessemer
+      where: England
+      when: 1856
+      outcome: achieved
+    - who: William Kelly
+      where: Kentucky, USA
+      when: 1851
+      outcome: independent
+      note: Similar air-blowing experiments; won a US patent priority claim.
+    - who: Robert Mushet
+      where: England
+      when: 1856
+      outcome: achieved
+      note: Adding spiegeleisen (manganese) fixed brittleness from excess oxygen.
+    - who: Sidney Gilchrist Thomas, Percy Gilchrist
+      where: England
+      when: 1878
+      outcome: achieved
+      note: Basic lining that allowed phosphorus-rich European ores.
+  sources:
+    - title: Bessemer process (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Bessemer_process
+    - title: Bessemer process (Britannica)
+      url: https://www.britannica.com/technology/Bessemer-process
+
+- id: open-hearth-steel
+  name: Open-hearth steel
+  kind: technique
+  fields: [materials]
+  date: 1865
+  status: achieved
+  tier: 3
+  summary: >-
+    A regenerative furnace that recycled waste heat made steel slowly but with fine control and
+    could melt scrap; it overtook Bessemer and dominated steelmaking until the 1960s.
+  requires: [coke-iron-smelting]
+  helped_by: [thermodynamics]
+  competes: [steel-bessemer]
+  efforts:
+    - who: Carl Wilhelm Siemens
+      where: England
+      when: 1857
+      outcome: achieved
+      note: Regenerative furnace.
+    - who: Pierre-Emile Martin
+      where: France
+      when: 1865
+      outcome: achieved
+      note: Applied it to steelmaking, the Siemens-Martin process.
+  sources:
+    - title: Open-hearth furnace (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Open-hearth_furnace
+
+- id: portland-cement
+  name: Portland cement and reinforced concrete
+  kind: technique
+  fields: [materials, engineering]
+  date: 1824
+  status: achieved
+  tier: 3
+  summary: >-
+    Kiln-burned limestone and clay gave a strong, uniform hydraulic cement; set around steel bars
+    it became reinforced concrete, the most used building material on Earth.
+  helped_by: [concrete-roman, coke-iron-smelting]
+  uses: [res-limestone, res-clay]
+  efforts:
+    - who: Joseph Aspdin
+      where: Leeds, England
+      when: 1824
+      outcome: achieved
+      note: Patent; Isaac Johnson's higher-temperature process (1840s) made modern Portland cement.
+    - who: Joseph Monier
+      where: France
+      when: 1867
+      outcome: achieved
+      note: Iron-reinforced concrete; Francois Hennebique's system (1892) spread it to buildings.
+  sources:
+    - title: Portland cement (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Portland_cement
+    - title: Reinforced concrete (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Reinforced_concrete
+
+- id: vulcanized-rubber
+  name: Vulcanized rubber
+  kind: technique
+  fields: [materials, chemistry]
+  date: 1839
+  status: achieved
+  tier: 3
+  summary: >-
+    Heating natural rubber with sulfur made it stable and elastic across temperatures, giving
+    seals, belts, cable insulation and, later, pneumatic tires.
+  uses: [res-natural-rubber, res-sulfur]
+  efforts:
+    - who: Charles Goodyear
+      where: USA
+      when: 1839
+      outcome: achieved
+      note: Patented 1844.
+    - who: Thomas Hancock
+      where: England
+      when: 1843
+      outcome: independent
+      note: Patented first in Britain, after examining Goodyear samples.
+    - who: John Boyd Dunlop
+      where: Belfast
+      when: 1888
+      outcome: achieved
+      note: The practical pneumatic tire.
+  sources:
+    - title: Vulcanization (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Vulcanization
+
+- id: aluminum-smelting
+  name: Aluminum smelting (Hall-Heroult)
+  kind: technique
+  fields: [materials, chemistry]
+  date: 1886
+  status: achieved
+  tier: 3
+  summary: >-
+    Electrolysis of alumina dissolved in molten cryolite turned aluminum from a precious metal
+    into a cheap structural one, given enough electricity.
+  requires: [electric-generator, electric-battery]
+  uses: [res-bauxite]
+  efforts:
+    - who: Charles Martin Hall
+      where: Ohio, USA
+      when: 1886
+      outcome: achieved
+      note: Founded what became Alcoa.
+    - who: Paul Heroult
+      where: France
+      when: 1886
+      outcome: independent
+      note: Same process, same year. Karl Josef Bayer's alumina refining process followed in 1888.
+  sources:
+    - title: Hall-Heroult process (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Hall%E2%80%93H%C3%A9roult_process
+
+# ---------------------------------------------------------------- chemistry
+
+- id: chemical-revolution
+  name: Oxygen and the chemical revolution
+  kind: discovery
+  fields: [chemistry]
+  date: 1789
+  status: achieved
+  tier: 2
+  summary: >-
+    The discovery of oxygen and Lavoisier's careful weighing showed that combustion is combination
+    with oxygen and that mass is conserved, replacing phlogiston with modern elements and names.
+  requires: [scientific-method]
+  helped_by: [vacuum-pump, scientific-societies]
+  efforts:
+    - who: Carl Wilhelm Scheele
+      where: Uppsala, Sweden
+      when: 1772
+      outcome: independent
+      note: Isolated oxygen first, about 1771 to 1772, but published only in 1777.
+    - who: Joseph Priestley
+      where: England
+      when: 1774
+      outcome: independent
+      note: Isolated "dephlogisticated air" in August 1774 and published first.
+    - who: Antoine Lavoisier
+      where: Paris
+      when: 1789
+      outcome: achieved
+      note: Named oxygen and explained it; Elementary Treatise on Chemistry (1789).
+  sources:
+    - title: Chemical revolution (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Chemical_revolution
+    - title: "Joseph Priestley and the Discovery of Oxygen (American Chemical Society)"
+      url: https://www.acs.org/education/whatischemistry/landmarks/josephpriestleyoxygen.html
+
+- id: atomic-theory
+  name: Atomic theory of chemistry
+  kind: discovery
+  fields: [chemistry, physics]
+  date: 1808
+  status: achieved
+  tier: 2
+  summary: >-
+    Elements consist of atoms of characteristic weight that combine in fixed whole-number ratios,
+    which made chemistry quantitative.
+  requires: [chemical-revolution]
+  efforts:
+    - who: John Dalton
+      where: Manchester
+      when: 1808
+      outcome: achieved
+      note: A New System of Chemical Philosophy (1808), from work begun in 1803.
+    - who: Amedeo Avogadro
+      where: Turin
+      when: 1811
+      outcome: achieved
+      note: Equal volumes of gas hold equal numbers of molecules; accepted after Cannizzaro's 1860 Karlsruhe talk.
+  sources:
+    - title: John Dalton (Wikipedia)
+      url: https://en.wikipedia.org/wiki/John_Dalton
+    - title: Atomic theory (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_atomic_theory
+
+- id: chemical-structure-theory
+  name: Structural theory of organic chemistry
+  kind: discovery
+  fields: [chemistry]
+  date: 1858
+  status: achieved
+  tier: 3
+  summary: >-
+    Carbon forms four bonds and links into chains and rings, so molecules have definite
+    structures that can be drawn, predicted and deliberately synthesized.
+  requires: [atomic-theory]
+  efforts:
+    - who: Friedrich Wohler
+      where: Germany
+      when: 1828
+      outcome: achieved
+      note: Synthesized urea from inorganic materials.
+    - who: August Kekule
+      where: Heidelberg
+      when: 1858
+      outcome: achieved
+      note: Tetravalent carbon and chains (1858); the benzene ring (1865).
+    - who: Archibald Scott Couper
+      where: Paris
+      when: 1858
+      outcome: independent
+    - who: Aleksandr Butlerov
+      where: Kazan
+      when: 1861
+      outcome: achieved
+      note: Coined "chemical structure".
+  sources:
+    - title: August Kekule (Wikipedia)
+      url: https://en.wikipedia.org/wiki/August_Kekul%C3%A9
+
+- id: synthetic-dyes
+  name: Synthetic dyes and the chemical industry
+  kind: technique
+  fields: [chemistry]
+  date: 1856
+  status: achieved
+  tier: 3
+  summary: >-
+    Perkin's accidental mauve from coal tar launched an industry of synthetic dyes whose firms,
+    BASF, Bayer and Hoechst, became the first science-based companies and later made drugs.
+  requires: [atomic-theory]
+  uses: [res-coal]
+  efforts:
+    - who: William Henry Perkin
+      where: London
+      when: 1856
+      outcome: achieved
+      note: Mauveine, found at 18 while trying to make quinine.
+    - who: Carl Graebe, Carl Liebermann, then BASF
+      where: Germany
+      when: 1869
+      outcome: achieved
+      note: Synthetic alizarin; BASF's synthetic indigo (1897) took 17 years and about 18 million marks of research.
+  sources:
+    - title: Mauveine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Mauveine
+    - title: William Henry Perkin (Science History Institute)
+      url: https://www.sciencehistory.org/education/scientific-biographies/william-henry-perkin/
+
+- id: periodic-table
+  name: Periodic table
+  kind: discovery
+  fields: [chemistry, physics]
+  date: 1869
+  status: achieved
+  tier: 1
+  summary: >-
+    Ordering elements by atomic weight revealed repeating families of properties; Mendeleev
+    left gaps and correctly predicted gallium, scandium and germanium.
+  requires: [atomic-theory]
+  helped_by: [spectroscopy, electric-battery]
+  efforts:
+    - who: Dmitri Mendeleev
+      where: St. Petersburg
+      when: 1869
+      outcome: achieved
+    - who: Lothar Meyer
+      where: Germany
+      when: 1864
+      outcome: independent
+      note: A partial table in 1864 and a full one in 1870.
+    - who: John Newlands; Alexandre-Emile Beguyer de Chancourtois
+      where: England, France
+      when: 1862
+      outcome: independent
+      note: The law of octaves (1865) and the telluric helix (1862).
+  sources:
+    - title: History of the periodic table (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_the_periodic_table
+
+- id: spectroscopy
+  name: Spectroscopy
+  kind: technique
+  fields: [physics, chemistry]
+  date: 1859
+  status: achieved
+  tier: 3
+  summary: >-
+    Each element emits and absorbs light at its own wavelengths, so a spectrum identifies what a
+    flame, a sample or a star is made of; the line patterns later demanded quantum theory.
+  requires: [glassmaking, lenses]
+  helped_by: [photography]
+  efforts:
+    - who: Joseph von Fraunhofer
+      where: Munich
+      when: 1814
+      outcome: achieved
+      note: Dark lines in the solar spectrum.
+    - who: Gustav Kirchhoff, Robert Bunsen
+      where: Heidelberg
+      when: 1859
+      outcome: achieved
+      note: Spectral analysis; found cesium and rubidium. Helium was found in the Sun in 1868.
+  sources:
+    - title: Spectroscopy (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Spectroscopy
+    - title: Gustav Kirchhoff (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Gustav_Kirchhoff
+
+- id: solvay-process
+  name: Industrial alkali (Leblanc and Solvay)
+  kind: technique
+  fields: [chemistry]
+  date: 1864
+  status: achieved
+  tier: 3
+  summary: >-
+    Making soda ash from salt in bulk supplied glass, soap, paper and textile industries; the
+    ammonia-soda Solvay process replaced the polluting Leblanc process.
+  requires: [chemical-revolution]
+  uses: [res-salt, res-limestone]
+  efforts:
+    - who: Nicolas Leblanc
+      where: France
+      when: 1791
+      outcome: rival
+      note: Salt plus sulfuric acid; its hydrochloric acid fumes led to Britain's Alkali Act of 1863.
+    - who: Ernest Solvay
+      where: Belgium
+      when: 1864
+      outcome: achieved
+      note: Developed 1861 to 1864, first plant at Couillet in 1865.
+  sources:
+    - title: Solvay process (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Solvay_process
+    - title: Leblanc process (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Leblanc_process
+
+- id: dynamite
+  name: Dynamite
+  kind: technique
+  fields: [chemistry, engineering]
+  date: 1867
+  status: achieved
+  tier: 3
+  summary: >-
+    Nitroglycerin absorbed in clay and set off with a blasting cap made high explosive safe to
+    handle, speeding mining, tunnels, canals and railway cuts.
+  requires: [chemical-revolution, gunpowder]
+  efforts:
+    - who: Ascanio Sobrero
+      where: Turin
+      when: 1847
+      outcome: achieved
+      note: Discovered nitroglycerin and judged it too dangerous to use.
+    - who: Alfred Nobel
+      where: Sweden and Germany
+      when: 1867
+      outcome: achieved
+      note: Patented dynamite in 1867; his fortune funded the Nobel Prizes.
+  sources:
+    - title: Dynamite (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Dynamite
+
+- id: ammonia-synthesis-catalyst
+  name: Ammonia synthesis and catalyst screening
+  kind: technique
+  fields: [chemistry]
+  date: 1909
+  status: achieved
+  tier: 3
+  summary: >-
+    Haber made ammonia from nitrogen and hydrogen at high pressure over an osmium catalyst; BASF
+    then ran thousands of trials to find a cheap promoted iron catalyst still used today.
+  requires: [thermodynamics, periodic-table]
+  efforts:
+    - who: Fritz Haber, Robert Le Rossignol
+      where: Karlsruhe, Germany
+      when: 1909
+      outcome: achieved
+      note: Bench-top unit made about 80 grams of ammonia an hour, demonstrated to BASF in July 1909.
+    - who: Alwin Mittasch (BASF)
+      where: Ludwigshafen, Germany
+      when: 1910
+      outcome: achieved
+      note: Systematic screening across most of the periodic table found iron promoted with alumina and potassium oxide.
+    - who: Walther Nernst
+      where: Berlin
+      when: 1907
+      outcome: rival
+      note: Measured the equilibrium and judged the yields too low to be practical.
+  effort:
+    span: [1909, 1912]
+    people: 50
+    note: Commonly cited totals are about 20,000 experiments on some 3,000 catalyst compositions over the program, though sources vary (10,000 to 20,000).
+  sources:
+    - title: Alwin Mittasch (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Alwin_Mittasch
+    - title: Nobel Prize in Chemistry 1918 (Fritz Haber)
+      url: https://www.nobelprize.org/prizes/chemistry/1918/summary/
+
+- id: haber-bosch
+  name: Haber-Bosch process
+  kind: technique
+  fields: [chemistry, agriculture]
+  date: 1913
+  status: achieved
+  tier: 1
+  summary: >-
+    Industrial synthesis of ammonia from air and fuel made nitrogen fertilizer and explosives
+    abundant; roughly half the nitrogen in people's bodies today was fixed by it.
+  requires: [ammonia-synthesis-catalyst, steel-bessemer, thermodynamics]
+  helped_by: [open-hearth-steel, industrial-research-lab]
+  uses: [res-coal, res-natural-gas]
+  efforts:
+    - who: Carl Bosch (BASF)
+      where: Oppau, Germany
+      when: 1913
+      outcome: achieved
+      note: Solved hydrogen embrittlement of steel reactors with a double-walled design. Nobel Prize in Chemistry 1931.
+    - who: Birkeland-Eyde arc process
+      where: Norway
+      when: 1903
+      outcome: rival
+      note: Fixed nitrogen with electric arcs; far more energy-hungry.
+    - who: Frank-Caro cyanamide process
+      where: Germany
+      when: 1898
+      outcome: rival
+  effort:
+    span: [1909, 1913]
+    note: BASF's scale-up from a tabletop unit to a plant making tens of tonnes a day took about four years; costs were large but are not well documented.
+  sources:
+    - title: Haber process (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Haber_process
+    - title: Nobel Prize in Chemistry 1931 (Bosch, Bergius)
+      url: https://www.nobelprize.org/prizes/chemistry/1931/summary/
+    - title: "Erisman et al., How a century of ammonia synthesis changed the world (Nature Geoscience, 2008)"
+      url: https://www.nature.com/articles/ngeo325
+
+- id: plastics
+  name: Synthetic plastics
+  kind: technique
+  fields: [materials, chemistry]
+  date: 1907
+  status: achieved
+  tier: 2
+  summary: >-
+    Bakelite, the first fully synthetic plastic, was followed by the understanding of polymers as
+    giant molecules and a flood of designed materials such as nylon and polyethylene.
+  requires: [chemical-structure-theory]
+  helped_by: [industrial-research-lab, oil-refining]
+  uses: [res-coal, res-oil]
+  efforts:
+    - who: Alexander Parkes; John Wesley Hyatt
+      where: England, USA
+      when: 1870
+      outcome: achieved
+      note: Semi-synthetic Parkesine (1862) and celluloid (1870), from cellulose.
+    - who: Leo Baekeland
+      where: New York, USA
+      when: 1907
+      outcome: achieved
+      note: Bakelite, from phenol and formaldehyde.
+    - who: Hermann Staudinger
+      where: Zurich and Freiburg
+      when: 1920
+      outcome: achieved
+      note: Macromolecule theory; Nobel Prize 1953.
+    - who: Wallace Carothers (DuPont)
+      where: USA
+      when: 1935
+      outcome: achieved
+      note: Nylon; ICI found polyethylene in 1933.
+  sources:
+    - title: Bakelite (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Bakelite
+    - title: History of plastics (Science History Institute)
+      url: https://www.sciencehistory.org/education/classroom-activities/role-playing-games/case-of-plastics/history-and-future-of-plastics/
+
+- id: oil-refining
+  name: Oil drilling and refining
+  kind: technique
+  fields: [energy, chemistry]
+  date: 1853
+  status: achieved
+  tier: 2
+  summary: >-
+    Drilled wells and distillation turned crude oil into kerosene for lamps, then gasoline and
+    diesel; cracking processes from 1913 raised the yield of motor fuel.
+  requires: [distillation]
+  uses: [res-oil]
+  efforts:
+    - who: Ignacy Lukasiewicz
+      where: Lviv, then Austrian Galicia
+      when: 1853
+      outcome: achieved
+      note: Distilled kerosene and built the kerosene lamp (1853), oil wells (1854) and a refinery (1856).
+    - who: Edwin Drake
+      where: Titusville, Pennsylvania, USA
+      when: 1859
+      outcome: achieved
+      note: The first US oil well drilled for oil; Baku wells were drilled in 1846 to 1848.
+    - who: William Burton (Standard Oil); Eugene Houdry
+      where: USA
+      when: 1913
+      outcome: achieved
+      note: Thermal cracking (1913) and catalytic cracking (1937).
+  sources:
+    - title: History of the petroleum industry (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_the_petroleum_industry
+    - title: Ignacy Lukasiewicz (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Ignacy_%C5%81ukasiewicz
+
+# ---------------------------------------------------------------- electric power
+
+- id: electric-light
+  name: Incandescent electric light
+  kind: device
+  fields: [electronics, energy]
+  date: 1879
+  status: achieved
+  tier: 2
+  summary: >-
+    A carbon filament glowing in a vacuum bulb gave safe, steady indoor light, and the demand for
+    it built the first electric utilities.
+  requires: [electric-generator, vacuum-pump, glassmaking]
+  helped_by: [industrial-research-lab]
+  efforts:
+    - who: Thomas Edison (Menlo Park)
+      where: New Jersey, USA
+      when: 1879
+      outcome: achieved
+      note: A carbonized thread lasted over 13 hours in October 1879; carbonized bamboo followed in 1880.
+    - who: Joseph Swan
+      where: Newcastle, England
+      when: 1878
+      outcome: independent
+      note: Demonstrated carbon lamps in 1878 to 1879; the two later merged as Ediswan.
+    - who: Humphry Davy, Pavel Yablochkov
+      where: England, Russia
+      when: 1876
+      outcome: rival
+      note: Arc lamps (Davy about 1806, Yablochkov candle 1876) lit streets but were too bright for rooms.
+    - who: William Coolidge (GE)
+      where: USA
+      when: 1910
+      outcome: achieved
+      note: Ductile tungsten filaments.
+  effort:
+    span: [1878, 1880]
+    people: 30
+    cost_usd: 1e7
+    note: Investors gave the Edison Electric Light Company about 300,000 dollars in 1878; the team tested thousands of filament materials. The 2025 figure is a rough conversion.
+  metric: price-of-light
+  sources:
+    - title: Incandescent light bulb (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Incandescent_light_bulb
+    - title: "Nordhaus, Do Real-Output and Real-Wage Measures Capture Reality? The History of Lighting Suggests Not (NBER, 1996)"
+      url: https://www.nber.org/books-and-chapters/economics-new-goods/do-real-output-and-real-wage-measures-capture-reality-history-lighting-suggests-not
+
+- id: dc-power-distribution
+  name: Central-station DC power
+  kind: infrastructure
+  fields: [energy, electronics]
+  date: 1882
+  status: achieved
+  tier: 3
+  summary: >-
+    Edison's steam-driven central stations sold direct current to customers through underground
+    mains, but low voltage limited each station to about a mile.
+  requires: [electric-generator, electric-light, steam-engine]
+  competes: [ac-power]
+  efforts:
+    - who: Edison Electric Light Company
+      where: Holborn Viaduct, London
+      when: 1882
+      outcome: achieved
+      note: Opened in January 1882.
+    - who: Edison Illuminating Company
+      where: Pearl Street, New York, USA
+      when: 1882
+      outcome: achieved
+      note: Opened 4 September 1882, serving 85 customers at first.
+  sources:
+    - title: Pearl Street Station (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Pearl_Street_Station
+    - title: War of the currents (Wikipedia)
+      url: https://en.wikipedia.org/wiki/War_of_the_currents
+
+- id: ac-power
+  name: Alternating-current power and the transformer
+  kind: technique
+  fields: [energy, electronics]
+  date: 1886
+  status: achieved
+  tier: 2
+  summary: >-
+    Transformers step alternating current up for efficient long-distance transmission and down
+    for use, and polyphase induction motors made AC useful for industry; AC won the war of currents.
+  requires: [electric-generator, electromagnetic-induction]
+  helped_by: [electric-motor]
+  competes: [dc-power-distribution]
+  efforts:
+    - who: Lucien Gaulard, John Dixon Gibbs
+      where: France, England
+      when: 1883
+      outcome: achieved
+      note: Early transformer system; the Hungarian ZBD team (Zipernowsky, Blathy, Deri) built the closed-core transformer in 1885.
+    - who: William Stanley (Westinghouse)
+      where: Great Barrington, Massachusetts, USA
+      when: 1886
+      outcome: achieved
+      note: First full AC distribution system.
+    - who: Nikola Tesla; Galileo Ferraris
+      where: USA, Italy
+      when: 1888
+      outcome: independent
+      note: Polyphase induction motors, conceived independently. Westinghouse bought Tesla's patents.
+    - who: Mikhail Dolivo-Dobrovolsky, Oskar von Miller
+      where: Germany
+      when: 1891
+      outcome: achieved
+      note: Lauffen to Frankfurt, 175 km three-phase transmission.
+  sources:
+    - title: War of the currents (Wikipedia)
+      url: https://en.wikipedia.org/wiki/War_of_the_currents
+    - title: Transformer (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Transformer
+
+- id: power-grid
+  name: Electric power grid
+  kind: infrastructure
+  fields: [energy, electronics]
+  date: 1896
+  status: achieved
+  tier: 1
+  summary: >-
+    Large AC generating stations, often hydroelectric or steam turbine, linked by high-voltage
+    lines to cities and factories, growing from single systems to national grids.
+  requires: [ac-power, electric-generator]
+  helped_by: [dc-power-distribution, steam-turbine, watermill]
+  efforts:
+    - who: Westinghouse, Cataract Construction Company
+      where: Niagara Falls, USA
+      when: 1896
+      outcome: achieved
+      note: Adams Power Plant began transmitting to Buffalo, 26 miles away, in November 1896.
+    - who: Samuel Insull (Commonwealth Edison)
+      where: Chicago, USA
+      when: 1903
+      outcome: achieved
+      note: Large central steam turbines and utility economics.
+    - who: Central Electricity Board
+      where: Britain
+      when: 1933
+      outcome: achieved
+      note: The National Grid, built 1928 to 1933.
+  sources:
+    - title: Electrical grid (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Electrical_grid
+    - title: Adams Power Plant Transformer House (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Adams_Power_Plant_Transformer_House
+
+- id: refrigeration
+  name: Mechanical refrigeration and gas liquefaction
+  kind: technique
+  fields: [energy, engineering, chemistry]
+  date: 1876
+  status: achieved
+  tier: 3
+  summary: >-
+    Vapor-compression machines chilled food and industry, and the same principles liquefied air
+    into liquid oxygen and nitrogen and, by 1908, helium near absolute zero.
+  requires: [thermodynamics]
+  helped_by: [steam-engine]
+  efforts:
+    - who: Jacob Perkins
+      where: London
+      when: 1834
+      outcome: achieved
+      note: Vapor-compression patent; James Harrison built commercial machines in Australia in the 1850s.
+    - who: Carl von Linde
+      where: Munich
+      when: 1876
+      outcome: achieved
+      note: Efficient ammonia compression refrigerator (1876) and industrial air liquefaction (1895).
+    - who: Louis Cailletet; Raoul Pictet
+      where: France, Switzerland
+      when: 1877
+      outcome: independent
+      note: First liquefied oxygen, in droplets.
+    - who: Heike Kamerlingh Onnes
+      where: Leiden
+      when: 1908
+      outcome: achieved
+      note: Liquefied helium.
+  sources:
+    - title: Refrigeration (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Refrigeration
+    - title: Carl von Linde (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Carl_von_Linde
+
+# ---------------------------------------------------------------- engines and vehicles
+
+- id: internal-combustion-engine
+  name: Internal combustion engine
+  kind: device
+  fields: [energy, engineering]
+  date: 1876
+  status: achieved
+  tier: 1
+  summary: >-
+    Burning fuel inside the cylinder gave compact, light engines with a high power-to-weight
+    ratio; the four-stroke cycle and later the diesel powered cars, planes, tractors and ships.
+  requires: [thermodynamics, machine-tools]
+  helped_by: [oil-refining]
+  efforts:
+    - who: Etienne Lenoir
+      where: Paris
+      when: 1860
+      outcome: achieved
+      note: First commercial gas engine, about 4 percent efficient.
+    - who: Nicolaus Otto
+      where: Deutz, Germany
+      when: 1876
+      outcome: achieved
+      note: The compressing four-stroke engine; Alphonse Beau de Rochas had described the cycle in 1862.
+    - who: Gottlieb Daimler, Wilhelm Maybach
+      where: Germany
+      when: 1885
+      outcome: achieved
+      note: Light, high-speed gasoline engine.
+    - who: Rudolf Diesel
+      where: Augsburg, Germany
+      when: 1897
+      outcome: achieved
+      note: Compression-ignition engine, patented 1893, about 26 percent efficient in 1897.
+  sources:
+    - title: Internal combustion engine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Internal_combustion_engine
+    - title: Nicolaus Otto (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Nicolaus_Otto
+
+- id: automobile
+  name: Automobile
+  kind: device
+  fields: [engineering, energy]
+  date: 1886
+  status: achieved
+  tier: 2
+  summary: >-
+    A self-propelled road vehicle with a gasoline engine; with pneumatic tires and mass production
+    it became the dominant form of personal transport.
+  requires: [internal-combustion-engine, oil-refining, vulcanized-rubber]
+  helped_by: [steel-bessemer]
+  efforts:
+    - who: Karl Benz
+      where: Mannheim, Germany
+      when: 1886
+      outcome: achieved
+      note: Patent-Motorwagen, patented 29 January 1886; Bertha Benz drove it 106 km in 1888.
+    - who: Gottlieb Daimler, Wilhelm Maybach
+      where: Cannstatt, Germany
+      when: 1886
+      outcome: independent
+    - who: Nicolas-Joseph Cugnot
+      where: France
+      when: 1769
+      outcome: achieved
+      note: A steam tractor; steam and electric cars competed until about 1910.
+  sources:
+    - title: Benz Patent-Motorwagen (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Benz_Patent-Motorwagen
+    - title: History of the automobile (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_the_automobile
+
+- id: assembly-line
+  name: Moving assembly line
+  kind: technique
+  fields: [engineering, society]
+  date: 1913
+  status: achieved
+  tier: 2
+  summary: >-
+    Moving the product past workers who each repeat one step cut the time to build a Model T
+    chassis from about 12 hours to about 90 minutes, making cars and later most goods cheap.
+  requires: [interchangeable-parts, automobile, electric-motor]
+  helped_by: [factory-system]
+  efforts:
+    - who: Henry Ford, Charles Sorensen and others
+      where: Highland Park, Michigan, USA
+      when: 1913
+      outcome: achieved
+      note: Inspired partly by meatpackers' disassembly lines; the Model T price fell from 850 dollars (1908) to about 260 dollars (1925).
+    - who: Ransom Olds
+      where: USA
+      when: 1901
+      outcome: achieved
+      note: A stationary assembly line.
+  sources:
+    - title: Assembly line (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Assembly_line
+    - title: Ford Model T (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Ford_Model_T
+
+- id: airplane
+  name: Powered airplane
+  kind: device
+  fields: [engineering]
+  date: 1903
+  status: achieved
+  tier: 1
+  summary: >-
+    The Wright brothers flew a controlled, powered, heavier-than-air machine, solving control by
+    wing warping and using their own wind tunnel data and a light engine.
+  requires: [internal-combustion-engine, aerodynamics]
+  helped_by: [aluminum-smelting]
+  efforts:
+    - who: Wilbur and Orville Wright
+      where: Kitty Hawk, North Carolina, USA
+      when: 1903
+      outcome: achieved
+      note: Four flights on 17 December 1903, the longest 59 seconds. Their engine had an aluminum crankcase.
+    - who: Samuel Langley (Smithsonian)
+      where: USA
+      when: 1903
+      outcome: abandoned
+      note: The Aerodrome crashed twice in late 1903.
+    - who: Alberto Santos-Dumont
+      where: Paris
+      when: 1906
+      outcome: independent
+      note: First public powered flight in Europe.
+  effort:
+    span: [1899, 1905]
+    people: 3
+    cost_usd: 4e4
+    note: The Wrights spent under about 1,000 dollars on materials, with mechanic Charlie Taylor building the engine. Langley had about 70,000 dollars of public money (roughly 2.5 million 2025 dollars).
+  sources:
+    - title: Wright brothers (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Wright_brothers
+    - title: The Wright Brothers (Smithsonian National Air and Space Museum)
+      url: https://airandspace.si.edu/exhibitions/wright-brothers
+
+- id: jet-engine
+  name: Jet engine
+  kind: device
+  fields: [engineering, energy]
+  date: 1939
+  status: achieved
+  tier: 3
+  summary: >-
+    A gas turbine that compresses air, burns fuel in it and expels the exhaust as thrust, far
+    faster at altitude than propellers; jet fighters flew by the end of the war.
+  requires: [steam-turbine, airplane, thermodynamics]
+  efforts:
+    - who: Frank Whittle (Power Jets)
+      where: England
+      when: 1937
+      outcome: achieved
+      note: Patent in 1930, first bench run in April 1937, Gloster E.28/39 flew in 1941.
+    - who: Hans von Ohain (Heinkel)
+      where: Germany
+      when: 1939
+      outcome: independent
+      note: The He 178 made the first jet flight on 27 August 1939. The Me 262 entered service in 1944.
+  sources:
+    - title: Jet engine (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Jet_engine
+    - title: Frank Whittle (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Frank_Whittle
+
+- id: rocketry
+  name: Liquid-fuel rocketry
+  kind: device
+  fields: [engineering, energy]
+  date: 1926
+  status: achieved
+  tier: 2
+  summary: >-
+    Rockets burning liquid fuel and liquid oxygen carry their own oxidizer and can fly beyond the
+    atmosphere; theory from Tsiolkovsky, first flight by Goddard, scale with the German V-2.
+  requires: [newtonian-mechanics, refrigeration, oil-refining]
+  helped_by: [gunpowder]
+  efforts:
+    - who: Konstantin Tsiolkovsky
+      where: Russia
+      when: 1903
+      outcome: achieved
+      note: The rocket equation and the case for liquid propellants.
+    - who: Robert Goddard
+      where: Auburn, Massachusetts, USA
+      when: 1926
+      outcome: achieved
+      note: First liquid-fuel rocket flight, 16 March 1926.
+    - who: Hermann Oberth
+      where: Germany
+      when: 1923
+      outcome: achieved
+      note: The Rocket into Planetary Space inspired German amateur rocketry.
+    - who: Wernher von Braun (Peenemunde Army Research Center)
+      where: Germany
+      when: 1942
+      outcome: achieved
+      note: The V-2 reached space in 1944 and was fired at London and Antwerp.
+  effort:
+    span: [1936, 1945]
+    people: 6000
+    note: Peenemunde had about 5,000 staff by 1942, plus tens of thousands of forced laborers at the Mittelwerk; at least 10,000 prisoners died building V-2s, more than were killed by them. The site alone cost about 300 million Reichsmarks.
+  sources:
+    - title: V-2 rocket (Wikipedia)
+      url: https://en.wikipedia.org/wiki/V-2_rocket
+    - title: Robert H. Goddard (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Robert_H._Goddard
+
+- id: panama-canal
+  name: Panama Canal
+  kind: infrastructure
+  fields: [engineering, society]
+  date: 1914
+  status: achieved
+  tier: 3
+  summary: >-
+    A lock canal across the Isthmus of Panama cut thousands of miles from sea routes between
+    the Atlantic and Pacific, built after a failed French attempt and a campaign against mosquitoes.
+  requires: [dynamite, railway, electric-motor]
+  helped_by: [germ-theory, portland-cement]
+  efforts:
+    - who: Ferdinand de Lesseps (Compagnie universelle)
+      where: Panama
+      when: 1881
+      outcome: abandoned
+      note: A sea-level design failed in 1889 amid disease and bankruptcy; about 22,000 workers died.
+    - who: US government, chief engineers John Stevens and George Goethals; William Gorgas on sanitation
+      where: Panama
+      when: 1914
+      outcome: achieved
+      note: Opened 15 August 1914.
+  effort:
+    span: [1904, 1914]
+    people: 43000
+    cost_usd: 1.2e10
+    note: Peak workforce about 43,400 in 1913; 5,609 recorded deaths in the US era. The US spent about 375 million dollars (including 40 million for French assets), roughly 12 billion 2025 dollars.
+  sources:
+    - title: Panama Canal (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Panama_Canal
+    - title: History of the Panama Canal (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_the_Panama_Canal
+
+# ---------------------------------------------------------------- modern physics
+
+- id: cathode-ray-tube
+  name: Cathode-ray tube
+  kind: device
+  fields: [physics, electronics]
+  date: 1875
+  status: achieved
+  tier: 3
+  summary: >-
+    Glass tubes pumped to low pressure, with a high voltage across them, glowed with rays from
+    the negative electrode; they revealed X-rays and the electron and later became TV screens.
+  requires: [vacuum-pump, electromagnetic-induction, glassmaking]
+  efforts:
+    - who: Heinrich Geissler, Julius Plucker
+      where: Bonn, Germany
+      when: 1857
+      outcome: achieved
+      note: Geissler's mercury pump and discharge tubes; Plucker saw cathode rays in 1858.
+    - who: William Crookes
+      where: London
+      when: 1875
+      outcome: achieved
+      note: Higher-vacuum Crookes tubes.
+    - who: Karl Ferdinand Braun
+      where: Strasbourg
+      when: 1897
+      outcome: achieved
+      note: The CRT with a fluorescent screen, the basis of the oscilloscope and television.
+  sources:
+    - title: Crookes tube (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Crookes_tube
+    - title: Cathode-ray tube (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Cathode-ray_tube
+
+- id: x-rays
+  name: X-rays
+  kind: discovery
+  fields: [physics, medicine]
+  date: 1895
+  status: achieved
+  tier: 2
+  summary: >-
+    Röntgen found penetrating rays from a discharge tube that imaged bones through flesh; within
+    months they were used in medicine, and later revealed crystal and molecular structure.
+  requires: [cathode-ray-tube]
+  helped_by: [photography]
+  efforts:
+    - who: Wilhelm Rontgen
+      where: Wurzburg, Germany
+      when: 1895
+      outcome: achieved
+      note: Discovered 8 November 1895; first Nobel Prize in Physics, 1901.
+    - who: Max von Laue; William Henry and Lawrence Bragg
+      where: Munich, England
+      when: 1912
+      outcome: achieved
+      note: X-ray diffraction by crystals.
+  sources:
+    - title: Nobel Prize in Physics 1901
+      url: https://www.nobelprize.org/prizes/physics/1901/summary/
+    - title: X-ray (Wikipedia)
+      url: https://en.wikipedia.org/wiki/X-ray
+
+- id: radioactivity
+  name: Radioactivity
+  kind: discovery
+  fields: [physics, chemistry]
+  date: 1896
+  status: achieved
+  tier: 2
+  summary: >-
+    Some elements emit energetic radiation as their atoms transmute, which showed atoms are not
+    eternal and held vast stores of energy.
+  requires: [photography]
+  helped_by: [x-rays, electric-battery]
+  uses: [res-uranium]
+  efforts:
+    - who: Henri Becquerel
+      where: Paris
+      when: 1896
+      outcome: achieved
+      note: Uranium salts fogged photographic plates in the dark.
+    - who: Marie and Pierre Curie
+      where: Paris
+      when: 1898
+      outcome: achieved
+      note: Polonium and radium, refined from tonnes of pitchblende. Nobel Prizes 1903 and 1911.
+    - who: Ernest Rutherford, Frederick Soddy
+      where: Montreal
+      when: 1902
+      outcome: achieved
+      note: Radioactive decay as transmutation; alpha and beta rays.
+  sources:
+    - title: Nobel Prize in Physics 1903
+      url: https://www.nobelprize.org/prizes/physics/1903/summary/
+    - title: Radioactive decay (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Radioactive_decay
+
+- id: electron
+  name: Discovery of the electron
+  kind: discovery
+  fields: [physics, electronics]
+  date: 1897
+  status: achieved
+  tier: 2
+  summary: >-
+    J. J. Thomson showed cathode rays are streams of tiny charged particles found in all
+    atoms, the first subatomic particle and the carrier of current in every circuit.
+  requires: [cathode-ray-tube, maxwell-equations]
+  efforts:
+    - who: J. J. Thomson
+      where: Cavendish Laboratory, Cambridge
+      when: 1897
+      outcome: achieved
+      note: Measured the charge-to-mass ratio. Nobel Prize 1906.
+    - who: Emil Wiechert; Walter Kaufmann
+      where: Germany
+      when: 1897
+      outcome: independent
+      note: Similar measurements the same year.
+  sources:
+    - title: Nobel Prize in Physics 1906
+      url: https://www.nobelprize.org/prizes/physics/1906/summary/
+    - title: Electron (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Electron
+
+- id: quantum-hypothesis
+  name: Quantum hypothesis
+  kind: discovery
+  fields: [physics]
+  date: 1900
+  status: achieved
+  tier: 2
+  summary: >-
+    Planck explained the spectrum of hot bodies by assuming energy comes in discrete quanta, and
+    Einstein used light quanta (photons) to explain the photoelectric effect.
+  requires: [statistical-mechanics, maxwell-equations, spectroscopy]
+  efforts:
+    - who: Max Planck
+      where: Berlin
+      when: 1900
+      outcome: achieved
+      note: Presented 14 December 1900. Nobel Prize 1918.
+    - who: Albert Einstein
+      where: Bern
+      when: 1905
+      outcome: achieved
+      note: Light quanta and the photoelectric effect; Nobel Prize 1921.
+  sources:
+    - title: Nobel Prize in Physics 1918
+      url: https://www.nobelprize.org/prizes/physics/1918/summary/
+    - title: Old quantum theory (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Old_quantum_theory
+
+- id: relativity
+  name: Theory of relativity
+  kind: discovery
+  fields: [physics]
+  date: [1905, 1915]
+  status: achieved
+  tier: 1
+  summary: >-
+    Space and time are relative to the observer and mass is a form of energy (special
+    relativity), and gravity is the curvature of spacetime (general relativity).
+  requires: [maxwell-equations, newtonian-mechanics, non-euclidean-geometry]
+  efforts:
+    - who: Albert Einstein
+      where: Bern and Berlin
+      when: 1905
+      outcome: achieved
+      note: Special relativity and E = mc squared in 1905; general relativity in November 1915.
+    - who: Hendrik Lorentz, Henri Poincare
+      where: Netherlands, France
+      when: 1904
+      outcome: rival
+      note: Much of the mathematics of special relativity, without its reinterpretation of time.
+    - who: David Hilbert
+      where: Gottingen
+      when: 1915
+      outcome: independent
+      note: Derived the field equations from a variational principle at nearly the same time.
+    - who: Arthur Eddington, Frank Dyson
+      where: Principe and Brazil
+      when: 1919
+      outcome: achieved
+      note: The eclipse expedition measured light bending by the Sun.
+  effort:
+    span: [1907, 1915]
+    people: 3
+    note: About eight years from the equivalence principle to the field equations, with Marcel Grossmann teaching Einstein Riemannian geometry.
+  sources:
+    - title: History of special relativity (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_special_relativity
+    - title: History of general relativity (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_general_relativity
+
+- id: atomic-nucleus
+  name: Atomic nucleus
+  kind: discovery
+  fields: [physics]
+  date: 1911
+  status: achieved
+  tier: 2
+  summary: >-
+    Alpha particles bouncing back from gold foil showed that an atom's mass and positive charge sit
+    in a tiny nucleus; Bohr then put the electrons in quantized orbits around it.
+  requires: [radioactivity, electron]
+  efforts:
+    - who: Ernest Rutherford, with Hans Geiger and Ernest Marsden
+      where: Manchester
+      when: 1911
+      outcome: achieved
+      note: Gold foil experiment 1909, interpretation 1911. Rutherford split nitrogen with alphas in 1917.
+    - who: Niels Bohr
+      where: Manchester and Copenhagen
+      when: 1913
+      outcome: achieved
+      note: The Bohr model explained hydrogen's spectral lines.
+  sources:
+    - title: Rutherford model (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Rutherford_model
+    - title: Bohr model (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Bohr_model
+
+- id: superconductivity
+  name: Superconductivity
+  kind: discovery
+  fields: [physics, materials]
+  date: 1911
+  status: achieved
+  tier: 3
+  summary: >-
+    Mercury cooled in liquid helium lost all electrical resistance; it took until 1957 for BCS
+    theory to explain why.
+  requires: [refrigeration]
+  uses: [res-helium]
+  efforts:
+    - who: Heike Kamerlingh Onnes
+      where: Leiden
+      when: 1911
+      outcome: achieved
+      note: Nobel Prize 1913. Walther Meissner and Robert Ochsenfeld found the expulsion of magnetic fields in 1933.
+  sources:
+    - title: Nobel Prize in Physics 1913
+      url: https://www.nobelprize.org/prizes/physics/1913/summary/
+    - title: Superconductivity (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Superconductivity
+
+- id: quantum-mechanics
+  name: Quantum mechanics
+  kind: discovery
+  fields: [physics, chemistry]
+  date: [1925, 1927]
+  status: achieved
+  tier: 1
+  summary: >-
+    A complete theory of atoms and light in which matter behaves as waves of probability;
+    it explains chemical bonds, solids and semiconductors.
+  requires: [quantum-hypothesis, atomic-nucleus, calculus]
+  helped_by: [fourier-analysis, scientific-societies]
+  efforts:
+    - who: Werner Heisenberg, Max Born, Pascual Jordan
+      where: Gottingen
+      when: 1925
+      outcome: achieved
+      note: Matrix mechanics.
+    - who: Louis de Broglie; Erwin Schrodinger
+      where: Paris, Zurich
+      when: 1926
+      outcome: achieved
+      note: Matter waves (1924) and the wave equation (1926).
+    - who: Paul Dirac
+      where: Cambridge
+      when: 1928
+      outcome: achieved
+      note: Unified formulation and the relativistic electron equation.
+  effort:
+    span: [1924, 1928]
+    people: 30
+    note: A few dozen physicists in a handful of centers (Gottingen, Copenhagen, Munich, Zurich, Cambridge) built it in about four years.
+  sources:
+    - title: History of quantum mechanics (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_quantum_mechanics
+    - title: Nobel Prize in Physics 1932
+      url: https://www.nobelprize.org/prizes/physics/1932/summary/
+
+- id: semiconductor-physics
+  name: Band theory of semiconductors
+  kind: discovery
+  fields: [physics, electronics, materials]
+  date: 1931
+  status: achieved
+  tier: 3
+  summary: >-
+    Quantum mechanics applied to crystals explained why some solids conduct, some insulate and
+    some sit in between, the theory behind crystal radio detectors and later the transistor.
+  requires: [quantum-mechanics, radio]
+  efforts:
+    - who: Jagadish Chandra Bose; Greenleaf Pickard
+      where: India, USA
+      when: 1906
+      outcome: achieved
+      note: Crystal detectors for radio (Bose's patent 1904, Pickard's silicon cat's whisker 1906), used without understanding.
+    - who: Felix Bloch
+      where: Leipzig
+      when: 1928
+      outcome: achieved
+      note: Electron waves in a periodic lattice.
+    - who: Alan Herries Wilson
+      where: Cambridge and Leipzig
+      when: 1931
+      outcome: achieved
+      note: Band theory of semiconductors. Schottky and Mott explained metal-semiconductor junctions in 1938 to 1939.
+  sources:
+    - title: Electronic band structure (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Electronic_band_structure
+    - title: Crystal detector (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Crystal_detector
+
+- id: cyclotron
+  name: Particle accelerators and the cyclotron
+  kind: device
+  fields: [physics, electronics]
+  date: 1931
+  status: achieved
+  tier: 3
+  summary: >-
+    Machines that accelerate charged particles to high energies to smash nuclei; the cyclotron
+    spirals them in a magnet and became the workhorse of nuclear physics and isotope production.
+  requires: [atomic-nucleus, vacuum-tube, vacuum-pump, electromagnetism]
+  efforts:
+    - who: Ernest Lawrence, M. Stanley Livingston
+      where: Berkeley, USA
+      when: 1931
+      outcome: achieved
+      note: Patented 1932. Nobel Prize 1939.
+    - who: John Cockcroft, Ernest Walton
+      where: Cavendish Laboratory
+      when: 1932
+      outcome: achieved
+      note: First nucleus split by artificially accelerated protons. Nobel Prize 1951.
+  sources:
+    - title: Cyclotron (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Cyclotron
+    - title: Nobel Prize in Physics 1939
+      url: https://www.nobelprize.org/prizes/physics/1939/summary/
+
+- id: neutron
+  name: Neutron
+  kind: discovery
+  fields: [physics]
+  date: 1932
+  status: achieved
+  tier: 3
+  summary: >-
+    An uncharged particle in the nucleus; because it is not repelled by nuclei it is the ideal
+    probe and trigger for nuclear reactions.
+  requires: [atomic-nucleus, radioactivity]
+  efforts:
+    - who: James Chadwick
+      where: Cavendish Laboratory, Cambridge
+      when: 1932
+      outcome: achieved
+      note: Nobel Prize 1935.
+    - who: Irene and Frederic Joliot-Curie; Walther Bothe
+      where: Paris, Germany
+      when: 1931
+      outcome: rival
+      note: Saw the radiation first but misread it as gamma rays.
+    - who: Enrico Fermi
+      where: Rome
+      when: 1934
+      outcome: achieved
+      note: Bombarded elements with slow neutrons, unknowingly splitting uranium.
+  sources:
+    - title: Nobel Prize in Physics 1935
+      url: https://www.nobelprize.org/prizes/physics/1935/summary/
+    - title: Discovery of the neutron (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Discovery_of_the_neutron
+
+- id: nuclear-fission
+  name: Nuclear fission
+  kind: discovery
+  fields: [physics, energy]
+  date: 1938
+  status: achieved
+  tier: 1
+  summary: >-
+    A uranium nucleus struck by a neutron splits in two, releasing about 200 million electron
+    volts and more neutrons, which made a chain reaction possible.
+  requires: [neutron, radioactivity]
+  helped_by: [relativity, quantum-mechanics, cyclotron]
+  uses: [res-uranium]
+  efforts:
+    - who: Otto Hahn, Fritz Strassmann
+      where: Berlin
+      when: 1938
+      outcome: achieved
+      note: Found barium in irradiated uranium in December 1938. Hahn alone got the 1944 Nobel Prize.
+    - who: Lise Meitner, Otto Frisch
+      where: Sweden and Copenhagen
+      when: 1939
+      outcome: achieved
+      note: Explained and named fission (Nature, February 1939). Meitner had fled Nazi Germany.
+    - who: Leo Szilard
+      where: London
+      when: 1933
+      outcome: achieved
+      note: Conceived the neutron chain reaction and patented it in 1934.
+  sources:
+    - title: Discovery of nuclear fission (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Discovery_of_nuclear_fission
+    - title: Nobel Prize in Chemistry 1944
+      url: https://www.nobelprize.org/prizes/chemistry/1944/summary/
+
+- id: nuclear-reactor
+  name: Nuclear reactor (controlled chain reaction)
+  kind: device
+  fields: [physics, energy]
+  date: 1942
+  status: achieved
+  tier: 2
+  summary: >-
+    Chicago Pile-1, a stack of graphite and uranium, sustained the first controlled nuclear chain
+    reaction; production reactors at Hanford then bred plutonium.
+  requires: [nuclear-fission]
+  helped_by: [big-science]
+  uses: [res-uranium]
+  efforts:
+    - who: Enrico Fermi, Leo Szilard and the Metallurgical Laboratory
+      where: University of Chicago, USA
+      when: 1942
+      outcome: achieved
+      note: Went critical on 2 December 1942.
+    - who: DuPont, Hanford B Reactor
+      where: Washington, USA
+      when: 1944
+      outcome: achieved
+      note: First large-scale production reactor, critical in September 1944.
+    - who: German Uranverein (Heisenberg)
+      where: Germany
+      when: 1945
+      outcome: abandoned
+      note: The Haigerloch pile never reached criticality.
+  effort:
+    span: [1939, 1942]
+    people: 50
+    note: CP-1 used about 350 tonnes of graphite, 36 tonnes of uranium oxide and 5.6 tonnes of uranium metal; about 49 people were present at criticality.
+  sources:
+    - title: Chicago Pile-1 (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Chicago_Pile-1
+    - title: B Reactor (Wikipedia)
+      url: https://en.wikipedia.org/wiki/B_Reactor
+
+- id: nuclear-weapon
+  name: Nuclear weapon (Manhattan Project)
+  kind: device
+  fields: [physics, energy, society]
+  date: 1945
+  status: achieved
+  tier: 1
+  summary: >-
+    The first fission bombs, from enriched uranium and reactor-made plutonium, were tested at
+    Trinity and used on Hiroshima and Nagasaki, a scale of science and industry without precedent.
+  requires: [nuclear-fission, nuclear-reactor, cyclotron, big-science]
+  helped_by: [quantum-mechanics, refrigeration, power-grid]
+  uses: [res-uranium]
+  efforts:
+    - who: Manhattan Project (Leslie Groves, J. Robert Oppenheimer)
+      where: USA, with Britain and Canada
+      when: 1945
+      outcome: achieved
+      note: Trinity test 16 July 1945; Hiroshima 6 August and Nagasaki 9 August 1945. Uranium was enriched at Oak Ridge by calutrons and gaseous diffusion, plutonium bred at Hanford.
+    - who: Otto Frisch, Rudolf Peierls; MAUD Committee (Tube Alloys)
+      where: Britain
+      when: 1941
+      outcome: achieved
+      note: The Frisch-Peierls memorandum (March 1940) showed a bomb needed kilograms, not tonnes; the MAUD report (1941) spurred the US effort.
+    - who: German Uranverein
+      where: Germany
+      when: 1939
+      outcome: abandoned
+    - who: Soviet project (Igor Kurchatov)
+      where: USSR
+      when: 1949
+      outcome: rival
+      note: Tested its first bomb in August 1949, aided by espionage.
+  effort:
+    span: [1942, 1946]
+    people: 130000
+    cost_usd: 3.5e10
+    note: Nearly 2 billion dollars in 1940s money, roughly 28 to 36 billion 2025 dollars depending on the deflator; about 130,000 people at peak across some 30 sites. Most of the cost was the enrichment and plutonium plants at Oak Ridge and Hanford.
+  sources:
+    - title: Manhattan Project (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Manhattan_Project
+    - title: The Manhattan Project (US Department of Energy, Office of History)
+      url: https://www.osti.gov/opennet/manhattan-project-history/

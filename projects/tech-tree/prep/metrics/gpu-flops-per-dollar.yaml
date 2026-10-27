@@ -1,0 +1,27 @@
+id: gpu-flops-per-dollar
+name: GPU price-performance (FP32 FLOP/s per dollar, record-setting GPUs)
+unit: FLOP/s per USD
+better: higher
+log: true
+points:                           # [year, value]; release-price FP32 peak FLOP/s / launch price
+  - [2008, 958551617.87]          # GeForce GTX 280: 0.6221e12 / $649
+  - [2010, 3168336673.35]         # GeForce GTX 580: 1.581e12 / $499
+  - [2013, 6403697996.92]         # GeForce GTX 780: 4.156e12 / $649
+  - [2014, 9072859744.99]         # GeForce GTX 980: 4.981e12 / $549
+  - [2016, 14813021702.84]        # GeForce GTX 1080: 8.873e12 / $599
+  - [2017, 16223175965.67]        # GeForce GTX 1080 Ti: 11.34e12 / $699
+  - [2020, 42589413447.78]        # GeForce RTX 3080: 29.77e12 / $699
+  - [2022, 61481481481.48]        # Radeon RX 7900 XTX: 61.42e12 / $999
+source:
+  title: Epoch AI, Machine Learning Hardware dataset
+  url: https://epoch.ai/data/machine-learning-hardware
+license: CC BY 4.0
+note: >-
+  Computed from Epoch AI's ml_hardware.csv (downloaded 2026-10-27) as FP32 peak
+  FLOP/s divided by release price in nominal USD, keeping only GPUs that set a
+  new record; the dataset has few priced consumer GPUs after 2022. ML
+  accelerators are better measured in tensor FP16/FP8, where price-performance
+  is higher (for example H100 SXM at about 2.9e10 dense FP16 FLOP/s per dollar
+  and GB200 at about 6.8e10). Epoch's 2022 study of 470 GPUs found FP32
+  FLOP/s per dollar doubling about every 2.5 years, and every 2.07 years for
+  GPUs used in ML (https://epoch.ai/blog/trends-in-gpu-price-performance).

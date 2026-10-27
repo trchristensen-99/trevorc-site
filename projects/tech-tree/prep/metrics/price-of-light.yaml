@@ -1,0 +1,33 @@
+id: price-of-light
+name: Labor price of light
+unit: hours of work per 1,000 lumen-hours
+better: lower
+fit: {from: 1800}  # the trend since the first factory-made light sources
+log: true
+points:                           # [year, value]
+  - [-100000, 58]                 # open wood fire
+  - [-40000, 50]                  # animal-fat lamp
+  - [-1750, 41]                   # Babylonian sesame-oil lamp
+  - [1800, 5.37]                  # tallow candle
+  - [1845, 4.9]                   # sperm (whale) oil lamp
+  - [1855, 2.97]                  # town gas lamp
+  - [1875, 0.326]                 # kerosene lamp
+  - [1895, 0.083]                 # early electric lamps
+  - [1920, 0.012]                 # tungsten filament
+  - [1940, 0.0055]
+  - [1990, 0.000605]              # compact fluorescent
+  - [1992, 0.000119]
+source:
+  title: >-
+    Nordhaus (1996), "Do Real-Output and Real-Wage Measures Capture Reality? The History of
+    Lighting Suggests Not", in Bresnahan and Gordon (eds.), The Economics of New Goods
+    (NBER, University of Chicago Press), Table 1.6; series as published by Our World in Data
+  url: https://ourworldindata.org/grapher/hours-of-work-per-1000-lumen-hours
+license: >-
+  Our World in Data's processing is CC BY 4.0. The underlying figures are from Nordhaus's
+  NBER chapter (copyright University of Chicago Press); they are reused here as cited facts.
+note: >-
+  Labor hours an average worker needed to earn the price of 1,000 lumen-hours (about one
+  60-watt incandescent bulb burning for an hour) with the best common technology of each date.
+  US wage data from 1800 on; earlier points are rough reconstructions. The lamp labels are
+  inferred from Nordhaus's text and may not match every row exactly.
