@@ -1,0 +1,31 @@
+id: ai-inference-price
+name: Price of GPT-4-level AI (cheapest model scoring at least 86 on MMLU)
+short: GPT-4-level price
+unit: USD per million tokens
+better: lower
+log: true
+field: computing
+points:                           # [release date as fractional year, USD per million tokens]; each a new low
+  - [2023.197, 37.5]    # GPT-4 (0314), 2023-03-14
+  - [2023.846, 15]      # GPT-4 Turbo, 2023-11-06
+  - [2024.364, 7.5]     # GPT-4o, 2024-05-13
+  - [2024.392, 2.19]    # Gemini 1.5 Pro (May 2024), 2024-05-23
+  - [2025.096, 0.175]   # Gemini 2.0 Flash, 2025-02-05
+source:
+  title: "Epoch AI, LLM inference prices have fallen rapidly but unequally across tasks (Cottier et al., 2025), lowest_price_models_data.csv"
+  url: https://epoch.ai/data-insights/llm-inference-price-trends
+license: CC BY 4.0
+note: >-
+  The cheapest model that matches the original GPT-4 (March 2023) on MMLU
+  (score of 86 or more), at its release date, from Epoch AI's CSV
+  (https://epoch.ai/data/charts/llm-inference-price-trends/lowest_price_models_data.csv,
+  updated November 2025, downloaded 2026-10-28). Price is a 3:1 blend of
+  input and output token prices, the first-party API price where there is
+  one. Epoch's data ends with models released in February 2025. Epoch found
+  prices for a fixed capability falling 9 to 900 times a year depending on the
+  benchmark (about 40 times a year at GPT-4 level on PhD-level science
+  questions). Its later study, "The plunging price of thought" (September
+  2026, https://epoch.ai/publications/the-plunging-price-of-thought), uses cost
+  per answered question instead and finds about 13 times a year overall.
+  MMLU is near saturation and may be partly memorised, so cheap models can
+  match GPT-4 on it while being weaker on harder tasks.

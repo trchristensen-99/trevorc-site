@@ -1,5 +1,7 @@
 id: sequencing-cost-per-megabase
 name: Cost per megabase of DNA sequence
+short: Cost per megabase
+field: biology
 unit: USD
 better: lower
 log: true

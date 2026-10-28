@@ -3,7 +3,7 @@
 # node's own lists.
 - {id: jacquard-loom, requires: [weaving]}
 - {id: blood-circulation, requires: [scientific-method]}
-- {id: vaccination, requires: [scientific-method], helped_by: [germ-theory]}
+- {id: vaccination, requires: [scientific-method]}
 - {id: anesthesia, requires: [distillation]}
 - {id: epidemiology, requires: [statistics]}
 - {id: evolution-natural-selection, requires: [scientific-method]}

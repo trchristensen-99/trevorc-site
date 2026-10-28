@@ -1,20 +1,23 @@
 id: solar-pv-module-price
 name: Solar photovoltaic module price
+short: Solar module price
 unit: USD per watt (constant 2025 US$)
 better: lower
-cumulative: solar-pv-cumulative-capacity
 log: true
+field: energy
+fit: {from: 2010}  # the IRENA era; the 1975-2025 line runs well above recent prices
+cumulative: solar-pv-cumulative-capacity
 points:                           # [year, value]
   - [1975, 132.3757]
   - [1976, 99.5976]
   - [1977, 72.6611]
   - [1978, 51.4082]
   - [1979, 43.1951]
-  - [1980, 36.605]
+  - [1980, 36.6050]
   - [1981, 29.2664]
   - [1982, 26.2952]
   - [1983, 21.2281]
-  - [1984, 19.725]
+  - [1984, 19.7250]
   - [1985, 17.2204]
   - [1986, 14.2447]
   - [1987, 12.1104]
@@ -27,7 +30,7 @@ points:                           # [year, value]
   - [1994, 9.2315]
   - [1995, 8.5355]
   - [1996, 7.9798]
-  - [1997, 7.952]
+  - [1997, 7.9520]
   - [1998, 7.1656]
   - [1999, 6.6193]
   - [2000, 6.4959]
@@ -50,19 +53,24 @@ points:                           # [year, value]
   - [2017, 0.5714]
   - [2018, 0.5091]
   - [2019, 0.4669]
-  - [2020, 0.3697]
-  - [2021, 0.3319]
-  - [2022, 0.3658]
-  - [2023, 0.3218]
-  - [2024, 0.2652]
+  - [2020, 0.3249]
+  - [2021, 0.3446]
+  - [2022, 0.3669]
+  - [2023, 0.2735]
+  - [2024, 0.1331]
+  - [2025, 0.1202]
 source:
-  title: "Our World in Data, Solar photovoltaic panel prices (IRENA 2025; Nemet 2009; Farmer and Lafond 2016)"
+  title: "Our World in Data, Solar photovoltaic module price (IRENA Renewable Power Generation Costs in 2024 and in 2025; Nemet 2009; Farmer and Lafond 2016)"
   url: https://ourworldindata.org/grapher/solar-pv-prices
 license: CC BY 4.0
 note: >-
   Module price only, excluding installation and balance of system. Nemet (2009)
-  for 1975 to 2003, Farmer and Lafond (2016) for 2004 to 2009, IRENA's Global
-  Price Index (pvXchange European benchmark) from 2010. Deflated to 2025 US$ by
-  OWID with the World Bank US GDP deflator. Values rounded to 4 decimals from
-  the OWID CSV downloaded 2026-10-27. Pair with solar-pv-cumulative-capacity
-  to fit Wright's law (roughly a 20 percent price drop per doubling).
+  for 1975 to 2003, Farmer and Lafond (2016) for 2004 to 2009, IRENA's global
+  module price index (pvXchange benchmark for modules sold in Europe) for 2010
+  to 2019, and IRENA's "mainstream" crystalline silicon module series from 2020
+  (OWID joins the two without rescaling; they differ by under 20 percent in
+  2020 to 2023). Deflated to 2025 US$ by OWID with the World Bank US GDP
+  deflator. Values rounded to 4 decimals from the OWID CSV downloaded
+  2026-10-28 (OWID revised the series on 2026-10-23, which lowered 2024 from
+  0.27 to 0.13). Paired with solar-pv-cumulative-capacity for a Wright's law
+  fit (price drop per doubling of cumulative capacity).

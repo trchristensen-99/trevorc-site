@@ -1,0 +1,72 @@
+id: wheat-yield
+name: Wheat yield in England and the United Kingdom
+short: UK wheat yield
+unit: tonnes per hectare
+better: higher
+log: true
+field: agriculture
+fit: {from: 1805}  # yields barely moved before the agricultural revolution
+points:                           # [year, value]
+  - [1275, 0.56]
+  - [1305, 0.52]
+  - [1355, 0.43]
+  - [1405, 0.43]
+  - [1455, 0.34]
+  - [1555, 0.67]
+  - [1605, 0.74]
+  - [1655, 0.91]
+  - [1705, 0.95]
+  - [1755, 1.05]
+  - [1805, 1.26]
+  - [1855, 1.76]
+  - [1865, 1.98]
+  - [1887, 2.06]
+  - [1912, 2.17]
+  - [1932, 2.23]
+  - [1944, 2.56]
+  - [1965, 4.07]
+  - [1970, 4.19]
+  - [1975, 4.33]
+  - [1980, 5.88]
+  - [1985, 6.33]
+  - [1990, 6.97]
+  - [1995, 7.7]
+  - [2000, 8.01]
+  - [2001, 7.08]
+  - [2002, 8.0]
+  - [2003, 7.78]
+  - [2004, 7.78]
+  - [2005, 7.96]
+  - [2006, 8.04]
+  - [2007, 7.22]
+  - [2008, 8.28]
+  - [2009, 7.93]
+  - [2010, 7.67]
+  - [2011, 7.75]
+  - [2012, 6.66]
+  - [2013, 7.38]
+  - [2014, 8.58]
+  - [2015, 8.98]
+  - [2016, 7.89]
+  - [2017, 8.28]
+  - [2018, 7.75]
+  - [2019, 8.93]
+  - [2020, 6.96]
+  - [2021, 7.81]
+  - [2022, 8.59]
+  - [2023, 8.13]
+  - [2024, 7.28]
+source:
+  title: "Our World in Data, Wheat yields (FAO 2025; Broadberry et al. 2015; Brassley 2000; Bayliss-Smith and Wanmali 1984)"
+  url: https://ourworldindata.org/grapher/wheat-yields
+license: CC BY 4.0
+note: >-
+  Harvested wheat per hectare in England (medieval and early modern points,
+  Broadberry et al., British Economic Growth 1270-1870) and the United
+  Kingdom (from 1887; FAO from 1961). Early points are averages over decades.
+  From 1961 to 1999 only every fifth year is kept; every year from 2000.
+  OWID CSV downloaded 2026-10-28. Yields roughly doubled between 1300 and
+  1800, nearly tripled by 1961, and then doubled again by the late 1990s with
+  semi-dwarf varieties, fertilizer and fungicides; the national average has
+  been flat at 7 to 9 tonnes since the late 1990s, with weather-driven dips
+  (2001, 2012, 2020, 2024).

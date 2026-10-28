@@ -1,0 +1,2039 @@
+# The frontier of the life sciences: the intermediate steps that the big
+# goals (rejuvenation, organ replacement, brain emulation, synthetic
+# genomes, molecular nanotechnology, cheap cultivated meat) actually depend
+# on. Achieved steps are included so the path is legible. Changes to the
+# existing goal nodes are in patches/frontier-life.yaml.
+
+# ===========================================================================
+# Aging and longevity (medicine, track longevity)
+# ===========================================================================
+
+- id: mouse-lifespan-drug
+  name: A drug that extends mouse lifespan when started late
+  kind: discovery
+  fields: [medicine, biology]
+  track: longevity
+  date: 2009
+  status: achieved
+  tier: 3
+  summary: >-
+    Rapamycin fed to genetically mixed mice from 20 months of age (roughly 60
+    in human terms) extended median and maximum lifespan in both sexes at
+    three independent sites. It was the first drug shown to slow aging in a
+    mammal, and the start of the "geroprotector" idea.
+  requires: [randomized-controlled-trial]
+  efforts:
+    - who: David Harrison, Randy Strong, Richard Miller (NIA Interventions Testing Program)
+      where: Jackson Laboratory, UT Health San Antonio, University of Michigan, USA
+      when: 2009
+      outcome: achieved
+      note: Lifespan to 90 percent mortality rose 14 percent in females and 9 percent in males.
+    - who: NIA Interventions Testing Program, later compounds
+      where: USA
+      when: [2009, 2026]
+      outcome: ongoing
+      note: Acarbose, 17-alpha-estradiol and canagliflozin also extended lifespan (canagliflozin by 14 percent in males only); fisetin did not.
+  sources:
+    - title: "Harrison et al., Nature 460:392 (2009)"
+      url: https://doi.org/10.1038/nature08221
+    - title: "Harrison et al. 2009, full text (PubMed Central)"
+      url: https://pmc.ncbi.nlm.nih.gov/articles/PMC2786175/
+
+- id: epigenetic-aging-clocks
+  name: Epigenetic aging clocks
+  kind: technique
+  fields: [medicine, biology, computing]
+  track: longevity
+  date: 2013
+  status: achieved
+  tier: 3
+  summary: >-
+    Models that estimate biological age from DNA methylation at a few hundred
+    sites. Steve Horvath's 2013 pan-tissue clock was the first to work across
+    tissues; later clocks (GrimAge 2019, DunedinPACE 2022) predict death and
+    disease or the pace of aging, and are now used as exploratory trial
+    endpoints.
+  requires: [microarrays, statistics]
+  helped_by: [deep-learning-genomics]
+  efforts:
+    - who: Steve Horvath (UCLA)
+      where: USA
+      when: 2013
+      outcome: achieved
+      note: Pan-tissue clock from 353 CpG sites; Gregory Hannum and colleagues published a blood clock the same year.
+    - who: Ake Lu and Steve Horvath (GrimAge); Daniel Belsky and Terrie Moffitt (DunedinPACE)
+      where: USA, New Zealand
+      when: [2019, 2022]
+      outcome: achieved
+    - who: Biomarkers of Aging Consortium
+      where: International
+      when: [2022, 2026]
+      outcome: ongoing
+      note: Its 2024 Nature Medicine paper notes there is still no consensus on how to validate aging biomarkers.
+  sources:
+    - title: "Horvath, Genome Biology 14:R115 (2013)"
+      url: https://doi.org/10.1186/gb-2013-14-10-r115
+    - title: "Moqri et al., Validation of biomarkers of aging, Nature Medicine (2024)"
+      url: https://doi.org/10.1038/s41591-023-02784-9
+
+- id: aging-biomarker-endpoint
+  name: An aging biomarker accepted as a trial endpoint
+  kind: institution
+  fields: [medicine, society]
+  track: longevity
+  date: { window: [2030, 2045], likely: 2036 }
+  status: ongoing
+  tier: 2
+  criterion: >-
+    The FDA or EMA accepts a measure of biological aging (a clock, composite
+    or functional index) as a surrogate or primary endpoint that can support
+    approval of a drug whose claim is slowing aging, through biomarker
+    qualification or in an approved drug's label. Use as an exploratory
+    endpoint does not count.
+  summary: >-
+    The institutional step that makes aging drugs testable in a few years
+    instead of the decades a lifespan trial would take. Without it, every
+    route to rejuvenation has to prove itself one disease at a time.
+  requires: [epigenetic-aging-clocks, randomized-controlled-trial]
+  helped_by: [deep-learning-genomics]
+  efforts:
+    - who: ARPA-H PROSPR program (seven teams including Stanford, UT Health San Antonio, Columbia)
+      where: USA
+      when: [2026, 2031]
+      outcome: ongoing
+      note: Up to $144 million over five years, awarded February 2026, to find early biomarkers that can serve as surrogates for long-term health outcomes in 1 to 3 year trials.
+    - who: Biomarkers of Aging Consortium
+      where: International
+      when: [2022, 2026]
+      outcome: ongoing
+    - who: XPRIZE Healthspan
+      where: International
+      when: [2023, 2030]
+      outcome: ongoing
+      note: $101 million prize for restoring muscle, cognitive and immune function by 10 or more years; 20 finalists named in August 2026, results due in 2030.
+  forecast:
+    note: >-
+      No aging biomarker has been qualified; only a handful of biomarkers of
+      any kind have ever been fully qualified through FDA's program, and none
+      as surrogate endpoints. PROSPR's cohort and trial data arrive around
+      2030 to 2031 and XPRIZE results in 2030, so the evidence package could
+      exist by the early 2030s. Biomarker qualification typically takes years
+      more, so I put acceptance around 2036, with a real chance it never
+      comes for clocks and a functional index is accepted instead.
+    sources:
+      - title: "ARPA-H: PROSPR research teams (February 2026)"
+        url: https://arpa-h.gov/news-and-events/research-teams-add-more-healthy-years-americans-lives-they-age
+      - title: "XPRIZE: 20 Healthspan finalist teams advance (August 2026)"
+        url: https://www.xprize.org/news/20-healthspan-finalist-teams-advance-in-the-race-to-extend-healthy-aging
+  sources:
+    - title: "ARPA-H: PROSPR research teams (February 2026)"
+      url: https://arpa-h.gov/news-and-events/research-teams-add-more-healthy-years-americans-lives-they-age
+    - title: "Moqri et al., Validation of biomarkers of aging, Nature Medicine (2024)"
+      url: https://doi.org/10.1038/s41591-023-02784-9
+
+- id: dog-lifespan-drug
+  name: A drug approved to extend dogs' lives
+  kind: technique
+  fields: [medicine, agriculture]
+  track: longevity
+  date: { window: [2027, 2031], likely: 2028 }
+  status: ongoing
+  tier: 3
+  criterion: >-
+    A regulator (in practice FDA's Center for Veterinary Medicine) grants
+    conditional or full approval to a drug labeled to extend lifespan or
+    healthy lifespan in dogs.
+  summary: >-
+    The first drug with a lifespan claim on its label, in any species. Loyal's
+    LOY-002, a daily pill for senior dogs, has passed two of the three major
+    technical sections of FDA review.
+  requires: [mouse-lifespan-drug]
+  efforts:
+    - who: Loyal (Celine Halioua), LOY-002
+      where: USA
+      when: [2019, 2026]
+      outcome: ongoing
+      note: FDA accepted the effectiveness section (February 2025) and target animal safety section (January 2026); manufacturing is pending. The STAY study enrolled 1,300 dogs at 70 clinics by July 2025.
+    - who: Dog Aging Project (TRIAD rapamycin trial)
+      where: USA
+      when: [2021, 2026]
+      outcome: ongoing
+  forecast:
+    note: >-
+      Loyal says it expects to complete the manufacturing section and apply
+      for conditional approval in 2027. FDA reviews of that section commonly
+      take a year, so 2028 is the likely date.
+    sources:
+      - title: "Loyal: LOY-002 target animal safety section accepted (January 2026)"
+        url: https://loyal.com/posts/loy-002-tas-announcement
+  sources:
+    - title: "Loyal: LOY-002 target animal safety section accepted (January 2026)"
+      url: https://loyal.com/posts/loy-002-tas-announcement
+
+- id: aging-drug-approved
+  name: A drug approved to slow human aging
+  kind: technique
+  fields: [medicine, society]
+  track: longevity
+  date: { window: [2033, 2055], likely: 2040 }
+  status: speculative
+  tier: 2
+  criterion: >-
+    A major regulator (FDA or EMA) approves a drug for healthy older people
+    on the basis of a randomized trial showing it delays a composite of
+    several age-related diseases (for example cardiovascular disease, cancer,
+    dementia and death), or improves an accepted aging endpoint, rather than
+    treating one disease.
+  summary: >-
+    Aging treated as an indication in its own right, the model proposed by
+    the TAME trial of metformin. Several candidate geroprotectors exist
+    (rapamycin, metformin, GLP-1 and SGLT2 drugs); none has been tested this
+    way to completion.
+  requires: [mouse-lifespan-drug, randomized-controlled-trial]
+  helped_by: [aging-biomarker-endpoint, dog-lifespan-drug]
+  efforts:
+    - who: TAME trial (Nir Barzilai, American Federation for Aging Research)
+      where: USA
+      when: [2015, 2026]
+      outcome: ongoing
+      note: Designed for about 3,000 people aged 65 to 79 over six years with a composite endpoint; still described as awaiting full funding in 2026 and not yet enrolling.
+    - who: PEARL trial of low-dose rapamycin (AgelessRx)
+      where: USA
+      when: 2025
+      outcome: abandoned
+      note: 114 people for 48 weeks; missed its primary endpoint (visceral fat), with modest gains in women's lean mass.
+    - who: SELECT trial of semaglutide (Novo Nordisk)
+      where: International
+      when: 2023
+      outcome: ongoing
+      note: In 17,604 adults with obesity, all-cause death fell by about 19 percent (hazard ratio 0.81), a hint of broad protective effects, though not a formally tested result.
+    - who: VITAL-H (UT Health San Antonio, ARPA-H PROSPR)
+      where: USA
+      when: [2026, 2031]
+      outcome: ongoing
+      note: A hybrid trial of an SGLT2 inhibitor, rapamycin and semaglutide on healthspan biomarkers.
+  forecast:
+    note: >-
+      FDA does not recognize aging as an indication. A TAME-style trial takes
+      about six years after funding, plus a year or two for review, so even a
+      2027 start gives 2034 at the earliest. A biomarker endpoint (about 2036
+      in this tree) would let shorter trials support a claim. GLP-1 drugs may
+      get there sideways by accumulating broad outcome labels. I put the
+      first approval whose claim is aging itself around 2040.
+    sources:
+      - title: "Lincoff et al., SELECT, NEJM 389:2221 (2023)"
+        url: https://doi.org/10.1056/NEJMoa2307563
+      - title: "Moel et al., PEARL rapamycin trial, Aging 17 (2025)"
+        url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12074816/
+      - title: "ARPA-H: PROSPR research teams (February 2026)"
+        url: https://arpa-h.gov/news-and-events/research-teams-add-more-healthy-years-americans-lives-they-age
+  sources:
+    - title: "Moel et al., PEARL rapamycin trial, Aging 17 (2025)"
+      url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12074816/
+
+- id: senolytics-approved
+  name: A senolytic drug approved
+  kind: technique
+  fields: [medicine, biology]
+  track: longevity
+  date: { window: [2031, 2045], likely: 2036 }
+  status: ongoing
+  tier: 3
+  criterion: >-
+    A drug whose mechanism is selectively killing senescent cells is approved
+    by the FDA or EMA for any indication after meeting its primary endpoint
+    in a randomized trial.
+  summary: >-
+    Drugs that clear senescent cells, which accumulate with age and secrete
+    inflammatory signals. Clearing them extends healthy life in mice, but
+    the first human trials have mostly missed their endpoints.
+  requires: [randomized-controlled-trial, cell-culture]
+  helped_by: [mouse-lifespan-drug]
+  efforts:
+    - who: James Kirkland, Sundeep Khosla and colleagues (Mayo Clinic), dasatinib plus quercetin
+      where: USA
+      when: [2015, 2024]
+      outcome: ongoing
+      note: A 2024 phase 2 bone trial in 60 women missed its primary endpoint; benefit appeared only in those with many senescent cells.
+    - who: Unity Biotechnology (UBX1325)
+      where: USA
+      when: [2011, 2025]
+      outcome: abandoned
+      note: Missed its primary endpoint in diabetic macular edema in 2025; the board approved a plan of dissolution in June 2025.
+    - who: Rubedo Life Sciences and others
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Early-stage topical and systemic senolytics.
+  forecast:
+    note: >-
+      As of 2026 no senolytic is approved and none is in phase 3. A new
+      phase 2 success in the late 2020s, then phase 3 and review, gives the
+      mid 2030s. I put 2036, with a real chance the class fails.
+    sources:
+      - title: "Unity Biotechnology 8-K, plan of dissolution (June 2025)"
+        url: https://www.sec.gov/Archives/edgar/data/1463361/000095017025091210/ubx-20250627.htm
+  sources:
+    - title: "Unity Biotechnology 8-K, plan of dissolution (June 2025)"
+      url: https://www.sec.gov/Archives/edgar/data/1463361/000095017025091210/ubx-20250627.htm
+
+- id: partial-reprogramming
+  name: Partial epigenetic reprogramming in animals
+  kind: discovery
+  fields: [medicine, biology]
+  track: longevity
+  date: 2016
+  status: achieved
+  tier: 2
+  summary: >-
+    Briefly switching on the Yamanaka factors resets aging marks without
+    turning cells back into stem cells. Cyclic expression extended lifespan
+    in progeroid mice and improved tissue repair in normal ones; later work
+    restored vision in old mice with three factors (OSK).
+  requires: [induced-pluripotent-stem-cells, gene-therapy]
+  efforts:
+    - who: Alejandro Ocampo, Juan Carlos Izpisua Belmonte (Salk Institute)
+      where: USA
+      when: 2016
+      outcome: achieved
+    - who: Yuancheng Lu, David Sinclair (Harvard)
+      where: USA
+      when: 2020
+      outcome: achieved
+      note: OSK gene therapy restored vision in aged mice and in a glaucoma model (Nature 2020).
+  sources:
+    - title: "Ocampo et al., Cell 167:1719 (2016)"
+      url: https://doi.org/10.1016/j.cell.2016.11.052
+    - title: "Lu et al., Nature 588:124 (2020)"
+      url: https://doi.org/10.1038/s41586-020-2975-4
+
+- id: reprogramming-human-trial
+  name: Partial reprogramming shown to work in a human organ
+  kind: technique
+  fields: [medicine, biology]
+  track: longevity
+  date: { window: [2028, 2034], likely: 2030 }
+  status: ongoing
+  tier: 3
+  criterion: >-
+    A controlled human trial of an in vivo partial reprogramming therapy
+    reports both acceptable safety and a measured functional benefit (for
+    example vision in optic neuropathy) in one organ.
+  summary: >-
+    The first test of rejuvenating cells in place in people, starting in the
+    eye, where a small dose can be injected locally and switched on and off
+    with an oral drug.
+  requires: [partial-reprogramming]
+  efforts:
+    - who: Life Biosciences (ER-100)
+      where: Boston, USA
+      when: 2026
+      outcome: ongoing
+      note: IND cleared January 2026; first patient dosed June 2026 (NCT07290244), about 18 patients with glaucoma or NAION; primary safety completion due May 2027.
+    - who: NewLimit
+      where: San Francisco, USA
+      when: 2026
+      outcome: ongoing
+      note: Raised $435 million in 2026 and plans a first human trial of a liver reprogramming medicine in 2027.
+    - who: Altos Labs, Retro Biosciences, YouthBio
+      where: USA
+      when: [2022, 2026]
+      outcome: ongoing
+      note: No disclosed reprogramming candidate in the clinic as of 2026.
+  forecast:
+    note: >-
+      ER-100's phase 1 finishes its primary safety readout in 2027; a
+      controlled efficacy result needs a phase 2, about 2029 to 2031.
+    sources:
+      - title: "Life Biosciences: first patient dosed with ER-100 (June 2026)"
+        url: https://www.lifebiosciences.com/life-biosciences-announces-first-patient-dosed-in-phase-1-trial-of-er-100-for-optic-neuropathies/
+      - title: "ClinicalTrials.gov NCT07290244"
+        url: https://clinicaltrials.gov/study/NCT07290244
+  sources:
+    - title: "Life Biosciences: first patient dosed with ER-100 (June 2026)"
+      url: https://www.lifebiosciences.com/life-biosciences-announces-first-patient-dosed-in-phase-1-trial-of-er-100-for-optic-neuropathies/
+    - title: "NewLimit raises $435 million (BioSpace, 2026)"
+      url: https://www.biospace.com/business/newlimit-snags-435m-after-seeing-age-reversal-in-human-liver-cells
+
+- id: systemic-reprogramming
+  name: Whole-body partial reprogramming in humans
+  kind: technique
+  fields: [medicine, biology]
+  track: longevity
+  date: { window: [2035, 2060], likely: 2044 }
+  status: speculative
+  tier: 2
+  criterion: >-
+    A reprogramming therapy delivered systemically (to most major organs, not
+    one eye or one tissue) shows in a randomized trial a reduction of at
+    least 5 years in a validated aging measure across several organ systems,
+    without excess cancer, over at least two years of follow-up.
+  summary: >-
+    Rejuvenating cells throughout the body by delivering reprogramming
+    factors everywhere, the version of reprogramming that would matter for
+    aging as a whole. Safe delivery to every tissue, and avoiding tumors from
+    over-reprogramming, are the obstacles.
+  requires: [reprogramming-human-trial]
+  helped_by: [aging-biomarker-endpoint, in-vivo-gene-editing]
+  efforts:
+    - who: Altos Labs, NewLimit, Retro Biosciences, Life Biosciences
+      where: USA
+      when: [2022, 2026]
+      outcome: ongoing
+      note: Together these companies have raised well over $4 billion; none has a systemic reprogramming therapy in humans as of 2026.
+  forecast:
+    note: >-
+      Local reprogramming in the eye began in 2026 and liver trials are
+      planned from 2027. Systemic gene delivery to most organs does not yet
+      exist for any therapy, and a two-year randomized trial with organ-level
+      aging measures would follow years of dose-finding. I put a result
+      meeting this bar in the 2040s, with very wide uncertainty.
+    sources:
+      - title: "NewLimit raises $435 million (BioSpace, 2026)"
+        url: https://www.biospace.com/business/newlimit-snags-435m-after-seeing-age-reversal-in-human-liver-cells
+  sources:
+    - title: "NewLimit raises $435 million (BioSpace, 2026)"
+      url: https://www.biospace.com/business/newlimit-snags-435m-after-seeing-age-reversal-in-human-liver-cells
+
+- id: longevity-escape-velocity
+  name: Longevity escape velocity
+  kind: milestone
+  fields: [medicine, society]
+  track: longevity
+  date: { window: [2045, 2150], likely: 2070 }
+  status: speculative
+  tier: 1
+  criterion: >-
+    In at least one country, remaining life expectancy at age 60 rises by at
+    least one year per calendar year, sustained for ten years, so that older
+    people's expected remaining lifespan stops shrinking.
+  summary: >-
+    The point where medicine adds years of life faster than they pass for
+    people who are already old. Today life expectancy in rich countries
+    rises by roughly 0.1 to 0.2 years per year.
+  requires: [aging-reversal]
+  efforts:
+    - who: Aubrey de Grey (who coined the term) and the SENS and LEV foundations
+      where: USA, UK
+      when: [2004, 2026]
+      outcome: ongoing
+  forecast:
+    note: >-
+      Metaculus' question on this (life expectancy rising a year per year)
+      has had community medians between about 2050 and 2060 in recent
+      snapshots, with an interquartile range from about 2039 to after 2180;
+      I could not read the live value. Life expectancy gains in rich
+      countries slowed after 2010. Measured at age 60, this needs a
+      rejuvenation therapy that is widely used, not just approved, so I put
+      it about a decade after rejuvenation therapies, around 2070, and well
+      later than the forecasting community.
+    sources:
+      - title: "Metaculus: when will a country reach longevity escape velocity?"
+        url: https://www.metaculus.com/questions/6592/date-life-expectancy-hits-escape-velocity
+  sources:
+    - title: "Metaculus: when will a country reach longevity escape velocity?"
+      url: https://www.metaculus.com/questions/6592/date-life-expectancy-hits-escape-velocity
+
+# ===========================================================================
+# Organs: transplant, xenotransplant, lab-grown organs, cryopreservation
+# (medicine, track surgery-organs)
+# ===========================================================================
+
+- id: organ-transplantation
+  name: Organ transplantation
+  kind: technique
+  fields: [medicine]
+  track: surgery-organs
+  date: 1954
+  status: achieved
+  tier: 2
+  summary: >-
+    Replacing a failed organ with a donor's. Joseph Murray transplanted a
+    kidney between identical twins in 1954, sidestepping rejection; drugs
+    that suppress the immune system (azathioprine, then ciclosporin in the
+    1980s) made transplants between unrelated people routine.
+  requires: [antiseptic-surgery, anesthesia, blood-transfusion]
+  efforts:
+    - who: Joseph Murray, John Merrill, Hartwell Harrison (Peter Bent Brigham Hospital)
+      where: Boston, USA
+      when: 1954
+      outcome: achieved
+      note: Ronald Herrick's kidney given to his twin Richard on December 23, 1954. Murray shared the 1990 Nobel Prize.
+  sources:
+    - title: "Merrill et al., JAMA 160:277 (1956)"
+      url: https://doi.org/10.1001/jama.1956.02960390027008
+    - title: "Harvard Medical School: transplant pioneer, Nobel laureate dies at 93"
+      url: https://hms.harvard.edu/news/transplant-pioneer-nobel-laureate-dies-age-93
+
+- id: pig-organ-xenotransplant
+  name: Gene-edited pig organs in living patients
+  kind: technique
+  fields: [medicine, biology]
+  track: surgery-organs
+  date: 2022
+  status: achieved
+  tier: 3
+  summary: >-
+    Hearts and kidneys from pigs with ten to 69 gene edits, transplanted into
+    living people as compassionate-use cases. The record by 2026 is a pig
+    kidney that kept a man off dialysis for 271 days.
+  requires: [organ-transplantation, crispr-cas9]
+  efforts:
+    - who: Bartley Griffith, Muhammad Mohiuddin (University of Maryland), with Revivicor
+      where: USA
+      when: [2022, 2023]
+      outcome: achieved
+      note: Pig hearts in David Bennett (2022, about 60 days) and Lawrence Faucette (2023, about six weeks).
+    - who: Massachusetts General Hospital with eGenesis; NYU Langone (Robert Montgomery) with United Therapeutics
+      where: USA
+      when: [2024, 2026]
+      outcome: achieved
+      note: Rick Slayman (2024); Towana Looney (130 days, 2024 to 2025); Tim Andrews (271 days dialysis-free, then a human kidney in January 2026). Five eGenesis patients by September 2026, none past a year.
+    - who: Beicheng Sun (First Affiliated Hospital of Anhui Medical University)
+      where: China
+      when: 2025
+      outcome: achieved
+      note: An auxiliary pig liver in a living patient, removed after 38 days.
+  sources:
+    - title: "Harvard Medical School: pig kidney patient becomes first to progress to a human kidney (2026)"
+      url: https://hms.harvard.edu/news/patient-who-received-pig-kidney-becomes-first-progress-human-kidney-transplant
+    - title: "eGenesis: clinical update on EGEN-2784 (September 2026)"
+      url: https://egenesisbio.com/news-media/press-releases/egenesis-announces-clinical-update-in-ongoing-expanded-access-study-of-egen-2784-in-patients-with-kidney-failure
+
+- id: xenotransplant-approved
+  name: Pig kidney transplants approved as treatment
+  kind: technique
+  fields: [medicine, biology]
+  track: surgery-organs
+  date: { window: [2030, 2040], likely: 2033 }
+  status: ongoing
+  tier: 2
+  criterion: >-
+    A regulator (FDA or equivalent) licenses a gene-edited pig kidney (or
+    heart) for patients with organ failure after a clinical trial in which a
+    majority of recipients keep a working graft at one year.
+  summary: >-
+    An unlimited supply of organs grown in pigs, ending the waiting list
+    (about 90,000 Americans wait for a kidney). The first formal trials began
+    in late 2025.
+  requires: [pig-organ-xenotransplant, randomized-controlled-trial]
+  efforts:
+    - who: United Therapeutics (Revivicor), EXPAND trial of the UKidney
+      where: USA
+      when: [2025, 2026]
+      outcome: ongoing
+      note: First trial transplant at NYU Langone in November 2025; a first cohort of six with a 24-week endpoint, designed to support a licensing application. A pig heart trial (EXPRESS) was cleared in May 2026.
+    - who: eGenesis, RESTORE trial of EGEN-2784
+      where: USA
+      when: 2027
+      outcome: ongoing
+      note: An FDA-cleared trial of 33 patients aged 50 to 70, due to start in early 2027.
+  forecast:
+    note: >-
+      No recipient has yet passed one year with a working pig kidney. Trials
+      with 24-week endpoints started in 2025 to 2027; expanding cohorts and a
+      licensing review typically take five or more years. A Metaculus
+      question on xenotransplantation becoming routine had a community median
+      around 2043 (few forecasters). I put the first licensed product around
+      2033, and routine use (thousands a year) a decade later.
+    sources:
+      - title: "United Therapeutics: first transplant in the EXPAND trial (November 2025)"
+        url: https://ir.unither.com/~/media/Files/U/United-Therapeutics-IR/documents/press-releases/2025/united-therapeutics-corporation-announces-first-transplant-in-expand-clinical-trial-of-ukidney-in-patients-with-end-stage-renal-disease.pdf
+      - title: "eGenesis: clinical update on EGEN-2784 (September 2026)"
+        url: https://egenesisbio.com/news-media/press-releases/egenesis-announces-clinical-update-in-ongoing-expanded-access-study-of-egen-2784-in-patients-with-kidney-failure
+  sources:
+    - title: "eGenesis: clinical update on EGEN-2784 (September 2026)"
+      url: https://egenesisbio.com/news-media/press-releases/egenesis-announces-clinical-update-in-ongoing-expanded-access-study-of-egen-2784-in-patients-with-kidney-failure
+
+- id: organoids
+  name: Organoids
+  kind: technique
+  fields: [biology, medicine]
+  track: life-science
+  date: 2009
+  status: achieved
+  tier: 3
+  summary: >-
+    Stem cells grown in a gel organize themselves into miniature, simplified
+    organs: gut (2009), brain (2013), kidney, liver and more. They are used
+    to model disease and test drugs, and FDA's 2025 plan to phase out
+    required animal testing leans on them.
+  requires: [cell-culture]
+  helped_by: [induced-pluripotent-stem-cells]
+  efforts:
+    - who: Toshiro Sato, Hans Clevers (Hubrecht Institute)
+      where: Netherlands
+      when: 2009
+      outcome: achieved
+      note: A single Lgr5 stem cell built crypt-villus gut structures in a dish.
+    - who: Madeline Lancaster, Juergen Knoblich (IMBA)
+      where: Austria
+      when: 2013
+      outcome: achieved
+      note: Cerebral organoids.
+    - who: Ryuichi Okamoto (Tokyo Medical and Dental University)
+      where: Japan
+      when: 2022
+      outcome: achieved
+      note: The first transplant of a patient's own colon organoids into a person with ulcerative colitis.
+  sources:
+    - title: "Sato et al., Nature 459:262 (2009)"
+      url: https://doi.org/10.1038/nature07935
+    - title: "Lancaster et al., Nature 501:373 (2013)"
+      url: https://doi.org/10.1038/nature12517
+    - title: "FDA plan to phase out animal testing requirements (April 2025)"
+      url: https://www.fda.gov/news-events/press-announcements/fda-announces-plan-phase-out-animal-testing-requirement-monoclonal-antibodies-and-other-drugs
+
+- id: engineered-tissue-implants
+  name: Lab-grown tissue implants
+  kind: technique
+  fields: [medicine, biology]
+  track: surgery-organs
+  date: 2006
+  status: achieved
+  tier: 3
+  summary: >-
+    Simple engineered tissues, grown from a patient's own cells on a
+    scaffold, implanted in people: bladder walls (2006), a bioprinted ear
+    (2022), a bioprinted trachea (2023) and cornea (2025). All are thin or
+    hollow structures that need little blood supply.
+  requires: [cell-culture]
+  helped_by: [3d-printing]
+  efforts:
+    - who: Anthony Atala (Children's Hospital Boston, later Wake Forest)
+      where: USA
+      when: 2006
+      outcome: achieved
+      note: Engineered bladder tissue grafted into seven children with spina bifida.
+    - who: 3DBio Therapeutics (AuriNovo ear)
+      where: USA
+      when: 2022
+      outcome: achieved
+      note: A bioprinted ear made from the patient's own cartilage cells, in a phase 1/2a trial.
+    - who: Precise Bio (bioprinted cornea, Rambam Medical Center)
+      where: Israel
+      when: 2025
+      outcome: achieved
+  sources:
+    - title: "Atala et al., Lancet 367:1241 (2006)"
+      url: https://doi.org/10.1016/S0140-6736(06)68438-9
+    - title: "Nature news: doctors grow organs from patients' own cells (2006)"
+      url: https://www.nature.com/news/2006/060403/full/news060403-3.html
+
+- id: lab-grown-solid-organ
+  name: A lab-grown solid organ that keeps a person alive
+  kind: technique
+  fields: [medicine, biology, engineering]
+  track: surgery-organs
+  date: { window: [2035, 2060], likely: 2045 }
+  status: speculative
+  tier: 2
+  criterion: >-
+    A bioprinted or otherwise lab-grown vascularized solid organ (kidney,
+    liver, heart or lung, or a lobe big enough to replace the organ's
+    function) is transplanted into a person and sustains that function, with
+    no dialysis or other support, for at least a year.
+  summary: >-
+    Building a whole organ, blood vessels and all, from a patient's own
+    cells, so it needs no donor and no immune suppression. Thick tissue
+    needs a dense network of vessels, which no one can yet print.
+  requires: [engineered-tissue-implants, organoids, induced-pluripotent-stem-cells]
+  helped_by: [3d-printing, crispr-cas9]
+  competes: [xenotransplant-approved]
+  efforts:
+    - who: ARPA-H PRINT program (Carnegie Mellon, Wake Forest, Wyss Institute, UC San Diego, UT Southwestern)
+      where: USA
+      when: [2026, 2031]
+      outcome: ongoing
+      note: Up to $176.8 million over five years from January 2026 to bioprint livers and kidney tissue; Carnegie Mellon aims to be ready for a first human trial of a liver construct around 2031.
+    - who: United Therapeutics (lung scaffolds); Wake Forest Institute for Regenerative Medicine
+      where: USA
+      when: [2010, 2026]
+      outcome: ongoing
+  forecast:
+    note: >-
+      No vascularized solid organ has been built and implanted in a person.
+      PRINT's goal is a first human trial of a partial liver around 2031,
+      which would be a small graft assisting the patient's own organ. A whole
+      organ that replaces function for a year is a much higher bar, so I put
+      it in the mid 2040s.
+    sources:
+      - title: "ARPA-H: teams set to bioprint universally matched organs on demand (January 2026)"
+        url: https://arpa-h.gov/news-and-events/arpa-h-awards-teams-set-bioprint-universally-matched-organs-demand
+  sources:
+    - title: "ARPA-H: teams set to bioprint universally matched organs on demand (January 2026)"
+      url: https://arpa-h.gov/news-and-events/arpa-h-awards-teams-set-bioprint-universally-matched-organs-demand
+
+- id: organ-vitrification
+  name: A vitrified organ transplanted and working
+  kind: technique
+  fields: [medicine, physics]
+  track: surgery-organs
+  date: 2023
+  status: achieved
+  tier: 3
+  summary: >-
+    Rat kidneys were cooled to a glass without ice crystals, stored for up to
+    100 days, rewarmed evenly with iron-oxide nanoparticles in a magnetic
+    field, and transplanted; all five recipients regained full kidney
+    function. In 2026 the same method recovered pig kidneys of human size.
+  requires: [organ-transplantation]
+  efforts:
+    - who: John Bischof, Erik Finger and colleagues (University of Minnesota)
+      where: USA
+      when: 2023
+      outcome: achieved
+    - who: ATP-Bio (NSF center) and University of Minnesota
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: A preprint (October 2026) reports human-scale pig kidneys stored up to a year at -150 C; transplanted ones had blood flow and made urine, but follow-up was about two hours.
+  sources:
+    - title: "Han et al., Nature Communications 14:3407 (2023)"
+      url: https://doi.org/10.1038/s41467-023-38824-8
+    - title: "ATP-Bio: cryopreservation and nanowarming of human-scale kidneys (October 2026)"
+      url: https://atp-bio.org/press-release-landmark-study-demonstrates-first-successful-long-term-cryopreservation-and-nanowarming-of-human-scale-kidneys/
+
+- id: organ-banking
+  name: Organ banking by cryopreservation
+  kind: technique
+  fields: [medicine, physics]
+  track: surgery-organs
+  date: { window: [2032, 2050], likely: 2038 }
+  status: speculative
+  tier: 3
+  criterion: >-
+    A human kidney (or other solid organ) that was vitrified and stored for
+    at least a month is rewarmed and transplanted into a patient, and works
+    for at least a year.
+  summary: >-
+    Storing donor organs indefinitely instead of for hours, so organs can be
+    matched and shipped anywhere, and a first step toward reversible
+    cryopreservation of larger systems.
+  requires: [organ-vitrification]
+  helped_by: [xenotransplant-approved]
+  efforts:
+    - who: ATP-Bio and University of Minnesota (Bischof, Finger)
+      where: USA
+      when: [2020, 2026]
+      outcome: ongoing
+    - who: Until Labs (formerly Cradle)
+      where: USA
+      when: [2024, 2026]
+      outcome: ongoing
+      note: Raised a $58 million series A in 2025 for organ and tissue cryopreservation; no organ-level results published.
+  forecast:
+    note: >-
+      Rat kidneys work after vitrification (2023), and human-size pig kidneys
+      survived a few hours after transplant (2026 preprint). The next steps
+      are long-term survival of a large animal on a vitrified kidney, then a
+      first human case; each has taken several years in this field. I put
+      the first human case in the late 2030s.
+    sources:
+      - title: "ATP-Bio: cryopreservation and nanowarming of human-scale kidneys (October 2026)"
+        url: https://atp-bio.org/press-release-landmark-study-demonstrates-first-successful-long-term-cryopreservation-and-nanowarming-of-human-scale-kidneys/
+  sources:
+    - title: "ATP-Bio: cryopreservation and nanowarming of human-scale kidneys (October 2026)"
+      url: https://atp-bio.org/press-release-landmark-study-demonstrates-first-successful-long-term-cryopreservation-and-nanowarming-of-human-scale-kidneys/
+
+- id: cryonics
+  name: Cryonics
+  kind: institution
+  fields: [medicine, society]
+  track: surgery-organs
+  date: 1967
+  status: achieved
+  tier: 3
+  summary: >-
+    Storing legally dead people at liquid nitrogen temperature in the hope
+    that future medicine can revive and repair them. James Bedford was the
+    first, in 1967. About 500 people are stored, mainly at Alcor and the
+    Cryonics Institute; none has been revived, and the damage from freezing
+    and from delays after death is not known to be reversible.
+  requires: [refrigeration]
+  efforts:
+    - who: Cryonics Society of California (James Bedford)
+      where: USA
+      when: 1967
+      outcome: achieved
+    - who: Alcor Life Extension Foundation; Cryonics Institute; Tomorrow Bio
+      where: USA, Germany
+      when: [1972, 2026]
+      outcome: ongoing
+    - who: Robert McIntyre and Gregory Fahy (21st Century Medicine), aldehyde-stabilized cryopreservation
+      where: USA
+      when: [2015, 2018]
+      outcome: achieved
+      note: Preserved rabbit and pig brain connectomes well enough to win the Brain Preservation Foundation prizes, but the fixative rules out biological revival.
+  sources:
+    - title: Wikipedia, James Bedford
+      url: https://en.wikipedia.org/wiki/James_Bedford
+    - title: "McIntyre and Fahy, Aldehyde-stabilized cryopreservation, Cryobiology 71:448 (2015)"
+      url: https://doi.org/10.1016/j.cryobiol.2015.09.003
+
+- id: reversible-suspended-animation
+  name: Reversible whole-body cryopreservation
+  kind: technique
+  fields: [medicine, physics]
+  track: surgery-organs
+  date: { window: [2060, 2200], likely: 2090 }
+  status: speculative
+  tier: 2
+  criterion: >-
+    A large mammal (at least a dog or pig) is cooled below -100 C for at
+    least a month, rewarmed and revived with normal behavior and memory; for
+    humans, the same done deliberately to a living patient as a medical
+    procedure.
+  summary: >-
+    Pausing a whole body and restarting it later, the "pause and wait" route
+    around aging: a person could wait out a disease, or aging itself, until
+    a cure exists. It needs whole-organ vitrification scaled up to every
+    tissue at once, including the brain.
+  requires: [organ-banking]
+  helped_by: [cryonics, molecular-nanotechnology]
+  efforts:
+    - who: Until Labs; ATP-Bio
+      where: USA
+      when: [2024, 2026]
+      outcome: ongoing
+      note: Working on tissue and organ scale; Until Labs reported recovering electrical activity in cryopreserved rodent brain slices (2024).
+  forecast:
+    note: >-
+      No mammal larger than tissue samples and rat kidneys has been
+      vitrified and recovered. Metaculus forecasters give about a 5 percent
+      chance that a cryonically preserved person is revived before 2100, and
+      in earlier snapshots put the first large mammal revived from
+      cryopreservation around 2079. I put a deliberate, reversible procedure
+      around 2090, with a long tail.
+    sources:
+      - title: "Metaculus: will a cryonically frozen individual be resuscitated before 2100?"
+        url: https://www.metaculus.com/questions/13672/
+  sources:
+    - title: "Han et al., Nature Communications 14:3407 (2023)"
+      url: https://doi.org/10.1038/s41467-023-38824-8
+
+# ===========================================================================
+# Genetic medicine: gene editing in patients (medicine, track genetic-medicine)
+# ===========================================================================
+
+- id: base-editing
+  name: Base and prime editing
+  kind: technique
+  fields: [biology, medicine]
+  track: molecular-biology
+  date: [2016, 2019]
+  status: achieved
+  tier: 3
+  summary: >-
+    CRISPR tools that rewrite DNA letters without cutting both strands: base
+    editors (2016) swap one base for another, and prime editors (2019) write
+    short insertions, deletions and all twelve kinds of point change. Most
+    disease-causing variants are within their reach.
+  requires: [crispr-cas9]
+  efforts:
+    - who: Alexis Komor, David Liu (Broad Institute)
+      where: USA
+      when: 2016
+      outcome: achieved
+    - who: Andrew Anzalone, David Liu (Broad Institute)
+      where: USA
+      when: 2019
+      outcome: achieved
+      note: Prime editing; the first patients were treated by Prime Medicine in 2024 to 2025.
+  sources:
+    - title: "Komor et al., Nature 533:420 (2016)"
+      url: https://doi.org/10.1038/nature17946
+    - title: "Anzalone et al., Nature 576:149 (2019)"
+      url: https://doi.org/10.1038/s41586-019-1711-4
+
+- id: crispr-therapy-approved
+  name: First approved CRISPR therapy
+  kind: technique
+  fields: [medicine, biology]
+  track: genetic-medicine
+  date: 2023
+  status: achieved
+  tier: 2
+  summary: >-
+    Casgevy edits a patient's own blood stem cells outside the body to switch
+    fetal hemoglobin back on, curing most patients' sickle cell crises. The
+    UK approved it in November 2023 and the FDA in December 2023.
+  requires: [crispr-cas9, gene-therapy, randomized-controlled-trial]
+  efforts:
+    - who: Vertex Pharmaceuticals and CRISPR Therapeutics
+      where: USA, Switzerland
+      when: [2019, 2023]
+      outcome: achieved
+      note: Treatment needs chemotherapy conditioning and costs about $2 million in the US.
+  sources:
+    - title: "FDA approves first gene therapies to treat sickle cell disease (December 2023)"
+      url: https://www.fda.gov/news-events/press-announcements/fda-approves-first-gene-therapies-treat-patients-sickle-cell-disease
+    - title: "Frangoul et al., NEJM 384:252 (2021)"
+      url: https://doi.org/10.1056/NEJMoa2031054
+
+- id: in-vivo-gene-editing
+  name: In vivo gene editing approved
+  kind: technique
+  fields: [medicine, biology]
+  track: genetic-medicine
+  date: { window: [2027, 2029], likely: 2027 }
+  status: ongoing
+  tier: 2
+  criterion: >-
+    The FDA or EMA approves a gene-editing therapy delivered directly into
+    the body (not cells edited outside it), after a randomized phase 3 trial.
+  summary: >-
+    Editing genes inside the body with a single infusion, usually lipid
+    nanoparticles that carry the editor to the liver. Trials have knocked
+    out disease genes for years at a time, and a personalized base editor
+    treated a baby with a rare metabolic disease in 2025.
+  requires: [crispr-cas9, gene-therapy, randomized-controlled-trial]
+  helped_by: [base-editing, modified-nucleoside-mrna]
+  efforts:
+    - who: Intellia Therapeutics (lonvo-z, NTLA-2002, hereditary angioedema; nex-z, NTLA-2001, ATTR amyloidosis)
+      where: USA
+      when: [2021, 2026]
+      outcome: ongoing
+      note: First in vivo CRISPR in humans (2021). Lonvo-z cut attacks 87 percent in phase 3; FDA accepted its application with a decision date of March 10, 2027. Nex-z was on clinical hold from October 2025 to early 2026 after a patient's death.
+    - who: Verve Therapeutics (acquired by Eli Lilly), VERVE-102 base editor for PCSK9
+      where: USA
+      when: [2022, 2026]
+      outcome: ongoing
+      note: One dose cut LDL cholesterol by up to 62 percent for up to 18 months in phase 1b (2026).
+    - who: Kiran Musunuru, Rebecca Ahrens-Nicklas (CHOP and Penn)
+      where: USA
+      when: 2025
+      outcome: achieved
+      note: A base editor designed for one baby (KJ Muldoon) with CPS1 deficiency, made and given within months.
+  forecast:
+    note: >-
+      Lonvo-z has a priority review decision date of March 10, 2027, with no
+      advisory committee planned. Approval on that date is likely but not
+      certain given the nex-z safety event, so 2027 with a window to 2029.
+    sources:
+      - title: "Intellia: lonvo-z application accepted with priority review (September 2026)"
+        url: https://www.sec.gov/Archives/edgar/data/0001652130/000119312526385194/ntla-ex99_1.htm
+      - title: "Gillmore et al., NEJM 385:493 (2021)"
+        url: https://doi.org/10.1056/NEJMoa2107454
+  sources:
+    - title: "Musunuru et al., NEJM 392:2235 (2025)"
+      url: https://doi.org/10.1056/NEJMoa2504747
+    - title: "Lilly: VERVE-102 phase 1b results (BioSpace, 2026)"
+      url: https://www.biospace.com/press-releases/a-single-dose-of-lillys-pcsk9-base-editor-verve-102-reduced-pcsk9-by-up-to-88-and-ldl-c-by-up-to-62-with-durable-effects-supporting-its-potential-as-a-one-time-treatment-for-hypercholesterolemia
+
+# ===========================================================================
+# The brain: connectomes and emulation (biology, track life-science)
+# ===========================================================================
+
+- id: worm-connectome
+  name: First complete connectome (C. elegans)
+  kind: discovery
+  fields: [biology]
+  track: life-science
+  date: 1986
+  status: achieved
+  tier: 3
+  summary: >-
+    The full wiring diagram of the nematode worm, 302 neurons and about 7,000
+    synapses, traced by hand from serial electron micrographs over more than
+    a decade. Forty years later the worm still has not been convincingly
+    simulated from it.
+  requires: [electron-microscope]
+  efforts:
+    - who: John White, Eileen Southgate, Nichol Thomson, Sydney Brenner (MRC Laboratory of Molecular Biology)
+      where: Cambridge, UK
+      when: [1970, 1986]
+      outcome: achieved
+  sources:
+    - title: "White et al., Phil. Trans. R. Soc. B 314:1 (1986)"
+      url: https://doi.org/10.1098/rstb.1986.0056
+
+- id: expansion-microscopy
+  name: Expansion microscopy
+  kind: technique
+  fields: [biology, physics]
+  track: life-science
+  date: 2015
+  status: achieved
+  tier: 3
+  summary: >-
+    Tissue is embedded in a swellable gel and physically enlarged about
+    fourfold or more, so an ordinary light microscope resolves detail near
+    70 nanometers. With protein labels it is a candidate route to cheaper
+    connectomes that also record which molecules sit at each synapse.
+  requires: [microscope]
+  efforts:
+    - who: Fei Chen, Paul Tillberg, Edward Boyden (MIT)
+      where: USA
+      when: 2015
+      outcome: achieved
+    - who: E11 Bio (PRISM, protein barcodes plus expansion)
+      where: USA
+      when: [2023, 2026]
+      outcome: ongoing
+      note: Aims to cut the cost of a mouse connectome about 100-fold compared with electron microscopy.
+  sources:
+    - title: "Chen, Tillberg and Boyden, Science 347:543 (2015)"
+      url: https://doi.org/10.1126/science.1260088
+    - title: "MIT News: a brief history of expansion microscopy (2025)"
+      url: https://news.mit.edu/2025/brief-history-expansion-microscopy-0423
+
+- id: fly-connectome
+  name: Whole fly brain connectome
+  kind: discovery
+  fields: [biology, computing]
+  track: life-science
+  date: 2024
+  status: achieved
+  tier: 2
+  summary: >-
+    The complete wiring of an adult fruit fly brain: about 139,000 neurons
+    and 50 million synapses, reconstructed from electron microscopy by AI
+    segmentation and years of human proofreading. A whole male central
+    nervous system (about 167,000 neurons) followed in 2025 to 2026.
+  requires: [electron-microscope, deep-learning, worm-connectome]
+  efforts:
+    - who: FlyWire Consortium (Mala Murthy, Sebastian Seung, Princeton, and many labs)
+      where: USA and international
+      when: [2017, 2024]
+      outcome: achieved
+    - who: Janelia FlyEM, University of Cambridge and Google
+      where: USA, UK
+      when: [2018, 2026]
+      outcome: achieved
+      note: The male central nervous system, brain plus nerve cord.
+  sources:
+    - title: "Dorkenwald et al., Nature 634:124 (2024)"
+      url: https://doi.org/10.1038/s41586-024-07558-y
+    - title: "Janelia FlyEM: male CNS connectome"
+      url: https://www.janelia.org/project-team/flyem/male-cns-connectome
+
+- id: mouse-cortex-connectome
+  name: Cubic-millimeter mammal connectomes
+  kind: discovery
+  fields: [biology, computing]
+  track: life-science
+  date: [2024, 2025]
+  status: achieved
+  tier: 3
+  summary: >-
+    One cubic millimeter of mammalian cortex mapped at synapse resolution:
+    a fragment of human temporal cortex (2024, 1.4 petabytes) and mouse
+    visual cortex with matched recordings of activity (2025, about 200,000
+    cells and 524 million synapses). A whole mouse brain is about 500 times
+    larger.
+  requires: [fly-connectome]
+  efforts:
+    - who: Jeff Lichtman (Harvard) and Viren Jain (Google), H01
+      where: USA
+      when: 2024
+      outcome: achieved
+    - who: MICrONS Consortium (Allen Institute, Princeton, Baylor; IARPA-funded)
+      where: USA
+      when: [2016, 2025]
+      outcome: achieved
+      note: Over 150 scientists for more than seven years.
+  sources:
+    - title: "Shapson-Coe et al., Science 384 (2024)"
+      url: https://doi.org/10.1126/science.adk4858
+    - title: "MICrONS Consortium, Nature 640:435 (2025)"
+      url: https://doi.org/10.1038/s41586-025-08790-w
+
+- id: whole-mouse-connectome
+  name: Whole mouse brain connectome
+  kind: discovery
+  fields: [biology, computing]
+  track: life-science
+  date: { window: [2030, 2045], likely: 2036 }
+  status: ongoing
+  tier: 2
+  criterion: >-
+    A synapse-resolution, proofread wiring diagram of an entire adult mouse
+    brain (about 70 million neurons), publicly released.
+  summary: >-
+    The first complete connectome of a mammal brain, about 1,000 times the
+    fly's. Imaging is feasible; the bottleneck is proofreading the
+    reconstruction, estimated at 100,000 person-years with today's tools.
+  requires: [mouse-cortex-connectome]
+  routes:
+    - name: Electron microscopy
+      requires: [electron-microscope]
+      note: The proven method, but costs estimated at $7 to 21 billion, mostly proofreading, unless AI removes it.
+    - name: Expansion microscopy
+      requires: [expansion-microscopy]
+      note: Light microscopy with protein barcodes to trace neurons; cheaper and adds molecular labels, but not yet shown at scale.
+  helped_by: [deep-learning, ai-agents]
+  efforts:
+    - who: NIH BRAIN CONNECTS
+      where: USA
+      when: [2023, 2028]
+      outcome: ongoing
+      note: $150 million over five years; its flagship maps 10 cubic millimeters of mouse hippocampus, about a fiftieth of the brain.
+    - who: E11 Bio
+      where: USA
+      when: [2023, 2026]
+      outcome: ongoing
+      note: Targets a whole mouse connectome within about five years of 2024 by expansion microscopy.
+  forecast:
+    note: >-
+      Wellcome's 2023 Scaling Connectomics report set a whole mouse brain as
+      a 10 to 15 year goal, which gives 2033 to 2038. E11 Bio's roadmap is
+      faster (about 2029) but depends on an unproven method. Each step so far
+      (fly 2024, cubic millimeter 2025) took seven or more years from start.
+      I put 2036.
+    sources:
+      - title: "Wellcome: Scaling connectomics (2023)"
+        url: https://wellcome.org/insights/reports/scaling-connectomics
+      - title: "E11 Bio: roadmap (2024)"
+        url: https://e11.bio/blog/roadmap
+  sources:
+    - title: "Wellcome: Scaling connectomics (2023)"
+      url: https://wellcome.org/insights/reports/scaling-connectomics
+
+- id: animal-brain-emulation
+  name: A whole small-animal brain emulated
+  kind: technique
+  fields: [biology, computing]
+  track: life-science
+  date: { window: [2028, 2042], likely: 2033 }
+  status: ongoing
+  tier: 2
+  criterion: >-
+    A simulation built from an animal's connectome plus measured neuron and
+    synapse properties (worm, larval zebrafish or fly), coupled to a body,
+    reproduces most of the animal's natural behaviors and its recorded
+    neural activity without being trained to do so, confirmed in a
+    peer-reviewed study.
+  summary: >-
+    The test case for brain emulation: does a wiring diagram plus physiology
+    reproduce what a real nervous system does? Simple fly-brain models
+    already predict some circuits, but no organism, not even the
+    302-neuron worm, has been emulated in full.
+  requires: [fly-connectome]
+  helped_by: [gpu, deep-learning]
+  efforts:
+    - who: Philip Shiu, Kristin Scott and colleagues (UC Berkeley)
+      where: USA
+      when: 2024
+      outcome: achieved
+      note: A simple spiking model of the whole fly brain predicted feeding and grooming circuits, confirmed with optogenetics.
+    - who: Lei Ma and colleagues (BAAIWorm, Beijing Academy of AI and Peking University)
+      where: China
+      when: 2024
+      outcome: ongoing
+      note: A closed-loop model of worm brain, body and environment that reproduces steering toward food.
+    - who: Eon Systems
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Claimed in March 2026 a fly-brain model in a simulated body that walks, grooms and feeds; not peer reviewed.
+    - who: OpenWorm
+      where: International
+      when: [2011, 2026]
+      outcome: ongoing
+  forecast:
+    note: >-
+      The 2025 State of Brain Emulation report distinguishes simulations that
+      reproduce outputs from emulations that recreate internal dynamics, and
+      finds no organism emulated yet; fewer than 500 people work on it. The
+      limiting data are whole-brain activity recordings and synapse
+      properties, now being collected for the worm, larval zebrafish and fly.
+      I put a convincing fly or worm emulation around 2033.
+    sources:
+      - title: "Zanichelli et al., State of Brain Emulation Report 2025 (arXiv)"
+        url: https://arxiv.org/abs/2510.15745
+      - title: "Shiu et al., Nature 634:210 (2024)"
+        url: https://doi.org/10.1038/s41586-024-07763-9
+  sources:
+    - title: "Shiu et al., Nature 634:210 (2024)"
+      url: https://doi.org/10.1038/s41586-024-07763-9
+    - title: "Zhao et al., BAAIWorm, Nature Computational Science 4:978 (2024)"
+      url: https://doi.org/10.1038/s43588-024-00738-w
+    - title: "The Decoder: startup claims full brain emulation of a fruit fly (2026)"
+      url: https://the-decoder.com/startup-claims-first-full-brain-emulation-of-a-fruit-fly-in-a-simulated-body/
+
+- id: mouse-brain-emulation
+  name: A mouse brain emulated
+  kind: technique
+  fields: [biology, computing]
+  track: life-science
+  date: { window: [2040, 2075], likely: 2052 }
+  status: speculative
+  tier: 3
+  criterion: >-
+    An emulation built from one mouse's connectome and molecular data
+    reproduces that mouse's learned behaviors (for example a trained maze or
+    task) and its recorded neural activity better than any generic model.
+  summary: >-
+    The first emulation of a mammal brain, and of an individual's memories
+    rather than a species' wiring.
+  requires: [whole-mouse-connectome, animal-brain-emulation]
+  helped_by: [agi]
+  forecast:
+    note: >-
+      Needs a mouse connectome (about 2036 here) plus a way to read synapse
+      strengths and molecular state from the same brain, which no method yet
+      does, plus the fly-to-mouse jump in simulation (about 500 times more
+      neurons). I put it in the early 2050s.
+    sources:
+      - title: "Zanichelli et al., State of Brain Emulation Report 2025 (arXiv)"
+        url: https://arxiv.org/abs/2510.15745
+  sources:
+    - title: "Zanichelli et al., State of Brain Emulation Report 2025 (arXiv)"
+      url: https://arxiv.org/abs/2510.15745
+
+- id: human-connectome
+  name: Whole human brain connectome
+  kind: discovery
+  fields: [biology, computing]
+  track: life-science
+  date: { window: [2045, 2100], likely: 2062 }
+  status: speculative
+  tier: 3
+  criterion: >-
+    A synapse-resolution wiring diagram of an entire human brain (about 86
+    billion neurons and 100 trillion or more synapses), reconstructed and
+    proofread to the accuracy of the fly connectome.
+  summary: >-
+    About 1,000 times the volume of a mouse brain and a zettabyte-scale
+    dataset by electron microscopy. The 2024 cubic millimeter of human
+    cortex was about a millionth of it.
+  requires: [whole-mouse-connectome]
+  forecast:
+    note: >-
+      Mapped volume grew from a fly brain to a cubic millimeter in about a
+      year (2024 to 2025), and a mouse brain is expected in the 2030s. If the
+      roughly 1,000-fold step from mouse to human takes two to three decades
+      as earlier steps did, a human brain arrives in the 2060s.
+    sources:
+      - title: "Wellcome: Scaling connectomics (2023)"
+        url: https://wellcome.org/insights/reports/scaling-connectomics
+      - title: "Shapson-Coe et al., Science 384 (2024)"
+        url: https://doi.org/10.1126/science.adk4858
+  sources:
+    - title: "Shapson-Coe et al., Science 384 (2024)"
+      url: https://doi.org/10.1126/science.adk4858
+
+# ===========================================================================
+# Brain-computer interfaces (electronics, track neurotech)
+# ===========================================================================
+
+- id: speech-neuroprosthesis
+  name: Speech neuroprosthesis
+  kind: device
+  fields: [electronics, medicine]
+  track: neurotech
+  date: 2023
+  status: achieved
+  tier: 3
+  summary: >-
+    Implants that decode attempted speech in people who cannot speak: 62 to
+    78 words a minute in 2023, 97 percent accuracy over months in 2024, and
+    near-instant synthesized voice in 2025. Natural conversation runs about
+    150 words a minute.
+  requires: [brain-computer-interfaces, deep-learning]
+  efforts:
+    - who: Francis Willett, Jaimie Henderson, Krishna Shenoy (Stanford, BrainGate)
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: 62 words a minute, 24 percent word error on a large vocabulary.
+    - who: Edward Chang and colleagues (UCSF)
+      where: USA
+      when: [2023, 2025]
+      outcome: achieved
+      note: 78 words a minute with an avatar (2023); streaming voice in 80 millisecond steps (2025).
+    - who: Nicholas Card, Sergey Stavisky, David Brandman (UC Davis)
+      where: USA
+      when: [2024, 2025]
+      outcome: achieved
+      note: 97.5 percent accuracy over 8.4 months in a man with ALS.
+  sources:
+    - title: "Willett et al., Nature 620:1031 (2023)"
+      url: https://doi.org/10.1038/s41586-023-06377-x
+    - title: "Metzger et al., Nature 620:1037 (2023)"
+      url: https://doi.org/10.1038/s41586-023-06443-4
+    - title: "Card et al., NEJM 391:609 (2024)"
+      url: https://doi.org/10.1056/NEJMoa2314132
+    - title: "Littlejohn et al., Nature Neuroscience 28:902 (2025)"
+      url: https://doi.org/10.1038/s41593-025-01905-6
+
+- id: bci-approved
+  name: Implanted BCI approved for paralysis
+  kind: device
+  fields: [electronics, medicine]
+  track: neurotech
+  date: { window: [2028, 2033], likely: 2030 }
+  status: ongoing
+  tier: 2
+  criterion: >-
+    The FDA (or EU notified bodies) grants market approval (PMA or De Novo,
+    or a CE mark) to an implanted brain-computer interface that lets people
+    with paralysis control a computer or communicate, for permanent home
+    use.
+  summary: >-
+    The point where implanted interfaces become a medical product rather
+    than a research trial. China approved a low-channel implant (Neuracle's
+    NEO, eight electrodes on the brain's surface) in March 2026; no
+    high-bandwidth device is approved in the US or Europe.
+  requires: [brain-computer-interfaces, randomized-controlled-trial]
+  helped_by: [speech-neuroprosthesis]
+  efforts:
+    - who: Synchron (Stentrode, delivered through a blood vessel)
+      where: USA
+      when: [2019, 2026]
+      outcome: ongoing
+      note: Six patients in its US early feasibility study with no device-related serious adverse events at 12 months; a $200 million round in 2025 funds a pivotal trial, still being prepared in mid 2026.
+    - who: Neuralink
+      where: USA, Canada, UK, UAE
+      when: [2024, 2026]
+      outcome: ongoing
+      note: 21 participants by January 2026 by its own count, more since; a speech trial started in late 2025.
+    - who: Paradromics (Connexus)
+      where: USA
+      when: [2025, 2026]
+      outcome: ongoing
+      note: FDA approved its trial in November 2025; first long-term implant June 2026 at the University of Michigan.
+    - who: Neuracle (NEO)
+      where: China
+      when: 2026
+      outcome: rival
+      note: Approved by China's NMPA in March 2026 for spinal cord injury, described as the world's first approved invasive BCI.
+  forecast:
+    note: >-
+      No company had started a pivotal trial by mid 2026. Pivotal device
+      trials typically run two to three years, with a year of review, which
+      points to about 2029 to 2031. One analysis expects Synchron to file
+      around 2027 or later. I put the first US approval in 2030.
+    sources:
+      - title: "TechTimes: Synchron targets 2026 pivotal trial (June 2026)"
+        url: https://www.techtimes.com/articles/317929/20260606/synchron-brain-implant-targets-2026-pivotal-trial-first-fda-approved-bci.htm
+      - title: "MIT Technology Review: China approves a brain chip (June 2026)"
+        url: https://www.technologyreview.com/2026/06/01/1138133/china-world-first-brain-chip/
+  sources:
+    - title: "MIT Technology Review: China approves a brain chip (June 2026)"
+      url: https://www.technologyreview.com/2026/06/01/1138133/china-world-first-brain-chip/
+    - title: "University of Michigan: first human Paradromics implant (2026)"
+      url: https://www.uofmhealth.org/news-release/university-michigan-implants-first-human-paradromics-wireless-brain-computer-interface-designed
+
+# ===========================================================================
+# Nanotechnology (materials, track nanotech)
+# ===========================================================================
+
+- id: single-atom-manipulation
+  name: Positioning single atoms
+  kind: technique
+  fields: [materials, physics]
+  track: nanotech
+  date: 1989
+  status: achieved
+  tier: 3
+  summary: >-
+    The tip of a scanning tunneling microscope used to drag individual atoms
+    into place: 35 xenon atoms spelling "IBM" on nickel at 4 kelvin. It
+    showed that matter can be arranged atom by atom, though only slowly, in
+    ultra-high vacuum and near absolute zero.
+  requires: [scanning-tunneling-microscope]
+  efforts:
+    - who: Donald Eigler, Erhard Schweizer (IBM Almaden)
+      where: USA
+      when: 1989
+      outcome: achieved
+      note: Published in Nature in April 1990.
+    - who: Saw-Wai Hla (Ohio University and Argonne)
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: X-ray characterization of a single atom, extending what can be measured one atom at a time.
+  sources:
+    - title: "Eigler and Schweizer, Nature 344:524 (1990)"
+      url: https://doi.org/10.1038/344524a0
+    - title: "Ajayi et al., Nature 618:69 (2023)"
+      url: https://doi.org/10.1038/s41586-023-06011-w
+
+- id: tip-mechanosynthesis
+  name: Covalent chemistry with a microscope tip
+  kind: technique
+  fields: [materials, physics, chemistry]
+  track: nanotech
+  date: [2003, 2012]
+  status: achieved
+  tier: 3
+  summary: >-
+    Making and breaking covalent bonds at chosen sites with a probe tip:
+    pulling single silicon atoms out of a surface and putting them back
+    (2003), and placing single phosphorus atoms in silicon with
+    atomic-lattice accuracy by hydrogen-resist lithography, used to build a
+    single-atom transistor (2012) and silicon qubit arrays.
+  requires: [single-atom-manipulation]
+  efforts:
+    - who: Noriaki Oyabu, Oscar Custance, Seizo Morita (Osaka University)
+      where: Japan
+      when: 2003
+      outcome: achieved
+      note: Mechanical vertical manipulation of silicon atoms with an atomic force microscope.
+    - who: Michelle Simmons (UNSW; Silicon Quantum Computing)
+      where: Australia
+      when: [2012, 2026]
+      outcome: ongoing
+      note: Single-atom transistor (2012); later arrays of thousands of atom-placed qubit registers.
+    - who: Zyvex Labs (hydrogen depassivation lithography)
+      where: USA
+      when: [2008, 2026]
+      outcome: ongoing
+  sources:
+    - title: "Oyabu et al., Physical Review Letters 90:176102 (2003)"
+      url: https://doi.org/10.1103/PhysRevLett.90.176102
+    - title: "Fuechsle et al., Nature Nanotechnology 7:242 (2012)"
+      url: https://doi.org/10.1038/nnano.2012.21
+
+- id: positional-assembly-3d
+  name: Tip-built three-dimensional covalent structures
+  kind: technique
+  fields: [materials, chemistry, physics]
+  track: nanotech
+  date: { window: [2035, 2070], likely: 2045 }
+  status: speculative
+  tier: 3
+  criterion: >-
+    A peer-reviewed demonstration of a probe tip (or array of tips) adding
+    atoms or small molecules one at a time to a growing covalent 3D
+    structure of at least 1,000 atoms, with per-step yield above 99 percent,
+    following a programmed blueprint.
+  summary: >-
+    Drexler's "mechanosynthesis": building solid objects such as diamond
+    lattices by moving reactive fragments into place with tools. Designs and
+    simulations exist (Freitas and Merkle), but nobody has built a
+    three-dimensional covalent structure this way.
+  requires: [tip-mechanosynthesis]
+  helped_by: [deep-learning]
+  efforts:
+    - who: Robert Freitas, Ralph Merkle; CBN Nano Technologies
+      where: USA, Canada
+      when: [2004, 2026]
+      outcome: ongoing
+      note: Tooltip designs and patents for diamond mechanosynthesis; no experimental build reported.
+    - who: Zyvex Labs DARPA atomically precise manufacturing program
+      where: USA
+      when: [2008, 2018]
+      outcome: abandoned
+      note: Roughly $15 million over five years for tip-based silicon patterning.
+  forecast:
+    note: >-
+      Covalent tip chemistry works for single sites on flat surfaces at
+      cryogenic temperatures; throughput and reliability are many orders of
+      magnitude short of building in 3D. Funding is small. My judgment is
+      that a 1,000-atom demonstration needs two decades of focused work that
+      has barely started, so the mid 2040s, with a long tail.
+    sources:
+      - title: "C&EN: the Drexler and Smalley debate on molecular assemblers (2003)"
+        url: https://pubsapp.acs.org/cen/coverstory/8148/8148counterpoint.html
+  sources:
+    - title: "C&EN: the Drexler and Smalley debate on molecular assemblers (2003)"
+      url: https://pubsapp.acs.org/cen/coverstory/8148/8148counterpoint.html
+
+- id: dna-origami
+  name: DNA origami
+  kind: technique
+  fields: [materials, biology, chemistry]
+  track: nanotech
+  date: 2006
+  status: achieved
+  tier: 2
+  summary: >-
+    A long single DNA strand folded into almost any 2D or 3D shape about 100
+    nanometers across by a few hundred short "staple" strands, with features
+    every 6 nanometers. By 2017 assemblies reached gigadaltons; they are used
+    as scaffolds to place molecules, as nanopores and as drug carriers in
+    animal studies.
+  requires: [recombinant-dna, dna-double-helix]
+  efforts:
+    - who: Nadrian Seeman (New York University)
+      where: USA
+      when: 1982
+      outcome: achieved
+      note: Proposed building with branched DNA junctions, founding structural DNA nanotechnology.
+    - who: Paul Rothemund (Caltech)
+      where: USA
+      when: 2006
+      outcome: achieved
+    - who: Hendrik Dietz (TU Munich); William Shih, Peng Yin (Harvard Wyss Institute)
+      where: Germany, USA
+      when: [2009, 2017]
+      outcome: achieved
+      note: 3D origami, DNA bricks and gigadalton-scale assemblies. No DNA nanostructure medicine has reached a human trial as of 2026.
+  sources:
+    - title: "Rothemund, Nature 440:297 (2006)"
+      url: https://doi.org/10.1038/nature04586
+    - title: "Wagenbauer, Sigl and Dietz, Nature 552:78 (2017)"
+      url: https://doi.org/10.1038/nature24651
+
+- id: de-novo-protein-design
+  name: De novo protein design
+  kind: technique
+  fields: [biology, computing, chemistry]
+  track: synthetic-biology
+  date: [2003, 2023]
+  status: achieved
+  tier: 2
+  summary: >-
+    Designing proteins that nature never made, from scratch: a new fold
+    (Top7, 2003), self-assembling nanoparticles in an approved vaccine
+    (2022), and since RFdiffusion (2023) binders, enzymes and antivenoms
+    designed by generative AI in days. It earned David Baker half of the
+    2024 Nobel Prize in Chemistry.
+  requires: [protein-crystallography, recombinant-dna]
+  helped_by: [protein-structure-prediction, deep-learning, diffusion-models]
+  efforts:
+    - who: Brian Kuhlman, David Baker (University of Washington)
+      where: USA
+      when: 2003
+      outcome: achieved
+      note: Top7, a protein fold not seen in nature.
+    - who: UW Institute for Protein Design and SK bioscience (SKYCovione)
+      where: USA, South Korea
+      when: 2022
+      outcome: achieved
+      note: A COVID-19 vaccine built on a designed nanoparticle, approved in Korea in June 2022.
+    - who: Joseph Watson, David Baker and colleagues (RFdiffusion)
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: Followed by designed serine hydrolase enzymes and snake-toxin binders in 2025.
+  sources:
+    - title: "Kuhlman et al., Science 302:1364 (2003)"
+      url: https://doi.org/10.1126/science.1089427
+    - title: "Watson et al., Nature 620:1089 (2023)"
+      url: https://doi.org/10.1038/s41586-023-06415-8
+    - title: "Nobel Prize in Chemistry 2024"
+      url: https://www.nobelprize.org/prizes/chemistry/2024/summary/
+
+- id: artificial-molecular-machines
+  name: Artificial molecular machines
+  kind: technique
+  fields: [materials, chemistry]
+  track: nanotech
+  date: [1991, 2016]
+  status: achieved
+  tier: 3
+  summary: >-
+    Synthetic molecules with parts that move on command: shuttles (1991),
+    light-driven rotary motors (1999), a molecular car. The 2016 Nobel Prize
+    went to Jean-Pierre Sauvage, Fraser Stoddart and Ben Feringa.
+  requires: [chemical-structure-theory]
+  efforts:
+    - who: Fraser Stoddart (molecular shuttle, 1991); Ben Feringa (rotary motor, 1999); Jean-Pierre Sauvage (catenanes, 1983)
+      where: UK and USA, Netherlands, France
+      when: [1983, 2016]
+      outcome: achieved
+  sources:
+    - title: "Nobel Prize in Chemistry 2016"
+      url: https://www.nobelprize.org/prizes/chemistry/2016/summary/
+    - title: "Koumura et al., Nature 401:152 (1999)"
+      url: https://doi.org/10.1038/43646
+
+- id: molecule-building-machines
+  name: Machines that build molecules
+  kind: technique
+  fields: [materials, chemistry]
+  track: nanotech
+  date: [2013, 2017]
+  status: achieved
+  tier: 3
+  summary: >-
+    Synthetic machines that make a specific product step by step: a rotaxane
+    that walks along a track and joins amino acids in order, a crude
+    ribosome (2013), and a programmable molecular arm that builds any of
+    four stereoisomers (2017). They are slow (hours per bond), single-use
+    and make only short products.
+  requires: [artificial-molecular-machines]
+  efforts:
+    - who: David Leigh (University of Manchester)
+      where: UK
+      when: [2013, 2017]
+      outcome: achieved
+  sources:
+    - title: "Lewandowski et al., Science 339:189 (2013)"
+      url: https://doi.org/10.1126/science.1229753
+    - title: "Kassem et al., Nature 549:374 (2017)"
+      url: https://doi.org/10.1038/nature23677
+
+- id: programmable-molecular-assembler
+  name: A programmable molecular assembler
+  kind: device
+  fields: [materials, chemistry, biology]
+  track: nanotech
+  date: { window: [2035, 2075], likely: 2048 }
+  status: speculative
+  tier: 2
+  criterion: >-
+    A designed (not evolved) molecular machine that reads a replaceable
+    instruction sequence and builds, by positioned covalent steps, products
+    of at least 20 steps from a set of at least five building blocks,
+    including non-biological ones, without being consumed, at a rate of at
+    least one step per minute.
+  summary: >-
+    A general-purpose builder at the molecular scale, something like a
+    ribosome that can make materials other than proteins. It could come from
+    designed proteins and DNA frameworks, from synthetic chemistry, or from
+    a mix.
+  requires: [molecule-building-machines]
+  routes:
+    - name: Designed biology
+      requires: [de-novo-protein-design, dna-origami]
+      note: Use designed proteins and DNA frameworks as the tooling, the path most funding now follows.
+    - name: Synthetic chemistry
+      requires: [artificial-molecular-machines]
+      note: Extend Leigh-style small-molecule machines into faster, reusable programmable synthesizers.
+  helped_by: [protein-structure-prediction, deep-learning]
+  efforts:
+    - who: UK ARIA Universal Fabricators programme
+      where: UK
+      when: 2026
+      outcome: ongoing
+      note: About £50 million to get engineered proteins to template the assembly of inorganic and composite materials.
+    - who: David Leigh (Manchester); David Baker (UW Institute for Protein Design)
+      where: UK, USA
+      when: [2013, 2026]
+      outcome: ongoing
+  forecast:
+    note: >-
+      Leigh predicted molecular factories within 10 to 20 years in 2017, and
+      no step change is reported since. AI protein design is moving faster
+      than synthetic chemistry, and ARIA is funding the protein route. My
+      judgment is the late 2040s.
+    sources:
+      - title: "University of Manchester: world's first molecular robot capable of building molecules (2017)"
+        url: https://www.manchester.ac.uk/about/news/scientists-create-worlds-first-molecular-robot-capable-of-building-molecules/
+      - title: "ARIA: Universal Fabricators programme thesis"
+        url: https://app-aria-cm-prod.azurewebsites.net/media/wluhzkuw/universal-fabricators-thesis.pdf
+  sources:
+    - title: "ARIA: opportunity spaces"
+      url: https://www.aria.org.uk/opportunity-spaces/
+
+# ===========================================================================
+# Synthetic biology (biology, track synthetic-biology)
+# ===========================================================================
+
+- id: engineered-microbe-manufacturing
+  name: Engineered microbes as chemical factories
+  kind: technique
+  fields: [biology, chemistry]
+  track: synthetic-biology
+  date: 2013
+  status: achieved
+  tier: 3
+  summary: >-
+    Yeast and bacteria given whole new metabolic pathways to make drugs and
+    chemicals: semi-synthetic artemisinin at industrial scale (2013), opiate
+    precursors from sugar (2015). Biology can make the molecule; beating the
+    incumbent on cost is harder, and Sanofi stopped artemisinin production
+    by 2015.
+  requires: [recombinant-dna]
+  helped_by: [crispr-cas9]
+  efforts:
+    - who: Jay Keasling (UC Berkeley), Amyris and Sanofi
+      where: USA, Italy
+      when: [2003, 2015]
+      outcome: achieved
+      note: Production began in 2013, targeting 35 tonnes a year; none was made in 2015 as plant-derived prices fell.
+    - who: Christina Smolke (Stanford; Antheia)
+      where: USA
+      when: [2015, 2024]
+      outcome: achieved
+      note: A yeast pathway of more than 20 enzymes (2015); Antheia's first commercial thebaine delivery from 116,000 liter fermentations in 2024.
+  sources:
+    - title: "Paddon et al., Nature 496:528 (2013)"
+      url: https://doi.org/10.1038/nature12051
+    - title: "Galanie et al., Science 349:1095 (2015)"
+      url: https://doi.org/10.1126/science.aac9373
+    - title: "Antheia: first commercial delivery of thebaine (2024)"
+      url: https://prnewswire.com/news-releases/antheia-marks-corporate-milestone-with-first-commercial-delivery-of-thebaine-302289197.html
+
+- id: minimal-cell
+  name: Minimal synthetic cell
+  kind: technique
+  fields: [biology]
+  track: synthetic-biology
+  date: 2016
+  status: achieved
+  tier: 3
+  summary: >-
+    JCVI-syn3.0, a bacterium running on a designed genome cut to 473 genes,
+    fewer than any free-living organism; the job of about a third of them is
+    still unknown. Its successor syn3A (2019) restored normal division.
+  requires: [synthetic-bacterial-genome]
+  efforts:
+    - who: Clyde Hutchison, John Glass, Craig Venter and colleagues (J. Craig Venter Institute)
+      where: USA
+      when: 2016
+      outcome: achieved
+  sources:
+    - title: "Hutchison et al., Science 351 (2016)"
+      url: https://doi.org/10.1126/science.aad6253
+    - title: "Breuer et al., eLife 8:e36842 (2019)"
+      url: https://elifesciences.org/articles/36842
+
+- id: recoded-genome
+  name: Recoded genomes
+  kind: technique
+  fields: [biology, chemistry]
+  track: synthetic-biology
+  date: 2019
+  status: achieved
+  tier: 3
+  summary: >-
+    E. coli with its 4-megabase genome rewritten to use fewer codons: 61
+    instead of 64 (2019), then 57 (2025), freeing codons to encode
+    non-natural amino acids and, in principle, making cells resistant to
+    viruses.
+  requires: [synthetic-bacterial-genome]
+  efforts:
+    - who: Julius Fredens, Jason Chin and colleagues (MRC Laboratory of Molecular Biology)
+      where: Cambridge, UK
+      when: [2019, 2025]
+      outcome: achieved
+      note: Syn57 made over 101,000 codon changes across the genome.
+  sources:
+    - title: "Fredens et al., Nature 569:514 (2019)"
+      url: https://doi.org/10.1038/s41586-019-1192-5
+    - title: "Robertson et al., Science 390 (2025)"
+      url: https://doi.org/10.1126/science.ady4368
+
+- id: synthetic-yeast-genome
+  name: Synthetic yeast genome (Sc2.0)
+  kind: technique
+  fields: [biology, chemistry]
+  track: synthetic-biology
+  date: [2014, 2025]
+  status: achieved
+  tier: 3
+  summary: >-
+    All 16 chromosomes of baker's yeast, about 12 megabases, redesigned and
+    built from synthetic DNA by an international consortium, the first
+    synthetic genome of a cell with a nucleus. The last chromosome was
+    finished in January 2025; combining them all in one strain was still
+    under way.
+  requires: [synthetic-bacterial-genome]
+  efforts:
+    - who: Sc2.0 consortium (Jef Boeke, NYU, with groups in China, the UK, Australia, Singapore and the USA)
+      where: International
+      when: [2006, 2025]
+      outcome: achieved
+      note: A strain carrying 6.5 synthetic chromosomes was reported in 2023.
+  sources:
+    - title: "Zhao et al., Cell 186:5220 (2023)"
+      url: https://doi.org/10.1016/j.cell.2023.09.025
+    - title: "Lab Online: final chromosome completed in the synthetic yeast genome (2025)"
+      url: https://www.labonline.com.au/content/life-scientist/news/scientists-complete-final-chromosome-in-synthetic-yeast-genome-628368406
+
+- id: synthetic-human-chromosome
+  name: A synthetic human chromosome
+  kind: technique
+  fields: [biology, chemistry]
+  track: synthetic-biology
+  date: { window: [2030, 2040], likely: 2034 }
+  status: ongoing
+  tier: 3
+  criterion: >-
+    A complete human chromosome (at least 50 megabases, about 2 percent of
+    the genome), written from synthetic DNA, replaces its natural
+    counterpart in a human cell line, which then grows normally.
+  summary: >-
+    The proof of concept for writing mammalian genomes, and the target of
+    the UK's Synthetic Human Genome project. It is four times the size of
+    the whole yeast genome and full of repeated sequence.
+  requires: [synthetic-yeast-genome, t2t-complete-genome]
+  helped_by: [recoded-genome, long-read-sequencing]
+  efforts:
+    - who: Synthetic Human Genome Project (SynHG; Jason Chin, Wellcome-funded)
+      where: UK
+      when: [2025, 2030]
+      outcome: ongoing
+      note: £10 million over five years from June 2025, with a 5 to 10 year horizon for a synthetic chromosome.
+  forecast:
+    note: >-
+      SynHG's own horizon is 5 to 10 years from 2025, so 2030 to 2035. Yeast
+      took 2006 to 2025 for 12 megabases, but assembly has sped up since and
+      enzymatic synthesis now delivers 50 kilobase sequence-perfect clones.
+      I put 2034.
+    sources:
+      - title: "Wellcome: new project to pioneer human genome synthesis (2025)"
+        url: https://wellcome.org/news/new-project-pioneer-principles-human-genome-synthesis
+      - title: "Drug Discovery News: Ansa's 50 kb clonal DNA product (2025)"
+        url: https://www.drugdiscoverynews.com/ansa-biotechnologies-redefines-what-s-possible-in-dna-synthesis-with-50-kb-sequence-perfect-clonal-product-16751
+  sources:
+    - title: "Wellcome: new project to pioneer human genome synthesis (2025)"
+      url: https://wellcome.org/news/new-project-pioneer-principles-human-genome-synthesis
+
+# ===========================================================================
+# Agriculture and food
+# ===========================================================================
+
+- id: precision-fermentation
+  name: Precision fermentation of animal proteins
+  kind: technique
+  fields: [agriculture, biology]
+  track: animals-food
+  date: [2019, 2026]
+  status: ongoing
+  tier: 3
+  criterion: >-
+    A fermentation-made animal protein (dairy whey or casein, egg white) is
+    sold at a bulk price at or below the conventional ingredient it
+    replaces, at a scale of at least 10,000 tonnes a year.
+  summary: >-
+    Brewing real milk and egg proteins in microbes rather than taking them
+    from animals. Products are on sale (Perfect Day whey since 2020,
+    Impossible's soy leghemoglobin since 2019), but volumes are small and
+    costs are several times those of the dairy proteins they replace.
+  requires: [engineered-microbe-manufacturing]
+  efforts:
+    - who: Impossible Foods (soy leghemoglobin)
+      where: USA
+      when: [2018, 2019]
+      outcome: achieved
+      note: FDA GRAS letter in 2018 and color additive approval in 2019, which opened retail sales.
+    - who: Perfect Day (beta-lactoglobulin whey)
+      where: USA, India
+      when: [2019, 2026]
+      outcome: ongoing
+      note: Its existing plant is sold out; a joint-venture plant in Gujarat is due to start in late 2026 and ramp up in 2027.
+    - who: Remilk; EVERY Company (egg proteins)
+      where: Israel, USA
+      when: [2025, 2026]
+      outcome: ongoing
+  forecast:
+    note: >-
+      Modeled costs are around 50 euros per kilogram at current scale
+      against under 15 euros for whey hydrolysate, so parity needs roughly
+      another order of magnitude of scale. Plants coming online in 2026 and
+      2027 are the next step; I expect parity for the cheapest protein in
+      the 2030s.
+    sources:
+      - title: "AgFunderNews: Perfect Day's Gujarat facility on track for 2026 (December 2025)"
+        url: https://agfundernews.com/perfect-day-says-gujarat-facility-on-track-for-2026-start-2027-ramp-up-for-recombinant-whey-protein
+  sources:
+    - title: "AgFunderNews: Perfect Day's Gujarat facility on track for 2026 (December 2025)"
+      url: https://agfundernews.com/perfect-day-says-gujarat-facility-on-track-for-2026-start-2027-ramp-up-for-recombinant-whey-protein
+    - title: "The Spoon: Remilk launches recombinant milk in Israel (2025)"
+      url: https://thespoon.tech/remilk-launches-recombinant-dmilk-in-through-joint-venture-eyes-us-launch-in-2026/
+
+- id: cultivated-meat-parity
+  name: Cultivated meat at price parity
+  kind: milestone
+  fields: [agriculture, biology]
+  track: animals-food
+  date: { window: [2038, 2070], likely: 2048 }
+  status: speculative
+  tier: 2
+  criterion: >-
+    A product that is at least 51 percent cultivated animal cells sells
+    wholesale at or below the price of the conventional meat it replaces
+    (about $6 to $10 per kilogram for ground beef), at a production volume
+    of at least 10,000 tonnes a year.
+  summary: >-
+    The point at which growing meat beats raising animals on cost, which is
+    what would decide whether it ever matters. Cultivated meat is approved
+    in several countries but sells in gram quantities at restaurant prices.
+  requires: [cultivated-meat]
+  helped_by: [precision-fermentation, engineered-microbe-manufacturing]
+  efforts:
+    - who: UPSIDE Foods, GOOD Meat, Mosa Meat, Aleph Farms, Vow, Wildtype, Mission Barns
+      where: USA, Netherlands, Israel, Australia, Singapore
+      when: [2020, 2026]
+      outcome: ongoing
+      note: Investment fell to $73.9 million in 2025 from a peak near $1 billion in 2021, and about 140 companies remain; Believer Meats shut down in December 2025.
+  forecast:
+    note: >-
+      David Humbird's 2021 techno-economic analysis puts cell mass at $22 to
+      $51 per kilogram at large scale and argues about $25 is the floor with
+      known bioprocess technology; CE Delft's more optimistic model gives
+      $5.66 per kilogram cost of goods by 2030 for a 10,000 tonne plant.
+      Industry claims of $10 to $15 per kilogram are disputed. With funding
+      down sharply and seven US states banning sales, I put wholesale parity
+      at scale around 2048, and give real weight to it never happening.
+    sources:
+      - title: "Humbird, Scale-up economics for cultured meat, Biotechnology and Bioengineering 118:3239 (2021)"
+        url: https://doi.org/10.1002/bit.27848
+      - title: "GFI: cultivated meat and seafood state of the industry report"
+        url: https://gfi.org/resource/cultivated-meat-and-seafood-state-of-the-industry-report/
+  sources:
+    - title: "Humbird, Biotechnology and Bioengineering 118:3239 (2021)"
+      url: https://doi.org/10.1002/bit.27848
+
+- id: gene-edited-crops
+  name: Gene-edited crops
+  kind: technique
+  fields: [agriculture, biology]
+  track: crops
+  date: [2019, 2026]
+  status: achieved
+  tier: 3
+  summary: >-
+    Crops with small, targeted DNA edits and no foreign genes, which several
+    countries now regulate like conventional breeding rather than as GMOs:
+    high-oleic soybean (US, 2019), a GABA tomato (Japan, 2021), and crops
+    under England's Precision Breeding regulations (in force November 2025)
+    and the EU's new genomic techniques regulation (adopted June 2026).
+  requires: [crispr-cas9, gm-crops]
+  efforts:
+    - who: Calyxt (high-oleic soybean oil)
+      where: USA
+      when: 2019
+      outcome: achieved
+    - who: Sanatech Seed (GABA tomato)
+      where: Japan
+      when: 2021
+      outcome: achieved
+    - who: UK and EU regulators
+      where: UK, EU
+      when: [2023, 2026]
+      outcome: achieved
+      note: England's Precision Breeding Act regulations took effect November 13, 2025; Regulation (EU) 2026/1388 was published June 26, 2026.
+  sources:
+    - title: "The Genetic Technology (Precision Breeding) Regulations 2025 (SI 2025/581)"
+      url: https://www.legislation.gov.uk/uksi/2025/581/made
+    - title: "European Parliament legislative observatory, new genomic techniques (2023/0226(COD))"
+      url: https://oeil.europarl.europa.eu/oeil/en/procedure-file?reference=2023/0226(COD)
+
+- id: improved-photosynthesis
+  name: Engineered photosynthesis in the field
+  kind: technique
+  fields: [agriculture, biology]
+  track: crops
+  date: 2022
+  status: achieved
+  tier: 3
+  summary: >-
+    Changing how plants handle light and photorespiration to raise yield.
+    Speeding a leaf's recovery from sun protection lifted tobacco biomass
+    about 15 percent (2016) and soybean seed yield by up to 33 percent in
+    field trials (2022). No such crop is grown commercially.
+  requires: [gm-crops]
+  efforts:
+    - who: Johannes Kromdijk, Stephen Long and the RIPE project (Illinois, Gates Foundation funded)
+      where: USA, UK
+      when: [2016, 2022]
+      outcome: achieved
+    - who: Amanda De Souza, Stephen Long (RIPE)
+      where: USA
+      when: 2022
+      outcome: achieved
+      note: Soybean yield up to 33 percent higher across five transformation events, with unchanged protein and oil.
+  sources:
+    - title: "Kromdijk et al., Science 354:857 (2016)"
+      url: https://doi.org/10.1126/science.aai8878
+    - title: "De Souza et al., Science 377:851 (2022)"
+      url: https://doi.org/10.1126/science.adc9831
+
+- id: c4-rice
+  name: C4 rice
+  kind: technique
+  fields: [agriculture, biology]
+  track: crops
+  date: { window: [2038, 2065], likely: 2048 }
+  status: ongoing
+  tier: 3
+  criterion: >-
+    A rice variety running a working C4 photosynthetic cycle yields at least
+    30 percent more grain per hectare than its parent in multi-season field
+    trials, and is approved for farmers to grow.
+  summary: >-
+    Rewiring rice to use the more efficient photosynthesis of maize and
+    sugarcane, which would raise yield by about half and cut water and
+    nitrogen needs. It means installing both a new leaf anatomy and a new
+    biochemistry, the most ambitious plant engineering project attempted.
+  requires: [improved-photosynthesis]
+  helped_by: [crispr-cas9, gene-edited-crops]
+  efforts:
+    - who: C4 Rice Project (IRRI, Oxford, Cambridge; Julian Hibberd, Jane Langdale; Gates Foundation funded)
+      where: Philippines, UK
+      when: [2008, 2026]
+      outcome: ongoing
+      note: Five C4 enzymes expressed in rice with labeled carbon showing malate forming (2019), and the bundle sheath made to resemble a C4 plant's; joining anatomy to biochemistry remains undone.
+  forecast:
+    note: >-
+      Eighteen years in, the project has the parts but not a working cycle.
+      Project statements have pointed to rice reaching farmers' fields
+      around 2039. Plant breeding and regulatory approval add roughly a
+      decade after a working prototype, so I put approved field use around
+      2048.
+    sources:
+      - title: "Ermakova et al., On the road to C4 rice, Plant Journal (2019)"
+        url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7065233/
+      - title: "University of Cambridge, Department of Plant Sciences: C4 rice"
+        url: https://www.plantsci.cam.ac.uk/node/34271
+  sources:
+    - title: "Ermakova et al., On the road to C4 rice, Plant Journal (2019)"
+      url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7065233/
+
+- id: nitrogen-fixing-cereals
+  name: Nitrogen-fixing cereals
+  kind: technique
+  fields: [agriculture, biology]
+  track: crops
+  date: { window: [2035, 2065], likely: 2045 }
+  status: ongoing
+  tier: 3
+  criterion: >-
+    A commercial cereal variety (maize, wheat or rice) that, through its own
+    genes or an engineered symbiosis, supplies at least half its nitrogen
+    from the air, cutting applied fertilizer by 50 percent or more at equal
+    yield in multi-season field trials.
+  summary: >-
+    Giving grain crops the nitrogen-fixing trick of legumes, which would cut
+    the biggest input cost in farming and a large share of farming's
+    emissions. Microbial products deliver perhaps a fifth of a maize crop's
+    nitrogen today.
+  requires: [nitrogen-fertilizer-scale, crispr-cas9]
+  routes:
+    - name: Engineered microbes
+      requires: [engineered-microbe-manufacturing]
+      note: Give soil bacteria that already live on roots a working nitrogenase, the approach now sold commercially.
+    - name: Engineered plants
+      requires: [gene-edited-crops]
+      note: >-
+        Change the plant itself, by recruiting nitrogen-fixing bacteria with
+        root exudates, copying the Sierra Mixe maize mucilage trait, or
+        putting nitrogenase into plant organelles.
+  efforts:
+    - who: Pivot Bio (PROVEN)
+      where: USA
+      when: [2019, 2026]
+      outcome: ongoing
+      note: More than 15 million cumulative acres; university studies find up to 35 to 40 pounds of nitrogen per acre, about a fifth of a maize crop's need.
+    - who: Alan Bennett, Allen Van Deynze (UC Davis), Sierra Mixe maize
+      where: USA, Mexico
+      when: 2018
+      outcome: achieved
+      note: A landrace maize whose aerial-root mucilage hosts nitrogen-fixing bacteria supplying 29 to 82 percent of its nitrogen.
+    - who: Guntur Subbarao and colleagues (JIRCAS and CIMMYT), nitrification-inhibiting wheat
+      where: Japan, Mexico
+      when: 2021
+      outcome: achieved
+      note: A wild-grass chromosome segment roughly doubled root nitrification inhibition, raising yield and cutting nitrous oxide.
+    - who: Eduardo Blumwald (UC Davis)
+      where: USA
+      when: 2022
+      outcome: ongoing
+      note: Gene-edited rice exuding more apigenin, which recruits nitrogen-fixing biofilms.
+  forecast:
+    note: >-
+      Microbial products are commercial but cover only about a fifth of a
+      crop's nitrogen, and the trend in their performance is slow. Putting
+      nitrogenase, which is poisoned by oxygen, into plant organelles has
+      been attempted for over a decade without a working cereal. Half of a
+      crop's nitrogen from the air, at field scale, looks like the 2040s.
+    sources:
+      - title: "Van Deynze et al., PLOS Biology 16:e2006352 (2018)"
+        url: https://doi.org/10.1371/journal.pbio.2006352
+      - title: "Subbarao et al., PNAS 118 (2021)"
+        url: https://doi.org/10.1073/pnas.2106595118
+      - title: "Pivot Bio: peer-reviewed study of its nitrogen-fixing microbes (2025)"
+        url: https://www.biospace.com/press-releases/peer-reviewed-study-validates-pivot-bios-gene-edited-microbes-as-a-third-source-of-nitrogen-delivery
+  sources:
+    - title: "Van Deynze et al., PLOS Biology 16:e2006352 (2018)"
+      url: https://doi.org/10.1371/journal.pbio.2006352
+    - title: "Subbarao et al., PNAS 118 (2021)"
+      url: https://doi.org/10.1073/pnas.2106595118

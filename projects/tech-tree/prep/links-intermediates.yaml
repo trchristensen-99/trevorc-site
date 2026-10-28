@@ -1,0 +1,19 @@
+# Links through the intermediate steps in nodes/i-intermediates.yaml.
+- {id: railway, helped_by: [cart-wagon]}
+- {id: automobile, helped_by: [bicycle]}
+- {id: airplane, helped_by: [bicycle]}
+- {id: watermill, requires: [gears]}
+- {id: windmill, requires: [gears]}
+- {id: mechanical-clock, requires: [gears]}
+- {id: antikythera-mechanism, requires: [gears]}
+- {id: precision-cylinder-boring, requires: [firearms]}
+- {id: interchangeable-parts, helped_by: [firearms]}
+- {id: longitude-chronometer, helped_by: [pendulum-clock]}
+- {id: dna-double-helix, requires: [x-ray-crystallography], drop: {requires: [x-rays]}}
+- {id: protein-crystallography, requires: [x-ray-crystallography], drop: {requires: [x-rays]}}
+- {id: pcr, requires: [dna-synthesis]}
+- {id: recombinant-insulin, requires: [dna-synthesis]}
+- {id: synthetic-bacterial-genome, requires: [dna-synthesis]}
+- {id: dna-synthesis-1-cent-base, requires: [dna-synthesis]}
+- {id: gwas, helped_by: [modern-synthesis]}
+- {id: communications-satellites, helped_by: [television]}

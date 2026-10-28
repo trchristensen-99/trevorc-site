@@ -1,0 +1,76 @@
+id: dram-cost-per-gb
+name: Price of computer memory (RAM) per gigabyte
+short: Memory price
+unit: USD per GB (constant 2020 US$)
+better: lower
+log: true
+field: electronics
+points:                           # [year, value]
+  - [1957, 3786000000000]
+  - [1959, 604300000000]
+  - [1960, 45840000000]
+  - [1965, 21710000000]
+  - [1970, 4896000000]
+  - [1973, 2328000000]
+  - [1974, 1651000000]
+  - [1975, 240100000]
+  - [1976, 104800000]
+  - [1977, 98400000]
+  - [1978, 60340000]
+  - [1979, 23900000]
+  - [1980, 20350000]
+  - [1981, 12750000]
+  - [1982, 5310000]
+  - [1983, 5145000]
+  - [1984, 3315000]
+  - [1985, 720400]
+  - [1986, 447500]
+  - [1987, 303000]
+  - [1988, 291000]
+  - [1989, 236100]
+  - [1990, 90100]
+  - [1991, 75530]
+  - [1992, 48420]
+  - [1993, 47020]
+  - [1994, 45840]
+  - [1995, 44580]
+  - [1996, 8660]
+  - [1997, 3477]
+  - [1998, 1340]
+  - [1999, 1214]
+  - [2000, 1045]
+  - [2001, 215.7]
+  - [2002, 192.1]
+  - [2003, 107.1]
+  - [2004, 104.4]
+  - [2005, 100.9]
+  - [2006, 93.39]
+  - [2007, 30.44]
+  - [2008, 11.74]
+  - [2009, 11.78]
+  - [2010, 11.59]
+  - [2011, 5.898]
+  - [2012, 4.127]
+  - [2013, 4.067]
+  - [2014, 4.002]
+  - [2015, 3.998]
+  - [2016, 2.961]
+  - [2017, 2.899]
+  - [2018, 2.83]
+  - [2019, 2.78]
+  - [2020, 2.746]
+  - [2021, 2.477]
+  - [2022, 1.862]
+  - [2023, 1.088]
+source:
+  title: "Our World in Data, Historical cost of computer memory and storage (John C. McCallum, 2023, adjusted with the US CPI)"
+  url: https://ourworldindata.org/grapher/historical-cost-of-computer-memory-and-storage
+license: CC BY 4.0 (OWID processing); underlying compilation by John C. McCallum
+note: >-
+  Cheapest retail or catalogue price McCallum found each year for main memory
+  (magnetic core before the mid-1970s, then DRAM chips and modules), converted
+  by OWID to constant 2020 US$ with the US consumer price index, and here from
+  dollars per terabyte to dollars per gigabyte (4 significant figures). OWID
+  CSV downloaded 2026-10-28; the series ends in 2023. McCallum's original site
+  (jcmit.net) no longer serves his tables. DRAM prices are cyclical, so single
+  years can sit well off the trend.

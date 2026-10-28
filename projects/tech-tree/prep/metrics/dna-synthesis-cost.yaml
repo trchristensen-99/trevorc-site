@@ -1,0 +1,41 @@
+id: dna-synthesis-cost
+name: Price of gene synthesis per base
+short: Gene synthesis price
+unit: USD per base
+better: lower
+log: true
+field: biology
+points:                           # [year, value]
+  - [1999, 25]
+  - [2001, 12]
+  - [2002, 8]
+  - [2003, 4]
+  - [2006, 1]
+  - [2007, 0.5]
+  - [2009, 0.39]
+  - [2010, 0.35]
+  - [2011, 0.29]
+  - [2012, 0.20]
+  - [2013, 0.18]
+  - [2014, 0.15]
+  - [2016, 0.03]
+  - [2017, 0.02]
+  - [2026, 0.07]   # Twist Bioscience list price, gene fragments 0.5 to 1.8 kb, read 2026-10-28
+source:
+  title: "Rob Carlson, DNA cost and productivity data, aka 'Carlson curves' (synthesis.cc, 26 October 2022)"
+  url: https://www.synthesis.cc/synthesis/2022/10/dna-synthesis-cost-data
+license: "Carlson's figures are CC BY-ND 4.0; the tabulated prices are reused as cited facts. 2026 point from Twist Bioscience's public price page."
+note: >-
+  Price to the customer of double-stranded synthetic genes, in nominal US
+  dollars per base, as tabulated by Carlson (1999 to 2017). 2026 is Twist
+  Bioscience's list price for gene fragments
+  (https://www.twistbioscience.com/products/genes: "from $0.07/bp", rising
+  to $0.09 for 3 to 5 kb and $0.09 to $0.23 for cloned genes); GenScript
+  lists cloned genes from $0.15 a base. Carlson's 2016 and 2017 values ($0.03
+  and $0.02) are lower than any list price found today and may reflect bulk
+  contracts, so the curve has in practice been flat at about $0.07 to $0.15
+  for list-price genes since about 2014. Short column-synthesized oligos fell
+  much more slowly, from $1 a base (1992) to $0.05 (2017) in the same table;
+  array-synthesized oligo pools are far cheaper, which Carlson (2025) puts at
+  $0.00001 to $0.001 a base, but need assembly and error correction to make
+  genes.

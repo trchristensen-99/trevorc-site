@@ -1,7 +1,7 @@
 import "./style.css"
 import { dateLabel } from "./time"
-import { TreeView, kindShape, type Filters } from "./tree"
-import type { Metric, Node, Source, Tree } from "./types"
+import { ROUTE_COLORS, TreeView, fmtValue, kindShape, type Display, type Filters } from "./tree"
+import type { Details, Metric, Node, Source, Tree } from "./types"
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
 const esc = (s: unknown) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!)
@@ -14,6 +14,7 @@ const KIND_LABEL: Record<Node["kind"], string> = {
   device: "Device",
   infrastructure: "Infrastructure",
   institution: "Institution",
+  milestone: "Milestone",
 }
 const STATUS_LABEL: Record<Node["status"], string> = {
   achieved: "Achieved",
@@ -58,51 +59,74 @@ function people(v: unknown) {
   const n = num(v)
   return Number.isFinite(n) ? `about ${n.toLocaleString("en-US")}` : esc(v)
 }
+// An effort's date: a year or [from, to], with BCE for negative years.
+function whenLabel(w: unknown): string {
+  const y = (v: unknown) => (typeof v === "number" ? (v < 0 ? `${(-v).toLocaleString("en-US")} BCE` : String(v)) : String(v))
+  if (Array.isArray(w)) {
+    const [a, b] = w as number[]
+    if (typeof a === "number" && typeof b === "number" && a < 0 && b < 0) return `${(-a).toLocaleString("en-US")} to ${(-b).toLocaleString("en-US")} BCE`
+    return `${y(a)} to ${y(b)}`
+  }
+  return y(w)
+}
 function sourcesHTML(sources: Source[] | undefined, title = "Sources") {
   if (!sources?.length) return ""
   return `<h3>${title}</h3><ul class="sources">${sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></li>`).join("")}</ul>`
 }
-function valueLabel(v: number, unit: string) {
-  const abs = Math.abs(v)
-  const s = abs >= 1e12 ? `${+(v / 1e12).toPrecision(3)}T` : abs >= 1e9 ? `${+(v / 1e9).toPrecision(3)}B` : abs >= 1e6 ? `${+(v / 1e6).toPrecision(3)}M` : abs >= 1e3 ? `${+(v / 1e3).toPrecision(3)}k` : `${+v.toPrecision(3)}`
-  return unit === "USD" ? `$${s}` : `${s} ${unit}`
-}
 
-// A small log-scale chart of a metric with its fitted trend, extended ten
-// years past the data.
-function metricChart(m: Metric) {
-  const W = 290, H = 150, L = 46, B = 22, T = 8, Rr = 8
-  const pts = m.points.filter(([, y]) => y > 0)
+// A small log-scale chart of a metric with its fitted trend carried
+// forward, and its milestones as thresholds.
+function metricChart(m: Metric, milestones: Node[], highlight?: string, title = true) {
+  const W = 300, H = 160, L = 50, B = 22, T = 8, Rr = 8
+  // Log scale, or linear for steady growth.
+  const f = (v: number) => (m.log ? Math.log10(v) : v)
+  const inv = (u: number) => (m.log ? 10 ** u : u)
+  const pts = m.points.filter(([, y]) => !m.log || y > 0)
   if (pts.length < 2) return ""
-  const x0 = pts[0][0], x1 = Math.max(pts.at(-1)![0], m.trend ? m.trend.to + 10 : 0)
-  const ys = pts.map((p) => Math.log10(p[1]))
+  const future = milestones.filter((n) => n.status !== "achieved").map((n) => n.at)
+  const x0 = pts[0][0], x1 = Math.max(pts.at(-1)![0] + (m.trend ? 10 : 0), ...future.map((y) => Math.min(y + 3, 2100)))
+  const ys = [...pts.map((p) => f(p[1])), ...milestones.map((n) => f(n.threshold!.value))]
   let y0 = Math.min(...ys), y1 = Math.max(...ys)
   if (m.trend) {
     const ext = m.trend.slope * x1 + m.trend.intercept
     y0 = Math.min(y0, ext)
     y1 = Math.max(y1, ext)
   }
-  y0 = Math.floor(y0)
-  y1 = Math.ceil(y1)
+  if (m.log) {
+    y0 = Math.floor(y0)
+    y1 = Math.ceil(y1)
+  } else {
+    const pad = (y1 - y0) * 0.08 || 1
+    y0 -= pad
+    y1 += pad
+  }
   const px = (x: number) => L + ((x - x0) / (x1 - x0 || 1)) * (W - L - Rr)
   const py = (v: number) => T + (1 - (v - y0) / (y1 - y0 || 1)) * (H - T - B)
   const grid: string[] = []
-  const step = Math.max(1, Math.ceil((y1 - y0) / 5))
-  for (let v = y0; v <= y1; v += step)
-    grid.push(`<line x1="${L}" x2="${W - Rr}" y1="${py(v)}" y2="${py(v)}" class="grid"/><text x="${L - 4}" y="${py(v)}" class="ylab">${valueLabel(10 ** v, m.unit === "USD" ? "USD" : "").trim()}</text>`)
+  // Grid: powers of ten, or round steps on a linear scale.
+  const raw = (y1 - y0) / 5
+  const step = m.log ? Math.max(1, Math.ceil(raw)) : (() => { const p = 10 ** Math.floor(Math.log10(raw)); return [1, 2, 5, 10].map((k) => k * p).find((k) => k >= raw)! })()
+  for (let v = m.log ? y0 : Math.ceil(y0 / step) * step; v <= y1; v += step)
+    grid.push(`<line x1="${L}" x2="${W - Rr}" y1="${py(v)}" y2="${py(v)}" class="grid"/><text x="${L - 4}" y="${py(v)}" class="ylab">${esc(fmtValue(inv(v), m.unit === "USD" ? "USD" : "").trim())}</text>`)
   const xt = [x0, Math.round((x0 + x1) / 2), x1].map((x) => `<text x="${px(x)}" y="${H - 6}" class="xlab">${Math.round(x)}</text>`)
-  const dots = pts.map(([x, y]) => `<circle cx="${px(x)}" cy="${py(Math.log10(y))}" r="2.4"><title>${Math.round(x)}: ${valueLabel(y, m.unit)}</title></circle>`).join("")
-  const trend = m.trend
-    ? `<line x1="${px(m.trend.from)}" y1="${py(m.trend.slope * m.trend.from + m.trend.intercept)}" x2="${px(m.trend.to)}" y2="${py(m.trend.slope * m.trend.to + m.trend.intercept)}" class="fit"/>` +
-      `<line x1="${px(m.trend.to)}" y1="${py(m.trend.slope * m.trend.to + m.trend.intercept)}" x2="${px(x1)}" y2="${py(m.trend.slope * x1 + m.trend.intercept)}" class="fit ext"/>`
+  const dots = pts.map(([x, y]) => `<circle cx="${px(x)}" cy="${py(f(y))}" r="2.4"><title>${Math.round(x)}: ${esc(fmtValue(y, m.unit))}</title></circle>`).join("")
+  const tr = m.trend
+  const trend = tr
+    ? `<line x1="${px(tr.from)}" y1="${py(tr.slope * tr.from + tr.intercept)}" x2="${px(tr.to)}" y2="${py(tr.slope * tr.to + tr.intercept)}" class="fit"/>` +
+      `<line x1="${px(tr.to)}" y1="${py(tr.slope * tr.to + tr.intercept)}" x2="${px(x1)}" y2="${py(tr.slope * x1 + tr.intercept)}" class="fit ext"/>`
     : ""
-  const rate = m.trend
-    ? `${m.trend.slope < 0 ? "Halves" : "Doubles"} about every ${m.trend.years < 2 ? m.trend.years.toFixed(1) : m.trend.years.toFixed(1)} years (r² ${m.trend.r2.toFixed(2)})`
-    : ""
+  const marks = milestones.map((n) => {
+    const v = f(n.threshold!.value)
+    const cls = `ms${n.id === highlight ? " on" : ""}`
+    return `<line x1="${L}" x2="${W - Rr}" y1="${py(v)}" y2="${py(v)}" class="${cls}"/><text x="${W - Rr - 2}" y="${py(v) - 3}" class="mslab${n.id === highlight ? " on" : ""}">${esc(n.threshold!.label ?? n.name)}</text>`
+  }).join("")
+  const rate = !tr ? "No clean trend"
+    : tr.linear ? `${tr.slope > 0 ? "Rises" : "Falls"} about ${esc(fmtValue(Math.abs(tr.slope * 10), m.unit))} a decade (r² ${tr.r2.toFixed(2)})`
+    : `${tr.slope < 0 ? "Halves" : "Doubles"} about every ${tr.years!.toFixed(1)} years (r² ${tr.r2.toFixed(2)})`
   const wright = m.wright ? `; falls ${(m.wright.learningRate * 100).toFixed(0)}% each time cumulative production doubles` : ""
-  return `<h3>${esc(m.name)}</h3>
-    <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.name)}">${grid.join("")}${xt.join("")}${trend}${dots}</svg>
-    <p class="rate">${rate}${wright}. Dashed: the trend carried forward.</p>
+  return `${title ? `<h3>${esc(m.name)}</h3>` : ""}
+    <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.name)}">${grid.join("")}${xt.join("")}${marks}${trend}${dots}</svg>
+    <p class="rate">${rate}${wright}.${tr ? " Dashed: the trend carried forward." : ""}${milestones.length ? " Lines across: milestones." : ""}</p>
     ${m.note ? `<p class="note">${esc(m.note)}</p>` : ""}
     ${m.source ? `<p class="note">Data: <a href="${esc(m.source.url)}" target="_blank" rel="noopener">${esc(m.source.title)}</a>${m.license ? ` (${esc(m.license)})` : ""}</p>` : ""}`
 }
@@ -114,13 +138,21 @@ async function main() {
     if (!r.ok) throw new Error(`${r.status} loading the tree`)
     return r.json()
   })
+  // The text loads after the tree is drawn.
+  let details: Record<string, Details> | null = null
+  const detailsReady: Promise<Record<string, Details>> = fetch("./data/details.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})).then((d) => (details = d))
+  const detail = async (id: string): Promise<Details> => (details ?? (await detailsReady))[id] ?? ({} as Details)
+
   const byId = new Map(tree.nodes.map((n) => [n.id, n]))
   const metrics = new Map(tree.metrics.map((m) => [m.id, m]))
   const svg = document.querySelector<SVGSVGElement>("#tree")!
   const view = new TreeView(svg, tree)
   const now = tree.meta.now
+  const fieldColor = new Map(tree.fields.map((f) => [f.id, f.color]))
+  const fieldName = (id: string) => tree.fields.find((f) => f.id === id)?.name ?? id
 
-  $("#counts").textContent = `${tree.nodes.filter((n) => n.kind !== "resource" && n.kind !== "precondition").length} technologies, ${tree.edges.filter((e) => e.kind === "requires").length} links`
+  const techCount = tree.nodes.filter((n) => n.kind !== "resource" && n.kind !== "precondition").length
+  $("#counts").textContent = `${techCount} technologies, ${tree.edges.filter((e) => e.kind === "requires").length} links`
 
   // Theme follows the site.
   const applyTheme = () => {
@@ -144,14 +176,58 @@ async function main() {
   if (embedded) out.target = "_top"
 
   // ------------------------------------------------------------ legend
-  const icon = (kind: Node["kind"], fill: string, stroke = "none", dash = "") =>
-    `<svg width="18" height="16" viewBox="-9 -8 18 16"><path d="${kindShape(kind, 5.5)}" fill="${fill}" stroke="${stroke}" stroke-width="1.4" ${dash ? `stroke-dasharray="${dash}"` : ""} fill-rule="evenodd"/></svg>`
+  const icon = (kind: Node["kind"], fill: string, stroke = "none", dash = "", fillOpacity = 1) =>
+    `<svg width="18" height="16" viewBox="-9 -8 18 16"><path d="${kindShape(kind, 5.5)}" fill="${fill}" fill-opacity="${fillOpacity}" stroke="${stroke}" stroke-width="1.4" ${dash ? `stroke-dasharray="${dash}"` : ""} fill-rule="evenodd"/></svg>`
   $("#legend").innerHTML =
     (Object.keys(KIND_LABEL) as Node["kind"][]).map((k) => `<li>${icon(k, "var(--muted)")}${KIND_LABEL[k]}</li>`).join("") +
     `<li>${icon("device", "var(--muted)")}<span>Solid: achieved</span></li>` +
+    `<li>${icon("device", "var(--muted)", "var(--muted)", "", 0.42)}<span>Half-filled: being worked on</span></li>` +
     `<li>${icon("device", "var(--bg-panel)", "var(--muted)", "2 1.5")}<span>Dashed: not yet; the bar is its likely window</span></li>` +
     `<li>${icon("device", "#c9cbc6", "var(--muted)")}<span>Gray: lost or forgotten</span></li>` +
     `<li><span class="sw line"></span>needs</li><li><span class="sw line dash"></span>helped by</li><li><span class="sw line dot"></span>uses a resource</li>`
+
+  // ----------------------------------------------------------- display
+  // Detail: a slider from fewer to everything, as a multiple of the
+  // default count at each zoom.
+  const display: Display = { detail: 1, grow: true, frontier: false, allLinks: false, trends: [] }
+  const DETAIL_MIN = 0.4, DETAIL_MAX = 16
+  const slider = $<HTMLInputElement>("#detail")
+  const toDetail = (v: number) => (v >= 100 ? Infinity : DETAIL_MIN * (DETAIL_MAX / DETAIL_MIN) ** (v / 99))
+  const fromDetail = (d: number) => (!Number.isFinite(d) ? 100 : Math.round((99 * Math.log(d / DETAIL_MIN)) / Math.log(DETAIL_MAX / DETAIL_MIN)))
+  const readout = () => ($("#detail-count").textContent = `${view.shown} of ${tree.nodes.length} showing`)
+  const setDisplay = (d: Partial<Display>) => {
+    Object.assign(display, d)
+    view.setDisplay(display)
+    document.body.style.setProperty("--strips", `${view.stripsHeight()}px`)
+    requestAnimationFrame(() => requestAnimationFrame(readout))
+    saveSoon()
+  }
+  slider.addEventListener("input", () => setDisplay({ detail: toDetail(+slider.value) }))
+  const check = (id: string, key: "grow" | "frontier" | "allLinks") => {
+    const i = $<HTMLInputElement>(id)
+    i.addEventListener("change", () => setDisplay({ [key]: i.checked }))
+    return i
+  }
+  const growBox = check("#grow", "grow")
+  const frontierBox = check("#show-frontier", "frontier")
+  const linksBox = check("#all-links", "allLinks")
+
+  // Trend strips: one checkbox per metric, by field.
+  const trendBoxes = new Map<string, HTMLInputElement>()
+  const trendList = $("#trend-list")
+  const sortedMetrics = [...tree.metrics].sort((a, b) => tree.fields.findIndex((f) => f.id === a.field) - tree.fields.findIndex((f) => f.id === b.field) || a.short.localeCompare(b.short))
+  for (const m of sortedMetrics) {
+    const l = document.createElement("label")
+    const i = document.createElement("input")
+    i.type = "checkbox"
+    i.addEventListener("change", () => setDisplay({ trends: sortedMetrics.filter((x) => trendBoxes.get(x.id)!.checked).map((x) => x.id) }))
+    trendBoxes.set(m.id, i)
+    l.append(i)
+    l.insertAdjacentHTML("beforeend", `<span class="sw" style="background:${fieldColor.get(m.field ?? "") ?? "var(--muted)"}"></span>`)
+    l.append(` ${m.short}`)
+    l.title = m.name
+    trendList.append(l)
+  }
 
   // ----------------------------------------------------------- filters
   const filters: Filters = { fields: new Set(), statuses: new Set(), kinds: new Set() }
@@ -163,6 +239,7 @@ async function main() {
       if (i.checked) set.add(id)
       else set.delete(id)
       view.setFilters(filters)
+      requestAnimationFrame(() => requestAnimationFrame(readout))
     })
     l.append(i)
     if (swatch) l.insertAdjacentHTML("beforeend", `<span class="sw" style="background:${swatch}"></span>`)
@@ -173,14 +250,10 @@ async function main() {
   box("#f-fields", "roots", "Roots", filters.fields, tree.roots.color)
   for (const [s, label] of Object.entries(STATUS_LABEL)) box("#f-status", s, label, filters.statuses)
   for (const [k, label] of Object.entries(KIND_LABEL)) box("#f-kinds", k, label, filters.kinds)
-  $<HTMLInputElement>("#all-links").addEventListener("change", (e) => {
-    view.showAllLinks = (e.target as HTMLInputElement).checked
-    view.setFilters(filters)
-  })
 
   // ------------------------------------------------------------ search
   const dl = $("#names")
-  for (const n of [...tree.nodes].sort((a, b) => a.name.localeCompare(b.name))) dl.insertAdjacentHTML("beforeend", `<option value="${esc(n.name)}">`)
+  dl.innerHTML = [...tree.nodes].sort((a, b) => a.name.localeCompare(b.name)).map((n) => `<option value="${esc(n.name)}">`).join("")
   const search = $<HTMLInputElement>("#search")
   search.addEventListener("input", () => {
     const exact = tree.nodes.find((n) => n.name.toLowerCase() === search.value.trim().toLowerCase())
@@ -193,11 +266,15 @@ async function main() {
 
   // -------------------------------------------------------------- info
   const info = $<HTMLElement>("#info")
-  const show = (html: string) => {
+  let showing = ""
+  const show = (html: string, what: string) => {
+    showing = what
     info.innerHTML = `<button class="close" aria-label="Close">×</button>${html}`
     info.hidden = false
+    info.scrollTop = 0
     info.querySelector(".close")!.addEventListener("click", () => {
       info.hidden = true
+      showing = ""
       view.select(null)
     })
     info.querySelectorAll<HTMLAnchorElement>("a[data-node]").forEach((a) =>
@@ -210,26 +287,36 @@ async function main() {
         }
       }),
     )
+    info.querySelectorAll<HTMLAnchorElement>("a[data-metric]").forEach((a) =>
+      a.addEventListener("click", (e) => {
+        e.preventDefault()
+        const m = metrics.get(a.dataset.metric!)
+        if (m) showMetric(m)
+      }),
+    )
   }
   const link = (id: string) => {
     const n = byId.get(id)
     return n ? `<a href="#n=${esc(id)}" data-node="${esc(id)}">${esc(n.name)}</a>` : ""
   }
   const linkList = (ids: string[]) => ids.map(link).filter(Boolean).join(", ")
-  const fieldName = (id: string) => tree.fields.find((f) => f.id === id)?.name ?? id
+  const milestonesOf = (m: Metric) => m.milestones.map((id) => byId.get(id)).filter((n): n is Node => !!n?.threshold).sort((a, b) => a.at - b.at)
 
-  const nodeHTML = (n: Node) => {
-    const needs = tree.edges.filter((e) => e.t === n.id && e.kind === "requires").map((e) => e.s)
-    const uses = tree.edges.filter((e) => e.t === n.id && e.kind === "uses").map((e) => e.s)
-    const helped = tree.edges.filter((e) => e.t === n.id && e.kind === "helped").map((e) => e.s)
+  const nodeHTML = (n: Node, d: Details) => {
+    const into = tree.edges.filter((e) => e.t === n.id)
+    const needs = into.filter((e) => e.kind === "requires" && !e.routes).map((e) => e.s)
+    const uses = into.filter((e) => e.kind === "uses" && !e.routes).map((e) => e.s)
+    const helped = into.filter((e) => e.kind === "helped").map((e) => e.s)
     const rivals = tree.edges.filter((e) => e.kind === "competes" && (e.s === n.id || e.t === n.id)).map((e) => (e.s === n.id ? e.t : e.s))
     const led = tree.edges.filter((e) => e.s === n.id && (e.kind === "requires" || e.kind === "uses")).map((e) => e.t)
+    const open = n.status === "speculative" || n.status === "ongoing"
     const rows: string[] = []
-    rows.push(`<dt>When</dt><dd>${esc(dateLabel(n.from, n.to, n.at, now, n.status === "speculative" || n.status === "ongoing"))}</dd>`)
+    rows.push(`<dt>When</dt><dd>${esc(dateLabel(n.from, n.to, n.at, now, open))}</dd>`)
+    if (n.trendYear && open) rows.push(`<dt>Trend</dt><dd>The trend alone gets there around ${Math.round(n.trendYear)}</dd>`)
     rows.push(`<dt>Status</dt><dd>${STATUS_LABEL[n.status]}</dd>`)
     if (n.lane !== "roots") rows.push(`<dt>Fields</dt><dd>${n.fields.map(fieldName).map(esc).join(", ")}</dd>`)
-    if (n.scarcity) rows.push(`<dt>Scarcity</dt><dd>${esc(n.scarcity)}</dd>`)
-    const e = n.effort
+    if (d.scarcity) rows.push(`<dt>Scarcity</dt><dd>${esc(d.scarcity)}</dd>`)
+    const e = d.effort
     let effort = ""
     if (e) {
       const span = Array.isArray(e.span) ? `${e.span[0]} to ${e.span[1]} (${e.span[1] - e.span[0]} years)` : e.span ? `${e.span} years` : ""
@@ -239,72 +326,111 @@ async function main() {
         (e.cost_usd ? `<dt>Cost</dt><dd>${money(e.cost_usd)} (2025 dollars)</dd>` : "") +
         `</dl>` + (e.note ? `<p class="note">${esc(e.note)}</p>` : "")
     }
-    const efforts = n.efforts?.length
-      ? `<h3>${n.status === "achieved" || n.status === "lost" ? "Who" : "Who's working on it"}</h3><ul class="efforts">${n.efforts.map((x) =>
-          `<li><strong>${esc(x.who)}</strong>${x.where ? `, ${esc(x.where)}` : ""}${x.when != null ? ` (${esc(typeof x.when === "number" && x.when < 0 ? `${-x.when} BCE` : x.when)})` : ""}${x.outcome && x.outcome !== "achieved" ? ` <span class="tag ${esc(x.outcome)}">${esc(OUTCOME_LABEL[x.outcome] ?? x.outcome)}</span>` : ""}${x.note ? `<br><span class="note">${esc(x.note)}</span>` : ""}</li>`).join("")}</ul>`
+    const efforts = d.efforts?.length
+      ? `<h3>${n.status === "achieved" || n.status === "lost" ? "Who" : "Who's working on it"}</h3><ul class="efforts">${d.efforts.map((x) =>
+          `<li><strong>${esc(x.who)}</strong>${x.where ? `, ${esc(x.where)}` : ""}${x.when != null ? ` (${esc(whenLabel(x.when))})` : ""}${x.outcome && x.outcome !== "achieved" ? ` <span class="tag ${esc(x.outcome)}">${esc(OUTCOME_LABEL[x.outcome] ?? x.outcome)}</span>` : ""}${x.note ? `<br><span class="note">${esc(x.note)}</span>` : ""}</li>`).join("")}</ul>`
       : ""
-    const metric = n.metric && metrics.get(n.metric) ? metricChart(metrics.get(n.metric)!) : ""
+    // Alternative routes, colored as they're drawn.
+    const routes = d.routes?.length
+      ? `<h3>Routes</h3><p class="note">Any one of these would do.</p><ol class="routes">${d.routes.map((r, i) =>
+          `<li><span class="sw" style="background:${ROUTE_COLORS[i % ROUTE_COLORS.length]}"></span><div><strong>${esc(r.name)}</strong>${r.requires.length ? `: ${linkList(r.requires)}` : ""}${r.note ? `<br><span class="note">${esc(r.note)}</span>` : ""}</div></li>`).join("")}</ol>`
+      : ""
+    const m = n.metric ? metrics.get(n.metric) : undefined
+    const threshold = n.threshold && m
+      ? `<p class="threshold">Reached when <a href="#" data-metric="${esc(m.id)}">${esc(m.name.charAt(0).toLowerCase() + m.name.slice(1))}</a> ${m.better === "lower" ? "falls to" : "reaches"} <strong>${esc(fmtValue(n.threshold.value, m.unit))}</strong>.</p>`
+      : ""
     return `<p class="kind">${KIND_LABEL[n.kind]}</p><h2>${esc(n.name)}</h2>` +
-      (n.summary ? `<p>${esc(n.summary)}</p>` : "") +
+      threshold +
+      (d.summary ? `<p>${esc(d.summary)}</p>` : "") +
+      (d.criterion ? `<div class="criterion"><h3>Counts as done when</h3><p>${esc(d.criterion)}</p></div>` : "") +
       `<dl>${rows.join("")}</dl>` +
-      (n.lost ? `<h3>Lost</h3><p>${esc(n.lost)}</p>` : "") +
-      (n.note ? `<p class="note">${esc(n.note)}</p>` : "") +
+      (d.lost ? `<h3>Lost</h3><p>${esc(d.lost)}</p>` : "") +
+      (d.note ? `<p class="note">${esc(d.note)}</p>` : "") +
+      routes +
       efforts + effort +
-      (n.forecast?.note ? `<h3>Forecast</h3><p>${esc(n.forecast.note)}</p>${sourcesHTML(n.forecast.sources, "Forecast sources")}` : "") +
-      metric +
-      (needs.length ? `<h3>Needs</h3><p>${linkList(needs)}</p>` : "") +
+      (d.forecast?.note ? `<h3>Forecast</h3><p>${esc(d.forecast.note)}</p>${sourcesHTML(d.forecast.sources, "Forecast sources")}` : "") +
+      (m ? metricChart(m, milestonesOf(m), n.id) : "") +
+      (needs.length ? `<h3>${routes ? "Needs on every route" : "Needs"}</h3><p>${linkList(needs)}</p>` : "") +
       (uses.length ? `<h3>Uses</h3><p>${linkList(uses)}</p>` : "") +
       (helped.length ? `<h3>Helped by</h3><p>${linkList(helped)}</p>` : "") +
       (rivals.length ? `<h3>Competed with</h3><p>${linkList(rivals)}</p>` : "") +
       (led.length ? `<h3>Led to</h3><p>${linkList(led)}</p>` : "") +
-      sourcesHTML(n.sources)
+      sourcesHTML(d.sources)
   }
 
-  view.onSelect = (n) => {
-    if (n) show(nodeHTML(n))
-    else if (!frontierOpen) info.hidden = true
+  const showMetric = (m: Metric) => {
+    view.select(null)
+    const ms = milestonesOf(m)
+    show(`<p class="kind">Trend</p><h2>${esc(m.name)}</h2>` + metricChart(m, ms, undefined, false) +
+      (ms.length ? `<h3>Milestones</h3><ul class="frontier">${ms.map((n) => `<li>${link(n.id)} <span class="note">${esc(n.status === "achieved" ? `reached ${Math.round(n.at)}` : dateLabel(n.from, n.to, n.at, now, true))}</span></li>`).join("")}</ul>` : "") +
+      (() => {
+        const techs = tree.nodes.filter((n) => n.metric === m.id && !n.threshold)
+        return techs.length ? `<h3>Technologies it tracks</h3><p>${linkList(techs.map((n) => n.id))}</p>` : ""
+      })(), `metric:${m.id}`)
+  }
+  view.onMetric = showMetric
+
+  view.onSelect = async (n) => {
+    if (n) {
+      const want = `node:${n.id}`
+      showing = want
+      if (!details) show(`<h2>${esc(n.name)}</h2><p class="note">Loading…</p>`, want)
+      const d = await detail(n.id)
+      if (view.selection === n) show(nodeHTML(n, d), want)
+    } else if (showing.startsWith("node:")) {
+      info.hidden = true
+      showing = ""
+    }
     saveSoon()
   }
 
-  // What people are working on now: everything ongoing, with its efforts.
-  let frontierOpen = false
-  $("#frontier").addEventListener("click", () => {
-    frontierOpen = true
+  // What people are working on now: everything not yet achieved, by field.
+  $("#frontier").addEventListener("click", async () => {
     view.select(null)
+    const d = details ?? (await detailsReady)
     const open = tree.nodes.filter((n) => n.status === "ongoing" || n.status === "speculative").sort((a, b) => a.at - b.at)
     const groups = tree.fields.map((f) => ({ f, list: open.filter((n) => n.fields[0] === f.id) })).filter((g) => g.list.length)
     show(`<p class="kind">The frontier</p><h2>What people are working on</h2>
-      <p>Technologies not yet achieved, by field, with their likely windows and the groups working on them.</p>` +
-      groups.map(({ f, list }) => `<h3><span class="sw" style="background:${f.color}"></span>${esc(f.name)}</h3><ul class="frontier">${list.map((n) =>
-        `<li>${link(n.id)} <span class="note">${esc(dateLabel(n.from, n.to, n.at, now, true))}</span>${n.efforts?.length ? `<br><span class="note">${n.efforts.map((x) => esc(x.who)).slice(0, 6).join(" · ")}${n.efforts.length > 6 ? " …" : ""}</span>` : ""}</li>`).join("")}</ul>`).join(""))
-    info.querySelector(".close")!.addEventListener("click", () => (frontierOpen = false))
+      <p>Technologies not yet achieved, by field, with their likely windows and the groups working on them. Tick <em>Always show the frontier</em> to see them all on the tree.</p>` +
+      groups.map(({ f, list }) => `<h3><span class="sw" style="background:${f.color}"></span>${esc(f.name)}</h3><ul class="frontier">${list.map((n) => {
+        const efforts = d[n.id]?.efforts ?? []
+        return `<li>${link(n.id)} <span class="note">${esc(dateLabel(n.from, n.to, n.at, now, true))}</span>${efforts.length ? `<br><span class="note">${efforts.map((x) => esc(x.who)).slice(0, 5).join(" · ")}${efforts.length > 5 ? " …" : ""}</span>` : ""}</li>`
+      }).join("")}</ul>`).join(""), "frontier")
   })
 
   // ----------------------------------------------------------- tooltip
   const tip = $<HTMLDivElement>("#tooltip")
-  view.onHover = (n, at) => {
-    if (!n || matchMedia("(hover: none)").matches) {
+  view.onHover = (n, at, text) => {
+    if ((!n && !text) || matchMedia("(hover: none)").matches) {
       tip.hidden = true
       return
     }
-    tip.innerHTML = `<strong>${esc(n.name)}</strong> <span>${esc(dateLabel(n.from, n.to, n.at, now, n.status !== "achieved"))}</span>`
+    tip.innerHTML = n
+      ? `<strong>${esc(n.name)}</strong> <span>${esc(dateLabel(n.from, n.to, n.at, now, n.status !== "achieved"))}</span>`
+      : esc(text)
     tip.hidden = false
     const r = svg.getBoundingClientRect()
-    tip.style.left = `${Math.min(r.width - tip.offsetWidth - 8, at[0] + 14)}px`
+    tip.style.left = `${Math.max(4, Math.min(r.width - tip.offsetWidth - 8, at[0] + 14))}px`
     tip.style.top = `${at[1] + 14}px`
   }
 
   // --------------------------------------------------------- URL state
-  // #n=id selects a technology; #z=x,y,zoom keeps the view.
+  // #n=id selects a technology; #z=x,y,zoom keeps the view; d, f, g, l and
+  // t keep the display options.
   let pending = 0
   const save = () => {
     const h = new URLSearchParams()
     if (view.selection) h.set("n", view.selection.id)
     const [x, y, k] = view.view()
     h.set("z", `${Math.round(x)},${Math.round(y)},${k.toFixed(2)}`)
-    history.replaceState(null, "", `#${h}`)
+    if (display.detail !== 1) h.set("d", Number.isFinite(display.detail) ? display.detail.toFixed(2) : "all")
+    if (display.frontier) h.set("f", "1")
+    if (!display.grow) h.set("g", "0")
+    if (display.allLinks) h.set("l", "1")
+    if (display.trends.length) h.set("t", display.trends.join(","))
+    history.replaceState(null, "", `#${h}`.replace(/%2C/g, ","))
   }
-  const saveSoon = () => {
+  function saveSoon() {
     clearTimeout(pending)
     pending = window.setTimeout(save, 300)
   }
@@ -313,6 +439,7 @@ async function main() {
   let folded = false
   view.onViewChange = () => {
     saveSoon()
+    readout()
     const zoomed = view.view()[2] > 1.4
     if (zoomed !== folded) {
       folded = zoomed
@@ -323,9 +450,25 @@ async function main() {
 
   $("#toggle-controls").addEventListener("click", () => document.body.classList.toggle("controls-open"))
 
+  // Restore the options from the URL, then the view.
+  const h = new URLSearchParams(location.hash.slice(1))
+  const d = h.get("d")
+  const restored: Partial<Display> = {}
+  if (d) restored.detail = d === "all" ? Infinity : Math.min(DETAIL_MAX, Math.max(DETAIL_MIN, +d || 1))
+  if (h.get("f") === "1") restored.frontier = frontierBox.checked = true
+  if (h.get("g") === "0") restored.grow = growBox.checked = false
+  if (h.get("l") === "1") restored.allLinks = linksBox.checked = true
+  const t = h.get("t")?.split(",").filter((id) => metrics.has(id))
+  if (t?.length) {
+    for (const id of t) trendBoxes.get(id)!.checked = true
+    restored.trends = sortedMetrics.filter((m) => t.includes(m.id)).map((m) => m.id)
+    ;($("#trends") as HTMLDetailsElement).open = true
+  }
+  slider.value = String(fromDetail(restored.detail ?? 1))
+  setDisplay(restored)
+
   view.resize()
   new ResizeObserver(() => view.resize()).observe(svg)
-  const h = new URLSearchParams(location.hash.slice(1))
   const z = h.get("z")?.split(",").map(Number)
   if (z?.length === 3 && z.every(Number.isFinite)) view.focus(z[0], z[1], z[2])
   const start = h.get("n") && byId.get(h.get("n")!)

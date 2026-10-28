@@ -1,0 +1,538 @@
+# Milestones: thresholds on the metrics in metrics/*.yaml. Most have no date
+# or status: the build dates them from the data (first year crossed) or, if
+# not yet crossed, from the fitted trend. Those with a date and a forecast
+# are ones where the trend is a poor guide.
+
+# --------------------------------------------------------------- sequencing
+
+- id: genome-100-dollars
+  name: "$100 genome"
+  kind: milestone
+  fields: [biology, medicine]
+  track: sequencing
+  tier: 2
+  threshold: { metric: sequencing-cost-per-genome, value: 100, label: "$100" }
+  summary: >-
+    A 30x human genome for under $100 all in, the price at which sequencing
+    everyone at birth becomes routine. Vendors already claim reagent costs
+    near or below $100 (Ultima's Solaris, 2025, about $80); NHGRI's fuller
+    production cost, which counts labor, instruments and overhead, was $525
+    when it last reported, in 2022.
+  requires: [thousand-dollar-genome]
+  helped_by: [ultima-genomics, element-aviti, dna-nanoball-sequencing, roche-sbx]
+  sources:
+    - title: NHGRI DNA Sequencing Costs Data
+      url: https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data
+    - title: "Ultima upgrades sequencer to enable $80 genome (GenomeWeb, 2025)"
+      url: https://www.genomeweb.com/sequencing/ultima-genomics-upgrades-sequencer-serve-data-hungry-applications-enable-80-human-genome
+
+# -------------------------------------------------------------------- solar
+
+- id: solar-module-1-dollar-watt
+  name: "Solar modules under $1 a watt"
+  kind: milestone
+  fields: [energy]
+  track: renewables
+  tier: 2
+  threshold: { metric: solar-pv-module-price, value: 1, label: "$1/W" }
+  summary: >-
+    Solar panels for under a dollar per watt of capacity (in 2025 dollars),
+    long held up as the point where solar could compete with grid power
+    without subsidy. Chinese wafer and module factories scaling up after 2008
+    pushed prices through it.
+  requires: [solar-photovoltaic]
+
+- id: solar-module-20-cents-watt
+  name: "Solar modules under 20 cents a watt"
+  kind: milestone
+  fields: [energy]
+  track: renewables
+  tier: 3
+  threshold: { metric: solar-pv-module-price, value: 0.2, label: "20¢/W" }
+  summary: >-
+    Solar modules for under 20 cents a watt, after a glut of Chinese
+    production capacity cut prices by almost two thirds from 2022 to 2024.
+  requires: [solar-module-1-dollar-watt]
+
+- id: solar-module-10-cents-watt
+  name: "Solar modules under 10 cents a watt"
+  kind: milestone
+  fields: [energy]
+  track: renewables
+  tier: 3
+  threshold: { metric: solar-pv-module-price, value: 0.1, label: "10¢/W" }
+  summary: >-
+    Solar modules for under 10 cents a watt on the European benchmark that
+    the series follows.
+  requires: [solar-module-20-cents-watt]
+  helped_by: [perovskite-silicon-tandem]
+
+- id: solar-1-terawatt
+  name: "A terawatt of solar"
+  kind: milestone
+  fields: [energy]
+  track: renewables
+  tier: 3
+  threshold: { metric: solar-pv-cumulative-capacity, value: 1000, label: "1 TW" }
+  summary: >-
+    One terawatt of solar capacity installed worldwide, up from about 1.2
+    gigawatts in 2000. It took three more years to pass 2 TW.
+  requires: [solar-module-1-dollar-watt]
+
+- id: solar-power-5-cents-kwh
+  name: "Solar power under 5 cents a kilowatt-hour"
+  kind: milestone
+  fields: [energy]
+  track: renewables
+  tier: 3
+  threshold: { metric: solar-lcoe, value: 0.05, label: "5¢/kWh" }
+  summary: >-
+    New utility-scale solar farms, averaged worldwide, producing electricity
+    for under 5 cents a kilowatt-hour over their life (2025 dollars). It was
+    41 cents in 2010.
+  requires: [solar-module-1-dollar-watt]
+
+- id: wind-power-5-cents-kwh
+  name: "Onshore wind under 5 cents a kilowatt-hour"
+  kind: milestone
+  fields: [energy]
+  track: renewables
+  tier: 3
+  threshold: { metric: wind-lcoe, value: 0.05, label: "5¢/kWh" }
+  summary: >-
+    New onshore wind farms, averaged worldwide, producing electricity for
+    under 5 cents a kilowatt-hour over their life (2025 dollars), helped by
+    taller towers and longer blades that raised output per turbine.
+  requires: [wind-power]
+
+# ------------------------------------------------------------------ storage
+
+- id: battery-pack-100-dollars-kwh
+  name: "Battery packs under $100 a kWh"
+  kind: milestone
+  fields: [energy, engineering]
+  track: storage-fuels
+  tier: 2
+  threshold: { metric: battery-pack-price, value: 100, label: "$100/kWh" }
+  summary: >-
+    The average lithium-ion pack, across cars, buses, two-wheelers and grid
+    storage, for under $100 a kilowatt-hour, the price long cited for
+    electric cars to match combustion cars on sticker price. Segments are
+    already there: in 2025 stationary storage packs averaged $70 and all packs
+    sold in China $84, while the global average was $108.
+  requires: [lithium-ion-battery, lithium-iron-phosphate]
+  helped_by: [sodium-ion-battery]
+  sources:
+    - title: "BloombergNEF, Lithium-ion battery pack prices fall to $108 per kilowatt-hour (December 2025)"
+      url: https://about.bnef.com/insights/clean-transport/lithium-ion-battery-pack-prices-fall-to-108-per-kilowatt-hour-despite-rising-metal-prices-bloombergnef/
+
+- id: battery-pack-50-dollars-kwh
+  name: "Battery packs under $50 a kWh"
+  kind: milestone
+  fields: [energy, engineering]
+  track: storage-fuels
+  tier: 3
+  threshold: { metric: battery-pack-price, value: 50, label: "$50/kWh" }
+  summary: >-
+    The average lithium-ion pack for under $50 a kilowatt-hour, cheap enough
+    for batteries to shift solar power into the night almost everywhere.
+  requires: [battery-pack-100-dollars-kwh]
+  helped_by: [sodium-ion-battery, solid-state-batteries]
+
+# ----------------------------------------------------------------------- AI
+
+- id: ai-training-1e25-flop
+  name: "AI model trained with 10^25 FLOP"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 3
+  threshold: { metric: ai-training-compute, value: 1.0e25, label: "1e25 FLOP" }
+  summary: >-
+    A model trained with ten trillion trillion operations. The EU's AI Act
+    (2024) presumes any general-purpose model trained with more than this
+    poses systemic risk. GPT-4 (2023) used about 2e25.
+  requires: [large-language-models]
+  helped_by: [ai-accelerators]
+  sources:
+    - title: "EU AI Act, Article 51 (classification of general-purpose AI models with systemic risk)"
+      url: https://artificialintelligenceact.eu/article/51/
+
+- id: ai-training-1e26-flop
+  name: "AI model trained with 10^26 FLOP"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 3
+  threshold: { metric: ai-training-compute, value: 1.0e26, label: "1e26 FLOP" }
+  summary: >-
+    A model trained with 10^26 operations, the reporting threshold in the US
+    executive order on AI of October 2023. Grok 3 and GPT-4.5 (2025) are
+    estimated to have passed it.
+  requires: [ai-training-1e25-flop]
+  helped_by: [ai-datacenters]
+
+- id: ai-training-1e27-flop
+  name: "AI model trained with 10^27 FLOP"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 3
+  threshold: { metric: ai-training-compute, value: 1.0e27, label: "1e27 FLOP" }
+  date: { window: [2026, 2029], likely: 2027 }
+  status: ongoing
+  summary: >-
+    A model trained with 10^27 operations, about 50 times GPT-4.
+  requires: [ai-training-1e26-flop]
+  helped_by: [ai-datacenters]
+  forecast:
+    note: >-
+      The 2010-2026 trend crosses 1e27 in late 2025, but frontier compute has
+      grown more slowly since GPT-4 (about 3 times a year rather than 4 to
+      5). The largest estimate in Epoch's data, GPT-6 Astra (September 2026),
+      is 9.4e26 with an interval of about 5e26 to 2e27, so the threshold may
+      already have been passed; at 3 times a year the next frontier models
+      clear it in 2027.
+    sources:
+      - title: "Epoch AI, Notable AI Models dataset"
+        url: https://epoch.ai/data/notable-ai-models
+
+- id: ai-gpt4-level-1-dollar
+  name: "GPT-4-level AI under $1 per million tokens"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 3
+  threshold: { metric: ai-inference-price, value: 1, label: "$1/M tokens" }
+  summary: >-
+    A model as good as the original GPT-4 on MMLU for under a dollar per
+    million tokens (about 750,000 words). Gemini 2.0 Flash (February 2025)
+    did it for $0.175, half a percent of GPT-4's launch price two years
+    earlier.
+  requires: [chatgpt]
+  helped_by: [open-weight-llms, mixture-of-experts]
+
+- id: ai-horizon-1-hour
+  name: "AI agents doing hour-long tasks"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 2
+  threshold: { metric: ai-task-horizon, value: 60, label: "1 hour" }
+  summary: >-
+    A frontier AI agent succeeding half the time at software tasks that take a
+    skilled person an hour, on METR's benchmark. Claude 3.7 Sonnet was the
+    first measured there, in February 2025.
+  requires: [reasoning-models]
+  helped_by: [ai-coding-assistants]
+
+- id: ai-horizon-1-workday
+  name: "AI agents doing a day's work"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 2
+  threshold: { metric: ai-task-horizon, value: 480, label: "8 hours" }
+  summary: >-
+    A frontier AI agent succeeding half the time at software tasks that take a
+    skilled person a full working day (8 hours), on METR's benchmark. Claude
+    Opus 4.6 (February 2026) was measured at about 12 hours, though with a
+    confidence interval from about 5 to 60 hours.
+  requires: [ai-horizon-1-hour, ai-agents]
+
+- id: ai-horizon-1-week
+  name: "AI agents doing a week's work"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 3
+  threshold: { metric: ai-task-horizon, value: 2400, label: "40 hours" }
+  summary: >-
+    A frontier AI agent succeeding half the time at software tasks that take a
+    skilled person a 40-hour working week. Measuring this needs longer tasks
+    than METR's current suite, which it calls unreliable above 16 hours.
+  requires: [ai-horizon-1-workday]
+
+- id: ai-horizon-1-month
+  name: "AI agents doing a month's work"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 2
+  threshold: { metric: ai-task-horizon, value: 10020, label: "1 month" }
+  summary: >-
+    A frontier AI agent succeeding half the time at software projects that take
+    a skilled person a month (167 working hours), the scale of a typical
+    feature or a small research project.
+  requires: [ai-horizon-1-week]
+
+- id: ai-horizon-1-year
+  name: "AI agents doing a year's work"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 3
+  threshold: { metric: ai-task-horizon, value: 120000, label: "1 year" }
+  summary: >-
+    A frontier AI agent succeeding half the time at projects that take a
+    skilled person a working year (2,000 hours).
+  requires: [ai-horizon-1-month]
+
+# -------------------------------------------------------------------- space
+
+- id: launch-1000-dollars-kg
+  name: "Orbit for under $1,000 a kilogram"
+  kind: milestone
+  fields: [engineering]
+  track: space
+  tier: 2
+  threshold: { metric: launch-cost-per-kg, value: 1000, label: "$1,000/kg" }
+  date: { window: [2027, 2035], likely: 2029 }
+  status: ongoing
+  summary: >-
+    A rocket on sale that puts payload in low Earth orbit for under $1,000 a
+    kilogram (2021 dollars), a third below Falcon Heavy's list price.
+  requires: [reusable-rockets]
+  helped_by: [fully-reusable-rockets]
+  forecast:
+    note: >-
+      The record line in the CSIS data halves only every 22 years because it
+      stalled from 1967 to 2010, so its trend (about 2032) says little.
+      Falcon Heavy (2018) sits at $1,500 and SpaceX's internal cost with
+      booster reuse is likely already lower, but no listed price is. The step
+      below $1,000 most likely comes with Starship: it first reached orbit and
+      deployed Starlink satellites on its 14th flight on 28 September 2026,
+      but no customer price has been published. I put the likely date at 2029
+      for the first published price under $1,000, allowing for a few years of
+      flights before outside payloads.
+    sources:
+      - title: "SpaceX Starship flight tests (Wikipedia)"
+        url: https://en.wikipedia.org/wiki/SpaceX_Starship_flight_tests
+      - title: "CSIS, Space launch to low Earth orbit: how much does it cost?"
+        url: https://aerospace.csis.org/data/space-launch-to-low-earth-orbit-how-much-does-it-cost/
+
+- id: launch-100-dollars-kg
+  name: "Orbit for under $100 a kilogram"
+  kind: milestone
+  fields: [engineering]
+  track: space
+  tier: 2
+  threshold: { metric: launch-cost-per-kg, value: 100, label: "$100/kg" }
+  date: { window: [2032, 2055], likely: 2040 }
+  status: speculative
+  summary: >-
+    Launch to low Earth orbit for under $100 a kilogram, cheap enough for
+    space-based solar power, large orbital stations and mass cargo to the
+    Moon and Mars to start to make economic sense.
+  requires: [launch-1000-dollars-kg, fully-reusable-rockets]
+  forecast:
+    note: >-
+      The CSIS record line's 22-year halving would put this near 2105, but
+      that line is from expendable rockets. A fully reusable Starship
+      refuelled and reflown many times is the only design aimed at this
+      price; it reached orbit for the first time in September 2026 and its
+      upper stage has not yet been recovered and reflown. I assume a tenfold
+      fall takes about a decade after the first sub-$1,000 price once both
+      stages are reused routinely, which gives about 2040, with a long tail
+      if full reuse proves hard.
+    sources:
+      - title: "SpaceX Starship flight tests (Wikipedia)"
+        url: https://en.wikipedia.org/wiki/SpaceX_Starship_flight_tests
+
+# ---------------------------------------------------------- DNA synthesis
+
+- id: dna-synthesis-1-cent-base
+  name: "Genes for 1 cent a base"
+  kind: milestone
+  fields: [biology]
+  track: synthetic-biology
+  tier: 2
+  threshold: { metric: dna-synthesis-cost, value: 0.01, label: "1¢/base" }
+  date: { window: [2028, 2045], likely: 2034 }
+  status: ongoing
+  summary: >-
+    Synthetic genes at a list price of 1 cent per base pair, so a typical
+    1,500-base gene costs $15 and a whole bacterial genome tens of thousands
+    of dollars.
+  requires: [pcr]
+  helped_by: [synthetic-bacterial-genome]
+  forecast:
+    note: >-
+      The fitted trend (halving about every 2.6 years) would say this already
+      happened, but it rests on Carlson's 2016 and 2017 values of 2 to 3
+      cents, which no list price matches: Twist sells gene fragments from 7
+      cents a base in 2026 and GenScript cloned genes from 15 cents, so list
+      prices have been nearly flat for a decade. Array-made oligos already
+      cost far under a cent a base, and enzymatic synthesis companies aim to
+      turn that into genes; I assume list prices resume falling at their
+      pre-2014 rate (about halving every 3 years) once those reach market,
+      which gives about 2034.
+    sources:
+      - title: "Rob Carlson, DNA cost and productivity data (2022)"
+        url: https://www.synthesis.cc/synthesis/2022/10/dna-synthesis-cost-data
+      - title: "Twist Bioscience, gene synthesis prices"
+        url: https://www.twistbioscience.com/products/genes
+      - title: "GenScript, gene synthesis"
+        url: https://www.genscript.com/gene_synthesis.html
+
+# ------------------------------------------------------------------- fusion
+
+- id: fusion-triple-product-ignition
+  name: "Ignition triple product in a magnetic fusion device"
+  kind: milestone
+  fields: [physics, energy]
+  track: nuclear-particle
+  tier: 2
+  threshold: { metric: fusion-triple-product, value: 2.9e21, label: "ignition" }
+  date: { window: [2028, 2045], likely: 2032 }
+  status: ongoing
+  summary: >-
+    A magnetically confined plasma with a triple product (density times
+    temperature times confinement time) of about 3e21 keV·s/m³, enough for
+    deuterium-tritium fusion to heat itself without outside power. The best
+    so far, TFTR in 1995, reached about a quarter of that. Laser fusion at NIF
+    reached ignition by its own measure in 2021 and 2022.
+  requires: [tokamak]
+  helped_by: [hts-fusion-magnets, optimized-stellarator, fusion-ignition-nif]
+  forecast:
+    note: >-
+      The record rose almost a million-fold from 1957 to 1995 and then
+      stalled, as no later machine has surpassed TFTR, so the trend (which
+      would put ignition around 2000) is no guide. The next two machines are
+      designed to pass it: SPARC (Commonwealth Fusion Systems, projected
+      6.2e21 at full performance), which aims for net energy (Q above 1) in
+      2027, and ITER (projected 7.4e21), whose 2024 schedule puts
+      deuterium-tritium operation in 2039. Reaching full performance usually
+      takes a new machine several years, so I put SPARC at likely 2032, with
+      ITER as the backstop.
+    sources:
+      - title: "Wurzel and Hsu, Continuing progress toward fusion energy breakeven and gain (2025)"
+        url: https://arxiv.org/abs/2505.03834
+      - title: "Commonwealth Fusion Systems, SPARC"
+        url: https://cfs.energy/technology/sparc
+      - title: "ITER (Wikipedia), 2024 revised schedule"
+        url: https://en.wikipedia.org/wiki/ITER
+
+# ------------------------------------------------------------------ quantum
+
+- id: quantum-gate-three-nines
+  name: "Two-qubit gates at 99.9% fidelity"
+  kind: milestone
+  fields: [computing, physics]
+  track: computers
+  tier: 3
+  threshold: { metric: two-qubit-gate-error, value: 0.001, label: "99.9%" }
+  summary: >-
+    An entangling gate between two qubits that fails less than once in a
+    thousand tries, reached with trapped ions at Oxford and NIST in 2016.
+  requires: [quantum-computing]
+  helped_by: [trapped-ion-qubits]
+
+- id: quantum-gate-four-nines
+  name: "Two-qubit gates at 99.99% fidelity"
+  kind: milestone
+  fields: [computing, physics]
+  track: computers
+  tier: 3
+  threshold: { metric: two-qubit-gate-error, value: 0.0001, label: "99.99%" }
+  summary: >-
+    A two-qubit gate that fails less than once in ten thousand tries,
+    claimed by IonQ in October 2025 with electronically controlled trapped
+    ions (a preprint, measured by a newer benchmarking method).
+  requires: [quantum-gate-three-nines]
+  helped_by: [trapped-ion-qubits]
+
+# ------------------------------------------------------------------ storage
+
+- id: hdd-1-dollar-gb
+  name: "A gigabyte of disk for a dollar"
+  kind: milestone
+  fields: [electronics, computing]
+  track: components
+  tier: 3
+  threshold: { metric: hdd-cost-per-gb, value: 1, label: "$1/GB" }
+  summary: >-
+    Hard disk storage for under a dollar a gigabyte (2020 dollars), about 100
+    million times cheaper than IBM's first disk drive in 1956.
+  requires: [hard-disk-drive]
+
+# --------------------------------------------------------------- longevity
+
+- id: life-expectancy-80
+  name: "Life expectancy of 80 in a country"
+  kind: milestone
+  fields: [medicine]
+  track: public-health
+  tier: 3
+  threshold: { metric: life-expectancy-best, value: 80, label: "80 years" }
+  summary: >-
+    A country (of at least a million people) whose newborns could expect to
+    live 80 years on average at that year's death rates. Japan was first.
+  requires: [antibiotics-penicillin, vaccination]
+  helped_by: [randomized-controlled-trial]
+
+- id: life-expectancy-85
+  name: "Life expectancy of 85 in a country"
+  kind: milestone
+  fields: [medicine]
+  track: public-health
+  tier: 3
+  threshold: { metric: life-expectancy-best, value: 85, label: "85 years" }
+  summary: >-
+    A country or territory of at least a million people with a life
+    expectancy at birth of 85 years for both sexes together. Hong Kong was
+    first.
+  requires: [life-expectancy-80]
+
+- id: life-expectancy-90
+  name: "Life expectancy of 90 in a country"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 2
+  threshold: { metric: life-expectancy-best, value: 90, label: "90 years" }
+  summary: >-
+    A country of at least a million people with a life expectancy at birth of
+    90 years for both sexes. The record line has risen about a quarter of a
+    year each year since 1840; whether it can keep doing so without slowing
+    aging itself is the central question of longevity research.
+  requires: [life-expectancy-85]
+
+# ------------------------------------------------------------- agriculture
+
+- id: cereal-yield-4-tonnes
+  name: "World cereal yield of 4 tonnes a hectare"
+  kind: milestone
+  fields: [agriculture]
+  track: crops
+  tier: 3
+  threshold: { metric: cereal-yield, value: 4, label: "4 t/ha" }
+  summary: >-
+    The world's farms averaging 4 tonnes of grain per hectare, three times
+    the 1961 average.
+  requires: [green-revolution, nitrogen-fertilizer-scale]
+  helped_by: [hybrid-corn, gm-crops]
+
+- id: cereal-yield-5-tonnes
+  name: "World cereal yield of 5 tonnes a hectare"
+  kind: milestone
+  fields: [agriculture]
+  track: crops
+  tier: 3
+  threshold: { metric: cereal-yield, value: 5, label: "5 t/ha" }
+  date: { window: [2038, 2056], likely: 2045 }
+  status: speculative
+  summary: >-
+    The world's farms averaging 5 tonnes of grain per hectare.
+  requires: [cereal-yield-4-tonnes]
+  helped_by: [gm-crops, precision-agriculture]
+  forecast:
+    note: >-
+      Cereal yields have grown in a straight line rather than exponentially:
+      about 0.045 tonnes a hectare a year from 1961 to 2024, but only about
+      0.03 a year from 2014 to 2024 (3.89 to 4.21). Carried forward from 4.21
+      in 2024, those rates give 5 tonnes between about 2042 and 2050, later
+      than the exponential trend's date; I put the likely date at 2045.
+    sources:
+      - title: "Our World in Data, Cereal yield (FAO)"
+        url: https://ourworldindata.org/grapher/cereal-yield

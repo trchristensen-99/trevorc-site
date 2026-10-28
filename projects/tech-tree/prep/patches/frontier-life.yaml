@@ -1,0 +1,393 @@
+# Changes to existing biology, medicine, agriculture and nanotech nodes that
+# are not yet achieved: concrete criteria, honest windows, and routes where
+# there are real alternatives. New nodes are in nodes/f-frontier-life.yaml.
+
+# --------------------------------------------------------------- sequencing
+# The three rival platforms shipped; they are products now, not attempts.
+
+- id: ultima-genomics
+  date: [2022, 2024]
+  status: achieved
+  summary: >-
+    Replaces the flow cell with an open, spinning 200 mm silicon wafer and
+    uses "mostly natural" nucleotides in a flow-based chemistry, aiming at
+    the $100 genome. It went on sale in February 2024; the Solaris upgrade
+    (2025) claims about $80 per 30x genome at list price and the UG200
+    series (2026) doubles reads per wafer.
+  efforts:
+    - who: Gilad Almogy (Ultima Genomics)
+      where: Fremont, California, USA
+      when: [2016, 2026]
+      outcome: achieved
+      note: Emerged from stealth in 2022 with about $600 million raised and began commercial sales in February 2024. Homopolymer accuracy remains a known weakness of flow-based reads, and the price claims are the company's.
+  sources:
+    - title: Ultima Genomics
+      url: https://www.ultimagenomics.com/
+    - title: "Ultima upgrades sequencer to enable the $80 genome (GenomeWeb, 2025)"
+      url: https://www.genomeweb.com/sequencing/ultima-genomics-upgrades-sequencer-serve-data-hungry-applications-enable-80-human-genome
+
+- id: element-aviti
+  status: achieved
+  summary: >-
+    Separates the stepping and reading of sequencing by synthesis: a
+    multivalent fluorescent "avidite" binds to read each base, so very little
+    labeled reagent is used and accuracy is high (often above Q40). AVITI
+    shipped from 2022; the higher-throughput VITARI, announced in February
+    2026 at $689,000 and claiming a genome for about $100, was due to ship in
+    the second half of 2026.
+  efforts:
+    - who: Molly He, Michael Previte and colleagues (Element Biosciences)
+      where: San Diego, USA
+      when: [2017, 2026]
+      outcome: achieved
+      note: Founded by Illumina alumni; AVITI launched March 2022 and shipped from June 2022, AVITI24 from December 2024.
+  sources:
+    - title: "Arslan et al., Nature Biotechnology 42:132 (2024)"
+      url: https://doi.org/10.1038/s41587-023-01750-7
+    - title: "Element Biosciences introduces VITARI (February 2026)"
+      url: https://www.elementbiosciences.com/news/element-biosciences-introduces-vitari-redefining-what-high-throughput-sequencing-makes-possible
+
+- id: roche-sbx
+  date: [2025, 2026]
+  status: achieved
+  summary: >-
+    A polymerase copies DNA into an "Xpandomer", a surrogate polymer about 50
+    times longer with large reporter groups, which is then read through
+    nanopores on a CMOS chip at high speed. Roche launched it as the AXELIOS
+    1 for research use on June 29, 2026, claiming same-day whole genomes and
+    reads up to about 1,500 bases.
+  efforts:
+    - who: Mark Kokoris and colleagues (Stratos Genomics, acquired by Roche in 2020)
+      where: Seattle, USA
+      when: [2007, 2025]
+      outcome: achieved
+      note: Unveiled February 2025 after Roche's earlier failed bid to buy Illumina (2012) and its Genia nanopore effort.
+    - who: Roche Diagnostics (AXELIOS 1)
+      where: Switzerland, USA
+      when: 2026
+      outcome: achieved
+      note: Global research-use launch June 29, 2026, with Hartwig, Broad Clinical Labs and 10x as early partners. Roche has published no cost or accuracy figures.
+
+- id: single-molecule-protein-sequencing
+  name: De novo single-molecule protein sequencing
+  date: { window: [2030, 2042], likely: 2034 }
+  status: ongoing
+  criterion: >-
+    Reading the amino acid sequence of single, full-length protein molecules
+    from scratch, with no reference database: all 20 amino acids
+    distinguished at 90 percent or better per-residue accuracy over at least
+    100 residues, on a commercially available instrument.
+  summary: >-
+    Reading proteins one molecule at a time, the way DNA is read, rather than
+    inferring them from mass spectrometry and a database. Instruments on sale
+    today read only a subset of amino acids, or identify known proteins
+    rather than sequencing unknown ones.
+  efforts:
+    - who: Quantum-Si (Jonathan Rothberg)
+      where: USA
+      when: [2022, 2026]
+      outcome: ongoing
+      note: Platinum (2022) and Platinum Pro (2025) use fluorescent recognizers that distinguish only some amino acids. The Proteus instrument, meant to read 19 or 20, slipped to 2027.
+    - who: Jeff Nivala (University of Washington); Giovanni Maglia; Cees Dekker; Hagan Bayley
+      where: USA, Netherlands, UK
+      when: [2021, 2026]
+      outcome: ongoing
+      note: Motor-driven multi-pass nanopore reading of protein strands hundreds of residues long with single-amino-acid sensitivity (Nature 2024), still short of de novo sequencing.
+    - who: Nautilus Biotechnology; Erisyon; Glyphic Biotechnologies
+      where: USA
+      when: [2018, 2026]
+      outcome: ongoing
+      note: Nautilus began early access in 2026 with a protein identification platform rather than a sequencer.
+  forecast:
+    note: >-
+      Three approaches (fluorescent recognizers, nanopores, fluorosequencing)
+      are about where DNA nanopore sequencing was around 2012, which took
+      another six to eight years to reach usable accuracy. Reading all 20
+      amino acids, which carry far more chemical variety than four bases and
+      cannot be copied or amplified, is the hard part, and instrument
+      launches have slipped repeatedly. I put a de novo instrument in the
+      early to mid 2030s.
+    sources:
+      - title: "Motone et al., Nature 633:662 (2024)"
+        url: https://doi.org/10.1038/s41586-024-07935-7
+      - title: "Quantum-Si second quarter 2026 results, Proteus launch moved to 2027"
+        url: https://www.nasdaq.com/press-release/quantum-si-reports-second-quarter-2026-financial-results-and-provides-proteustm
+
+# ----------------------------------------------------------------- genomics
+
+- id: newborn-genome-sequencing
+  criterion: >-
+    A national health system offers whole-genome sequencing to every newborn
+    as standard screening, with at least 80 percent of births in that country
+    covered in a year.
+  date: { window: [2032, 2048], likely: 2037 }
+  forecast:
+    note: >-
+      The cost (about $200 to $500 per genome) is no longer the obstacle;
+      evidence of benefit, interpretation capacity, consent and budgets are.
+      England's Generation Study had recruited 52,000 of 100,000 babies by
+      March 2026 and should finish in 2027, and the NHS 10-Year Plan (July
+      2025) makes universal newborn sequencing a longer-term ambition with a
+      stated 10-year horizon. Pilots elsewhere (GUARDIAN in New York,
+      Florida's Sunshine Genetics Act, NIH BEACONS) are in the thousands.
+      National screening programs usually slip past their first horizon, so I
+      put the first country-wide offer around 2037, a couple of years later
+      than before.
+    sources:
+      - title: Genomics England Generation Study
+        url: https://www.genomicsengland.co.uk/initiatives/newborns
+      - title: "Generation Study recruitment milestone (Digital Health, March 2026)"
+        url: https://www.digitalhealth.net/2026/03/major-genomics-data-study-hits-recruitment-milestone/
+
+- id: synthetic-mammalian-genome
+  criterion: >-
+    A complete mammalian genome (about 3 billion base pairs) assembled from
+    chemically synthesized DNA is placed in a cell that then divides and
+    grows normally.
+  requires: [synthetic-human-chromosome]
+  helped_by: [crispr-cas9, long-read-sequencing, t2t-complete-genome, recoded-genome]
+  date: { window: [2045, 2080], likely: 2058 }
+  forecast:
+    note: >-
+      The largest synthetic genomes grew from 1.08 Mb (2010) to 4 Mb (E. coli,
+      2019) and about 12 Mb (yeast Sc2.0, finished 2025): roughly 10x per
+      decade. A mammalian genome is about 250 times larger than yeast, which
+      at that pace is about 2.4 decades past 2025. Repeats, centromeres,
+      chromatin and delivery into mammalian cells are much harder than in
+      yeast, and DNA synthesis costs (about $0.07 per base for gene-length
+      fragments, $0.28 for 50 kb clonal pieces) must fall about 100-fold
+      more. SynHG's synthetic human chromosome, expected around 2034 here, is
+      the checkpoint; a whole genome is a further 50-fold step, so I now say
+      the late 2050s.
+    sources:
+      - title: "Wellcome: new project to pioneer human genome synthesis (2025)"
+        url: https://wellcome.org/news/new-project-pioneer-principles-human-genome-synthesis
+      - title: "Lab Online: final chromosome completed in the synthetic yeast genome (2025)"
+        url: https://www.labonline.com.au/content/life-scientist/news/scientists-complete-final-chromosome-in-synthetic-yeast-genome-628368406
+      - title: "Drug Discovery News: Ansa's 50 kb clonal DNA product (2025)"
+        url: https://www.drugdiscoverynews.com/ansa-biotechnologies-redefines-what-s-possible-in-dna-synthesis-with-50-kb-sequence-perfect-clonal-product-16751
+
+# ---------------------------------------------------------------- longevity
+
+- id: aging-reversal
+  name: Rejuvenation therapies
+  kind: technique
+  tier: 1
+  criterion: >-
+    A treatment, approved for use, that in a randomized controlled trial
+    reverses biological age by at least 10 years on a validated measure
+    across several organ systems at once (or equivalently restores muscle,
+    cognitive and immune function by 10 or more years, the XPRIZE Healthspan
+    bar), with the gain holding for at least two years.
+  summary: >-
+    Making an old body measurably younger, across organs, rather than
+    treating one age-related disease at a time. There are three broad ways
+    to get there: repair the damage in place, replace the worn parts, or
+    stop the clock and wait.
+  requires: [randomized-controlled-trial, aging-biomarker-endpoint]
+  routes:
+    - name: Repair
+      requires: [systemic-reprogramming, senolytics-approved, in-vivo-gene-editing, aging-drug-approved]
+      note: Reset cells where they are, with reprogramming, senolytics, gene editing and geroprotector drugs.
+    - name: Replace
+      requires: [lab-grown-solid-organ, xenotransplant-approved]
+      note: Swap out failing organs for new ones, grown in a lab or in a pig.
+    - name: Pause and wait
+      requires: [reversible-suspended-animation]
+      note: Stop biological time until the other routes mature. Today's cryonics is a bet on this, not a demonstration of it.
+  helped_by: [epigenetic-aging-clocks, induced-pluripotent-stem-cells, partial-reprogramming, organ-banking, agi]
+  date: { window: [2045, 2110], likely: 2062 }
+  forecast:
+    note: >-
+      Partial reprogramming reversed aging marks in mice from 2016 and
+      reached a first human trial in 2026, in the eye. Senolytics have missed
+      their endpoints so far. Pig kidneys keep people off dialysis for months
+      but not yet a year, and no lab-grown solid organ has been implanted.
+      Each route needs both the technology and an institutional change: an
+      accepted aging endpoint, around 2036 here, without which nobody can run
+      the trial this criterion asks for. Metaculus forecasters put longevity
+      escape velocity, a looser bar, somewhere from the late 2030s to beyond
+      2100, with medians in the 2050s. I put a therapy meeting this bar
+      around 2062, with very wide uncertainty and a real chance that the
+      "replace" route gets there first on organ-by-organ grounds without
+      anything that deserves the name rejuvenation.
+    sources:
+      - title: "Metaculus: when will a country reach longevity escape velocity?"
+        url: https://www.metaculus.com/questions/6592/date-life-expectancy-hits-escape-velocity
+      - title: "XPRIZE Healthspan: 20 finalist teams advance (August 2026)"
+        url: https://www.xprize.org/news/20-healthspan-finalist-teams-advance-in-the-race-to-extend-healthy-aging
+      - title: "Ocampo et al., Cell 167:1719 (2016)"
+        url: https://doi.org/10.1016/j.cell.2016.11.052
+
+# -------------------------------------------------------------------- brain
+
+- id: whole-brain-emulation
+  criterion: >-
+    A human brain is scanned at synaptic resolution and simulated so that the
+    simulation, questioned over days, is indistinguishable from the person to
+    people who knew them, and reports the person's memories.
+  requires: [human-connectome, mouse-brain-emulation]
+  helped_by: [electron-microscope, deep-learning, gpu, agi, expansion-microscopy]
+  date: { window: [2055, 2160], likely: 2090 }
+  forecast:
+    note: >-
+      The path runs through a whole mouse connectome (about 2036 here), an
+      emulated fly or worm (about 2033), a mouse emulation (about 2052) and a
+      human connectome (about 2062). Each step so far has taken longer than
+      expected, and two things beyond wiring are unsolved: reading synapse
+      strengths and molecular state from a preserved brain, and showing that
+      a connectome plus physiology reproduces behavior at all. Metaculus
+      forecasters have a community median in the early 2070s with a very wide
+      range. I lean later, around 2090.
+    sources:
+      - title: "Metaculus: when will the first whole human brain be emulated?"
+        url: https://www.metaculus.com/questions/2813/
+      - title: "Zanichelli et al., State of Brain Emulation Report 2025 (arXiv)"
+        url: https://arxiv.org/abs/2510.15745
+      - title: "Wellcome: Scaling connectomics (2023)"
+        url: https://wellcome.org/insights/reports/scaling-connectomics
+
+- id: brain-computer-interfaces
+  criterion: >-
+    Implanted interfaces that restore useful function are in routine clinical
+    use: at least 1,000 people living with a high-channel implant they use
+    daily outside a research study.
+  summary: >-
+    Electrode arrays in or on the brain whose signals are decoded,
+    increasingly by neural networks, to move cursors and robot arms or
+    produce speech for paralyzed people. Roughly 50 to 100 people had
+    high-channel implants by 2026, almost all of them in trials.
+  date: [2004, 2026]
+  helped_by: [deep-learning, speech-neuroprosthesis]
+  forecast:
+    note: >-
+      Counts went from a handful in 2023 to Neuralink's 21 participants by
+      January 2026, plus Synchron's six, Paradromics' first and China's NEO.
+      Reaching a thousand daily users needs the first market approvals
+      (around 2030 here) and surgical capacity. I put routine use around
+      2033.
+    sources:
+      - title: "MIT Technology Review: China approves a brain chip (June 2026)"
+        url: https://www.technologyreview.com/2026/06/01/1138133/china-world-first-brain-chip/
+      - title: "University of Michigan: first human Paradromics implant (2026)"
+        url: https://www.uofmhealth.org/news-release/university-michigan-implants-first-human-paradromics-wireless-brain-computer-interface-designed
+
+- id: bci-at-scale
+  criterion: >-
+    At least 100,000 people worldwide are living with an implanted
+    high-bandwidth brain interface, reimbursed by health systems as ordinary
+    care.
+  requires: [brain-computer-interfaces, bci-approved]
+  helped_by: [ai-agents, speech-neuroprosthesis]
+  date: { window: [2038, 2060], likely: 2045 }
+  forecast:
+    note: >-
+      Cochlear implants, the closest analogue, took about 20 years from first
+      approval (1984) to 100,000 recipients worldwide. If the first BCI
+      approvals land around 2030, the same curve gives about 2050; faster
+      electronics and a large eligible population (roughly 5 million people
+      with paralysis worldwide) argue for sooner, surgical capacity and cost
+      for later. I put 2045. Elective use by healthy people, if it ever
+      comes, is a separate and later question.
+    sources:
+      - title: Wikipedia, Cochlear implant
+        url: https://en.wikipedia.org/wiki/Cochlear_implant
+      - title: "MIT Technology Review: China approves a brain chip (June 2026)"
+        url: https://www.technologyreview.com/2026/06/01/1138133/china-world-first-brain-chip/
+
+# ---------------------------------------------------------------- nanotech
+
+- id: molecular-nanotechnology
+  name: Atomically precise manufacturing
+  tier: 1
+  criterion: >-
+    Macroscopic objects (at least a gram) are manufactured to atomic
+    precision, every atom in a specified place, by programmable molecular
+    machinery, at a cost and rate that make the product useful rather than a
+    demonstration.
+  summary: >-
+    Making things with every atom where it is meant to be, as Richard Feynman
+    suggested in 1959 and Eric Drexler argued in 1986. Two routes are live:
+    biology, where designed proteins and DNA frameworks already assemble
+    nanoscale structures, and mechanical positional assembly with microscope
+    tips.
+  requires: [scanning-tunneling-microscope]
+  routes:
+    - name: Biological
+      requires: [programmable-molecular-assembler, de-novo-protein-design, dna-origami]
+      note: Build with designed proteins, DNA frameworks and engineered organisms. This is where the money and the results are.
+    - name: Mechanical
+      requires: [positional-assembly-3d]
+      note: >-
+        Drexler's diamond mechanosynthesis, with tips that place atoms
+        covalently, scaled up by machines that build machines.
+  helped_by: [protein-structure-prediction, deep-learning, 3d-printing, single-atom-manipulation, engineered-microbe-manufacturing]
+  date: { window: [2055, 2140], likely: 2080 }
+  forecast:
+    note: >-
+      Read as atomic precision in bulk, not as nanoscale materials, which
+      already exist. On the biological route, designed proteins and DNA
+      origami build precise nanostructures, but nothing joins them into
+      macroscopic objects; UK ARIA started a £50 million programme in 2026 on
+      protein-templated materials. On the mechanical route, tips can do
+      single-site covalent chemistry but no one has built a 3D covalent
+      structure that way, and funding is tiny. A dated snapshot of the
+      Metaculus question on molecular nanotechnology gave roughly 50 percent
+      by 2040, which looks far too fast against the experimental record. I
+      put a gram-scale atomically precise product around 2080, and note this
+      is judgment rather than extrapolation.
+    sources:
+      - title: "C&EN: the Drexler and Smalley debate (2003)"
+        url: https://pubsapp.acs.org/cen/coverstory/8148/8148counterpoint.html
+      - title: "ARIA: Universal Fabricators programme thesis"
+        url: https://app-aria-cm-prod.azurewebsites.net/media/wluhzkuw/universal-fabricators-thesis.pdf
+      - title: "Nobel Prize in Chemistry 2016"
+        url: https://www.nobelprize.org/prizes/chemistry/2016/summary/
+
+# ------------------------------------------------------------- agriculture
+
+- id: cultivated-meat
+  criterion: >-
+    Cultivated meat is approved for sale and sold in ordinary retail, rather
+    than in tasting events or single restaurants, in at least three major
+    markets.
+  summary: >-
+    Growing animal muscle and fat cells in bioreactors instead of raising
+    animals. Singapore first approved sales in 2020, the US in 2023, Israel
+    in 2024 and Australia and New Zealand in 2025, but output is tiny, costs
+    are far above conventional meat, and seven US states have banned sales.
+  date: { window: [2026, 2040], likely: 2032 }
+  helped_by: [recombinant-dna, precision-fermentation]
+  forecast:
+    note: >-
+      Approvals keep coming (Singapore, the US, Israel, Australia and New
+      Zealand, plus UK pet food), but retail distribution does not: products
+      appear in single restaurants and then disappear. Investment fell to
+      $73.9 million in 2025 from nearly $1 billion in 2021, about 140
+      companies remain, Believer Meats shut down in late 2025, and seven US
+      states ban sales, with Florida's ban upheld on appeal in March 2026.
+      Ordinary retail in three markets looks like the early 2030s; price
+      parity is a separate, much later milestone.
+    sources:
+      - title: "GFI: cultivated meat and seafood state of the industry report"
+        url: https://gfi.org/resource/cultivated-meat-and-seafood-state-of-the-industry-report/
+      - title: "FoodNavigator: cultivated meat regulation, where countries stand in 2026"
+        url: https://www.foodnavigator.com/Article/2026/02/18/cultivated-meat-regulation-where-countries-stand-in-2026/
+      - title: "WLRN: appeals court upholds Florida's ban on lab-grown meat (March 2026)"
+        url: https://www.wlrn.org/food-and-agriculture/2026-03-24/appeals-court-upholds-floridas-ban-on-lab-grown-meat
+  efforts:
+    - who: Mark Post (Maastricht University), first cultured burger
+      where: Netherlands
+      when: 2013
+      outcome: achieved
+      note: Cost about $330,000.
+    - who: Eat Just (GOOD Meat)
+      where: Singapore
+      when: 2020
+      outcome: ongoing
+      note: The first regulatory approval anywhere, November 2020.
+    - who: UPSIDE Foods; Mosa Meat; Aleph Farms; Vow; Wildtype; Mission Barns
+      where: USA, Netherlands, Israel, Australia
+      when: [2023, 2026]
+      outcome: ongoing
+      note: Five products cleared in the US by 2026; Vow quail approved in Australia and New Zealand in 2025; Florida, Alabama, Indiana, Mississippi, Montana, Nebraska and Texas have banned sales.

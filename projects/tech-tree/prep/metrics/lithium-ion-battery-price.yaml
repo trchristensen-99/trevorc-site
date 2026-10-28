@@ -1,5 +1,7 @@
 id: lithium-ion-battery-price
-name: Price of lithium-ion battery cells
+name: Price of lithium-ion battery cells (cells only, not packs)
+short: Li-ion cell price
+field: energy
 unit: USD per kWh (constant 2024 US$)
 better: lower
 log: true
@@ -38,13 +40,19 @@ points:                           # [year, value]
   - [2022, 132]
   - [2023, 111]
   - [2024, 78]
+  - [2025, 74]                    # BNEF 2025 survey, cell share of the pack price, real 2025 US$
 source:
   title: "Our World in Data, Price of lithium-ion battery cells (Rupert Way 2026, based on Ziegler and Trancik 2021, BloombergNEF and Avicenne Energy)"
   url: https://ourworldindata.org/grapher/price-of-lithium-ion-battery-cells
 license: CC BY 4.0 (as published by Our World in Data)
 note: >-
-  Representative cell price across major chemistries, constant 2024 US$ per kWh.
-  1991 to 2015 follows Ziegler and Trancik (2021, Energy Environ. Sci. 14,
-  1635); later years blend BloombergNEF and Avicenne survey data. Cell price
-  only; pack prices are higher (BNEF's 2024 pack average was about $115/kWh).
-  Values rounded to 1 decimal from the OWID CSV downloaded 2026-10-27.
+  The price of CELLS only, not packs (see battery-pack-price for finished
+  packs; BNEF's 2025 pack average was $108/kWh, of which $74 was cells).
+  Representative cell price across major chemistries, constant 2024 US$ per
+  kWh. 1991 to 2015 follow Ziegler and Trancik (2021, Energy Environ. Sci.
+  14, 1635); later years blend BloombergNEF and Avicenne survey data. 1991 to
+  2024 are rounded to 1 decimal from the OWID CSV (downloaded 2026-10-27,
+  unchanged on 2026-10-28). 2025 is the cell share in BNEF's 2025 survey
+  chart (real 2025 US$; that chart also puts 2024 cells at $78, so the two
+  dollar bases agree closely):
+  https://about.bnef.com/insights/clean-transport/lithium-ion-battery-pack-prices-fall-to-108-per-kilowatt-hour-despite-rising-metal-prices-bloombergnef/

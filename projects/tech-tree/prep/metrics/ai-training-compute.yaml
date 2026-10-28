@@ -1,8 +1,11 @@
 id: ai-training-compute
 name: Training compute of notable AI models
+short: AI training compute
+field: computing
 unit: FLOP
 better: higher
 log: true
+fit: {from: 2010}  # the deep-learning era; before 2010 compute doubled about every two years
 points:                           # [year, value]; a representative set of landmark and frontier models
   - [1950, 40]                    # Theseus (Shannon's maze-solving mouse)
   - [1957, 694894.9377361819]     # Perceptron Mark I

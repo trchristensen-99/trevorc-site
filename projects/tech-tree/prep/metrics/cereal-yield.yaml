@@ -1,0 +1,84 @@
+id: cereal-yield
+name: World cereal yield
+short: Cereal yield
+unit: tonnes per hectare
+better: higher
+log: false
+field: agriculture
+points:                           # [year, value]
+  - [1961, 1.353]
+  - [1962, 1.427]
+  - [1963, 1.44]
+  - [1964, 1.494]
+  - [1965, 1.497]
+  - [1966, 1.61]
+  - [1967, 1.653]
+  - [1968, 1.696]
+  - [1969, 1.709]
+  - [1970, 1.766]
+  - [1971, 1.892]
+  - [1972, 1.858]
+  - [1973, 1.94]
+  - [1974, 1.893]
+  - [1975, 1.913]
+  - [1976, 2.026]
+  - [1977, 2.025]
+  - [1978, 2.213]
+  - [1979, 2.176]
+  - [1980, 2.161]
+  - [1981, 2.247]
+  - [1982, 2.369]
+  - [1983, 2.309]
+  - [1984, 2.499]
+  - [1985, 2.529]
+  - [1986, 2.557]
+  - [1987, 2.54]
+  - [1988, 2.46]
+  - [1989, 2.629]
+  - [1990, 2.758]
+  - [1991, 2.683]
+  - [1992, 2.789]
+  - [1993, 2.738]
+  - [1994, 2.814]
+  - [1995, 2.767]
+  - [1996, 2.926]
+  - [1997, 2.994]
+  - [1998, 3.051]
+  - [1999, 3.113]
+  - [2000, 3.059]
+  - [2001, 3.135]
+  - [2002, 3.078]
+  - [2003, 3.118]
+  - [2004, 3.364]
+  - [2005, 3.28]
+  - [2006, 3.281]
+  - [2007, 3.37]
+  - [2008, 3.545]
+  - [2009, 3.559]
+  - [2010, 3.561]
+  - [2011, 3.655]
+  - [2012, 3.612]
+  - [2013, 3.83]
+  - [2014, 3.893]
+  - [2015, 3.933]
+  - [2016, 4.017]
+  - [2017, 4.066]
+  - [2018, 4.022]
+  - [2019, 4.125]
+  - [2020, 4.114]
+  - [2021, 4.172]
+  - [2022, 4.183]
+  - [2023, 4.228]
+  - [2024, 4.206]
+source:
+  title: "Our World in Data, Cereal yield (FAO, Production: Crops and livestock products, 2025)"
+  url: https://ourworldindata.org/grapher/cereal-yield
+license: CC BY 4.0
+note: >-
+  World production of all cereals (wheat, rice, maize, barley, sorghum,
+  millet and others) divided by harvested area, from FAOSTAT via OWID (CSV
+  downloaded 2026-10-28). Rice is counted as paddy. The rise from 1.35 tonnes
+  in 1961 to over 4 is the Green Revolution and its successors: semi-dwarf
+  wheat and rice, hybrid maize, fertilizer and irrigation. Growth has been
+  roughly linear (about 0.045 tonnes a year), so the exponential fit slowly
+  overstates future gains.

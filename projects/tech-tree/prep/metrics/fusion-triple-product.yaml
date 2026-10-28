@@ -1,0 +1,42 @@
+id: fusion-triple-product
+name: Record fusion triple product in magnetic confinement
+short: Fusion triple product
+unit: keV·s/m³
+better: higher
+log: true
+field: physics
+fit: {to: 1995}  # the rise from ZETA to TFTR; no magnetic device has beaten TFTR since
+points:                           # [year, value]; only new records
+  - [1957, 9.0e14]   # ZETA
+  - [1969, 2.0e16]   # T-3
+  - [1971, 6.8e16]   # ST
+  - [1972, 2.4e17]   # ST
+  - [1974, 1.3e18]   # TFR
+  - [1976, 3.2e18]   # PLT
+  - [1978, 2.4e19]   # Alcator A
+  - [1984, 1.2e20]   # Alcator C
+  - [1991, 6.1e20]   # JET (shot 26087)
+  - [1995, 7.9e20]   # TFTR (shot 83546)
+source:
+  title: "Wurzel and Hsu, Continuing progress toward fusion energy breakeven and gain as measured against the Lawson criterion, Physics of Plasmas 32, 112106 (2025), arXiv:2505.03834"
+  url: https://arxiv.org/abs/2505.03834
+license: "Paper under the arXiv non-exclusive license; the underlying dataset (github.com/swurzel/lawson-criterion-paper) is MIT-licensed"
+note: >-
+  The Lawson triple product n_i0 T_i0 tau_E* (peak ion density times peak ion
+  temperature times energy confinement time, corrected for transient
+  heating), the record for magnetic confinement devices (tokamaks, pinches,
+  stellarators) by year, from Tables 1 to 3 of Wurzel and Hsu (2025) and
+  their 2022 paper (arXiv:2105.10954). By their Table 3 (2022), D-T ignition
+  needs at least 2.9e21 keV·s/m³ at 14 keV, and Q_fuel = 1 needs 4.6e20. The
+  magnetic record has stood since TFTR in 1995: JT-60U reached 5.6e20 in
+  1998 and JET 2.2e20 in its 2021 D-T campaign, and the machines designed to
+  pass ignition (SPARC, projected 6.2e21; ITER, projected 7.4e21) are still
+  being built.
+  The best stellarator is Wendelstein 7-X at 6.2e19 (2017); its 2025
+  long-pulse record had no published value at the time of checking.
+  Inertial confinement uses a different triple product (n ⟨T⟩ tau_stag) and
+  a different ignition condition, so it is not mixed in: NIF holds that record
+  at 1.7e22 (shot N170827, 2017), and its shot N210808 (2021) reached
+  hot-spot ignition at 1.6e22. After ignition the triple product stops being
+  a useful measure for ICF; NIF's later shots are measured by gain (Q_sci
+  1.51 in December 2022, 4.13 in April 2025).

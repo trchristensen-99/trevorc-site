@@ -1,0 +1,33 @@
+id: solar-lcoe
+name: Levelized cost of electricity from new solar PV plants, world
+short: Solar power cost
+unit: USD per kWh (constant 2025 US$)
+better: lower
+log: true
+field: energy
+points:                           # [year, value]
+  - [2010, 0.4077]
+  - [2011, 0.3438]
+  - [2012, 0.2598]
+  - [2013, 0.2026]
+  - [2014, 0.1808]
+  - [2015, 0.1337]
+  - [2016, 0.1174]
+  - [2017, 0.09356]
+  - [2018, 0.07915]
+  - [2019, 0.0685]
+  - [2020, 0.06078]
+  - [2021, 0.05435]
+  - [2022, 0.05045]
+  - [2023, 0.04261]
+  - [2024, 0.043]
+  - [2025, 0.04354]
+source:
+  title: "Our World in Data, Levelized cost of energy by technology (IRENA, Renewable Power Generation Costs in 2025, and earlier editions)"
+  url: https://ourworldindata.org/grapher/levelized-cost-of-energy
+license: CC BY 4.0 (OWID); IRENA data may be reused with attribution
+note: >-
+  Levelized cost of electricity: lifetime cost of building, financing and
+  running a plant divided by its lifetime output, without subsidies, as
+  estimated by IRENA in constant 2025 US$ (4 significant figures, OWID CSV
+  downloaded 2026-10-28). Global capacity-weighted average for utility-scale solar PV plants commissioned each year. The fall slowed after 2020: LCOE was flat at about 0.043 from 2023 to 2025.

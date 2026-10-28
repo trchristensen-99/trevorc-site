@@ -1,0 +1,73 @@
+id: hdd-cost-per-gb
+name: Price of hard disk storage per gigabyte
+short: Disk price
+unit: USD per GB (constant 2020 US$)
+better: lower
+log: true
+field: electronics
+points:                           # [year, value]
+  - [1956, 87540000]
+  - [1959, 67590000]
+  - [1960, 31480000]
+  - [1964, 29380000]
+  - [1966, 8366000]
+  - [1970, 1732000]
+  - [1973, 1514000]
+  - [1974, 971200]
+  - [1975, 890000]
+  - [1979, 659500]
+  - [1980, 581100]
+  - [1981, 526700]
+  - [1982, 496200]
+  - [1983, 311600]
+  - [1984, 93410]
+  - [1985, 75510]
+  - [1986, 43570]
+  - [1987, 34100]
+  - [1988, 21800]
+  - [1989, 15620]
+  - [1990, 6474]
+  - [1991, 5305]
+  - [1992, 2582]
+  - [1993, 1286]
+  - [1994, 756.6]
+  - [1995, 363.2]
+  - [1996, 210.5]
+  - [1997, 78.03]
+  - [1998, 39.45]
+  - [1999, 13.73]
+  - [2000, 6.12]
+  - [2001, 3.785]
+  - [2002, 1.75]
+  - [2003, 1.055]
+  - [2004, 0.8349]
+  - [2005, 0.5384]
+  - [2006, 0.2808]
+  - [2007, 0.2496]
+  - [2008, 0.1202]
+  - [2009, 0.08443]
+  - [2010, 0.05341]
+  - [2011, 0.04218]
+  - [2012, 0.04133]
+  - [2013, 0.04073]
+  - [2014, 0.03826]
+  - [2015, 0.03093]
+  - [2016, 0.02987]
+  - [2017, 0.0264]
+  - [2018, 0.02409]
+  - [2019, 0.01898]
+  - [2020, 0.01625]
+  - [2021, 0.01552]
+  - [2022, 0.01264]
+  - [2023, 0.01062]
+source:
+  title: "Our World in Data, Historical cost of computer memory and storage (John C. McCallum, 2023, adjusted with the US CPI)"
+  url: https://ourworldindata.org/grapher/historical-cost-of-computer-memory-and-storage
+license: CC BY 4.0 (OWID processing); underlying compilation by John C. McCallum
+note: >-
+  Cheapest price McCallum found each year for hard disk drives (IBM's RAMAC
+  in 1956 onward), converted by OWID to constant 2020 US$ with the US consumer
+  price index, and here from dollars per terabyte to dollars per gigabyte (4
+  significant figures). OWID CSV downloaded 2026-10-28; the series ends in
+  2023. The decline has slowed since about 2010, from halving every 1 to 2
+  years to every 4 or so.

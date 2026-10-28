@@ -42,7 +42,52 @@ build (`build.mjs`) checks the files, lays the nodes out and writes
 ```
 
 Only `id`, `name`, `kind`, `fields`, `date`, `status`, `tier`, `summary`
-and `sources` are required. Prerequisites point backwards in time: a tech's
+and `sources` are required, plus `criterion` for anything not yet
+achieved.
+
+### Fields for the frontier
+
+```yaml
+  track: longevity                # sub-lane within the main field; see Tracks
+  criterion: >-                   # for ongoing and speculative nodes: what
+    A therapy that, in a randomized  # counts as done, concretely enough that
+    trial, ...                    # someone could check it.
+  routes:                         # alternative paths: any ONE route is enough
+    - name: Repair                #   (requires: still lists what every route needs)
+      requires: [partial-reprogramming-humans, senolytics-approved]
+      note: Fix the damage in place.
+    - name: Replace
+      requires: [whole-organ-bioprinting, xenotransplant-routine]
+```
+
+### Milestones
+
+A milestone is a threshold on a metric: "a human genome for under $1,000".
+
+```yaml
+- id: genome-100-dollars
+  name: "$100 genome"
+  kind: milestone
+  fields: [biology]
+  track: sequencing
+  tier: 2
+  threshold: { metric: sequencing-cost-per-genome, value: 100, label: "$100" }
+  # date and status may be left out: the build dates the milestone from the
+  # data (the first year it was crossed) or, if not yet crossed, from the
+  # trend carried forward. Give them to override with your own judgment;
+  # the trend's year is still shown alongside.
+  requires: [next-generation-sequencing]
+  summary: ...
+  sources: [...]                  # optional if the metric's source covers it
+```
+
+### Patches
+
+`patches/*.yaml` changes nodes defined elsewhere: each entry gives an `id`
+and the fields to replace (whole fields, so to change `requires` give the
+full new list). `remove: true` deletes a node. `links.yaml` and
+`links-*.yaml` add links (`requires`, `helped_by`, `uses`, `competes`) and
+can remove wrong ones with `drop: { requires: [...] }`. Prerequisites point backwards in time: a tech's
 `requires` should all be dated no later than it.
 
 ## Kinds
@@ -55,14 +100,34 @@ and `sources` are required. Prerequisites point backwards in time: a tech's
 - `technique`: a method or process (smelting, vulcanization, PCR).
 - `device`: a made thing (the triode, the steam engine).
 - `infrastructure`: large shared systems (the power grid, the internet).
+- `milestone`: a threshold on a metric (see Milestones).
 - `institution`: social technologies, meaning reusable methods and
   organizations that, once they exist, can be copied and make other things
   possible: writing, money, double-entry bookkeeping, the patent, the
   joint-stock company, peer review, the randomized trial.
 
-## Fields
+## Fields and tracks
 
-In lane order, from abstract to applied:
+Each field is a lane; within it, tracks group related technologies so
+they sit next to each other. Assign tracks in `tracks.yaml` (existing
+nodes) or with `track:` on the node. In lane order, from abstract to
+applied, with each field's tracks top to bottom (defined in `build.mjs`):
+
+- `math`: geometry-analysis, number-algebra, probability-statistics, logic, cryptography
+- `computing`: computing-theory, classic-ai, deep-learning, bioinformatics, software, networks, computers
+- `electronics`: processors, components, chipmaking, communication, neurotech
+- `physics`: quantum-atomic, em-optics, astronomy, earth-climate, mechanics-heat, nuclear-particle
+- `energy`: nuclear-energy, renewables, grid, storage-fuels, carbon, fossil-fuels, engines
+- `engineering`: space, aviation, land-transport, sea-transport, machines, construction
+- `materials`: metals, traditional-materials, modern-materials, nanotech
+- `chemistry`: classical-chemistry, industrial-chemistry, analytical-chemistry
+- `biology`: sequencing, single-molecule, genomics, molecular-biology, synthetic-biology, life-science
+- `medicine`: genetic-medicine, drugs, longevity, surgery-organs, public-health
+- `agriculture`: crops, soil-water, farm-machines, animals-food
+- `society`: research, economy, law-governance, records
+- roots: preconditions, resources
+
+The fields themselves:
 
 `math`, `computing`, `electronics`, `physics`, `energy`, `engineering`
 (mechanics, transport, construction), `materials`, `chemistry`, `biology`,
@@ -87,4 +152,9 @@ source:
   url: https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data
 license: public domain
 note: Optional.
+short: Genome cost                # optional short name for the trend strips
+field: biology                    # the field it belongs with
+fit: { from: 2008 }               # optional: fit the trend from/to a year, or
+                                  # envelope: min|max (best value each year)
+cumulative: other-metric-id       # optional: fit a learning curve against it
 ```

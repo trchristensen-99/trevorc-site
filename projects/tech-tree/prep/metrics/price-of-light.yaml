@@ -1,5 +1,7 @@
 id: price-of-light
 name: Labor price of light
+short: Price of light
+field: energy
 unit: hours of work per 1,000 lumen-hours
 better: lower
 fit: {from: 1800}  # the trend since the first factory-made light sources

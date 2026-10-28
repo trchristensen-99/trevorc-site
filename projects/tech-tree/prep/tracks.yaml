@@ -1,0 +1,93 @@
+# Tracks: sub-lanes within each field, so related technologies sit next to
+# each other (satellites beside human spaceflight, not beside container
+# shipping). The tracks themselves, in top-to-bottom order, are defined in
+# build.mjs (FIELDS). A node can also set `track:` itself, which wins over
+# this list. Nodes whose track isn't given anywhere go in their field's
+# first track, with a warning.
+
+# Mathematics
+geometry-analysis: [geometry, trigonometry, analytic-geometry, calculus, fourier-analysis, non-euclidean-geometry]
+number-algebra: [tally-marks, numerals, place-value-zero, algebra]
+probability-statistics: [probability-theory, statistics, monte-carlo-method, reverse-mode-autodiff]
+logic: [formal-logic, boolean-logic, mathematical-logic]
+cryptography: [public-key-cryptography, shor-algorithm, post-quantum-cryptography]
+
+# Computing and AI
+computing-theory: [computability-theory, switching-circuit-theory, mcculloch-pitts-neuron, information-theory, turing-test]
+classic-ai: [dartmouth-workshop, symbolic-ai, perceptron, lisp, perceptrons-book-limits, expert-systems, neocognitron, hopfield-network, backpropagation, bayesian-networks, reinforcement-learning, convolutional-networks, support-vector-machines, lstm, deep-blue, lisp-machines, fifth-generation-project]
+deep-learning: [imagenet, deep-learning, word-embeddings, deep-belief-networks, deep-reinforcement-learning, gans, attention-mechanism, residual-networks, alphago, transformer, mixture-of-experts, rlhf, generative-pretraining, bert, scaling-laws, large-language-models, diffusion-models, multimodal-models, chinchilla-scaling, generative-media, chatgpt, frontier-models, open-weight-llms, reasoning-models, ai-mathematics, ai-coding-assistants, ai-agents, robot-foundation-models, automated-ai-research, agi]
+bioinformatics: [phred-phrap, de-bruijn-assembly, short-read-alignment, neural-basecalling]
+software: [compiler, programming-languages, time-sharing, operating-systems, relational-database, unix, graphical-user-interface, search-engines, cryptocurrency]
+networks: [packet-switching, arpanet, email, ethernet, tcp-ip, internet, world-wide-web, cloud-computing]
+computers: [abacus, jacquard-loom, analytical-engine, tabulating-machine, electronic-computer, stored-program-computer, ibm-system-360, personal-computer, gpu-computing, ai-datacenters, quantum-computing, fault-tolerant-quantum-computer, cryptographically-relevant-quantum-computer]
+
+# Electronics and communication
+processors: [microprocessor, risc-architecture, itanium, x86-64, gpu, multicore-processors, ai-accelerators]
+components: [electric-motor, relay, electric-light, vacuum-tube, transistor, mosfet, cmos, integrated-circuit, planar-process, finfet, gate-all-around, magnetic-core-memory, hard-disk-drive, dram, flash-memory]
+chipmaking: [photolithography, moores-law, dennard-scaling, deep-uv-lithography, euv-lithography, high-na-euv, advanced-packaging]
+communication: [telegraph, telephone, radio, radar, communications-satellites, optical-fiber, cellular-network, smartphone, satellite-megaconstellations]
+neurotech: [brain-computer-interfaces, bci-at-scale]
+
+# Physics
+quantum-atomic: [radioactivity, electron, quantum-hypothesis, atomic-nucleus, quantum-mechanics, semiconductor-physics, superconductivity, atomic-clock, scanning-tunneling-microscope, zero-mode-waveguides, quantum-error-correction, quantum-supremacy, below-threshold-error-correction]
+em-optics: [optics-alhazen, compass, lenses, leyden-jar, electric-battery, electromagnetism, electromagnetic-induction, spectroscopy, maxwell-equations, cathode-ray-tube, electromagnetic-waves, x-rays, electron-microscope, laser]
+astronomy: [astronomy-ancient, heliocentrism, telescope, keplers-laws, space-telescopes, exoplanet-detection, gravitational-wave-detection]
+earth-climate: [plate-tectonics, climate-science, solar-geoengineering]
+mechanics-heat: [galilean-kinematics, newtonian-mechanics, vacuum-pump, carnot-heat-engine-theory, thermodynamics, statistical-mechanics, relativity]
+nuclear-particle: [neutron, cyclotron, nuclear-fission, nuclear-reactor, nuclear-weapon, particle-accelerator, standard-model, higgs-boson, tokamak, fusion-ignition-nif]
+
+# Energy
+nuclear-energy: [nuclear-power, small-modular-reactors, molten-salt-thorium, fusion-power]
+renewables: [watermill, windmill, solar-photovoltaic, wind-power, offshore-wind, perovskite-solar-cells, perovskite-silicon-tandem, enhanced-geothermal, space-based-solar]
+grid: [electric-generator, dc-power-distribution, ac-power, power-grid, grid-batteries, long-duration-storage]
+storage-fuels: [lithium-ion-battery, sodium-ion-battery, solid-state-batteries, green-hydrogen]
+carbon: [carbon-capture, gigaton-carbon-removal]
+fossil-fuels: [deep-coal-mining, oil-refining, shale-fracking]
+engines: [control-of-fire, steam-engine, watt-steam-engine, refrigeration, internal-combustion-engine, steam-turbine]
+
+# Engineering and transport
+space: [rocketry, satellites, earth-observation, human-spaceflight, planetary-probes, moon-landing, space-stations, gps, space-shuttle, mars-rovers, asteroid-sample-return, reusable-rockets, planetary-defense, orbital-manufacturing, fully-reusable-rockets, crewed-lunar-return, crewed-mars-landing, asteroid-mining, mars-settlement, interstellar-probe]
+aviation: [aerodynamics, airplane, jet-engine, jet-airliner, concorde, electric-aviation]
+land-transport: [wheel, railway, transcontinental-railroad, automobile, high-speed-rail, electric-vehicles, autonomous-vehicles]
+sea-transport: [watercraft, sailing-ships, transoceanic-voyages, longitude-chronometer, steamboat, panama-canal, container-shipping]
+machines: [woodworking, bow-and-arrow, water-clock, antikythera-mechanism, spinning-wheel, mechanical-clock, spinning-jenny, water-frame, precision-cylinder-boring, machine-tools, interchangeable-parts, assembly-line, 3d-printing]
+construction: [monumental-architecture]
+
+# Materials
+metals: [copper-smelting, bronze, iron-smelting, blast-furnace, crucible-steel-wootz, coke-iron-smelting, puddling-process, steel-bessemer, open-hearth-steel, aluminum-smelting]
+traditional-materials: [stone-tools, clothing, weaving, pottery, lime-plaster, glassmaking, concrete-roman, paper, portland-cement]
+modern-materials: [vulcanized-rubber, plastics, single-crystal-growth, synthetic-diamond, carbon-fiber, superconductors-high-temp, carbon-nanotubes, graphene, room-temperature-superconductor, molecular-nanotechnology]
+
+# Chemistry
+classical-chemistry: [distillation, greek-fire, maya-blue, gunpowder, chemical-revolution, electrolysis, atomic-theory, photography, synthetic-dyes, chemical-structure-theory, dynamite, periodic-table]
+industrial-chemistry: [solvay-process, ammonia-synthesis-catalyst, haber-bosch, desalination, lithium-iron-phosphate, direct-air-capture]
+analytical-chemistry: [nuclein-discovery, chromatography, gel-electrophoresis, protein-sequencing-classical, dideoxynucleotides, maxam-gilbert-sequencing, capillary-electrophoresis, reversible-terminators]
+
+# Biology
+sequencing: [plus-minus-sequencing, sanger-sequencing, shotgun-sequencing, automated-sequencing, abi-370, pyrosequencing, abi-3700, bridge-amplification, emulsion-pcr, roche-454, next-generation-sequencing, solexa-illumina, solid-sequencing, dna-nanoball-sequencing, ion-torrent, thousand-dollar-genome, ultima-genomics, element-aviti, roche-sbx, ten-dollar-genome]
+single-molecule: [protein-nanopores, helicos, pacbio-smrt, long-read-sequencing, nanopore-motor-proteins, nanopore-sequencing, pacbio-hifi, single-molecule-protein-sequencing]
+genomics: [genbank, first-bacterial-genome, microarrays, human-genome-project, celera-genomics, chip-seq, encode-project, rna-seq, single-cell-rna-seq, deep-learning-genomics, t2t-complete-genome, human-pangenome]
+molecular-biology: [dna-genetic-material, dna-double-helix, dna-polymerase, protein-crystallography, messenger-rna, genetic-code, restriction-enzymes, reverse-transcriptase, protein-data-bank, recombinant-dna, m13-cloning-vectors, pcr, taq-polymerase, bac-vectors, rna-interference, modified-nucleoside-mrna, crispr-cas9, protein-structure-prediction, synthetic-bacterial-genome, synthetic-mammalian-genome]
+life-science: [microscope, microorganisms-discovered, cell-theory, evolution-natural-selection, mendelian-genetics, chromosome-theory, cell-culture, one-gene-one-enzyme, induced-pluripotent-stem-cells, whole-brain-emulation]
+
+# Medicine
+genetic-medicine: [gwas, gene-therapy, newborn-genome-sequencing]
+drugs: [insulin-therapy, sulfa-drugs, antibiotics-penicillin, streptomycin, randomized-controlled-trial, oral-contraceptive, monoclonal-antibodies, recombinant-insulin, hiv-antiretroviral-therapy]
+longevity: [aging-reversal]
+surgery-organs: [blood-circulation, anesthesia, antiseptic-surgery, blood-transfusion, ivf]
+public-health: [vaccination, epidemiology, germ-theory, polio-vaccine, smallpox-eradication, mrna-vaccines]
+
+# Agriculture and food
+crops: [agriculture, columbian-exchange, norfolk-four-course-rotation, hybrid-corn, green-revolution, gm-crops]
+soil-water: [irrigation, agricultural-chemistry, superphosphate-fertilizer, guano-trade, nitrogen-fertilizer-scale, center-pivot-irrigation, drip-irrigation]
+farm-machines: [plow, seed-drill, mechanical-reaper, steel-plow, tractor, precision-agriculture]
+animals-food: [domestication-dogs, animal-domestication, horse-domestication, cultivated-meat]
+
+# Society and institutions
+research: [universities, scientific-method, scientific-societies, peer-review, industrial-research-lab, big-science, research-grant-system, cern, darpa, open-source, inducement-prizes, nasa-cots]
+economy: [coinage, bills-of-exchange, paper-money, double-entry-bookkeeping, joint-stock-company, stock-exchange, central-banking, insurance-modern, factory-system, venture-capital, prediction-markets]
+law-governance: [cities, law-codes, patents, iso-standards, outer-space-treaty, montreal-protocol, ipcc, carbon-pricing]
+records: [spoken-language, art-symbolic, clay-tokens, writing, calendar, libraries, alphabet, woodblock-printing, movable-type, printing-press]
+
+# Roots
+preconditions: [touch, vision, hearing, bipedalism, precision-grip, large-brain, cooperation, vocal-tract, language-capacity]

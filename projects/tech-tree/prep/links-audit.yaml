@@ -1,0 +1,190 @@
+# Link audit (October 2026): forward links from childless techs, missing
+# direct prerequisites, and wrong links. Each entry adds to the node's own
+# lists; `drop` removes a link. Only links among nodes that existed when the
+# audit started. Grouped by the lane of the node being edited.
+
+# ------------------------------------------------------------- agriculture
+# Plows, horses and wheels chain forward into farm machinery.
+- {id: seed-drill, requires: [animal-domestication, wheel], helped_by: [plow, horse-domestication]}
+- {id: mechanical-reaper, requires: [horse-domestication, wheel]}
+- {id: steel-plow, requires: [plow], helped_by: [horse-domestication]}
+- {id: tractor, requires: [wheel], helped_by: [mechanical-reaper, assembly-line]}
+- {id: precision-agriculture, requires: [tractor], drop: {helped_by: [deep-learning]}}
+# Agricultural revolution: Tull's drill fed into the Norfolk system.
+- {id: norfolk-four-course-rotation, helped_by: [seed-drill]}
+- {id: green-revolution, helped_by: [superphosphate-fertilizer]}
+# Transgenic plants are regenerated from tissue culture; patents built the seed business.
+- {id: gm-crops, requires: [cell-culture], helped_by: [patents]}
+# Both are ocean trades.
+- {id: columbian-exchange, requires: [transoceanic-voyages]}
+- {id: guano-trade, requires: [transoceanic-voyages]}
+# The 1960 scale-up long predates fracked gas.
+- {id: nitrogen-fertilizer-scale, drop: {helped_by: [shale-fracking]}}
+
+# ----------------------------------------------------------------- biology
+# Leeuwenhoek used single high-power lenses, not a compound microscope.
+- {id: microorganisms-discovered, requires: [lenses], helped_by: [microscope], drop: {requires: [microscope]}}
+# Darwin: the Beagle voyage and breeders' artificial selection.
+- {id: evolution-natural-selection, helped_by: [transoceanic-voyages, animal-domestication]}
+# Chromosomes were seen with aniline-dye stains ("colored bodies").
+- {id: chromosome-theory, helped_by: [synthetic-dyes]}
+# Aseptic technique came from surgery (Carrel); antibiotics made routine culture possible.
+- {id: cell-culture, helped_by: [antiseptic-surgery, antibiotics-penicillin]}
+- {id: dna-genetic-material, helped_by: [radioactivity]}            # Hershey-Chase labels
+- {id: dna-double-helix, helped_by: [chromatography]}               # Chargaff's base ratios
+- {id: protein-crystallography, requires: [fourier-analysis], helped_by: [stored-program-computer]}  # Fourier maps on EDSAC
+- {id: protein-data-bank, requires: [stored-program-computer]}
+- {id: recombinant-dna, helped_by: [antibiotics-penicillin]}        # resistance markers select clones
+- {id: protein-sequencing-classical, helped_by: [insulin-therapy]}  # pure insulin was on hand
+# CRISPR repeats were found by comparing sequenced microbial genomes; NGS was not needed in 2012.
+- {id: crispr-cas9, helped_by: [first-bacterial-genome, next-generation-sequencing], drop: {requires: [next-generation-sequencing]}}
+- {id: induced-pluripotent-stem-cells, helped_by: [ivf]}            # ES cells came from IVF embryos
+- {id: human-genome-project, helped_by: [big-science]}
+- {id: microarrays, helped_by: [photolithography]}                  # Affymetrix chips
+- {id: emulsion-pcr, requires: [taq-polymerase]}
+- {id: bridge-amplification, helped_by: [taq-polymerase]}
+- {id: abi-3700, helped_by: [abi-370]}
+- {id: ion-torrent, requires: [cmos]}
+
+# --------------------------------------------------------------- chemistry
+- {id: anesthesia, helped_by: [chemical-revolution]}                # nitrous oxide, Davy
+- {id: periodic-table, helped_by: [electrolysis]}                   # Davy's new elements
+- {id: oil-refining, helped_by: [steam-engine]}                     # Drake's steam-driven drill
+
+# --------------------------------------------------------------- computing
+- {id: stored-program-computer, helped_by: [cathode-ray-tube]}      # Williams tube memory
+- {id: ibm-system-360, requires: [magnetic-core-memory]}
+- {id: time-sharing, helped_by: [magnetic-core-memory]}
+- {id: operating-systems, helped_by: [hard-disk-drive]}
+- {id: open-source, requires: [unix]}                               # GNU was a free Unix
+- {id: internet, helped_by: [unix]}                                 # BSD's TCP/IP stack
+- {id: tcp-ip, helped_by: [darpa]}
+- {id: graphical-user-interface, helped_by: [darpa]}                # Engelbart's ARPA-funded lab
+- {id: cloud-computing, helped_by: [unix, x86-64]}
+- {id: personal-computer, helped_by: [venture-capital]}
+- {id: alphago, requires: [monte-carlo-method]}                     # Monte Carlo tree search
+- {id: ai-mathematics, helped_by: [alphago]}                        # AlphaProof
+- {id: generative-media, helped_by: [gans]}
+- {id: frontier-models, helped_by: [chatgpt]}
+- {id: ai-datacenters, helped_by: [chatgpt]}
+- {id: robot-foundation-models, helped_by: [open-weight-llms]}
+- {id: public-key-cryptography, requires: [stored-program-computer]}
+- {id: electronic-computer, helped_by: [big-science]}                # wartime Army project
+- {id: packet-switching, helped_by: [nuclear-weapon]}               # Baran's survivable network
+- {id: world-wide-web, helped_by: [cern]}                           # written at CERN
+- {id: cryptocurrency, helped_by: [open-source]}
+- {id: de-bruijn-assembly, helped_by: [next-generation-sequencing]} # Velvet for short reads
+- {id: information-theory, helped_by: [telegraph]}                  # Nyquist and Hartley
+- {id: rlhf, drop: {helped_by: [large-language-models]}}            # 2017, before LLMs
+
+# ------------------------------------------------------------- electronics
+- {id: radar, helped_by: [cathode-ray-tube], drop: {helped_by: [big-science]}}
+- {id: transistor, helped_by: [industrial-research-lab, telephone]}
+- {id: finfet, requires: [cmos]}
+- {id: hard-disk-drive, helped_by: [electric-motor]}
+- {id: cellular-network, requires: [telephone], helped_by: [information-theory]}
+- {id: smartphone, helped_by: [unix, cmos, container-shipping]}
+- {id: satellite-megaconstellations, helped_by: [radar]}            # phased-array antennas
+# Band theory (1931) did not need radio.
+- {id: semiconductor-physics, helped_by: [radio], drop: {requires: [radio]}}
+
+# ------------------------------------------------------------------ energy
+- {id: internal-combustion-engine, helped_by: [steam-engine]}
+- {id: deep-coal-mining, helped_by: [gunpowder]}                    # blasting
+- {id: nuclear-power, requires: [nuclear-reactor, steam-turbine]}
+- {id: steam-turbine, helped_by: [watermill]}                       # water turbines came first
+- {id: solar-photovoltaic, requires: [semiconductor-physics, single-crystal-growth], drop: {helped_by: [satellites, integrated-circuit]}}
+- {id: wind-power, helped_by: [aerodynamics, plastics]}             # fiberglass blades
+- {id: offshore-wind, helped_by: [oil-refining]}                    # offshore drilling know-how
+- {id: grid-batteries, helped_by: [electric-vehicles]}
+- {id: shale-fracking, helped_by: [synthetic-diamond]}              # PDC drill bits
+- {id: enhanced-geothermal, helped_by: [synthetic-diamond, plate-tectonics]}
+# Storage is in sedimentary rock; plate tectonics helps but is not needed.
+- {id: carbon-capture, helped_by: [plate-tectonics], drop: {requires: [plate-tectonics]}}
+
+# ------------------------------------------------------------- engineering
+# The wheel carries forward into rail and road.
+- {id: wheel, helped_by: [pottery]}                                 # the potter's wheel
+- {id: railway, requires: [wheel], helped_by: [deep-coal-mining], uses: [res-coal], drop: {helped_by: [telegraph]}}  # colliery wagonways
+- {id: automobile, requires: [wheel]}
+- {id: airplane, requires: [oil-refining], helped_by: [automobile]}
+- {id: jet-engine, helped_by: [aerodynamics]}
+- {id: jet-airliner, requires: [aluminum-smelting], drop: {helped_by: [carbon-fiber]}}
+- {id: electric-vehicles, requires: [electric-motor], helped_by: [lithium-iron-phosphate], uses: [res-copper]}
+- {id: high-speed-rail, requires: [electric-motor]}
+- {id: autonomous-vehicles, requires: [automobile], helped_by: [darpa, inducement-prizes, electric-vehicles, laser]}
+- {id: electric-aviation, requires: [electric-motor], helped_by: [carbon-fiber, electric-vehicles, smartphone]}
+- {id: precision-cylinder-boring, helped_by: [gunpowder]}           # Wilkinson bored cannon
+- {id: machine-tools, helped_by: [mechanical-clock]}                # clockmakers' precision
+- {id: assembly-line, helped_by: [power-grid]}
+- {id: antikythera-mechanism, helped_by: [trigonometry]}
+- {id: planetary-probes, helped_by: [information-theory]}           # deep-space coding
+- {id: moon-landing, helped_by: [big-science, magnetic-core-memory]}
+- {id: space-stations, helped_by: [moon-landing], drop: {helped_by: [space-shuttle]}}  # Skylab; Salyut predates the Shuttle
+- {id: gps, drop: {helped_by: [smartphone]}}
+- {id: reusable-rockets, helped_by: [space-shuttle, carbon-fiber]}
+- {id: mars-rovers, helped_by: [solar-photovoltaic]}
+- {id: satellites, requires: [newtonian-mechanics]}                 # orbital mechanics
+- {id: container-shipping, helped_by: [steamboat], uses: [res-oil]}                # powered ocean freighters
+
+# --------------------------------------------------------------- materials
+- {id: coke-iron-smelting, helped_by: [deep-coal-mining]}
+- {id: puddling-process, helped_by: [watt-steam-engine]}
+- {id: steel-bessemer, helped_by: [railway]}                        # rails were the market
+- {id: aluminum-smelting, requires: [electrolysis]}
+- {id: carbon-nanotubes, requires: [electron-microscope]}           # Iijima's TEM
+# Graphene was found with tape, optical contrast and AFM, not the STM itself.
+- {id: graphene, helped_by: [scanning-tunneling-microscope], drop: {requires: [scanning-tunneling-microscope]}}
+- {id: room-temperature-superconductor, helped_by: [graphene]}      # twisted-bilayer route
+- {id: weaving, helped_by: [clothing]}
+- {id: glassmaking, drop: {uses: [res-cobalt]}}                     # a colorant, not needed
+
+# -------------------------------------------------------------------- math
+- {id: fourier-analysis, requires: [trigonometry]}
+- {id: boolean-logic, requires: [formal-logic]}                     # algebra of the syllogism
+- {id: heliocentrism, helped_by: [trigonometry]}
+- {id: geometry, helped_by: [irrigation]}                           # field and canal surveying
+- {id: calculus, helped_by: [galilean-kinematics]}
+
+# ----------------------------------------------------------------- physics
+- {id: exoplanet-detection, requires: [spectroscopy]}               # Doppler method, 51 Peg b
+- {id: climate-science, helped_by: [spectroscopy]}
+- {id: plate-tectonics, helped_by: [radioactivity]}                 # radiometric dating
+- {id: electron-microscope, requires: [electron]}
+- {id: laser, helped_by: [spectroscopy]}
+- {id: higgs-boson, requires: [particle-accelerator], helped_by: [monte-carlo-method]}
+- {id: particle-accelerator, requires: [relativity]}                # synchrotrons are relativistic by design
+
+# ---------------------------------------------------------------- medicine
+- {id: sulfa-drugs, requires: [synthetic-dyes]}                     # Prontosil was a dye
+- {id: recombinant-insulin, requires: [genetic-code, protein-sequencing-classical], helped_by: [venture-capital]}
+- {id: mrna-vaccines, requires: [genetic-code]}
+- {id: germ-theory, helped_by: [epidemiology]}
+- {id: polio-vaccine, helped_by: [antibiotics-penicillin]}          # Enders' cultures
+- {id: blood-transfusion, helped_by: [antiseptic-surgery]}
+- {id: gwas, helped_by: [epidemiology]}
+- {id: gene-therapy, helped_by: [reverse-transcriptase]}            # retroviral vectors
+# vaccination (1796) helped_by germ-theory (1862) points forward in time, but it
+# comes from links.yaml, which loads after this file, so it must be dropped there.
+
+# ----------------------------------------------------------------- society
+- {id: coinage, requires: [copper-smelting]}
+- {id: central-banking, helped_by: [paper-money]}
+- {id: bills-of-exchange, helped_by: [paper]}
+- {id: factory-system, helped_by: [norfolk-four-course-rotation]}
+- {id: iso-standards, helped_by: [assembly-line]}
+- {id: writing, requires: [spoken-language]}
+- {id: cities, helped_by: [plow]}
+- {id: cern, requires: [big-science]}
+- {id: carbon-pricing, helped_by: [stock-exchange], drop: {requires: [stock-exchange]}}
+- {id: inducement-prizes, drop: {requires: [joint-stock-company]}}            # prizes predate and need no companies
+
+# --------------------------------------------------------------- resources
+# Copper wire, coal and fuel that these systems run on.
+- {id: telegraph, uses: [res-copper]}
+- {id: telephone, uses: [res-copper]}
+- {id: electric-generator, uses: [res-copper]}
+- {id: electric-motor, uses: [res-copper]}
+- {id: power-grid, uses: [res-copper, res-coal]}
+- {id: sailing-ships, uses: [res-wood]}
+- {id: optical-fiber, uses: [res-silicon]}

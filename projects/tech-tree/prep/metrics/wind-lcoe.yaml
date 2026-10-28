@@ -1,0 +1,59 @@
+id: wind-lcoe
+name: Levelized cost of electricity from new onshore wind farms, world
+short: Wind power cost
+unit: USD per kWh (constant 2025 US$)
+better: lower
+log: true
+field: energy
+points:                           # [year, value]
+  - [1984, 0.369]
+  - [1985, 0.3426]
+  - [1986, 0.3041]
+  - [1987, 0.295]
+  - [1988, 0.2433]
+  - [1989, 0.225]
+  - [1990, 0.2392]
+  - [1991, 0.2295]
+  - [1992, 0.2299]
+  - [1993, 0.2419]
+  - [1994, 0.2278]
+  - [1995, 0.2382]
+  - [1996, 0.2127]
+  - [1997, 0.1861]
+  - [1998, 0.1745]
+  - [1999, 0.1718]
+  - [2000, 0.1839]
+  - [2001, 0.1614]
+  - [2002, 0.1492]
+  - [2003, 0.1307]
+  - [2004, 0.1329]
+  - [2005, 0.1245]
+  - [2006, 0.1281]
+  - [2007, 0.1166]
+  - [2008, 0.1228]
+  - [2009, 0.1204]
+  - [2010, 0.1136]
+  - [2011, 0.1077]
+  - [2012, 0.09884]
+  - [2013, 0.09905]
+  - [2014, 0.08761]
+  - [2015, 0.07601]
+  - [2016, 0.06979]
+  - [2017, 0.06479]
+  - [2018, 0.05563]
+  - [2019, 0.04926]
+  - [2020, 0.04093]
+  - [2021, 0.03608]
+  - [2022, 0.03402]
+  - [2023, 0.03314]
+  - [2024, 0.03428]
+  - [2025, 0.03295]
+source:
+  title: "Our World in Data, Levelized cost of energy by technology (IRENA, Renewable Power Generation Costs in 2025, and earlier editions)"
+  url: https://ourworldindata.org/grapher/levelized-cost-of-energy
+license: CC BY 4.0 (OWID); IRENA data may be reused with attribution
+note: >-
+  Levelized cost of electricity: lifetime cost of building, financing and
+  running a plant divided by its lifetime output, without subsidies, as
+  estimated by IRENA in constant 2025 US$ (4 significant figures, OWID CSV
+  downloaded 2026-10-28). Global capacity-weighted average for onshore wind farms commissioned each year; IRENA's series starts in 1984. The fall has flattened since about 2021.

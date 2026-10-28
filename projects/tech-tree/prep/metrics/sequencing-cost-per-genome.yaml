@@ -1,8 +1,11 @@
 id: sequencing-cost-per-genome
 name: Cost to sequence a human genome
+short: Genome cost
+field: biology
 unit: USD
 better: lower
 log: true
+fit: {from: 2015.5}  # the post-HiSeq X regime; the 2008-2011 cliff was a one-off platform switch
 points:  # [year, value]; year is fractional (end of month)
   - [2001.75, 95263071.92]  # 2001-09-30
   - [2002.25, 70175437.42]  # 2002-03-31
@@ -87,4 +90,4 @@ source:
   url: https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data
 license: public domain
 note: >-
-  NHGRI Genome Sequencing Program production costs, all 78 data points as published (Sept 2001 to May 2022; page last updated May 16, 2023). Years are fractional: each point is dated to the end of its month (for example 2001.75 is 2001-09-30). Values are in nominal US dollars, rounded to the cent. A 'genome' is 3,000 Mb at the coverage of the era's dominant platform (about 6x Sanger before 2008, about 30x short reads after), and costs include labor, reagents, instrument depreciation, informatics and overhead, but not assembly or analysis. The cliff from late 2007 to 2009 is the switch from capillary Sanger to second-generation sequencers. The May 2022 point repeats the February 2022 value in the source.
+  NHGRI Genome Sequencing Program production costs, all 78 data points as published (Sept 2001 to May 2022; page last updated May 16, 2023). Years are fractional: each point is dated to the end of its month (for example 2001.75 is 2001-09-30). Values are in nominal US dollars, rounded to the cent. A 'genome' is 3,000 Mb at the coverage of the era's dominant platform (about 6x Sanger before 2008, about 30x short reads after), and costs include labor, reagents, instrument depreciation, informatics and overhead, but not assembly or analysis. The cliff from late 2007 to 2009 is the switch from capillary Sanger to second-generation sequencers. The May 2022 point repeats the February 2022 value in the source. NHGRI has not published newer data (checked 2026-10-28). Vendor list prices for reagents are lower than these all-in production costs: about $200 a genome for Illumina's NovaSeq X (2022) and about $80 claimed by Ultima for its Solaris chemistry (2025). The trend is fitted from mid-2015 on, when cost halving slowed to about every five years.

@@ -1,0 +1,27 @@
+# Turns the two genome-cost nodes in nodes/c-bio.yaml into milestones on
+# sequencing-cost-per-genome. Other fields are kept as they are.
+
+- id: thousand-dollar-genome
+  kind: milestone
+  track: sequencing
+  threshold: { metric: sequencing-cost-per-genome, value: 1000, label: "$1,000" }
+  # Dated by the data: NHGRI's all-in production cost first fell below
+  # $1,000 in February 2019. Illumina's HiSeq X Ten claimed it in 2014 for
+  # reagents plus amortized machines, which the summary and efforts keep.
+  date: null
+  status: null
+  summary: >-
+    A 30x human genome for under $1,000, a target NHGRI set in 2004.
+    Illumina's HiSeq X Ten, sold as sets of ten machines, claimed it in 2014
+    for reagents and amortized instruments; NHGRI's own all-in production
+    cost crossed $1,000 in 2019.
+
+- id: ten-dollar-genome
+  kind: milestone
+  track: sequencing
+  threshold: { metric: sequencing-cost-per-genome, value: 10, label: "$10" }
+  # Keeps its own date and forecast: the NHGRI trend since 2015 (halving
+  # about every 4 years from $525 in 2022) gives the late 2040s, but vendor
+  # prices are already near $100, about ten years ahead of NHGRI's series.
+  requires: [genome-100-dollars]
+  helped_by: [solexa-illumina, ultima-genomics, element-aviti, roche-sbx, nanopore-sequencing]

@@ -1,0 +1,243 @@
+# Intermediate steps the link audit found missing: the links between an
+# early invention and its modern descendants (the wheel to the car runs
+# through carts, gears and the bicycle).
+
+- id: cart-wagon
+  name: Carts and wagons
+  kind: device
+  fields: [engineering]
+  track: land-transport
+  date: [-3500, -3000]
+  status: achieved
+  tier: 2
+  summary: >-
+    Wheeled vehicles pulled by oxen, appearing across Europe and the Near East
+    within a few centuries of the wheel. Wooden wagonways for mine carts were
+    the direct ancestors of the railway.
+  requires: [wheel, animal-domestication, woodworking]
+  efforts:
+    - who: Funnelbeaker and Mesopotamian cultures
+      where: Central Europe and Mesopotamia
+      when: -3500
+      note: The Bronocice pot (Poland, about 3500 BCE) shows a four-wheeled wagon.
+  sources:
+    - title: Wagon (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Wagon
+    - title: Bronocice pot (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Bronocice_pot
+
+- id: chariot
+  name: Spoked-wheel chariot
+  kind: device
+  fields: [engineering]
+  track: land-transport
+  date: [-2100, -1800]
+  status: achieved
+  tier: 3
+  summary: >-
+    A light two-wheeled war vehicle with spoked wheels, pulled by horses. It
+    spread from the steppe across Eurasia within a few centuries.
+  requires: [cart-wagon, horse-domestication, bronze]
+  efforts:
+    - who: Sintashta culture
+      where: Southern Urals
+      when: -2000
+  sources:
+    - title: Chariot (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Chariot
+
+- id: gears
+  name: Gears
+  kind: device
+  fields: [engineering]
+  track: machines
+  date: [-330, -270]
+  status: achieved
+  tier: 2
+  summary: >-
+    Toothed wheels that transmit and convert rotation. They made the
+    watermill, windmill, clockwork and calculating machines possible.
+  requires: [wheel, geometry]
+  efforts:
+    - who: Greek engineers (Ctesibius, Archimedes, Philo of Byzantium)
+      where: Alexandria and Syracuse
+      when: -300
+  sources:
+    - title: Gear, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Gear#History
+
+- id: firearms
+  name: Firearms and cannon
+  kind: device
+  fields: [engineering, chemistry]
+  track: machines
+  date: [1280, 1330]
+  status: achieved
+  tier: 2
+  summary: >-
+    Metal tubes that use gunpowder to fire a projectile. Boring cannon barrels
+    accurately led to the precision cylinder boring that made Watt's steam
+    engine work, and armory practice led to interchangeable parts.
+  requires: [gunpowder, bronze]
+  efforts:
+    - who: Yuan dynasty gunsmiths
+      where: China
+      when: 1288
+      note: The Heilongjiang hand cannon is dated to about 1288; the Xanadu gun to 1298.
+  sources:
+    - title: Hand cannon (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Hand_cannon
+    - title: Cannon, history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Cannon
+
+- id: pendulum-clock
+  name: Pendulum clock
+  kind: device
+  fields: [engineering, physics]
+  track: machines
+  date: 1656
+  status: achieved
+  tier: 3
+  summary: >-
+    Christiaan Huygens's clock, regulated by a pendulum, cut clock errors from
+    about fifteen minutes a day to about fifteen seconds. It remained the most
+    accurate timekeeper until the 1930s.
+  requires: [mechanical-clock, galilean-kinematics]
+  efforts:
+    - who: Christiaan Huygens, with clockmaker Salomon Coster
+      where: The Hague, Netherlands
+      when: 1656
+  sources:
+    - title: Pendulum clock (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Pendulum_clock
+
+- id: bicycle
+  name: Safety bicycle
+  kind: device
+  fields: [engineering]
+  track: land-transport
+  date: 1885
+  status: achieved
+  tier: 2
+  summary: >-
+    John Kemp Starley's Rover: two equal wheels, chain drive to the rear, and
+    soon pneumatic tires. Bicycle makers developed the ball bearings, steel
+    tubing and mass production the car industry inherited, and the Wright
+    brothers were bicycle makers.
+  requires: [wheel, steel-bessemer, vulcanized-rubber, machine-tools]
+  efforts:
+    - who: John Kemp Starley
+      where: Coventry, England
+      when: 1885
+  sources:
+    - title: Safety bicycle (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Safety_bicycle
+
+- id: modern-synthesis
+  name: Modern evolutionary synthesis
+  kind: discovery
+  fields: [biology, math]
+  track: life-science
+  date: [1918, 1942]
+  status: achieved
+  tier: 2
+  summary: >-
+    The reconciliation of Darwinian selection with Mendelian genetics through
+    population genetics, by Fisher, Haldane, Wright, Dobzhansky and others. It
+    is the statistical basis of quantitative genetics, breeding and
+    genome-wide association.
+  requires: [evolution-natural-selection, mendelian-genetics, statistics]
+  efforts:
+    - who: Ronald Fisher, J. B. S. Haldane, Sewall Wright
+      where: UK and USA
+      when: [1918, 1932]
+    - who: Theodosius Dobzhansky, Ernst Mayr, Julian Huxley
+      where: USA and UK
+      when: [1937, 1942]
+      note: Huxley's 1942 book gave the synthesis its name.
+  sources:
+    - title: Modern synthesis (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Modern_synthesis_(20th_century)
+
+- id: x-ray-crystallography
+  name: X-ray crystallography
+  kind: technique
+  fields: [physics, chemistry, biology]
+  track: em-optics
+  date: [1912, 1913]
+  status: achieved
+  tier: 2
+  summary: >-
+    Working out where the atoms in a crystal are from how it diffracts X-rays.
+    It revealed the structures of salt, DNA, proteins and most of the drugs
+    in use.
+  requires: [x-rays]
+  efforts:
+    - who: Max von Laue
+      where: Munich, Germany
+      when: 1912
+    - who: William Henry Bragg and William Lawrence Bragg
+      where: Leeds and Cambridge, UK
+      when: 1913
+  sources:
+    - title: X-ray crystallography (Wikipedia)
+      url: https://en.wikipedia.org/wiki/X-ray_crystallography
+    - title: Nobel Prize in Physics 1915
+      url: https://www.nobelprize.org/prizes/physics/1915/summary/
+
+- id: dna-synthesis
+  name: Chemical DNA synthesis
+  kind: technique
+  fields: [biology, chemistry]
+  track: molecular-biology
+  date: [1970, 1981]
+  status: achieved
+  tier: 2
+  summary: >-
+    Making DNA of a chosen sequence from chemical building blocks. Khorana's
+    group built the first synthetic gene in 1970; Beaucage and Caruthers's
+    phosphoramidite chemistry (1981) made it automatic, and it still supplies
+    the primers for PCR and the parts for synthetic genomes.
+  requires: [chemical-structure-theory, dna-double-helix, genetic-code]
+  efforts:
+    - who: Har Gobind Khorana's group
+      where: University of Wisconsin, USA
+      when: 1970
+    - who: Serge Beaucage and Marvin Caruthers
+      where: University of Colorado, USA
+      when: 1981
+  sources:
+    - title: Oligonucleotide synthesis (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Oligonucleotide_synthesis
+    - title: "Beaucage and Caruthers, Tetrahedron Letters 22:1859 (1981)"
+      url: https://doi.org/10.1016/S0040-4039(01)90461-7
+
+- id: television
+  name: Electronic television
+  kind: device
+  fields: [electronics]
+  track: communication
+  date: 1927
+  status: achieved
+  tier: 2
+  summary: >-
+    Pictures sent by radio and drawn on a cathode-ray tube. Philo Farnsworth
+    transmitted the first all-electronic image in 1927; by the 1960s most
+    homes in rich countries had a set.
+  requires: [cathode-ray-tube, radio]
+  efforts:
+    - who: Philo Farnsworth
+      where: San Francisco, USA
+      when: 1927
+    - who: John Logie Baird
+      where: London, UK
+      when: 1926
+      outcome: rival
+      note: Mechanical television, with a spinning disc; it lost to electronic systems.
+    - who: Vladimir Zworykin (RCA)
+      where: USA
+      when: 1929
+      outcome: independent
+  sources:
+    - title: History of television (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_television

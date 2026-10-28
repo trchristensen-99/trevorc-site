@@ -1,5 +1,7 @@
 id: transistors-per-chip
 name: Transistors in the largest microprocessor
+short: Transistors per chip
+field: electronics
 unit: transistors
 better: higher
 log: true
@@ -31,13 +33,20 @@ points:                           # [year, value]; only years where the record c
   - [2018, 21100000000]
   - [2019, 39500000000]
   - [2021, 58200000000]
+  - [2022, 114000000000]  # Apple M1 Ultra (two dies); from Wikipedia, not OWID
+  - [2023, 146000000000]  # AMD Instinct MI300A (multi-chip module); Wikipedia
+  - [2026, 227000000000]  # Nvidia Vera CPU (multi-chip module); Wikipedia
 source:
   title: "Our World in Data, Moore's law: the number of transistors per microprocessor (from Rupp, Microprocessor Trend Data, 2022)"
   url: https://ourworldindata.org/grapher/transistors-per-microprocessor
-license: CC BY 4.0
+license: CC BY 4.0 (OWID); later points CC BY-SA 4.0 (Wikipedia)
 note: >-
-  Values are the OWID series (downloaded 2026-10-27), rounded to whole
-  transistors; years where OWID repeats the previous record are dropped. The
-  series ends in 2021. Later chips are larger still (for example Apple's M2
-  Ultra, 2023, at about 134 billion, and Nvidia's two-die B200 GPU, 2024, at
-  about 208 billion), but those are not in this source.
+  1971 to 2021 are the OWID series (downloaded 2026-10-27), rounded to whole
+  transistors, keeping only years where the record changed; OWID's source
+  (Rupp) ends in 2021. 2022, 2023 and 2026 are the largest counts in the
+  microprocessor table of Wikipedia's "Transistor count" article (read
+  2026-10-28; CC BY-SA 4.0). Since about 2019 the record holders are
+  multi-chip packages (AMD's Epyc Rome in 2019 already was), so the series
+  measures transistors per processor package, not per die. GPUs, which are
+  not in this series, are larger still (Nvidia's two-die B200, 2024, about
+  208 billion).

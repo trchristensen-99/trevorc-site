@@ -1,0 +1,32 @@
+id: two-qubit-gate-error
+name: Best two-qubit quantum gate error rate
+short: Qubit gate error
+unit: error per gate (1 minus fidelity)
+better: lower
+log: true
+field: computing
+points:                           # [year, value]; only new records, any platform
+  - [2003, 0.03]       # Innsbruck ion trap (Sevilla and Riedel dataset)
+  - [2008, 0.007]      # Benhelm et al., Nature Physics 4, 463 (Ca-40 ions, 99.3%)
+  - [2016, 0.0008]     # Gaebler et al., PRL 117, 060505 (Be-9 ions); Ballance et al., PRL 117, 060504, 99.9%
+  - [2021, 0.0006]     # Clark et al., PRL 127, 130505 (Ca-40 ions)
+  - [2024, 0.0003]     # Oxford Ionics, 99.97% (arXiv:2407.07694; PRX Quantum 6, 040313, 2025)
+  - [2025, 0.000084]   # IonQ, above 99.99% (arXiv:2510.17286, preprint)
+source:
+  title: "Sevilla and Riedel, Forecasting timelines of quantum computing (arXiv:2009.05045, dataset CC BY 4.0), plus the papers named on each point"
+  url: https://arxiv.org/abs/2009.05045
+license: "Dataset CC BY 4.0; later points are published results reused as cited facts"
+note: >-
+  The lowest two-qubit entangling gate error reported each time the record
+  fell, on any platform; so far every record has been set with trapped ions.
+  Papers measure it differently (Bell-state fidelity, randomized
+  benchmarking, IonQ's leakage-aware benchmarking), so points are only
+  roughly comparable, and a best pair in a lab is better than a whole
+  machine's average (Quantinuum's commercial H1-1 averaged 8.6e-4 in 2024;
+  superconducting fluxonium reached 7.8e-4 in 2023, Ding et al., PRX 13,
+  031035; neutral atoms 5e-3 in 2023, Evered et al., Nature 622, 268). The
+  2003 point is from Sevilla and Riedel's spreadsheet
+  (https://docs.google.com/spreadsheets/d/1pwb4gf0FxlxgfVhtXTaqEGS9b7FwsstsJ0v7Zb1naQ0/).
+  Error correction needs physical errors well below the surface-code
+  threshold of about 1e-2, across many more qubits than any of these
+  records used.

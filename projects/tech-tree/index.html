@@ -6,6 +6,7 @@
     <title>Real Life Tech Tree</title>
     <meta name="description" content="How human technology actually developed: the net of discoveries, techniques and institutions behind it, and what people are working on now." />
     <link rel="icon" href="/static/icon.png" />
+    <link rel="preload" href="./data/tree.json" as="fetch" crossorigin />
     <link rel="stylesheet" href="./main.css" />
   </head>
   <body>
@@ -21,18 +22,30 @@
         </header>
         <input id="search" type="search" placeholder="Find a technology…" autocomplete="off" list="names" />
         <datalist id="names"></datalist>
+        <div class="detail">
+          <label for="detail">Detail <span id="detail-count"></span></label>
+          <input id="detail" type="range" min="0" max="100" step="1" value="50" aria-describedby="detail-help" />
+          <div class="ends" id="detail-help"><span>Landmarks</span><span>Everything</span></div>
+          <label class="check"><input id="grow" type="checkbox" checked /> More appear as you zoom in</label>
+          <label class="check"><input id="show-frontier" type="checkbox" /> Always show the frontier</label>
+          <label class="check"><input id="all-links" type="checkbox" /> Show every link</label>
+          </div>
+        <details id="trends">
+          <summary>Trend lines</summary>
+          <p class="hint">Measured progress along the bottom, on the same time axis, with milestones marked. Click a strip for its chart.</p>
+          <fieldset id="trend-list"></fieldset>
+        </details>
         <details id="filters">
           <summary>Filter</summary>
           <fieldset id="f-fields"><legend>Fields</legend></fieldset>
           <fieldset id="f-status"><legend>Status</legend></fieldset>
           <fieldset id="f-kinds"><legend>Kind</legend></fieldset>
         </details>
-        <label class="check"><input id="all-links" type="checkbox" /> Show every link</label>
         <div class="row actions">
           <button id="frontier" type="button">The frontier</button>
           <a id="elsewhere"></a>
         </div>
-        <p class="hint">Scroll to zoom: more technologies appear as you go. Click one to light up what it needs and what it led to.</p>
+        <p class="hint">Scroll to zoom. Click a technology to light up what it needs and what it led to.</p>
       </section>
 
       <details class="panel legend">

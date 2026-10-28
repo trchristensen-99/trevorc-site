@@ -1,0 +1,90 @@
+id: life-expectancy-best
+name: Record life expectancy at birth (best country each year)
+short: Record life expectancy
+unit: years
+better: higher
+log: false
+field: medicine
+fit: {from: 1950}  # the post-war record line; the whole series bends and overstates the future
+points:                           # [year, value]  # country or territory holding the record
+  - [1840, 43.98]  # Sweden
+  - [1845, 45.99]  # Sweden
+  - [1850, 49.52]  # Norway
+  - [1855, 50.43]  # Norway
+  - [1860, 49.99]  # Norway
+  - [1865, 50.42]  # Norway
+  - [1870, 50.86]  # Norway
+  - [1875, 47.63]  # Norway
+  - [1880, 51.89]  # Norway
+  - [1885, 51.04]  # Norway
+  - [1890, 50.44]  # Sweden
+  - [1895, 54.01]  # Sweden
+  - [1900, 53.47]  # Norway
+  - [1905, 57.0]  # Australia
+  - [1910, 58.04]  # Denmark
+  - [1915, 58.4]  # Denmark
+  - [1920, 58.91]  # Sweden
+  - [1925, 63.17]  # Australia
+  - [1930, 64.9]  # Australia
+  - [1935, 66.51]  # Netherlands
+  - [1940, 66.74]  # Sweden
+  - [1945, 68.38]  # Australia
+  - [1950, 71.59]  # Norway
+  - [1955, 73.43]  # Norway
+  - [1960, 73.56]  # Norway
+  - [1965, 73.87]  # Sweden
+  - [1970, 74.66]  # Sweden
+  - [1975, 74.98]  # Sweden
+  - [1980, 76.14]  # Japan
+  - [1985, 77.8]  # Japan
+  - [1990, 78.99]  # Japan
+  - [1991, 79.26]  # Japan
+  - [1992, 79.3]  # Japan
+  - [1993, 79.45]  # Japan
+  - [1994, 79.84]  # Japan
+  - [1995, 79.68]  # Japan
+  - [1996, 80.36]  # Japan
+  - [1997, 80.58]  # Japan
+  - [1998, 80.65]  # Japan
+  - [1999, 80.61]  # Japan
+  - [2000, 81.18]  # Japan
+  - [2001, 81.51]  # Japan
+  - [2002, 81.8]  # Japan
+  - [2003, 81.85]  # Japan
+  - [2004, 82.13]  # Japan
+  - [2005, 82.01]  # Japan
+  - [2006, 82.37]  # Japan
+  - [2007, 82.55]  # Japan
+  - [2008, 82.63]  # Japan
+  - [2009, 82.97]  # Japan
+  - [2010, 82.92]  # Japan
+  - [2011, 83.16]  # Hong Kong
+  - [2012, 83.42]  # Hong Kong
+  - [2013, 83.7]  # Hong Kong
+  - [2014, 83.93]  # Hong Kong
+  - [2015, 84.15]  # Hong Kong
+  - [2016, 84.38]  # Hong Kong
+  - [2017, 84.66]  # Hong Kong
+  - [2018, 84.99]  # Hong Kong
+  - [2019, 85.26]  # Hong Kong
+  - [2020, 84.71]  # Hong Kong
+  - [2021, 85.08]  # Hong Kong
+  - [2022, 84.05]  # Japan
+  - [2023, 85.51]  # Hong Kong
+source:
+  title: "Our World in Data, Life expectancy at birth (Riley 2005; Zijdeman et al. 2015; Human Mortality Database 2025; UN World Population Prospects 2024)"
+  url: https://ourworldindata.org/grapher/life-expectancy
+license: CC BY 4.0
+note: >-
+  The highest period life expectancy at birth (both sexes) among countries and
+  territories with at least 1 million people that year, computed from the OWID
+  life expectancy and population CSVs downloaded 2026-10-28; every fifth year
+  to 1985, then every year to 2023. The population floor leaves out
+  microstates such as Monaco and San Marino, whose UN estimates sit 1 to 2
+  years above any large country. This is the record line Oeppen and Vaupel
+  (Science 296, 1029, 2002) drew, which rose about 3 months a year from 1840;
+  they used women's life expectancy, which runs a few years higher.
+  The leader passed from Sweden and Norway to Australia, Japan (1980s to
+  2010s) and Hong Kong. COVID-19 interrupted the rise in 2020 to 2022. The
+  trend fitted here is exponential like every other series, but the classic
+  description is a straight line.

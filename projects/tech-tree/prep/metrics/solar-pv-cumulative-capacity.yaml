@@ -1,5 +1,7 @@
 id: solar-pv-cumulative-capacity
 name: Cumulative installed solar capacity, world
+short: Solar capacity
+field: energy
 unit: GW
 better: higher
 log: true

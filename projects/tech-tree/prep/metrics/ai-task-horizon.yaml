@@ -1,0 +1,46 @@
+id: ai-task-horizon
+name: Time horizon of frontier AI agents on software tasks (METR, 50% success)
+short: AI task horizon
+unit: minutes
+better: higher
+log: true
+field: computing
+points:                           # [release date as fractional year, minutes]  # model, release date; 95% CI
+  - [2019.120, 0.0538]  # GPT-2, 2019-02-14; CI 0.00999 to 0.142
+  - [2020.405, 0.144]  # davinci-002 (GPT-3), 2020-05-28; CI 0.0933 to 0.221
+  - [2022.200, 0.599]  # GPT-3.5 Turbo Instruct, 2022-03-15; CI 0.255 to 1.12
+  - [2023.197, 3.99]  # GPT-4, 2023-03-14; CI 1.93 to 8
+  - [2023.846, 4.04]  # GPT-4 1106, 2023-11-06; CI 1.87 to 8.44
+  - [2024.364, 6.99]  # GPT-4o, 2024-05-13; CI 4 to 12.9
+  - [2024.468, 11.4]  # Claude 3.5 Sonnet, 2024-06-20; CI 5.49 to 22.4
+  - [2024.698, 20.3]  # o1-preview, 2024-09-12; CI 11.7 to 33.4
+  - [2024.808, 20.5]  # Claude 3.5 Sonnet (Oct 2024), 2024-10-22; CI 10.1 to 40.8
+  - [2024.928, 38.8]  # o1, 2024-12-05; CI 21.2 to 65
+  - [2025.148, 60.4]  # Claude 3.7 Sonnet, 2025-02-24; CI 33 to 104
+  - [2025.287, 120]  # o3, 2025-04-16; CI 74.6 to 191
+  - [2025.597, 203]  # GPT-5, 2025-08-07; CI 113 to 406
+  - [2025.879, 224]  # Gemini 3 Pro, 2025-11-18; CI 140 to 379
+  - [2025.895, 293]  # Claude Opus 4.5, 2025-11-24; CI 162 to 624
+  - [2025.942, 352]  # GPT-5.2, 2025-12-11; CI 198 to 815
+  - [2026.096, 719]  # Claude Opus 4.6, 2026-02-05; CI 317 to 3630
+  - [2026.263, 1040]  # Claude Mythos Preview (early), 2026-04-07; CI 509 to 3300
+source:
+  title: "METR, Time horizons of frontier AI models (Time Horizon 1.1 results, benchmark_results_1_1.yaml)"
+  url: https://metr.org/time-horizons/
+license: "Copyright METR, all rights reserved (no open license stated); figures reused as cited facts"
+note: >-
+  The length of software, research-engineering and cybersecurity tasks,
+  measured by how long they take skilled humans, that a model completes with
+  50 percent probability. Only models METR marks as state of the art at
+  release are kept (18 of 26), dated by release. Values are METR's Time
+  Horizon 1.1 estimates (228 tasks, after METR's correction of 3 March 2026),
+  from https://metr.org/assets/benchmark_results_1_1.yaml, downloaded
+  2026-10-28; TH1.1 revised several older models (GPT-4 from 6.0 to 4.0
+  minutes, GPT-5 from 131 to 203). METR's own doubling time from 2023 on is
+  about 129 days (CI 104 to 158), and about 188 days over the whole series.
+  METR says estimates above 16 hours are unreliable with the current task
+  suite, so the last two points (12 and 17 hours) have very wide intervals,
+  and its page says it is no longer actively updated: no model released after
+  April 2026 had been measured by October 2026. A 50 percent horizon is not
+  the same as doing the job reliably; METR's 80 percent horizons are about 4
+  to 8 times shorter.

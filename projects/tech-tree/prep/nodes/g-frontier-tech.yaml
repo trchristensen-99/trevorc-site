@@ -1,0 +1,2111 @@
+# Frontier technology: the intermediate steps, alternative routes and
+# measurable goals for computing and AI, quantum computing, chips, fusion and
+# fission, clean energy, carbon removal, superconductors, space and transport.
+# Changes to existing frontier nodes are in patches/frontier-tech.yaml.
+
+# ---------------------------------------------------------------------------
+# Quantum computing: the qubit modalities (routes to fault tolerance)
+# ---------------------------------------------------------------------------
+
+- id: trapped-ion-qubits
+  name: Trapped-ion qubits
+  kind: technique
+  fields: [physics, computing]
+  track: quantum-atomic
+  date: 1995
+  status: achieved
+  tier: 3
+  summary: >-
+    Qubits stored in single charged atoms held by electric fields and
+    controlled with lasers or microwaves. They have the best gate fidelities
+    of any platform but run slowly, and scaling means shuttling ions between
+    zones on a chip.
+  requires: [laser, quantum-mechanics]
+  efforts:
+    - who: Ignacio Cirac and Peter Zoller
+      where: Austria
+      when: 1995
+      outcome: achieved
+      note: Proposed a quantum computer built from cold trapped ions.
+    - who: Christopher Monroe, David Wineland and colleagues (NIST)
+      where: USA
+      when: 1995
+      outcome: achieved
+      note: First two-qubit quantum logic gate, on a single beryllium ion.
+    - who: Quantinuum; IonQ (with Oxford Ionics); AQT; Oxford Ionics
+      where: USA, UK, Austria
+      when: 2025
+      outcome: ongoing
+  sources:
+    - title: Monroe et al. 1995, Demonstration of a Fundamental Quantum Logic Gate, Physical Review Letters
+      url: https://doi.org/10.1103/PhysRevLett.75.4714
+
+- id: superconducting-qubits
+  name: Superconducting qubits
+  kind: device
+  fields: [physics, electronics]
+  track: quantum-atomic
+  date: 1999
+  status: achieved
+  tier: 3
+  summary: >-
+    Qubits made from tiny superconducting circuits with Josephson junctions,
+    cooled near absolute zero and made with chip fabrication methods. They are
+    fast and the most developed platform (Google, IBM, USTC), but need wiring
+    and refrigeration for every qubit.
+  requires: [superconductivity, integrated-circuit, quantum-mechanics]
+  uses: [res-helium]
+  efforts:
+    - who: Yasunobu Nakamura, Yuri Pashkin and Jaw-Shen Tsai (NEC)
+      where: Japan
+      when: 1999
+      outcome: achieved
+      note: Coherent control of a single-Cooper-pair box, the first superconducting qubit.
+    - who: Google Quantum AI; IBM; USTC (Zuchongzhi); Rigetti; AWS
+      where: USA, China
+      when: 2025
+      outcome: ongoing
+  sources:
+    - title: Nakamura, Pashkin and Tsai 1999, Coherent control of macroscopic quantum states in a single-Cooper-pair box, Nature
+      url: https://doi.org/10.1038/19718
+
+- id: photonic-qubits
+  name: Photonic quantum computing
+  kind: technique
+  fields: [physics, computing]
+  track: quantum-atomic
+  date: 2003
+  status: achieved
+  tier: 3
+  summary: >-
+    Computing with single photons in optical circuits. Photons barely
+    interact, so gates are probabilistic and built from measurement, but
+    chips can be made in ordinary silicon photonics foundries and work at
+    room temperature apart from the detectors.
+  requires: [laser, quantum-mechanics, optical-fiber]
+  efforts:
+    - who: Emanuel Knill, Raymond Laflamme and Gerard Milburn
+      where: USA, Canada, Australia
+      when: 2001
+      outcome: achieved
+      note: Showed that linear optics plus photon detection is enough for efficient quantum computing.
+    - who: Jeremy O'Brien and colleagues (University of Queensland)
+      where: Australia
+      when: 2003
+      outcome: achieved
+      note: First all-optical controlled-NOT gate.
+    - who: Pan Jianwei and Lu Chaoyang (USTC), Jiuzhang
+      where: China
+      when: 2020
+      outcome: achieved
+      note: Quantum advantage on Gaussian boson sampling with 76 detected photons.
+    - who: PsiQuantum; Xanadu; Quandela
+      where: USA, Canada, France
+      when: 2025
+      outcome: ongoing
+  sources:
+    - title: Knill, Laflamme and Milburn 2001, A scheme for efficient quantum computation with linear optics, Nature
+      url: https://doi.org/10.1038/35051009
+    - title: O'Brien et al. 2003, Demonstration of an all-optical quantum controlled-NOT gate, Nature
+      url: https://doi.org/10.1038/nature02054
+    - title: Zhong et al. 2020, Quantum computational advantage using photons, Science
+      url: https://doi.org/10.1126/science.abe8770
+
+- id: neutral-atom-arrays
+  name: Neutral-atom qubit arrays
+  kind: technique
+  fields: [physics, computing]
+  track: quantum-atomic
+  date: 2016
+  status: achieved
+  tier: 3
+  summary: >-
+    Uncharged atoms held in grids of laser tweezers and entangled by exciting
+    them to large Rydberg states. Atoms can be moved mid-computation, which
+    suits error-correcting codes, and arrays grew from dozens to thousands of
+    atoms in under a decade.
+  requires: [laser, quantum-mechanics]
+  efforts:
+    - who: Thad Walker and Mark Saffman (Wisconsin); Antoine Browaeys (Institut d'Optique)
+      where: USA, France
+      when: 2010
+      outcome: achieved
+      note: First neutral-atom controlled-NOT gate using Rydberg blockade (Wisconsin, 2010).
+    - who: Browaeys group; Mikhail Lukin and Markus Greiner (Harvard)
+      where: France, USA
+      when: 2016
+      outcome: achieved
+      note: Defect-free arrays assembled atom by atom with movable tweezers.
+    - who: QuEra; Atom Computing; Pasqal; Infleqtion
+      where: USA, France
+      when: 2025
+      outcome: ongoing
+  sources:
+    - title: Isenhower et al. 2010, Demonstration of a Neutral Atom Controlled-NOT Quantum Gate, Physical Review Letters
+      url: https://doi.org/10.1103/PhysRevLett.104.010503
+    - title: Barredo et al. 2016, An atom-by-atom assembler of defect-free arbitrary two-dimensional atomic arrays, Science
+      url: https://doi.org/10.1126/science.aah3778
+
+- id: logical-qubit-processors
+  name: Processors of many logical qubits
+  kind: device
+  fields: [physics, computing]
+  track: quantum-atomic
+  date: 2023
+  status: achieved
+  tier: 3
+  summary: >-
+    Running algorithms on dozens of error-corrected logical qubits at once
+    rather than on bare physical qubits. The codes were small and the
+    circuits short, but it showed the machinery of fault tolerance working
+    together.
+  requires: [quantum-error-correction, neutral-atom-arrays]
+  helped_by: [trapped-ion-qubits]
+  efforts:
+    - who: Dolev Bluvstein, Mikhail Lukin and colleagues (Harvard, MIT, QuEra)
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: Up to 48 logical qubits on 280 atoms, with entangling gates between them.
+    - who: Quantinuum (Helios)
+      where: USA, UK
+      when: 2025
+      outcome: independent
+      note: "November 2025: 98 barium-ion qubits with 99.92 percent two-qubit fidelity, encoding a claimed 48 error-corrected logical qubits (a 2:1 ratio some observers question)."
+    - who: Harvard, MIT and QuEra
+      where: USA
+      when: 2025
+      outcome: achieved
+      note: A 3,000-atom array run continuously for over two hours, and a fault-tolerant architecture with dozens of logical qubits below threshold (Nature, 2025).
+  sources:
+    - title: Quantum Computing Report, Quantinuum launches Helios (2025)
+      url: https://quantumcomputingreport.com/quantinuum-launches-helios-quantum-computer-with-industry-leading-fidelity-and-singapore-partnership/
+    - title: Chiu et al. 2025, Continuous operation of a coherent 3,000-qubit system (arXiv)
+      url: https://arxiv.org/abs/2506.20660
+    - title: Bluvstein et al. 2023, Logical quantum processor based on reconfigurable atom arrays, Nature
+      url: https://doi.org/10.1038/s41586-023-06927-3
+
+# ---------------------------------------------------------------------------
+# Fusion: confinement routes and the steps to a power plant
+# ---------------------------------------------------------------------------
+
+- id: optimized-stellarator
+  name: Optimized stellarator
+  kind: device
+  fields: [physics, energy]
+  track: nuclear-particle
+  date: 2021
+  status: achieved
+  tier: 3
+  summary: >-
+    A twisted magnetic bottle whose coils are shaped by computer optimization
+    so the plasma stays confined without a large current flowing through it,
+    which avoids the sudden disruptions of tokamaks. Wendelstein 7-X showed in
+    2021 that the optimization works.
+  requires: [tokamak, stored-program-computer, superconductivity]
+  competes: [tokamak]
+  efforts:
+    - who: Lyman Spitzer (Princeton)
+      where: USA
+      when: 1951
+      outcome: achieved
+      note: Invented the stellarator; early ones lost heat too fast and were eclipsed by the tokamak.
+    - who: Max Planck Institute for Plasma Physics, Wendelstein 7-X
+      where: Germany
+      when: 2021
+      outcome: achieved
+      note: First plasma 2015; reduced neoclassical heat loss confirmed in Nature (2021); record long-pulse triple product sustained for 43 seconds in May 2025.
+    - who: Proxima Fusion; Type One Energy; Thea Energy
+      where: Germany, USA
+      when: 2025
+      outcome: ongoing
+      note: Startups designing stellarator power plants with high-temperature superconducting magnets.
+  sources:
+    - title: Beidler et al. 2021, Demonstration of reduced neoclassical energy transport in Wendelstein 7-X, Nature
+      url: https://doi.org/10.1038/s41586-021-03687-w
+    - title: EUROfusion, Wendelstein 7-X sets world record for long plasma triple product (2025)
+      url: https://euro-fusion.org/eurofusion-news/wendelstein-7-x-sets-world-record-for-long-plasma-triple-product/
+
+- id: hts-fusion-magnets
+  name: High-field superconducting fusion magnets
+  kind: device
+  fields: [physics, materials]
+  track: nuclear-particle
+  date: 2021
+  status: achieved
+  tier: 3
+  summary: >-
+    Large magnets wound from high-temperature superconducting tape that reach
+    about 20 tesla. Fusion power density rises with the fourth power of field
+    strength, so these allow tokamaks and stellarators tens of times smaller
+    than ITER for the same performance.
+  requires: [rebco-coated-conductor, tokamak]
+  efforts:
+    - who: Commonwealth Fusion Systems and MIT Plasma Science and Fusion Center
+      where: USA
+      when: 2021
+      outcome: achieved
+      note: A 20 tesla large-bore magnet test on September 5, 2021, the design used in SPARC.
+    - who: Tokamak Energy; Energy Singularity (HH70)
+      where: UK, China
+      when: 2024
+      outcome: independent
+      note: Energy Singularity's HH70, the first all-HTS tokamak, made its first plasma in 2024.
+  sources:
+    - title: MIT News, MIT-designed project achieves major advance toward fusion energy (2021)
+      url: https://news.mit.edu/2021/MIT-CFS-major-advance-toward-fusion-energy-0908
+    - title: Wikipedia, HH70
+      url: https://en.wikipedia.org/wiki/HH70
+
+- id: magneto-inertial-fusion
+  name: Magnetized target fusion
+  kind: technique
+  fields: [physics, energy]
+  track: nuclear-particle
+  date: 2014
+  status: achieved
+  tier: 3
+  summary: >-
+    A middle path between magnetic and laser fusion: a magnetized plasma is
+    squeezed in a fast pulse by a collapsing liner, colliding plasmas or
+    magnetic fields. It needs neither steady confinement nor huge lasers,
+    and it is the route of several of the best-funded startups.
+  requires: [tokamak, electromagnetism]
+  helped_by: [fusion-ignition-nif]
+  efforts:
+    - who: Sandia National Laboratories, MagLIF on the Z machine
+      where: USA
+      when: 2014
+      outcome: achieved
+      note: Magnetized liner inertial fusion produced thermonuclear neutrons at fusion-relevant temperatures.
+    - who: Helion Energy (pulsed field-reversed configuration)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Aims to recover electricity directly from the expanding plasma. Its Polaris machine reached 150 million degrees and in January 2026 became the first private device to run deuterium-tritium fusion; it has not yet claimed electricity.
+    - who: General Fusion (liquid-metal liner)
+      where: Canada
+      when: 2026
+      outcome: ongoing
+      note: LM26 made first plasma in March 2025; laid off about a quarter of staff in May 2025, then listed on Nasdaq in July 2026 and reported 1.1 keV electron temperature in October 2026.
+    - who: Zap Energy (sheared-flow Z-pinch)
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: FuZE-3 reached about 1.6 gigapascals of plasma pressure (November 2025).
+  sources:
+    - title: Helion, Helion achieves new fusion energy milestones
+      url: https://www.helionenergy.com/newsroom/helion-achieves-new-fusion-energy-milestones
+    - title: General Fusion, 1 keV electron temperature milestone (2026)
+      url: https://generalfusion.com/post/general-fusion-achieves-world-first-1-kev-electron-temperature-milestone-on-its-path-to-commercial-fusion-power/
+    - title: Gomez et al. 2014, Experimental Demonstration of Fusion-Relevant Conditions in Magnetized Liner Inertial Fusion, Physical Review Letters
+      url: https://doi.org/10.1103/PhysRevLett.113.155003
+
+# ---------------------------------------------------------------------------
+# Superconductors
+# ---------------------------------------------------------------------------
+
+- id: hydride-superconductors
+  name: High-pressure hydride superconductors
+  kind: discovery
+  fields: [materials, physics]
+  track: modern-materials
+  date: 2015
+  status: achieved
+  tier: 3
+  summary: >-
+    Hydrogen-rich compounds squeezed in diamond anvils to over a million
+    atmospheres superconduct at up to about 250 K, close to room temperature,
+    as theory predicted. They prove high critical temperatures are possible
+    but are useless at ordinary pressure.
+  requires: [superconductivity, superconductors-high-temp]
+  efforts:
+    - who: Mikhail Eremets and colleagues (Max Planck Institute for Chemistry, Mainz)
+      where: Germany
+      when: 2015
+      outcome: achieved
+      note: Sulfur hydride superconducting at 203 K at about 150 gigapascals.
+    - who: Eremets group; Russell Hemley group (George Washington University)
+      where: Germany, USA
+      when: 2019
+      outcome: achieved
+      note: Lanthanum hydride at about 250 K and 170 gigapascals.
+  sources:
+    - title: Drozdov et al. 2015, Conventional superconductivity at 203 kelvin at high pressures in the sulfur hydride system, Nature
+      url: https://doi.org/10.1038/nature14964
+    - title: Drozdov et al. 2019, Superconductivity at 250 K in lanthanum hydride under high pressures, Nature
+      url: https://doi.org/10.1038/s41586-019-1201-8
+
+# ---------------------------------------------------------------------------
+# Space: propellant, the Moon, Mars
+# ---------------------------------------------------------------------------
+
+- id: mars-oxygen-moxie
+  name: Oxygen made on Mars (MOXIE)
+  kind: device
+  fields: [engineering, chemistry]
+  track: space
+  date: 2021
+  status: achieved
+  tier: 3
+  summary: >-
+    A toaster-sized unit on the Perseverance rover that split Martian carbon
+    dioxide into oxygen, the first use of another planet's resources to make
+    something useful. A return trip would need about a thousand times its
+    output, mostly as oxidizer for rocket fuel.
+  requires: [mars-rovers, electrolysis]
+  efforts:
+    - who: MIT Haystack Observatory and NASA JPL (Michael Hecht, principal investigator)
+      where: USA
+      when: 2021
+      outcome: achieved
+      note: 16 runs from April 2021 to August 2023 made 122 grams of oxygen at up to 12 grams an hour, 98 percent pure.
+  sources:
+    - title: NASA, NASA's oxygen-generating experiment MOXIE completes Mars mission (2023)
+      url: https://www.nasa.gov/missions/mars-2020-perseverance/perseverance-rover/nasas-oxygen-generating-experiment-moxie-completes-mars-mission/
+    - title: Hoffman et al. 2022, Mars Oxygen ISRU Experiment (MOXIE), Science Advances
+      url: https://doi.org/10.1126/sciadv.abp8636
+
+# ---------------------------------------------------------------------------
+# AI: from agents to automated research and AGI
+# ---------------------------------------------------------------------------
+
+- id: ai-discovered-results
+  name: AI-discovered results in math and algorithms
+  kind: technique
+  fields: [computing, math]
+  track: deep-learning
+  date: 2023
+  status: achieved
+  tier: 3
+  summary: >-
+    Language models paired with automatic checkers that search for new
+    programs and constructions, finding results that beat the best known
+    human ones on open problems. The answers are narrow but new, and each can
+    be verified by a machine.
+  requires: [large-language-models, reinforcement-learning]
+  helped_by: [alphago]
+  efforts:
+    - who: Google DeepMind, FunSearch (Bernardino Romera-Paredes, Pushmeet Kohli and colleagues)
+      where: UK
+      when: 2023
+      outcome: achieved
+      note: Found larger cap sets than any known, the first discovery on an open math problem by an LLM-based search (Nature, December 2023).
+    - who: Google DeepMind, AlphaEvolve
+      where: UK
+      when: 2025
+      outcome: achieved
+      note: "May 2025: multiplied 4x4 complex matrices with 48 multiplications, beating Strassen's 1969 method; improved the best known answer on about 20 percent of 50-plus open problems; a scheduling heuristic recovers 0.7 percent of Google's compute."
+  sources:
+    - title: Romera-Paredes et al. 2023, Mathematical discoveries from program search with large language models, Nature
+      url: https://doi.org/10.1038/s41586-023-06924-6
+    - title: Google DeepMind, AlphaEvolve, a Gemini-powered coding agent for designing advanced algorithms (2025)
+      url: https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/
+
+- id: starship-orbital-refueling
+  name: Ship-to-ship propellant transfer in orbit
+  kind: technique
+  fields: [engineering]
+  track: space
+  date: { window: [2027, 2030], likely: 2028 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Pumping cryogenic propellant from one spacecraft to another in orbit, so a
+    ship can leave Earth orbit with full tanks. Both US lunar landers and
+    SpaceX's Mars plans depend on it, and it has not yet been done at scale
+    with cryogenic fuel.
+  requires: [reusable-rockets, space-stations]
+  helped_by: [fully-reusable-rockets]
+  criterion: >-
+    One spacecraft transfers cryogenic propellant (liquid oxygen and methane
+    or hydrogen) to another in orbit at the scale of tens of tonnes or more,
+    as NASA's lunar lander contracts require before an uncrewed landing.
+  efforts:
+    - who: SpaceX (Starship Human Landing System for NASA)
+      where: USA
+      when: 2027
+      outcome: ongoing
+      note: Moved propellant between tanks inside one ship on its third flight (March 2024); a tanker-to-depot demonstration was scheduled for early 2027 as of NASA's October 2026 update. A lunar landing needs an estimated 4 to 14 tanker flights.
+    - who: Blue Origin (Blue Moon Mark 2 with a refueling transporter)
+      where: USA
+      when: 2028
+      outcome: rival
+      note: The smaller Mark 1 cargo lander had not flown by October 2026, with launch no earlier than early 2027.
+    - who: Soviet and Russian Progress tankers
+      where: USSR, Russia
+      when: 1978
+      outcome: achieved
+      note: Routine transfer of storable (not cryogenic) propellant to space stations since 1978.
+  forecast:
+    note: >-
+      SpaceX's first orbital Starship flight came only in September 2026, and
+      the ship-to-ship test has already slipped from 2025 to 2027. Boil-off,
+      docking of two very large ships and fast tanker turnaround all have to
+      work. I expect the first transfer demonstration in 2027 to 2028 and
+      treat 2028 as the date it is done at the scale a landing needs.
+    sources:
+      - title: Wikipedia, Starship HLS
+        url: https://en.wikipedia.org/wiki/Starship_HLS
+      - title: Wikipedia, SpaceX Starship flight tests
+        url: https://en.wikipedia.org/wiki/SpaceX_Starship_flight_tests
+  sources:
+    - title: Wikipedia, Starship HLS
+      url: https://en.wikipedia.org/wiki/Starship_HLS
+    - title: Wikipedia, Blue Moon Pathfinder Mission 1
+      url: https://en.wikipedia.org/wiki/Blue_Moon_Pathfinder_Mission_1
+
+- id: propellant-depot
+  name: Orbital propellant depots
+  kind: infrastructure
+  fields: [engineering]
+  track: space
+  date: { window: [2028, 2036], likely: 2029 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Tanks parked in orbit that collect propellant from many launches and
+    store it for weeks to months, the space equivalent of a fuel station.
+    They turn launch cost, not rocket size, into the limit on how far
+    missions can go.
+  requires: [starship-orbital-refueling]
+  criterion: >-
+    A depot holds at least 100 tonnes of cryogenic propellant in orbit for a
+    month or more with low boil-off, and then refuels a vehicle that departs
+    for the Moon or beyond.
+  efforts:
+    - who: SpaceX (depot ship filled by tanker Starships)
+      where: USA
+      when: 2027
+      outcome: ongoing
+      note: Part of the lunar lander plan; the first fill-up flights were scheduled for 2027.
+    - who: United Launch Alliance (ACES depot concepts)
+      where: USA
+      when: 2009
+      outcome: abandoned
+      note: Proposed depots around the Centaur upper stage in the 2000s and 2010s; never flown.
+  forecast:
+    note: >-
+      A depot needs a working transfer first, then storage for weeks, which no
+      one has shown for cryogenic propellant. SpaceX's lunar lander plan uses
+      exactly this (a depot ship filled by several tankers), and the first
+      crewed US landing (Artemis IV, targeted 2028) depends on it. If
+      transfers work in 2027 to 2028, a depot follows within a year or so.
+      Judgment: 2029, with slips likely.
+    sources:
+      - title: Wikipedia, Starship HLS
+        url: https://en.wikipedia.org/wiki/Starship_HLS
+  sources:
+    - title: Wikipedia, Starship HLS
+      url: https://en.wikipedia.org/wiki/Starship_HLS
+
+- id: commercial-lunar-landers
+  name: Commercial lunar landers
+  kind: device
+  fields: [engineering]
+  track: space
+  date: 2024
+  status: achieved
+  tier: 3
+  summary: >-
+    Private companies landing robotic craft on the Moon under fixed-price NASA
+    delivery contracts. The first landed tipped on its side in 2024; Firefly's
+    Blue Ghost made the first fully successful one in 2025.
+  requires: [moon-landing, nasa-cots]
+  efforts:
+    - who: Intuitive Machines (IM-1 Odysseus)
+      where: USA
+      when: 2024
+      outcome: achieved
+      note: First private soft landing, February 22, 2024, near Malapert A; broke a leg and tipped over. IM-2 (March 2025) also tipped over, so its PRIME-1 ice drill never ran.
+    - who: Firefly Aerospace (Blue Ghost Mission 1)
+      where: USA
+      when: 2025
+      outcome: achieved
+      note: Landed upright in Mare Crisium on March 2, 2025 and operated for two weeks.
+    - who: ispace
+      where: Japan
+      when: 2025
+      outcome: abandoned
+      note: Both landers crashed (April 2023 and June 2025).
+  sources:
+    - title: Wikipedia, IM-1
+      url: https://en.wikipedia.org/wiki/IM-1
+    - title: Wikipedia, Blue Ghost Mission 1
+      url: https://en.wikipedia.org/wiki/Blue_Ghost_Mission_1
+    - title: Wikipedia, IM-2
+      url: https://en.wikipedia.org/wiki/IM-2
+
+- id: lunar-water-mining
+  name: Water mined on the Moon
+  kind: technique
+  fields: [engineering, chemistry]
+  track: space
+  date: { window: [2030, 2050], likely: 2038 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Extracting water ice from permanently shadowed craters near the lunar
+    poles for drinking, oxygen and rocket fuel. It is the main reason both
+    the US and China aim for the south pole, but no one has yet drilled into
+    lunar ice.
+  requires: [commercial-lunar-landers, electrolysis]
+  helped_by: [artemis-accords, mars-oxygen-moxie]
+  criterion: >-
+    Equipment on the Moon extracts at least one tonne of water (or the oxygen
+    from it) from lunar soil or ice within a year, for use there.
+  efforts:
+    - who: NASA (PRIME-1 drill on IM-2; VIPER rover)
+      where: USA
+      when: 2025
+      outcome: abandoned
+      note: PRIME-1's drill was extended but never operated after the lander tipped over in March 2025.
+    - who: CNSA (Chang'e 8)
+      where: China
+      when: 2028
+      outcome: ongoing
+      note: Planned to test in-situ resource use in 2028 as a step toward the International Lunar Research Station.
+    - who: Interlune
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Aims to mine helium-3 rather than water; claims over $500 million in purchase orders.
+  forecast:
+    note: >-
+      The ice has been mapped from orbit, but its form and concentration on
+      the ground are unknown, and the only drill sent so far never ran. Tonne
+      scale needs a powered, long-lived plant near a crater, which in turn
+      needs a lunar base program (the US targets 2029 to 2036, China's ILRS
+      construction runs 2026 to 2035). Judgment: late 2030s.
+    sources:
+      - title: Wikipedia, International Lunar Research Station
+        url: https://en.wikipedia.org/wiki/International_Lunar_Research_Station
+      - title: Wikipedia, IM-2
+        url: https://en.wikipedia.org/wiki/IM-2
+  sources:
+    - title: Wikipedia, IM-2
+      url: https://en.wikipedia.org/wiki/IM-2
+    - title: Interlune
+      url: https://www.interlune.space/
+
+- id: lunar-base
+  name: Permanent lunar base
+  kind: infrastructure
+  fields: [engineering, society]
+  track: space
+  date: { window: [2032, 2055], likely: 2040 }
+  status: speculative
+  tier: 2
+  summary: >-
+    A base near the lunar south pole where crews live in rotation, like
+    Antarctic stations, supplied from Earth at first and later partly from
+    local ice. NASA paused its lunar-orbit Gateway in 2026 to focus on a
+    surface base; China plans one with partner countries.
+  requires: [crewed-lunar-return]
+  helped_by: [lunar-water-mining, propellant-depot, small-modular-reactors, closed-loop-life-support]
+  criterion: >-
+    People live on the Moon continuously for at least a year, with crews
+    rotating and no gap of more than a few weeks.
+  efforts:
+    - who: NASA (Artemis V onward)
+      where: USA
+      when: 2029
+      outcome: ongoing
+      note: In March 2026 NASA paused the Gateway station "as designed" and refocused on a surface base built from 2029 to 2036, with about one landing a year from Artemis V (late 2028).
+    - who: China and partners, International Lunar Research Station
+      where: China, Russia and 11 other members
+      when: 2035
+      outcome: ongoing
+      note: Construction phase 2026 to 2035, missions ILRS-1 to 5 in 2031 to 2035, use from 2036.
+    - who: SpaceX
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: In February 2026 Musk said Mars missions would wait five to seven years while SpaceX focuses on a lunar base.
+  forecast:
+    note: >-
+      Agency schedules put early base elements in the early 2030s, but
+      continuous occupancy needs reliable landings every few months, surface
+      power through the two-week lunar night and habitats that do not yet
+      exist. Antarctica took about 45 years from the first expeditions to
+      year-round stations (1911 to 1956). Judgment: around 2040.
+    sources:
+      - title: Wikipedia, Lunar Gateway
+        url: https://en.wikipedia.org/wiki/Lunar_Gateway
+      - title: Wikipedia, International Lunar Research Station
+        url: https://en.wikipedia.org/wiki/International_Lunar_Research_Station
+      - title: Wikipedia, SpaceX Mars program
+        url: https://en.wikipedia.org/wiki/SpaceX_Mars_program
+  sources:
+    - title: Wikipedia, Artemis program
+      url: https://en.wikipedia.org/wiki/Artemis_program
+    - title: Wikipedia, Lunar Gateway
+      url: https://en.wikipedia.org/wiki/Lunar_Gateway
+
+- id: closed-loop-life-support
+  name: Closed-loop life support
+  kind: technique
+  fields: [engineering, biology]
+  track: space
+  date: { window: [2035, 2065], likely: 2045 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Habitats that recycle nearly all their air and water and grow much of
+    their own food, so crews far from Earth are not tied to supply ships. The
+    ISS recycles 98 percent of its water but no oxygen-food loop has run
+    for years with people.
+  requires: [space-stations]
+  helped_by: [cultivated-meat, electrolysis]
+  criterion: >-
+    A crew of at least four lives for a year in a sealed habitat (on Earth,
+    in orbit or on another world) with at least 98 percent of water and
+    oxygen recycled and at least half of food grown inside, with no resupply
+    of those.
+  efforts:
+    - who: NASA ISS environmental control system
+      where: USA
+      when: 2023
+      outcome: achieved
+      note: Total water recovery reached 98 percent with the brine processor (June 2023); oxygen is made by electrolysis of resupplied water.
+    - who: Biosphere 2
+      where: USA
+      when: 1991
+      outcome: abandoned
+      note: Eight people sealed in for two years (1991 to 1993); oxygen fell so low that air had to be pumped in.
+    - who: Beihang University, Lunar Palace 1 (Yuegong-1)
+      where: China
+      when: 2018
+      outcome: ongoing
+      note: Rotating crews of four lived in a ground facility for 370 days (2017 to 2018) with oxygen and water fully recycled and much of the food grown inside.
+  forecast:
+    note: >-
+      Ground tests have come close for a year, but not in space or under
+      partial gravity, and no space agency has funded a flight-scale
+      bioregenerative system. A Mars settlement or a permanent lunar base
+      would force the issue. Judgment: mid-2040s for a flight-proven system.
+    sources:
+      - title: Wikipedia, Yuegong-1
+        url: https://en.wikipedia.org/wiki/Yuegong-1
+      - title: NASA, NASA achieves water recovery milestone on International Space Station (2023)
+        url: https://www.nasa.gov/missions/station/iss-research/nasa-achieves-water-recovery-milestone-on-international-space-station/
+  sources:
+    - title: NASA, NASA achieves water recovery milestone on International Space Station (2023)
+      url: https://www.nasa.gov/missions/station/iss-research/nasa-achieves-water-recovery-milestone-on-international-space-station/
+    - title: Wikipedia, Biosphere 2
+      url: https://en.wikipedia.org/wiki/Biosphere_2
+
+- id: mars-propellant-production
+  name: Rocket propellant made on Mars
+  kind: technique
+  fields: [engineering, chemistry]
+  track: space
+  date: { window: [2033, 2060], likely: 2040 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Making methane and oxygen on Mars from atmospheric carbon dioxide and
+    buried ice, so ships can fly home without hauling return fuel from Earth.
+    MOXIE made 122 grams of oxygen; a return Starship needs hundreds of
+    tonnes of propellant.
+  requires: [mars-oxygen-moxie, electrolysis]
+  helped_by: [solar-photovoltaic, small-modular-reactors]
+  criterion: >-
+    A plant on Mars produces at least 10 tonnes of rocket propellant
+    (oxidizer and fuel) and loads it into a vehicle.
+  efforts:
+    - who: SpaceX
+      where: USA
+      when: 2033
+      outcome: ongoing
+      note: Its Mars architecture assumes Sabatier-process methane plants powered by large solar arrays; Mars missions were pushed back by five to seven years in February 2026.
+    - who: NASA (MOXIE follow-ons in the Moon to Mars architecture)
+      where: USA
+      when: 2023
+      outcome: ongoing
+  forecast:
+    note: >-
+      The step from 12 grams an hour to tonnes needs uncrewed cargo landings
+      with power plants, ice mining and automation, all before crews arrive,
+      since SpaceX's plan relies on it for the trip home. Mars launch windows
+      come every 26 months. Judgment: about 2040, on uncrewed precursor
+      flights.
+    sources:
+      - title: Wikipedia, SpaceX Mars program
+        url: https://en.wikipedia.org/wiki/SpaceX_Mars_program
+      - title: NASA, MOXIE completes Mars mission (2023)
+        url: https://www.nasa.gov/missions/mars-2020-perseverance/perseverance-rover/nasas-oxygen-generating-experiment-moxie-completes-mars-mission/
+  sources:
+    - title: Wikipedia, SpaceX Mars program
+      url: https://en.wikipedia.org/wiki/SpaceX_Mars_program
+
+- id: nuclear-space-propulsion
+  name: Nuclear propulsion in space
+  kind: device
+  fields: [engineering, energy]
+  track: space
+  date: { window: [2028, 2040], likely: 2031 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Rockets heated by a fission reactor (nuclear thermal), or electric
+    thrusters powered by one (nuclear electric), which could halve Mars trip
+    times compared with chemical rockets. NERVA engines ran on the ground in
+    the 1960s; none has flown.
+  requires: [nuclear-reactor, rocketry]
+  criterion: >-
+    A spacecraft in space is propelled by a fission reactor, either by
+    heating propellant directly or by powering electric thrusters.
+  efforts:
+    - who: NASA and the Atomic Energy Commission, Rover and NERVA
+      where: USA
+      when: 1964
+      outcome: abandoned
+      note: Ground tests from 1959 to 1969 reached about 850 seconds of specific impulse, twice chemical engines; cancelled January 1973.
+    - who: DARPA and NASA, DRACO
+      where: USA
+      when: 2025
+      outcome: abandoned
+      note: A nuclear thermal flight demonstration cancelled in 2025; DARPA cited falling launch costs.
+    - who: NASA, Space Reactor-1 Freedom
+      where: USA
+      when: 2028
+      outcome: ongoing
+      note: Announced March 2026, a nuclear electric pathfinder reusing the Gateway power module, proposed for launch in December 2028 with two Mars flybys.
+  forecast:
+    note: >-
+      Nuclear propulsion has lost funding every time chemical alternatives
+      looked good enough, most recently in 2025. SR-1 Freedom's 2028 date is
+      a proposal; new nuclear flight hardware usually slips several years.
+      Judgment: early 2030s.
+    sources:
+      - title: Wikipedia, Space Reactor-1 Freedom
+        url: https://en.wikipedia.org/wiki/Space_Reactor-1_Freedom
+      - title: Wikipedia, DRACO
+        url: https://en.wikipedia.org/wiki/Demonstration_Rocket_for_Agile_Cislunar_Operations
+  sources:
+    - title: Wikipedia, NERVA
+      url: https://en.wikipedia.org/wiki/NERVA
+    - title: Wikipedia, Space Reactor-1 Freedom
+      url: https://en.wikipedia.org/wiki/Space_Reactor-1_Freedom
+
+- id: artemis-accords
+  name: Artemis Accords and space resource law
+  kind: institution
+  fields: [society, engineering]
+  track: law-governance
+  date: 2020
+  status: achieved
+  tier: 3
+  summary: >-
+    Bilateral agreements, led by the US, on how countries behave on the Moon
+    and beyond, including that extracting space resources is allowed without
+    claiming territory. They build on a 2015 US law letting citizens own
+    resources they mine in space.
+  requires: [outer-space-treaty]
+  efforts:
+    - who: US Congress, Commercial Space Launch Competitiveness Act
+      where: USA
+      when: 2015
+      outcome: achieved
+      note: Signed November 25, 2015; lets US citizens own space resources they obtain, without claiming sovereignty.
+    - who: NASA and the US State Department with seven founding partners
+      where: USA and partners
+      when: 2020
+      outcome: achieved
+      note: Signed October 13, 2020 by eight nations; 77 signatories by October 2026. China and Russia have not signed.
+  sources:
+    - title: Wikipedia, Artemis Accords
+      url: https://en.wikipedia.org/wiki/Artemis_Accords
+    - title: Wikipedia, U.S. Commercial Space Launch Competitiveness Act
+      url: https://en.wikipedia.org/wiki/U.S._Commercial_Space_Launch_Competitiveness_Act
+
+- id: electric-regional-aircraft
+  name: Battery-electric regional airliners
+  kind: device
+  fields: [engineering, energy]
+  track: aviation
+  date: { window: [2030, 2045], likely: 2034 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Fixed-wing airliners with 9 to 30 seats flying short routes on battery
+    power, or batteries plus a small fuel reserve. Batteries hold about 50
+    times less energy per kilogram than jet fuel, so range, not motors, is
+    the limit.
+  requires: [lithium-ion-battery, jet-airliner]
+  helped_by: [solid-state-batteries, electric-aviation]
+  criterion: >-
+    A battery-electric or battery-hybrid airliner with at least 19 seats
+    holds a type certificate and flies scheduled paying passengers.
+  efforts:
+    - who: Eviation (Alice)
+      where: USA, Israel
+      when: 2022
+      outcome: abandoned
+      note: First flight September 2022; on indefinite pause since 2025.
+    - who: Heart Aerospace (ES-30)
+      where: Sweden, USA
+      when: 2026
+      outcome: ongoing
+      note: Its X1 demonstrator first flew on August 12, 2026; aims for type certification of the 30-seat hybrid by the end of the 2020s.
+    - who: Beta Technologies (CX300)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Conventional-takeoff electric aircraft in FAA certification; went public in November 2025.
+  forecast:
+    note: >-
+      New airliner certifications usually slip by years, Heart's ES-30 has
+      moved from all-electric to hybrid, and Eviation paused. Batteries near
+      400 Wh/kg would help. Judgment: first 19-plus seat service in the
+      early to mid 2030s.
+    sources:
+      - title: Wikipedia, Heart Aerospace
+        url: https://en.wikipedia.org/wiki/Heart_Aerospace
+      - title: Wikipedia, Eviation Alice
+        url: https://en.wikipedia.org/wiki/Eviation_Alice
+  sources:
+    - title: Wikipedia, Heart Aerospace
+      url: https://en.wikipedia.org/wiki/Heart_Aerospace
+    - title: Wikipedia, Beta Technologies
+      url: https://en.wikipedia.org/wiki/Beta_Technologies
+
+- id: superhuman-coder
+  name: Automated coder (superhuman coder)
+  kind: technique
+  fields: [computing, society]
+  track: deep-learning
+  date: { window: [2027, 2035], likely: 2029 }
+  status: speculative
+  tier: 2
+  summary: >-
+    AI that does all the coding work of a frontier AI lab better and much
+    faster than its best engineers, so that human researchers only choose
+    what to build. It is the first step in most forecasts of AI speeding up
+    its own development.
+  requires: [ai-agents, ai-coding-assistants, ai-horizon-1-workday]
+  helped_by: [ai-horizon-1-month, ai-datacenters]
+  criterion: >-
+    The AI 2027 "superhuman coder" bar: a frontier AI company could run the
+    system on 5 percent of its compute as about 30 times as many agents as it
+    has human researchers, each doing the company's coding tasks about 30
+    times faster than its best human engineer, at equal or better quality.
+    A lab saying it has stopped hiring software engineers for research
+    because AI does that work would be strong evidence.
+  efforts:
+    - who: Anthropic (Claude Code, Claude Opus and Mythos models)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Claude Opus 4.6 (February 2026) was the first model METR measured above an 8-hour, 50 percent time horizon; an early Mythos Preview reached about 17 hours (April 2026).
+    - who: OpenAI (Codex, GPT-5.x and GPT-6)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: METR found GPT-5.6 Sol (June 2026) cheated on tasks more often than any public model it had tested and judged it would not enable fully automated AI research.
+    - who: Google DeepMind; xAI; DeepSeek; Cursor; Cognition
+      where: USA, UK, China
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      METR's 50 percent time horizon on software tasks crossed 1 hour in
+      February 2025 and 8 hours in February 2026 (Claude Opus 4.6, about 12
+      hours, 95 percent interval 5 to 61 hours), doubling about every 4.3
+      months since 2023. The 80 percent horizon is four to six times shorter
+      (about 3 hours for the best model), and METR says its tasks cannot
+      measure beyond about 16 hours, so the trend is now hard to check.
+      Carried forward, a 50 percent horizon of a work-month arrives around
+      2027 to 2029. The AI 2027 scenario put the superhuman coder in early
+      2027; in August 2026 its authors' medians for the similar "automated
+      coder" were November 2027 (Kokotajlo) and January 2030 (Lifland), and
+      the AI Futures model's December 2025 median was late 2031. I put it
+      at 2029, allowing for the reliability gap between finishing half of
+      long tasks and doing a lab's work.
+    sources:
+      - title: METR, Time horizon 1.1 (January 2026)
+        url: https://metr.org/blog/2026-01-29-time-horizon-1-1/
+      - title: METR, benchmark results (time horizons by model)
+        url: https://metr.org/assets/benchmark_results_1_1.yaml
+      - title: AI Futures Project, Q2.5 2026 timelines update (August 2026)
+        url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+      - title: AI Futures Project, AI Futures Model December 2025 update
+        url: https://blog.aifutures.org/p/ai-futures-model-dec-2025-update
+      - title: AI 2027, takeoff forecast (definitions)
+        url: https://ai-2027.com/research/takeoff-forecast
+  sources:
+    - title: AI 2027, takeoff forecast (definitions of superhuman coder and researcher)
+      url: https://ai-2027.com/research/takeoff-forecast
+    - title: METR, Time horizons
+      url: https://metr.org/time-horizons/
+    - title: METR, GPT-5.6 Sol evaluation (June 2026)
+      url: https://metr.org/blog/2026-06-26-gpt-5-6-sol/
+
+- id: ai-autonomous-science
+  name: AI that makes major discoveries in natural science
+  kind: technique
+  fields: [computing, society]
+  track: deep-learning
+  date: { window: [2027, 2036], likely: 2030 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    AI agents that form hypotheses, run experiments through automated labs
+    or simulations, and reach discoveries in physics, chemistry or biology
+    on their own. By 2026 AI had proved significant math results, but its
+    lab discoveries still relied on humans to run the experiments.
+  requires: [ai-discovered-results, ai-agents]
+  helped_by: [superhuman-coder, robot-foundation-models, protein-structure-prediction]
+  criterion: >-
+    An AI system, with humans only supplying resources and checking the
+    work, makes a discovery in a natural science that is published in a
+    leading journal with the AI as the main contributor, and that experts
+    rank among the important results of its field that year.
+  efforts:
+    - who: FutureHouse (Robin)
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: A multi-agent system proposed ripasudil as a treatment for dry macular degeneration (May 2025), with humans running the lab work; published in Nature in May 2026.
+    - who: Google (AI co-scientist)
+      where: USA, UK
+      when: 2025
+      outcome: ongoing
+      note: Proposed drug-repurposing candidates for leukemia and independently arrived at an unpublished, already validated mechanism of gene transfer in bacteria (February 2025).
+    - who: Sakana AI (AI Scientist v2)
+      where: Japan
+      when: 2025
+      outcome: ongoing
+      note: A fully AI-written paper passed peer review at an ICLR 2025 workshop and was withdrawn as planned.
+    - who: Edison Scientific (Kosmos)
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: Runs of about 12 hours were judged equal to months of human research; about 79 percent of report statements were accurate.
+  forecast:
+    note: >-
+      Math, where answers can be checked by machine, fell first: in May 2026
+      an unreleased OpenAI model disproved Erdős's 1946 unit distance
+      conjecture, a result Tim Gowers said he would have recommended for the
+      Annals of Mathematics. Natural science also needs physical
+      experiments, which are slower and need lab automation. If automated
+      coders arrive near 2029, AI-led discovery in simulation-heavy fields
+      should follow within a year or two. Judgment: around 2030.
+    sources:
+      - title: Quanta Magazine, Why the legendary Erdős problems are falling to AI (August 2026)
+        url: https://www.quantamagazine.org/why-the-legendary-erdos-problems-are-falling-to-ai-20260803/
+      - title: FutureHouse, Robin, end-to-end scientific discovery with a multi-agent system
+        url: https://www.futurehouse.org/research-announcements/demonstrating-end-to-end-scientific-discovery-with-robin-a-multi-agent-system
+  sources:
+    - title: Google Research, Accelerating scientific breakthroughs with an AI co-scientist (2025)
+      url: https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/
+    - title: Sakana AI, The AI Scientist generates its first peer-reviewed scientific publication (2025)
+      url: https://sakana.ai/ai-scientist-first-publication/
+    - title: Kosmos, an AI scientist for autonomous discovery (arXiv 2025)
+      url: https://arxiv.org/abs/2511.02824
+
+- id: continual-learning-ai
+  name: AI that learns on the job
+  kind: technique
+  fields: [computing]
+  track: deep-learning
+  date: { window: [2027, 2040], likely: 2031 }
+  status: speculative
+  tier: 3
+  summary: >-
+    AI that keeps learning from its own experience after it is deployed,
+    building up skill and context the way a new employee does, rather than
+    staying frozen between training runs. Many researchers see this, or
+    learned world models, as the missing piece that scaling alone may not
+    supply.
+  requires: [reasoning-models, ai-agents]
+  criterion: >-
+    A deployed AI system improves at a new job from its own experience and
+    feedback over days to weeks, about as fast and as lastingly as a capable
+    human hire, without its developer running a new training run, across
+    white-collar work in general.
+  efforts:
+    - who: Frontier labs (OpenAI, Anthropic, Google DeepMind)
+      where: USA, UK
+      when: 2026
+      outcome: ongoing
+      note: Memory and long context let 2026 agents carry notes between sessions, but their weights stay fixed between releases.
+    - who: Yann LeCun, AMI Labs (Advanced Machine Intelligence)
+      where: France, USA
+      when: 2025
+      outcome: rival
+      note: Founded December 2025 after LeCun left Meta, to build world models that learn how the physical world works; raised $1.03 billion in March 2026.
+  forecast:
+    note: >-
+      Dwarkesh Patel argued in June 2025 that the lack of continual learning
+      is the main reason models do not yet replace human workers, and gave
+      2032 as his 50 percent date for AI that learns on the job as easily as
+      a human. Lab research on test-time training and memory is active but
+      no lab has shipped it. Judgment: early 2030s, with wide uncertainty.
+    sources:
+      - title: Dwarkesh Patel, Why I don't think AGI is right around the corner (June 2025)
+        url: https://www.dwarkesh.com/p/timelines-june-2025
+  sources:
+    - title: Dwarkesh Patel, Why I don't think AGI is right around the corner (June 2025)
+      url: https://www.dwarkesh.com/p/timelines-june-2025
+    - title: Wikipedia, Yann LeCun
+      url: https://en.wikipedia.org/wiki/Yann_LeCun
+
+- id: general-purpose-robots
+  name: General-purpose robots at work
+  kind: device
+  fields: [engineering, computing]
+  track: machines
+  date: { window: [2028, 2038], likely: 2032 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Humanoids and mobile robot arms run by foundation models that can be
+    put to many jobs, in factories, warehouses and homes, instead of one
+    programmed task. Thousands were built by 2026, mostly for pilots and
+    research.
+  requires: [robot-foundation-models, electric-motor, lithium-ion-battery]
+  helped_by: [ai-agents, continual-learning-ai]
+  criterion: >-
+    At least 100,000 general-purpose robots (humanoids or mobile
+    manipulators driven by learned models, not fixed single-task arms) are
+    doing paid work worldwide, or a home robot that does chores such as
+    laundry and dishes in unfamiliar homes sells tens of thousands of units.
+  efforts:
+    - who: Unitree Robotics
+      where: China
+      when: 2025
+      outcome: ongoing
+      note: Shipped over 5,500 humanoids in 2025, mostly for research, education and display; filed for a Shanghai listing in March 2026.
+    - who: Figure AI
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Over 350 Figure 03 robots delivered by April 2026, building about one an hour, and about 740 operating by the end of June 2026.
+    - who: Tesla (Optimus)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Fremont production lines were being installed in 2026; no output reported.
+    - who: 1X Technologies (NEO)
+      where: USA, Norway
+      when: 2025
+      outcome: ongoing
+      note: Home humanoid offered for preorder in October 2025 at $20,000 or $499 a month.
+    - who: Physical Intelligence; Google DeepMind (Gemini Robotics); Nvidia (GR00T)
+      where: USA, UK
+      when: 2026
+      outcome: ongoing
+      note: Robot foundation models; Physical Intelligence released pi0.7 in April 2026 and an API in October 2026.
+  forecast:
+    note: >-
+      From a few thousand working units in 2026, reaching 100,000 needs about
+      five doublings; at a doubling a year (fast for hardware) that is about
+      2031. Reliability in unstructured places, cost (a car-like price per
+      robot) and safety around people are the main hurdles. Judgment: early
+      2030s for the work count, later for homes.
+    sources:
+      - title: Wikipedia, Figure AI
+        url: https://en.wikipedia.org/wiki/Figure_AI
+      - title: Wikipedia, Humanoid robot
+        url: https://en.wikipedia.org/wiki/Humanoid_robot
+  sources:
+    - title: Wikipedia, Figure AI
+      url: https://en.wikipedia.org/wiki/Figure_AI
+    - title: Wikipedia, Unitree Robotics
+      url: https://en.wikipedia.org/wiki/Unitree_Robotics
+    - title: Wikipedia, 1X Technologies
+      url: https://en.wikipedia.org/wiki/1X_Technologies
+    - title: Physical Intelligence, blog
+      url: https://www.pi.website/blog
+
+- id: robotaxis-at-scale
+  name: Robotaxis at scale
+  kind: infrastructure
+  fields: [engineering, computing]
+  track: land-transport
+  date: { window: [2026, 2030], likely: 2027 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Driverless taxi fleets large enough to be an ordinary way to get around
+    in many cities. Waymo reached about 500,000 paid rides a week in 2026,
+    Tesla removed safety monitors in several Texas and Florida cities, and
+    Baidu, Pony.ai and WeRide run driverless fleets in China and the Gulf.
+  requires: [autonomous-vehicles, electric-vehicles]
+  helped_by: [robot-foundation-models, ai-datacenters]
+  criterion: >-
+    Robotaxis with no safety driver or monitor on board give at least one
+    million paid rides a week in one country, spread over at least ten
+    metropolitan areas.
+  efforts:
+    - who: Waymo (Alphabet)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: About 500,000 paid rides a week and 3,871 vehicles in June 2026; full service in Phoenix, the San Francisco Bay Area, Los Angeles, Austin, Atlanta, Miami, Nashville, Dallas, Houston, and from October 2026 San Antonio, San Diego and Tampa.
+    - who: Tesla Robotaxi
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Camera-only; no safety monitor in Austin from January 2026, then Dallas, Houston, Miami, Orlando and Tampa; about 420 vehicles in Texas.
+    - who: Baidu Apollo Go; Pony.ai; WeRide
+      where: China, United Arab Emirates
+      when: 2026
+      outcome: ongoing
+      note: Driverless commercial service in Beijing, Wuhan, Shenzhen, Guangzhou and other Chinese cities, and in Abu Dhabi and Dubai.
+    - who: Zoox (Amazon)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Purpose-built vehicles; paid rides in Las Vegas from August 2026.
+  forecast:
+    note: >-
+      Waymo reached about 500,000 paid rides a week by mid-2026 and opened
+      eight new metros in 2026 alone; one more doubling, likely within about
+      a year at that pace, would pass a million a week in the US alone, so
+      2027 is likely. China may get there first if Apollo Go's
+      growth continues, but its ride counts were not published for 2026.
+    sources:
+      - title: Wikipedia, Waymo
+        url: https://en.wikipedia.org/wiki/Waymo
+      - title: Wikipedia, Tesla Robotaxi
+        url: https://en.wikipedia.org/wiki/Tesla_Robotaxi
+  sources:
+    - title: Wikipedia, Waymo
+      url: https://en.wikipedia.org/wiki/Waymo
+    - title: Wikipedia, Tesla Robotaxi
+      url: https://en.wikipedia.org/wiki/Tesla_Robotaxi
+    - title: Wikipedia, Apollo Go
+      url: https://en.wikipedia.org/wiki/Apollo_Go
+    - title: Wikipedia, Zoox
+      url: https://en.wikipedia.org/wiki/Zoox_(company)
+
+- id: personal-self-driving-cars
+  name: Self-driving personal cars
+  kind: device
+  fields: [engineering, computing]
+  track: land-transport
+  date: { window: [2028, 2042], likely: 2033 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Cars that people own and that drive themselves anywhere in a large
+    region with no one watching the road, so the owner can sleep or work.
+    In 2026 consumer systems, including Tesla's Full Self-Driving, still
+    required a supervising driver.
+  requires: [robotaxis-at-scale]
+  criterion: >-
+    At least 100,000 privately owned cars are legally allowed to drive
+    themselves door to door, including on highways and city streets across
+    at least a whole metropolitan area, with no human required to watch the
+    road (SAE level 4 in private ownership).
+  efforts:
+    - who: Tesla (FSD, camera-only end-to-end neural network)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Still sold as "Supervised" for consumers in 2026, while unsupervised in Tesla's own robotaxi fleets in some cities.
+    - who: Waymo and car makers (lidar, radar and detailed maps)
+      where: USA, Japan
+      when: 2026
+      outcome: rival
+      note: The sensor-heavy approach that works in robotaxis is costlier per car, which is why it has stayed in fleets.
+  forecast:
+    note: >-
+      Robotaxis work in mapped, geofenced cities with remote support;
+      personal cars must handle any road and weather, and makers would carry
+      the liability. Expect the first unsupervised personal-car offers late
+      in the 2020s and 100,000 such cars in the early to mid 2030s. Judgment.
+    sources:
+      - title: Wikipedia, Tesla Robotaxi
+        url: https://en.wikipedia.org/wiki/Tesla_Robotaxi
+  sources:
+    - title: Wikipedia, Tesla Robotaxi
+      url: https://en.wikipedia.org/wiki/Tesla_Robotaxi
+
+- id: ai-safety-institutes
+  name: AI safety institutes and frontier AI rules
+  kind: institution
+  fields: [society, computing]
+  track: law-governance
+  date: 2023
+  status: achieved
+  tier: 3
+  summary: >-
+    Government bodies that test the most capable AI models before and after
+    release, and the first laws aimed at general-purpose models, notably the
+    EU AI Act. They give states a way to see dangerous capabilities coming,
+    though their powers are mostly voluntary.
+  requires: [frontier-models]
+  efforts:
+    - who: UK AI Safety Institute (AI Security Institute from February 2025)
+      where: UK
+      when: 2023
+      outcome: achieved
+      note: Founded November 2023 around the Bletchley Park summit.
+    - who: US AI Safety Institute (Center for AI Standards and Innovation from June 2025)
+      where: USA
+      when: 2023
+      outcome: achieved
+    - who: European Union, AI Act
+      where: EU
+      when: 2024
+      outcome: achieved
+      note: In force August 1, 2024; obligations for general-purpose AI models from August 2, 2025.
+  sources:
+    - title: Wikipedia, AI Safety Institute
+      url: https://en.wikipedia.org/wiki/AI_Safety_Institute
+    - title: EU AI Act implementation timeline
+      url: https://artificialintelligenceact.eu/implementation-timeline/
+
+# ---------------------------------------------------------------------------
+# Quantum computing: the open steps
+# ---------------------------------------------------------------------------
+
+- id: topological-qubits
+  name: Topological qubits
+  kind: device
+  fields: [physics, computing]
+  track: quantum-atomic
+  date: { window: [2028, 2045], likely: 2035 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Qubits that store information in exotic states (Majorana zero modes)
+    spread across a superconducting nanowire, so local noise cannot easily
+    disturb them. If they work they would need far less error correction;
+    whether anyone has made one is disputed.
+  requires: [superconductivity, quantum-mechanics, integrated-circuit]
+  criterion: >-
+    A qubit whose protection comes from topological states, confirmed by
+    independent groups (for example through braiding or parity
+    measurements), with error rates below those of the best conventional
+    qubits.
+  efforts:
+    - who: Microsoft (Station Q, Majorana 1)
+      where: USA, Denmark, Netherlands
+      when: 2025
+      outcome: ongoing
+      note: Announced Majorana 1 with eight "topological qubits" in February 2025, but the accompanying Nature paper said its measurements did not by themselves show the states were topological. Microsoft is in the final stage of DARPA's Quantum Benchmarking Initiative.
+  forecast:
+    note: >-
+      Two decades of Majorana claims have not yet produced an agreed working
+      qubit. Microsoft says it can reach useful scale quickly once one works;
+      DARPA's program will judge by 2033. Low confidence; it may be overtaken
+      by other platforms before it matures.
+    sources:
+      - title: Microsoft Quantum team 2025, Interferometric single-shot parity measurement in InAs-Al hybrid devices, Nature
+        url: https://doi.org/10.1038/s41586-024-08445-2
+      - title: DARPA, Quantum Benchmarking Initiative
+        url: https://www.darpa.mil/research/programs/quantum-benchmarking-initiative
+  sources:
+    - title: Microsoft, Majorana 1 chip carves new path for quantum computing (2025)
+      url: https://news.microsoft.com/source/features/innovation/microsofts-majorana-1-chip-carves-new-path-for-quantum-computing/
+    - title: Microsoft Quantum team 2025, Nature 638, 651
+      url: https://doi.org/10.1038/s41586-024-08445-2
+
+- id: useful-quantum-advantage
+  name: Useful quantum advantage
+  kind: discovery
+  fields: [computing, physics]
+  track: computers
+  date: { window: [2026, 2031], likely: 2027 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    A quantum computer doing a calculation someone actually needs, in
+    physics, chemistry or materials, better than any classical computer can.
+    Earlier "supremacy" tasks were contrived; in 2025 and 2026 Google and IBM
+    claimed the first verifiable or useful advantages, and classical
+    researchers are testing each claim.
+  requires: [quantum-supremacy, quantum-computing]
+  helped_by: [below-threshold-error-correction, logical-qubit-processors]
+  criterion: >-
+    A quantum computer solves a problem of scientific or commercial value
+    (not a benchmark designed for quantum hardware) faster, more cheaply or
+    more accurately than the best known classical method, and the claim
+    survives at least a year of attempts to match it classically.
+  efforts:
+    - who: Google Quantum AI (Quantum Echoes on Willow)
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: Claimed the first verifiable quantum advantage in October 2025, measuring an out-of-time-order correlator about 13,000 times faster than supercomputers (Nature).
+    - who: IBM with the University of Chicago, Qedma and Algorithmiq
+      where: USA, Israel, Finland
+      when: 2026
+      outcome: ongoing
+      note: Published three advantage claims in July 2026 on its Quantum Advantage Tracker. Within two weeks a classical team reproduced the University of Chicago result in 37 minutes on GPUs; the other two had not been matched.
+  forecast:
+    note: >-
+      IBM predicted the first advantages would be found by the end of 2026
+      and set up a public tracker for claims and rebuttals. Classical
+      simulation has overturned most earlier claims within months, so I
+      expect a claim to survive a year of scrutiny around 2027, with the
+      first commercially valuable one (chemistry or materials) later.
+    sources:
+      - title: IBM, Welcome to the quantum advantage era
+        url: https://www.ibm.com/quantum/blog/quantum-advantage-era
+      - title: IBM, Quantum advantage claims (July 2026)
+        url: https://www.ibm.com/quantum/blog/quantum-advantage
+      - title: Manabe, Gu and Pan 2026, classical reproduction of the IBM and UChicago result (arXiv)
+        url: https://arxiv.org/abs/2608.13110
+  sources:
+    - title: Google Quantum AI 2025, Observation of constructive interference at the edge of quantum ergodicity, Nature
+      url: https://doi.org/10.1038/s41586-025-09526-6
+    - title: Google, Our quantum hardware demonstrates verifiable quantum advantage (2025)
+      url: https://blog.google/innovation-and-ai/technology/research/quantum-hardware-verifiable-advantage/
+    - title: IBM and University of Chicago demonstrate quantum advantage (July 2026)
+      url: https://newsroom.ibm.com/2026-07-30-ibm-and-the-university-of-chicago-demonstrate-quantum-advantage,-establishing-trusted-quantum-computation-on-logical-circuits
+
+# ---------------------------------------------------------------------------
+# Chipmaking
+# ---------------------------------------------------------------------------
+
+- id: backside-power-delivery
+  name: Backside power delivery
+  kind: technique
+  fields: [electronics]
+  track: chipmaking
+  date: 2025
+  status: achieved
+  tier: 3
+  summary: >-
+    Moving a chip's power wiring underneath the transistors, so the wires on
+    top carry only signals. It frees space and cuts power losses, and is the
+    biggest change in chip wiring in decades.
+  requires: [gate-all-around, euv-lithography]
+  efforts:
+    - who: Intel (PowerVia on Intel 18A)
+      where: USA
+      when: 2025
+      outcome: achieved
+      note: Intel says it reached high-volume manufacturing on 18A by the end of 2025 in Arizona and Oregon, claiming up to 18 percent more performance or 38 percent less power than Intel 3.
+    - who: TSMC (A16, Super Power Rail)
+      where: Taiwan
+      when: 2026
+      outcome: rival
+      note: Nanosheet transistors with a backside power rail, scheduled for the second half of 2026.
+  sources:
+    - title: Intel, Intel 18A process
+      url: https://www.intel.com/content/www/us/en/foundry/process/18a.html
+    - title: Intel 2026 proxy statement (high-volume manufacturing on 18A)
+      url: https://www.sec.gov/Archives/edgar/data/50863/000005086326000061/proxy2026.htm
+    - title: TSMC, A16 technology
+      url: https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_A16
+
+- id: cfet-transistors
+  name: Stacked complementary transistors (CFET)
+  kind: technique
+  fields: [electronics]
+  track: components
+  date: { window: [2031, 2040], likely: 2034 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Stacking the n-type and p-type transistor of each logic pair on top of
+    each other instead of side by side, roughly halving the area of a logic
+    cell. It is the planned successor to gate-all-around nanosheets once
+    sideways shrinking runs out.
+  requires: [gate-all-around, backside-power-delivery]
+  helped_by: [high-na-euv]
+  criterion: >-
+    Chips built with stacked complementary FETs are in high-volume
+    manufacturing for commercial products.
+  efforts:
+    - who: Intel; TSMC; Samsung
+      where: USA, Taiwan, South Korea
+      when: 2023
+      outcome: ongoing
+      note: Showed CFET test devices at IEDM in December 2023 (Intel an inverter at 60 nm pitch, TSMC at 48 nm).
+    - who: imec
+      where: Belgium
+      when: 2023
+      outcome: ongoing
+      note: Its scaling roadmap puts CFET after forksheet transistors.
+  forecast:
+    note: >-
+      Engineers quoted in 2023 expected production 7 to 10 years out, about
+      2030 to 2033. New transistor architectures have usually arrived later
+      than first expected (gate-all-around came in 2022 to 2025), so I put it
+      in the mid-2030s.
+    sources:
+      - title: IEEE Spectrum, Intel, Samsung and TSMC demo stacked CFET transistors (2023)
+        url: https://spectrum.ieee.org/cfet-intel-samsung-tsmc
+      - title: imec, Smaller, better, faster, imec presents chip scaling roadmap (2023)
+        url: https://www.imec-int.com/en/articles/smaller-better-faster-imec-presents-chip-scaling-roadmap
+  sources:
+    - title: IEEE Spectrum, Intel, Samsung and TSMC demo stacked CFET transistors (2023)
+      url: https://spectrum.ieee.org/cfet-intel-samsung-tsmc
+
+# ---------------------------------------------------------------------------
+# Fusion: the open steps
+# ---------------------------------------------------------------------------
+
+- id: magnetic-fusion-gain
+  name: Magnetic fusion with gain above 1
+  kind: discovery
+  fields: [physics, energy]
+  track: nuclear-particle
+  date: { window: [2027, 2032], likely: 2028 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    A magnetically confined plasma that makes more fusion power than the
+    heating power put into it (Q above 1), which laser fusion passed in
+    2022. JET reached Q of 0.67 in 1997; compact high-field tokamaks under
+    construction aim to pass 1 around 2027.
+  requires: [tokamak, hts-fusion-magnets]
+  helped_by: [optimized-stellarator, fusion-triple-product-ignition]
+  criterion: >-
+    A magnetic confinement device (tokamak, stellarator or other) produces
+    more fusion power than the external heating power absorbed by the
+    plasma (Q above 1), with deuterium-tritium fuel.
+  efforts:
+    - who: JET (EUROfusion, Culham)
+      where: UK, EU
+      when: 1997
+      outcome: achieved
+      note: Q of 0.67 with 16 MW of fusion power in 1997; a record 69 MJ in October 2023 before closing.
+    - who: Commonwealth Fusion Systems, SPARC
+      where: USA
+      when: 2027
+      outcome: ongoing
+      note: First of 18 magnets installed January 2026 and about 80 percent complete by July 2026; first plasma and Q above 1 targeted for 2027, design Q about 11.
+    - who: ASIPP Hefei, BEST
+      where: China
+      when: 2027
+      outcome: ongoing
+      note: Compact superconducting tokamak due for completion in 2027, aiming at Q of about 5.
+    - who: ITER
+      where: France
+      when: 2039
+      outcome: ongoing
+      note: Deuterium-tritium operation now planned for 2039, aiming at Q of 10.
+  forecast:
+    note: >-
+      SPARC and BEST both target 2027. New fusion machines take a year or
+      more from first plasma to full field and tritium operation, and SPARC
+      has already slipped from 2025. Judgment: first Q above 1 in 2028.
+    sources:
+      - title: Nuclear News Network, CFS SPARC tracker
+        url: https://www.nuclearnewsnetwork.com/industry-trackers/fusion-energy-companies/cfs-sparc
+      - title: Nuclear News Network, China BEST tracker
+        url: https://www.nuclearnewsnetwork.com/industry-trackers/fusion-energy-companies/china-best
+      - title: Creely et al. 2020, Overview of the SPARC tokamak, Journal of Plasma Physics
+        url: https://www.cambridge.org/core/product/identifier/S0022377820001257/type/journal_article
+  sources:
+    - title: TechCrunch, Commonwealth Fusion Systems installs reactor magnet (January 2026)
+      url: https://techcrunch.com/2026/01/06/commonwealth-fusion-systems-installs-reactor-magnet-lands-deal-with-nvidia/
+    - title: ITER 2024 baseline summary
+      url: https://iter.org/sites/default/files/media/2024-07/baseline_press_conference_summary_july-2024_b.pdf
+    - title: Wikipedia, Joint European Torus
+      url: https://en.wikipedia.org/wiki/Joint_European_Torus
+
+- id: fusion-drivers
+  name: Repetition-rated drivers for inertial fusion
+  kind: device
+  fields: [physics, energy]
+  track: nuclear-particle
+  date: { window: [2030, 2042], likely: 2035 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Lasers or pulsed-power machines efficient enough, and fast enough to
+    fire many times a second, to turn laser-style fusion into a power plant.
+    NIF's flashlamp lasers fire a few times a day and waste most of the
+    power they draw.
+  requires: [laser, fusion-ignition-nif]
+  criterion: >-
+    A driver delivers fusion-class energy (megajoule scale) to targets at
+    least once a second for hours, with wall-plug efficiency of about 10
+    percent or better.
+  efforts:
+    - who: DOE inertial fusion energy hubs (LLNL-led STARFIRE, with Focused Energy and Xcimer)
+      where: USA
+      when: 2023
+      outcome: ongoing
+      note: $42 million for three research hubs announced December 2023.
+    - who: Xcimer Energy
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Krypton fluoride laser; its Phoenix prototype started operating in June 2026, with a larger Anvil system planned for 2028 and a plant in the mid-2030s.
+    - who: Focused Energy (with RWE at Biblis); Marvel Fusion
+      where: Germany, USA
+      when: 2026
+      outcome: ongoing
+      note: Focused Energy raised a $240 million Series A in May 2026 and plans a plant in the mid-2030s.
+    - who: Pacific Fusion
+      where: USA
+      when: 2030
+      outcome: rival
+      note: Uses pulsed power instead of lasers; raised over $900 million and broke ground in New Mexico in August 2026, aiming at net facility gain by 2030.
+  forecast:
+    note: >-
+      Company plans converge on demonstration drivers around 2028 to 2030 and
+      plants in the mid-2030s. Each needs a new laser or pulser architecture
+      plus cheap mass-produced targets. Judgment: 2035.
+    sources:
+      - title: POWER, Xcimer starts operations of prototype for laser fusion architecture (2026)
+        url: https://www.powermag.com/xcimer-energy-starts-operations-of-prototype-for-laser-fusion-architecture/
+      - title: New Mexico governor, Pacific Fusion campus announcement (2025)
+        url: https://www.governor.state.nm.us/2025/09/26/governor-announces-1-billion-fusion-research-and-manufacturing-campus-in-new-mexico-pacific-fusion-project-will-create-hundreds-of-jobs/
+  sources:
+    - title: US DOE, $42 million for inertial fusion energy hubs (2023)
+      url: https://www.energy.gov/articles/doe-announces-42-million-inertial-fusion-energy-hubs
+    - title: Focused Energy, $240 million Series A (2026)
+      url: https://www.focused-energy.co/news-release/focused-energy-sets-a-new-benchmark-240-million-for-the-largest-series-a-financing-in-the-global-fusion-industry
+
+- id: tritium-breeding-blanket
+  name: Tritium breeding blankets
+  kind: technique
+  fields: [energy, physics]
+  track: nuclear-energy
+  date: { window: [2033, 2050], likely: 2040 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Lithium-bearing walls around a fusion plasma that capture its neutrons
+    and turn the lithium into tritium. The world has only a few tens of
+    kilograms of tritium, so deuterium-tritium plants must make their own
+    fuel; no large breeding system has yet been tried.
+  requires: [nuclear-reactor, lithium-ion-battery]
+  uses: [res-lithium]
+  criterion: >-
+    A blanket in a fusion neutron environment breeds more tritium than the
+    plant burns (tritium breeding ratio above 1), measured over a full
+    operating campaign, and the tritium is extracted for reuse.
+  efforts:
+    - who: ITER test blanket modules (EU, Japan, China, Korea)
+      where: France
+      when: 2039
+      outcome: ongoing
+      note: Four mock-up blanket designs to be tested in two ports during deuterium-tritium operation.
+    - who: UKAEA, LIBRTI
+      where: UK
+      when: 2026
+      outcome: ongoing
+      note: About £220 million (2023 to 2030) for a breeding test facility using a 14 MeV neutron source in the old JET power building; Commonwealth Fusion Systems joined in July 2026.
+  forecast:
+    note: >-
+      Breeding can only be shown at full scale in a deuterium-tritium plant
+      or a strong neutron source; ITER's tests start in 2039 and the first
+      pilot plants (ARC, STEP) aim for the 2030s. Judgment: about 2040.
+    sources:
+      - title: ITER, Tritium breeding
+        url: https://www.iter.org/machine/supporting-systems/tritium-breeding
+      - title: UKAEA, LIBRTI
+        url: https://www.ukaea.org/work/librti/
+  sources:
+    - title: ITER, Tritium breeding
+      url: https://www.iter.org/machine/supporting-systems/tritium-breeding
+    - title: Wikipedia, Breeding blanket
+      url: https://en.wikipedia.org/wiki/Breeding_blanket
+
+- id: fusion-net-electricity
+  name: First net electricity from fusion
+  kind: discovery
+  fields: [energy, physics]
+  track: nuclear-energy
+  date: { window: [2029, 2042], likely: 2034 }
+  status: speculative
+  tier: 2
+  summary: >-
+    A fusion machine that sends out more electricity than the whole facility
+    draws, if only for a test run. Scientific gain counts only the heating
+    energy reaching the fuel; here the lasers, magnets, pumps and
+    conversion losses all count against it.
+  requires: [fusion-ignition-nif, tokamak]
+  helped_by: [fusion-triple-product-ignition, deep-learning]
+  routes:
+    - name: Tokamak
+      requires: [magnetic-fusion-gain, hts-fusion-magnets]
+      note: Commonwealth Fusion Systems (SPARC then ARC), China (BEST then CFEDR), Tokamak Energy, UKAEA STEP.
+    - name: Stellarator
+      requires: [optimized-stellarator, hts-fusion-magnets]
+      note: Proxima Fusion (Alpha, early 2030s), Type One Energy (Infinity Two at TVA), Thea Energy.
+    - name: Inertial (laser or pulsed power)
+      requires: [fusion-ignition-nif, fusion-drivers]
+      note: Xcimer, Focused Energy, Marvel Fusion; Pacific Fusion with pulsed power.
+    - name: Magnetized target and pulsed magnetic
+      requires: [magneto-inertial-fusion]
+      note: Helion (direct electricity recovery, Orion plant for Microsoft), General Fusion, Zap Energy.
+  criterion: >-
+    A fusion device produces more electrical energy than the entire facility
+    consumes over the same period (engineering gain above 1), measured and
+    published, even for a single run of seconds to minutes.
+  efforts:
+    - who: Helion Energy
+      where: USA
+      when: 2028
+      outcome: ongoing
+      note: Promised Microsoft at least 50 MW from its Orion plant by 2028 under a 2023 agreement; it had earlier expected Polaris to make electricity in 2024, which it did not.
+    - who: Commonwealth Fusion Systems, ARC
+      where: USA
+      when: 2032
+      outcome: ongoing
+      note: A 400 MW plant near Richmond, Virginia, planned for the early 2030s; Google has agreed to buy half its output and Eni over $1 billion of power.
+    - who: Pacific Fusion
+      where: USA
+      when: 2030
+      outcome: ongoing
+      note: Aims at facility gain by 2030, a step short of net electricity.
+  forecast:
+    note: >-
+      Private fusion has raised about $14 billion (FIA, July 2026) and most
+      firms say the early 2030s; Helion says 2028. Those dates have slipped
+      before, and engineering gain needs a Q well above 5 to 10 for magnetic
+      routes or much higher target gains for inertial ones. Judgment: the
+      first net-electric run around 2034, by whichever route gets there.
+    sources:
+      - title: Fusion Industry Association, 2026 global fusion industry report
+        url: https://www.fusionindustryassociation.org/fusion-industry-attracts-record-annual-funding-of-4-48bn-raising-total-to-14-24bn/
+      - title: Helion, world's first fusion power purchase agreement with Microsoft (2023)
+        url: https://www.helionenergy.com/newsroom/helion-announces-worlds-first-fusion-ppa-with-microsoft
+      - title: TechCrunch, Commonwealth Fusion Systems books a $1B power deal (2025)
+        url: https://techcrunch.com/2025/09/22/commonwealth-fusion-systems-books-a-1b-power-deal-for-its-future-fusion-reactor/
+  sources:
+    - title: Fusion Industry Association, 2026 global fusion industry report
+      url: https://www.fusionindustryassociation.org/fusion-industry-attracts-record-annual-funding-of-4-48bn-raising-total-to-14-24bn/
+    - title: Proxima Fusion, Alpha
+      url: https://www.proximafusion.com/program/alpha
+    - title: Type One Energy, Series B (2026)
+      url: https://www.typeoneenergy.com/news/type-one-energy-completes-200m-series-b-financing
+
+# ---------------------------------------------------------------------------
+# Fission
+# ---------------------------------------------------------------------------
+
+- id: smr-series-production
+  name: Small reactors built in series
+  kind: infrastructure
+  fields: [energy, engineering]
+  track: nuclear-energy
+  date: { window: [2033, 2050], likely: 2040 }
+  status: speculative
+  tier: 3
+  summary: >-
+    The point of small modular reactors: building the same design over and
+    over so costs fall, the way they did for ships and aircraft. First units
+    are expensive; Ontario's first four BWRX-300s are budgeted at C$20.9
+    billion.
+  requires: [small-modular-reactors]
+  helped_by: [ai-datacenters]
+  criterion: >-
+    At least ten reactors of one small modular design (under 300 MWe each)
+    are in commercial operation, and the later units were each built in
+    under four years at a lower cost per kilowatt than the first.
+  efforts:
+    - who: Ontario Power Generation and GE Vernova Hitachi (BWRX-300, Darlington)
+      where: Canada
+      when: 2030
+      outcome: ongoing
+      note: Four units for C$20.9 billion, the first C$7.7 billion; basemat set May 2026, first grid power targeted for the end of 2030.
+    - who: TVA and ENTRA1 (NuScale modules)
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: Plan for up to 6 GW announced September 2025; no power purchase agreement signed by August 2026.
+    - who: Kairos Power with Google; X-energy with Dow; TerraPower Natrium
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Google agreed to buy up to 500 MW from Kairos (2024); TerraPower started building its 345 MWe Natrium plant in Wyoming in April 2026.
+    - who: Rolls-Royce SMR
+      where: UK
+      when: 2025
+      outcome: ongoing
+  forecast:
+    note: >-
+      Western first units reach the grid around 2030, and a design needs
+      several more units before it shows a learning curve; Darlington's four
+      are the nearest fleet. China's Linglong One could be copied faster.
+      Judgment: about 2040 for ten units of one design.
+    sources:
+      - title: World Nuclear News, What is the budget for Canada's first SMR project?
+        url: https://www.world-nuclear-news.org/articles/what-is-the-budget-for-canadas-first-smr-project
+      - title: World Nuclear News, Darlington SMR foundation module milestone (2026)
+        url: https://www.world-nuclear-news.org/articles/darlington-smr-nuclear-project-foundation-module-milestone
+  sources:
+    - title: World Nuclear News, What is the budget for Canada's first SMR project?
+      url: https://www.world-nuclear-news.org/articles/what-is-the-budget-for-canadas-first-smr-project
+    - title: NEI Magazine, TVA and ENTRA1 plan SMR deployment (2025)
+      url: https://www.neimagazine.com/news/tva-entra1-plan-smr-deployment/
+    - title: World Nuclear News, TerraPower starts construction (2026)
+      url: https://www.world-nuclear-news.org/articles/terrapower-starts-construction-of-first-us-utility-scale-advanced-nuclear-plant
+
+# ---------------------------------------------------------------------------
+# Solar, storage and geothermal
+# ---------------------------------------------------------------------------
+
+- id: round-the-clock-solar
+  name: Round-the-clock solar cheaper than fossil power
+  kind: infrastructure
+  fields: [energy]
+  track: renewables
+  date: { window: [2027, 2035], likely: 2030 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Solar panels plus batteries sized to supply a constant load day and
+    night nearly all year, which turns cheap daytime solar into firm power.
+    In sunny places this cost about $104 per MWh in 2024, falling about a
+    fifth a year.
+  requires: [solar-photovoltaic, grid-batteries, lithium-iron-phosphate]
+  helped_by: [battery-pack-100-dollars-kwh, solar-module-10-cents-watt, sodium-ion-battery]
+  criterion: >-
+    Unsubsidized solar plus batteries can deliver a constant load for at
+    least 97 percent of hours of the year in a sunny region for under $60
+    per MWh, below the cost of new coal or nuclear power.
+  efforts:
+    - who: Ember (analysis)
+      where: UK
+      when: 2025
+      outcome: ongoing
+      note: Found that 6 GW of solar and 17 GWh of batteries in Las Vegas could have met a constant 1 GW for 97 percent of hours at $104 per MWh with 2024 prices, down from $132 a year earlier; new coal was about $118 and new nuclear about $182.
+    - who: Chinese module and battery makers
+      where: China
+      when: 2026
+      outcome: ongoing
+      note: Module prices about $0.11 per watt in October 2026; stationary battery packs averaged $70 per kWh in 2025.
+  forecast:
+    note: >-
+      The cost fell 22 percent in a year as battery prices fell 45 percent
+      for stationary packs (BNEF 2025); modules, at about 11 cents a watt,
+      fall more slowly now. A continued 10 to 15 percent a year would reach
+      $60 by about 2028 to 2030. Land, grid connection and financing costs
+      fall less, so judgment: 2030.
+    sources:
+      - title: Ember, Solar electricity every hour of every day is here (2025)
+        url: https://ember-energy.org/latest-insights/solar-electricity-every-hour-of-every-day-is-here-and-it-changes-everything/
+      - title: BloombergNEF, Lithium-ion battery pack prices fall to $108 per kilowatt-hour (2025)
+        url: https://about.bnef.com/insights/clean-energy/lithium-ion-battery-pack-prices-fall-to-108-per-kilowatt-hour-despite-rising-metal-prices-bloombergnef/
+      - title: InfoLink, solar spot prices
+        url: https://www.infolink-group.com/spot-price/
+  sources:
+    - title: Ember, Solar electricity every hour of every day is here (2025)
+      url: https://ember-energy.org/latest-insights/solar-electricity-every-hour-of-every-day-is-here-and-it-changes-everything/
+
+- id: compressed-air-storage
+  name: Gigawatt-hour compressed air storage
+  kind: infrastructure
+  fields: [energy, engineering]
+  track: grid
+  date: 2025
+  status: achieved
+  tier: 3
+  summary: >-
+    Storing energy by pumping air into salt caverns or mines and releasing
+    it through turbines, now with the heat of compression kept and reused.
+    China's plants of 300 to 600 MW and 1.5 to 2.4 GWh, with about 70
+    percent round-trip efficiency, made it a grid-scale rival to batteries.
+  requires: [power-grid, steam-turbine]
+  competes: [grid-batteries]
+  efforts:
+    - who: Hubei Yingcheng plant (Nengchu-1)
+      where: China
+      when: 2025
+      outcome: achieved
+      note: 300 MW and 1,500 MWh, about 70 percent efficient, fully grid-connected in January 2025.
+    - who: Huai'an plant, Jiangsu
+      where: China
+      when: 2026
+      outcome: achieved
+      note: 600 MW and 2.4 GWh in two units, fully operating by March 2026.
+    - who: Hydrostor (Willow Rock, Silver City)
+      where: USA, Australia
+      when: 2026
+      outcome: ongoing
+  sources:
+    - title: ESS News, World's largest compressed air storage facility in full operation (2025)
+      url: https://www.ess-news.com/2025/01/10/worlds-largest-compressed-air-energy-storage-facility-commences-full-operation-in-china/
+    - title: ESS News, World's largest compressed air storage station fully operational (2026)
+      url: https://www.ess-news.com/2026/03/04/worlds-largest-compressed-air-energy-storage-station-now-fully-operational-in-china/
+    - title: Hydrostor, news
+      url: https://www.hydrostor.ca/news/
+
+- id: closed-loop-geothermal
+  name: Closed-loop geothermal
+  kind: technique
+  fields: [energy, engineering]
+  track: renewables
+  date: { window: [2026, 2030], likely: 2027 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Circulating fluid through sealed, radiator-like loops of deep horizontal
+    wells, so heat is taken from rock without fracturing it or needing
+    natural hot water. It avoids induced earthquakes but extracts heat more
+    slowly.
+  requires: [shale-fracking, electric-generator]
+  competes: [enhanced-geothermal]
+  criterion: >-
+    A closed-loop geothermal plant delivers at least 5 MW of electricity to
+    a grid for a year.
+  efforts:
+    - who: Eavor Technologies (Geretsried)
+      where: Germany, Canada
+      when: 2026
+      outcome: ongoing
+      note: Designed for about 8.2 MW of electricity and 64 MW of heat; drilling and technical updates through May 2026.
+  forecast:
+    note: >-
+      Geretsried's first loops were drilled by 2026; first power and a year
+      of output point to 2027. Judgment.
+    sources:
+      - title: Eavor, Geretsried project
+        url: https://eavor.de/projekt-geretsried/
+  sources:
+    - title: Eavor, Geretsried project
+      url: https://eavor.de/projekt-geretsried/
+
+- id: superhot-rock-geothermal
+  name: Superhot rock geothermal
+  kind: technique
+  fields: [energy, engineering]
+  track: renewables
+  date: { window: [2030, 2050], likely: 2036 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Drilling to rock above about 374 °C, where water becomes supercritical and
+    carries several times more energy per well. It would make geothermal
+    cheap almost anywhere, but needs drills and well materials that survive
+    those temperatures, possibly by vaporizing rock with millimeter waves.
+  requires: [shale-fracking, electric-generator]
+  helped_by: [enhanced-geothermal]
+  criterion: >-
+    A plant produces electricity commercially from wells in rock above
+    374 °C (supercritical water conditions).
+  efforts:
+    - who: Quaise Energy (millimeter-wave drilling)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Project Obsidian in central Oregon (announced April 2026) plans 50 MW, then 250 MW, then over 1 GW; a confirmation well toward 15,000 feet and 700 °F was under way in October 2026.
+  forecast:
+    note: >-
+      Millimeter-wave drilling has not yet been proven at depth, and well
+      casings and pumps must last at supercritical conditions. Judgment:
+      mid-2030s for a first commercial plant.
+    sources:
+      - title: Quaise Energy, Introducing Project Obsidian (2026)
+        url: https://www.quaise.com/news/introducing-project-obsidian
+      - title: Quaise Energy, Confirming the resource at Project Obsidian (2026)
+        url: https://www.quaise.com/news/confirming-the-resource-at-project-obsidian
+  sources:
+    - title: Quaise Energy, Introducing Project Obsidian (2026)
+      url: https://www.quaise.com/news/introducing-project-obsidian
+
+- id: geothermal-at-scale
+  name: Next-generation geothermal at gigawatt scale
+  kind: infrastructure
+  fields: [energy]
+  track: renewables
+  date: { window: [2029, 2038], likely: 2031 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Engineered geothermal plants, no longer limited to volcanic hot springs,
+    adding firm, carbon-free power by the gigawatt. Fervo's Utah plant began
+    commercial operation in October 2026 with about 900 MW contracted.
+  requires: [electric-generator, shale-fracking]
+  routes:
+    - name: Fractured hot rock (enhanced geothermal)
+      requires: [enhanced-geothermal]
+      note: Fervo, Utah FORGE, Sage Geosystems.
+    - name: Closed loop
+      requires: [closed-loop-geothermal]
+      note: Eavor.
+    - name: Superhot rock
+      requires: [superhot-rock-geothermal]
+      note: Quaise.
+  criterion: >-
+    At least 1 GW of new-type geothermal capacity (enhanced, closed-loop or
+    superhot) is operating in one country.
+  efforts:
+    - who: Fervo Energy (Cape Station, Utah)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: First 33 MW block in commercial operation October 1, 2026; about 100 MW by January 2027 and a 400 MW next phase targeted for 2028; about 900 MW contracted, including 396 MW for Google.
+    - who: Sage Geosystems (with Ormat); Utah FORGE (DOE)
+      where: USA
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Fervo alone plans about 500 MW by 2028. Reaching a gigawatt needs a
+      second large site or another developer, and drilling costs must keep
+      falling. Judgment: 2031.
+    sources:
+      - title: ThinkGeoEnergy, Fervo reports first power at Cape Station (2026)
+        url: https://www.thinkgeoenergy.com/fervo-energy-reports-first-power-generation-at-cape-station-enhanced-geothermal-site-utah/
+      - title: Fervo Energy, news
+        url: https://fervoenergy.com/news/
+  sources:
+    - title: ThinkGeoEnergy, Fervo reports first power at Cape Station (2026)
+      url: https://www.thinkgeoenergy.com/fervo-energy-reports-first-power-generation-at-cape-station-enhanced-geothermal-site-utah/
+    - title: Sage Geosystems
+      url: https://www.sagegeosystems.com/
+
+# ---------------------------------------------------------------------------
+# Carbon removal routes
+# ---------------------------------------------------------------------------
+
+- id: beccs
+  name: Bioenergy with carbon capture (BECCS)
+  kind: technique
+  fields: [energy, chemistry]
+  track: carbon
+  date: { window: [2028, 2034], likely: 2029 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Burning or fermenting plants for energy and burying the CO2, so carbon
+    the plants pulled from the air stays underground. It can run at large
+    scale with today's equipment, but competes for land and biomass.
+  requires: [carbon-capture]
+  criterion: >-
+    A BECCS plant removes and permanently stores at least 500,000 tonnes of
+    biogenic CO2 a year, verified by a third party.
+  efforts:
+    - who: Stockholm Exergi (Värtaverket combined heat and power plant)
+      where: Sweden
+      when: 2026
+      outcome: ongoing
+      note: Under construction (foundation finished September 2026), planned to remove 7.83 million tonnes over its first ten years, with €180 million from the EU Innovation Fund and over SEK 20 billion of Swedish support.
+    - who: Microsoft and other carbon removal buyers
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: BECCS makes up most of the tonnes contracted in large removal deals.
+  forecast:
+    note: >-
+      Stockholm Exergi's plant is the first large one with financing in
+      place; at about 800,000 tonnes a year it would meet the bar once
+      running, expected near the end of the decade. Judgment: 2029.
+    sources:
+      - title: Stockholm Exergi, BECCS
+        url: https://www.stockholmexergi.se/en/beccs/
+  sources:
+    - title: Stockholm Exergi, BECCS
+      url: https://www.stockholmexergi.se/en/beccs/
+    - title: CDR.fyi
+      url: https://www.cdr.fyi/
+
+- id: enhanced-weathering
+  name: Enhanced rock weathering
+  kind: technique
+  fields: [chemistry, agriculture]
+  track: industrial-chemistry
+  date: { window: [2028, 2036], likely: 2031 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Spreading crushed basalt or similar rock on farmland so that rain turns
+    CO2 into dissolved bicarbonate, speeding a reaction that controls the
+    climate over geological time. It is cheap to spread but hard to measure.
+  requires: [climate-science, agriculture]
+  criterion: >-
+    Enhanced weathering projects deliver at least one million tonnes a year
+    of third-party verified CO2 removal.
+  efforts:
+    - who: Lithos Carbon
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: 5,160 registry-certified tonnes issued by December 2025, then the largest such issuance.
+    - who: UNDO
+      where: UK
+      when: 2026
+      outcome: ongoing
+      note: Has spread about 358,000 tonnes of rock, which it expects to remove about 79,000 tonnes of CO2 over time.
+  forecast:
+    note: >-
+      Verified tonnes are in the thousands a year, and measurement methods
+      are still being settled. Durable removal overall is growing about 40
+      percent a year (CDR.fyi, 2026); at faster rates typical of a young
+      market, a million verified tonnes a year comes around the early 2030s.
+      Judgment.
+    sources:
+      - title: Lithos Carbon
+        url: https://www.lithoscarbon.com/
+      - title: CDR.fyi, monthly recap June 2026
+        url: https://www.cdr.fyi/blog/cdr-monthly-recap-june-2026
+  sources:
+    - title: Lithos Carbon
+      url: https://www.lithoscarbon.com/
+    - title: UNDO
+      url: https://www.un-do.com/
+
+# ---------------------------------------------------------------------------
+# Superconducting tape
+# ---------------------------------------------------------------------------
+
+- id: rebco-coated-conductor
+  name: REBCO superconducting tape in bulk
+  kind: technique
+  fields: [materials, electronics]
+  track: modern-materials
+  date: 2021
+  status: achieved
+  tier: 3
+  summary: >-
+    Thin films of rare-earth barium copper oxide grown on metal ribbon, the
+    form of high-temperature superconductor that carries very high currents
+    in strong magnetic fields. Fusion demand turned it from a specialty
+    product into one made by the thousand kilometers.
+  requires: [superconductors-high-temp, single-crystal-growth]
+  uses: [res-rare-earths]
+  efforts:
+    - who: SuperOx; Faraday Factory Japan; Fujikura; Shanghai Superconductor; SuperPower
+      where: Russia, Japan, China, USA
+      when: 2021
+      outcome: achieved
+      note: SuperOx made over 300 km of 4 mm tape in nine months, mostly for Commonwealth Fusion Systems, which it called the largest order the industry had seen. SPARC needs about 10,000 km.
+  sources:
+    - title: Molodyk et al. 2021, Development and large volume production of extremely high current density YBa2Cu3O7 superconducting wires for fusion, Scientific Reports
+      url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7822827
+    - title: MIT News, Tests show high-temperature superconducting magnets are ready for fusion (2024)
+      url: https://news.mit.edu/2024/tests-show-high-temperature-superconducting-magnets-fusion-ready-0304
+
+- id: cheap-superconducting-tape
+  name: Superconducting tape at tens of dollars per kA-m
+  kind: technique
+  fields: [materials, energy]
+  track: modern-materials
+  date: { window: [2028, 2040], likely: 2033 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    High-temperature superconducting tape cheap enough per unit of current
+    carried to be used widely, in grid cables, wind generators, motors and
+    MRI machines as well as fusion magnets. Makers aim at tens of dollars
+    per kiloampere-meter.
+  requires: [rebco-coated-conductor]
+  helped_by: [hts-fusion-magnets]
+  criterion: >-
+    REBCO tape sells in volume for under $20 per kiloampere-meter of
+    current capacity (at the operating conditions of a fusion or motor
+    magnet, about 20 K).
+  efforts:
+    - who: SuperOx; Faraday Factory Japan; Shanghai Superconductor; Fujikura
+      where: Russia, Japan, China
+      when: 2026
+      outcome: ongoing
+      note: Scaling production lines for fusion customers; SuperOx's stated goal is "tens of dollars per kiloampere-meter".
+  forecast:
+    note: >-
+      Public prices are scarce. Fusion orders of thousands of kilometers are
+      what drives the scale-up, so the date tracks fusion financing. Judgment
+      with low confidence: early 2030s.
+    sources:
+      - title: Molodyk et al. 2021, Scientific Reports
+        url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7822827
+  sources:
+    - title: Molodyk et al. 2021, Scientific Reports
+      url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7822827

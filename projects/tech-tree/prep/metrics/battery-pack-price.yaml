@@ -1,0 +1,42 @@
+id: battery-pack-price
+name: Price of lithium-ion battery packs (BloombergNEF survey average)
+short: Battery pack price
+unit: USD per kWh (constant 2025 US$)
+better: lower
+log: true
+field: energy
+fit: {from: 2017}  # the fall has slowed since the steep early years; fit the recent regime
+points:                           # [year, value]
+  - [2010, 1474]
+  - [2013, 827]
+  - [2014, 734]
+  - [2015, 475]
+  - [2016, 365]
+  - [2017, 273]
+  - [2018, 224]
+  - [2019, 194]
+  - [2020, 169]
+  - [2021, 159]
+  - [2022, 170]
+  - [2023, 148]
+  - [2024, 118]
+  - [2025, 108]
+source:
+  title: "BloombergNEF, Lithium-ion battery pack prices fall to $108 per kilowatt-hour, despite rising metal prices (December 2025), and New record lows for battery prices"
+  url: https://about.bnef.com/insights/clean-transport/lithium-ion-battery-pack-prices-fall-to-108-per-kilowatt-hour-despite-rising-metal-prices-bloombergnef/
+license: "Copyright BloombergNEF; headline figures from its public press releases, reused as cited facts"
+note: >-
+  Volume-weighted average price of a finished pack (cells plus modules,
+  battery management, wiring and housing; for stationary storage, the rack)
+  across electric cars, buses, commercial vehicles, two- and three-wheelers
+  and stationary storage, all restated by BNEF in real 2025 dollars. 2013 to
+  2025 are the labelled bars of BNEF's 2025 survey chart (lithium_11.png in
+  the press release); 2010 is from the line chart in "New record lows for
+  battery prices"
+  (https://about.bnef.com/insights/clean-transport/new-record-lows-for-battery-prices/),
+  whose caption gives $1,474 (written "$!,474"). BNEF restates the whole
+  history every year, so older releases quote smaller numbers for the same
+  years (for example $1,100 for 2010 in the 2020 survey). Segment prices are
+  lower than the average: in 2025, stationary storage packs averaged $70, car
+  packs $99 and all packs in China $84. The cell share of the 2025 average
+  was $74.

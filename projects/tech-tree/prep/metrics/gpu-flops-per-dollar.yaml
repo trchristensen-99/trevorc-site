@@ -1,5 +1,7 @@
 id: gpu-flops-per-dollar
 name: GPU price-performance (FP32 FLOP/s per dollar, record-setting GPUs)
+short: GPU FLOP/s per dollar
+field: electronics
 unit: FLOP/s per USD
 better: higher
 log: true

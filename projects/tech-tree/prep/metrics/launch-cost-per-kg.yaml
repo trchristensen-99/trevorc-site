@@ -1,80 +1,31 @@
 id: launch-cost-per-kg
-name: Cost to launch a kilogram to low Earth orbit
+name: Cost to launch a kilogram to low Earth orbit (cheapest vehicle available)
+short: Launch cost per kg
 unit: USD per kg (constant 2021 US$)
 better: lower
-fit: {envelope: min}  # several rockets a year: fit the cheapest
 log: true
-points:                           # [year of first successful launch, value]; one point per vehicle
-  - [1962, 14900]   # Kosmos (Small)
-  - [1963, 29500]   # Atlas Centaur (Medium)
-  - [1964, 30600]   # Titan II (Medium)
+field: engineering
+points:                           # [year of first successful launch, value]; only vehicles that set a new low
+  - [1962, 14900]  # Kosmos (Small)
   - [1965, 8200]   # Proton (Heavy)
-  - [1965, 21000]   # Titan III+ (Medium)
-  - [1965, 177900]   # Delta E (Medium)
-  - [1966, 8400]   # R-36 / Cyclone (Medium)
-  - [1966, 17900]   # Soyuz (Medium)
   - [1967, 5400]   # Saturn V (Heavy)
-  - [1967, 118500]   # Scout (Small)
-  - [1975, 17500]   # Long March 2A (Medium)
-  - [1975, 21400]   # Delta 3000-Series (Small)
-  - [1980, 32800]   # Delta 3910 (Small)
-  - [1981, 65400]   # Space Shuttle (Heavy)
-  - [1982, 8300]   # Long March 2C (Medium)
   - [1985, 5100]   # Zenit 2 (Medium)
-  - [1988, 18300]   # Ariane 44 (Medium)
-  - [1988, 31100]   # Shavit (Small)
-  - [1989, 30800]   # Titan IV (Heavy)
-  - [1990, 9900]   # Long March 2E (Medium)
-  - [1990, 38800]   # Delta II (Medium)
-  - [1990, 41100]   # Pegasus (Small)
-  - [1991, 18700]   # Atlas II (Medium)
-  - [1992, 9100]   # Long March 2D (Medium)
-  - [1993, 23600]   # Start (Small)
-  - [1994, 8500]   # PSLV (Medium)
-  - [1994, 8700]   # Long March 3A (Medium)
-  - [1994, 10500]   # H-II (Medium)
-  - [1994, 20600]   # Rokot (Small)
-  - [1994, 34600]   # Taurus (Small)
-  - [1996, 50600]   # Pegasus XL (Small)
-  - [1997, 6200]   # Long March 3B (Medium)
-  - [1997, 10200]   # Ariane 5G (Heavy)
-  - [1997, 45800]   # M-V (Small)
-  - [1998, 19100]   # Shtil (Small)
-  - [1999, 8900]   # Zenit 3SL (Medium)
-  - [1999, 9600]   # Dnepr (Medium)
-  - [1999, 18000]   # Delta III (Medium)
-  - [1999, 19200]   # Athena 1 (Small)
-  - [2000, 16000]   # Atlas III (Medium)
-  - [2000, 73100]   # Minotaur I (Small)
-  - [2001, 10000]   # GSLV (Medium)
-  - [2002, 8100]   # Atlas V (Medium)
-  - [2002, 10400]   # Delta IV (Medium)
-  - [2003, 11200]   # Strela (Small)
-  - [2004, 11600]   # Delta IV Heavy (Heavy)
-  - [2008, 12600]   # Falcon 1 (Small)
   - [2010, 2600]   # Falcon 9 (Medium)
-  - [2012, 20000]   # Vega (Small)
-  - [2013, 7600]   # Long March 4B (Medium)
-  - [2013, 10600]   # Kuaizhou (Small)
-  - [2013, 13600]   # Antares (Medium)
-  - [2013, 34500]   # Epsilon (Small)
-  - [2014, 4500]   # Angara (Heavy)
-  - [2016, 7900]   # Long March 5 (Heavy)
-  - [2017, 8000]   # LVM3 (Medium)
-  - [2017, 30500]   # Minotaur IV (Small)
   - [2018, 1500]   # Falcon Heavy (Heavy)
-  - [2018, 23100]   # Electron (Small)
-  - [2019, 10600]   # Long March 11 (Small)
-  - [2019, 17300]   # Shian Quxian (Small)
 source:
   title: "CSIS Aerospace Security Project (2022), via Our World in Data, Cost of space launches to low Earth orbit"
   url: https://ourworldindata.org/grapher/cost-space-launches-low-earth-orbit
 license: CC BY 4.0 (OWID processing); underlying data CSIS
 note: >-
-  Each point is one launch vehicle, dated by its first successful launch, at the
-  cost of a dedicated launch divided by its LEO payload capacity, in constant
-  2021 US$. Several years have more than one vehicle, so fit the lower envelope
-  rather than a mean. Small rockets cost more per kg at any date. Series ends in
-  2019 and prices expendable list prices; Falcon 9 with booster reuse (internal
-  cost said to be far below list) and Starship are not reflected. Original CSIS
-  page: https://aerospace.csis.org/data/space-launch-to-low-earth-orbit-how-much-does-it-cost/
+  The record line of the cheapest vehicle available: of the 60 vehicles in the
+  CSIS table (first flights 1962 to 2019), only those whose cost per kilogram
+  beat every earlier vehicle are kept, dated by first successful launch. Cost
+  is the price of a dedicated launch divided by the vehicle's LEO payload
+  capacity, in constant 2021 US$. Earlier versions of this file plotted every
+  vehicle; small rockets cost 5 to 30 times more per kilogram at any date, so
+  that cloud had no usable trend (r² 0.14). The record line stalled from 1967
+  to 2010 and then fell fast with SpaceX. These are list prices for fully
+  expendable payload capacity; SpaceX's internal cost with booster reuse is
+  lower, but not published. The CSIS table ends in 2019 (OWID checked
+  2026-10-28) and has no Starship point. Original CSIS page:
+  https://aerospace.csis.org/data/space-launch-to-low-earth-orbit-how-much-does-it-cost/
