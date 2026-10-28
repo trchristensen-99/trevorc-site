@@ -463,7 +463,9 @@ export class TreeView {
       ctx.globalAlpha = (unachieved(n) ? 0.35 : 0.22) * (dim(n) ? 0.3 : 1)
       ctx.fillStyle = this.color(n)
       ctx.beginPath()
-      ctx.roundRect(x0, sy(n.y) - 2, x1 - x0, 4, 2)
+      // roundRect is missing before Safari 16.
+      if (ctx.roundRect) ctx.roundRect(x0, sy(n.y) - 2, x1 - x0, 4, 2)
+      else ctx.rect(x0, sy(n.y) - 2, x1 - x0, 4)
       ctx.fill()
     }
     // Links as curves, skipping any wholly off screen, batched by style

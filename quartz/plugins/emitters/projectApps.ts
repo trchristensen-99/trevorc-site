@@ -21,6 +21,7 @@
 //                    vendor/<name>/, for libraries that load their own
 //                    workers relative to themselves and so can't be bundled
 
+import { createHash } from "crypto"
 import fs from "fs"
 import path from "path"
 import { build } from "esbuild"
@@ -67,10 +68,21 @@ export const ProjectApps: QuartzEmitterPlugin = () => ({
       })
       for (const file of Object.keys(result.metafile.outputs)) yield file as FilePath
 
+      // The shell links main.js and main.css with a hash of their contents,
+      // so a browser holding an older cached copy (Cloudflare lets browsers
+      // keep them for hours) fetches the new one instead of running old code
+      // against new data.
       const shell = path.join(dir, "index.html")
       if (fs.existsSync(shell)) {
         const dest = path.join(out, "index.html")
-        await fs.promises.copyFile(shell, dest)
+        let html = await fs.promises.readFile(shell, "utf8")
+        for (const file of ["main.js", "main.css"]) {
+          const built = path.join(out, file)
+          if (!fs.existsSync(built)) continue
+          const hash = createHash("sha256").update(await fs.promises.readFile(built)).digest("hex").slice(0, 10)
+          html = html.replaceAll(`"./${file}"`, `"./${file}?v=${hash}"`)
+        }
+        await fs.promises.writeFile(dest, html)
         yield dest as FilePath
       }
       const vendor = path.join(dir, "vendor.json")
