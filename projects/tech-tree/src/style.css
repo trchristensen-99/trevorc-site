@@ -74,6 +74,8 @@ fieldset label, .check { display: flex; align-items: center; gap: 6px; cursor: p
 #detail { width: 100%; margin: 2px 0 0; accent-color: var(--accent); }
 .detail .ends { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: -2px; }
 #trends .hint { margin: 6px 0 0; }
+#trends .layout { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
+#trends select { font: inherit; font-size: 12.5px; color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 2px 4px; }
 #toggle-controls { display: none; top: 52px; left: 12px; width: 40px; height: 40px; cursor: pointer; font-size: 18px; color: var(--ink); }
 
 .legend { left: 12px; bottom: calc(12px + var(--strips, 0px)); padding: 6px 12px; font-size: 12.5px; max-width: 280px; }
@@ -114,6 +116,8 @@ fieldset label, .check { display: flex; align-items: center; gap: 6px; cursor: p
 .info .criterion { margin: 10px 0; padding: 6px 10px 2px; border-left: 3px solid var(--accent); background: color-mix(in srgb, var(--accent) 7%, transparent); border-radius: 0 6px 6px 0; }
 .info .criterion h3 { margin-top: 2px; }
 .info .threshold { margin: 4px 0 8px; }
+.info ul.scenarios { list-style: none; padding: 0; display: grid; gap: 6px; margin: 6px 0; }
+.info ul.scenarios li { display: flex; gap: 8px; align-items: baseline; font-size: 13px; }
 .info ol.routes { list-style: none; padding: 0; display: grid; gap: 7px; }
 .info ol.routes li { display: flex; gap: 8px; align-items: baseline; }
 .info ol.routes .sw { transform: translateY(1px); }

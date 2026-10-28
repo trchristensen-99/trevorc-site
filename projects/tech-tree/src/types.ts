@@ -29,6 +29,7 @@ export interface Node {
   metric?: string
   threshold?: { metric: string; value: number; label?: string }
   trendYear?: number // when the metric's trend reaches the threshold
+  scenarioYears?: { id: string; year: number | null }[] // when each forecast does
   routes?: string[]
 }
 
@@ -88,6 +89,19 @@ export interface Metric {
   source?: Source
   license?: string
   note?: string
+  scenarios: Scenario[]
+}
+
+// A forecast path for a metric, with an optional band.
+export interface Scenario {
+  id: string
+  name: string
+  kind: "trend" | "projection" | "survey" | "market" | "model" | "judgment"
+  points: [number, number][]
+  low: [number, number][]
+  high: [number, number][]
+  note?: string
+  sources?: Source[]
 }
 
 export interface Tree {

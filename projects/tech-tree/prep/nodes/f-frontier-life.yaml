@@ -1427,10 +1427,10 @@
       has barely started, so the mid 2040s, with a long tail.
     sources:
       - title: "C&EN: the Drexler and Smalley debate on molecular assemblers (2003)"
-        url: https://pubsapp.acs.org/cen/coverstory/8148/8148counterpoint.html
+        url: https://doi.org/10.1021/cen-v081n048.p037
   sources:
     - title: "C&EN: the Drexler and Smalley debate on molecular assemblers (2003)"
-      url: https://pubsapp.acs.org/cen/coverstory/8148/8148counterpoint.html
+      url: https://doi.org/10.1021/cen-v081n048.p037
 
 - id: dna-origami
   name: DNA origami
@@ -1962,7 +1962,7 @@
     sources:
       - title: "Ermakova et al., On the road to C4 rice, Plant Journal (2019)"
         url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7065233/
-      - title: "University of Cambridge, Department of Plant Sciences: C4 rice"
+      - title: "University of Cambridge, Department of Plant Sciences: Hibberd, Improving crop yield through enhanced photosynthesis (C4 rice)"
         url: https://www.plantsci.cam.ac.uk/node/34271
   sources:
     - title: "Ermakova et al., On the road to C4 rice, Plant Journal (2019)"

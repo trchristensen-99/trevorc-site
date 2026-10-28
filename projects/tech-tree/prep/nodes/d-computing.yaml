@@ -1021,8 +1021,8 @@
       outcome: achieved
       note: 193 nm immersion scanners, first used in volume at the 45 nm node around 2007; ASML took most of the market.
   sources:
-    - title: Wikipedia, Excimer laser lithography
-      url: https://en.wikipedia.org/wiki/Excimer_laser_lithography
+    - title: Wikipedia, Excimer laser (photolithography)
+      url: https://en.wikipedia.org/wiki/Excimer_laser#Photolithography
     - title: Wikipedia, Immersion lithography
       url: https://en.wikipedia.org/wiki/Immersion_lithography
 

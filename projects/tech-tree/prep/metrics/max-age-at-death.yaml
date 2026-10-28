@@ -1,0 +1,134 @@
+id: max-age-at-death
+name: Oldest verified age at death each year
+short: Oldest age at death
+unit: years
+better: higher
+log: false
+field: medicine
+fit: false  # no line fits: whether there is a plateau is the open question
+points:                           # [year, value]  # who died oldest that year
+  - [1980, 113.66]  # Anna Murphy, USA
+  - [1981, 114.87]  # Eliza Underwood, USA
+  - [1982, 113.22]  # Nellie Spencer, USA
+  - [1983, 113.42]  # Emma Wilson, USA
+  - [1984, 112.05]  # Sabina Zieg, USA
+  - [1985, 113.13]  # Ollie Bay, USA
+  - [1986, 115.22]  # Augusta Holtz, USA
+  - [1987, 114.57]  # Anna Eliza Williams
+  - [1988, 114.25]  # Florence Knapp, USA
+  - [1989, 114.70]  # Mary Royster
+  - [1990, 116.10]  # Easter Wiggins, USA
+  - [1991, 113.94]  # Ellen Thomas, USA
+  - [1992, 117.18]  # Delphia Welford, USA
+  - [1993, 115.62]  # Charlotte Hughes, UK
+  - [1994, 115.53]  # Margaret Skeete, USA
+  - [1995, 116.48]  # Tane Ikai, Japan
+  - [1996, 114.96]  # Mary Bidwell, USA
+  - [1997, 122.45]  # Jeanne Calment, France (the record)
+  - [1998, 117.63]  # Marie-Louise Meilleur, Canada
+  - [1999, 119.26]  # Sarah Knauss, USA
+  - [2000, 115.96]  # USA
+  - [2001, 115.12]  # Marie Brémont, France
+  - [2002, 115.07]  # Maude Farris-Luse, USA
+  - [2003, 114.52]  # Yukichi Chuganji, Japan
+  - [2004, 114.74]  # Ramona Trinidad Iglesias-Jordan, Puerto Rico
+  - [2005, 115.17]  # Hendrikje van Andel-Schipper, Netherlands
+  - [2006, 116.95]  # María Capovilla, Ecuador
+  - [2007, 115.43]  # Emiliano Mercado del Toro, Puerto Rico
+  - [2008, 115.60]  # Edna Parker, USA
+  - [2009, 115.43]  # Gertrude Baines, USA
+  - [2010, 114.98]  # Kama Chinen, Japan
+  - [2011, 115.03]  # Chiyono Hasegawa, Japan
+  - [2012, 116.27]  # Besse Cooper, USA
+  - [2013, 116.15]  # Jiroemon Kimura, Japan (oldest man)
+  - [2014, 114.32]  # Anna Henderson, USA
+  - [2015, 117.07]  # Misao Okawa, Japan
+  - [2016, 116.85]  # Susannah Mushatt Jones, USA
+  - [2017, 117.52]  # Violet Brown, Jamaica
+  - [2018, 117.71]  # Nabi Tajima, Japan
+  - [2019, 116.25]  # Maria Giuseppa Robucci, Italy
+  - [2020, 115.13]  # Mina Kitagawa, Japan
+  - [2021, 116.96]  # Francisca Celsa dos Santos, Brazil
+  - [2022, 119.30]  # Kane Tanaka, Japan
+  - [2023, 118.93]  # Lucile Randon, France
+  - [2024, 117.46]  # Maria Branyas, Spain
+  - [2025, 116.89]  # Inah Canabarro Lucas, Brazil
+source:
+  title: "Wikipedia, List of the verified oldest people (cases validated by the Gerontology Research Group, LongeviQuest and others), and GRG tables of validated supercentenarian deaths by year"
+  url: https://en.wikipedia.org/wiki/List_of_the_verified_oldest_people
+license: "Facts compiled from Wikipedia (CC BY-SA 4.0) and the Gerontology Research Group's public tables"
+note: >-
+  The highest validated age at death in each year (the "maximum reported age
+  at death" of Dong, Milholland and Vijg), computed from birth and death
+  dates on 2026-10-28. From 1990 the value comes from Wikipedia's lists of
+  the 100 oldest verified women and men, which include every woman who
+  died at 114.74 or older; for 1980 to 1989, 1991, 2003 and 2014, when no one
+  that old died, it comes from GRG's yearly tables of validated deaths
+  (www.grg-supercentenarians.org/validated-supercentenarian-deaths-in-YYYY/).
+  Before about 1990 validation covered mainly the United States, so the
+  lower 1980s values partly reflect fewer checked cases elsewhere. Dong et
+  al. (Nature 538:257, 2016) found the maximum age at death rose from the
+  1970s to the early 1990s and then plateaued around 1995, and put the
+  average maximum at about 115 and the chance of anyone reaching 125 in a
+  given year at under 1 in 10,000. Many replies disputed this: Barbi et al.
+  (Science 2018) found that the risk of death stops rising after 105 in
+  Italy, which implies no fixed limit. In this series the annual maximum
+  averaged 113.9 in the 1980s, 115.4 over 2000 to 2014 and 117.3 over 2015
+  to 2025, so it has not stayed flat, but the year to year scatter is large
+  and no straight-line trend fits well. The oldest living person in October
+  2026, Ethel Caterham of the UK, is 117.2.
+scenarios:
+  - id: dong-plateau
+    name: Dong et al. plateau
+    kind: trend
+    points: [[2025, 115], [2100, 115]]
+    note: >-
+      The limit hypothesis: the maximum age at death fluctuates around an
+      average of about 115 with no upward trend, and 125 is close to an
+      absolute limit (Dong, Milholland and Vijg 2016, from International
+      Database on Longevity data for France, Japan, the UK and the US,
+      1968 to 2006).
+    sources:
+      - title: "Dong, Milholland and Vijg, Evidence for a limit to human lifespan, Nature 538:257 (2016)"
+        url: https://doi.org/10.1038/nature19793
+      - title: "ScienceDaily: Maximum human lifespan has already been reached (Albert Einstein College of Medicine, 2016)"
+        url: https://www.sciencedaily.com/releases/2016/10/161005132823.htm
+  - id: metaculus-record-2050
+    name: Metaculus, record by 2050
+    kind: market
+    points: [[2025, 122.45], [2050, 125.8]]
+    low: [[2025, 122.45], [2050, 122.9]]
+    high: [[2025, 122.45], [2050, 129.9]]
+    note: >-
+      The Metaculus community forecast for the longest verified human
+      lifespan on record on 1 January 2050: a median of about 125.8 with an
+      interquartile range (50 percent band) of about 122.9 to 129.9, from
+      about 150 forecasters. This is the record by then, the highest the
+      annual series would reach once, not its level each year, so the line
+      runs from today's record (Calment's 122.45) and the years it gives
+      for milestones are rough. Metaculus
+      blocks automated reading, so these figures come from search-engine
+      snapshots of the page (another snapshot showed a median of 125 and a
+      range of 123 to 129), not the live value.
+    sources:
+      - title: "Metaculus: longest verified human lifespan on record on January 1, 2050"
+        url: https://www.metaculus.com/questions/1628
+  - id: pearce-raftery-2100
+    name: Pearce and Raftery, record by 2100
+    kind: projection
+    points: [[2025, 122.45], [2100, 127.7]]
+    low: [[2025, 122.45], [2100, 125.8]]
+    high: [[2025, 122.45], [2100, 130.6]]
+    note: >-
+      A Bayesian forecast combining the exponential (constant-risk)
+      survival of supercentenarians with UN population projections of how
+      many people will reach 110. The chance that someone dies at or above
+      a given age between 2020 and 2100 is 99.9 percent for 124, 89 percent
+      for 126, 44 percent for 128, 13 percent for 130 and 3 percent for 132.
+      The point is the median of that distribution and the band its 10th to
+      90th percentiles, interpolated by me from those figures. Like the
+      Metaculus line, it is the highest age reached once in the period, not
+      the annual level, drawn from today's record of 122.45.
+    sources:
+      - title: "Pearce and Raftery, Probabilistic forecasting of maximum human lifespan by 2100 using Bayesian population projections, Demographic Research 44:1271 (2021)"
+        url: https://doi.org/10.4054/DemRes.2021.44.52

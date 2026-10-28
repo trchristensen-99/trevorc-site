@@ -358,8 +358,8 @@
   sources:
     - title: History of insurance (Wikipedia)
       url: https://en.wikipedia.org/wiki/History_of_insurance
-    - title: Equitable Life Assurance Society (Wikipedia)
-      url: https://en.wikipedia.org/wiki/Equitable_Life_Assurance_Society
+    - title: The Equitable Life Assurance Society (Wikipedia)
+      url: https://en.wikipedia.org/wiki/The_Equitable_Life_Assurance_Society
 
 - id: factory-system
   name: Factory system
@@ -831,8 +831,8 @@
   sources:
     - title: Tabulating machine (Wikipedia)
       url: https://en.wikipedia.org/wiki/Tabulating_machine
-    - title: The Hollerith Machine (US Census Bureau)
-      url: https://www.census.gov/history/www/innovations/technology/the_hollerith_tabulator.html
+    - title: US Census Bureau, Herman Hollerith and Mechanical Tabulation (History and the Census, 2016)
+      url: https://www.census.gov/about/history/stories/monthly/2016/january-2016.html
 
 # ---------------------------------------------------------------- astronomy and mechanics
 
@@ -2047,8 +2047,8 @@
   sources:
     - title: Abraham Darby I (Wikipedia)
       url: https://en.wikipedia.org/wiki/Abraham_Darby_I
-    - title: Coalbrookdale (Britannica)
-      url: https://www.britannica.com/place/Coalbrookdale
+    - title: Abraham Darby (Britannica)
+      url: https://www.britannica.com/biography/Abraham-Darby
 
 - id: puddling-process
   name: Puddling (wrought iron)

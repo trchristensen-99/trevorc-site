@@ -39,3 +39,47 @@ note: >-
   the confidence labels range from confident to speculative. Epoch finds
   frontier training compute growing about 4 to 5 times per year since 2010
   (https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year).
+scenarios:                        # paths start from the 2026 point, GPT-6 Astra (9.4e26 FLOP, Epoch estimate)
+  - id: epoch-4-5x
+    name: Epoch trend, 4 to 5 times a year
+    kind: trend
+    points: [[2026, 9.4e26], [2027, 4.7e27], [2028, 2.35e28], [2030, 5.9e29]]
+    low: [[2027, 3.76e27], [2028, 1.5e28], [2030, 2.4e29]]
+    high: [[2027, 4.7e27], [2028, 2.35e28], [2030, 5.9e29]]
+    note: >-
+      Frontier training compute growing 5 times a year (Epoch AI's trends
+      page, February 2026), with the band down to 4 times a year (Epoch's
+      2024 estimate), from GPT-6 Astra. It passes 1e28 FLOP in 2027 and
+      1e29 in 2029.
+    sources:
+      - title: Epoch AI, Trends in AI (data-trends)
+        url: https://epoch.ai/data-trends
+      - title: Epoch AI, Training compute of frontier AI models grows by 4-5x per year
+        url: https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
+  - id: epoch-feasible-2030
+    name: Epoch, feasible by 2030
+    kind: model
+    points: [[2026, 9.4e26], [2030, 2.0e29]]
+    low: [[2030, 1.0e28]]
+    high: [[2030, 3.0e29]]
+    note: >-
+      Epoch AI's 2024 analysis found training runs of about 2e29 FLOP
+      "will likely be feasible by the end of this decade", with power the
+      tightest limit: 1 to 5 gigawatt campuses allow runs of 1e28 to 3e29
+      FLOP by 2030, which gives the band. Its September 2025 report for
+      Google DeepMind expected about 1e29 FLOP by 2030, with clusters
+      costing over $100 billion. The path implies about 3.8 times a year.
+    sources:
+      - title: Epoch AI, Can AI scaling continue through 2030? (August 2024)
+        url: https://epoch.ai/blog/can-ai-scaling-continue-through-2030
+      - title: "Epoch AI, What will AI look like in 2030? (September 2025)"
+        url: https://epoch.ai/blog/what-will-ai-look-like-in-2030
+  - id: since-gpt4
+    name: Since GPT-4, about 3 times a year
+    kind: trend
+    points: [[2026, 9.4e26], [2027, 2.82e27], [2028, 8.46e27], [2030, 7.6e28]]
+    note: >-
+      The slower pace of the largest estimated runs since GPT-4: from 2.1e25
+      FLOP (GPT-4, March 2023) to 9.4e26 (GPT-6 Astra, September 2026) is
+      about 3 times a year in this dataset, carried forward. It reaches 1e28
+      in 2028 and 1e29 only after 2030.

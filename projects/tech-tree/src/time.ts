@@ -19,13 +19,13 @@ export function timeScale(tree: Tree) {
 
 const fmt = (n: number) => n.toLocaleString("en-US")
 
-// "3.3 million years ago", "40,000 years ago", "3200 BCE", "1947".
+// "3.3 million years ago", "40,000 years ago", "3200 BC", "1947".
 export function yearLabel(y: number, now: number) {
   const ago = now - y
   if (ago >= 1e6) return `${+(ago / 1e6).toFixed(1)} million years ago`
   if (ago >= 12000) return `${fmt(Math.round(ago / 1000) * 1000)} years ago`
-  if (y < 0) return `${fmt(Math.round(-y))} BCE`
-  if (y < 1000) return `${Math.round(y)} CE`
+  if (y < 0) return `${fmt(Math.round(-y))} BC`
+  if (y < 1000) return `AD ${Math.max(1, Math.round(y))}`
   return String(Math.round(y))
 }
 

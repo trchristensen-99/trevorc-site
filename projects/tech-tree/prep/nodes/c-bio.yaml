@@ -890,8 +890,8 @@
   sources:
     - title: Smallpox eradication (WHO)
       url: https://www.who.int/health-topics/smallpox
-    - title: Eradication of smallpox (Wikipedia)
-      url: https://en.wikipedia.org/wiki/Smallpox#Eradication
+    - title: History of smallpox, eradication (Wikipedia)
+      url: https://en.wikipedia.org/wiki/History_of_smallpox#Eradication
 
 # ---------------------------------------------------------------------------
 # Agricultural technology, 1450 to 1945
@@ -2156,7 +2156,7 @@
       note: Sheath-flow detection, used in the ABI 3700.
   sources:
     - title: "Huang, Quesada, Mathies, Anal Chem 64:2149 (1992)"
-      url: https://doi.org/10.1021/ac00041a030
+      url: https://doi.org/10.1021/ac00042a021
     - title: Capillary electrophoresis (Wikipedia)
       url: https://en.wikipedia.org/wiki/Capillary_electrophoresis
 
@@ -2615,8 +2615,8 @@
   sources:
     - title: "Bentley et al., Nature 456:53 (2008)"
       url: https://doi.org/10.1038/nature07517
-    - title: Illumina to acquire Solexa (Illumina press release, 2006)
-      url: https://investor.illumina.com/news/press-release-details/2006/Illumina-Signs-Definitive-Agreement-to-Acquire-Solexa/default.aspx
+    - title: Illumina signs definitive agreement to acquire Solexa (press release, November 2006, SEC Form 8-K exhibit)
+      url: https://www.sec.gov/Archives/edgar/data/1110803/000095012306014002/y27165exv99w1.htm
 
 - id: solid-sequencing
   name: SOLiD sequencing by ligation

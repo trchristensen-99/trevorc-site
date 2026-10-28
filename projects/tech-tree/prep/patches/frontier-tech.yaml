@@ -147,12 +147,12 @@
       note: All use their own models heavily for research coding by 2026.
   forecast:
     note: >-
-      This needs the automated coder first (judged about 2029 here) plus
+      This needs the automated coder first (judged about 2028 here) plus
       research taste and long-horizon judgment. In August 2026 the AI 2027
       authors put "top-expert-dominating AI" at November 2028 (Kokotajlo)
       and July 2032 (Lifland). METR judged that GPT-6-era models (GPT-5.6
       Sol, June 2026) would not yet enable fully automated AI research. I put
-      it two years after the automated coder, at 2031, with a long tail if
+      it two years after the automated coder, at 2030, with a long tail if
       continual learning proves necessary and hard.
     sources:
       - title: TechCrunch, Sam Altman says OpenAI will have a legitimate AI researcher by 2028 (2025)
@@ -210,15 +210,16 @@
       Frontier training compute has grown about 4 to 5 times a year, to about
       1e27 FLOP (GPT-6 Astra, 2026, per Epoch), and METR's time horizons
       doubled about every four months to around 12 to 17 hours by 2026.
-      Carried forward, AI handles month-long projects around 2029 and
-      year-long ones around 2031; the question is whether that reaches
+      Carried forward, and on the forecasts drawn on the time-horizon trend
+      line, AI handles month-long projects around 2027 to 2028 and year-long
+      ones around 2028 to 2030; the question is whether that reaches
       messy, open-ended work and on-the-job learning. In August 2026 the AI
       2027 authors put top-expert-level AI at 2028 (Kokotajlo) and 2032
       (Lifland); Dwarkesh Patel put human-like on-the-job learning at 2032;
       Metaculus's strong-AGI question sat around the early 2030s in 2025 to
       2026; the 2023 survey of 2,778 AI researchers gave 50 percent for
       human-level machine intelligence by 2047, earlier with each survey. I
-      put the median at 2032, with a long tail if scaling slows when compute
+      put the median at 2031, with a long tail if scaling slows when compute
       growth meets power and capital limits around 2030.
     sources:
       - title: Metaculus, When will the first general AI system be devised, tested, and publicly announced?

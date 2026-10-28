@@ -920,9 +920,10 @@
       2027 to 2029. The AI 2027 scenario put the superhuman coder in early
       2027; in August 2026 its authors' medians for the similar "automated
       coder" were November 2027 (Kokotajlo) and January 2030 (Lifland), and
-      the AI Futures model's December 2025 median was late 2031. I put it
-      at 2029, allowing for the reliability gap between finishing half of
-      long tasks and doing a lab's work.
+      the AI Futures model's December 2025 median was late 2031, and its
+      August 2026 default run reaches it around October 2027. I put it at
+      2028, allowing for the reliability gap between finishing half of long
+      tasks and doing a lab's work.
     sources:
       - title: METR, Time horizon 1.1 (January 2026)
         url: https://metr.org/blog/2026-01-29-time-horizon-1-1/
@@ -1346,7 +1347,7 @@
       expect a claim to survive a year of scrutiny around 2027, with the
       first commercially valuable one (chemistry or materials) later.
     sources:
-      - title: IBM, Welcome to the quantum advantage era
+      - title: IBM Quantum blog, The dawn of quantum advantage (2025)
         url: https://www.ibm.com/quantum/blog/quantum-advantage-era
       - title: IBM, Quantum advantage claims (July 2026)
         url: https://www.ibm.com/quantum/blog/quantum-advantage
@@ -1824,8 +1825,8 @@
       url: https://www.ess-news.com/2025/01/10/worlds-largest-compressed-air-energy-storage-facility-commences-full-operation-in-china/
     - title: ESS News, World's largest compressed air storage station fully operational (2026)
       url: https://www.ess-news.com/2026/03/04/worlds-largest-compressed-air-energy-storage-station-now-fully-operational-in-china/
-    - title: Hydrostor, news
-      url: https://www.hydrostor.ca/news/
+    - title: Hydrostor, Willow Rock Energy Storage Center
+      url: https://hydrostor.ca/project/willow-rock-energy-storage-center/
 
 - id: closed-loop-geothermal
   name: Closed-loop geothermal

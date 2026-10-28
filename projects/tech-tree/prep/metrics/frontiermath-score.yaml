@@ -1,0 +1,41 @@
+id: frontiermath-score
+name: Best score on FrontierMath tiers 1-3 (Epoch AI's runs, version 2)
+short: FrontierMath 1-3
+unit: percent solved
+better: higher
+log: false
+field: math
+points:                           # [model release date as fractional year, best score so far]; model, release date
+  - [2024.066, 0.0]    # GPT-3.5 Turbo (0125), 2024-01-25
+  - [2024.270, 0.7]    # GPT-4 Turbo (2024-04-09)
+  - [2024.959, 14.74]  # o1 (high), 2024-12-17
+  - [2025.082, 18.6]   # o3-mini (high), 2025-01-31
+  - [2025.288, 36.14]  # o4-mini (high), 2025-04-16
+  - [2025.597, 55.44]  # GPT-5 (high), 2025-08-07
+  - [2025.764, 55.79]  # GPT-5 Pro, 2025-10-07
+  - [2025.942, 74.0]   # GPT-5.2 Pro (xhigh), 2025-12-11
+  - [2026.173, 82.46]  # GPT-5.4 Pro (xhigh), 2026-03-05
+  - [2026.307, 87.72]  # GPT-5.5 Pro (xhigh), 2026-04-23
+  - [2026.518, 89.12]  # GPT-5.6 Sol (max), 2026-07-09
+  - [2026.671, 93.68]  # GPT-6 Astra (max), 2026-09-03
+source:
+  title: "Epoch AI, Benchmarking Hub (frontiermath_tiers_1_3_v2.csv in benchmark_data.zip)"
+  url: https://epoch.ai/benchmarks
+license: CC BY 4.0
+note: >-
+  FrontierMath is a set of unpublished, hard mathematics problems written
+  by mathematicians, with answers a computer can check; tiers 1 to 3 run
+  from advanced undergraduate to early research level. Values are the best
+  score Epoch AI measured for any model released by each date, from
+  Epoch's CSV (downloaded 2026-10-28). Epoch released version 2 on 12 June
+  2026 after fixing errors in 42 percent of problems and re-ran older
+  models, so these values are higher than the version 1 scores reported at
+  the time (on version 1 the best was 40.7 at the end of 2025, GPT-5.2,
+  and 52.4 in April 2026). The AI Digest 2025 survey's median for the end
+  of 2025 was 40 percent on version 1, almost exactly right (40.7); the
+  Forecasting Research Institute's LEAP experts (mid-2025) expected 31
+  percent then, 55 by the end of 2027 and 75 by the end of 2030, all far
+  too low. Epoch wrote in September 2025 that FrontierMath "could be
+  solved as early as 2027 on current trends". OpenAI funded FrontierMath
+  and has access to much of it. Scores saturate, so the straight-line
+  trend is a poor guide near 100 percent.

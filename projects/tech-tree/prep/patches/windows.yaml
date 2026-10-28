@@ -1,0 +1,242 @@
+# Future windows checked against where things stand in late October 2026
+# (NOW = 2026.8). Each window opens no sooner than the least time the
+# remaining steps could take, and no sooner than what it needs. Decimal
+# years: 2027.2 is about March 2027. Sorts after the other patch files, so
+# these entries win.
+
+# ------------------------------------------------- status: already achieved
+
+# Achieved: animal milk and egg proteins brewed in microbes have been on
+# sale since 2019 (Perfect Day whey ice cream, July 2019; Impossible's
+# leghemoglobin approved for retail, 2019). Price parity at scale is a
+# separate, later question, so the parity criterion and forecast go.
+- id: precision-fermentation
+  status: achieved
+  date: 2019
+  criterion: null
+  forecast: null
+
+# Achieved: implanted BCIs have restored function since BrainGate's first
+# participant (Matt Nagle) in 2004. The old span 2004 to 2026 was history,
+# not a forecast; approval and routine use are covered by bci-approved and
+# bci-at-scale, which require this node.
+- id: brain-computer-interfaces
+  status: achieved
+  date: 2004
+  criterion: null
+  forecast: null
+
+# ------------------------------------------- windows that opened in the past
+
+# Cultivated meat is cleared in several countries but sold only in tasting
+# events, single restaurants and a few one-off retail sales; regular retail
+# in three markets needs new distribution deals and supply: at least months.
+- id: cultivated-meat
+  date: { window: [2027.4, 2040], likely: 2032 }
+
+# Waymo was at about 500,000 paid rides a week (spring 2026) and targets
+# over a million by the end of 2026; the earliest is a year-end announcement.
+- id: robotaxis-at-scale
+  date: { window: [2026.9, 2030], likely: 2027.2 }
+
+# A claim must survive a year of classical attempts. The oldest live
+# candidates (IBM tracker entries, late 2025 to mid 2026) cannot complete
+# that year before early to mid 2027.
+- id: useful-quantum-advantage
+  date: { window: [2027.1, 2031], likely: 2027.4 }
+
+# Geretsried's first loop reached the grid in December 2025 in partial
+# operation (one loop is about a quarter of the 8.2 MW plant); the second
+# loop began construction in March 2026. 5 MW needs about three loops, then
+# a full year of output.
+- id: closed-loop-geothermal
+  date: { window: [2028.5, 2033], likely: 2029.5 }
+  forecast:
+    note: >-
+      Geretsried's first loop delivered power to the grid in December 2025,
+      in partial operation, and the second loop began construction in March
+      2026. Each loop is about a quarter of the plant's 8.2 MW, so 5 MW needs
+      about three loops running, and the criterion then needs a year of
+      output. Judgment: about 2029.
+    sources:
+      - title: Eavor, Geretsried project
+        url: https://eavor.de/projekt-geretsried/
+
+# GPT-6 Astra (September 2026) is estimated at 9.4e26 with an interval
+# reaching 2e27, so a confirmed 1e27 run could come with the next frontier
+# release or an Epoch revision: any time from now.
+- id: ai-training-1e27-flop
+  date: { window: [2026.85, 2029], likely: 2027.2 }
+
+# -------------------------------------- windows too soon for what remains
+
+# FDA decision date for lonvo-z is March 10, 2027; early approval is rare.
+- id: in-vivo-gene-editing
+  date: { window: [2027.19, 2029], likely: 2027.25 }
+
+# SPARC's magnets were about 80 percent installed in July 2026; first
+# plasma, then full field, then deuterium-tritium operation take months at
+# the least, so Q above 1 cannot come before late 2027.
+- id: magnetic-fusion-gain
+  date: { window: [2027.8, 2032], likely: 2028.4 }
+
+# Best METR horizon about 16 hours (spring 2026); even the fastest public
+# forecast (Kokotajlo, automated coder November 2027) leaves at least
+# several months.
+- id: superhuman-coder
+  # Likely moved to 2028 with the AI forecasts: AI Futures Project medians
+  # are November 2027 to January 2030, and METR horizon paths reach a month
+  # of work in 2027 to 2028.
+  date: { window: [2027.3, 2035], likely: 2028 }
+
+# No lab has shipped weight-updating on-the-job learning; a deployed system
+# that works across white-collar jobs needs at least one release cycle and
+# months of use to show it.
+- id: continual-learning-ai
+  date: { window: [2027.4, 2040], likely: 2031 }
+
+# A discovery has to be made, published in a leading journal and judged
+# among its field's important results that year: at least about six months
+# to a year from now.
+- id: ai-autonomous-science
+  date: { window: [2027.4, 2036], likely: 2030 }
+
+# First ship catch is planned for Flight 15 (late November 2026 at the
+# soonest); the first booster reflight came about seven months after its
+# first catch, so a caught ship reflying to orbit is mid 2027 at the
+# soonest.
+- id: fully-reusable-rockets
+  date: { window: [2027.3, 2031], likely: 2027.8 }
+  forecast:
+    note: >-
+      The booster side is done, and Starship reached orbit in September 2026.
+      The ship still needs a catch (first attempt planned for Flight 15, late
+      2026 at the soonest), a heat shield that survives without heavy
+      refurbishment and a reflight. The first booster reflight came about
+      seven months after the first booster catch. SpaceX has usually met its
+      technical goals two to three times later than Musk's dates, but the
+      remaining steps are incremental. Judgment: late 2027.
+    sources:
+      - title: Wikipedia, SpaceX Starship flight tests
+        url: https://en.wikipedia.org/wiki/SpaceX_Starship_flight_tests
+      - title: Wikipedia, Starship flight test 14
+        url: https://en.wikipedia.org/wiki/Starship_flight_test_14
+
+# Two ships must fly and dock; the transfer demo is scheduled for early
+# 2027 and Flight 15 has not yet flown.
+- id: starship-orbital-refueling
+  date: { window: [2027.3, 2030], likely: 2028 }
+
+# Artemis IV's landing is targeted for early 2028, after the uncrewed
+# Starship lunar demo (late 2027) and a refueled depot; China's landing
+# needs Long March 10 and Lanyue flights first (by 2030). Not before early
+# 2028.
+- id: crewed-lunar-return
+  date: { window: [2028.2, 2033], likely: 2029 }
+
+# No pivotal trial has started (October 2026). Enrollment plus 12-month
+# follow-up plus FDA review is about 2.5 years at the least.
+- id: bci-approved
+  date: { window: [2029.3, 2033], likely: 2030 }
+
+# Logical qubit roadmaps (IBM Starling, Quantinuum Apollo) target 2029, and
+# no platform is ahead of them on logical error rates near one in a million.
+- id: fault-tolerant-quantum-computer
+  date: { window: [2029, 2037], likely: 2030 }
+
+# ER-100's phase 1 is open-label with a safety readout in May 2027; a
+# controlled efficacy result needs a phase 2 after it.
+- id: reprogramming-human-trial
+  date: { window: [2029, 2034], likely: 2030 }
+
+# SR-1 Freedom, the nearest flight, is proposed for launch in December 2028.
+- id: nuclear-space-propulsion
+  date: { window: [2029, 2040], likely: 2031 }
+
+# PROSPR's evidence arrives around 2030 to 2031, and FDA biomarker
+# qualification then takes years.
+- id: aging-biomarker-endpoint
+  date: { window: [2031, 2045], likely: 2036 }
+
+# TAME has not started enrolling; a six-year outcome trial plus review gives
+# 2034 even if it started in 2027 (as the forecast says).
+- id: aging-drug-approved
+  date: { window: [2034, 2055], likely: 2040 }
+
+# Carmakers' all-solid-state cells move to small-batch production in 2027
+# at the soonest; 10,000 cars in one year needs a year of series output.
+- id: solid-state-batteries
+  date: { window: [2028, 2035], likely: 2030 }
+
+# A few thousand general-purpose robots do paid work in 2026; 100,000 needs
+# about five doublings, and home robots (1X NEO) have only begun shipping.
+- id: general-purpose-robots
+  date: { window: [2028.4, 2038], likely: 2032 }
+
+# Verified enhanced weathering removal is in the thousands of tonnes a
+# year, and credits lag spreading by a year or more; a million verified
+# tonnes needs several years of fast growth.
+- id: enhanced-weathering
+  date: { window: [2029, 2036], likely: 2031 }
+
+# Stockholm Exergi's plant starts in 2028; 500,000 tonnes in a year needs a
+# full year of operation and shipping to storage.
+- id: beccs
+  date: { window: [2028.8, 2034], likely: 2029.4 }
+
+# Iron-air (Form Energy) is the only 24-hour-plus technology near scale,
+# with a few hundred MWh running; 10 GWh needs its contracted projects built.
+- id: long-duration-storage
+  date: { window: [2028, 2036], likely: 2030 }
+
+# Varda flies every two to three months, carrying mostly test and
+# government payloads; monthly returns of products for sale need a higher
+# cadence and paying product customers.
+- id: orbital-manufacturing
+  date: { window: [2028, 2035], likely: 2030 }
+
+# Joby is in TIA flight testing with no type certificate (October 2026);
+# its 2026 passenger flights are under the FAA pilot program, which does not
+# count. Certificate then service: mid 2027 at the soonest.
+- id: electric-aviation
+  date: { window: [2027.4, 2031], likely: 2028 }
+  forecast:
+    note: >-
+      Joby is closest: it began type inspection flight testing in March 2026,
+      the final stage of certification, and expects FAA pilots' for-credit
+      flights to follow; that stage usually takes a year or more, and first
+      certified service would follow soon after. Its 2026 passenger flights
+      under the FAA's eVTOL pilot program come before a type certificate and
+      do not meet this bar. China already allows commercial eVTOL passenger
+      flights. Judgment: 2028.
+    sources:
+      - title: Joby Aviation, second quarter 2026 results
+        url: https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results
+      - title: Wikipedia, Joby Aviation
+        url: https://en.wikipedia.org/wiki/Joby_Aviation
+
+# Intel's 14A uses High-NA from risk production in 2027 and volume in 2028;
+# memory makers target 2028. Not in a shipping product before mid 2027.
+- id: high-na-euv
+  date: { window: [2027.4, 2030], likely: 2028 }
+
+# Loyal's manufacturing section is still under review and expected in
+# 2027; the conditional approval decision follows it.
+- id: dog-lifespan-drug
+  date: { window: [2027.4, 2031], likely: 2028 }
+
+# AI forecasts (metrics/ai-task-horizon.yaml scenarios): every path reaches a
+# month's work in 2027 to 2028 and a year's in 2028 to 2030, a year or two
+# before the trend fitted to METR's measured points alone. METR's suite can't
+# measure past about 16 hours, so these thresholds are dated from the
+# forecasts, not measurement.
+- id: automated-ai-research
+  date: { window: [2028, 2040], likely: 2030 }
+- id: agi
+  date: { window: [2028, 2045], likely: 2031 }
+- id: ai-horizon-1-week
+  date: { window: [2026.8, 2029], likely: 2027.2 }
+- id: ai-horizon-1-month
+  date: { window: [2027.1, 2031], likely: 2027.8 }
+- id: ai-horizon-1-year
+  date: { window: [2027.9, 2034], likely: 2029.5 }

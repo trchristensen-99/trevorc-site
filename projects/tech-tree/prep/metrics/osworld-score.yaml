@@ -1,0 +1,47 @@
+id: osworld-score
+name: Best published success rate on OSWorld (AI agents using a real computer)
+short: OSWorld
+unit: percent of tasks
+better: higher
+log: false
+field: computing
+points:                           # [date as fractional year, best score so far]; agent or model, date; original OSWorld to July 2025, OSWorld-Verified after
+  - [2024.276, 12.24]  # GPT-4 (accessibility tree), original paper, 2024-04-11
+  - [2024.811, 24.5]   # OSCAR with GPT-4o, 2024-10-24; self-reported
+  - [2025.060, 38.1]   # OpenAI CUA (200 steps), 2025-01-23; OpenAI-reported
+  - [2025.290, 42.5]   # UI-TARS-1.5 (100 steps), 2025-04-17; self-reported
+  - [2025.512, 45.2]   # GTA1 with o3 (100 steps), 2025-07-07; self-reported
+  - [2025.570, 53.1]   # GTA1 with o3, 2025-07-28; OSWorld-Verified, run by the OSWorld team
+  - [2025.589, 60.76]  # CoACT-1, 2025-08-04; OSWorld-Verified official run
+  - [2025.756, 69.9]   # Agent S3 with GPT-5, best of 10, 2025-10-04; official run
+  - [2025.942, 72.58]  # Agent S3 with Claude Opus 4.5 and GPT-5, best of 10, 2025-12-11; official run
+  - [2026.151, 74.48]  # HIPPO Agent with Claude Opus 4.5, 2026-02-25; official run
+  - [2026.173, 75.0]   # GPT-5.4, 2026-03-05; OpenAI-reported
+  - [2026.263, 79.6]   # Claude Mythos Preview, 2026-04-07; Anthropic-reported
+  - [2026.299, 82.56]  # Holo3-35B-A3B, 2026-04-20; official run
+  - [2026.384, 83.64]  # Pointer Agent with Claude Opus 4.7, 2026-05-21; official run
+  - [2026.436, 85.0]   # Claude Fable 5 / Mythos 5, 2026-06-09; Anthropic-reported (official run of Fable 5: 85.96, 2026-08-01)
+  - [2026.562, 90.19]  # Intelligence-Indeed Agent, 2026-07-25; official run
+source:
+  title: "OSWorld and OSWorld-Verified leaderboards (osworld_verified_results.xlsx, self_reported_results.xlsx), with lab reports"
+  url: http://osworld-v1.xlang.ai/
+license: "Scores are reported facts; OSWorld itself is Apache-2.0"
+note: >-
+  OSWorld (Xie et al., NeurIPS 2024) is 369 tasks done on a real Ubuntu
+  desktop through the screen, mouse and keyboard: editing documents and
+  spreadsheets, using a browser, running programs. People completed 72.36
+  percent of tasks. Values are the best score published by each date: the
+  original benchmark to July 2025, then OSWorld-Verified, a cleaned-up
+  version run by the benchmark's authors, mixing whole agent systems (some
+  using several models or best-of-10 attempts) with lab-reported single
+  models. The two versions are not exactly comparable. The first to pass
+  the human rate was a best-of-10 agent system (December 2025); among
+  single models, Anthropic reported 72.7 for Claude Opus 4.6 (February
+  2026), and in official runs Claude Sonnet 4.6 came just short (72.11,
+  March 2026) and Claude Fable 5 reached 85.96 (August 2026). The AI
+  Digest 2025 survey's median for the end of 2025 was 60 percent; the
+  result was 66 (original) to 72.6 (Verified), so forecasters were too
+  low. In mid-2026 labs moved to the harder OSWorld 2.0, whose scores are
+  not comparable (Epoch AI's strict pass rate tops out at 31.4). The
+  benchmark saturates, so the straight-line trend is a poor guide near
+  100 percent.

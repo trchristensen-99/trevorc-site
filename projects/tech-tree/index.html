@@ -24,7 +24,7 @@
         <datalist id="names"></datalist>
         <div class="detail">
           <label for="detail">Detail <span id="detail-count"></span></label>
-          <input id="detail" type="range" min="0" max="100" step="1" value="50" aria-describedby="detail-help" />
+          <input id="detail" type="range" min="0" max="100" step="1" value="40" aria-describedby="detail-help" />
           <div class="ends" id="detail-help"><span>← Landmarks only</span><span>Everything →</span></div>
           <label class="check"><input id="grow" type="checkbox" checked /> More appear as you zoom in</label>
           <label class="check"><input id="show-frontier" type="checkbox" /> Always show the frontier</label>
@@ -32,7 +32,13 @@
           </div>
         <details id="trends">
           <summary>Trend lines</summary>
-          <p class="hint">Measured progress along the bottom, on the same time axis, with milestones marked. Click a strip for its chart.</p>
+          <p class="hint">Measured progress along the bottom, on the same time axis: the data, its trend (dashed) and forecasts (dotted), with milestones marked. Click one for its chart.</p>
+          <label class="layout">Layout <select id="trend-layout">
+            <option value="auto">Automatic</option>
+            <option value="strips">Strips</option>
+            <option value="compact">Compact strips</option>
+            <option value="combined">One combined chart</option>
+          </select></label>
           <fieldset id="trend-list"></fieldset>
         </details>
         <details id="filters">

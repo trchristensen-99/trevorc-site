@@ -157,4 +157,21 @@ field: biology                    # the field it belongs with
 fit: { from: 2008 }               # optional: fit the trend from/to a year, or
                                   # envelope: min|max (best value each year)
 cumulative: other-metric-id       # optional: fit a learning curve against it
+scenarios:                        # optional: forecasts of where it goes next
+  - id: un-wpp-medium             # unique within the metric
+    name: UN medium projection    # short, shown as a label
+    kind: projection              # trend | projection | survey | market | model | judgment
+    points: [[2030, 74.1], [2050, 77.4], [2100, 82.1]]   # the central path
+    low: [[2050, 74.0], [2100, 76.5]]    # optional band (e.g. 80 or 95 percent)
+    high: [[2050, 80.5], [2100, 87.9]]
+    note: >-                      # what it assumes, in a sentence or two
+      ...
+    sources: [{title: ..., url: ...}]
 ```
+
+Scenarios are drawn on the metric's chart and trend strip, and every
+milestone on the metric reports the year each scenario reaches it. Use
+`kind: model` for a path computed from stated assumptions (say so in the
+note, e.g. "if rejuvenation therapies arrive around 2062 and add ..."),
+and `judgment` for your own estimate. Points must start at or after the
+last data point; the first one may repeat it so the line joins the data.

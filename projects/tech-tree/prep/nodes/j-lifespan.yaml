@@ -1,0 +1,222 @@
+# Lifespan milestones: thresholds on the lifespan metrics
+# (metrics/life-expectancy-world.yaml, life-expectancy-65-best.yaml,
+# life-expectancy-best.yaml, max-age-at-death.yaml). Medicine, track
+# longevity. Each metric carries forecast scenarios (UN, IHME, the record
+# line, Metaculus, and a model tied to the tree's date for aging-reversal);
+# the build reports the year each scenario reaches each threshold. The
+# windows below are given by hand where the straight-line trend is a poor
+# guide, with the reasoning in `forecast`.
+#
+# Longevity escape velocity is a threshold on the slope of remaining life
+# expectancy, not its level, so it stays a node of its own
+# (longevity-escape-velocity in f-frontier-life.yaml); the model scenarios
+# on these metrics show that a single 10-year rejuvenation would not reach
+# it.
+
+- id: life-expectancy-world-75
+  name: "World life expectancy of 75"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 3
+  threshold: { metric: life-expectancy-world, value: 75, label: "75 years" }
+  date: { window: [2029, 2047], likely: 2034 }
+  status: speculative
+  summary: >-
+    The average newborn on Earth expected to live 75 years at that year's
+    death rates, up from 32 in 1900 and 73 in 2023. Most of the remaining
+    gain is in Africa and South Asia, from fewer child, infectious and
+    heart disease deaths.
+  requires: [vaccination, antibiotics-penicillin]
+  helped_by: [smallpox-eradication, hiv-antiretroviral-therapy, epidemiology]
+  forecast:
+    note: >-
+      The straight line since 1970 (about 3.1 years a decade) would cross
+      75 around 2027, but gains have been slowing as countries converge.
+      The UN's median crosses 75 around 2034, with a 95 percent interval
+      from about 2029 to 2047. IHME's reference forecast (73.6 in 2022 to
+      78.2 in 2050) crosses around 2031 to 2033 if its gains are steady. I use
+      the UN's dates.
+    sources:
+      - title: "UN World Population Prospects 2024, probabilistic projections of life expectancy at birth"
+        url: https://population.un.org/wpp/assets/Excel%20Files/2_Indicators%20(Probabilistic)/EXCEL_FILES/4_Mortality/UN_PPP2024_Output_e0.xlsx
+      - title: "GBD 2021 Forecasting Collaborators, Lancet 403:2204 (2024)"
+        url: https://doi.org/10.1016/S0140-6736(24)00685-8
+
+- id: life-expectancy-world-80
+  name: "World life expectancy of 80"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 2
+  threshold: { metric: life-expectancy-world, value: 80, label: "80 years" }
+  date: { window: [2050, 2110], likely: 2078 }
+  status: speculative
+  summary: >-
+    The world as a whole living as long as Japan did around 1996. Reaching
+    it means poorer countries closing most of the gap with the leaders, and
+    the leaders' old-age death rates continuing to fall.
+  requires: [life-expectancy-world-75]
+  helped_by: [aging-drug-approved, aging-reversal]
+  forecast:
+    note: >-
+      The UN's median reaches 80 around 2080, its 95 percent interval from
+      about 2062 to after 2100; IHME's upper bound for 2050 is 80.3. The
+      straight-line trend (about 2043) overstates it. In the tree's model,
+      rejuvenation therapies arriving in 2062 and spreading as HIV therapy
+      did bring it to 2071 (2060 if they arrive in 2045). I put it a little
+      before the UN, around 2078.
+    sources:
+      - title: "UN World Population Prospects 2024, probabilistic projections of life expectancy at birth"
+        url: https://population.un.org/wpp/assets/Excel%20Files/2_Indicators%20(Probabilistic)/EXCEL_FILES/4_Mortality/UN_PPP2024_Output_e0.xlsx
+
+- id: life-expectancy-65-25
+  name: "25 more years at 65 in a country"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 3
+  threshold: { metric: life-expectancy-65-best, value: 25, label: "25 years at 65" }
+  date: { window: [2032, 2052], likely: 2040 }
+  status: speculative
+  summary: >-
+    A country where 65-year-olds can expect to live to 90 on average, at
+    that year's death rates. The record was 23.2 years (Hong Kong) in 2023,
+    up from 15.7 in 1970, mostly from fewer deaths from heart disease and
+    stroke.
+  requires: [randomized-controlled-trial, antibiotics-penicillin]
+  helped_by: [aging-drug-approved, senolytics-approved]
+  forecast:
+    note: >-
+      The line since 1970 (1.5 years a decade) crosses 25 around 2035, but
+      since 2000 the pace has been about 1.2 a decade, which gives 2040, and
+      the UN's medium path for Hong Kong reaches 25 in 2041. The tree's
+      geroprotector and senolytic drugs (about 2036 to 2040 here) could
+      bring it a few years earlier if they work.
+    sources:
+      - title: "UN World Population Prospects 2024, demographic indicators, medium variant"
+        url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Demographic_Indicators_Medium.csv.gz
+
+- id: life-expectancy-65-30
+  name: "30 more years at 65 in a country"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 2
+  threshold: { metric: life-expectancy-65-best, value: 30, label: "30 years at 65" }
+  date: { window: [2052, 2120], likely: 2080 }
+  status: speculative
+  summary: >-
+    A country where 65-year-olds can expect to reach 95 on average. This is
+    where gains depend most on slowing aging itself rather than curing
+    particular diseases.
+  requires: [life-expectancy-65-25]
+  helped_by: [aging-reversal, aging-drug-approved, longevity-escape-velocity]
+  forecast:
+    note: >-
+      Without new aging biology the UN's medium path for Hong Kong reaches
+      30 only around 2096, and the line since 1970 around 2070. In the
+      tree's model, a 10-year rejuvenation arriving in 2062 (node
+      aging-reversal) adds about 7.5 years at 65 as it spreads and brings
+      it to about 2070, or 2055 with arrival in 2045. I put it around 2080,
+      between the two, since the therapy's date is so uncertain.
+    sources:
+      - title: "UN World Population Prospects 2024, demographic indicators, medium variant"
+        url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Demographic_Indicators_Medium.csv.gz
+
+- id: life-expectancy-100
+  name: "Life expectancy of 100 in a country"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 2
+  threshold: { metric: life-expectancy-best, value: 100, label: "100 years" }
+  date: { window: [2050, 2160], likely: 2090 }
+  status: speculative
+  summary: >-
+    A country of at least a million people where the average newborn could
+    expect to reach 100 at that year's death rates, 14.5 years above the
+    2023 record. Olshansky and colleagues call this radical life extension and
+    argue it is implausible this century unless aging itself is slowed.
+  requires: [life-expectancy-90]
+  helped_by: [aging-reversal, longevity-escape-velocity]
+  forecast:
+    note: >-
+      The sources disagree by decades. Metaculus forecasters put the median
+      at 2062 (interquartile range 2045 to after 2075). Oeppen and Vaupel's
+      record line, a quarter year per year, gives 2081. The UN's median for
+      the leading country never reaches 100 this century; the top of its
+      95 percent band does around 2084. The tree's model, with
+      rejuvenation therapies in 2062, gives about 2085, since a single
+      10-year reset adds only about 7 years at birth. I put it around 2090.
+    sources:
+      - title: "Metaculus: when will any country have a life expectancy at birth of at least 100 years?"
+        url: https://www.metaculus.com/questions/3044/date-of-any-country-with-life-expectancy-100
+      - title: "Olshansky et al., Implausibility of radical life extension in humans in the twenty-first century, Nature Aging 4:1635 (2024)"
+        url: https://doi.org/10.1038/s43587-024-00702-3
+      - title: "Oeppen and Vaupel, Broken limits to life expectancy, Science 296:1029 (2002)"
+        url: https://doi.org/10.1126/science.1069675
+
+- id: lifespan-123
+  name: "Someone verified to live to 123"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 2
+  threshold: { metric: max-age-at-death, value: 123, label: "123 years" }
+  date: { window: [2032, 2080], likely: 2043 }
+  status: speculative
+  summary: >-
+    Breaking Jeanne Calment's record of 122 years and 164 days, set in 1997
+    and unbroken for almost 30 years. Counted when a validated
+    supercentenarian reaches 123, which on this chart shows when they die.
+  requires: [life-expectancy-85]
+  helped_by: [aging-drug-approved]
+  forecast:
+    note: >-
+      The oldest living person in October 2026, Ethel Caterham, is 117.2,
+      so 2032 is about the earliest possible date. Medford and Vaupel
+      (2019) put the chance that Calment's record survives to 2050 at about
+      one in five; Metaculus forecasters expect the record on 1 January
+      2050 to be about 126 (interquartile range about 123 to 130); Pearce
+      and Raftery (2021) put the chance of someone dying at 124 or older by
+      2100 at 99.9 percent. Dong et al. (2016) argued for a limit near 115,
+      which makes the record an outlier unlikely to be repeated. I put the
+      likely date around 2043.
+    sources:
+      - title: "Medford and Vaupel, Human lifespan records are not remarkable but their durations are, PLOS ONE 14:e0212345 (2019)"
+        url: https://doi.org/10.1371/journal.pone.0212345
+      - title: "Metaculus: longest verified human lifespan on record on January 1, 2050"
+        url: https://www.metaculus.com/questions/1628
+      - title: "Pearce and Raftery, Demographic Research 44:1271 (2021)"
+        url: https://doi.org/10.4054/DemRes.2021.44.52
+
+- id: lifespan-125
+  name: "Someone verified to live to 125"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 3
+  threshold: { metric: max-age-at-death, value: 125, label: "125 years" }
+  date: { window: [2040, 2130], likely: 2070 }
+  status: speculative
+  summary: >-
+    A validated human lifespan of 125 years, the age Dong, Milholland and
+    Vijg (2016) put as the practical upper limit, with a chance in any year
+    of under 1 in 10,000.
+  requires: [lifespan-123]
+  helped_by: [aging-reversal]
+  forecast:
+    note: >-
+      Pearce and Raftery's Bayesian forecast puts the chance of someone
+      dying at 126 or older between 2020 and 2100 at 89 percent and at 124
+      or older at 99.9 percent, so 125 is likely this century, mostly late,
+      once the large post-war birth cohorts reach 110 (from about 2056).
+      Metaculus forecasters are more optimistic, with a median record of
+      about 126 by 2050. A rejuvenation therapy (about 2062 here) given to
+      people over 100 would make it sooner. I put it around 2070.
+    sources:
+      - title: "Pearce and Raftery, Probabilistic forecasting of maximum human lifespan by 2100, Demographic Research 44:1271 (2021)"
+        url: https://doi.org/10.4054/DemRes.2021.44.52
+      - title: "Dong, Milholland and Vijg, Evidence for a limit to human lifespan, Nature 538:257 (2016)"
+        url: https://doi.org/10.1038/nature19793

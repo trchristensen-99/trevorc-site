@@ -1,0 +1,42 @@
+id: swe-bench-verified
+name: Best published score on SWE-bench Verified (real GitHub issues resolved)
+short: SWE-bench Verified
+unit: percent resolved
+better: higher
+log: false
+field: computing
+points:                           # [date as fractional year, best score so far]; model or agent, date; source
+  - [2023.773, 4.4]    # RAG + Claude 2, 2023-10-10; swebench.com
+  - [2024.251, 22.4]   # SWE-agent + GPT-4 (1106), 2024-04-02; swebench.com
+  - [2024.445, 32.6]   # MASAI + GPT-4o, 2024-06-12; swebench.com
+  - [2024.645, 45.2]   # Gru, 2024-08-24; swebench.com
+  - [2024.825, 53.0]   # OpenHands + CodeAct v2.1 (Claude 3.5 Sonnet), 2024-10-29; swebench.com
+  - [2024.948, 58.2]   # devlo, 2024-12-13; swebench.com
+  - [2024.967, 71.7]   # o3, 2024-12-20; OpenAI-reported
+  - [2025.386, 73.2]   # Tools + Claude Opus 4, 2025-05-22; swebench.com
+  - [2025.589, 76.8]   # EPAM AI/Run + Claude Sonnet 4, 2025-08-04; swebench.com
+  - [2025.740, 78.8]   # TRAE + Doubao-Seed-Code, 2025-09-28; swebench.com
+  - [2025.896, 80.9]   # Claude Opus 4.5, 2025-11-24; Anthropic-reported
+  - [2026.263, 93.9]   # Claude Mythos Preview, 2026-04-07; Anthropic-reported (anthropic.com/glasswing)
+  - [2026.436, 95.5]   # Claude Mythos 5, 2026-06-09; Anthropic system card via BenchLM and steel.dev
+  - [2026.559, 97.0]   # Claude Opus 5 with mini-SWE-agent, released 2026-07-24; run independently by Vals.ai (97.0 +/- 0.76, updated 2026-09-01)
+source:
+  title: "SWE-bench leaderboards (swebench.com, data/leaderboards.json), with lab reports and Vals.ai"
+  url: https://www.swebench.com/
+license: "Scores are reported facts; the swebench.com leaderboard states no license (SWE-bench code is MIT)"
+note: >-
+  SWE-bench Verified is 500 real issues from 12 Python repositories on
+  GitHub, each checked by human annotators to be solvable, with the fix
+  graded by the project's own tests. Points are the best score published
+  by each date: swebench.com submissions (mostly self-submitted agents) to
+  February 2026, then lab-reported scores, then Vals.ai's independent run
+  of Claude Opus 5 (https://www.vals.ai/benchmarks/swebench), which has
+  archived the benchmark as saturated. Epoch AI's own runs with its own
+  scaffold are lower (83.5 for Claude Opus 4.7, April 2026). OpenAI stopped
+  reporting the benchmark in February 2026. The AI Digest 2025 forecasting
+  survey's median for the end of 2025 was 88 percent; the best pass@1
+  score was 80.9, so forecasters were too high. Epoch AI wrote in September
+  2025 that SWE-bench was "on track to be solved in 2026", and it was. A
+  benchmark like this follows an S-curve, so the straight-line trend is a
+  poor guide near 100 percent, and the last few percent may be flawed or
+  ambiguous tasks rather than skill.

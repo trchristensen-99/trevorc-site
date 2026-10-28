@@ -1,0 +1,57 @@
+id: remote-labor-index
+name: Share of real paid freelance projects AI completes at professional quality (Remote Labor Index)
+short: Remote Labor Index
+unit: percent of projects
+better: higher
+log: false
+field: computing
+points:                           # [model release date as fractional year, best automation rate so far]; model, release date
+  - [2025.827, 2.5]    # Manus, best agent at the benchmark's launch, 2025-10-29
+  - [2025.896, 3.75]   # Claude Opus 4.5 (thinking), 2025-11-24
+  - [2026.096, 4.17]   # Claude Opus 4.6 in Claude Cowork, 2026-02-05
+  - [2026.307, 6.25]   # GPT-5.5 in Codex, 2026-04-23
+  - [2026.403, 8.33]   # Claude Opus 4.8, 2026-05-28
+  - [2026.436, 15.83]  # Claude Fable 5, 2026-06-09
+  - [2026.666, 17.92]  # Claude Fable 5.1, 2026-09-01
+  - [2026.671, 20.83]  # GPT-6 Astra, 2026-09-03
+  - [2026.723, 21.25]  # Claude Opus 5.5, 2026-09-22
+source:
+  title: "Scale AI and Center for AI Safety, Remote Labor Index leaderboard"
+  url: https://labs.scale.com/leaderboard/rli
+license: "Scores are reported facts; no license stated"
+note: >-
+  The Remote Labor Index (Scale AI and the Center for AI Safety, October
+  2025) is 240 real projects that freelancers were paid to do, across 23
+  fields such as software, design, architecture and data analysis,
+  each taking a professional a median of about 11.5 hours for a median fee
+  of $200 ($143,991 in all). The automation rate is the share of projects
+  where the AI's deliverable is judged at least as good as the human's,
+  that is, one a reasonable client would accept. Values are the leaderboard
+  scores (read 2026-10-28) dated by each model's release; Fable 5 was
+  scored on 218 of the 240 projects. The AI Digest 2026 survey's median
+  for the end of 2026 was 18 percent, passed in September. Unlike most
+  benchmarks this one tracks whole jobs, so it is a closer guide to
+  economic impact, but it saturates at 100 and has been measured for only
+  a year, so its trend is a rough guide.
+scenarios:
+  - id: manifold
+    name: Manifold markets
+    kind: market
+    points: [[2026.723, 21.25], [2027.0, 40], [2027.55, 80]]
+    low: [[2027.0, 24]]
+    high: [[2027.0, 65]]
+    note: >-
+      Two Manifold markets read on 28 October 2026. "Best Remote Labor
+      Index score by Dec 31, 2026" (32 traders, matching the AI Digest
+      survey question) puts 33 percent on 30 to 40 and 23 percent on 40 to
+      50, a median near 40 with an 80 percent range of about 24 to 65
+      (interpolated within its bins). "In what year will the automation
+      rate reach 80%?" (12 traders) puts 66 percent on 2027 and 13 percent
+      on 2026 or earlier, a median around mid-2027. Both markets are thin,
+      and the end-of-2026 one needs a jump from 21 percent within two
+      months.
+    sources:
+      - title: "Manifold, What will be the best Remote Labor Index score by Dec 31, 2026?"
+        url: https://manifold.markets/Bayesian/what-will-be-the-best-remote-labor
+      - title: "Manifold, In what year will Remote Labor Index automation rate reach 80%?"
+        url: https://manifold.markets/CopiumSupplier/in-what-year-will-remote-labor-inde

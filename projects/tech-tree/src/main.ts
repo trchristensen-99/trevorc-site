@@ -1,6 +1,6 @@
 import "./style.css"
 import { dateLabel } from "./time"
-import { ROUTE_COLORS, TreeView, fmtValue, kindShape, type Display, type Filters } from "./tree"
+import { DETAIL_DEFAULT, ROUTE_COLORS, TreeView, fmtValue, kindShape, type Display, type Filters } from "./tree"
 import type { Details, Metric, Node, Source, Tree } from "./types"
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
@@ -59,12 +59,12 @@ function people(v: unknown) {
   const n = num(v)
   return Number.isFinite(n) ? `about ${n.toLocaleString("en-US")}` : esc(v)
 }
-// An effort's date: a year or [from, to], with BCE for negative years.
+// An effort's date: a year or [from, to], with BC for negative years.
 function whenLabel(w: unknown): string {
-  const y = (v: unknown) => (typeof v === "number" ? (v < 0 ? `${(-v).toLocaleString("en-US")} BCE` : String(v)) : String(v))
+  const y = (v: unknown) => (typeof v === "number" ? (v < 0 ? `${(-v).toLocaleString("en-US")} BC` : v < 1000 ? `AD ${v}` : String(v)) : String(v))
   if (Array.isArray(w)) {
     const [a, b] = w as number[]
-    if (typeof a === "number" && typeof b === "number" && a < 0 && b < 0) return `${(-a).toLocaleString("en-US")} to ${(-b).toLocaleString("en-US")} BCE`
+    if (typeof a === "number" && typeof b === "number" && a < 0 && b < 0) return `${(-a).toLocaleString("en-US")} to ${(-b).toLocaleString("en-US")} BC`
     return `${y(a)} to ${y(b)}`
   }
   return y(w)
@@ -72,6 +72,16 @@ function whenLabel(w: unknown): string {
 function sourcesHTML(sources: Source[] | undefined, title = "Sources") {
   if (!sources?.length) return ""
   return `<h3>${title}</h3><ul class="sources">${sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></li>`).join("")}</ul>`
+}
+
+const SCENARIO_COLORS = ["#7b5ea7", "#d0587e", "#2a9d8f", "#c9772a", "#2f8fb0", "#8aa33a"]
+const SCENARIO_KIND: Record<string, string> = {
+  trend: "trend",
+  projection: "official projection",
+  survey: "survey",
+  market: "forecasters and markets",
+  model: "model",
+  judgment: "my estimate",
 }
 
 // A small log-scale chart of a metric with its fitted trend carried
@@ -84,8 +94,11 @@ function metricChart(m: Metric, milestones: Node[], highlight?: string, title = 
   const pts = m.points.filter(([, y]) => !m.log || y > 0)
   if (pts.length < 2) return ""
   const future = milestones.filter((n) => n.status !== "achieved").map((n) => n.at)
-  const x0 = pts[0][0], x1 = Math.max(pts.at(-1)![0] + (m.trend ? 10 : 0), ...future.map((y) => Math.min(y + 3, 2100)))
+  const scen = m.scenarios ?? []
+  const scenEnd = Math.max(...scen.flatMap((sc) => sc.points.map((p) => p[0])), -Infinity)
+  const x0 = pts[0][0], x1 = Math.min(2100, Math.max(pts.at(-1)![0] + (m.trend ? 10 : 0), scenEnd, ...future.map((y) => Math.min(y + 3, 2100))))
   const ys = [...pts.map((p) => f(p[1])), ...milestones.map((n) => f(n.threshold!.value))]
+  for (const sc of scen) for (const [x, v] of [...sc.points, ...sc.low, ...sc.high]) if (x <= x1 && (!m.log || v > 0)) ys.push(f(v))
   let y0 = Math.min(...ys), y1 = Math.max(...ys)
   if (m.trend) {
     const ext = m.trend.slope * x1 + m.trend.intercept
@@ -115,6 +128,13 @@ function metricChart(m: Metric, milestones: Node[], highlight?: string, title = 
     ? `<line x1="${px(tr.from)}" y1="${py(tr.slope * tr.from + tr.intercept)}" x2="${px(tr.to)}" y2="${py(tr.slope * tr.to + tr.intercept)}" class="fit"/>` +
       `<line x1="${px(tr.to)}" y1="${py(tr.slope * tr.to + tr.intercept)}" x2="${px(x1)}" y2="${py(tr.slope * x1 + tr.intercept)}" class="fit ext"/>`
     : ""
+  // Forecast scenarios: dotted lines in their own colors, with bands.
+  const line = (list: [number, number][]) => list.filter(([x, v]) => x <= x1 && (!m.log || v > 0)).map(([x, v], j) => `${j ? "L" : "M"}${px(x).toFixed(1)},${py(f(v)).toFixed(1)}`).join("")
+  const scenSvg = scen.map((sc, i) => {
+    const c = SCENARIO_COLORS[i % SCENARIO_COLORS.length]
+    const band = sc.low.length > 1 && sc.high.length > 1 ? `<path d="${line(sc.low)}${line([...sc.high].reverse()).replace(/^M/, "L")}Z" fill="${c}" opacity="0.12"/>` : ""
+    return `${band}<path d="${line(sc.points)}" fill="none" stroke="${c}" stroke-width="1.6" stroke-dasharray="2 2.5"/>`
+  }).join("")
   const marks = milestones.map((n) => {
     const v = f(n.threshold!.value)
     const cls = `ms${n.id === highlight ? " on" : ""}`
@@ -125,8 +145,9 @@ function metricChart(m: Metric, milestones: Node[], highlight?: string, title = 
     : `${tr.slope < 0 ? "Halves" : "Doubles"} about every ${tr.years!.toFixed(1)} years (r² ${tr.r2.toFixed(2)})`
   const wright = m.wright ? `; falls ${(m.wright.learningRate * 100).toFixed(0)}% each time cumulative production doubles` : ""
   return `${title ? `<h3>${esc(m.name)}</h3>` : ""}
-    <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.name)}">${grid.join("")}${xt.join("")}${marks}${trend}${dots}</svg>
-    <p class="rate">${rate}${wright}.${tr ? " Dashed: the trend carried forward." : ""}${milestones.length ? " Lines across: milestones." : ""}</p>
+    <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.name)}">${grid.join("")}${xt.join("")}${marks}${scenSvg}${trend}${dots}</svg>
+    <p class="rate">${rate}${wright}.${tr ? " Dashed: the trend carried forward." : ""}${scen.length ? " Dotted: forecasts." : ""}${milestones.length ? " Lines across: milestones." : ""}</p>
+    ${scen.length ? `<ul class="scenarios">${scen.map((sc, i) => `<li><span class="sw" style="background:${SCENARIO_COLORS[i % SCENARIO_COLORS.length]}"></span><div><strong>${esc(sc.name)}</strong> <span class="tag">${esc(SCENARIO_KIND[sc.kind] ?? sc.kind)}</span>${sc.note ? `<br><span class="note">${esc(sc.note)}</span>` : ""}${sc.sources?.length ? `<br><span class="note">${sc.sources.map((x) => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>`).join("; ")}</span>` : ""}</div></li>`).join("")}</ul>` : ""}
     ${m.note ? `<p class="note">${esc(m.note)}</p>` : ""}
     ${m.source ? `<p class="note">Data: <a href="${esc(m.source.url)}" target="_blank" rel="noopener">${esc(m.source.title)}</a>${m.license ? ` (${esc(m.license)})` : ""}</p>` : ""}`
 }
@@ -187,22 +208,28 @@ async function main() {
     `<li><span class="sw line"></span>needs</li><li><span class="sw line dash"></span>helped by</li><li><span class="sw line dot"></span>uses a resource</li>`
 
   // ----------------------------------------------------------- display
-  // Detail: a slider from fewer to everything, as a multiple of the
-  // default count at each zoom.
-  const display: Display = { detail: 1, grow: true, frontier: false, allLinks: false, trends: [] }
-  const DETAIL_MIN = 0.4, DETAIL_MAX = 16
+  // Detail: a slider from nothing (0) through the default set to
+  // everything (100).
+  const display: Display = { detail: DETAIL_DEFAULT, grow: true, frontier: false, allLinks: false, trends: [], trendLayout: "auto" }
   const slider = $<HTMLInputElement>("#detail")
-  const toDetail = (v: number) => (v >= 100 ? Infinity : DETAIL_MIN * (DETAIL_MAX / DETAIL_MIN) ** (v / 99))
-  const fromDetail = (d: number) => (!Number.isFinite(d) ? 100 : Math.round((99 * Math.log(d / DETAIL_MIN)) / Math.log(DETAIL_MAX / DETAIL_MIN)))
+  slider.value = String(DETAIL_DEFAULT)
   const readout = () => ($("#detail-count").textContent = `${view.shown} of ${tree.nodes.length} showing`)
+  // After each draw: the count, and the room the trend panel takes, so the
+  // panels can clear it.
+  let strips = -1
+  view.onRender = () => {
+    readout()
+    const sh = view.stripsHeight()
+    if (sh !== strips) document.body.style.setProperty("--strips", `${(strips = sh)}px`)
+  }
   const setDisplay = (d: Partial<Display>) => {
     Object.assign(display, d)
     view.setDisplay(display)
-    document.body.style.setProperty("--strips", `${view.stripsHeight()}px`)
-    requestAnimationFrame(() => requestAnimationFrame(readout))
     saveSoon()
   }
-  slider.addEventListener("input", () => setDisplay({ detail: toDetail(+slider.value) }))
+  slider.addEventListener("input", () => setDisplay({ detail: +slider.value }))
+  const layoutSel = $<HTMLSelectElement>("#trend-layout")
+  layoutSel.addEventListener("change", () => setDisplay({ trendLayout: layoutSel.value as Display["trendLayout"] }))
   const check = (id: string, key: "grow" | "frontier" | "allLinks") => {
     const i = $<HTMLInputElement>(id)
     i.addEventListener("change", () => setDisplay({ [key]: i.checked }))
@@ -239,7 +266,6 @@ async function main() {
       if (i.checked) set.add(id)
       else set.delete(id)
       view.setFilters(filters)
-      requestAnimationFrame(() => requestAnimationFrame(readout))
     })
     l.append(i)
     if (swatch) l.insertAdjacentHTML("beforeend", `<span class="sw" style="background:${swatch}"></span>`)
@@ -313,6 +339,13 @@ async function main() {
     const rows: string[] = []
     rows.push(`<dt>When</dt><dd>${esc(dateLabel(n.from, n.to, n.at, now, open))}</dd>`)
     if (n.trendYear && open) rows.push(`<dt>Trend</dt><dd>The trend alone gets there around ${Math.round(n.trendYear)}</dd>`)
+    if (n.scenarioYears?.length && open) {
+      const mm = metrics.get(n.threshold!.metric)!
+      rows.push(`<dt>Forecasts</dt><dd>${n.scenarioYears.map((x) => {
+        const sc = mm.scenarios.find((y) => y.id === x.id)
+        return `${esc(sc?.name ?? x.id)}: ${x.year == null ? "not by " + Math.round(Math.max(...(sc?.points ?? [[2100, 0]]).map((p) => p[0]))) : Math.round(x.year)}`
+      }).join("<br>")}</dd>`)
+    }
     rows.push(`<dt>Status</dt><dd>${STATUS_LABEL[n.status]}</dd>`)
     if (n.lane !== "roots") rows.push(`<dt>Fields</dt><dd>${n.fields.map(fieldName).map(esc).join(", ")}</dd>`)
     if (d.scarcity) rows.push(`<dt>Scarcity</dt><dd>${esc(d.scarcity)}</dd>`)
@@ -423,7 +456,8 @@ async function main() {
     if (view.selection) h.set("n", view.selection.id)
     const [x, y, k] = view.view()
     h.set("z", `${Math.round(x)},${Math.round(y)},${k.toFixed(2)}`)
-    if (display.detail !== 1) h.set("d", Number.isFinite(display.detail) ? display.detail.toFixed(2) : "all")
+    if (display.detail !== DETAIL_DEFAULT) h.set("d", String(display.detail))
+    if (display.trendLayout !== "auto") h.set("tl", display.trendLayout)
     if (display.frontier) h.set("f", "1")
     if (!display.grow) h.set("g", "0")
     if (display.allLinks) h.set("l", "1")
@@ -439,7 +473,6 @@ async function main() {
   let folded = false
   view.onViewChange = () => {
     saveSoon()
-    readout()
     const zoomed = view.view()[2] > 1.4
     if (zoomed !== folded) {
       folded = zoomed
@@ -454,7 +487,9 @@ async function main() {
   const h = new URLSearchParams(location.hash.slice(1))
   const d = h.get("d")
   const restored: Partial<Display> = {}
-  if (d) restored.detail = d === "all" ? Infinity : Math.min(DETAIL_MAX, Math.max(DETAIL_MIN, +d || 1))
+  if (d) restored.detail = d === "all" ? 100 : Math.min(100, Math.max(0, Math.round(+d))) || 0
+  const tl = h.get("tl")
+  if (tl === "strips" || tl === "compact" || tl === "combined") restored.trendLayout = layoutSel.value = tl
   if (h.get("f") === "1") restored.frontier = frontierBox.checked = true
   if (h.get("g") === "0") restored.grow = growBox.checked = false
   if (h.get("l") === "1") restored.allLinks = linksBox.checked = true
@@ -464,7 +499,7 @@ async function main() {
     restored.trends = sortedMetrics.filter((m) => t.includes(m.id)).map((m) => m.id)
     ;($("#trends") as HTMLDetailsElement).open = true
   }
-  slider.value = String(fromDetail(restored.detail ?? 1))
+  slider.value = String(restored.detail ?? DETAIL_DEFAULT)
   setDisplay(restored)
 
   view.resize()

@@ -1,0 +1,26 @@
+# Links from the AI forecast milestones (nodes/k-ai-forecasts.yaml) and the
+# METR time-horizon milestones to the capability nodes, so the tree shows
+# which measurable thresholds stand between now and each capability.
+# `requires` where the threshold is a necessary part of the capability's
+# criterion; `helped_by` where it is evidence or a means.
+
+# An automated coder must do the coding work of a frontier lab, which
+# includes the routine fixes SWE-bench measures and long autonomous tasks.
+- {id: superhuman-coder, requires: [swe-bench-verified-95], helped_by: [ai-horizon-1-week, ai-training-1e28-flop, remote-labor-index-50]}
+
+# Automated AI research needs the coder plus research-level reasoning and
+# much more compute.
+- {id: automated-ai-research, helped_by: [frontiermath-tier4-solved, ai-horizon-1-month, ai-training-1e28-flop, ai-lab-revenue-1t]}
+
+# AGI's criterion is doing at least 90 percent of computer-based work at a
+# professional level, so it needs human-level computer use and at least
+# half of real freelance projects.
+- {id: agi, requires: [osworld-human-level, remote-labor-index-50], helped_by: [hle-80, ai-lab-revenue-1t, ai-training-1e29-flop]}
+
+# Major discoveries in natural science: expert knowledge across fields and
+# research-level problem solving are prerequisites in spirit, though not
+# sufficient (experiments are the bottleneck).
+- {id: ai-autonomous-science, helped_by: [hle-80, frontiermath-tier4-solved, ai-horizon-1-month]}
+
+# Learning on the job is tested by long, unfamiliar real tasks.
+- {id: continual-learning-ai, helped_by: [remote-labor-index-50]}

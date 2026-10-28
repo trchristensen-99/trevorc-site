@@ -1,0 +1,54 @@
+id: hle-score
+name: Best score on Humanity's Last Exam (full set, no tools, run by Scale AI)
+short: Humanity's Last Exam
+unit: percent correct
+better: higher
+log: false
+field: computing
+points:                           # [model release date as fractional year, best score so far]; model, release date
+  - [2024.730, 4.6]    # Gemini 1.5 Pro (002), 2024-09-24
+  - [2024.959, 7.96]   # o1, 2024-12-17
+  - [2025.227, 18.16]  # Gemini 2.5 Pro (experimental), 2025-03-25
+  - [2025.288, 20.32]  # o3 (high), 2025-04-16
+  - [2025.425, 21.64]  # Gemini 2.5 Pro (preview 06-05), 2025-06-05
+  - [2025.597, 25.32]  # GPT-5, 2025-08-07
+  - [2025.762, 31.64]  # GPT-5 Pro, 2025-10-06
+  - [2025.879, 37.52]  # Gemini 3 Pro (preview), 2025-11-18
+  - [2026.134, 46.44]  # Gemini 3.1 Pro (preview), 2026-02-19
+  - [2026.671, 54.8]   # GPT-6 Astra, 2026-09-03 (added to the leaderboard 2026-09-09)
+source:
+  title: "Scale AI, Humanity's Last Exam leaderboard, and Epoch AI Benchmarking Hub (hle_external.csv)"
+  url: https://labs.scale.com/leaderboard/humanitys_last_exam
+license: "Scores are reported facts; Epoch AI's compilation is CC BY 4.0 (the HLE dataset itself is MIT)"
+note: >-
+  Humanity's Last Exam (Center for AI Safety and Scale AI, 2025) is 2,500
+  closed-ended questions at the frontier of expert knowledge across many
+  subjects, written to be hard for AI. Values are the best score on the
+  full multimodal set without tools, as run by Scale AI, for any model
+  released by each date (from Scale's leaderboard and Epoch AI's copy,
+  downloaded 2026-10-28). Labs report higher scores for their own runs:
+  without tools, Claude Mythos Preview 56.8 (April 2026) and Claude Fable
+  5.1 60.9 (September 2026), though Scale measured Fable 5.1 at 46.5; with
+  search and code tools, Claude Opus 5.5 reported 67.7 (September 2026).
+  Not every answer key is right: FutureHouse estimated in July 2025 that
+  29 percent (plus or minus 3.7) of the text-only chemistry and biology
+  answers conflict with the published literature, and the HLE team's own
+  check found about 18 percent of a subset problematic, so the practical
+  ceiling is below 100 and the trend is a poor guide above about 80.
+scenarios:
+  - id: polymarket-2026
+    name: Polymarket, end of 2026
+    kind: market
+    points: [[2026.671, 54.8], [2027.0, 60]]
+    low: [[2027.0, 58]]
+    high: [[2027.0, 65]]
+    note: >-
+      Polymarket's "Highest score on Humanity's Last Exam in 2026?" market
+      (resolved from the official HLE results at agi.safe.ai) on 28 October
+      2026: 86.5 percent on 58 or more, 48 percent on 60 or more, 16 percent
+      on 65 or more and 6 percent on 80 or more, so a median near 60 with
+      about 70 percent between 58 and 65. The market is small (a few
+      thousand dollars traded).
+    sources:
+      - title: "Polymarket, Highest score on Humanity's Last Exam in 2026? (gamma-api.polymarket.com, read 2026-10-28)"
+        url: https://polymarket.com/event/highest-score-on-humanitys-last-exam-in-2026-20260723190142922

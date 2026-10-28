@@ -86,5 +86,88 @@ note: >-
   they used women's life expectancy, which runs a few years higher.
   The leader passed from Sweden and Norway to Australia, Japan (1980s to
   2010s) and Hong Kong. COVID-19 interrupted the rise in 2020 to 2022. The
-  trend fitted here is exponential like every other series, but the classic
-  description is a straight line.
+  trend is a straight line, the classic description of the record.
+scenarios:
+  - id: un-wpp-2024
+    name: UN WPP 2024 (Hong Kong)
+    kind: projection
+    points: [[2024, 85.63], [2030, 86.44], [2040, 87.79], [2050, 89.08], [2060, 90.28], [2070, 91.37], [2080, 92.39], [2090, 93.37], [2100, 94.42]]
+    low: [[2024, 84.68], [2030, 83.99], [2040, 83.72], [2050, 84.36], [2060, 84.86], [2070, 85.18], [2080, 85.41], [2090, 85.9], [2100, 86.28]]
+    high: [[2024, 86.59], [2030, 88.94], [2040, 91.43], [2050, 93.71], [2060, 95.87], [2070, 97.56], [2080, 99.23], [2090, 101.06], [2100, 102.69]]
+    note: >-
+      The UN's median for Hong Kong, the highest projected place in each
+      decade to 2100, with its 95 percent prediction interval: 89.1 in 2050
+      and 94.4 in 2100 (Japan is close behind at 88.4 and 94.4). Gains slow
+      to about 1.2 years a decade, because the UN's model has gains shrink
+      as life expectancy rises, as they have in every country. Even the top
+      of the band only reaches 100 around 2084.
+    sources:
+      - title: "UN World Population Prospects 2024, probabilistic projections of life expectancy at birth (UN_PPP2024_Output_e0.xlsx)"
+        url: https://population.un.org/wpp/assets/Excel%20Files/2_Indicators%20(Probabilistic)/EXCEL_FILES/4_Mortality/UN_PPP2024_Output_e0.xlsx
+  - id: oeppen-vaupel
+    name: Record line, 3 months a year
+    kind: trend
+    points: [[2023, 85.51], [2050, 92.3], [2100, 104.8]]
+    note: >-
+      Oeppen and Vaupel's record line carried forward from the 2023 record:
+      a quarter of a year of life expectancy per calendar year, the pace of
+      record female life expectancy from 1840 to 2000, which gives 92.3 in
+      2050 and 104.8 in 2100. In this both-sexes series the record rose
+      about 1.9 years a decade over 1950 to 1990 and 2.2 over 1990 to 2019,
+      so it has not yet slowed. Olshansky et al. (Nature Aging 2024) argue
+      it must: in eight of the longest-lived countries, Hong Kong and the
+      US, gains have slowed since 1990, survival to 100 is unlikely to exceed 15 percent for women and
+      5 percent for men, and radical life extension is implausible this
+      century unless biological aging itself can be slowed.
+    sources:
+      - title: "Oeppen and Vaupel, Broken limits to life expectancy, Science 296:1029 (2002)"
+        url: https://doi.org/10.1126/science.1069675
+      - title: "Olshansky, Willcox, Demetrius and Beltrán-Sánchez, Implausibility of radical life extension in humans in the twenty-first century, Nature Aging 4:1635 (2024)"
+        url: https://doi.org/10.1038/s43587-024-00702-3
+  - id: metaculus-100
+    name: Metaculus, a country at 100
+    kind: market
+    points: [[2023, 85.51], [2062, 100]]
+    low: [[2023, 85.51], [2075, 100]]
+    high: [[2023, 85.51], [2046, 100]]
+    note: >-
+      The Metaculus community forecast for when any country first has a
+      life expectancy at birth of 100 for both sexes: a median of 2062 with
+      an interquartile range from late 2045 to after 2075 (about 35 percent
+      on after 2075, when the question closes), from about 104 forecasters.
+      Drawn as straight lines from the 2023 record to 100 at those dates.
+      Forecasters here are far more optimistic than the UN, whose median
+      never reaches 100 this century; the same year, 2062, is the tree's
+      date for rejuvenation therapies. Metaculus blocks automated reading,
+      so these figures come from search-engine snapshots (another showed a
+      median of 2060), not the live value.
+    sources:
+      - title: "Metaculus: when will any country have a life expectancy at birth of at least 100 years?"
+        url: https://www.metaculus.com/questions/3044/date-of-any-country-with-life-expectancy-100
+  - id: model-rejuvenation
+    name: "Model: rejuvenation at the tree's date"
+    kind: model
+    points: [[2024, 85.6], [2030, 86.4], [2040, 87.8], [2050, 89.1], [2060, 90.3], [2065, 91.5], [2070, 93.9], [2075, 97.3], [2080, 99.3], [2090, 100.7], [2100, 101.8]]
+    low: [[2024, 85.6], [2030, 86.4], [2040, 87.8], [2050, 89.1], [2060, 90.3], [2070, 91.4], [2080, 92.4], [2090, 93.4], [2100, 94.4]]
+    high: [[2024, 85.6], [2030, 86.4], [2040, 87.8], [2045, 88.5], [2050, 90.3], [2055, 93.4], [2060, 96.5], [2065, 97.9], [2070, 98.7], [2075, 99.2], [2080, 99.7], [2090, 100.7], [2100, 101.8]]
+    note: >-
+      A simple model, not a forecast; every point is computed, none is data.
+      Baseline (no new aging biology): the UN median for Hong Kong. On top
+      of it, rejuvenation therapies (node aging-reversal) arrive in 2062,
+      the tree's likely date; the band uses the tree's window, arrival in
+      2045 (high) or 2110 (low, the baseline). Effect: the aging-reversal
+      criterion's 10-year reset, applied once to everyone 60 and over, so
+      they die at the rates of people 10 years younger; on Hong Kong's 2023
+      UN life table that adds 7.3 years to life expectancy at birth (my
+      calculation), held fixed. Uptake: a logistic curve reaching half of
+      older people 10 years after arrival (scale 3 years), my assumption
+      for a reimbursed therapy in a rich country. With these assumptions
+      the record reaches 90 around 2058 (2050 with the early arrival) and
+      100 around 2085 (2083 with the early arrival): a single reset adds
+      about 7 years, so 100 still waits for the baseline to reach 93.
+      Earlier steps on the tree (aging-drug-approved around 2040,
+      senolytics-approved around 2036) are not modeled separately; if they
+      work they would lift the baseline before 2062.
+    sources:
+      - title: "UN World Population Prospects 2024, complete life tables, both sexes, 1950 to 2023 (CSV)"
+        url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Life_Table_Complete_Medium_Both_1950-2023.csv.gz

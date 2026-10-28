@@ -1,0 +1,87 @@
+id: ai-lab-revenue
+name: Combined annualized revenue of OpenAI and Anthropic
+short: AI lab revenue
+unit: USD a year (run rate)
+better: higher
+log: true
+field: society
+points:                           # [date as fractional year, OpenAI + Anthropic annualized run rate]; the two reports summed
+  - [2024.000, 2.087e9]   # OpenAI $2B (Dec 2023) + Anthropic $87M (Jan 2024)
+  - [2024.997, 6.5e9]     # OpenAI $5.5B + Anthropic $1B, end of 2024
+  - [2025.573, 1.7e10]    # OpenAI $12B (30 Jul 2025) + Anthropic $5B (29 Jul 2025)
+  - [2025.997, 3.04e10]   # OpenAI $21.4B + Anthropic $9B, end of 2025
+  - [2026.162, 4.4e10]    # OpenAI $25B (28 Feb 2026) + Anthropic $19B (3 Mar 2026)
+  - [2026.556, 9.5e10]    # OpenAI $30B (15 Jul 2026) + Anthropic $65B (31 Jul 2026)
+  - [2026.745, 1.15e11]   # OpenAI $50B (30 Sep 2026) + Anthropic's last report, $65B (31 Jul 2026): a lower bound
+source:
+  title: "Epoch AI, AI companies revenue reports (ai_companies_revenue_reports.csv)"
+  url: https://epoch.ai/data/ai_companies_revenue_reports.csv
+license: CC BY 4.0
+note: >-
+  The two leading AI labs' annualized revenue (the latest month times 12),
+  summing the two companies' reports nearest in time from Epoch AI's
+  compilation of disclosures and press reports (downloaded 2026-10-28).
+  The last point adds OpenAI's September figure to Anthropic's July one,
+  so it is a lower bound. Epoch's file notes that reports of OpenAI near
+  $70 billion in September 2026 grossed up revenue shared with cloud
+  partners and were superseded by an FT report of $50 billion. xAI, the
+  third lab in the AI Digest survey question, was under $0.5 billion in
+  2025 and is left out. Combined revenue grew about 4 times a year from
+  2024 to 2026. The AI Digest 2025 survey's median for the end of
+  2025 (with xAI) was $16 billion; the result was $30.4 billion, so
+  forecasters were about half too low, and they were low again in 2026.
+scenarios:
+  - id: ai-digest-2026
+    name: AI Digest survey, end of 2026
+    kind: survey
+    points: [[2026.745, 1.15e11], [2027.0, 1.0e11]]
+    note: >-
+      The median of 557 forecasters in the AI Digest 2026 survey (closed 25
+      January 2026) for OpenAI, Anthropic and xAI's December 2026
+      annualized revenue: $100 billion, from about $31 billion at the time.
+      It was already passed by the third quarter of 2026.
+    sources:
+      - title: AI Digest, AI 2026 Forecasting Survey (forecast2026.ai)
+        url: https://forecast2026.ai/
+      - title: "Eli Lifland, AI Futures Project, forecast of how AI will progress in 2026"
+        url: https://blog.aifutures.org/p/forecast-how-ai-will-progress-in
+  - id: leap-superforecasters
+    name: FRI LEAP, superforecasters
+    kind: survey
+    points: [[2026.745, 1.15e11], [2027.0, 9.0e10], [2031.0, 3.0e11], [2041.0, 7.7e11]]
+    note: >-
+      Superforecasters' medians in the Forecasting Research Institute's
+      LEAP wave 11 (13 July to 11 August 2026) for OpenAI and Anthropic's
+      combined run rate at the end of 2026, 2030 and 2040: $90 billion,
+      $300 billion and $770 billion. Forecasters were told it was $72
+      billion in mid-July; FRI suspects many anchored on the $30 billion
+      end-2025 figure.
+    sources:
+      - title: Forecasting Research Institute, LEAP wave 11 report
+        url: https://leap.forecastingresearch.org/reports/wave11
+  - id: leap-experts
+    name: FRI LEAP, experts
+    kind: survey
+    points: [[2026.745, 1.15e11], [2027.0, 7.0e10], [2031.0, 1.5e11], [2041.0, 3.0e11]]
+    note: >-
+      The LEAP experts' medians for the same question: $70 billion at the
+      end of 2026, $150 billion at the end of 2030 and $300 billion at the
+      end of 2040, slowing to about 20 percent a year after 2026.
+    sources:
+      - title: Forecasting Research Institute, LEAP wave 11 report
+        url: https://leap.forecastingresearch.org/reports/wave11
+  - id: epoch-3x
+    name: Epoch, about 3 times a year
+    kind: trend
+    points: [[2026.745, 1.15e11], [2027.745, 3.45e11], [2028.745, 1.035e12]]
+    note: >-
+      Lab revenue growing about 3 times a year, the rate Epoch AI's 2030
+      report found ("hundreds of billions" before 2030) and close to the
+      3.2 times a year for OpenAI since 2024 on its trends page, carried
+      forward from the September 2026 lower bound. It reaches a trillion
+      dollars a year in late 2028.
+    sources:
+      - title: "Epoch AI, What will AI look like in 2030? (September 2025)"
+        url: https://epoch.ai/blog/what-will-ai-look-like-in-2030
+      - title: Epoch AI, Trends in AI (data-trends)
+        url: https://epoch.ai/data-trends

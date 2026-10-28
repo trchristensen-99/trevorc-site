@@ -130,13 +130,44 @@ function fitWright(price, cumulative) {
   const fit = fitTime(pts.map(([x, y]) => [Math.log10(cum.get(Math.round(x))), y]))
   return fit && { exponent: fit.slope, learningRate: 1 - 2 ** fit.slope, r2: fit.r2, points: pts.length }
 }
+// Forecast scenarios on a metric: a central path, optionally a band.
+const SCENARIO_KINDS = ["trend", "projection", "survey", "market", "model", "judgment"]
+function scenariosOf(m, points) {
+  const pts = (list) => (list ?? []).map(([x, y]) => [Number(x), Number(y)]).filter(([x, y]) => Number.isFinite(x) && Number.isFinite(y)).sort((a, b) => a[0] - b[0])
+  const last = points.at(-1)?.[0] ?? -Infinity
+  return (m.scenarios ?? []).map((sc, i) => {
+    const where = `metric ${m.id}: scenario ${sc.id ?? i + 1}`
+    if (!sc.id || !sc.name) warn(`${where}: needs an id and a name`)
+    if (!SCENARIO_KINDS.includes(sc.kind)) warn(`${where}: unknown kind ${sc.kind}`)
+    const p = pts(sc.points)
+    if (p.length < 2) warn(`${where}: needs at least two points`)
+    if (p.length && p[0][0] < last - 1) warn(`${where}: starts in ${p[0][0]}, before the data ends (${last})`)
+    if (!sc.sources?.length && sc.kind !== "judgment" && sc.kind !== "trend") warn(`${where}: no sources`)
+    return { id: sc.id ?? `s${i + 1}`, name: sc.name ?? `Scenario ${i + 1}`, kind: sc.kind, points: p, low: pts(sc.low), high: pts(sc.high), note: sc.note && era(sc.note), sources: sc.sources }
+  })
+}
+// The year a path first reaches a value (interpolating between its
+// points, on the metric's own scale), or null if it never does.
+function pathCrossing(m, path, value) {
+  const f = (v) => (m.log !== false ? Math.log10(Math.max(v, 1e-300)) : v)
+  const beats = (y) => (m.better === "lower" ? y <= value : y >= value)
+  for (let i = 0; i < path.length; i++) {
+    if (!beats(path[i][1])) continue
+    if (i === 0) return path[0][0]
+    const [x0, y0] = path[i - 1], [x1, y1] = path[i]
+    const t = (f(value) - f(y0)) / (f(y1) - f(y0) || 1)
+    return x0 + t * (x1 - x0)
+  }
+  return null
+}
+
 const metricsOut = metrics.map((m) => {
   const points = (m.points ?? []).map(([x, y]) => [Number(x), Number(y)]).filter(([x, y]) => Number.isFinite(x) && Number.isFinite(y)).sort((a, b) => a[0] - b[0])
   if (points.length < 2) warn(`metric ${m.id}: fewer than two points`)
   // `fit` can limit the trend to a period, or fit the cheapest (or best)
   // value each year where several rival products share a year. Trends
   // that don't fit (r² under 0.5) aren't shown.
-  let fitPts = points.filter(([x]) => (m.fit?.from == null || x >= m.fit.from) && (m.fit?.to == null || x <= m.fit.to))
+  let fitPts = points.filter(([x]) => (!m.fit || m.fit.from == null || x >= m.fit.from) && (!m.fit || m.fit.to == null || x <= m.fit.to))
   if (m.fit?.envelope) {
     const best = new Map()
     for (const [x, y] of fitPts) {
@@ -145,7 +176,8 @@ const metricsOut = metrics.map((m) => {
     }
     fitPts = [...best].sort((a, b) => a[0] - b[0])
   }
-  let trend = fitTime(fitPts, m.log !== false)
+  // `fit: false` means no trend is fitted (the series has no meaningful line).
+  let trend = m.fit === false ? null : fitTime(fitPts, m.log !== false)
   if (trend && trend.r2 < 0.5) {
     warn(`metric ${m.id}: trend fits poorly (r² ${trend.r2.toFixed(2)}), not shown`)
     trend = null
@@ -154,7 +186,8 @@ const metricsOut = metrics.map((m) => {
   const wright = cumulative ? fitWright({ points }, { points: cumulative.points.map(([x, y]) => [Number(x), Number(y)]) }) : null
   return {
     id: m.id, name: m.name, short: m.short ?? m.name, unit: m.unit, better: m.better ?? "higher", log: m.log !== false, points,
-    trend, wright, source: m.source, license: m.license, note: m.note, field: m.field, milestones: [],
+    trend, wright, source: m.source, license: m.license, note: m.note && era(m.note), field: m.field, milestones: [],
+    scenarios: scenariosOf(m, points),
   }
 })
 const metricById = new Map(metricsOut.map((m) => [m.id, m]))
@@ -165,14 +198,38 @@ const metricById = new Map(metricsOut.map((m) => [m.id, m]))
 // the trend (wider on the late side, since trends slow more often than they
 // speed up). A milestone's own `date` wins, but the trend's year is kept to
 // show alongside it.
+//
+// A window can't open sooner than the fastest the series has ever moved
+// (its best five-year stretch) would take to close the remaining gap from
+// the latest data, and never before now.
+function fastestRate(m) {
+  const f = (v) => (m.log ? Math.log10(v) : v)
+  const pts = m.points.filter(([, y]) => !m.log || y > 0)
+  const sign = m.better === "lower" ? -1 : 1
+  let best = 0
+  for (let i = 0; i < pts.length; i++)
+    for (let j = i + 1; j < pts.length; j++) {
+      const dt = pts[j][0] - pts[i][0]
+      if (dt < 5) continue
+      best = Math.max(best, (sign * (f(pts[j][1]) - f(pts[i][1]))) / dt)
+      break
+    }
+  return best
+}
 function crossing(m, value) {
+  const f = (v) => (m.log ? Math.log10(v) : v)
   const beats = (y) => (m.better === "lower" ? y <= value : y >= value)
   const hit = m.points.find(([, y]) => beats(y))
   if (hit) return { year: hit[0], crossed: true }
   if (!m.trend || (m.better === "lower") !== (m.trend.slope < 0)) return null
-  const year = ((m.log ? Math.log10(value) : value) - m.trend.intercept) / m.trend.slope
+  const year = (f(value) - m.trend.intercept) / m.trend.slope
   const spread = Math.max(1, (1.5 * m.trend.sd) / Math.abs(m.trend.slope))
-  return { year, from: year - spread, to: year + 2 * spread, crossed: false }
+  const last = m.points.at(-1)
+  const rate = fastestRate(m)
+  const soonest = Math.max(NOW + 0.25, rate > 0 ? last[0] + Math.abs(f(last[1]) - f(value)) / rate : NOW + 1)
+  const from = Math.max(year - spread, soonest)
+  const likely = Math.max(year, from + 0.5)
+  return { year, likely, from, to: Math.max(year + 2 * spread, likely + 1), crossed: false, soonest }
 }
 
 // ----------------------------------------------------------------- check
@@ -222,7 +279,7 @@ for (const n of nodes) {
     else {
       const c = crossing(m, Number(n.threshold.value))
       if (c) n._trend = c
-      if (n.date == null && c) n.date = c.crossed ? Math.round(c.year) : { window: [Math.floor(c.from), Math.ceil(c.to)], likely: Math.round(c.year) }
+      if (n.date == null && c) n.date = c.crossed ? Math.round(c.year) : { window: [Math.round(c.from * 10) / 10, Math.ceil(c.to)], likely: Math.round(c.likely) }
       if (n.status == null && c) n.status = c.crossed ? "achieved" : "speculative"
       if (c && c.crossed && n.status !== "achieved") warn(`${where}: the data has crossed this threshold (${Math.round(c.year)}) but it isn't marked achieved`)
       m.milestones.push(n.id)
@@ -303,6 +360,22 @@ for (const n of kept)
     state.set(n.id, 2)
   }
   for (const n of kept) if (!state.get(n.id)) visit(n, [])
+}
+
+// Future windows: none should open in the past, or before something it
+// needs (on every route) could be done.
+for (const n of kept) {
+  if (n.status !== "ongoing" && n.status !== "speculative") continue
+  if (n._date.from < NOW - 0.05) warn(`${n.id}: not yet achieved, but its window opens in ${n._date.from}, before now`)
+  for (const id of n._requires) {
+    const p = live.get(id)
+    if ((p.status === "ongoing" || p.status === "speculative") && p._date.from > n._date.from + 0.05)
+      warn(`${n.id}: window opens ${n._date.from}, before what it needs (${id}) can (${p._date.from})`)
+  }
+  if (n._routes.length) {
+    const earliest = Math.min(...n._routes.map((r) => Math.max(NOW, ...r.requires.map((id) => live.get(id)).filter((p) => p.status === "ongoing" || p.status === "speculative").map((p) => p._date.from))))
+    if (earliest > n._date.from + 0.05) warn(`${n.id}: window opens ${n._date.from}, before any route's prerequisites can (${earliest})`)
+  }
 }
 
 // ------------------------------------------------------------------ rank
@@ -399,20 +472,31 @@ let bumped = 0
 for (const n of ranked) {
   const t = trackById.get(n._track)
   n._x = xOf(n._date.at)
+  // What a node takes up across: itself, plus its date range's bar.
+  n._xa = Math.min(n._x, xOf(n._date.from))
+  n._xb = Math.max(n._x, xOf(n._date.to))
   const r = RADIUS[n.tier]
   const mid = (t.y0 + t.y1) / 2
-  const near = placed.filter((p) => Math.abs(p._x - n._x) < r + RADIUS[p.tier] + 4)
-  // How clear y is at zoom s: 1 or more means it overlaps nothing.
+  const apart = (p) => Math.max(0, p._xa - n._xb, n._xa - p._xb)
+  const near = placed.filter((p) => apart(p) < r + RADIUS[p.tier] + 4)
+  // How clear y is at zoom s: 1 or more means it overlaps nothing, bars
+  // included, so overlapping windows sit on separate lines.
   const clearance = (y, s) => near.reduce((c, p) => {
     const z = Math.max(s, p._z)
     const gx = (r + RADIUS[p.tier] + 4) / z, gy = (r + RADIUS[p.tier] + 2.5) / z
-    return Math.min(c, Math.max(Math.abs(p._x - n._x) / gx, Math.abs(p._y - y) / gy))
+    return Math.min(c, Math.max(apart(p) / gx, Math.abs(p._y - y) / gy))
   }, Infinity)
+  // A little jitter, the same on every build (from the id), so a track's
+  // nodes don't all sit on its center line.
+  let hash = 0
+  for (const ch of n.id) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0
+  const jitter = ((hash % 1000) / 1000 - 0.5) * 0.7
   const candidates = (s) => {
     const step = (2 * r + 2.5) / s / 3
     const room = Math.max(0, (t.y1 - t.y0) / 2 - Math.min(r / s, (t.y1 - t.y0) / 4))
-    const out = [mid]
-    for (let i = 1; i * step <= room; i++) out.push(mid - i * step, mid + i * step)
+    const start = mid + jitter * room
+    const out = [start]
+    for (let i = 1; i * step <= 2 * room; i++) for (const c of [start - i * step, start + i * step]) if (Math.abs(c - mid) <= room) out.push(c)
     return out
   }
   const limit = n._z * (n.tier === 1 ? 1.5 : 2)
@@ -469,22 +553,37 @@ const out = {
   fields: FIELDS.map(({ tracks, ...f }) => f), roots: (({ tracks, ...f }) => f)(ROOTS),
   lanes: lanes.map((l) => ({ ...l, tracks: l.tracks.map((t) => ({ ...t, y0: round(t.y0), y1: round(t.y1) })) })),
   nodes: ranked.map((n) => ({
-    id: n.id, name: n.name, kind: n.kind, fields: n.fields, status: n.status, tier: n.tier,
+    id: n.id, name: era(n.name), kind: n.kind, fields: n.fields, status: n.status, tier: n.tier,
     from: n._date.from, to: n._date.to, at: round(n._date.at, 2),
     x: round(n._x), y: round(n._y), z: round(n._z, 2), lane: (n.lane ?? n.fields[0]), track: n._track,
     ...(n.metric ? { metric: n.metric } : {}),
     ...(n.threshold ? { threshold: { metric: n.threshold.metric, value: Number(n.threshold.value), label: n.threshold.label } } : {}),
     ...(n._trend && !n._trend.crossed ? { trendYear: round(n._trend.year) } : {}),
+    ...(n.threshold && n.status !== "achieved" && metricById.get(n.threshold.metric).scenarios.length
+      ? { scenarioYears: metricById.get(n.threshold.metric).scenarios.map((sc) => ({ id: sc.id, year: (() => { const y = pathCrossing(metricById.get(n.threshold.metric), sc.points, Number(n.threshold.value)); return y == null ? null : round(y) })() })) }
+      : {}),
     ...(n._routes.length ? { routes: n._routes.map((r) => r.name) } : {}),
   })),
   edges,
   metrics: metricsOut,
 }
-const details = Object.fromEntries(kept.map((n) => [n.id, {
+// Years in the text read BC and AD (the data may say BCE and CE). Source
+// titles are left as published.
+function era(str) {
+  return str.replace(/(\d[\d,]*)\s*BCE\b/g, "$1 BC").replace(/\b(\d[\d,]*)\s*CE\b/g, "AD $1")
+}
+const eraDeep = (v, key = "") => {
+  if (key === "sources" || key === "source") return v
+  if (typeof v === "string") return era(v)
+  if (Array.isArray(v)) return v.map((x) => eraDeep(x))
+  if (v && typeof v === "object") return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, eraDeep(x, k)]))
+  return v
+}
+const details = Object.fromEntries(kept.map((n) => [n.id, eraDeep({
   date: n.date, summary: n.summary, criterion: n.criterion, efforts: n.efforts, effort: n.effort, forecast: n.forecast, lost: n.lost,
   scarcity: n.scarcity, note: n.note, sources: n.sources,
   ...(n._routes.length ? { routes: n._routes.map((r) => ({ name: r.name, note: r.note, requires: r.requires })) } : {}),
-}]))
+})]))
 fs.mkdirSync(OUT, { recursive: true })
 fs.writeFileSync(path.join(OUT, "tree.json"), JSON.stringify(out))
 fs.writeFileSync(path.join(OUT, "details.json"), JSON.stringify(details))

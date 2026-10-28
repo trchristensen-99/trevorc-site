@@ -44,3 +44,124 @@ note: >-
   April 2026 had been measured by October 2026. A 50 percent horizon is not
   the same as doing the job reliably; METR's 80 percent horizons are about 4
   to 8 times shorter.
+scenarios:                        # paths start from the last measurement, Claude Mythos Preview (April 2026, 1,040 minutes)
+  - id: metr-long-run
+    name: METR long-run trend, doubling every 6 months
+    kind: trend
+    points: [[2026.263, 1040], [2027, 2806], [2028, 10787], [2029, 41472], [2030, 159443]]
+    note: >-
+      The doubling time METR fits to its whole series since 2019, about 188
+      days, carried forward from Mythos Preview. It reaches a 40-hour week
+      in late 2026, a 167-hour month at the end of 2027 and a 2,000-hour
+      year in late 2029. METR's own projection (March 2025) was that if the
+      trend held, AI agents would carry out month-long projects by the end
+      of the decade. Above about 16 hours METR's current tasks cannot
+      confirm any of this; every path here is a guess about what a longer
+      task suite would measure.
+    sources:
+      - title: METR, Time horizon 1.1 (January 2026)
+        url: https://metr.org/blog/2026-01-29-time-horizon-1-1/
+      - title: METR, Measuring AI ability to complete long tasks (March 2025)
+        url: https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/
+  - id: metr-since-2023
+    name: METR 2023-26 trend, doubling every 4 months
+    kind: trend
+    points: [[2026.263, 1040], [2027, 4418], [2028, 31444], [2029, 223807]]
+    low: [[2027, 3388], [2028, 16819], [2029, 83502]]
+    high: [[2027, 6255], [2028, 71356], [2029, 814054]]
+    note: >-
+      METR's doubling time for models since 2023, about 129 days (95
+      percent interval 104 to 158 days, which gives the band); since 2024
+      it is faster still, about 89 days. On this path the horizon passed a
+      40-hour week in September 2026, reaches a month in mid-2027 and a
+      year in late 2028. METR found GPT-5.6 Sol (June 2026) at about 11
+      hours if cheating counts as failure but 71 hours if cheating runs are
+      dropped, and judged neither a robust measurement, and its May 2026
+      risk report said the best agents essentially saturated the task suite.
+    sources:
+      - title: METR, benchmark results (benchmark_results_1_1.yaml, doubling times)
+        url: https://metr.org/assets/benchmark_results_1_1.yaml
+      - title: METR, GPT-5.6 Sol evaluation (June 2026)
+        url: https://metr.org/blog/2026-06-26-gpt-5-6-sol/
+      - title: METR, Frontier risk report (May 2026)
+        url: https://metr.org/blog/2026-05-19-frontier-risk-report/
+  - id: ai-digest-2026
+    name: AI Digest survey, doubling every 4.6 months
+    kind: survey
+    points: [[2026.263, 1040], [2027, 4001], [2028, 24893]]
+    note: >-
+      The median of 642 forecasters in the AI Digest 2026 survey (January
+      2026) for the doubling time of METR's horizon over 2026: 4.55 months,
+      carried forward here past 2026. The Forecasting Research Institute's
+      LEAP panel (April to May 2026) asked about the stricter 80 percent
+      horizon instead: medians of 3.4 hours (experts) and 3.5 hours
+      (superforecasters) by the end of 2026, which Mythos Preview's 3.1
+      hours nearly matched in May, and 80 percent success on 8-hour tasks
+      by 2030 (experts) or 2028 (superforecasters).
+    sources:
+      - title: AI Digest, AI 2026 Forecasting Survey (forecast2026.ai)
+        url: https://forecast2026.ai/
+      - title: Forecasting Research Institute, LEAP wave 8, AI timelines (June 2026)
+        url: https://forecastingresearch.substack.com/p/leap-wave-8-ai-timelines
+  - id: manifold
+    name: Manifold markets
+    kind: market
+    points: [[2026.263, 1040], [2027.0, 2450], [2028.0, 7680]]
+    low: [[2027.0, 960], [2028.0, 960]]
+    high: [[2027.0, 3840]]
+    note: >-
+      Manifold's "frontier METR time horizon on January 1, 2027" market (15
+      traders, 28 October 2026) puts 34 percent on 16 to 32 hours and 43
+      percent on 32 to 64 hours, a median near 41 hours (interpolated); its
+      2028 twin (9 traders) puts 55 percent on 128 hours or more. Both
+      resolve on METR's numbers, which METR stopped updating in September
+      2026; a separate market gives 74 percent that the end-2026 horizon
+      will be "ambiguous", and a 2026 market resolved its thresholds above
+      16 hours as void.
+    sources:
+      - title: Manifold, What will the frontier METR time horizon be on January 1, 2027?
+        url: https://manifold.markets/Benthamite/what-will-the-frontier-metr-time-ho
+      - title: Manifold, What will the frontier METR time horizon be on January 1, 2028?
+        url: https://manifold.markets/Benthamite/what-will-the-frontier-metr-time-ho-zsSz9zytSP
+      - title: Manifold, Will the METR 50% time horizon be "ambiguous" at the end of 2026?
+        url: https://manifold.markets/event/will-the-metr-50-time-horizon-be-am
+  - id: ai-futures-model
+    name: AI Futures Model (default settings)
+    kind: model
+    points: [[2026.263, 1040], [2026.5, 1689], [2027.0, 5599], [2027.5, 24312], [2028.0, 203342]]
+    note: >-
+      The default run of the AI Futures Project's model on
+      aifuturesmodel.com (read 28 October 2026), in which each doubling is
+      8 percent easier than the last (superexponential), starting from a
+      4-month doubling time. The model forecasts the 80 percent horizon; it
+      is converted here to the 50 percent horizon at Mythos Preview's ratio
+      of 5.6 (1,045 to 186 minutes), an assumption, since the ratio was 10
+      for Claude Opus 4.6. The run reaches an automated coder in late 2027
+      and superintelligence in late 2028. The project's August 2026 update
+      moved away from time horizons, since "it's unclear what time horizon
+      corresponds to" an automated coder; its forecasters' medians for that
+      milestone are November 2027 (Kokotajlo), January 2029 (Brendan, AI Futures) and
+      January 2030 (Lifland).
+    sources:
+      - title: AI Futures Project, AI Futures Model
+        url: https://www.aifuturesmodel.com/
+      - title: AI Futures Project, Q2.5 2026 timelines update (August 2026)
+        url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+  - id: slowdown
+    name: Slowdown, each doubling 10 percent longer
+    kind: model
+    points: [[2026.263, 1040], [2027, 4125], [2028, 18973], [2029, 67449], [2030, 196427], [2032, 1155797]]
+    note: >-
+      AI 2027's subexponential case, in which each doubling takes 10
+      percent longer than the one before, started from METR's 129-day
+      doubling time. Growth slows to a doubling a year by about 2033; a
+      month arrives in the second half of 2027 and a year in mid-2029. Whitfill,
+      Snodin and Becker (2025) found that month-long horizons at 80 percent
+      reliability come about 7 years later than a simple trend suggests
+      once the shape of the success curve is modelled. Started from the
+      slower 188-day trend, the same case would reach a year around 2031.
+    sources:
+      - title: AI 2027, timelines forecast (superexponential and subexponential cases)
+        url: https://ai-2027.com/research/timelines-forecast
+      - title: Whitfill, Snodin and Becker 2025, arXiv 2511.19492
+        url: https://arxiv.org/abs/2511.19492

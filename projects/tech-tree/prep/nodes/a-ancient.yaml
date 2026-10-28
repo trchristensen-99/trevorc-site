@@ -554,8 +554,8 @@
   sources:
     - title: USGS Mineral Commodity Summaries 2025, Phosphate Rock
       url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-phosphate.pdf
-    - title: Peak phosphorus (Wikipedia)
-      url: https://en.wikipedia.org/wiki/Peak_phosphorus
+    - title: Phosphorus, reserves and peak phosphorus (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Phosphorus#Reserves
     - title: Phosphate mining in Nauru (Wikipedia)
       url: https://en.wikipedia.org/wiki/Phosphate_mining_in_Nauru
 
@@ -1027,8 +1027,8 @@
   sources:
     - title: Toups et al. 2011, Origin of clothing lice (Molecular Biology and Evolution)
       url: https://doi.org/10.1093/molbev/msq234
-    - title: Hallett et al. 2021, Earliest clothing evidence at Contrebandiers Cave (iScience)
-      url: https://doi.org/10.1016/j.isci.2021.103071
+    - title: Hallett et al. 2021, A worked bone assemblage from Contrebandiers Cave, earliest evidence of hide and fur working for clothing (iScience)
+      url: https://doi.org/10.1016/j.isci.2021.102988
 
 - id: art-symbolic
   name: Symbolic art and ornament
@@ -1505,8 +1505,8 @@
   sources:
     - title: Radivojevic et al. 2010, On the origins of extractive metallurgy (Journal of Archaeological Science)
       url: https://doi.org/10.1016/j.jas.2010.06.012
-    - title: Copper metallurgy, history (Wikipedia)
-      url: https://en.wikipedia.org/wiki/Copper_Age
+    - title: Chalcolithic, the Copper Age (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Chalcolithic
 
 - id: plow
   name: Plow
@@ -1566,8 +1566,8 @@
       outcome: independent
       note: Outrigger and double-hulled canoes settled the Pacific, reaching Hawaii and New Zealand by about 1300 CE.
   sources:
-    - title: Sailing, history (Wikipedia)
-      url: https://en.wikipedia.org/wiki/History_of_sailing
+    - title: Maritime history (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Maritime_history
     - title: Austronesian peoples, voyaging (Wikipedia)
       url: https://en.wikipedia.org/wiki/Austronesian_peoples
 
@@ -1781,7 +1781,7 @@
       note: Arsenical and later tin bronzes, used widely under the Inca.
   sources:
     - title: Radivojevic et al. 2013, Tainted ores and the rise of tin bronzes in Eurasia (Antiquity)
-      url: https://doi.org/10.1017/S0003598X00049553
+      url: https://doi.org/10.1017/S0003598X0004984X
     - title: Bronze Age (Wikipedia)
       url: https://en.wikipedia.org/wiki/Bronze_Age
 
@@ -2744,7 +2744,7 @@
   sources:
     - title: Jiaozi (currency) (Wikipedia)
       url: https://en.wikipedia.org/wiki/Jiaozi_(currency)
-    - title: History of paper money in China (Wikipedia)
+    - title: History of Chinese currency, paper money (Wikipedia)
       url: https://en.wikipedia.org/wiki/History_of_Chinese_currency
 
 - id: movable-type

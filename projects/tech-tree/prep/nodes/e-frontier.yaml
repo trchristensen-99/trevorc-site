@@ -57,8 +57,8 @@
       units and Hinkley Point C is estimated near 46 billion pounds, which is
       why cost, not physics, is the constraint in the West.
   sources:
-    - title: IAEA, Obninsk, the world's first nuclear power plant
-      url: https://www.iaea.org/newscenter/news/the-worlds-first-nuclear-power-plant-celebrates-70-years
+    - title: IAEA Bulletin 16(3), Blokhintsev and Krasin, Building and operation of the first atomic power station (Obninsk, 1974)
+      url: https://www.iaea.org/sites/default/files/publications/magazines/bulletin/bull16-3/16304700712.pdf
     - title: World Nuclear Association, Nuclear Power in the World Today
       url: https://world-nuclear.org/information-library/current-and-future-generation/nuclear-power-in-the-world-today
 
@@ -208,8 +208,8 @@
       outcome: achieved
       note: First working laser, May 16, 1960.
   sources:
-    - title: APS Physics History, Maiman builds first working laser
-      url: https://www.aps.org/publications/apsnews/200305/history.cfm
+    - title: APS Physics History, May 16, 1960, Maiman builds first working laser
+      url: https://www.aps.org/apsnews/2010/05/physics-history
     - title: Nobel Prize in Physics 1964
       url: https://www.nobelprize.org/prizes/physics/1964/summary/
 
@@ -867,8 +867,8 @@
   sources:
     - title: MIT Technology Review, Form Energy (2026 climate tech companies to watch)
       url: https://www.technologyreview.com/2026/10/06/1145020/2026-climate-tech-companies-to-watch-form-energy-iron-batteries/
-    - title: LDES Council, Net-zero power report
-      url: https://www.ldescouncil.com/
+    - title: LDES Council and McKinsey, Net-zero power, long duration energy storage for a renewable grid (2021)
+      url: https://ldescouncil.com/flagship-2021-net-zero-power-report/
 
 - id: shale-fracking
   name: Horizontal drilling and hydraulic fracturing
@@ -910,8 +910,8 @@
   sources:
     - title: Breakthrough Institute, Where the shale gas revolution came from
       url: https://thebreakthrough.org/issues/energy/where-the-shale-gas-revolution-came-from
-    - title: US EIA, Hydraulic fracturing accounts for most US oil and gas production
-      url: https://www.eia.gov/todayinenergy/detail.php?id=26112
+    - title: US EIA, Hydraulic fracturing accounts for about half of current US crude oil production (2016)
+      url: https://www.eia.gov/todayinenergy/detail.php?id=25372
 
 - id: green-hydrogen
   name: Green hydrogen from electrolysis
@@ -1200,7 +1200,7 @@
   sources:
     - title: NASA, TIROS
       url: https://science.nasa.gov/mission/tiros/
-    - title: USGS, Landsat history
+    - title: USGS, Landsat 1
       url: https://www.usgs.gov/landsat-missions/landsat-1
 
 - id: human-spaceflight
@@ -2033,11 +2033,13 @@
       crash its price. Depends on cheap launch and a space economy that needs
       local water.
     sources:
-      - title: The Space Review, What happened to asteroid mining?
-        url: https://www.thespacereview.com/article/3896/1
+      - title: The Space Review, The asteroid mining bubble has burst (2019)
+        url: https://www.thespacereview.com/article/3633/1
   sources:
-    - title: AstroForge, Odin mission
+    - title: AstroForge, company site
       url: https://www.astroforge.com/
+    - title: The Space Review, The new wave of asteroid mining ventures (2025, includes the Odin mission)
+      url: https://www.thespacereview.com/article/4955/1
 
 - id: orbital-manufacturing
   name: In-space manufacturing
@@ -2179,8 +2181,8 @@
   sources:
     - title: CERN, The Higgs boson
       url: https://home.cern/science/physics/higgs-boson
-    - title: CERN, LHC facts and figures
-      url: https://home.cern/resources/faqs/facts-and-figures-about-lhc
+    - title: CERN, The Large Hadron Collider (facts and figures)
+      url: https://home.cern/science/accelerators/large-hadron-collider
 
 - id: gravitational-wave-detection
   name: Gravitational-wave detection
@@ -2286,7 +2288,7 @@
       outcome: achieved
       note: Estimated 1.5 to 4.5 C of warming per CO2 doubling.
   sources:
-    - title: NOAA, The Keeling Curve
+    - title: NOAA Global Monitoring Laboratory, Trends in atmospheric CO2 (Mauna Loa record)
       url: https://gml.noaa.gov/ccgg/trends/
     - title: Nobel Prize in Physics 2021
       url: https://www.nobelprize.org/prizes/physics/2021/summary/
@@ -2357,8 +2359,8 @@
   sources:
     - title: de Havilland Comet, Wikipedia
       url: https://en.wikipedia.org/wiki/De_Havilland_Comet
-    - title: IATA, global air passenger outlook
-      url: https://www.iata.org/en/publications/economics/
+    - title: IATA, Global Outlook for Air Transport (December 2025, about 5 billion passengers in 2025)
+      url: https://www.iata.org/en/publications/economics/reports/global-outlook-for-air-transport-december-2025/
 
 - id: concorde
   name: Supersonic airliner
@@ -2744,13 +2746,13 @@
       had little experimental work. AI protein design (2024 Nobel) speeds parts
       design, not assembly. Pure judgment; the range is very wide.
     sources:
-      - title: Chemical and Engineering News, Drexler and Smalley debate (2003)
-        url: https://pubsapp.acs.org/cen/coverstory/8148/8148counterpoint.html
+      - title: Chemical and Engineering News 81(48), Drexler and Smalley make the case for and against molecular assemblers (2003)
+        url: https://doi.org/10.1021/cen-v081n048.p037
       - title: Nobel Prize in Chemistry 2016
         url: https://www.nobelprize.org/prizes/chemistry/2016/summary/
   sources:
     - title: Feynman 1959, There's Plenty of Room at the Bottom
-      url: https://web.pa.msu.edu/people/yang/RFeynman_plentySpace.pdf
+      url: https://calteches.library.caltech.edu/1976/1/1960Bottom.pdf
 
 # ------------------------------------------------ ENVIRONMENT AND AGRICULTURE
 
@@ -3025,8 +3027,8 @@
   effort:
     note: Draws down aquifers such as the Ogallala faster than they recharge.
   sources:
-    - title: Smithsonian, How center-pivot irrigation changed the landscape
-      url: https://www.smithsonianmag.com/innovation/the-inventor-of-center-pivot-irrigation-180967486/
+    - title: Smithsonian, How center pivot irrigation brought the Dust Bowl back to life
+      url: https://www.smithsonianmag.com/innovation/how-center-pivot-irrigation-brought-dust-bowl-back-to-life-180970243/
 
 - id: drip-irrigation
   name: Drip irrigation
@@ -3155,8 +3157,8 @@
       of researchers' time; a 2007 US survey put administrative work at about
       42 percent.
   sources:
-    - title: NSF, Science, the Endless Frontier
-      url: https://www.nsf.gov/about/history/vbush1945.htm
+    - title: Bush 1945, Science, the Endless Frontier (GPO GovInfo full text)
+      url: https://www.govinfo.gov/content/pkg/GOVPUB-PR32_400-e7966ee70a4f7b47f862431c9776f727/html/GOVPUB-PR32_400-e7966ee70a4f7b47f862431c9776f727.htm
     - title: NSF, National Center for Science and Engineering Statistics
       url: https://ncses.nsf.gov/
 

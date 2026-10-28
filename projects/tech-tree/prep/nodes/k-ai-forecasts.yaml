@@ -1,0 +1,279 @@
+# AI forecast milestones: thresholds on the AI benchmark, revenue and
+# compute metrics in metrics/*.yaml that mean something in practice. Those
+# already crossed carry the year from the data (the build would round
+# fractional years up). Saturating benchmarks get an explicit window, since
+# a straight-line trend is a poor guide near 100 percent. The METR time
+# horizon milestones (ai-horizon-*) are in h-milestones.yaml; links from
+# these to the capability nodes are in links-ai-forecasts.yaml.
+
+# ------------------------------------------------------------------ coding
+
+- id: swe-bench-verified-50
+  name: "AI fixes half of a set of real GitHub issues"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 3
+  threshold: { metric: swe-bench-verified, value: 50, label: "50%" }
+  date: 2024
+  status: achieved
+  summary: >-
+    An AI agent resolving half of SWE-bench Verified, 500 real bug reports
+    and feature requests from open-source Python projects, graded by the
+    projects' own tests. OpenHands, an agent built on Claude 3.5 Sonnet,
+    reached 53 percent in October 2024. In practice: AI could take a well-described ticket in an
+    unfamiliar codebase and often close it unaided.
+  requires: [large-language-models]
+  helped_by: [ai-coding-assistants, ai-agents]
+
+- id: swe-bench-verified-95
+  name: "SWE-bench Verified saturated (95%)"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 2
+  threshold: { metric: swe-bench-verified, value: 95, label: "95%" }
+  date: 2026
+  status: achieved
+  summary: >-
+    AI resolving 95 percent of SWE-bench Verified, about all that is left
+    once flawed and ambiguous tasks are allowed for. Anthropic reported 95.5
+    for Claude Mythos 5 (June 2026) and Vals.ai measured 97.0 for Claude
+    Opus 5 independently. In practice: routine, well-specified fixes in
+    real codebases became something AI does reliably, and the benchmark
+    stopped separating models, so labs moved to harder ones such as
+    SWE-bench Pro.
+  requires: [swe-bench-verified-50, reasoning-models]
+  helped_by: [ai-agents]
+
+# ---------------------------------------------------------- computer use
+
+- id: osworld-human-level
+  name: "AI matches people at everyday computer tasks (OSWorld)"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 2
+  threshold: { metric: osworld-score, value: 72.36, label: "human 72%" }
+  date: 2025
+  status: achieved
+  summary: >-
+    An AI agent completing as many of OSWorld's 369 tasks on a real desktop
+    (spreadsheets, documents, browsers, file management) as the people
+    tested, 72.36 percent. A best-of-10 agent system passed it in December
+    2025 and single models in 2026. In practice: AI can operate ordinary
+    software through the screen, mouse and keyboard, so it is not limited
+    to tools with an API.
+  requires: [multimodal-models]
+  helped_by: [ai-agents, reasoning-models]
+
+# ------------------------------------------------------------------- math
+
+- id: frontiermath-50
+  name: "AI solves half of FrontierMath (tiers 1-3)"
+  kind: milestone
+  fields: [math, computing]
+  track: logic
+  tier: 3
+  threshold: { metric: frontiermath-score, value: 50, label: "50%" }
+  date: 2025
+  status: achieved
+  summary: >-
+    AI solving half of FrontierMath's tiers 1 to 3, unpublished problems
+    from advanced undergraduate to early research level. GPT-5 did it in August 2025 on Epoch AI's
+    revised version 2 (on the original version, GPT-5.4 Pro reached 50 in
+    March 2026). In practice: AI became useful for the routine but hard
+    calculations and arguments inside research mathematics.
+  requires: [reasoning-models]
+  helped_by: [ai-mathematics]
+
+- id: frontiermath-tier4-50
+  name: "AI solves half of FrontierMath's research tier"
+  kind: milestone
+  fields: [math, computing]
+  track: logic
+  tier: 3
+  threshold: { metric: frontiermath-tier4-score, value: 50, label: "50%" }
+  date: 2026
+  status: achieved
+  summary: >-
+    AI solving half of FrontierMath tier 4, research-level problems written
+    by mathematicians. GPT-5.4 Pro reached
+    58.5 percent in March 2026 on Epoch AI's revised version 2 (on the
+    original version the best was 47.9 in May 2026, against an AI Digest
+    survey median of 62 for the end of 2026). In practice: AI could solve
+    many problems that would be a project for a professional mathematician.
+  requires: [frontiermath-50]
+
+- id: frontiermath-tier4-solved
+  name: "FrontierMath solved"
+  kind: milestone
+  fields: [math, computing]
+  track: logic
+  tier: 2
+  threshold: { metric: frontiermath-tier4-score, value: 95, label: "95%" }
+  date: 2026
+  status: achieved
+  summary: >-
+    AI solving essentially all of FrontierMath's research tier: GPT-6 Astra
+    scored 97.6 percent in September 2026 and GPT-6.1 Sol all 41 problems.
+    Epoch AI had written in 2025 that the benchmark "could be solved as
+    early as 2027". In practice: on hard math problems with checkable
+    answers, AI matches strong research mathematicians; the open question
+    moved to proving new theorems and choosing what to prove.
+  requires: [frontiermath-tier4-50]
+  helped_by: [ai-discovered-results]
+
+# ------------------------------------------------------------- knowledge
+
+- id: hle-50
+  name: "AI passes half of Humanity's Last Exam"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 3
+  threshold: { metric: hle-score, value: 50, label: "50%" }
+  date: 2026
+  status: achieved
+  summary: >-
+    AI answering half of Humanity's Last Exam, 2,500 expert-written
+    questions at the edge of knowledge in dozens of fields, without tools,
+    as run independently by Scale AI. GPT-6 Astra scored 54.8 percent in
+    September 2026 (Anthropic reported 56.8 for Claude Mythos Preview in
+    April). In practice: AI answers many questions only a specialist in
+    that narrow area could.
+  requires: [reasoning-models]
+  helped_by: [multimodal-models]
+
+- id: hle-80
+  name: "Humanity's Last Exam saturated (80%)"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 2
+  threshold: { metric: hle-score, value: 80, label: "80%" }
+  date: { window: [2027, 2031], likely: 2028 }
+  summary: >-
+    AI answering 80 percent of Humanity's Last Exam without tools, about as
+    high as the benchmark can go given its answer-key errors. In practice:
+    on closed questions an AI would match the specialist in almost any
+    field, the "last exam" of its name.
+  requires: [hle-50]
+  forecast:
+    note: >-
+      Scale AI's no-tools runs rose about 25 points a year from 2024 to
+      2026, which would reach 80 in late 2027, but gains slow near the top
+      and FutureHouse estimated that 29 percent of the chemistry and biology
+      answers conflict with the literature, so the last points may be
+      unreachable. Polymarket gives 6 percent to 80 or more in 2026;
+      Manifold's thin market on the first year above 80 (any published
+      score, tools allowed) gives 36 percent to 2026 and 43 percent to
+      2027. Labs' own scores with tools were already 68 to 70 in late 2026.
+      Judgment: 2028 for an independent no-tools run, earlier if lab
+      reports count.
+    sources:
+      - title: "Polymarket, Highest score on Humanity's Last Exam in 2026?"
+        url: https://polymarket.com/event/highest-score-on-humanitys-last-exam-in-2026-20260723190142922
+      - title: "Manifold, When will Humanity's Last Exam be saturated? (>80%)"
+        url: https://manifold.markets/jim/when-will-humanitys-last-exam-be-sa
+      - title: FutureHouse, About 30% of Humanity's Last Exam chemistry and biology answers are likely wrong (July 2025)
+        url: https://www.futurehouse.org/research/hle-exam
+
+# ------------------------------------------------------------ real work
+
+- id: remote-labor-index-50
+  name: "AI does half of real freelance projects"
+  kind: milestone
+  fields: [computing, society]
+  track: deep-learning
+  tier: 2
+  threshold: { metric: remote-labor-index, value: 50, label: "50%" }
+  summary: >-
+    AI completing half of the Remote Labor Index, 240 real projects that
+    freelancers were paid to do (design, software, architecture, data
+    analysis; a median of 11.5 hours and $200 each), at a quality a client
+    would accept. The best was 21 percent in September 2026. In practice:
+    for a typical remote freelance job, handing it to an AI would usually
+    work, the clearest sign on any benchmark of AI replacing paid work
+    rather than helping with it.
+  requires: [osworld-human-level, ai-agents]
+  helped_by: [ai-horizon-1-workday, ai-horizon-1-week]
+
+# --------------------------------------------------------------- economy
+
+- id: ai-lab-revenue-100b
+  name: "AI labs earning $100 billion a year"
+  kind: milestone
+  fields: [computing, society]
+  track: deep-learning
+  tier: 3
+  threshold: { metric: ai-lab-revenue, value: 1.0e11, label: "$100B/yr" }
+  date: 2026
+  status: achieved
+  summary: >-
+    OpenAI and Anthropic together selling AI at a rate of $100 billion a
+    year, passed by the third quarter of 2026 (OpenAI $50 billion in
+    September, Anthropic $65 billion in July). Forecasters in the AI Digest
+    survey had put the end of 2026 at $100 billion including xAI. In
+    practice: AI became a large industry in its own right, able to pay for
+    the next rounds of data centers from sales rather than only from
+    investors.
+  requires: [frontier-models]
+  helped_by: [ai-coding-assistants, ai-agents]
+
+- id: ai-lab-revenue-1t
+  name: "AI labs earning $1 trillion a year"
+  kind: milestone
+  fields: [computing, society]
+  track: deep-learning
+  tier: 2
+  threshold: { metric: ai-lab-revenue, value: 1.0e12, label: "$1T/yr" }
+  summary: >-
+    The two leading AI labs selling AI at a rate of a trillion dollars a
+    year, ten times their 2026 level. In practice it would mean AI doing a
+    large share of paid work, since revenue on this scale would most
+    likely come from replacing labor rather than selling software seats. Epoch AI's
+    3-times-a-year trend reaches it in late 2028; the Forecasting Research
+    Institute's superforecasters expected $770 billion only by 2040.
+  requires: [ai-lab-revenue-100b]
+  helped_by: [remote-labor-index-50, superhuman-coder]
+  sources:
+    - title: Forecasting Research Institute, LEAP wave 11 report
+      url: https://leap.forecastingresearch.org/reports/wave11
+    - title: "Epoch AI, What will AI look like in 2030? (September 2025)"
+      url: https://epoch.ai/blog/what-will-ai-look-like-in-2030
+
+# --------------------------------------------------------------- compute
+
+- id: ai-training-1e28-flop
+  name: "AI model trained with 10^28 FLOP"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 3
+  threshold: { metric: ai-training-compute, value: 1.0e28, label: "1e28 FLOP" }
+  summary: >-
+    A model trained with ten times GPT-6 Astra's estimated compute and about
+    500 times GPT-4's. In practice it needs a gigawatt-scale data center
+    campus; Epoch AI put the power limit for 2030 at 1e28 to 3e29 FLOP.
+  requires: [ai-training-1e27-flop]
+  helped_by: [ai-datacenters, ai-lab-revenue-100b]
+
+- id: ai-training-1e29-flop
+  name: "AI model trained with 10^29 FLOP"
+  kind: milestone
+  fields: [computing]
+  track: deep-learning
+  tier: 3
+  threshold: { metric: ai-training-compute, value: 1.0e29, label: "1e29 FLOP" }
+  summary: >-
+    A model trained with 100 times GPT-6 Astra's estimated compute, the
+    scale Epoch AI expected by 2030 (it judged about 2e29 feasible). In
+    practice it needs gigawatts of power and clusters costing over $100
+    billion, so it tests whether money and electricity, not ideas,
+    set the pace of AI.
+  requires: [ai-training-1e28-flop]
+  helped_by: [ai-lab-revenue-100b]
+  sources:
+    - title: Epoch AI, Can AI scaling continue through 2030? (August 2024)
+      url: https://epoch.ai/blog/can-ai-scaling-continue-through-2030

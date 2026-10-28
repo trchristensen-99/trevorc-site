@@ -1,0 +1,31 @@
+id: frontiermath-tier4-score
+name: Best score on FrontierMath tier 4, research-level problems (Epoch AI's runs, version 2)
+short: FrontierMath tier 4
+unit: percent solved
+better: higher
+log: false
+field: math
+points:                           # [model release date as fractional year, best score so far]; model, release date
+  - [2025.082, 0.0]    # o3-mini (high), 2025-01-31
+  - [2025.288, 4.88]   # o4-mini (high), 2025-04-16
+  - [2025.597, 21.95]  # GPT-5 (high), 2025-08-07
+  - [2025.942, 46.0]   # GPT-5.2 Pro (xhigh), 2025-12-11
+  - [2026.173, 58.54]  # GPT-5.4 Pro (xhigh), 2026-03-05
+  - [2026.307, 78.05]  # GPT-5.5 Pro (xhigh), 2026-04-23
+  - [2026.436, 90.2]   # Claude Fable 5 (max), 2026-06-09
+  - [2026.671, 97.6]   # GPT-6 Astra (high), 2026-09-03
+  - [2026.742, 100.0]  # GPT-6.1 Sol (max), 2026-09-29
+source:
+  title: "Epoch AI, Benchmarking Hub (frontiermath_tier_4_v2.csv in benchmark_data.zip)"
+  url: https://epoch.ai/benchmarks
+license: CC BY 4.0
+note: >-
+  Tier 4 is a small set of research-level problems written by
+  mathematicians (48 in version 1, 41 in version 2 of June 2026). Values are the best score Epoch AI measured for any model
+  released by each date (CSV downloaded 2026-10-28); GPT-6.1 Sol solved
+  all 41. On version 1, still used for the AI Digest 2026 survey, the
+  best score was 31.3 percent at the end of 2025 and 47.9 by May 2026;
+  the survey's median for the end of 2026 was 62 percent, and a Manifold
+  market on the end-of-2026 score resolved at 90 percent or more in
+  September 2026, so forecasters were far too low. With so few problems,
+  each is worth about 2.4 points, and the series is now saturated.

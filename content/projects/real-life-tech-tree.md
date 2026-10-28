@@ -52,7 +52,7 @@ The shapes mark kinds of technology:
 
 "Social technologies" count when they're reusable methods or organizations that, once they exist, can be copied and make other things possible.
 
-Zoomed out, you see the landmarks and the main links between them. More appears as you zoom in, in order of importance (how much depends on each technology), down to individual methods and rival efforts. The **Detail** slider shows more or fewer at every zoom, up to everything at once, and **Always show the frontier** keeps every unachieved technology on screen. Clicking a technology lights up everything it needs (orange) and everything it led to (teal). This is the view the [Battelle Memorial Institute](https://www.battelle.org/) drew by hand in 1973 for the video tape recorder: decades of separate work in magnetics, electronics and control theory converging on one device.
+Zoomed out, you see the landmarks and the main links between them. More appears as you zoom in, in order of importance (how much depends on each technology), down to individual methods and rival efforts. The **Detail** slider shows more or fewer at every zoom, from none at the far left to everything at the far right, and **Always show the frontier** keeps every unachieved technology on screen. Clicking a technology lights up everything it needs (orange) and everything it led to (teal). This is the view the [Battelle Memorial Institute](https://www.battelle.org/) drew by hand in 1973 for the video tape recorder: decades of separate work in magnetics, electronics and control theory converging on one device.
 
 Half-filled shapes are being worked on, and dashed ones haven't happened yet. Their bars show my best estimate of the window they'll fall in, drawn from trends and forecasts that are cited for each one. Each one also says what would count as achieving it, concretely enough to check: not "automated AI research" but an AI system that does the work of a frontier lab's best researchers, many times over, faster and cheaper. **The frontier** lists everything not yet achieved and who around the world is working on it.
 
@@ -68,7 +68,17 @@ Some lines of technology have a number that tracks them:
 
 For many technologies, how cheap or how good matters more than whether something is possible at all: solar cells worked in 1954 but changed the world only once they got cheap. So the tree tracks 23 measured series, and where there's a long enough one it fits a trend and reports how fast it doubles or halves. For solar, which has production data, it also fits a learning curve: how much the price falls each time cumulative production doubles.
 
-**Trend lines** shows any of these series as strips along the bottom, on the same time axis as the tree. **Milestones** (flags) are thresholds on them that people actually talk about: the $1,000 genome, solar modules under 20 cents a watt, battery packs under $100 a kilowatt-hour, AI agents that can do a day's or a month's work. A milestone already passed is dated from the data; one not yet reached is dated by carrying the trend forward, unless there's a good reason to think the trend will bend, which its note explains. Nick Land's line that "prices encode distributed SF narratives" is the idea behind treating them as evidence: a falling price is a bet that the future has already started.
+**Trend lines** shows any of these series along the bottom, on the same time axis as the tree, as strips or one combined chart. **Milestones** (flags) are thresholds on them that people actually talk about: the $1,000 genome, solar modules under 20 cents a watt, battery packs under $100 a kilowatt-hour, AI agents that can do a day's or a month's work. A milestone already passed is dated from the data; one not yet reached is dated by carrying the trend forward, unless there's a good reason to think the trend will bend, which its note explains. No window opens sooner than the series' fastest past improvement could get there from where it stands now.
+
+## Forecasting
+
+Prices and measured trends are one kind of forecast, but not the only one. Where others have published forecasts for a series, the tree draws them as dotted lines beside the trend, with their bands, and every milestone on that series reports when each forecast reaches it:
+- official projections, like the UN's for life expectancy;
+- surveys of forecasters and researchers, like the AI Digest's yearly survey of where AI benchmarks will be;
+- markets and forecasting platforms, like Metaculus, Manifold and Kalshi;
+- models, like the AI Futures Project's timelines model.
+
+Some forecasts are linked to the tree itself. Life expectancy both depends on and tests the tree's medical forecasts, so one lifespan scenario assumes rejuvenation therapies arrive at the tree's own estimate and spread the way past treatments did. It shows how much that would add, and that a one-time reset falls well short of "longevity escape velocity". For AI, where surveys forecast benchmark scores rather than capabilities, the tree turns the forecasts into milestones (a score on a benchmark, or the length of task an AI agent can finish) and links them to the capabilities they stand in for, like an AI that codes better than a lab's best engineers. Nick Land's line that "prices encode distributed SF narratives" is the idea behind treating them as evidence: a falling price is a bet that the future has already started.
 
 Where the sources allow, each technology also records roughly what it took in years, people and money. The Manhattan Project took about 130,000 people; the Human Genome Project took 13 years and about $3 billion.
 
@@ -79,11 +89,12 @@ Every technology lists its sources. The metrics come from:
 - [Epoch AI](https://epoch.ai/) (CC BY);
 - [METR](https://metr.org/) (the time horizons of AI agents);
 - [IRENA](https://www.irena.org/), BloombergNEF and CSIS (energy and launch costs);
+- the [UN World Population Prospects](https://population.un.org/wpp/) and the [Human Mortality Database](https://www.mortality.org/) (lifespan);
 - the [National Human Genome Research Institute](https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data) (public domain).
 
-The forecasts draw on [Metaculus](https://www.metaculus.com/), expert surveys and the trends above. The structure and the judgment calls are mine; corrections and additions are welcome through the [contact page](../contact).
+The forecasts draw on [Metaculus](https://www.metaculus.com/), the [AI Digest](https://theaidigest.org/) surveys, the [AI Futures Project](https://ai-futures.org/), expert surveys and the trends above. The structure and the judgment calls are mine; corrections and additions are welcome through the [contact page](../contact).
 
 ## Changelog
 
-- **28 October 2026:** tracks within each field; a detail control and a frontier view; concrete criteria, intermediate steps and alternative routes for future technologies; 34 milestones and trend lines for 23 measured series; about 200 more links, plus missing steps like carts, gears and the bicycle between the wheel and the car; faster drawing.
+- **28 October 2026:** tracks within each field; a detail control and a frontier view; concrete criteria, intermediate steps and alternative routes for future technologies; 34 milestones and trend lines for 23 measured series; about 200 more links, plus missing steps like carts, gears and the bicycle between the wheel and the car; faster drawing. Later the same day: forecasts from projections, surveys, markets and models drawn beside the trends; lifespan and AI benchmark series; every future window opens no sooner than it could be reached; sources checked; a detail slider from none to everything; trend lines get their own room, with compact and combined layouts; BC and AD.
 - **27 October 2026:** first version, with landmark technologies across all of history and detailed histories of DNA sequencing and AI.
