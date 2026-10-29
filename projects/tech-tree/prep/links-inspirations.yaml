@@ -1,0 +1,13 @@
+# Links for the steps added from the inspiration trees (nodes/m-inspirations.yaml).
+- id: senolytics-approved
+  requires: [senescent-cell-clearance]
+- id: reversible-suspended-animation
+  requires: [small-mammal-cryorevival]
+- id: whole-brain-emulation
+  helped_by: [aldehyde-stabilized-cryopreservation]
+- id: aging-reversal
+  helped_by: [hallmarks-of-aging]
+- id: aging-drug-approved
+  helped_by: [hallmarks-of-aging]
+- id: longevity-escape-velocity
+  helped_by: [progressive-brain-replacement]

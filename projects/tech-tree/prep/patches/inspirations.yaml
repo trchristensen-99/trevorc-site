@@ -1,0 +1,57 @@
+# Steps and open problems (checklist) and what else a technology would help
+# with (also_helps), following the Foresight Longevity Tech Tree's
+# challenges and off-target applications and Antimortality's checklists.
+
+- id: aging-reversal
+  checklist:
+    - node: hallmarks-of-aging
+    - node: mouse-lifespan-drug
+    - node: senescent-cell-clearance
+    - node: epigenetic-aging-clocks
+    - node: partial-reprogramming
+    - node: aging-biomarker-endpoint
+    - node: senolytics-approved
+    - node: reprogramming-human-trial
+    - node: aging-drug-approved
+    - node: systemic-reprogramming
+    - step: Deliver rejuvenating therapies to every tissue, including across the blood-brain barrier
+    - step: Rejuvenate cells without them losing their identity or turning cancerous
+- id: systemic-reprogramming
+  also_helps: [Alzheimer's and other dementias, Parkinson's disease, osteoarthritis, muscle loss (sarcopenia), spinal cord injury, bone and ovarian regeneration]
+- id: senolytics-approved
+  also_helps: [cancer, fibrosis, neurodegeneration]
+- id: reversible-suspended-animation
+  also_helps: ["emergency medicine: pausing trauma or cardiac arrest patients until they can be treated", long spaceflight]
+  checklist:
+    - node: cryonics
+      step: Store people at liquid-nitrogen temperature (not yet reversibly)
+    - node: organ-vitrification
+    - step: Cryoprotectants that vitrify whole organs without toxic damage
+      who: 21st Century Medicine, ATP-Bio
+    - step: Get cryoprotectant evenly into every tissue, including muscle, fat and the brain behind the blood-brain barrier
+    - step: Rewarm a large body fast and evenly enough to avoid ice and cracking
+      note: Nanowarming with iron oxide particles works for rat kidneys (2023).
+    - node: organ-banking
+    - node: small-mammal-cryorevival
+    - step: Revive an animal brain from cryopreservation with its memories intact
+- id: organ-banking
+  also_helps: ["organ transplants: organs matched and shipped worldwide instead of used within hours, and fewer thrown away"]
+- id: whole-brain-emulation
+  also_helps: [neuroscience and brain disease, AI built on how brains work]
+  checklist:
+    - node: worm-connectome
+    - node: fly-connectome
+    - node: mouse-cortex-connectome
+    - node: aldehyde-stabilized-cryopreservation
+    - node: animal-brain-emulation
+    - node: whole-mouse-connectome
+    - node: mouse-brain-emulation
+    - node: human-connectome
+    - step: Infer each synapse's strength and each neuron's behavior from the scan, or measure them alongside it
+- id: lab-grown-solid-organ
+  checklist:
+    - node: engineered-tissue-implants
+    - node: organoids
+    - node: induced-pluripotent-stem-cells
+    - step: Grow branching blood vessels through thick tissue so its inner cells survive
+    - step: Make billions of cells of each of an organ's cell types, cheaply and safely

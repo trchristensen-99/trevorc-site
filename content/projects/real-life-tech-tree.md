@@ -58,6 +58,8 @@ Half-filled shapes are being worked on, and dashed ones haven't happened yet. Th
 
 Big goals rarely have a single path. Where there are genuinely different ways to get somewhere, they're shown as routes, any one of which would do. Rejuvenation could come from repairing the body in place, replacing its worn parts, or pausing it until either is possible. Fusion power could come from tokamaks, stellarators, lasers or magnetized targets. Selecting one colors each route's prerequisites.
 
+The biggest goals also list their steps and open problems, ticked off as they're solved, and what else they'd help with along the way. Reversible cryopreservation, for example, has to solve cryoprotectant toxicity, getting protectant into every tissue, and rewarming a whole body evenly. Clicking **Suggest a change**, in the side panel or under any technology, opens a GitHub issue with a template.
+
 ## Measuring progress
 
 Some lines of technology have a number that tracks them:
@@ -92,6 +94,20 @@ How much work does a technology take, and how much of the world's resources? **W
 
 **Resources.** Each resource now has its world production, reserves, leading producers and processors, recycling rate and demand outlook, mostly from the USGS's 2026 summaries. From these the tree scores supply risk: how concentrated production or processing is among countries, how many years reserves last, how little is recycled, and how fast demand is growing. Technologies record how much they need (about 9 kg of lithium and 66 kg of graphite in a typical electric car's battery; solar panels take 17% of the world's silver) and take the rating of their riskiest resource. Lithium, graphite, rare earths, helium, gallium and germanium rate very high. Oil rates low, because many countries produce it; the price of oil is a political problem more than a supply one. **Display** can color the whole tree by supply risk or by what each technology took.
 
+## Inspirations
+
+Two earlier maps inspired this one, and copies of both are kept [on their own page](/apps/tech-tree/inspirations/), since neither is online at its original address any more:
+- **The [Foresight Institute](https://foresight.org/)'s tech trees** (2022 to 2023) cover longevity, neurotechnology, nanotechnology, space and "intelligent cooperation". Each is a graph of goals, technologies, open challenges, spillover applications, and the labs and companies working on each.
+- **Antimortality** (2022), by Kai Micah Mills, lays out three paths to much longer lives (prevention by preservation, extension by curing aging, and ascension by enhancement and uploading), each a checklist of concrete problems with the groups working on them.
+
+This tree borrows several things from them:
+- their checklists of steps and open problems;
+- Foresight's spillover applications ("would also help with");
+- steps that were missing here, such as the hallmarks of aging, clearing senescent cells in mice, brain preservation for later scanning, reviving a cryopreserved small mammal, and replacing the aging brain piece by piece;
+- Foresight's habit of inviting edits.
+
+What it adds is all of technology rather than one field, a time axis, sourced dates and windows, and the models above.
+
 ## Sources
 
 Every technology lists its sources. The metrics come from:
@@ -107,6 +123,6 @@ The forecasts draw on [Metaculus](https://www.metaculus.com/), the [AI Digest](h
 
 ## Changelog
 
-- **29 October 2026:** display options (color by field, status or kind; links; labels; node size; theme; date bars, track names and eras); trend lines no longer cover the tree; life expectancy at birth and at 65 by country income group, with UN and IHME projections. Later the same day: **What it takes**, with effort figures for about 200 technologies, models of effort and of the time after prerequisites, outside-view estimates for the frontier, and world supply data and supply-risk ratings for the resources, with how much of each technology needs; color the tree by supply risk or by effort.
+- **29 October 2026:** display options (color by field, status or kind; links; labels; node size; theme; date bars, track names and eras); trend lines no longer cover the tree; life expectancy at birth and at 65 by country income group, with UN and IHME projections. Later the same day: **What it takes**, with effort figures for about 200 technologies, models of effort and of the time after prerequisites, outside-view estimates for the frontier, and world supply data and supply-risk ratings for the resources, with how much of each technology needs; color the tree by supply risk or by effort. Then: copies of the Foresight Institute tech trees and Antimortality on an [inspirations page](/apps/tech-tree/inspirations/); steps and open problems for the biggest goals, with what else they'd help with; five new steps in longevity and preservation; a way to suggest changes.
 - **28 October 2026:** tracks within each field; a detail control and a frontier view; concrete criteria, intermediate steps and alternative routes for future technologies; 34 milestones and trend lines for 23 measured series; about 200 more links, plus missing steps like carts, gears and the bicycle between the wheel and the car; faster drawing. Later the same day: forecasts from projections, surveys, markets and models drawn beside the trends; lifespan and AI benchmark series; every future window opens no sooner than it could be reached; sources checked; a detail slider from none to everything; trend lines get their own room, with compact and combined layouts; BC and AD.
 - **27 October 2026:** first version, with landmark technologies across all of history and detailed histories of DNA sequencing and AI.

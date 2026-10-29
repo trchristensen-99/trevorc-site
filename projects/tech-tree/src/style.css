@@ -166,3 +166,10 @@ body.folded.controls-open .controls { display: grid; }
 @media (max-width: 720px) { .info.wide { width: auto; } }
 .chart.effort a { cursor: pointer; }
 .chart.effort a:hover > * { stroke: var(--ink); stroke-width: 1.6; }
+.info p.note .bar { display: inline-block; vertical-align: middle; }
+.info ul.checklist { list-style: none; padding: 0; display: grid; gap: 5px; }
+.info ul.checklist li { display: flex; gap: 8px; align-items: baseline; }
+.info ul.checklist .box { flex: none; width: 13px; height: 13px; border: 1.4px solid var(--muted); border-radius: 3px; font-size: 10px; line-height: 11px; text-align: center; transform: translateY(2px); }
+.info ul.checklist li.done .box { background: var(--accent); border-color: var(--accent); color: #fff; }
+.hint.links { margin-top: 4px; }
+.hint.links a, .info .suggest a { color: var(--accent); }

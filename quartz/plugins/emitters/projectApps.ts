@@ -16,6 +16,8 @@
 //   src/main.ts      entry point; CSS it imports is emitted as main.css
 //   index.html       app shell, copied as-is
 //   data/**          prebuilt data files, copied as-is
+//   static/**        other files served as-is under the app (e.g. pages
+//                    that go with it), at /apps/<name>/<path>
 //   vendor.json      optional {"name": ["pkg/dist/file.mjs", ...]}: library
 //                    files copied unbundled from node_modules to
 //                    vendor/<name>/, for libraries that load their own
@@ -99,6 +101,8 @@ export const ProjectApps: QuartzEmitterPlugin = () => ({
       }
       const data = path.join(dir, "data")
       if (fs.existsSync(data)) yield* copyTree(data, path.join(out, "data"))
+      const stat = path.join(dir, "static")
+      if (fs.existsSync(stat)) yield* copyTree(stat, out)
     }
   },
   async *partialEmit() {},

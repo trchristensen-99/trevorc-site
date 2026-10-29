@@ -97,6 +97,9 @@ function sourcesHTML(sources: Source[] | undefined, title = "Sources") {
   return `<h3>${title}</h3><ul class="sources">${sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></li>`).join("")}</ul>`
 }
 
+// Suggestions go to the site's GitHub issues, with a template.
+const SUGGEST = "https://github.com/trchristensen-99/trevorc-site/issues/new?template=tech-tree.md"
+
 const SCENARIO_COLORS = ["#7b5ea7", "#d0587e", "#2a9d8f", "#c9772a", "#2f8fb0", "#8aa33a"]
 const SCENARIO_KIND: Record<string, string> = {
   trend: "trend",
@@ -497,6 +500,15 @@ async function main() {
     return `<h3>Supply</h3>${c ? `<p>${badge(c.rating)} supply risk</p>` : ""}${parts}${rows.length ? `<dl>${rows.join("")}</dl>` : ""}${s.note ? `<p class="note">${esc(s.note)}</p>` : ""}${sourcesHTML(s.sources, "Supply sources")}`
   }
 
+  // Steps toward it, done and not; the open ones are its open problems.
+  const checklistHTML = (d: Details) => {
+    const c = d.checklist
+    if (!c?.length) return ""
+    const done = c.filter((x) => x.done != null).length
+    return `<h3>Steps and open problems</h3><p class="note"><span class="bar"><span style="width:${Math.round((100 * done) / c.length)}%"></span></span> ${done} of ${c.length} done</p><ul class="checklist">${c.map((x) =>
+      `<li class="${x.done != null ? "done" : ""}"><span class="box">${x.done != null ? "✓" : ""}</span><div>${x.node ? `<a href="#n=${esc(x.node)}" data-node="${esc(x.node)}">${esc(x.step)}</a>` : esc(x.step)}${x.done != null ? ` <span class="note">${x.done}</span>` : ""}${x.who ? `<br><span class="note">${esc(x.who)}</span>` : ""}${x.note ? `<br><span class="note">${esc(x.note)}</span>` : ""}</div></li>`).join("")}</ul>`
+  }
+
   const nodeHTML = (n: Node, d: Details) => {
     const into = tree.edges.filter((e) => e.t === n.id)
     const needs = into.filter((e) => e.kind === "requires" && !e.routes).map((e) => e.s)
@@ -542,7 +554,8 @@ async function main() {
       `<dl>${rows.join("")}</dl>` +
       (d.lost ? `<h3>Lost</h3><p>${esc(d.lost)}</p>` : "") +
       (d.note ? `<p class="note">${esc(d.note)}</p>` : "") +
-      routes +
+      routes + checklistHTML(d) +
+      (d.alsoHelps?.length ? `<h3>Would also help with</h3><p>${d.alsoHelps.map(esc).join(", ")}</p>` : "") +
       efforts + effort + outsideView(n, d) +
       (n.kind === "resource" ? supplyHTML(d) : "") +
       (d.forecast?.note ? `<h3>Forecast</h3><p>${esc(d.forecast.note)}</p>${sourcesHTML(d.forecast.sources, "Forecast sources")}` : "") +
@@ -552,7 +565,8 @@ async function main() {
       (helped.length ? `<h3>Helped by</h3><p>${linkList(helped)}</p>` : "") +
       (rivals.length ? `<h3>Competed with</h3><p>${linkList(rivals)}</p>` : "") +
       (n.kind === "resource" && d.usedBy?.length ? usedByHTML(d.usedBy) : led.length ? `<h3>Led to</h3><p>${linkList(led)}</p>` : "") +
-      sourcesHTML(d.sources)
+      sourcesHTML(d.sources) +
+      `<p class="note suggest"><a href="${SUGGEST}&title=${encodeURIComponent(`[tech tree] ${n.name}`)}" target="_blank" rel="noopener">Suggest a change to this</a></p>`
   }
 
   const showMetric = (m: Metric) => {
@@ -591,7 +605,7 @@ async function main() {
       <p>Technologies not yet achieved, by field, with their likely windows and the groups working on them. Tick <em>Always show the frontier</em> to see them all on the tree.</p>` +
       groups.map(({ f, list }) => `<h3><span class="sw" style="background:${f.color}"></span>${esc(f.name)}</h3><ul class="frontier">${list.map((n) => {
         const efforts = d[n.id]?.efforts ?? []
-        return `<li>${link(n.id)} <span class="note">${esc(dateLabel(n.from, n.to, n.at, now, true))}</span>${efforts.length ? `<br><span class="note">${efforts.map((x) => esc(x.who)).slice(0, 5).join(" · ")}${efforts.length > 5 ? " …" : ""}</span>` : ""}</li>`
+        return `<li>${link(n.id)} <span class="note">${esc(dateLabel(n.from, n.to, n.at, now, true))}${n.steps ? `; ${n.steps[0]} of ${n.steps[1]} steps done` : ""}</span>${efforts.length ? `<br><span class="note">${efforts.map((x) => esc(x.who)).slice(0, 5).join(" · ")}${efforts.length > 5 ? " …" : ""}</span>` : ""}</li>`
       }).join("")}</ul>`).join(""), "frontier")
   })
 

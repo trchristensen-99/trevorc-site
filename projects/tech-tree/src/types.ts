@@ -31,6 +31,7 @@ export interface Node {
   trendYear?: number // when the metric's trend reaches the threshold
   scenarioYears?: { id: string; year: number | null }[] // when each forecast does
   routes?: string[]
+  steps?: [number, number] // checklist steps done, of all
   py?: number // log10 of the person-years it took (or has had so far)
   risk?: "low" | "moderate" | "high" | "very high" // supply risk: its own, or its riskiest resource's
 }
@@ -49,6 +50,8 @@ export interface Details {
   supplyCalc?: { rp: number | null; hhi: number | null; procHhi: number | null; parts: Record<string, number>; score: number | null; rating: string; judged: boolean }
   risk?: { rating: string; resource: string }
   resourceUse?: ResourceUse[]
+  checklist?: { step: string; node?: string; done: number | null; who?: string; note?: string }[]
+  alsoHelps?: string[]
   usedBy?: ResourceUse[]
   forecast?: { note?: string; sources?: Source[] }
   lost?: string

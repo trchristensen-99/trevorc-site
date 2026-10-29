@@ -1,0 +1,213 @@
+/**
+  Antimortality Stylesheet
+ */
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #000;
+  color: #F4F4F4;
+  font-family: "Courier New";
+}
+
+body {
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
+
+i {
+  color: #F4F4F4;
+}
+
+.outer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.outer .header {
+  margin-bottom: 50px;
+  text-align: center;
+  line-height: 22px;
+}
+.outer .footer {
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
+.outer .footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+.outer > img {
+  width: 50px;
+  margin: 50px 0 25px 0;
+}
+
+.tree {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 50px 0;
+}
+.tree .branch {
+  width: 450px;
+  margin: 0 50px;
+}
+.tree .branch h1 {
+  margin-bottom: 50px;
+  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: 5px;
+  border-bottom: 2px solid #F4F4F4;
+  padding-bottom: 20px;
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  transition: 2s;
+  flex: 1;
+}
+.node:not(:first-of-type) {
+  margin-top: 50px;
+}
+.node:not(:last-of-type) {
+  margin-bottom: 50px;
+}
+.node:hover {
+  cursor: pointer;
+  filter: brightness(150%);
+  transform: scale(1.05, 1.05);
+  transition: 0.1s;
+}
+.node:hover .node-icon {
+  transform: scale(1.05, 1.05) rotate(45deg);
+  transition: 0.1s;
+}
+.node:hover .node-icon i {
+  color: #ff0000;
+}
+.node:hover h3 {
+  color: #ff0000;
+}
+.node .node-icon {
+  height: 60px;
+  width: 60px;
+  border: 2px solid #F4F4F4;
+  transform: rotate(45deg);
+  background-color: #212121;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 2s;
+}
+.node .node-icon i {
+  transform: rotate(-45deg);
+  font-size: 25px;
+}
+.node .node-body {
+  height: auto;
+  flex: 1;
+  border: 2px solid #F4F4F4;
+  padding: 15px 20px 15px 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: -25px;
+  background-color: #212121;
+}
+.node h3 {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: -3px;
+  margin-bottom: 3px;
+}
+.node p {
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.checkbox-outer {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+}
+.checkbox-outer .checkbox {
+  height: 20px;
+  width: 20px;
+  border: 1px solid #F4F4F4;
+  background-color: #212121;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.checkbox-outer .checkbox i {
+  font-size: 12px;
+  color: #00ff00;
+}
+.checkbox-outer p {
+  font-size: 14px;
+  margin-left: 10px;
+  flex: 1;
+  letter-spacing: 0.5px;
+}
+
+.project {
+  height: 20px;
+  display: inline-flex;
+  color: #F4F4F4;
+  text-decoration: none;
+  font-size: 14px;
+  text-transform: uppercase;
+  margin-top: 15px;
+  background-color: #212121;
+  border: 1px solid #F4F4F4;
+  margin-right: 15px;
+  align-items: center;
+  padding: 0 5px;
+  transition: 2s;
+}
+.project:hover {
+  cursor: pointer;
+  transform: scale(1.05, 1.05);
+  transition: 0.1s;
+}
+.project:hover p {
+  color: #ff0000;
+}
+.project img {
+  height: 12px;
+  width: 12px;
+}
+.project p {
+  margin-left: 5px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+@media screen and (max-width: 1600px) {
+  .tree .branch {
+    width: 375px;
+    margin: 0 25px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .tree {
+    flex-direction: column;
+  }
+  .tree .branch {
+    width: 90%;
+    margin: 50px 0 0 5%;
+  }
+  .outer > p {
+    text-align: center;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}

@@ -1,0 +1,154 @@
+# Steps the Foresight Longevity Tech Tree and Antimortality map that this
+# tree was missing (see the inspirations page).
+
+- id: hallmarks-of-aging
+  name: The hallmarks of aging
+  kind: discovery
+  fields: [medicine, biology]
+  track: longevity
+  date: 2013
+  status: achieved
+  tier: 2
+  summary: >-
+    A shared list of what goes wrong as bodies age, so each cause can be measured and targeted. López-Otín and
+    colleagues named nine hallmarks in 2013, from genomic instability and telomere loss to cellular senescence
+    and stem cell exhaustion, and expanded the list to twelve in 2023. Aubrey de Grey's SENS program had
+    proposed seven categories of damage to repair in 2002.
+  requires: [dna-double-helix, cell-culture]
+  helped_by: [mouse-lifespan-drug]
+  efforts:
+    - who: Carlos López-Otín, Maria Blasco, Linda Partridge, Manuel Serrano and Guido Kroemer
+      where: Spain, UK, France
+      when: 2013
+      outcome: achieved
+      note: Updated in 2023 to twelve hallmarks, adding disabled autophagy, chronic inflammation and dysbiosis.
+    - who: Aubrey de Grey (SENS)
+      where: UK, USA
+      when: 2002
+      outcome: independent
+      note: Seven categories of age-related damage, each with a proposed repair.
+  sources:
+    - title: "López-Otín et al., The hallmarks of aging, Cell 153:1194 (2013)"
+      url: https://doi.org/10.1016/j.cell.2013.05.039
+    - title: "López-Otín et al., Hallmarks of aging: an expanding universe, Cell 186:243 (2023)"
+      url: https://doi.org/10.1016/j.cell.2022.11.001
+
+- id: senescent-cell-clearance
+  name: Clearing senescent cells extends healthy life in mice
+  kind: technique
+  fields: [medicine, biology]
+  track: longevity
+  date: [2011, 2016]
+  status: achieved
+  tier: 3
+  summary: >-
+    Senescent cells stop dividing but linger and inflame the tissue around them. Killing them with a genetic
+    switch delayed aging diseases in fast-aging mice (2011) and extended the lives of normal mice (2016), and the
+    first senolytic drugs, dasatinib and quercetin, cleared them in 2015.
+  requires: [recombinant-dna, cell-culture]
+  efforts:
+    - who: Darren Baker, Jan van Deursen and colleagues (Mayo Clinic)
+      where: USA
+      when: [2011, 2016]
+      outcome: achieved
+    - who: Yi Zhu, James Kirkland and colleagues (Mayo Clinic)
+      where: USA
+      when: 2015
+      outcome: achieved
+      note: The first senolytic drugs.
+  sources:
+    - title: "Baker et al., Clearance of p16Ink4a-positive senescent cells delays ageing-associated disorders, Nature 479:232 (2011)"
+      url: https://doi.org/10.1038/nature10600
+    - title: "Zhu et al., The Achilles' heel of senescent cells: from transcriptome to senolytic drugs, Aging Cell 14:644 (2015)"
+      url: https://doi.org/10.1111/acel.12344
+    - title: "Baker et al., Naturally occurring p16Ink4a-positive cells shorten healthy lifespan, Nature 530:184 (2016)"
+      url: https://doi.org/10.1038/nature16932
+
+- id: aldehyde-stabilized-cryopreservation
+  name: Brain connectome preserved for long-term storage
+  kind: technique
+  fields: [medicine, biology]
+  track: surgery-organs
+  date: [2015, 2018]
+  status: achieved
+  tier: 3
+  summary: >-
+    Aldehyde-stabilized cryopreservation fixes a brain with glutaraldehyde, then vitrifies it, preserving every
+    synapse as electron microscopes show. It won the Brain Preservation Foundation's prizes for a rabbit brain
+    (2016) and a pig brain (2018). The fixation kills the tissue, so it preserves information for scanning, not
+    a living brain.
+  requires: [electron-microscope]
+  helped_by: [cryonics]
+  efforts:
+    - who: Robert McIntyre and Gregory Fahy (21st Century Medicine)
+      where: USA
+      when: 2015
+      outcome: achieved
+    - who: Nectome
+      where: USA
+      when: 2018
+      outcome: ongoing
+  sources:
+    - title: "McIntyre and Fahy, Aldehyde-stabilized cryopreservation, Cryobiology 71:448 (2015)"
+      url: https://doi.org/10.1016/j.cryobiol.2015.09.003
+    - title: Brain Preservation Foundation
+      url: https://www.brainpreservation.org/
+
+- id: small-mammal-cryorevival
+  name: A small mammal revived after cryopreservation
+  kind: technique
+  fields: [medicine, biology]
+  track: surgery-organs
+  date: { window: [2040, 2100], likely: 2060 }
+  status: speculative
+  tier: 3
+  summary: >-
+    The step between banking organs and pausing a person: cooling a whole animal far below freezing and bringing
+    it back. In the 1950s Audrey Smith and James Lovelock revived hamsters partly frozen just below 0 C; nothing
+    has yet been revived from cryogenic temperatures, where the whole body has to vitrify without ice or
+    toxic cryoprotectant damage and then rewarm evenly.
+  criterion: >-
+    A mouse, rat or similar small mammal is cooled below -100 C for at least a week, rewarmed and revived, and
+    lives normally for at least a month afterward.
+  requires: [organ-vitrification]
+  helped_by: [organ-banking]
+  efforts:
+    - who: Until Labs (formerly Cradle)
+      where: USA
+      outcome: ongoing
+      note: Aims at reversible whole-body cryopreservation, starting with organs and neural tissue.
+    - who: ATP-Bio and the University of Minnesota (Bischof, Finger)
+      where: USA
+      outcome: ongoing
+      note: Vitrification and nanowarming of organs.
+  sources:
+    - title: "Han et al., Vitrification and nanowarming enable long-term organ cryopreservation and life-sustaining kidney transplantation in a rat model, Nature Communications 14:3407 (2023)"
+      url: https://doi.org/10.1038/s41467-023-38824-8
+
+- id: progressive-brain-replacement
+  name: Replacing the aging brain piece by piece
+  kind: technique
+  fields: [medicine, biology]
+  track: longevity
+  date: { window: [2050, 2150], likely: 2085 }
+  status: speculative
+  tier: 3
+  summary: >-
+    The brain can't be transplanted, so Jean Hébert proposes replacing it gradually: small regions of aging
+    neocortex swapped for young tissue grown from stem cells, slowly enough that the rest of the brain carries
+    memories and skills across, as it does around slow-growing tumors. With organ and body replacement it would
+    make a "replace" route to a much longer life.
+  criterion: >-
+    In a person, a region of neocortex is replaced with new lab-grown neural tissue that integrates and takes over
+    the region's function, with memory and personality preserved on standard neuropsychological tests before and
+    after.
+  requires: [organoids, induced-pluripotent-stem-cells]
+  helped_by: [brain-computer-interfaces, lab-grown-solid-organ]
+  efforts:
+    - who: Jean Hébert (Albert Einstein College of Medicine; program manager at ARPA-H)
+      where: USA
+      outcome: ongoing
+      note: Proposed a roughly $110 million ARPA-H program to test the approach in monkeys and other animals.
+  sources:
+    - title: "MIT Technology Review, This researcher wants to replace your brain, little by little (2024)"
+      url: https://www.technologyreview.com/2024/08/16/1096808/arpa-h-jean-hebert-wants-to-replace-your-brain/

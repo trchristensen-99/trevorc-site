@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tech Tree Inspirations</title>
+    <meta name="description" content="Copies of the Foresight Institute tech trees and Antimortality, two earlier technology trees that inspired the Real Life Tech Tree." />
+    <link rel="icon" href="/static/icon.png" />
+    <style>
+      :root {
+        --bg: #fbfbf9; --panel: #ffffff; --ink: #1d2329; --muted: #5f6a74; --line: #e1e3de; --accent: #3d6fb6;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) { --bg: #11161c; --panel: #161c23; --ink: #e7ebef; --muted: #9aa6b2; --line: #2a323b; --accent: #8fb0ff; color-scheme: dark; }
+      }
+      :root[data-theme="dark"] { --bg: #11161c; --panel: #161c23; --ink: #e7ebef; --muted: #9aa6b2; --line: #2a323b; --accent: #8fb0ff; color-scheme: dark; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+      main { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+      a { color: var(--accent); }
+      .crumbs { font-size: 14px; color: var(--muted); }
+      h1 { font-size: 30px; margin: 8px 0 4px; }
+      h2 { font-size: 22px; margin: 40px 0 6px; }
+      h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 22px 0 8px; }
+      .lede { color: var(--muted); margin-top: 0; }
+      .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+      .card { display: block; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); text-decoration: none; color: inherit; }
+      .card:hover { border-color: var(--accent); }
+      .card strong { color: var(--accent); }
+      .card span { display: block; font-size: 14px; color: var(--muted); }
+      .frame { width: 100%; height: 70vh; min-height: 420px; border: 1px solid var(--line); border-radius: 10px; background: #000; }
+      .note { font-size: 14px; color: var(--muted); }
+      ul { padding-left: 20px; }
+      li { margin: 4px 0; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="crumbs"><a href="/projects/real-life-tech-tree">Real Life Tech Tree</a> › Inspirations</p>
+      <h1>Tech tree inspirations</h1>
+      <p class="lede">Two earlier attempts to map the technologies between us and much longer lives, which inspired the <a href="/projects/real-life-tech-tree">Real Life Tech Tree</a>. Neither is online at its original address any more, so copies are kept here, unchanged except where noted.</p>
+
+      <h2>Foresight Institute Tech Trees</h2>
+      <p>The <a href="https://foresight.org/" target="_blank" rel="noopener">Foresight Institute</a> built these maps in 2022 and 2023 with researchers in each field, starting with longevity and adding four more. Each is a graph of goals, the technologies and open challenges in the way, the "off-target" applications they would also serve, and the labs and companies working on them. Click and drag to pan, scroll to zoom, and click a node for its notes; the menu can download the graph, and the Longevity tree's Start Here box explains how to edit it.</p>
+      <div class="cards">
+        <a class="card" href="./foresight/ForesightTechTree/"><strong>Longevity</strong><span>1,033 nodes: the hallmarks of aging, repair and replacement, preservation, and about 270 labs and companies</span></a>
+        <a class="card" href="./foresight/ForesightNeurotechTree/"><strong>Neurotech</strong><span>313 nodes: therapies, brain-computer interfaces, biomarkers and clinical trials</span></a>
+        <a class="card" href="./foresight/ForesightNanotechTree/"><strong>Nanotech</strong><span>337 nodes: molecular machines and the chemistry behind them</span></a>
+        <a class="card" href="./foresight/ForesightSpaceTree/"><strong>Space</strong><span>722 nodes: propulsion, in-space manufacturing and resources, habitats, debris</span></a>
+        <a class="card" href="./foresight/ForesightIntcoopTree/"><strong>Intelligent Cooperation</strong><span>170 nodes: machine learning, private computation and decentralized systems</span></a>
+      </div>
+      <h3>The Longevity tree</h3>
+      <iframe class="frame" src="./foresight/ForesightTechTree/" title="Foresight Longevity Tech Tree" loading="lazy"></iframe>
+      <p class="note">From <a href="https://github.com/foresight-org/LongevityTechTree" target="_blank" rel="noopener">foresight-org/LongevityTechTree</a> (commit 275517d, February 2023), whose README invites anyone to clone, fork or edit it; the repository has no formal license, and the trees remain Foresight's and their contributors'. The graph software is <a href="https://codeberg.org/nilesh/grapher" target="_blank" rel="noopener">Grapher</a> by Nilesh Trivedi. One change: the pages load the Fluent UI components from an unversioned link, which now serves a newer, incompatible version, so the copies pin version 2.5.12, the one current when the trees were last updated.</p>
+
+      <h2>Antimortality</h2>
+      <p><a href="./antimortality/">Antimortality</a> (2022), by Kai Micah Mills, lays out three paths to "eternal life for mankind": <strong>prevention</strong> (cryopreservation, so no one is lost while the rest is worked out), <strong>extension</strong> (curing aging and replacing the body) and <strong>ascension</strong> (enhancement, synthetic bodies and consciousness transfer). Each path is a checklist of concrete problems, ticked when solved, with the groups working on each.</p>
+      <iframe class="frame" src="./antimortality/" title="Antimortality" loading="lazy"></iframe>
+      <p class="note">From <a href="https://github.com/antimortality/website" target="_blank" rel="noopener">antimortality/website</a> (commit 2eda231, November 2022), under the MIT License (<a href="./antimortality/LICENSE.md">copyright 2022 Antimortality</a>). antimortality.com no longer serves it. Rebuilt from the same source with esbuild and Sass instead of Create React App, and with Font Awesome 5 loaded from cdnjs instead of the site's own Font Awesome kit; the content is unchanged.</p>
+
+      <h2>What the Real Life Tech Tree took from them</h2>
+      <ul>
+        <li>From both: open problems and steps toward each frontier technology, ticked off as they're solved, with who is working on each.</li>
+        <li>From Foresight: the other things a technology would help with besides its main goal, and hallmark-level steps in aging research such as clearing senescent cells.</li>
+        <li>From Antimortality: the intermediate steps toward reversible preservation, such as reviving a cryopreserved small mammal, and replacing the aging brain piece by piece.</li>
+        <li>From Foresight's issue templates: a way to suggest a change to the tree.</li>
+      </ul>
+      <p><a href="/apps/tech-tree/">Open the Real Life Tech Tree</a></p>
+    </main>
+  </body>
+</html>

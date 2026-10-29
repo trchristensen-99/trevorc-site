@@ -423,6 +423,22 @@ for (const n of kept) {
   }
 }
 
+// Steps toward a frontier technology (`checklist`): other nodes, which
+// count as done when achieved, or plain steps with the year they were done
+// (or not yet) and who is working on them. Open steps are its open problems.
+for (const n of kept) {
+  if (!n.checklist) continue
+  n._checklist = list(n.checklist).map((c, i) => {
+    if (c.node) {
+      const p = live.get(c.node)
+      if (!p) { warn(`${n._file}: ${n.id}: checklist step ${i + 1}: unknown node ${c.node}`); return null }
+      return { node: p.id, step: c.step ?? p.name, done: p.status === "achieved" ? Math.round(p._date.at) : null, ...(c.who ? { who: c.who } : {}) }
+    }
+    if (!c.step) warn(`${n._file}: ${n.id}: checklist step ${i + 1} needs a step or a node`)
+    return { step: c.step, done: c.done ? Number(c.done) : null, ...(c.who ? { who: c.who } : {}), ...(c.note ? { note: c.note } : {}) }
+  }).filter(Boolean)
+}
+
 // ---------------------------------------------------------------- models
 
 // What it took. Person-years are the common measure: people working on it
@@ -828,6 +844,7 @@ const out = {
     })(),
     ...(n._routes.length ? { routes: n._routes.map((r) => r.name) } : {}),
     ...(n._effort?.py ? { py: round(Math.log10(n._effort.py), 2) } : {}),
+    ...(n._checklist ? { steps: [n._checklist.filter((c) => c.done != null).length, n._checklist.length] } : {}),
     ...(n._supply ? { risk: n._supply.rating } : n._risk ? { risk: n._risk.rating } : {}),
   })),
   edges,
@@ -860,6 +877,8 @@ const details = Object.fromEntries(kept.map((n) => [n.id, eraDeep({
   ...(n._effortModel ? { effortModel: mapVals(n._effortModel, (v) => round(v, 3)) } : {}),
   ...(n.supply ? { supply: n.supply, supplyCalc: n._supply } : {}),
   ...(n._risk ? { risk: n._risk } : {}),
+  ...(n._checklist ? { checklist: n._checklist } : {}),
+  ...(n.also_helps ? { alsoHelps: list(n.also_helps) } : {}),
   ...(() => {
     // Resource use, from either end.
     const ofTech = n.kind === "resource" ? [] : n._requires.filter((id) => live.get(id).kind === "resource").map((id) => ({ resource: id, ...(useOf.get(`${id}>${n.id}`) ?? {}) }))
