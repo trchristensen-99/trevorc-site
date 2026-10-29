@@ -161,35 +161,52 @@ function pathCrossing(m, path, value) {
   return null
 }
 
-const metricsOut = metrics.map((m) => {
-  const points = (m.points ?? []).map(([x, y]) => [Number(x), Number(y)]).filter(([x, y]) => Number.isFinite(x) && Number.isFinite(y)).sort((a, b) => a[0] - b[0])
-  if (points.length < 2) warn(`metric ${m.id}: fewer than two points`)
-  // `fit` can limit the trend to a period, or fit the cheapest (or best)
-  // value each year where several rival products share a year. Trends
-  // that don't fit (r² under 0.5) aren't shown.
-  let fitPts = points.filter(([x]) => (!m.fit || m.fit.from == null || x >= m.fit.from) && (!m.fit || m.fit.to == null || x <= m.fit.to))
-  if (m.fit?.envelope) {
+// A measured line: its points, and the trend fitted to them. `fit` can
+// limit the trend to a period, or fit the cheapest (or best) value each
+// year where several rival products share a year; `fit: false` fits none.
+// Trends that don't fit (r² under 0.5) aren't shown.
+function lineOf(m, src, where) {
+  const points = (src.points ?? []).map(([x, y]) => [Number(x), Number(y)]).filter(([x, y]) => Number.isFinite(x) && Number.isFinite(y)).sort((a, b) => a[0] - b[0])
+  if (points.length < 2) warn(`${where}: fewer than two points`)
+  const fit = src.fit !== undefined ? src.fit : m.fit
+  let fitPts = points.filter(([x]) => (!fit || fit.from == null || x >= fit.from) && (!fit || fit.to == null || x <= fit.to))
+  if (fit?.envelope) {
     const best = new Map()
     for (const [x, y] of fitPts) {
       const k = Math.round(x)
-      if (!best.has(k) || (m.fit.envelope === "min" ? y < best.get(k) : y > best.get(k))) best.set(k, y)
+      if (!best.has(k) || (fit.envelope === "min" ? y < best.get(k) : y > best.get(k))) best.set(k, y)
     }
     fitPts = [...best].sort((a, b) => a[0] - b[0])
   }
-  // `fit: false` means no trend is fitted (the series has no meaningful line).
-  let trend = m.fit === false ? null : fitTime(fitPts, m.log !== false)
+  let trend = fit === false ? null : fitTime(fitPts, m.log !== false)
   if (trend && trend.r2 < 0.5) {
-    warn(`metric ${m.id}: trend fits poorly (r² ${trend.r2.toFixed(2)}), not shown`)
+    warn(`${where}: trend fits poorly (r² ${trend.r2.toFixed(2)}), not shown`)
     trend = null
   }
+  return { points, trend, scenarios: scenariosOf({ ...m, id: where.replace(/^metric /, ""), scenarios: src.scenarios }, points) }
+}
+// A metric is one line, or several (`series`, e.g. one per income group)
+// sharing a unit and a chart.
+const metricsOut = metrics.map((m) => {
+  const main = m.series ? { points: [], trend: null, scenarios: [] } : lineOf(m, m, `metric ${m.id}`)
+  const series = m.series?.map((sr, i) => {
+    if (!sr.id || !sr.name) warn(`metric ${m.id}: series ${i + 1} needs an id and a name`)
+    return { id: sr.id, name: sr.name, ...lineOf(m, sr, `metric ${m.id} (${sr.id})`) }
+  })
   const cumulative = m.cumulative && metrics.find((x) => x.id === m.cumulative)
-  const wright = cumulative ? fitWright({ points }, { points: cumulative.points.map(([x, y]) => [Number(x), Number(y)]) }) : null
+  const wright = cumulative ? fitWright({ points: main.points }, { points: cumulative.points.map(([x, y]) => [Number(x), Number(y)]) }) : null
   return {
-    id: m.id, name: m.name, short: m.short ?? m.name, unit: m.unit, better: m.better ?? "higher", log: m.log !== false, points,
-    trend, wright, source: m.source, license: m.license, note: m.note && era(m.note), field: m.field, milestones: [],
-    scenarios: scenariosOf(m, points),
+    id: m.id, name: m.name, short: m.short ?? m.name, unit: m.unit, better: m.better ?? "higher", log: m.log !== false,
+    points: main.points, trend: main.trend, scenarios: main.scenarios, ...(series ? { series } : {}),
+    wright, source: m.source, license: m.license, note: m.note && era(m.note), field: m.field, milestones: [],
   }
 })
+// The line a milestone sits on: the metric's own, or one of its series.
+function lineFor(m, seriesId) {
+  if (!m.series) return m
+  const sr = m.series.find((x) => x.id === seriesId)
+  return sr ? { ...m, ...sr } : null
+}
 const metricById = new Map(metricsOut.map((m) => [m.id, m]))
 
 // Milestones: a threshold on a metric ("a genome for under $1,000"). When
@@ -277,7 +294,9 @@ for (const n of nodes) {
     const m = metricById.get(n.threshold.metric)
     if (!m) { warn(`${where}: threshold on unknown metric ${n.threshold.metric}`); delete n.threshold }
     else {
-      const c = crossing(m, Number(n.threshold.value))
+      const line = lineFor(m, n.threshold.series)
+      if (!line) warn(`${where}: threshold needs a series of ${m.id} (${m.series.map((x) => x.id).join(", ")})`)
+      const c = line && crossing(line, Number(n.threshold.value))
       if (c) n._trend = c
       if (n.date == null && c) n.date = c.crossed ? Math.round(c.year) : { window: [Math.round(c.from * 10) / 10, Math.ceil(c.to)], likely: Math.round(c.likely) }
       if (n.status == null && c) n.status = c.crossed ? "achieved" : "speculative"
@@ -557,11 +576,14 @@ const out = {
     from: n._date.from, to: n._date.to, at: round(n._date.at, 2),
     x: round(n._x), y: round(n._y), z: round(n._z, 2), lane: (n.lane ?? n.fields[0]), track: n._track,
     ...(n.metric ? { metric: n.metric } : {}),
-    ...(n.threshold ? { threshold: { metric: n.threshold.metric, value: Number(n.threshold.value), label: n.threshold.label } } : {}),
+    ...(n.threshold ? { threshold: { metric: n.threshold.metric, value: Number(n.threshold.value), label: n.threshold.label, ...(n.threshold.series ? { series: n.threshold.series } : {}) } } : {}),
     ...(n._trend && !n._trend.crossed ? { trendYear: round(n._trend.year) } : {}),
-    ...(n.threshold && n.status !== "achieved" && metricById.get(n.threshold.metric).scenarios.length
-      ? { scenarioYears: metricById.get(n.threshold.metric).scenarios.map((sc) => ({ id: sc.id, year: (() => { const y = pathCrossing(metricById.get(n.threshold.metric), sc.points, Number(n.threshold.value)); return y == null ? null : round(y) })() })) }
-      : {}),
+    ...(() => {
+      if (!n.threshold || n.status === "achieved") return {}
+      const line = lineFor(metricById.get(n.threshold.metric), n.threshold.series)
+      if (!line?.scenarios.length) return {}
+      return { scenarioYears: line.scenarios.map((sc) => ({ id: sc.id, year: (() => { const y = pathCrossing(line, sc.points, Number(n.threshold.value)); return y == null ? null : round(y) })() })) }
+    })(),
     ...(n._routes.length ? { routes: n._routes.map((r) => r.name) } : {}),
   })),
   edges,
@@ -593,5 +615,5 @@ const kb = (f) => (fs.statSync(path.join(OUT, f)).size / 1024).toFixed(0)
 console.log(`${kept.length} nodes (${by("kind")}); tiers ${by("tier")}; status ${by("status")}`)
 console.log(`${bumped} nodes show later than their rank, to fit their tracks`)
 console.log(`${edges.length} links; ${metricsOut.length} metrics; tree.json ${kb("tree.json")} KB, details.json ${kb("details.json")} KB`)
-for (const m of metricsOut) if (m.trend) console.log(`  ${m.id}: ${m.trend.linear ? `${m.trend.slope > 0 ? "rises" : "falls"} ${Math.abs(m.trend.slope * 10).toPrecision(2)} ${m.unit} a decade` : `${m.trend.slope < 0 ? "halves" : "doubles"} every ${m.trend.years.toFixed(2)} years`} (r² ${m.trend.r2.toFixed(2)})${m.wright ? `; learning rate ${(m.wright.learningRate * 100).toFixed(0)}%` : ""}`)
+for (const m of metricsOut.flatMap((m) => (m.series ? m.series.map((sr) => ({ ...m, ...sr, id: `${m.id} (${sr.id})` })) : [m]))) if (m.trend) console.log(`  ${m.id}: ${m.trend.linear ? `${m.trend.slope > 0 ? "rises" : "falls"} ${Math.abs(m.trend.slope * 10).toPrecision(2)} ${m.unit} a decade` : `${m.trend.slope < 0 ? "halves" : "doubles"} every ${m.trend.years.toFixed(2)} years`} (r² ${m.trend.r2.toFixed(2)})${m.wright ? `; learning rate ${(m.wright.learningRate * 100).toFixed(0)}%` : ""}`)
 if (warnings.length) console.log(`\n${warnings.length} warning(s):\n  ` + warnings.slice(0, 80).join("\n  ") + (warnings.length > 80 ? `\n  ... and ${warnings.length - 80} more` : ""))

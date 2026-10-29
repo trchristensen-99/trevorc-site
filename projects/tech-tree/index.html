@@ -26,20 +26,53 @@
           <label for="detail">Detail <span id="detail-count"></span></label>
           <input id="detail" type="range" min="0" max="100" step="1" value="40" aria-describedby="detail-help" />
           <div class="ends" id="detail-help"><span>← Landmarks only</span><span>Everything →</span></div>
-          <label class="check"><input id="grow" type="checkbox" checked /> More appear as you zoom in</label>
-          <label class="check"><input id="show-frontier" type="checkbox" /> Always show the frontier</label>
-          <label class="check"><input id="all-links" type="checkbox" /> Show every link</label>
+          <label class="check"><input data-opt="grow" type="checkbox" checked /> More appear as you zoom in</label>
+          <label class="check"><input data-opt="frontier" type="checkbox" /> Always show the frontier</label>
           </div>
         <details id="trends">
           <summary>Trend lines</summary>
           <p class="hint">Measured progress along the bottom, on the same time axis: the data, its trend (dashed) and forecasts (dotted), with milestones marked. Click one for its chart.</p>
-          <label class="layout">Layout <select id="trend-layout">
+          <label class="layout">Layout <select data-opt="trendLayout">
             <option value="auto">Automatic</option>
             <option value="strips">Strips</option>
             <option value="compact">Compact strips</option>
             <option value="combined">One combined chart</option>
           </select></label>
           <fieldset id="trend-list"></fieldset>
+        </details>
+        <details id="display">
+          <summary>Display</summary>
+          <div class="opts">
+            <label>Color by <select data-opt="colorBy">
+              <option value="field">Field</option>
+              <option value="status">Status</option>
+              <option value="kind">Kind</option>
+            </select></label>
+            <label>Links <select data-opt="links">
+              <option value="main">Main links</option>
+              <option value="all">Every link</option>
+              <option value="none">None</option>
+            </select></label>
+            <label>Labels <select data-opt="labels">
+              <option value="fit">All that fit</option>
+              <option value="landmarks">Landmarks only</option>
+              <option value="none">None</option>
+            </select></label>
+            <label>Node size <select data-opt="nodeSize">
+              <option value="0.75">Small</option>
+              <option value="1">Medium</option>
+              <option value="1.35">Large</option>
+            </select></label>
+            <label>Theme <select id="theme">
+              <option value="auto">Same as the site</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select></label>
+          </div>
+          <label class="check"><input data-opt="bars" type="checkbox" checked /> Date ranges and windows</label>
+          <label class="check"><input data-opt="trackNames" type="checkbox" checked /> Track names (zoomed in)</label>
+          <label class="check"><input data-opt="eras" type="checkbox" checked /> Eras</label>
+          <button id="reset-display" type="button" class="link">Reset display</button>
         </details>
         <details id="filters">
           <summary>Filter</summary>

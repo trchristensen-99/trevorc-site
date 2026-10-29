@@ -1,0 +1,413 @@
+id: life-expectancy-65-income
+name: Remaining life expectancy at 65 by country income group
+short: Life expectancy at 65 by income
+unit: years
+better: higher
+log: false
+field: medicine
+fit: {from: 1970}  # old-age death rates barely moved before about 1970, then began to fall
+source:
+  title: "UN World Population Prospects 2024 (income groups and world); Our World in Data life tables, Human Mortality Database 2025 before 1950 (best country)"
+  url: https://population.un.org/wpp/downloads
+license: CC BY 3.0 IGO (UN WPP); CC BY 4.0 (OWID)
+note: >-
+  How many more years a 65-year-old could expect to live at that year's death
+  rates (both sexes), for the four World Bank income groups and the world from
+  UN World Population Prospects 2024 (CSV checked 2026-10-29; every fifth year
+  1950 to 1985, then every year to 2023), and for the best country or
+  territory with at least 1 million people and complete death registration
+  (those covered by the Human Mortality Database), from OWID's life tables
+  (HMD before 1950, UN from 1950), every fifth year from 1840. Income groups
+  use the World Bank classification of May 2024 for every year, as at birth.
+  In 2023: high-income 20.6 years, upper-middle 17.3, lower-middle 15.3,
+  low-income 14.1, world 17.6, and the record 23.2 (Hong Kong). The gap
+  between rich and poor countries is much smaller at 65 than at birth, since
+  most of the gap at birth is deaths of children and young adults, but it has
+  grown, from 3.8 years in 1950 and 3.2 in 1970 to 6.5 in 2023: deaths from
+  heart disease and stroke at older ages fell from about 1970 in rich
+  countries far faster than in poor ones. Gains at old ages are what aging
+  research targets. The best-country line crept from 11 to 15 years between
+  1840 and 1950 and has risen about 1.4 years a decade since 1970, led by
+  Japan and then Hong Kong (Lithuania's UN estimates lead in the early 1960s;
+  the 1945 value is from HMD and the 1950 one from the UN, so the two sources
+  join with a small step).
+series:
+  - id: world
+    name: World
+    points: [[1950, 11.38], [1955, 11.88], [1960, 11.65], [1965, 12.53], [1970, 12.94], [1975, 13.46],
+      [1980, 13.88], [1985, 14.19], [1990, 14.65], [1991, 14.74], [1992, 14.83], [1993, 14.83],
+      [1994, 14.89], [1995, 15.00], [1996, 15.11], [1997, 15.22], [1998, 15.30], [1999, 15.35],
+      [2000, 15.47], [2001, 15.58], [2002, 15.64], [2003, 15.70], [2004, 15.86], [2005, 15.94],
+      [2006, 16.09], [2007, 16.21], [2008, 16.28], [2009, 16.43], [2010, 16.54], [2011, 16.66],
+      [2012, 16.77], [2013, 16.89], [2014, 17.01], [2015, 17.07], [2016, 17.19], [2017, 17.23],
+      [2018, 17.35], [2019, 17.45], [2020, 16.77], [2021, 16.21], [2022, 17.34], [2023, 17.57]]
+    scenarios:
+      - id: un-wpp-2024
+        name: UN WPP 2024
+        kind: projection
+        points: [[2024, 17.70], [2030, 18.26], [2040, 19.01], [2050, 19.60], [2060, 20.17], [2070, 20.65], [2080, 21.11], [2090, 21.55], [2100, 21.94]]
+        note: >-
+          The UN's medium variant. The UN publishes prediction intervals only
+          for life expectancy at birth, so no band is shown. The world reaches
+          19.6 years at 65 in 2050 and 21.9 in 2100, about 0.6 years a decade.
+        sources:
+          - title: "UN World Population Prospects 2024, demographic indicators, medium variant (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Demographic_Indicators_Medium.csv.gz
+      - id: model-rejuvenation
+        name: "Model: rejuvenation at the tree's date"
+        kind: model
+        points: [[2024, 17.7], [2030, 18.3], [2040, 19.0], [2050, 19.6], [2060, 20.2], [2062, 20.3], [2065, 20.7],
+          [2070, 21.8], [2075, 23.4], [2080, 25.2], [2085, 26.8], [2090, 27.9], [2095, 28.6], [2100, 29.0]]
+        low: [[2024, 17.7], [2030, 18.3], [2040, 19.0], [2050, 19.6], [2060, 20.2], [2070, 20.6], [2080, 21.1], [2090, 21.6], [2100, 21.9]]
+        high: [[2024, 17.7], [2030, 18.3], [2040, 19.0], [2045, 19.3], [2050, 20.2], [2055, 21.7], [2060, 23.5], [2065, 25.3],
+          [2070, 26.6], [2075, 27.6], [2080, 28.1], [2085, 28.5], [2090, 28.8], [2095, 29.0], [2100, 29.2]]
+        note: >-
+          A simple model, not a forecast; every point is computed, none is
+          data. Baseline (no new aging biology): the UN medium path for the
+          world. On top of it, rejuvenation therapies (node aging-reversal)
+          arrive in 2062, the tree's likely date; the band uses the tree's
+          window, arrival in 2045 (high) or 2110 (low, which leaves the
+          baseline unchanged to 2100). Effect: the aging-reversal criterion's
+          10-year reset, applied once to everyone 60 and over, so they die at
+          the rates of people 10 years younger. On the UN's 2023 world life
+          table that adds 7.3 years at 65 (my calculation). The added years
+          are held fixed and scaled by the share of people over 60 who have
+          had it. Uptake differs by income group, the point of the comparison.
+          My logistic curves reach half of people over 60 8 years after
+          arrival in high-income countries (scale 3 years, so 90 percent after
+          about 15) and 25 years after in low-income countries (scale 6, 90
+          percent after about 38), with 15 and 20 years for upper-middle and
+          lower-middle income (my interpolation). They are set from two past
+          therapies. Combination antiretroviral therapy for HIV (1996): in the
+          United States 53 percent of adults in HIV care were taking it by
+          late 1997 to January 1998 (HCSUS), while in low-income countries
+          coverage of all people with HIV was 19 percent in 2010 and first
+          passed half in 2016, 20 years on, and only after generic drugs and
+          donor programmes such as PEPFAR and the Global Fund (World Bank,
+          from UNAIDS). Statins (first approved in 1987) had no such push: in
+          2003 to 2009, 66.5 percent of people with heart disease took one in
+          high-income countries against 3.3 percent in low-income ones (PURE),
+          and in national surveys from 2013 to 2019 still only 8.2 percent did
+          in low-income countries (Marcus et al. 2022). The world line weights
+          each group's uptake by its share of the world's people over 60 in
+          the UN projection, so world uptake reaches half about 17 years after
+          arrival.
+        sources:
+          - title: "UN World Population Prospects 2024, complete life tables, both sexes, 1950 to 2023 (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Life_Table_Complete_Medium_Both_1950-2023.csv.gz
+          - title: "UN World Population Prospects 2024, population by five-year age group, medium variant (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_PopulationByAge5GroupSex_Medium.csv.gz
+          - title: "Cunningham et al. (HCSUS), Prevalence and predictors of highly active antiretroviral therapy use in patients with HIV infection in the United States, JAIDS 25:115 (2000)"
+            url: https://doi.org/10.1097/00042560-200010010-00005
+          - title: "World Bank World Development Indicators: antiretroviral therapy coverage, percent of people living with HIV (SH.HIV.ARTC.ZS), low-income countries, from UNAIDS"
+            url: https://data.worldbank.org/indicator/SH.HIV.ARTC.ZS?locations=XM
+          - title: "Marcus et al., Use of statins for the prevention of cardiovascular disease in 41 low-income and middle-income countries, Lancet Global Health 10:e369 (2022), which also reports the PURE study"
+            url: https://doi.org/10.1016/S2214-109X(21)00551-9
+  - id: high
+    name: High-income countries
+    points: [[1950, 13.21], [1955, 13.65], [1960, 13.88], [1965, 14.14], [1970, 14.41], [1975, 14.94],
+      [1980, 15.51], [1985, 16.04], [1990, 16.76], [1991, 16.89], [1992, 17.05], [1993, 17.02],
+      [1994, 17.24], [1995, 17.26], [1996, 17.41], [1997, 17.57], [1998, 17.66], [1999, 17.72],
+      [2000, 17.97], [2001, 18.18], [2002, 18.26], [2003, 18.31], [2004, 18.68], [2005, 18.73],
+      [2006, 19.02], [2007, 19.15], [2008, 19.25], [2009, 19.47], [2010, 19.57], [2011, 19.69],
+      [2012, 19.73], [2013, 19.87], [2014, 20.06], [2015, 19.97], [2016, 20.16], [2017, 20.15],
+      [2018, 20.24], [2019, 20.39], [2020, 19.76], [2021, 19.80], [2022, 20.00], [2023, 20.60]]
+    scenarios:
+      - id: un-wpp-2024
+        name: UN WPP 2024
+        kind: projection
+        points: [[2024, 20.68], [2030, 21.29], [2040, 22.27], [2050, 23.17], [2060, 24.04], [2070, 24.90], [2080, 25.72], [2090, 26.55], [2100, 27.37]]
+        note: >-
+          The UN's medium variant. The UN publishes prediction intervals only
+          for life expectancy at birth, so no band is shown. High-income
+          countries reach 23.2 in 2050 and 27.4 in 2100, about 0.9 years a
+          decade against 1.1 over 2000 to 2023.
+        sources:
+          - title: "UN World Population Prospects 2024, demographic indicators, medium variant (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Demographic_Indicators_Medium.csv.gz
+      - id: model-rejuvenation
+        name: "Model: rejuvenation at the tree's date"
+        kind: model
+        points: [[2024, 20.7], [2030, 21.3], [2040, 22.3], [2050, 23.2], [2060, 24.0], [2062, 24.2], [2065, 25.2],
+          [2070, 28.4], [2075, 31.6], [2080, 33.0], [2085, 33.6], [2090, 34.1], [2095, 34.5], [2100, 34.9]]
+        low: [[2024, 20.7], [2030, 21.3], [2040, 22.3], [2050, 23.2], [2060, 24.0], [2070, 24.9], [2080, 25.7], [2090, 26.6], [2100, 27.4]]
+        high: [[2024, 20.7], [2030, 21.3], [2040, 22.3], [2045, 22.7], [2050, 24.8], [2055, 28.4], [2060, 30.9], [2065, 31.9],
+          [2070, 32.4], [2075, 32.8], [2080, 33.2], [2085, 33.7], [2090, 34.1], [2095, 34.5], [2100, 34.9]]
+        note: >-
+          A simple model, not a forecast; every point is computed, none is
+          data. Baseline (no new aging biology): the UN medium path for
+          high-income countries. On top of it, rejuvenation therapies (node
+          aging-reversal) arrive in 2062, the tree's likely date; the band
+          uses the tree's window, arrival in 2045 (high) or 2110 (low, which
+          leaves the baseline unchanged to 2100). Effect: the aging-reversal
+          criterion's 10-year reset, applied once to everyone 60 and over, so
+          they die at the rates of people 10 years younger. On the UN's 2023
+          life table for the group that adds 7.5 years at 65 (my calculation).
+          The added years are held fixed and scaled by the share of people
+          over 60 who have had it. Uptake differs by income group, the point
+          of the comparison. My logistic curves reach half of people over 60 8
+          years after arrival in high-income countries (scale 3 years, so 90
+          percent after about 15) and 25 years after in low-income countries
+          (scale 6, 90 percent after about 38), with 15 and 20 years for
+          upper-middle and lower-middle income (my interpolation). They are
+          set from two past therapies. Combination antiretroviral therapy for
+          HIV (1996): in the United States 53 percent of adults in HIV care
+          were taking it by late 1997 to January 1998 (HCSUS), while in
+          low-income countries coverage of all people with HIV was 19 percent
+          in 2010 and first passed half in 2016, 20 years on, and only after
+          generic drugs and donor programmes such as PEPFAR and the Global
+          Fund (World Bank, from UNAIDS). Statins (first approved in 1987) had
+          no such push: in 2003 to 2009, 66.5 percent of people with heart
+          disease took one in high-income countries against 3.3 percent in
+          low-income ones (PURE), and in national surveys from 2013 to 2019
+          still only 8.2 percent did in low-income countries (Marcus et al.
+          2022). The fastest gain is about 0.65 years a year, short of the one
+          year a year that longevity escape velocity needs (node
+          longevity-escape-velocity): a single reset raises the level but does
+          not keep it rising.
+        sources:
+          - title: "UN World Population Prospects 2024, complete life tables, both sexes, 1950 to 2023 (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Life_Table_Complete_Medium_Both_1950-2023.csv.gz
+          - title: "UN World Population Prospects 2024, population by five-year age group, medium variant (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_PopulationByAge5GroupSex_Medium.csv.gz
+          - title: "Cunningham et al. (HCSUS), Prevalence and predictors of highly active antiretroviral therapy use in patients with HIV infection in the United States, JAIDS 25:115 (2000)"
+            url: https://doi.org/10.1097/00042560-200010010-00005
+          - title: "World Bank World Development Indicators: antiretroviral therapy coverage, percent of people living with HIV (SH.HIV.ARTC.ZS), low-income countries, from UNAIDS"
+            url: https://data.worldbank.org/indicator/SH.HIV.ARTC.ZS?locations=XM
+          - title: "Marcus et al., Use of statins for the prevention of cardiovascular disease in 41 low-income and middle-income countries, Lancet Global Health 10:e369 (2022), which also reports the PURE study"
+            url: https://doi.org/10.1016/S2214-109X(21)00551-9
+  - id: upper-middle
+    name: Upper-middle-income countries
+    points: [[1950, 10.04], [1955, 10.50], [1960, 9.55], [1965, 11.35], [1970, 12.05], [1975, 12.73],
+      [1980, 13.20], [1985, 13.64], [1990, 14.18], [1991, 14.33], [1992, 14.42], [1993, 14.40],
+      [1994, 14.44], [1995, 14.60], [1996, 14.76], [1997, 14.87], [1998, 14.97], [1999, 14.98],
+      [2000, 15.05], [2001, 15.15], [2002, 15.21], [2003, 15.28], [2004, 15.41], [2005, 15.53],
+      [2006, 15.67], [2007, 15.82], [2008, 15.90], [2009, 16.05], [2010, 16.18], [2011, 16.33],
+      [2012, 16.47], [2013, 16.60], [2014, 16.71], [2015, 16.83], [2016, 16.93], [2017, 16.98],
+      [2018, 17.19], [2019, 17.29], [2020, 16.71], [2021, 16.34], [2022, 17.19], [2023, 17.28]]
+    scenarios:
+      - id: un-wpp-2024
+        name: UN WPP 2024
+        kind: projection
+        points: [[2024, 17.45], [2030, 18.28], [2040, 19.32], [2050, 20.23], [2060, 21.11], [2070, 21.93], [2080, 22.70], [2090, 23.43], [2100, 24.09]]
+        note: >-
+          The UN's medium variant. The UN publishes prediction intervals only
+          for life expectancy at birth, so no band is shown.
+          Upper-middle-income countries reach 20.2 in 2050 and 24.1 in 2100.
+        sources:
+          - title: "UN World Population Prospects 2024, demographic indicators, medium variant (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Demographic_Indicators_Medium.csv.gz
+  - id: lower-middle
+    name: Lower-middle-income countries
+    points: [[1950, 10.96], [1955, 11.27], [1960, 11.55], [1965, 11.64], [1970, 11.90], [1975, 12.28],
+      [1980, 12.56], [1985, 12.64], [1990, 12.78], [1991, 12.79], [1992, 12.82], [1993, 12.86],
+      [1994, 12.90], [1995, 12.96], [1996, 13.03], [1997, 13.12], [1998, 13.21], [1999, 13.30],
+      [2000, 13.39], [2001, 13.46], [2002, 13.54], [2003, 13.60], [2004, 13.65], [2005, 13.70],
+      [2006, 13.76], [2007, 13.83], [2008, 13.90], [2009, 14.00], [2010, 14.10], [2011, 14.23],
+      [2012, 14.34], [2013, 14.45], [2014, 14.56], [2015, 14.67], [2016, 14.77], [2017, 14.87],
+      [2018, 14.93], [2019, 15.00], [2020, 14.22], [2021, 13.06], [2022, 15.19], [2023, 15.29]]
+    scenarios:
+      - id: un-wpp-2024
+        name: UN WPP 2024
+        kind: projection
+        points: [[2024, 15.46], [2030, 15.90], [2040, 16.67], [2050, 17.43], [2060, 18.21], [2070, 18.93], [2080, 19.56], [2090, 20.15], [2100, 20.73]]
+        note: >-
+          The UN's medium variant. The UN publishes prediction intervals only
+          for life expectancy at birth, so no band is shown.
+          Lower-middle-income countries reach 17.4 in 2050 and 20.7 in 2100.
+        sources:
+          - title: "UN World Population Prospects 2024, demographic indicators, medium variant (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Demographic_Indicators_Medium.csv.gz
+  - id: low
+    name: Low-income countries
+    points: [[1950, 9.46], [1955, 10.63], [1960, 10.88], [1965, 11.03], [1970, 11.25], [1975, 11.39],
+      [1980, 11.65], [1985, 11.52], [1990, 11.96], [1991, 11.90], [1992, 11.93], [1993, 12.09],
+      [1994, 11.73], [1995, 12.08], [1996, 12.09], [1997, 12.14], [1998, 12.11], [1999, 12.21],
+      [2000, 12.31], [2001, 12.35], [2002, 12.40], [2003, 12.58], [2004, 12.64], [2005, 12.69],
+      [2006, 12.79], [2007, 12.88], [2008, 12.97], [2009, 12.96], [2010, 13.17], [2011, 13.19],
+      [2012, 13.33], [2013, 13.42], [2014, 13.45], [2015, 13.51], [2016, 13.57], [2017, 13.61],
+      [2018, 13.73], [2019, 13.79], [2020, 13.40], [2021, 13.33], [2022, 13.80], [2023, 14.09]]
+    scenarios:
+      - id: un-wpp-2024
+        name: UN WPP 2024
+        kind: projection
+        points: [[2024, 14.11], [2030, 14.33], [2040, 14.69], [2050, 15.03], [2060, 15.47], [2070, 16.00], [2080, 16.51], [2090, 17.02], [2100, 17.57]]
+        note: >-
+          The UN's medium variant. The UN publishes prediction intervals only
+          for life expectancy at birth, so no band is shown. Low-income
+          countries reach 15.0 in 2050 and 17.6 in 2100, under half a year a
+          decade, so the gap to high-income countries at 65 widens from 6.5
+          years in 2023 to 8.1 in 2050 and 9.8 in 2100.
+        sources:
+          - title: "UN World Population Prospects 2024, demographic indicators, medium variant (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Demographic_Indicators_Medium.csv.gz
+      - id: model-rejuvenation
+        name: "Model: rejuvenation at the tree's date"
+        kind: model
+        points: [[2024, 14.1], [2030, 14.3], [2040, 14.7], [2050, 15.0], [2060, 15.5], [2062, 15.6], [2065, 15.8],
+          [2070, 16.3], [2075, 17.0], [2080, 18.1], [2085, 19.7], [2090, 21.4], [2095, 22.9], [2100, 24.0]]
+        low: [[2024, 14.1], [2030, 14.3], [2040, 14.7], [2050, 15.0], [2060, 15.5], [2070, 16.0], [2080, 16.5], [2090, 17.0], [2100, 17.6]]
+        high: [[2024, 14.1], [2030, 14.3], [2040, 14.7], [2045, 14.9], [2050, 15.2], [2055, 15.7], [2060, 16.5], [2065, 17.8],
+          [2070, 19.5], [2075, 21.2], [2080, 22.5], [2085, 23.4], [2090, 23.9], [2095, 24.4], [2100, 24.7]]
+        note: >-
+          A simple model, not a forecast; every point is computed, none is
+          data. Baseline (no new aging biology): the UN medium path for
+          low-income countries. On top of it, rejuvenation therapies (node
+          aging-reversal) arrive in 2062, the tree's likely date; the band
+          uses the tree's window, arrival in 2045 (high) or 2110 (low, which
+          leaves the baseline unchanged to 2100). Effect: the aging-reversal
+          criterion's 10-year reset, applied once to everyone 60 and over, so
+          they die at the rates of people 10 years younger. On the UN's 2023
+          life table for the group that adds 7.2 years at 65, about as much as
+          in rich countries, since it acts only on people who reach 65 (my
+          calculation). The added years are held fixed and scaled by the share
+          of people over 60 who have had it. Uptake differs by income group,
+          the point of the comparison. My logistic curves reach half of people
+          over 60 8 years after arrival in high-income countries (scale 3
+          years, so 90 percent after about 15) and 25 years after in
+          low-income countries (scale 6, 90 percent after about 38), with 15
+          and 20 years for upper-middle and lower-middle income (my
+          interpolation). They are set from two past therapies. Combination
+          antiretroviral therapy for HIV (1996): in the United States 53
+          percent of adults in HIV care were taking it by late 1997 to January
+          1998 (HCSUS), while in low-income countries coverage of all people
+          with HIV was 19 percent in 2010 and first passed half in 2016, 20
+          years on, and only after generic drugs and donor programmes such as
+          PEPFAR and the Global Fund (World Bank, from UNAIDS). Statins (first
+          approved in 1987) had no such push: in 2003 to 2009, 66.5 percent of
+          people with heart disease took one in high-income countries against
+          3.3 percent in low-income ones (PURE), and in national surveys from
+          2013 to 2019 still only 8.2 percent did in low-income countries
+          (Marcus et al. 2022). With arrival in 2062 the gap at 65 between
+          high- and low-income countries peaks at 14.6 years in 2075, against
+          9.0 without the therapy, then narrows to 10.9 by 2100.
+        sources:
+          - title: "UN World Population Prospects 2024, complete life tables, both sexes, 1950 to 2023 (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Life_Table_Complete_Medium_Both_1950-2023.csv.gz
+          - title: "UN World Population Prospects 2024, population by five-year age group, medium variant (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_PopulationByAge5GroupSex_Medium.csv.gz
+          - title: "Cunningham et al. (HCSUS), Prevalence and predictors of highly active antiretroviral therapy use in patients with HIV infection in the United States, JAIDS 25:115 (2000)"
+            url: https://doi.org/10.1097/00042560-200010010-00005
+          - title: "World Bank World Development Indicators: antiretroviral therapy coverage, percent of people living with HIV (SH.HIV.ARTC.ZS), low-income countries, from UNAIDS"
+            url: https://data.worldbank.org/indicator/SH.HIV.ARTC.ZS?locations=XM
+          - title: "Marcus et al., Use of statins for the prevention of cardiovascular disease in 41 low-income and middle-income countries, Lancet Global Health 10:e369 (2022), which also reports the PURE study"
+            url: https://doi.org/10.1016/S2214-109X(21)00551-9
+  - id: best
+    name: Best country
+    points: # [year, value]  # country or territory holding the record
+      - [1840, 11.05]  # Denmark
+      - [1845, 11.40]  # Denmark
+      - [1850, 12.26]  # Norway
+      - [1855, 11.98]  # Norway
+      - [1860, 12.93]  # Norway
+      - [1865, 13.23]  # Norway
+      - [1870, 12.51]  # Norway
+      - [1875, 12.22]  # Norway
+      - [1880, 13.36]  # Norway
+      - [1885, 13.46]  # Norway
+      - [1890, 13.55]  # Norway
+      - [1895, 13.89]  # Norway
+      - [1900, 13.38]  # Norway
+      - [1905, 13.90]  # Norway
+      - [1910, 13.93]  # Norway
+      - [1915, 13.61]  # Norway
+      - [1920, 14.08]  # Norway
+      - [1925, 14.36]  # Norway
+      - [1930, 14.54]  # Norway
+      - [1935, 14.19]  # Norway
+      - [1940, 14.24]  # Norway
+      - [1945, 15.56]  # Norway
+      - [1950, 14.95]  # Norway
+      - [1955, 15.62]  # Norway
+      - [1960, 16.09]  # Lithuania
+      - [1965, 15.74]  # Lithuania
+      - [1970, 15.67]  # Sweden
+      - [1975, 15.99]  # Canada
+      - [1980, 16.68]  # Canada
+      - [1985, 17.48]  # Japan
+      - [1990, 18.33]  # Japan
+      - [1991, 18.55]  # Japan
+      - [1992, 18.61]  # Japan
+      - [1993, 18.70]  # Japan
+      - [1994, 19.02]  # Japan
+      - [1995, 18.91]  # Japan
+      - [1996, 19.45]  # Japan
+      - [1997, 19.60]  # Japan
+      - [1998, 19.76]  # Japan
+      - [1999, 19.66]  # Japan
+      - [2000, 20.14]  # Japan
+      - [2001, 20.39]  # Japan
+      - [2002, 20.61]  # Japan
+      - [2003, 20.68]  # Japan
+      - [2004, 20.89]  # Japan
+      - [2005, 20.77]  # Japan
+      - [2006, 21.04]  # Japan
+      - [2007, 21.15]  # Japan
+      - [2008, 21.19]  # Japan
+      - [2009, 21.48]  # Japan
+      - [2010, 21.38]  # Japan
+      - [2011, 21.29]  # Japan
+      - [2012, 21.46]  # Japan
+      - [2013, 21.62]  # Japan
+      - [2014, 21.81]  # Hong Kong
+      - [2015, 22.01]  # Hong Kong
+      - [2016, 22.24]  # Hong Kong
+      - [2017, 22.51]  # Hong Kong
+      - [2018, 22.81]  # Hong Kong
+      - [2019, 23.07]  # Hong Kong
+      - [2020, 22.55]  # Japan
+      - [2021, 22.79]  # Hong Kong
+      - [2022, 21.94]  # Japan
+      - [2023, 23.19]  # Hong Kong
+    scenarios:
+      - id: un-wpp-2024
+        name: UN WPP 2024
+        kind: projection
+        points: [[2024, 23.19], [2030, 23.80], [2040, 24.88], [2050, 25.99], [2060, 27.01], [2070, 27.90], [2080, 28.72], [2090, 29.53], [2100, 30.42]]
+        note: >-
+          The UN's medium variant for Hong Kong, the place with the highest
+          projected value in each decade to 2100: 26.0 years in 2050 and 30.4
+          in 2100, about 1.0 year a decade, slower than the 1.4 a decade since
+          1970. The UN publishes prediction intervals only for life expectancy
+          at birth, so no band is shown.
+        sources:
+          - title: "UN World Population Prospects 2024, demographic indicators, medium variant (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Demographic_Indicators_Medium.csv.gz
+      - id: model-rejuvenation
+        name: "Model: rejuvenation at the tree's date"
+        kind: model
+        points: [[2024, 23.2], [2030, 23.8], [2040, 24.9], [2050, 26.0], [2060, 27.0], [2062, 27.2], [2065, 28.2],
+          [2070, 31.4], [2075, 34.5], [2080, 35.9], [2085, 36.5], [2090, 37.0], [2095, 37.4], [2100, 37.9]]
+        low: [[2024, 23.2], [2030, 23.8], [2040, 24.9], [2050, 26.0], [2060, 27.0], [2070, 27.9], [2080, 28.7], [2090, 29.5], [2100, 30.4]]
+        high: [[2024, 23.2], [2030, 23.8], [2040, 24.9], [2045, 25.4], [2050, 27.6], [2055, 31.3], [2060, 33.8], [2065, 34.8],
+          [2070, 35.4], [2075, 35.8], [2080, 36.2], [2085, 36.6], [2090, 37.0], [2095, 37.4], [2100, 37.9]]
+        note: >-
+          A simple model, not a forecast; every point is computed, none is
+          data. Baseline (no new aging biology): the UN medium path for Hong
+          Kong. On top of it, rejuvenation therapies (node aging-reversal)
+          arrive in 2062, the tree's likely date; the band uses the tree's
+          window, arrival in 2045 (high) or 2110 (low, which leaves the
+          baseline unchanged to 2100). Effect: the aging-reversal criterion's
+          10-year reset, applied once to everyone 60 and over, so they die at
+          the rates of people 10 years younger. On Hong Kong's 2023 UN life
+          table that adds 7.5 years at 65 (my calculation). The added years
+          are held fixed and scaled by the share of people over 60 who have
+          had it. Uptake in the leading country follows the high-income curve:
+          half of people over 60 8 years after arrival (scale 3 years), set
+          between the United States' uptake of HIV therapy (53 percent of
+          adults in care within about 2 years, HCSUS) and of statins in
+          high-income countries (66.5 percent of people with heart disease in
+          2003 to 2009, PURE, as reported by Marcus et al. 2022). The fastest
+          gain is about 0.65 years a year, short of the one year a year that
+          longevity escape velocity needs.
+        sources:
+          - title: "UN World Population Prospects 2024, complete life tables, both sexes, 1950 to 2023 (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Life_Table_Complete_Medium_Both_1950-2023.csv.gz
+          - title: "UN World Population Prospects 2024, population by five-year age group, medium variant (CSV)"
+            url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_PopulationByAge5GroupSex_Medium.csv.gz
+          - title: "Cunningham et al. (HCSUS), Prevalence and predictors of highly active antiretroviral therapy use in patients with HIV infection in the United States, JAIDS 25:115 (2000)"
+            url: https://doi.org/10.1097/00042560-200010010-00005
+          - title: "World Bank World Development Indicators: antiretroviral therapy coverage, percent of people living with HIV (SH.HIV.ARTC.ZS), low-income countries, from UNAIDS"
+            url: https://data.worldbank.org/indicator/SH.HIV.ARTC.ZS?locations=XM
+          - title: "Marcus et al., Use of statins for the prevention of cardiovascular disease in 41 low-income and middle-income countries, Lancet Global Health 10:e369 (2022), which also reports the PURE study"
+            url: https://doi.org/10.1016/S2214-109X(21)00551-9

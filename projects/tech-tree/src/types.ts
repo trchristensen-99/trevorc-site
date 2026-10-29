@@ -27,7 +27,7 @@ export interface Node {
   lane: string
   track: string
   metric?: string
-  threshold?: { metric: string; value: number; label?: string }
+  threshold?: { metric: string; value: number; label?: string; series?: string }
   trendYear?: number // when the metric's trend reaches the threshold
   scenarioYears?: { id: string; year: number | null }[] // when each forecast does
   routes?: string[]
@@ -89,6 +89,16 @@ export interface Metric {
   source?: Source
   license?: string
   note?: string
+  scenarios: Scenario[]
+  series?: Series[] // several lines sharing the chart (then points is empty)
+}
+
+// One line of a metric with several.
+export interface Series {
+  id: string
+  name: string
+  points: [number, number][]
+  trend: Metric["trend"]
   scenarios: Scenario[]
 }
 

@@ -1,11 +1,15 @@
 # Lifespan milestones: thresholds on the lifespan metrics
-# (metrics/life-expectancy-world.yaml, life-expectancy-65-best.yaml,
-# life-expectancy-best.yaml, max-age-at-death.yaml). Medicine, track
-# longevity. Each metric carries forecast scenarios (UN, IHME, the record
-# line, Metaculus, and a model tied to the tree's date for aging-reversal);
-# the build reports the year each scenario reaches each threshold. The
-# windows below are given by hand where the straight-line trend is a poor
-# guide, with the reasoning in `forecast`.
+# (metrics/life-expectancy-income.yaml and life-expectancy-65-income.yaml,
+# with one line per World Bank income group plus the world and, at 65, the
+# best country; life-expectancy-best.yaml; max-age-at-death.yaml).
+# Medicine, track longevity. Each metric carries forecast scenarios (UN,
+# IHME, the record line, Metaculus, and a model tied to the tree's date for
+# aging-reversal, with uptake that differs by income group); the build
+# reports the year each scenario reaches each threshold. The windows below
+# are given by hand where the straight-line trend is a poor guide, with the
+# reasoning in `forecast`. The gap between high- and low-income countries
+# (16.5 years at birth in 2023) can't be a threshold on one line, so it is
+# described in the metric's notes instead.
 #
 # Longevity escape velocity is a threshold on the slope of remaining life
 # expectancy, not its level, so it stays a node of its own
@@ -19,7 +23,7 @@
   fields: [medicine]
   track: longevity
   tier: 3
-  threshold: { metric: life-expectancy-world, value: 75, label: "75 years" }
+  threshold: { metric: life-expectancy-income, series: world, value: 75, label: "75 years" }
   date: { window: [2029, 2047], likely: 2034 }
   status: speculative
   summary: >-
@@ -49,7 +53,7 @@
   fields: [medicine]
   track: longevity
   tier: 2
-  threshold: { metric: life-expectancy-world, value: 80, label: "80 years" }
+  threshold: { metric: life-expectancy-income, series: world, value: 80, label: "80 years" }
   date: { window: [2050, 2110], likely: 2078 }
   status: speculative
   summary: >-
@@ -63,12 +67,112 @@
       The UN's median reaches 80 around 2080, its 95 percent interval from
       about 2062 to after 2100; IHME's upper bound for 2050 is 80.3. The
       straight-line trend (about 2043) overstates it. In the tree's model,
-      rejuvenation therapies arriving in 2062 and spreading as HIV therapy
-      did bring it to 2071 (2060 if they arrive in 2045). I put it a little
-      before the UN, around 2078.
+      rejuvenation therapies arriving in 2062 and spreading fast in rich
+      countries and slowly in poor ones bring it to 2070 (2057 if they
+      arrive in 2045). I put it a little before the UN, around 2078.
     sources:
       - title: "UN World Population Prospects 2024, probabilistic projections of life expectancy at birth"
         url: https://population.un.org/wpp/assets/Excel%20Files/2_Indicators%20(Probabilistic)/EXCEL_FILES/4_Mortality/UN_PPP2024_Output_e0.xlsx
+
+- id: life-expectancy-low-income-70
+  name: "Life expectancy of 70 in low-income countries"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 2
+  threshold: { metric: life-expectancy-income, series: low, value: 70, label: "70 years, low income" }
+  date: { window: [2036, 2085], likely: 2047 }
+  status: speculative
+  summary: >-
+    The 26 low-income countries, most of them in sub-Saharan Africa, with a
+    life expectancy at birth of 70, where high-income countries were in
+    1967. They were at 64.9 in 2023, up from 53.1 in 2000 as child, HIV and
+    other infectious deaths fell.
+  requires: [vaccination, antibiotics-penicillin, hiv-antiretroviral-therapy]
+  helped_by: [epidemiology, mrna-vaccines]
+  forecast:
+    note: >-
+      The sources disagree by almost two decades. The straight line since
+      1970 (4.5 years a decade) crosses 70 around 2036, and the pace since
+      2000 (5.1 a decade) would cross it around 2033. The UN expects gains to
+      slow sharply, to about 1.4 years a decade, and crosses 70 only in
+      2055 (95 percent interval about 2043 to 2084). IHME does not publish
+      income groups, but its forecast for sub-Saharan Africa, 73.6 in 2050
+      (69.4 to 76.2), would reach 70 around 2039 on the same path. I put it
+      around 2047, between the two.
+    sources:
+      - title: "UN World Population Prospects 2024, probabilistic projections of life expectancy at birth"
+        url: https://population.un.org/wpp/assets/Excel%20Files/2_Indicators%20(Probabilistic)/EXCEL_FILES/4_Mortality/UN_PPP2024_Output_e0.xlsx
+      - title: "GBD 2021 Forecasting Collaborators, Lancet 403:2204 (2024)"
+        url: https://doi.org/10.1016/S0140-6736(24)00685-8
+
+- id: life-expectancy-lower-middle-75
+  name: "Life expectancy of 75 in lower-middle-income countries"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 3
+  threshold: { metric: life-expectancy-income, series: lower-middle, value: 75, label: "75 years, lower-middle income" }
+  date: { window: [2038, 2094], likely: 2053 }
+  status: speculative
+  summary: >-
+    The 54 lower-middle-income countries, home to 3.25 billion people and
+    led by India, Pakistan and Nigeria, with a life expectancy at birth of
+    75, where high-income countries were in 1989. They were at 69.6 in 2023.
+  requires: [vaccination, antibiotics-penicillin]
+  helped_by: [hiv-antiretroviral-therapy, epidemiology, aging-drug-approved]
+  forecast:
+    note: >-
+      The straight line since 1970 (3.6 years a decade) crosses 75 around
+      2037, but the UN expects gains to slow to about 1.4 years a decade
+      and crosses 75 around 2056 (95 percent interval about 2041 to 2094).
+      IHME publishes no forecast for this group, but its forecasts for
+      poorer regions such as sub-Saharan Africa are well above the UN's, so
+      I put it a little before the UN, around 2053.
+    sources:
+      - title: "UN World Population Prospects 2024, probabilistic projections of life expectancy at birth"
+        url: https://population.un.org/wpp/assets/Excel%20Files/2_Indicators%20(Probabilistic)/EXCEL_FILES/4_Mortality/UN_PPP2024_Output_e0.xlsx
+
+- id: life-expectancy-65-world-20
+  name: "20 more years at 65, worldwide"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 3
+  threshold: { metric: life-expectancy-65-income, series: world, value: 20, label: "20 years at 65, world" }
+  summary: >-
+    The average 65-year-old on Earth expected to live to 85 at that year's
+    death rates. The world was at 17.6 years in 2023, up from 12.9 in 1970;
+    the UN's medium path reaches 20 around 2057.
+  requires: [randomized-controlled-trial, antibiotics-penicillin]
+  helped_by: [aging-drug-approved, senolytics-approved]
+
+- id: life-expectancy-65-high-income-25
+  name: "25 more years at 65 in high-income countries"
+  kind: milestone
+  fields: [medicine]
+  track: longevity
+  tier: 3
+  threshold: { metric: life-expectancy-65-income, series: high, value: 25, label: "25 years at 65, high income" }
+  date: { window: [2050, 2090], likely: 2066 }
+  status: speculative
+  summary: >-
+    65-year-olds across the high-income countries, not just the leader,
+    expecting to live to 90 on average. They were at 20.6 years in 2023, up
+    from 14.4 in 1970.
+  requires: [life-expectancy-65-25]
+  helped_by: [aging-drug-approved, senolytics-approved, aging-reversal]
+  forecast:
+    note: >-
+      The straight line since 1970 (1.2 years a decade) crosses 25 around
+      2058. The UN expects gains to slow to about 0.9 a decade and crosses
+      25 around 2071. In the tree's model, a 10-year rejuvenation arriving
+      in 2062 (node aging-reversal) and reaching half of older people in
+      rich countries within 8 years brings it to 2064, or 2050 with arrival
+      in 2045. I put it around 2066.
+    sources:
+      - title: "UN World Population Prospects 2024, demographic indicators, medium variant"
+        url: https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Demographic_Indicators_Medium.csv.gz
 
 - id: life-expectancy-65-25
   name: "25 more years at 65 in a country"
@@ -76,7 +180,7 @@
   fields: [medicine]
   track: longevity
   tier: 3
-  threshold: { metric: life-expectancy-65-best, value: 25, label: "25 years at 65" }
+  threshold: { metric: life-expectancy-65-income, series: best, value: 25, label: "25 years at 65" }
   date: { window: [2032, 2052], likely: 2040 }
   status: speculative
   summary: >-
@@ -103,7 +207,7 @@
   fields: [medicine]
   track: longevity
   tier: 2
-  threshold: { metric: life-expectancy-65-best, value: 30, label: "30 years at 65" }
+  threshold: { metric: life-expectancy-65-income, series: best, value: 30, label: "30 years at 65" }
   date: { window: [2052, 2120], likely: 2080 }
   status: speculative
   summary: >-
@@ -118,7 +222,7 @@
       30 only around 2096, and the line since 1970 around 2070. In the
       tree's model, a 10-year rejuvenation arriving in 2062 (node
       aging-reversal) adds about 7.5 years at 65 as it spreads and brings
-      it to about 2070, or 2055 with arrival in 2045. I put it around 2080,
+      it to about 2068, or 2053 with arrival in 2045. I put it around 2080,
       between the two, since the therapy's date is so uncertain.
     sources:
       - title: "UN World Population Prospects 2024, demographic indicators, medium variant"

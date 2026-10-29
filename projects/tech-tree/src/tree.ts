@@ -9,7 +9,7 @@
 import { select, type Selection } from "d3-selection"
 import { zoom, zoomIdentity, type D3ZoomEvent, type ZoomBehavior, type ZoomTransform } from "d3-zoom"
 import { timeScale } from "./time"
-import type { Edge, Lane, Metric, Node, Track, Tree } from "./types"
+import type { Edge, Lane, Metric, Node, Series, Track, Tree } from "./types"
 
 type Sel<T extends Element> = Selection<T, unknown, null, undefined>
 
@@ -23,7 +23,13 @@ export interface Display {
   detail: number // the slider, 0 to 100: none, the default set (DETAIL_DEFAULT), everything
   grow: boolean // more appear as you zoom in
   frontier: boolean // everything not yet achieved shows at every zoom
-  allLinks: boolean // every direct link among shown nodes, not the reduced set
+  links: "main" | "all" | "none" // the reduced set, every direct link, or none (a selection's chain always shows)
+  colorBy: "field" | "status" | "kind"
+  labels: "fit" | "landmarks" | "none"
+  nodeSize: number // multiplies the node sizes
+  bars: boolean // date ranges and future windows
+  trackNames: boolean // track names and dividers when zoomed in
+  eras: boolean // era lines and names
   trends: string[] // metric ids shown along the bottom
   trendLayout: "auto" | "strips" | "compact" | "combined"
 }
@@ -47,6 +53,12 @@ export const ROUTE_COLORS = ["#7b5ea7", "#d0587e", "#2f8fb0", "#8aa33a", "#c9772
 const STRIP = { strips: 34, compact: 20 } as const
 const STRIP_GAP = 3
 const COMBINED_H = 150
+// Lines within one metric (e.g. income groups), by position.
+export const SERIES_COLORS = ["#3d6fb6", "#2a9d8f", "#e0a526", "#d0587e", "#7b5ea7", "#6b7280"]
+// A metric's lines: its series, or itself as one line.
+export function seriesOf(m: Metric): Series[] {
+  return m.series ?? [{ id: m.id, name: m.name, points: m.points, trend: m.trend, scenarios: m.scenarios ?? [] }]
+}
 // Lines in the combined chart, by position.
 const PALETTE = ["#3d6fb6", "#e0a526", "#2a9d8f", "#d0587e", "#7b5ea7", "#c9772a", "#4f9a4a", "#c2534b", "#2f8fb0", "#8aa33a", "#6b7280", "#8d6e4f"]
 
@@ -76,6 +88,16 @@ function shape(kind: Node["kind"], r: number): string {
 export const kindShape = shape
 
 export const DETAIL_DEFAULT = 40
+export const DISPLAY_DEFAULTS: Display = {
+  detail: DETAIL_DEFAULT, grow: true, frontier: false, trends: [], trendLayout: "auto",
+  links: "main", colorBy: "field", labels: "fit", nodeSize: 1, bars: true, trackNames: true, eras: true,
+}
+// Colors when nodes are colored by status or kind instead of field.
+export const STATUS_COLORS: Record<Node["status"], string> = { achieved: "#3d6fb6", ongoing: "#e0a526", speculative: "#7b5ea7", lost: "#8b9096" }
+export const KIND_COLORS: Record<Node["kind"], string> = {
+  precondition: "#9a8466", resource: "#8d6e4f", discovery: "#2a9d8f", technique: "#3d6fb6", device: "#c9772a",
+  infrastructure: "#6b7280", institution: "#d0587e", milestone: "#7b5ea7",
+}
 const unachieved = (n: Node) => n.status === "ongoing" || n.status === "speculative"
 
 export class TreeView {
@@ -112,7 +134,7 @@ export class TreeView {
   private selected: Node | null = null
   private lit: { up: Set<string>; down: Set<string> } | null = null
   private filters: Filters = { fields: new Set(), statuses: new Set(), kinds: new Set() }
-  private display: Display = { detail: DETAIL_DEFAULT, grow: true, frontier: false, allLinks: false, trends: [], trendLayout: "auto" }
+  private display: Display = { ...DISPLAY_DEFAULTS }
   // Nodes in the order they appear (by the zoom they first show at), and
   // each node's place in it.
   private order: Node[]
@@ -129,7 +151,12 @@ export class TreeView {
     this.zSorted = this.order.map((n) => n.z)
     this.metrics = new Map(tree.metrics.map((m) => [m.id, m]))
     this.fieldColor = new Map(tree.fields.map((f) => [f.id, f.color]))
-    this.color = (n) => (n.lane === "roots" ? tree.roots.color : this.fieldColor.get(n.fields[0]) ?? "#888")
+    this.color = (n) => {
+      const by = this.display.colorBy
+      if (by === "status") return STATUS_COLORS[n.status]
+      if (by === "kind") return KIND_COLORS[n.kind]
+      return n.lane === "roots" ? tree.roots.color : this.fieldColor.get(n.fields[0]) ?? "#888"
+    }
     for (const e of tree.edges) {
       if (e.kind !== "requires" && e.kind !== "uses") continue
       ;(this.parents.get(e.t) ?? this.parents.set(e.t, []).get(e.t)!).push(e.s)
@@ -181,17 +208,24 @@ export class TreeView {
 
   // Centre on a point of the layout at a relative zoom.
   focus(x: number, y: number, k: number) {
-    this.svg.call(this.zoomer.transform, zoomIdentity.translate(this.w / 2 - x * this.bx * k, this.h / 2 - y * this.by * k).scale(k))
+    this.svg.call(this.zoomer.transform, zoomIdentity.translate(this.w / 2 - x * this.bx * k, this.midY() - y * this.by * k).scale(k))
   }
   focusNode(n: Node, rel = 4) {
     const k = Math.max(rel, this.t.k)
     // On phones the info panel covers the bottom half, so aim higher.
     const fy = this.w <= 640 ? 0.25 : 0.5
-    this.svg.call(this.zoomer.transform, zoomIdentity.translate(this.w * 0.42 - n.x * this.bx * k, this.h * fy - n.y * this.by * k).scale(k))
+    const top = 38, bottom = this.h - 6 - this.stripsHeight()
+    this.svg.call(this.zoomer.transform, zoomIdentity.translate(this.w * 0.42 - n.x * this.bx * k, top + (bottom - top) * fy - n.y * this.by * k).scale(k))
   }
   view(): [number, number, number] {
     const k = this.t.k
-    return [(this.w / 2 - this.t.x) / (this.bx * k), (this.h / 2 - this.t.y) / (this.by * k), k]
+    return [(this.w / 2 - this.t.x) / (this.bx * k), (this.midY() - this.t.y) / (this.by * k), k]
+  }
+  // The middle of the space the tree has: below the axis, above the trend
+  // panel. Views are centered here, so at the starting zoom the whole tree
+  // fits that space whatever the panel's size.
+  private midY() {
+    return (38 + this.h - 6 - this.stripsHeight()) / 2
   }
   // How many nodes are showing (for the detail control's readout).
   get shown() {
@@ -391,7 +425,8 @@ export class TreeView {
     type T = Track & { lane: Lane; first: boolean }
     const tracks: T[] = tree.lanes.flatMap((l) => l.tracks.map((t, i) => ({ ...t, lane: l, first: i === 0 })))
       .filter((t) => (t.y1 - t.y0) * ky >= 15 && sy(t.y1) > 36 && sy(t.y0) < this.h)
-    if (!overview) {
+    const trackNames = this.display.trackNames && !overview
+    if (trackNames) {
       ctx.strokeStyle = this.dark ? "#232b34" : "#e3e5e0"
       ctx.lineWidth = 1
       ctx.setLineDash([3, 4])
@@ -401,7 +436,7 @@ export class TreeView {
       ctx.setLineDash([])
     }
     const trackX = overview ? this.left + 8 : 24
-    this.g.tracks.selectAll<SVGTextElement, T>("text").data(overview ? [] : tracks, (t) => t.id).join("text")
+    this.g.tracks.selectAll<SVGTextElement, T>("text").data(trackNames ? tracks : [], (t) => t.id).join("text")
       .attr("x", trackX).attr("y", (t) => Math.max(sy(t.y0) + 9, 44)).attr("dominant-baseline", "central")
       .attr("font-size", 9.5).attr("letter-spacing", "0.03em").attr("fill", muted).attr("opacity", 0.9)
       .attr("stroke", halo).attr("stroke-width", 3).attr("paint-order", "stroke").attr("pointer-events", "none")
@@ -412,7 +447,7 @@ export class TreeView {
     const top = Math.max(0, sy(0)), bottom = Math.min(this.h, sy(tree.meta.height))
     ctx.strokeStyle = this.dark ? "#2a323b" : "#e1e3de"
     ctx.beginPath()
-    for (const [x] of eraX) if (x > 0 && x < this.w) { ctx.moveTo(Math.round(x) + 0.5, top); ctx.lineTo(Math.round(x) + 0.5, bottom) }
+    if (this.display.eras) for (const [x] of eraX) if (x > 0 && x < this.w) { ctx.moveTo(Math.round(x) + 0.5, top); ctx.lineTo(Math.round(x) + 0.5, bottom) }
     ctx.stroke()
     const accent = this.dark ? "#8fb0ff" : "#3d6fb6"
     if (nowX < this.w) {
@@ -436,7 +471,7 @@ export class TreeView {
     axis.selectAll<SVGRectElement, number>("rect").data([0]).join("rect").attr("x", 0).attr("y", 0).attr("width", this.w).attr("height", 34)
       .attr("fill", this.dark ? "rgba(14,19,25,0.92)" : "rgba(255,255,255,0.92)")
     const eraLabels = eraX.map(([x, name], i) => ({ x: Math.max(x, 4), end: i + 1 < eraX.length ? eraX[i + 1][0] : nowX, name }))
-      .filter((d) => d.end - d.x > d.name.length * 6.3 + 12)
+      .filter((d) => this.display.eras && d.end - d.x > d.name.length * 6.3 + 12)
     axis.selectAll<SVGTextElement, (typeof eraLabels)[number]>("text.era").data(eraLabels, (d) => d.name).join("text").attr("class", "era")
       .attr("x", (d) => d.x + 4).attr("y", 13).text((d) => d.name).attr("fill", this.dark ? "#9aa6b2" : "#5b6672").attr("font-size", 11)
     let last = -Infinity
@@ -496,7 +531,9 @@ export class TreeView {
         if (e.kind === "helped" || e.kind === "competes") return e.s === sel.id || e.t === sel.id
         return (up(e.s) && up(e.t)) || (down(e.s) && down(e.t))
       })
-    } else if (this.display.allLinks) {
+    } else if (this.display.links === "none") {
+      edges = []
+    } else if (this.display.links === "all") {
       edges = tree.edges.filter((e) => shownIds.has(e.s) && shownIds.has(e.t))
     } else {
       edges = this.reduced(baseIds, flags.map((f) => (f ? 1 : 0)).join(""))
@@ -509,8 +546,9 @@ export class TreeView {
     }
 
     const dim = (n: Node) => (lit && !inChain(n)) || (q && !matches(n))
+    const rad = (n: Node) => RADIUS[n.tier] * this.display.nodeSize
     // Date ranges and future windows as bars behind the nodes.
-    for (const n of nodes) {
+    for (const n of this.display.bars ? nodes : []) {
       if (n.to <= n.from || !onScreen(n)) continue
       const x0 = sx(ts.x(n.from)), x1 = sx(ts.x(n.to))
       if (x1 - x0 <= 6) continue
@@ -562,7 +600,7 @@ export class TreeView {
         .on("pointerleave", () => this.onHover(null, [0, 0])),
     )
     nodeSel.attr("transform", (n) => `translate(${sx(n.x)},${sy(n.y)})`)
-      .attr("d", (n) => shape(n.kind, RADIUS[n.tier] * (n === sel ? 1.4 : 1)))
+      .attr("d", (n) => shape(n.kind, rad(n) * (n === sel ? 1.4 : 1)))
       .attr("fill-rule", "evenodd")
       .attr("fill", (n) => (n.status === "speculative" ? halo : n.status === "lost" ? (this.dark ? "#4b5158" : "#c9cbc6") : this.color(n)))
       .attr("fill-opacity", (n) => (n.status === "ongoing" ? 0.42 : 1))
@@ -577,16 +615,17 @@ export class TreeView {
     const priority = (n: Node) => (n === sel ? -1e9 : inChain(n) ? -1e6 : 0) + n.z + (dim(n) ? 1e6 : 0)
     const placed: [number, number, number, number][] = []
     const size = (n: Node) => (n.tier === 1 ? 12 : n.tier === 2 ? 11 : 10.5)
-    const labels = vis.filter((n) => !dim(n) || n === sel).sort((a, b) => priority(a) - priority(b) || a.x - b.x).filter((n) => {
+    const labelMode = this.display.labels
+    const labels = vis.filter((n) => (!dim(n) || n === sel) && (labelMode === "fit" || n === sel || inChain(n) || (labelMode === "landmarks" && n.tier === 1))).sort((a, b) => priority(a) - priority(b) || a.x - b.x).filter((n) => {
       const s = size(n)
-      const x = sx(n.x) + RADIUS[n.tier] + 4, y = sy(n.y)
+      const x = sx(n.x) + rad(n) + 4, y = sy(n.y)
       const box: [number, number, number, number] = [x - 2, y - s / 2 - 1, x + n.name.length * s * 0.55 + 2, y + s / 2 + 1]
       if (placed.some((p) => box[0] < p[2] && box[2] > p[0] && box[1] < p[3] && box[3] > p[1])) return false
       placed.push(box)
       return true
     })
     this.g.labels.selectAll<SVGTextElement, Node>("text").data(labels, (n) => n.id).join("text")
-      .attr("x", (n) => sx(n.x) + RADIUS[n.tier] + 4).attr("y", (n) => sy(n.y))
+      .attr("x", (n) => sx(n.x) + rad(n) + 4).attr("y", (n) => sy(n.y))
       .attr("dominant-baseline", "central")
       .attr("font-size", size)
       .attr("font-weight", (n) => (n.tier === 1 || n === sel ? 650 : 500))
@@ -606,34 +645,41 @@ export class TreeView {
   private geometry(m: Metric, y0: number, H: number, sx: (x: number) => number, tx: (year: number) => number, withMarks: boolean) {
     const f = (v: number) => (m.log ? Math.log10(v) : v)
     const ok = (v: number) => !m.log || v > 0
-    const pts = m.points.filter(([, v]) => ok(v))
+    const lines = seriesOf(m)
     const ms = withMarks ? m.milestones.map((id) => this.byId.get(id)).filter((n): n is Node => !!n && !!n.threshold) : []
-    const scen = m.scenarios ?? []
-    const vals = [...pts.map(([, v]) => f(v)), ...ms.map((n) => f(n.threshold!.value))]
-    for (const sc of scen) for (const [x, v] of [...sc.points, ...sc.low, ...sc.high]) if (x <= 2100 && ok(v)) vals.push(f(v))
-    // Room for the trend to run on a dozen years past the data.
-    if (m.trend && pts.length) vals.push(m.trend.slope * (pts.at(-1)![0] + 12) + m.trend.intercept)
+    // One scale for all of the metric's lines.
+    const vals = ms.map((n) => f(n.threshold!.value))
+    for (const ln of lines) {
+      for (const [, v] of ln.points) if (ok(v)) vals.push(f(v))
+      for (const sc of ln.scenarios) for (const [x, v] of [...sc.points, ...sc.low, ...sc.high]) if (x <= 2100 && ok(v)) vals.push(f(v))
+      // Room for the trend to run on a dozen years past the data.
+      if (ln.trend && ln.points.length) vals.push(ln.trend.slope * (ln.points.at(-1)![0] + 12) + ln.trend.intercept)
+    }
     let lo = Math.min(...vals), hi = Math.max(...vals)
     if (m.log && hi - lo < 0.5) { lo -= 0.25; hi += 0.25 }
     if (!m.log) { const pad = (hi - lo) * 0.08 || 1; lo -= pad; hi += pad }
     const py = (u: number) => y0 + 3 + (1 - (u - lo) / (hi - lo)) * (H - 6)
-    const line = (list: [number, number][]) => list.filter(([, v]) => ok(v)).map(([x, v], j) => `${j ? "L" : "M"}${sx(tx(x)).toFixed(1)},${py(f(v)).toFixed(1)}`).join("")
-    const data = line(pts)
-    let ext = ""
-    if (m.trend && pts.length) {
-      const span = hi - lo
-      const seg: string[] = []
-      for (let x = pts.at(-1)![0]; x <= 2100; x += 0.5) {
-        const u = m.trend.slope * x + m.trend.intercept
-        if (u < lo - span * 0.02 || u > hi + span * 0.02) break
-        seg.push(`${seg.length ? "L" : "M"}${sx(tx(x)).toFixed(1)},${py(u).toFixed(1)}`)
+    const path = (list: [number, number][]) => list.filter(([, v]) => ok(v)).map(([x, v], j) => `${j ? "L" : "M"}${sx(tx(x)).toFixed(1)},${py(f(v)).toFixed(1)}`).join("")
+    const geoLines = lines.map((ln) => {
+      const pts = ln.points.filter(([, v]) => ok(v))
+      let ext = ""
+      if (ln.trend && pts.length) {
+        const span = hi - lo
+        const seg: string[] = []
+        for (let x = pts.at(-1)![0]; x <= 2100; x += 0.5) {
+          const u = ln.trend.slope * x + ln.trend.intercept
+          if (u < lo - span * 0.02 || u > hi + span * 0.02) break
+          seg.push(`${seg.length ? "L" : "M"}${sx(tx(x)).toFixed(1)},${py(u).toFixed(1)}`)
+        }
+        ext = seg.join("")
       }
-      ext = seg.join("")
-    }
-    const scenarios = scen.map((sc) => {
-      const band = sc.low.length > 1 && sc.high.length > 1 ? line(sc.low) + line([...sc.high].reverse()).replace(/^M/, "L") + "Z" : ""
-      const end = sc.points.filter(([, v]) => ok(v)).at(-1)
-      return { id: sc.id, name: sc.name, d: line(sc.points), band, end: end ? [sx(tx(end[0])), py(f(end[1]))] as [number, number] : null }
+      const scenarios = ln.scenarios.map((sc) => {
+        const band = sc.low.length > 1 && sc.high.length > 1 ? path(sc.low) + path([...sc.high].reverse()).replace(/^M/, "L") + "Z" : ""
+        const end = sc.points.filter(([, v]) => ok(v)).at(-1)
+        return { id: sc.id, name: sc.name, d: path(sc.points), band, end: end ? [sx(tx(end[0])), py(f(end[1]))] as [number, number] : null }
+      })
+      const last = pts.at(-1)
+      return { id: ln.id, name: ln.name, data: path(pts), ext, scenarios, last: last ? [sx(tx(last[0])), py(f(last[1]))] as [number, number] : null, points: pts }
     })
     // Milestone labels that would overlap the one before are left out.
     let end = -Infinity
@@ -644,7 +690,7 @@ export class TreeView {
         if (show) end = mk.x + 3 + mk.label.length * 5.3
         return { ...mk, label: show ? mk.label : "" }
       })
-    return { data, ext, scenarios, marks, py, f }
+    return { lines: geoLines, marks, py, f }
   }
 
   private renderTrends(sx: (x: number) => number, tx: (year: number) => number, ink: string, muted: string, halo: string, overview: boolean) {
@@ -663,24 +709,40 @@ export class TreeView {
     g.append("rect").attr("x", 0).attr("y", top).attr("width", this.w).attr("height", this.h - top).attr("fill", bg).attr("stroke", edge)
     // Hover: the data point nearest the pointer, over all lines shown.
     const hover: { x: number; y: number; text: string }[] = []
-    const addHover = (m: Metric, py: (u: number) => number, f: (v: number) => number) => {
-      for (const [x, v] of m.points) if (!m.log || v > 0) hover.push({ x: sx(tx(x)), y: py(f(v)), text: `${m.name}: ${fmtValue(v, m.unit)} in ${Math.round(x)}` })
+    const addHover = (m: Metric, geo: ReturnType<TreeView["geometry"]>) => {
+      for (const ln of geo.lines)
+        for (const [x, v] of ln.points) hover.push({ x: sx(tx(x)), y: geo.py(geo.f(v)), text: `${m.series ? `${m.short}, ${ln.name}` : m.name}: ${fmtValue(v, m.unit)} in ${Math.round(x)}` })
     }
-    const drawLines = (sel: Sel<SVGGElement>, geo: ReturnType<TreeView["geometry"]>, color: string, labels: boolean) => {
-      for (const sc of geo.scenarios) {
-        if (sc.band) sel.append("path").attr("d", sc.band).attr("fill", color).attr("opacity", 0.1)
-        sel.append("path").attr("d", sc.d).attr("fill", "none").attr("stroke", color).attr("stroke-width", 1.2).attr("stroke-dasharray", "1.5 2.5").attr("opacity", 0.9)
-      }
-      sel.append("path").attr("d", geo.ext).attr("fill", "none").attr("stroke", color).attr("stroke-width", 1.3).attr("stroke-dasharray", "4 3").attr("opacity", 0.75)
-      sel.append("path").attr("d", geo.data).attr("fill", "none").attr("stroke", color).attr("stroke-width", 1.8)
-      if (labels) {
-        let lastY = -Infinity
-        for (const sc of [...geo.scenarios].filter((x) => x.end).sort((a, b) => a.end![1] - b.end![1])) {
-          if (sc.end![1] - lastY < 9) continue
-          lastY = sc.end![1]
-          sel.append("text").attr("x", sc.end![0] + 3).attr("y", sc.end![1]).attr("dominant-baseline", "central").attr("font-size", 9).attr("fill", muted)
-            .attr("stroke", halo).attr("stroke-width", 2.5).attr("paint-order", "stroke").text(sc.name)
+    // A metric's lines: one color each (several series get a palette, or in
+    // the combined chart fading shades of the metric's color), with forecast
+    // and, on full strips, series names.
+    const drawLines = (sel: Sel<SVGGElement>, geo: ReturnType<TreeView["geometry"]>, color: string, labels: boolean, shades = false) => {
+      const many = geo.lines.length > 1
+      geo.lines.forEach((ln, i) => {
+        const c = many && !shades ? SERIES_COLORS[i % SERIES_COLORS.length] : color
+        const op = many && shades ? Math.max(0.35, 1 - i * 0.18) : 1
+        const g = sel.append("g").attr("opacity", op)
+        // With several series, each shows only its first forecast here (the
+        // chart in the info panel has them all).
+        for (const sc of many ? ln.scenarios.slice(0, 1) : ln.scenarios) {
+          if (sc.band && !many) g.append("path").attr("d", sc.band).attr("fill", c).attr("opacity", 0.1)
+          g.append("path").attr("d", sc.d).attr("fill", "none").attr("stroke", c).attr("stroke-width", 1.2).attr("stroke-dasharray", "1.5 2.5").attr("opacity", 0.9)
         }
+        g.append("path").attr("d", ln.ext).attr("fill", "none").attr("stroke", c).attr("stroke-width", 1.3).attr("stroke-dasharray", "4 3").attr("opacity", 0.75)
+        g.append("path").attr("d", ln.data).attr("fill", "none").attr("stroke", c).attr("stroke-width", 1.8)
+      })
+      if (!labels) return
+      // Labels at line ends: series names at the last data point, else
+      // scenario names; ones that would overlap are left out.
+      const tags = many
+        ? geo.lines.filter((ln) => ln.last).map((ln, i) => ({ at: ln.last!, text: ln.name, color: SERIES_COLORS[i % SERIES_COLORS.length] }))
+        : geo.lines[0].scenarios.filter((x) => x.end).map((x) => ({ at: x.end!, text: x.name, color: muted }))
+      let lastY = -Infinity
+      for (const t of tags.sort((a, b) => a.at[1] - b.at[1])) {
+        if (t.at[1] - lastY < 9) continue
+        lastY = t.at[1]
+        sel.append("text").attr("x", t.at[0] + 3).attr("y", t.at[1]).attr("dominant-baseline", "central").attr("font-size", 9).attr("fill", t.color)
+          .attr("stroke", halo).attr("stroke-width", 2.5).attr("paint-order", "stroke").text(t.text)
       }
     }
     if (layout === "combined") {
@@ -700,8 +762,8 @@ export class TreeView {
       area.append("line").attr("x1", nowX).attr("x2", nowX).attr("y1", y0).attr("y2", y0 + H).attr("stroke", accent).attr("stroke-dasharray", "3 3").attr("opacity", 0.6)
       list.forEach((m, i) => {
         const geo = this.geometry(m, y0, H, sx, tx, false)
-        drawLines(area.append("g"), geo, PALETTE[i % PALETTE.length], false)
-        addHover(m, geo.py, geo.f)
+        drawLines(area.append("g"), geo, PALETTE[i % PALETTE.length], false, true)
+        addHover(m, geo)
       })
       area.append("text").attr("x", this.w - 8).attr("y", y0 + H - 4).attr("text-anchor", "end").attr("font-size", 9.5).attr("fill", muted)
         .text("Each line on its own scale. Dashed: trend; dotted: forecasts.")
@@ -716,14 +778,16 @@ export class TreeView {
         strip.append("line").attr("x1", nowX).attr("x2", nowX).attr("y1", y0).attr("y2", y0 + H).attr("stroke", accent).attr("stroke-dasharray", "3 3").attr("opacity", 0.6)
         const geo = this.geometry(m, y0, H, sx, tx, true)
         drawLines(strip, geo, color, layout === "strips")
-        addHover(m, geo.py, geo.f)
+        addHover(m, geo)
         for (const mk of geo.marks) {
           strip.append("line").attr("x1", mk.x).attr("x2", mk.x).attr("y1", y0 + 2).attr("y2", y0 + H - 2)
             .attr("stroke", color).attr("stroke-width", 1.2).attr("stroke-dasharray", mk.done ? null : "2 2")
           if (mk.label && layout === "strips") strip.append("text").attr("x", mk.x + 3).attr("y", y0 + H - 5).attr("font-size", 9.5).attr("fill", muted)
             .attr("stroke", halo).attr("stroke-width", 2.5).attr("paint-order", "stroke").text(mk.label)
         }
-        const last = m.points.at(-1)
+        // The latest value: the metric's, or for several series the first's.
+        const first = seriesOf(m)[0]
+        const last = first?.points.at(-1)
         strip.append("text").attr("x", labelX).attr("y", y0 + (layout === "strips" ? 12 : H / 2)).attr("dominant-baseline", layout === "strips" ? null : "central")
           .attr("font-size", layout === "strips" ? 11 : 10).attr("font-weight", 650).attr("fill", color)
           .attr("stroke", halo).attr("stroke-width", 3).attr("paint-order", "stroke")

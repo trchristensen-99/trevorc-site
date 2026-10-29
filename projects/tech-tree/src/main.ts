@@ -1,6 +1,6 @@
 import "./style.css"
 import { dateLabel } from "./time"
-import { DETAIL_DEFAULT, ROUTE_COLORS, TreeView, fmtValue, kindShape, type Display, type Filters } from "./tree"
+import { DETAIL_DEFAULT, DISPLAY_DEFAULTS, KIND_COLORS, ROUTE_COLORS, SERIES_COLORS, STATUS_COLORS, TreeView, fmtValue, kindShape, seriesOf, type Display, type Filters } from "./tree"
 import type { Details, Metric, Node, Source, Tree } from "./types"
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
@@ -32,7 +32,15 @@ const OUTCOME_LABEL: Record<string, string> = {
 
 // ---------------------------------------------------------------- theme
 
+// The viewer's own choice (Display > Theme), else the site's, else the
+// system's.
 function siteTheme(): "light" | "dark" {
+  try {
+    const own = localStorage.getItem("tech-tree-theme")
+    if (own === "dark" || own === "light") return own
+  } catch {
+    /* storage blocked */
+  }
   try {
     const parentTheme = window.parent !== window ? window.parent.document.documentElement.getAttribute("saved-theme") : null
     const stored = parentTheme ?? localStorage.getItem("theme")
@@ -87,24 +95,27 @@ const SCENARIO_KIND: Record<string, string> = {
 // A small log-scale chart of a metric with its fitted trend carried
 // forward, and its milestones as thresholds.
 function metricChart(m: Metric, milestones: Node[], highlight?: string, title = true) {
-  const W = 300, H = 160, L = 50, B = 22, T = 8, Rr = 8
-  // Log scale, or linear for steady growth.
+  const W = 300, H = 170, L = 50, B = 22, T = 8, Rr = 8
+  // Log scale, or linear for steady growth. Several series share one scale.
   const f = (v: number) => (m.log ? Math.log10(v) : v)
   const inv = (u: number) => (m.log ? 10 ** u : u)
-  const pts = m.points.filter(([, y]) => !m.log || y > 0)
-  if (pts.length < 2) return ""
+  const ok = (v: number) => !m.log || v > 0
+  const lines = seriesOf(m).map((ln) => ({ ...ln, points: ln.points.filter(([, y]) => ok(y)) })).filter((ln) => ln.points.length >= 2)
+  if (!lines.length) return ""
+  const many = lines.length > 1
   const future = milestones.filter((n) => n.status !== "achieved").map((n) => n.at)
-  const scen = m.scenarios ?? []
-  const scenEnd = Math.max(...scen.flatMap((sc) => sc.points.map((p) => p[0])), -Infinity)
-  const x0 = pts[0][0], x1 = Math.min(2100, Math.max(pts.at(-1)![0] + (m.trend ? 10 : 0), scenEnd, ...future.map((y) => Math.min(y + 3, 2100))))
-  const ys = [...pts.map((p) => f(p[1])), ...milestones.map((n) => f(n.threshold!.value))]
-  for (const sc of scen) for (const [x, v] of [...sc.points, ...sc.low, ...sc.high]) if (x <= x1 && (!m.log || v > 0)) ys.push(f(v))
-  let y0 = Math.min(...ys), y1 = Math.max(...ys)
-  if (m.trend) {
-    const ext = m.trend.slope * x1 + m.trend.intercept
-    y0 = Math.min(y0, ext)
-    y1 = Math.max(y1, ext)
+  const allScen = lines.flatMap((ln) => ln.scenarios)
+  const scenEnd = Math.max(...allScen.flatMap((sc) => sc.points.map((p) => p[0])), -Infinity)
+  const lastX = Math.max(...lines.map((ln) => ln.points.at(-1)![0]))
+  const x0 = Math.min(...lines.map((ln) => ln.points[0][0]))
+  const x1 = Math.min(2100, Math.max(lastX + (lines.some((ln) => ln.trend) ? 10 : 0), scenEnd, ...future.map((y) => Math.min(y + 3, 2100))))
+  const ys = milestones.map((n) => f(n.threshold!.value))
+  for (const ln of lines) {
+    for (const [, v] of ln.points) ys.push(f(v))
+    for (const sc of ln.scenarios) for (const [x, v] of [...sc.points, ...sc.low, ...sc.high]) if (x <= x1 && ok(v)) ys.push(f(v))
+    if (ln.trend) ys.push(ln.trend.slope * x1 + ln.trend.intercept)
   }
+  let y0 = Math.min(...ys), y1 = Math.max(...ys)
   if (m.log) {
     y0 = Math.floor(y0)
     y1 = Math.ceil(y1)
@@ -122,32 +133,50 @@ function metricChart(m: Metric, milestones: Node[], highlight?: string, title = 
   for (let v = m.log ? y0 : Math.ceil(y0 / step) * step; v <= y1; v += step)
     grid.push(`<line x1="${L}" x2="${W - Rr}" y1="${py(v)}" y2="${py(v)}" class="grid"/><text x="${L - 4}" y="${py(v)}" class="ylab">${esc(fmtValue(inv(v), m.unit === "USD" ? "USD" : "").trim())}</text>`)
   const xt = [x0, Math.round((x0 + x1) / 2), x1].map((x) => `<text x="${px(x)}" y="${H - 6}" class="xlab">${Math.round(x)}</text>`)
-  const dots = pts.map(([x, y]) => `<circle cx="${px(x)}" cy="${py(f(y))}" r="2.4"><title>${Math.round(x)}: ${esc(fmtValue(y, m.unit))}</title></circle>`).join("")
-  const tr = m.trend
-  const trend = tr
-    ? `<line x1="${px(tr.from)}" y1="${py(tr.slope * tr.from + tr.intercept)}" x2="${px(tr.to)}" y2="${py(tr.slope * tr.to + tr.intercept)}" class="fit"/>` +
-      `<line x1="${px(tr.to)}" y1="${py(tr.slope * tr.to + tr.intercept)}" x2="${px(x1)}" y2="${py(tr.slope * x1 + tr.intercept)}" class="fit ext"/>`
-    : ""
-  // Forecast scenarios: dotted lines in their own colors, with bands.
-  const line = (list: [number, number][]) => list.filter(([x, v]) => x <= x1 && (!m.log || v > 0)).map(([x, v], j) => `${j ? "L" : "M"}${px(x).toFixed(1)},${py(f(v)).toFixed(1)}`).join("")
-  const scenSvg = scen.map((sc, i) => {
-    const c = SCENARIO_COLORS[i % SCENARIO_COLORS.length]
-    const band = sc.low.length > 1 && sc.high.length > 1 ? `<path d="${line(sc.low)}${line([...sc.high].reverse()).replace(/^M/, "L")}Z" fill="${c}" opacity="0.12"/>` : ""
-    return `${band}<path d="${line(sc.points)}" fill="none" stroke="${c}" stroke-width="1.6" stroke-dasharray="2 2.5"/>`
+  const path = (list: [number, number][]) => list.filter(([x, v]) => x <= x1 && ok(v)).map(([x, v], j) => `${j ? "L" : "M"}${px(x).toFixed(1)},${py(f(v)).toFixed(1)}`).join("")
+  // One color per series (or per scenario when there's one line); dashes
+  // tell a series' scenarios apart.
+  const DASHES = ["2 2.5", "6 3", "1 2", "8 3 2 3"]
+  const lineColor = (i: number) => (many ? SERIES_COLORS[i % SERIES_COLORS.length] : "var(--accent)")
+  const scenColor = (i: number, j: number) => (many ? lineColor(i) : SCENARIO_COLORS[j % SCENARIO_COLORS.length])
+  const body = lines.map((ln, i) => {
+    const c = lineColor(i)
+    const tr = ln.trend
+    const trend = tr
+      ? `<line x1="${px(tr.from)}" y1="${py(tr.slope * tr.from + tr.intercept)}" x2="${px(tr.to)}" y2="${py(tr.slope * tr.to + tr.intercept)}" class="fit"/>` +
+        `<line x1="${px(tr.to)}" y1="${py(tr.slope * tr.to + tr.intercept)}" x2="${px(x1)}" y2="${py(tr.slope * x1 + tr.intercept)}" class="fit ext"/>`
+      : ""
+    const scen = ln.scenarios.map((sc, j) => {
+      const sc_c = scenColor(i, j)
+      const band = sc.low.length > 1 && sc.high.length > 1 ? `<path d="${path(sc.low)}${path([...sc.high].reverse()).replace(/^M/, "L")}Z" fill="${sc_c}" opacity="${many ? 0.08 : 0.12}"/>` : ""
+      return `${band}<path d="${path(sc.points)}" fill="none" stroke="${sc_c}" stroke-width="1.5" stroke-dasharray="${many ? DASHES[j % DASHES.length] : "2 2.5"}"/>`
+    }).join("")
+    const dots = many
+      ? `<path d="${path(ln.points)}" fill="none" stroke="${c}" stroke-width="1.8"><title>${esc(ln.name)}</title></path>`
+      : ln.points.map(([x, y]) => `<circle cx="${px(x)}" cy="${py(f(y))}" r="2.4"><title>${Math.round(x)}: ${esc(fmtValue(y, m.unit))}</title></circle>`).join("")
+    return scen + trend + dots
   }).join("")
   const marks = milestones.map((n) => {
     const v = f(n.threshold!.value)
     const cls = `ms${n.id === highlight ? " on" : ""}`
     return `<line x1="${L}" x2="${W - Rr}" y1="${py(v)}" y2="${py(v)}" class="${cls}"/><text x="${W - Rr - 2}" y="${py(v) - 3}" class="mslab${n.id === highlight ? " on" : ""}">${esc(n.threshold!.label ?? n.name)}</text>`
   }).join("")
-  const rate = !tr ? "No clean trend"
-    : tr.linear ? `${tr.slope > 0 ? "Rises" : "Falls"} about ${esc(fmtValue(Math.abs(tr.slope * 10), m.unit))} a decade (r² ${tr.r2.toFixed(2)})`
-    : `${tr.slope < 0 ? "Halves" : "Doubles"} about every ${tr.years!.toFixed(1)} years (r² ${tr.r2.toFixed(2)})`
+  const rateOf = (tr: Metric["trend"]) => !tr ? "no clean trend"
+    : tr.linear ? `${tr.slope > 0 ? "rises" : "falls"} about ${esc(fmtValue(Math.abs(tr.slope * 10), m.unit))} a decade (r² ${tr.r2.toFixed(2)})`
+    : `${tr.slope < 0 ? "halves" : "doubles"} about every ${tr.years!.toFixed(1)} years (r² ${tr.r2.toFixed(2)})`
+  const cap = (x: string) => x.charAt(0).toUpperCase() + x.slice(1)
   const wright = m.wright ? `; falls ${(m.wright.learningRate * 100).toFixed(0)}% each time cumulative production doubles` : ""
+  const key = `${lines.some((ln) => ln.trend) ? " Dashed: the trend carried forward." : ""}${allScen.length ? ` ${many ? "Patterned" : "Dotted"}: forecasts.` : ""}${milestones.length ? " Lines across: milestones." : ""}`
+  const rates = many
+    ? `<ul class="series">${lines.map((ln, i) => `<li><span class="sw" style="background:${lineColor(i)}"></span><div><strong>${esc(ln.name)}</strong>: ${rateOf(ln.trend)}${ln.points.length ? `; ${esc(fmtValue(ln.points.at(-1)![1], m.unit))} in ${Math.round(ln.points.at(-1)![0])}` : ""}</div></li>`).join("")}</ul><p class="rate">${key.trim()}</p>`
+    : `<p class="rate">${cap(rateOf(lines[0].trend))}${wright}.${key}</p>`
+  const scenList = lines.map((ln, i) => ln.scenarios.length
+    ? `${many ? `<p class="kind">${esc(ln.name)}</p>` : ""}<ul class="scenarios">${ln.scenarios.map((sc, j) => `<li>${many ? `<svg width="18" height="8"><line x1="0" x2="18" y1="4" y2="4" stroke="${scenColor(i, j)}" stroke-width="2" stroke-dasharray="${DASHES[j % DASHES.length]}"/></svg>` : `<span class="sw" style="background:${scenColor(i, j)}"></span>`}<div><strong>${esc(sc.name)}</strong> <span class="tag">${esc(SCENARIO_KIND[sc.kind] ?? sc.kind)}</span>${sc.note ? `<br><span class="note">${esc(sc.note)}</span>` : ""}${sc.sources?.length ? `<br><span class="note">${sc.sources.map((x) => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>`).join("; ")}</span>` : ""}</div></li>`).join("")}</ul>`
+    : "").join("")
   return `${title ? `<h3>${esc(m.name)}</h3>` : ""}
-    <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.name)}">${grid.join("")}${xt.join("")}${marks}${scenSvg}${trend}${dots}</svg>
-    <p class="rate">${rate}${wright}.${tr ? " Dashed: the trend carried forward." : ""}${scen.length ? " Dotted: forecasts." : ""}${milestones.length ? " Lines across: milestones." : ""}</p>
-    ${scen.length ? `<ul class="scenarios">${scen.map((sc, i) => `<li><span class="sw" style="background:${SCENARIO_COLORS[i % SCENARIO_COLORS.length]}"></span><div><strong>${esc(sc.name)}</strong> <span class="tag">${esc(SCENARIO_KIND[sc.kind] ?? sc.kind)}</span>${sc.note ? `<br><span class="note">${esc(sc.note)}</span>` : ""}${sc.sources?.length ? `<br><span class="note">${sc.sources.map((x) => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>`).join("; ")}</span>` : ""}</div></li>`).join("")}</ul>` : ""}
+    <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.name)}">${grid.join("")}${xt.join("")}${marks}${body}</svg>
+    ${rates}
+    ${scenList ? `<details class="forecasts"${many ? "" : " open"}><summary>Forecasts</summary>${scenList}</details>` : ""}
     ${m.note ? `<p class="note">${esc(m.note)}</p>` : ""}
     ${m.source ? `<p class="note">Data: <a href="${esc(m.source.url)}" target="_blank" rel="noopener">${esc(m.source.title)}</a>${m.license ? ` (${esc(m.license)})` : ""}</p>` : ""}`
 }
@@ -176,17 +205,17 @@ async function main() {
   $("#counts").textContent = `${techCount} technologies, ${tree.edges.filter((e) => e.kind === "requires").length} links`
 
   // Theme follows the site.
-  const applyTheme = () => {
-    const dark = siteTheme() === "dark"
+  const applyTheme = (choice?: string) => {
+    const dark = choice === "dark" || (choice !== "light" && siteTheme() === "dark")
     document.documentElement.dataset.theme = dark ? "dark" : "light"
     view.setDark(dark)
   }
   try {
-    window.parent.document.addEventListener("themechange", applyTheme)
+    window.parent.document.addEventListener("themechange", () => applyTheme())
   } catch {
     /* not same-origin */
   }
-  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme)
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => applyTheme())
   applyTheme()
 
   // Embedded in the project page vs. opened on its own.
@@ -199,18 +228,29 @@ async function main() {
   // ------------------------------------------------------------ legend
   const icon = (kind: Node["kind"], fill: string, stroke = "none", dash = "", fillOpacity = 1) =>
     `<svg width="18" height="16" viewBox="-9 -8 18 16"><path d="${kindShape(kind, 5.5)}" fill="${fill}" fill-opacity="${fillOpacity}" stroke="${stroke}" stroke-width="1.4" ${dash ? `stroke-dasharray="${dash}"` : ""} fill-rule="evenodd"/></svg>`
-  $("#legend").innerHTML =
-    (Object.keys(KIND_LABEL) as Node["kind"][]).map((k) => `<li>${icon(k, "var(--muted)")}${KIND_LABEL[k]}</li>`).join("") +
-    `<li>${icon("device", "var(--muted)")}<span>Solid: achieved</span></li>` +
-    `<li>${icon("device", "var(--muted)", "var(--muted)", "", 0.42)}<span>Half-filled: being worked on</span></li>` +
-    `<li>${icon("device", "var(--bg-panel)", "var(--muted)", "2 1.5")}<span>Dashed: not yet; the bar is its likely window</span></li>` +
-    `<li>${icon("device", "#c9cbc6", "var(--muted)")}<span>Gray: lost or forgotten</span></li>` +
-    `<li><span class="sw line"></span>needs</li><li><span class="sw line dash"></span>helped by</li><li><span class="sw line dot"></span>uses a resource</li>`
+  // The key changes with what the colors mean.
+  const renderLegend = () => {
+    const by = display.colorBy
+    const colors = by === "status"
+      ? (Object.keys(STATUS_COLORS) as Node["status"][]).map((k) => `<li><span class="sw" style="background:${STATUS_COLORS[k]}"></span>${STATUS_LABEL[k]}</li>`).join("")
+      : by === "kind"
+        ? (Object.keys(KIND_COLORS) as Node["kind"][]).map((k) => `<li><span class="sw" style="background:${KIND_COLORS[k]}"></span>${KIND_LABEL[k]}</li>`).join("")
+        : tree.fields.map((f) => `<li><span class="sw" style="background:${f.color}"></span>${esc(f.name)}</li>`).join("") + `<li><span class="sw" style="background:${tree.roots.color}"></span>Roots</li>`
+    $("#legend").innerHTML =
+      `<li class="head">Colors: ${by === "field" ? "field" : by}</li>${colors}<li class="head">Shapes: kind</li>` +
+      (Object.keys(KIND_LABEL) as Node["kind"][]).map((k) => `<li>${icon(k, "var(--muted)")}${KIND_LABEL[k]}</li>`).join("") +
+      `<li class="head">Fill: status</li>` +
+      `<li>${icon("device", "var(--muted)")}<span>Solid: achieved</span></li>` +
+      `<li>${icon("device", "var(--muted)", "var(--muted)", "", 0.42)}<span>Half-filled: being worked on</span></li>` +
+      `<li>${icon("device", "var(--bg-panel)", "var(--muted)", "2 1.5")}<span>Dashed: not yet; the bar is its likely window</span></li>` +
+      `<li>${icon("device", "#c9cbc6", "var(--muted)")}<span>Gray: lost or forgotten</span></li>` +
+      `<li class="head">Links</li><li><span class="sw line"></span>needs</li><li><span class="sw line dash"></span>helped by</li><li><span class="sw line dot"></span>uses a resource</li>`
+  }
 
   // ----------------------------------------------------------- display
   // Detail: a slider from nothing (0) through the default set to
   // everything (100).
-  const display: Display = { detail: DETAIL_DEFAULT, grow: true, frontier: false, allLinks: false, trends: [], trendLayout: "auto" }
+  const display: Display = { ...DISPLAY_DEFAULTS, trends: [] }
   const slider = $<HTMLInputElement>("#detail")
   slider.value = String(DETAIL_DEFAULT)
   const readout = () => ($("#detail-count").textContent = `${view.shown} of ${tree.nodes.length} showing`)
@@ -228,16 +268,46 @@ async function main() {
     saveSoon()
   }
   slider.addEventListener("input", () => setDisplay({ detail: +slider.value }))
-  const layoutSel = $<HTMLSelectElement>("#trend-layout")
-  layoutSel.addEventListener("change", () => setDisplay({ trendLayout: layoutSel.value as Display["trendLayout"] }))
-  const check = (id: string, key: "grow" | "frontier" | "allLinks") => {
-    const i = $<HTMLInputElement>(id)
-    i.addEventListener("change", () => setDisplay({ [key]: i.checked }))
-    return i
+  // The display options: every control marked data-opt sets that option
+  // (checkboxes on and off, menus their value).
+  type Opt = Exclude<keyof Display, "detail" | "trends">
+  const optControls = [...document.querySelectorAll<HTMLInputElement | HTMLSelectElement>("[data-opt]")]
+  const readOpt = (el: HTMLInputElement | HTMLSelectElement) => {
+    const key = el.dataset.opt as Opt
+    const v = el instanceof HTMLInputElement && el.type === "checkbox" ? el.checked : typeof DISPLAY_DEFAULTS[key] === "number" ? +el.value : el.value
+    return { [key]: v } as Partial<Display>
   }
-  const growBox = check("#grow", "grow")
-  const frontierBox = check("#show-frontier", "frontier")
-  const linksBox = check("#all-links", "allLinks")
+  const writeOpt = (el: HTMLInputElement | HTMLSelectElement) => {
+    const v = display[el.dataset.opt as Opt]
+    if (el instanceof HTMLInputElement && el.type === "checkbox") el.checked = !!v
+    else el.value = String(v)
+  }
+  for (const el of optControls)
+    el.addEventListener("change", () => {
+      setDisplay(readOpt(el))
+      if (el.dataset.opt === "colorBy") renderLegend()
+    })
+  $("#reset-display").addEventListener("click", () => {
+    setDisplay({ ...DISPLAY_DEFAULTS, detail: display.detail, trends: display.trends, trendLayout: display.trendLayout, grow: display.grow, frontier: display.frontier })
+    optControls.forEach(writeOpt)
+    renderLegend()
+  })
+  // Theme: the site's (or system's) unless the viewer picks one.
+  const themeSel = $<HTMLSelectElement>("#theme")
+  try {
+    themeSel.value = localStorage.getItem("tech-tree-theme") ?? "auto"
+  } catch {
+    /* storage blocked */
+  }
+  themeSel.addEventListener("change", () => {
+    try {
+      if (themeSel.value === "auto") localStorage.removeItem("tech-tree-theme")
+      else localStorage.setItem("tech-tree-theme", themeSel.value)
+    } catch {
+      /* storage blocked: applies for this visit only */
+    }
+    applyTheme(themeSel.value)
+  })
 
   // Trend strips: one checkbox per metric, by field.
   const trendBoxes = new Map<string, HTMLInputElement>()
@@ -341,8 +411,9 @@ async function main() {
     if (n.trendYear && open) rows.push(`<dt>Trend</dt><dd>The trend alone gets there around ${Math.round(n.trendYear)}</dd>`)
     if (n.scenarioYears?.length && open) {
       const mm = metrics.get(n.threshold!.metric)!
+      const ln = seriesOf(mm).find((x) => !mm.series || x.id === n.threshold!.series)
       rows.push(`<dt>Forecasts</dt><dd>${n.scenarioYears.map((x) => {
-        const sc = mm.scenarios.find((y) => y.id === x.id)
+        const sc = ln?.scenarios.find((y) => y.id === x.id)
         return `${esc(sc?.name ?? x.id)}: ${x.year == null ? "not by " + Math.round(Math.max(...(sc?.points ?? [[2100, 0]]).map((p) => p[0]))) : Math.round(x.year)}`
       }).join("<br>")}</dd>`)
     }
@@ -370,7 +441,7 @@ async function main() {
       : ""
     const m = n.metric ? metrics.get(n.metric) : undefined
     const threshold = n.threshold && m
-      ? `<p class="threshold">Reached when <a href="#" data-metric="${esc(m.id)}">${esc(m.name.charAt(0).toLowerCase() + m.name.slice(1))}</a> ${m.better === "lower" ? "falls to" : "reaches"} <strong>${esc(fmtValue(n.threshold.value, m.unit))}</strong>.</p>`
+      ? `<p class="threshold">Reached when <a href="#" data-metric="${esc(m.id)}">${esc(m.name.charAt(0).toLowerCase() + m.name.slice(1))}</a>${n.threshold.series ? ` (${esc(m.series?.find((x) => x.id === n.threshold!.series)?.name ?? n.threshold.series)})` : ""} ${m.better === "lower" ? "falls to" : "reaches"} <strong>${esc(fmtValue(n.threshold.value, m.unit))}</strong>.</p>`
       : ""
     return `<p class="kind">${KIND_LABEL[n.kind]}</p><h2>${esc(n.name)}</h2>` +
       threshold +
@@ -448,8 +519,10 @@ async function main() {
   }
 
   // --------------------------------------------------------- URL state
-  // #n=id selects a technology; #z=x,y,zoom keeps the view; d, f, g, l and
-  // t keep the display options.
+  // #n=id selects a technology; #z=x,y,zoom keeps the view; d (detail), t
+  // and tl (trend lines and layout) and OPT_KEYS keep the display options,
+  // when they differ from the defaults.
+  const OPT_KEYS: Record<Opt, string> = { grow: "g", frontier: "f", links: "lk", colorBy: "cb", labels: "lb", nodeSize: "ns", bars: "br", trackNames: "tn", eras: "er", trendLayout: "tl" }
   let pending = 0
   const save = () => {
     const h = new URLSearchParams()
@@ -458,9 +531,10 @@ async function main() {
     h.set("z", `${Math.round(x)},${Math.round(y)},${k.toFixed(2)}`)
     if (display.detail !== DETAIL_DEFAULT) h.set("d", String(display.detail))
     if (display.trendLayout !== "auto") h.set("tl", display.trendLayout)
-    if (display.frontier) h.set("f", "1")
-    if (!display.grow) h.set("g", "0")
-    if (display.allLinks) h.set("l", "1")
+    for (const [key, short] of Object.entries(OPT_KEYS)) {
+      const v = display[key as Opt]
+      if (v !== DISPLAY_DEFAULTS[key as Opt]) h.set(short, typeof v === "boolean" ? (v ? "1" : "0") : String(v))
+    }
     if (display.trends.length) h.set("t", display.trends.join(","))
     history.replaceState(null, "", `#${h}`.replace(/%2C/g, ","))
   }
@@ -488,11 +562,13 @@ async function main() {
   const d = h.get("d")
   const restored: Partial<Display> = {}
   if (d) restored.detail = d === "all" ? 100 : Math.min(100, Math.max(0, Math.round(+d))) || 0
-  const tl = h.get("tl")
-  if (tl === "strips" || tl === "compact" || tl === "combined") restored.trendLayout = layoutSel.value = tl
-  if (h.get("f") === "1") restored.frontier = frontierBox.checked = true
-  if (h.get("g") === "0") restored.grow = growBox.checked = false
-  if (h.get("l") === "1") restored.allLinks = linksBox.checked = true
+  for (const [key, short] of Object.entries(OPT_KEYS)) {
+    const v = h.get(short)
+    if (v == null) continue
+    const def = DISPLAY_DEFAULTS[key as Opt]
+    ;(restored as Record<string, unknown>)[key] = typeof def === "boolean" ? v === "1" : typeof def === "number" ? +v || def : v
+  }
+  if (h.get("l") === "1") restored.links = "all" // older links
   const t = h.get("t")?.split(",").filter((id) => metrics.has(id))
   if (t?.length) {
     for (const id of t) trendBoxes.get(id)!.checked = true
@@ -501,6 +577,8 @@ async function main() {
   }
   slider.value = String(restored.detail ?? DETAIL_DEFAULT)
   setDisplay(restored)
+  optControls.forEach(writeOpt)
+  renderLegend()
 
   view.resize()
   new ResizeObserver(() => view.resize()).observe(svg)

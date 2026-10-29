@@ -169,6 +169,31 @@ scenarios:                        # optional: forecasts of where it goes next
     sources: [{title: ..., url: ...}]
 ```
 
+### Several lines on one metric
+
+A metric can hold several lines that share a unit and a chart, such as one
+per country income group. Give `series` instead of `points`; each series
+has its own `points`, optional `fit` and `scenarios`:
+
+```yaml
+id: life-expectancy-income
+name: Life expectancy at birth by country income group
+unit: years
+better: higher
+log: false
+series:
+  - id: high
+    name: High-income countries
+    points: [[1950, 64.2], ...]
+    scenarios: [...]
+  - id: low
+    name: Low-income countries
+    points: [...]
+```
+
+A milestone on such a metric names its line: `threshold: { metric:
+life-expectancy-income, series: low, value: 70 }`.
+
 Scenarios are drawn on the metric's chart and trend strip, and every
 milestone on the metric reports the year each scenario reaches it. Use
 `kind: model` for a path computed from stated assumptions (say so in the
