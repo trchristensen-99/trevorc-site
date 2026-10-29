@@ -1,0 +1,704 @@
+# World supply of each resource (see SCHEMA.md): production, reserves (in
+# the same unit), the leading producers and processors (percent of world
+# output), the end-of-life recycling rate (UNEP 2011 bands), demand in 2040
+# as a multiple of today (IEA stated policies), and leading uses. The build
+# turns these into a supply-risk rating; `risk` gives a judgment instead.
+# Minerals: USGS Mineral Commodity Summaries 2026 (2025 data, estimated).
+res-copper:
+  year: 2025
+  production:
+    value: 23000000
+    unit: t
+    what: copper content
+  reserves:
+    value: 980000000
+    unit: t
+  producers:
+    - [ Chile, 23 ]
+    - [ Congo (Kinshasa), 13.9 ]
+    - [ Peru, 11.7 ]
+    - [ China, 7.8 ]
+    - [ Russia, 5.7 ]
+  processing:
+    stage: refining
+    producers:
+      - [ China, 48.3 ]
+      - [ Congo (Kinshasa), 9.7 ]
+      - [ Chile, 5.9 ]
+      - [ Japan, 4.8 ]
+  recycling: ">50%"
+  demand_2040: 1.3
+  uses:
+    - [ building construction (US), 42 ]
+    - [ electrical and electronic products (US), 23 ]
+  note: Reserves have stayed at a few decades of production for a century, because prices fund new
+    discovery, but ore grades are falling. The IEA sees a possible 30% shortfall of mine supply by
+    2035 as grids and electric vehicles add demand; China refines nearly half of the world's copper.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Copper"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-copper.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+    - title: IEA, Global Critical Minerals Outlook 2025
+      url: https://www.iea.org/reports/global-critical-minerals-outlook-2025
+    - title: USGS, Mineral Commodity Summaries 2026 data release (CSV)
+      url: https://doi.org/10.5066/P1WKQ63T
+res-iron-ore:
+  year: 2025
+  production:
+    value: 1600000000
+    unit: t
+    what: iron content
+  reserves:
+    value: 87000000000
+    unit: t
+  producers:
+    - [ Australia, 37.5 ]
+    - [ Brazil, 16.2 ]
+    - [ India, 11.9 ]
+    - [ China, 11.2 ]
+    - [ Iran, 3.8 ]
+  recycling: ">50%"
+  note: Iron is among the most abundant metals; steel is the most recycled material by tonnage.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Iron ore"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-iron-ore.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+res-tin:
+  year: 2025
+  production:
+    value: 290000
+    unit: t
+    what: tin content
+  reserves:
+    value: 6000000
+    unit: t
+    more: true
+  producers:
+    - [ China, 24.5 ]
+    - [ Indonesia, 21 ]
+    - [ Peru, 11.4 ]
+    - [ Brazil, 9.7 ]
+    - [ Congo (Kinshasa), 9.3 ]
+  recycling: ">50%"
+  note: Mostly solder for electronics, tinplate and chemicals. Production comes partly from artisanal
+    mines in Indonesia, Myanmar and Congo.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Tin"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-tin.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+res-potash:
+  year: 2025
+  production:
+    value: 49000000
+    unit: t
+    what: K2O equivalent
+  reserves:
+    value: 5900000000
+    unit: t
+    more: true
+  producers:
+    - [ Canada, 30.6 ]
+    - [ Russia, 20.4 ]
+    - [ China, 12.9 ]
+    - [ Belarus, 12.2 ]
+    - [ Germany, 6.1 ]
+  note: About 85% of potash goes to fertilizer, and nothing substitutes for potassium as a plant
+    nutrient (USGS). Canada, Russia and Belarus hold most reserves, and sanctions on Belarus and
+    Russia since 2021 and 2022 have shown how concentrated it is.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Potash"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-potash.pdf
+res-silicon:
+  year: 2025
+  production:
+    value: 4600000
+    unit: t
+    what: silicon metal (not ferrosilicon)
+  producers:
+    - [ China, 87 ]
+    - [ Brazil, 3.9 ]
+    - [ Norway, 2.8 ]
+    - [ France, 1.5 ]
+    - [ Australia, 1 ]
+  risk:
+    rating: high
+    note: >-
+      My judgment: quartz itself is abundant, so the score (which would be
+      very high) overstates it, but turning it into silicon metal and solar-
+      and chip-grade polysilicon is concentrated in China (87% of silicon
+      metal), and the ultra-pure quartz for crucible-grown crystals comes
+      mostly from Spruce Pine, North Carolina.
+  note: Silicon itself is the second most abundant element in the crust; the constraint is refining,
+    which takes cheap electricity and is concentrated in China, as is nearly all solar-grade
+    polysilicon.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Silicon"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf
+res-zinc:
+  year: 2025
+  production:
+    value: 13000000
+    unit: t
+    what: zinc content
+  reserves:
+    value: 240000000
+    unit: t
+  producers:
+    - [ China, 31.5 ]
+    - [ Peru, 11.5 ]
+    - [ Australia, 8.5 ]
+    - [ India, 6.7 ]
+    - [ Mexico, 6 ]
+  recycling: ">50%"
+  note: Mostly for galvanizing steel.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Zinc"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-zinc.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+res-sulfur:
+  year: 2025
+  production:
+    value: 84000000
+    unit: t
+    what: all forms, mostly recovered from oil and gas
+  producers:
+    - [ China, 22.6 ]
+    - [ United States, 9.6 ]
+    - [ Russia, 8.9 ]
+    - [ Saudi Arabia, 8.6 ]
+    - [ United Arab Emirates, 7.5 ]
+  note: Now almost all recovered from oil and gas refining rather than mined, so supply follows fossil
+    fuel use; most becomes sulfuric acid for fertilizer.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Sulfur"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-sulfur.pdf
+res-silver:
+  year: 2025
+  production:
+    value: 26000
+    unit: t
+    what: silver
+  reserves:
+    value: 610000
+    unit: t
+  producers:
+    - [ Mexico, 24.2 ]
+    - [ Peru, 13.8 ]
+    - [ China, 13.1 ]
+    - [ Bolivia, 5.8 ]
+    - [ Chile, 5.4 ]
+  recycling: ">50%"
+  uses:
+    - [ solar panels (2024), 17 ]
+  note: Solar panels took about 198 million ounces in 2024, about 17% of world demand (Silver
+    Institute), and the market has run deficits since 2021; makers are cutting silver per cell and
+    moving to copper.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Silver"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silver.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+    - title: Silver Institute, World Silver Survey 2025
+      url: https://silverinstitute.org/wp-content/uploads/2025/04/World_Silver_Survey-2025.pdf
+res-helium:
+  year: 2025
+  production:
+    value: 190
+    unit: million m³
+    what: helium
+  producers:
+    - [ United States, 42.6 ]
+    - [ Qatar, 33.2 ]
+    - [ Russia, 9.5 ]
+    - [ Algeria, 5.8 ]
+    - [ Canada, 3.2 ]
+  recycling: <1%
+  uses:
+    - [ "analytical, lab and specialty gases (US)", 22 ]
+    - [ "controlled atmospheres, fiber optics and semiconductors (US)", 17 ]
+    - [ lifting gas (US), 17 ]
+    - [ MRI (US), 15 ]
+  note: Helium comes from a few natural gas fields and escapes to space once vented, so it is rarely
+    recovered except in closed systems. Shortages in 2006, 2012, 2018 and 2022 followed outages at a
+    handful of plants (and the end of US federal reserve sales). The USGS gives no world reserve
+    figure.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Helium"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-helium.pdf
+res-nickel:
+  year: 2025
+  production:
+    value: 3900000
+    unit: t
+    what: nickel content
+  reserves:
+    value: 140000000
+    unit: t
+    more: true
+  producers:
+    - [ Indonesia, 66.7 ]
+    - [ Philippines, 6.9 ]
+    - [ Russia, 5.1 ]
+    - [ Canada, 3.6 ]
+    - [ New Caledonia, 3.6 ]
+  recycling: ">50%"
+  demand_2040: 2
+  note: Indonesia's output grew from under a tenth of the world's in 2015 to two-thirds, mostly
+    through Chinese-financed plants processing laterite ore; the IEA expects the top three
+    countries' share to keep rising.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Nickel"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-nickel.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+    - title: IEA, Global Critical Minerals Outlook 2025
+      url: https://www.iea.org/reports/global-critical-minerals-outlook-2025
+res-cobalt:
+  year: 2025
+  production:
+    value: 310000
+    unit: t
+    what: cobalt content
+  reserves:
+    value: 12000000
+    unit: t
+  producers:
+    - [ Congo (Kinshasa), 74.2 ]
+    - [ Indonesia, 14.2 ]
+    - [ Russia, 2.5 ]
+    - [ Madagascar, 1.3 ]
+    - [ Australia, 1.2 ]
+  recycling: ">50%"
+  demand_2040: 1.55
+  processing:
+    stage: refining
+    producers:
+      - [ China, 76 ]
+  note: Mostly a byproduct of copper in Congo and of nickel in Indonesia; China refines over
+    three-quarters of it (IEA). Batteries are the leading use, and cobalt-free LFP cells have taken
+    much of the market.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Cobalt"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-cobalt.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+    - title: IEA, Global Critical Minerals Outlook 2025
+      url: https://www.iea.org/reports/global-critical-minerals-outlook-2025
+res-rare-earths:
+  year: 2025
+  production:
+    value: 390000
+    unit: t
+    what: rare-earth oxide equivalent
+  reserves:
+    value: 85000000
+    unit: t
+    more: true
+  producers:
+    - [ China, 69.2 ]
+    - [ United States, 13.1 ]
+    - [ Australia, 7.4 ]
+    - [ Burma, 5.6 ]
+    - [ Thailand, 1.2 ]
+  recycling: <1%
+  demand_2040: 1.55
+  processing:
+    stage: separation and refining
+    producers:
+      - [ China, 91 ]
+  note: Not rare in the crust, but separation is hard and polluting, and China does about 91% of it
+    (IEA). Magnets are the leading use. China tightened rare-earth export controls in April 2025 and
+    widened them in October, then suspended the October rules for a year.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Rare earths"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+    - title: IEA, Global Critical Minerals Outlook 2025
+      url: https://www.iea.org/reports/global-critical-minerals-outlook-2025
+res-lithium:
+  year: 2025
+  production:
+    value: 290000
+    unit: t
+    what: lithium content
+  reserves:
+    value: 37000000
+    unit: t
+  producers:
+    - [ Australia, 31.7 ]
+    - [ China, 21.4 ]
+    - [ Chile, 19.3 ]
+    - [ Zimbabwe, 9.7 ]
+    - [ Argentina, 7.9 ]
+  recycling: <1%
+  demand_2040: 5
+  processing:
+    stage: chemical refining
+    producers:
+      - [ China, 65 ]
+  uses:
+    - [ batteries, 88 ]
+    - [ ceramics and glass, 4 ]
+    - [ lubricating greases, 2 ]
+  note: Reserves are large next to production, but demand grows fivefold by 2040 in the IEA's
+    stated-policies scenario and the IEA expects a deficit in the 2030s. China refines roughly
+    two-thirds of it, by reported estimates. Prices rose about tenfold in 2021 to 2022 and fell back
+    by 2024.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Lithium"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-lithium.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+    - title: IEA, Global Critical Minerals Outlook 2025
+      url: https://www.iea.org/reports/global-critical-minerals-outlook-2025
+res-phosphate:
+  year: 2025
+  production:
+    value: 250000000
+    unit: t
+    what: phosphate rock
+  reserves:
+    value: 73000000000
+    unit: t
+  producers:
+    - [ China, 44 ]
+    - [ Morocco, 14.4 ]
+    - [ United States, 8 ]
+    - [ Russia, 5.6 ]
+    - [ Jordan, 4.8 ]
+  note: Morocco (with Western Sahara) holds about two-thirds of reserves, so production could
+    concentrate further as other deposits run down. There are no substitutes for phosphorus in
+    agriculture (USGS).
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Phosphate rock"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-phosphate.pdf
+res-gold:
+  year: 2025
+  production:
+    value: 3300
+    unit: t
+    what: gold
+  reserves:
+    value: 66000
+    unit: t
+  producers:
+    - [ China, 11.5 ]
+    - [ Russia, 9.4 ]
+    - [ Australia, 8.5 ]
+    - [ Canada, 6.1 ]
+    - [ United States, 4.8 ]
+  recycling: ">50%"
+  note: Mostly held as jewelry and investment; electronics use is small.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Gold"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gold.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+res-bauxite:
+  year: 2025
+  production:
+    value: 440000000
+    unit: t
+    what: dry bauxite
+  reserves:
+    value: 29000000000
+    unit: t
+  producers:
+    - [ Guinea, 34.1 ]
+    - [ Australia, 22 ]
+    - [ China, 19.8 ]
+    - [ Brazil, 7.5 ]
+    - [ India, 5.7 ]
+  recycling: ">50%"
+  note: The recycling rate is for aluminum. Guinea's share has risen fast. Smelting aluminum takes
+    about 14 to 15 MWh a tonne, so cheap power matters more than ore.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Bauxite and alumina"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-bauxite-alumina.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+res-salt:
+  year: 2025
+  production:
+    value: 270000000
+    unit: t
+    what: salt
+  producers:
+    - [ China, 20.7 ]
+    - [ United States, 14.8 ]
+    - [ India, 11.1 ]
+    - [ Germany, 5.6 ]
+    - [ Canada, 4.8 ]
+  note: Effectively unlimited in seawater and evaporite beds.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Salt"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-salt.pdf
+res-graphite:
+  year: 2025
+  production:
+    value: 1800000
+    unit: t
+    what: natural graphite
+  reserves:
+    value: 310000000
+    unit: t
+  producers:
+    - [ China, 77.8 ]
+    - [ Madagascar, 4.4 ]
+    - [ Tanzania, 4.2 ]
+    - [ Brazil, 3.6 ]
+    - [ Mozambique, 3.3 ]
+  recycling: <1%
+  demand_2040: 2
+  processing:
+    stage: battery-grade anode material
+    producers:
+      - [ China, 90 ]
+  note: Battery anodes now drive demand. China mines most natural graphite and makes over 90% of
+    battery-grade anode material, natural or synthetic (IEA), and has controlled graphite exports
+    since December 2023.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Graphite"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-graphite.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+    - title: IEA, Global Critical Minerals Outlook 2025
+      url: https://www.iea.org/reports/global-critical-minerals-outlook-2025
+res-gallium:
+  year: 2025
+  production:
+    value: 900000
+    unit: kg
+    what: primary low-purity gallium
+  producers:
+    - [ China, 99 ]
+  recycling: <1%
+  note: A byproduct of refining bauxite into alumina; China made 99% of primary gallium in 2025. It
+    introduced export licenses in August 2023, banned exports to the US in December 2024, and lifted
+    that ban for a year in November 2025.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Gallium"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+res-indium:
+  year: 2025
+  production:
+    value: 1100
+    unit: t
+    what: refined indium
+  producers:
+    - [ China, 69.1 ]
+    - [ "Korea, Republic of", 16.4 ]
+    - [ Japan, 5.9 ]
+    - [ Canada, 3.6 ]
+    - [ France, 1.9 ]
+  recycling: <1%
+  note: A byproduct of zinc refining. Most goes into indium tin oxide, the transparent conductor in
+    touchscreens and flat panels. Manufacturing scrap is recycled in Japan and Korea, but old
+    products are not.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Indium"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+res-platinum-group:
+  year: 2025
+  production:
+    value: 360
+    unit: t
+    what: platinum and palladium
+  reserves:
+    value: 76000
+    unit: t
+    more: true
+  producers:
+    - [ South Africa, 52.8 ]
+    - [ Russia, 28.9 ]
+    - [ Zimbabwe, 9.2 ]
+    - [ Canada, 5.8 ]
+    - [ United States, 2.2 ]
+  recycling: ">50%"
+  note: Catalytic converters are the leading use; electrolyzers for green hydrogen need platinum and
+    iridium, which comes almost entirely from South Africa. Production is figured here as platinum
+    plus palladium.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Platinum-group metals"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-platinum-group.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+res-oil:
+  year: 2024
+  production:
+    value: 35400000000
+    unit: barrels
+    what: crude oil and liquids, about 97 million barrels a day
+  reserves:
+    value: 1732000000000
+    unit: barrels
+  producers:
+    - [ United States, 18.9 ]
+    - [ Russia, 11.6 ]
+    - [ Saudi Arabia, 11.2 ]
+    - [ Canada, 6.4 ]
+    - [ Iran, 5.2 ]
+  note: Production shares are by energy content for 2024 (Energy Institute, via Our World in Data);
+    proved reserves are for the end of 2020, the last year the Statistical Review published them,
+    which with 2024 production give about 49 years. Proved reserves have grown with prices and
+    technology (shale) for decades. OPEC+ coordinates output among many of the largest producers,
+    which concentration by country understates.
+  sources:
+    - title: Energy Institute, Statistical Review of World Energy 2025 (via Our World in Data energy data)
+      url: https://github.com/owid/energy-data
+    - title: bp Statistical Review of World Energy 2021 (proved reserves at end of 2020)
+      url: https://www.bp.com/content/dam/bp/business-sites/en/global/corporate/pdfs/energy-economics/statistical-review/bp-stats-review-2021-full-report.pdf
+res-natural-gas:
+  year: 2024
+  production:
+    value: 4120000000000
+    unit: m³
+    what: natural gas
+  reserves:
+    value: 188100000000000
+    unit: m³
+  producers:
+    - [ United States, 25 ]
+    - [ Russia, 15.3 ]
+    - [ Iran, 6.4 ]
+    - [ China, 6 ]
+    - [ Canada, 4.7 ]
+  note: Shares by energy content for 2024 (Energy Institute, via Our World in Data); proved reserves
+    at the end of 2020 (bp), about 46 years of 2024 production. Russia and Iran hold over a third of
+    reserves. Gas is the feedstock for most of the world's ammonia.
+  sources:
+    - title: Energy Institute, Statistical Review of World Energy 2025 (via Our World in Data energy data)
+      url: https://github.com/owid/energy-data
+    - title: bp Statistical Review of World Energy 2021 (proved reserves at end of 2020)
+      url: https://www.bp.com/content/dam/bp/business-sites/en/global/corporate/pdfs/energy-economics/statistical-review/bp-stats-review-2021-full-report.pdf
+res-coal:
+  year: 2024
+  production:
+    value: 9200000000
+    unit: t
+    what: coal
+  reserves:
+    value: 1074000000000
+    unit: t
+  producers:
+    - [ China, 51.8 ]
+    - [ India, 9.9 ]
+    - [ Indonesia, 9.3 ]
+    - [ Australia, 6.5 ]
+    - [ United States, 5.8 ]
+  note: Shares by energy content for 2024 (Energy Institute, via Our World in Data); proved reserves
+    at the end of 2020 (bp), over a century of production. China mines half the world's coal and
+    burns more than that. Coking coal for steel is scarcer than coal in general.
+  sources:
+    - title: Energy Institute, Statistical Review of World Energy 2025 (via Our World in Data energy data)
+      url: https://github.com/owid/energy-data
+    - title: bp Statistical Review of World Energy 2021 (proved reserves at end of 2020)
+      url: https://www.bp.com/content/dam/bp/business-sites/en/global/corporate/pdfs/energy-economics/statistical-review/bp-stats-review-2021-full-report.pdf
+res-uranium:
+  year: 2024
+  production:
+    value: 60213
+    unit: t
+    what: uranium (tU)
+  reserves:
+    value: 7824600
+    unit: t
+  producers:
+    - [ Kazakhstan, 38.6 ]
+    - [ Canada, 23.8 ]
+    - [ Namibia, 12.2 ]
+  processing:
+    stage: enrichment (capacity planned for 2030)
+    producers:
+      - [ Russia, 38.3 ]
+      - [ China, 23.4 ]
+      - [ "UK, Netherlands, Germany and US (Urenco)", 23.1 ]
+      - [ France, 12.9 ]
+  uses:
+    - [ nuclear power, 100 ]
+  note: "Reserves here are known recoverable resources at under $130 a kilogram (2025), about 130
+    years of current mining; mines supply about 90% of reactor needs and stockpiles the rest.
+    Enrichment is the tighter stage: Russia's Rosatom has the largest share of capacity, and the US
+    banned imports of Russian enriched uranium from 2024, with waivers to 2028."
+  sources:
+    - title: World Nuclear Association, World uranium mining production
+      url: https://world-nuclear.org/information-library/nuclear-fuel-cycle/mining-of-uranium/world-uranium-mining-production
+    - title: World Nuclear Association, Uranium enrichment
+      url: https://world-nuclear.org/information-library/nuclear-fuel-cycle/conversion-enrichment-and-fabrication/uranium-enrichment
+res-germanium:
+  recycling: <1%
+  risk:
+    rating: very high
+    note: No world production figures are published; China is the leading producer and exporter,
+      introduced export licenses in August 2023 and banned exports to the US in December 2024
+      (USGS).
+  note: A byproduct of zinc refining and coal ash. Used in fiber optics, infrared optics and some
+    chips and solar cells for satellites. Manufacturing scrap is recycled, old products rarely.
+  sources:
+    - title: "USGS, Mineral Commodity Summaries 2026: Germanium"
+      url: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf
+    - title: "UNEP International Resource Panel, Recycling Rates of Metals: A Status Report (Graedel et
+        al., 2011)"
+      url: https://www.resourcepanel.org/reports/recycling-rates-metals
+res-fresh-water:
+  risk:
+    rating: high
+    note: "My judgment: renewable globally, but scarce where most needed; agriculture takes about 70% of
+      withdrawals, and aquifers such as the Ogallala and the North China Plain are drawn down faster
+      than they refill."
+  sources:
+    - title: FAO AQUASTAT
+      url: https://www.fao.org/aquastat/en/
+res-fertile-soil:
+  risk:
+    rating: moderate
+    note: "My judgment: the FAO's 2015 assessment found about a third of the world's soils moderately to
+      highly degraded, mostly by erosion, nutrient loss and salinization; fertilizer and better
+      practice offset much of it."
+  sources:
+    - title: FAO and ITPS, Status of the World's Soil Resources (2015)
+      url: https://www.fao.org/documents/card/en/c/c6814873-efc3-41db-b7d3-2081a10ede50/
+res-wood:
+  risk:
+    rating: low
+    note: "My judgment: renewable and widely grown; local overcutting was a real constraint before coal."
+  sources: []
+res-clay:
+  risk:
+    rating: low
+    note: "My judgment: common clays are effectively unlimited."
+  sources: []
+res-limestone:
+  risk:
+    rating: low
+    note: "My judgment: abundant worldwide; the limit on cement is its carbon dioxide, not the rock."
+  sources: []
+res-flint:
+  risk:
+    rating: low
+    note: "My judgment: abundant, and no longer needed."
+  sources: []

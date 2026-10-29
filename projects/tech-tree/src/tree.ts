@@ -24,7 +24,7 @@ export interface Display {
   grow: boolean // more appear as you zoom in
   frontier: boolean // everything not yet achieved shows at every zoom
   links: "main" | "all" | "none" // the reduced set, every direct link, or none (a selection's chain always shows)
-  colorBy: "field" | "status" | "kind"
+  colorBy: "field" | "status" | "kind" | "effort" | "risk"
   labels: "fit" | "landmarks" | "none"
   nodeSize: number // multiplies the node sizes
   bars: boolean // date ranges and future windows
@@ -98,6 +98,16 @@ export const KIND_COLORS: Record<Node["kind"], string> = {
   precondition: "#9a8466", resource: "#8d6e4f", discovery: "#2a9d8f", technique: "#3d6fb6", device: "#c9772a",
   infrastructure: "#6b7280", institution: "#d0587e", milestone: "#7b5ea7",
 }
+// Supply risk, from the resources each technology uses.
+export const RISK_COLORS: Record<string, string> = { low: "#5f9e4f", moderate: "#d6a428", high: "#d9712b", "very high": "#c2364b" }
+// Person-years, on a log scale: 1 to a million, light to dark.
+export const EFFORT_STOPS = ["#f2d98c", "#e9a85a", "#d6714a", "#b04352", "#7d2a5f", "#45215e"]
+export function effortColor(py: number) {
+  const t = Math.max(0, Math.min(1, py / 6)) * (EFFORT_STOPS.length - 1)
+  const i = Math.min(EFFORT_STOPS.length - 2, Math.floor(t))
+  const mix = (a: string, b: string, f: number) => "#" + [1, 3, 5].map((k) => Math.round(parseInt(a.slice(k, k + 2), 16) * (1 - f) + parseInt(b.slice(k, k + 2), 16) * f).toString(16).padStart(2, "0")).join("")
+  return mix(EFFORT_STOPS[i], EFFORT_STOPS[i + 1], t - i)
+}
 const unachieved = (n: Node) => n.status === "ongoing" || n.status === "speculative"
 
 export class TreeView {
@@ -155,6 +165,8 @@ export class TreeView {
       const by = this.display.colorBy
       if (by === "status") return STATUS_COLORS[n.status]
       if (by === "kind") return KIND_COLORS[n.kind]
+      if (by === "risk") return n.risk ? RISK_COLORS[n.risk] : this.dark ? "#4a525b" : "#d3d6d1"
+      if (by === "effort") return n.py != null ? effortColor(n.py) : this.dark ? "#4a525b" : "#d3d6d1"
       return n.lane === "roots" ? tree.roots.color : this.fieldColor.get(n.fields[0]) ?? "#888"
     }
     for (const e of tree.edges) {

@@ -1,0 +1,127 @@
+# How much of a resource a technology needs (see SCHEMA.md). Each entry
+# also adds the `uses` link.
+#
+#   amount: how much, in words
+#   share: percent of the world's use of the resource that goes to it
+#   substitute: a technology that avoids the resource
+#   source: where the figures come from
+
+- tech: lithium-ion-battery
+  resource: res-lithium
+  share: 88
+  amount: About 9 kg of lithium in a typical electric car's battery.
+  substitute: sodium-ion-battery
+  source: {title: "USGS, Mineral Commodity Summaries 2026: Lithium", url: "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-lithium.pdf"}
+- tech: lithium-ion-battery
+  resource: res-graphite
+  amount: The anode of nearly every lithium-ion cell is graphite, natural or synthetic, about 66 kg in a typical electric car.
+  source: {title: "IEA, The Role of Critical Minerals in Clean Energy Transitions (2021)", url: "https://www.iea.org/reports/the-role-of-critical-minerals-in-clean-energy-transitions"}
+- tech: lithium-ion-battery
+  resource: res-cobalt
+  amount: The leading use of cobalt; nickel-rich cathodes use less of it, and LFP cells none.
+  substitute: lithium-iron-phosphate
+  source: {title: "USGS, Mineral Commodity Summaries 2026: Cobalt", url: "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-cobalt.pdf"}
+- tech: lithium-ion-battery
+  resource: res-nickel
+  amount: Nickel-rich cathodes (NMC, NCA) carry most of the energy in long-range cars; LFP cells use none.
+  substitute: lithium-iron-phosphate
+- tech: electric-vehicles
+  resource: res-lithium
+  amount: About 8.9 kg per car.
+  source: {title: "IEA, The Role of Critical Minerals in Clean Energy Transitions (2021)", url: "https://www.iea.org/reports/the-role-of-critical-minerals-in-clean-energy-transitions"}
+- tech: electric-vehicles
+  resource: res-copper
+  amount: About 53 kg per car, against 22 kg in a conventional car.
+  source: {title: "IEA, The Role of Critical Minerals in Clean Energy Transitions (2021)", url: "https://www.iea.org/reports/the-role-of-critical-minerals-in-clean-energy-transitions"}
+- tech: electric-vehicles
+  resource: res-nickel
+  amount: About 40 kg per car (nickel-rich batteries).
+  source: {title: "IEA, The Role of Critical Minerals in Clean Energy Transitions (2021)", url: "https://www.iea.org/reports/the-role-of-critical-minerals-in-clean-energy-transitions"}
+- tech: electric-vehicles
+  resource: res-cobalt
+  amount: About 13 kg per car (2021 battery mix; falling).
+  substitute: lithium-iron-phosphate
+  source: {title: "IEA, The Role of Critical Minerals in Clean Energy Transitions (2021)", url: "https://www.iea.org/reports/the-role-of-critical-minerals-in-clean-energy-transitions"}
+- tech: electric-vehicles
+  resource: res-graphite
+  amount: About 66 kg per car.
+  source: {title: "IEA, The Role of Critical Minerals in Clean Energy Transitions (2021)", url: "https://www.iea.org/reports/the-role-of-critical-minerals-in-clean-energy-transitions"}
+- tech: electric-vehicles
+  resource: res-rare-earths
+  amount: About 0.5 kg per car, in the drive motor's magnets; induction and wound-rotor motors avoid them.
+  source: {title: "IEA, The Role of Critical Minerals in Clean Energy Transitions (2021)", url: "https://www.iea.org/reports/the-role-of-critical-minerals-in-clean-energy-transitions"}
+- tech: lithium-iron-phosphate
+  resource: res-phosphate
+  amount: A small share of phosphate demand, but it needs purified phosphoric acid, about 75% of which China makes (IEA).
+  source: {title: "IEA, Global Critical Minerals Outlook 2025", url: "https://www.iea.org/reports/global-critical-minerals-outlook-2025"}
+- tech: solar-photovoltaic
+  resource: res-silver
+  share: 17
+  amount: About 6,100 tonnes of silver in 2024 for the contacts on the cells; makers are cutting the silver per cell and moving to copper.
+  source: {title: "Silver Institute, World Silver Survey 2025", url: "https://silverinstitute.org/wp-content/uploads/2025/04/World_Silver_Survey-2025.pdf"}
+- tech: solar-photovoltaic
+  resource: res-silicon
+  amount: Cells are made of ultra-pure polysilicon refined from silicon metal, almost all of it in China.
+- tech: wind-power
+  resource: res-rare-earths
+  amount: Direct-drive turbines use roughly 600 kg of neodymium-iron-boron magnet per MW; geared turbines use far less. Magnets are the leading use of rare earths.
+  source: {title: "USGS, Mineral Commodity Summaries 2026: Rare earths", url: "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths.pdf"}
+- tech: offshore-wind
+  resource: res-rare-earths
+  amount: Most offshore turbines are direct-drive, with permanent-magnet generators.
+- tech: power-grid
+  resource: res-copper
+  amount: Wires, cables and transformers; grids and electrification are the main source of new copper demand (IEA).
+  source: {title: "IEA, Global Critical Minerals Outlook 2025", url: "https://www.iea.org/reports/global-critical-minerals-outlook-2025"}
+- tech: nuclear-power
+  resource: res-uranium
+  share: 100
+  amount: A 1 GW reactor uses about 200 tonnes of mined uranium oxide concentrate a year.
+  source: {title: "World Nuclear Association, The nuclear fuel cycle", url: "https://world-nuclear.org/information-library/nuclear-fuel-cycle/introduction/nuclear-fuel-cycle-overview"}
+- tech: haber-bosch
+  resource: res-natural-gas
+  amount: Natural gas is both the hydrogen source and the fuel for most ammonia outside China, which uses coal.
+  substitute: green-hydrogen
+  source: {title: "IEA, Ammonia Technology Roadmap (2021)", url: "https://www.iea.org/reports/ammonia-technology-roadmap"}
+- tech: nitrogen-fertilizer-scale
+  resource: res-potash
+  share: 85
+  amount: About 42 million tonnes of potassium (as K2O) went into fertilizer in 2025.
+  source: {title: "USGS, Mineral Commodity Summaries 2026: Potash", url: "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-potash.pdf"}
+- tech: superphosphate-fertilizer
+  resource: res-phosphate
+  amount: About 48 million tonnes of phosphate (as P2O5) went into fertilizer in 2025, most of all phosphate mined.
+  source: {title: "USGS, Mineral Commodity Summaries 2026: Phosphate rock", url: "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-phosphate.pdf"}
+- tech: irrigation
+  resource: res-fresh-water
+  share: 70
+  amount: Agriculture, mostly irrigation, takes about 70% of the fresh water people withdraw.
+  source: {title: "FAO AQUASTAT", url: "https://www.fao.org/aquastat/en/"}
+- tech: smartphone
+  resource: res-gallium
+  amount: Gallium arsenide amplifiers send the radio signal in nearly every phone.
+- tech: smartphone
+  resource: res-indium
+  amount: The touchscreen's transparent electrode is indium tin oxide, which takes most of the world's indium.
+  source: {title: "USGS, Mineral Commodity Summaries 2026: Indium", url: "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf"}
+- tech: smartphone
+  resource: res-cobalt
+  amount: Phone batteries are mostly lithium cobalt oxide.
+- tech: optical-fiber
+  resource: res-germanium
+  amount: Germanium dioxide raises the refractive index of the fiber's core; fiber optics is one of germanium's main uses.
+  source: {title: "USGS, Mineral Commodity Summaries 2026: Germanium", url: "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf"}
+- tech: superconductivity
+  resource: res-helium
+  amount: Low-temperature superconducting magnets, as in MRI scanners, sit in liquid helium; MRI takes about 15% of US helium.
+  substitute: superconductors-high-temp
+  source: {title: "USGS, Mineral Commodity Summaries 2026: Helium", url: "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-helium.pdf"}
+- tech: superconducting-qubits
+  resource: res-helium
+  amount: Dilution refrigerators need helium-4 and the much rarer helium-3, a byproduct of tritium decay.
+- tech: green-hydrogen
+  resource: res-platinum-group
+  amount: Proton-exchange-membrane electrolyzers need platinum and iridium; alkaline electrolyzers use nickel instead.
+- tech: nuclear-reactor
+  resource: res-graphite
+  amount: Chicago Pile-1 used about 350 tonnes of graphite as its moderator.

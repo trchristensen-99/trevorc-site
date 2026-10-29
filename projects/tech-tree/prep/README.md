@@ -15,6 +15,11 @@ npm run build   # writes ../data/tree.json
   removed), so a review can be kept apart from the original data.
 - `tracks.yaml`: which track (sub-lane of its field) each node sits in. The
   tracks themselves, and their order, are defined in `build.mjs`.
+- `effort.yaml`: what each technology took (people, years, cost), merged into
+  the nodes.
+- `supply.yaml` and `resource-use.yaml`: world supply of each resource
+  (production, reserves, producers; mostly USGS) and how much of each a
+  technology needs.
 - `metrics/*.yaml`: measured series (prices, performance) with their sources.
   The build fits a doubling or halving time to each, and a learning curve
   (Wright's law) where a series names its `cumulative` production series.
@@ -25,7 +30,9 @@ them, cycles, missing sources and future technologies without a criterion.
 It dates milestones from their metrics (the year the data crossed the
 threshold, or the trend carried forward), ranks the nodes by importance (tier,
 then how much depends on them) to decide the zoom each first shows at, and
-places each on the log time axis inside its track. It writes `tree.json`
+places each on the log time axis inside its track. It also fits the
+effort and prerequisite models, gives an outside-view estimate for future
+technologies, and rates each resource's supply risk (see SCHEMA.md). It writes `tree.json`
 (what the first view needs) and `details.json` (the text, loaded after). The
 app works out which links to draw for whatever is showing: only those not
 implied by a longer chain of shown nodes.

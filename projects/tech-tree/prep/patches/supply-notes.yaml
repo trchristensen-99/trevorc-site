@@ -1,0 +1,61 @@
+# Resource notes updated to match the 2025 figures in supply.yaml (the
+# Supply section shows production and reserves, so the notes don't repeat
+# them).
+
+- id: res-tin
+  note: >-
+    Tin ore is rare and patchy, so Bronze Age cities depended on long trade routes to a few sources: Cornwall,
+    the Erzgebirge, Iberia and Central Asia. The Uluburun shipwreck (about 1300 BC) carried about 10 tonnes of
+    copper and 1 tonne of tin, the 10 to 1 bronze ratio. Cornish mining ended in 1998. Today China, Indonesia and
+    Peru lead, reserves are only about two decades of production, and much of it goes into electronics solder.
+- id: res-lithium
+  note: >-
+    Not geologically scarce: identified resources keep growing. Mining is concentrated in Australia (hard rock)
+    and Chile and Argentina (brines), and China refines most of it, so processing capacity, water use in desert
+    brines and price swings are the constraints.
+- id: res-uranium
+  note: >-
+    Known resources recoverable at under $130 a kilogram are about 7.8 million tonnes, over a century of current
+    mining. Kazakhstan mines about 40 percent. Ore grades vary enormously: Cigar Lake in Canada averages around 15
+    percent uranium oxide, while many mines work ores of 0.1 percent or less.
+- id: res-potash
+  note: >-
+    Ash potash drove forest clearing in colonial North America (the first US patent, in 1790, was for a potash
+    process). Mined potash began at Stassfurt, Germany, in 1861. Reserves, concentrated in Canada, Belarus and
+    Russia, are over a century of production, which makes supply politically exposed though not geologically
+    scarce.
+- id: res-rare-earths
+  note: >-
+    Not rare in the crust, but minable concentrations are uncommon and separating them is chemically dirty. China
+    mines about 70 percent and does about 90 percent of separation and magnet making, and it has used export
+    controls on them as leverage.
+- id: res-gold
+  note: >-
+    About 216,000 tonnes have been mined in all history, two thirds since 1950. Easy placer gold was worked out
+    first in each gold rush. South Africa's Witwatersrand produced about 1,000 tonnes in 1970 and only about 100
+    tonnes in 2024, from mines up to 4 km deep.
+- id: res-silver
+  note: >-
+    Great historic mines ran out or became uneconomic: Laurion funded Athens' fleet in the 5th century BCE; Potosi
+    in Bolivia flooded the world with silver after 1545. Today most silver is a byproduct of lead, zinc and copper
+    mining.
+- id: res-copper
+  note: >-
+    Early metalworkers took native copper and rich, colorful surface oxide ores (Timna, Cyprus, the Great Lakes).
+    Those are long gone, and grades keep falling: ores of several percent copper were common in the 19th century,
+    while Chile's average grade fell from about 0.93 percent in 2005 to around 0.6 percent, and Calvo et al. found
+    global copper grades fell about 25 percent in ten years. Lower grades mean more rock, energy and water per
+    tonne.
+- id: res-zinc
+  note: >-
+    Used today mainly to galvanize steel against rust. Reserves are under 20 years of output, though identified
+    resources are about 1.9 billion tonnes. Zinc ores are also the main source of germanium and indium.
+- id: res-salt
+  note: >-
+    Rock salt deposits are vast and seawater is nearly unlimited. Salt was scarce only locally and historically,
+    which made it a major traded and taxed good.
+- id: res-helium
+  note: >-
+    Helium forms slowly from radioactive decay and escapes to space once released, so it is truly non-renewable.
+    It is recovered only from a few gas fields, led by the US and Qatar. The US government sold its Federal Helium
+    Reserve near Amarillo in 2024, ending a century-old strategic stockpile.

@@ -31,6 +31,8 @@ export interface Node {
   trendYear?: number // when the metric's trend reaches the threshold
   scenarioYears?: { id: string; year: number | null }[] // when each forecast does
   routes?: string[]
+  py?: number // log10 of the person-years it took (or has had so far)
+  risk?: "low" | "moderate" | "high" | "very high" // supply risk: its own, or its riskiest resource's
 }
 
 // The text of each node, loaded after the tree is drawn.
@@ -39,13 +41,45 @@ export interface Details {
   summary?: string
   criterion?: string
   efforts?: Effort[]
-  effort?: { span?: [number, number] | number; people?: number | string; cost_usd?: number | string; note?: string }
+  effort?: { span?: [number, number] | number; people?: number | string; person_years?: number; cost_usd?: number | string; compute_usd?: number; work?: string; growth?: number; rough?: boolean; note?: string }
+  effortCalc?: { years: number | null; people: number | null; py: number | null; work: string; rough: boolean; vsTrend?: number }
+  prereqModel?: { ready: number; last: number; waited: number; q25: number; q50: number; q75: number }
+  effortModel?: { spent: number; people: number; growth: number; past: number; q10: number; q50: number; q90: number }
+  supply?: Supply
+  supplyCalc?: { rp: number | null; hhi: number | null; procHhi: number | null; parts: Record<string, number>; score: number | null; rating: string; judged: boolean }
+  risk?: { rating: string; resource: string }
+  resourceUse?: ResourceUse[]
+  usedBy?: ResourceUse[]
   forecast?: { note?: string; sources?: Source[] }
   lost?: string
   scarcity?: string
   note?: string
   sources?: Source[]
   routes?: { name: string; note?: string; requires: string[] }[]
+}
+
+export interface Supply {
+  year?: number
+  production?: { value: number; unit: string; what?: string }
+  reserves?: { value: number; unit: string; more?: boolean }
+  producers?: [string, number][]
+  processing?: { stage: string; producers: [string, number][] }
+  recycling?: string
+  demand_2040?: number
+  uses?: [string, number][]
+  risk?: { rating: string; note?: string }
+  note?: string
+  sources?: Source[]
+}
+
+// One technology's use of one resource.
+export interface ResourceUse {
+  tech?: string
+  resource?: string
+  amount?: string
+  share?: number
+  substitute?: string
+  source?: Source
 }
 
 export interface Edge {
@@ -129,4 +163,13 @@ export interface Tree {
   nodes: Node[]
   edges: Edge[]
   metrics: Metric[]
+  models: Models
+}
+
+// Fits across the whole tree (see build.mjs).
+export interface Models {
+  effort: { n: number; beta: number[]; sd: number; r2: number; fold: number; from: number; kinds: { name: string; kinds: string[]; n: number; shift: number }[] } | null
+  cost: { n: number; slope: number; intercept: number; sd: number; r2: number; fold: number; from: number } | null
+  span: { n: number; exponent: number; intercept: number; r2: number } | null
+  lag: { eras: { from: number; to: number; n: number; q25: number | null; q50: number | null; q75: number | null }[]; basis: { from: number; n: number; q25: number; q50: number; q75: number } }
 }

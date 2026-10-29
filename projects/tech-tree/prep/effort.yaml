@@ -1,0 +1,791 @@
+# What each technology took: merged key by key into the node's `effort`
+# (see SCHEMA.md). A key set to null removes it.
+#
+#   span: [from, to]   years of focused work on this result
+#   people: 10         people working on it at once (researchers, engineers,
+#                      builders; not trial volunteers or customers). For
+#                      something not yet achieved: the number working on it now
+#   person_years: 30   total, when the sources give one (else people x years)
+#   cost_usd: 1e6      total cost, 2025 dollars
+#   compute_usd: 1e6   the cost of computing alone (AI training runs)
+#   work: build        mostly building what people already knew how to make
+#                      (default research: finding out how)
+#   growth: 0.1        for something not yet achieved: how fast the effort on
+#                      it is growing, a fraction a year
+#   rough: true        my order-of-magnitude estimate from the histories,
+#                      not a documented figure
+#
+# People and years are orders of magnitude. Where a node's own sources
+# cover the history, the figures come from them.
+
+# ------------------------------------------------- corrections to older entries
+
+- id: monumental-architecture
+  span: null
+  people: null
+  note: >-
+    For scale, the Great Pyramid (about 2580 to 2560 BC, long after the first
+    monuments): excavations of the workers' town at Giza suggest a paid,
+    rotating workforce of about 10,000 to 30,000 at a time over roughly 20
+    years. Göbekli Tepe itself was built by foragers over generations.
+- id: rocketry
+  span: [1920, 1926]
+  people: 3
+  rough: true
+  note: >-
+    Goddard worked largely alone, with a few assistants and a Smithsonian
+    grant of $5,000 (1917). The V-2 that followed was another order of
+    effort: Peenemünde had about 5,000 staff by 1942, plus tens of thousands
+    of forced laborers at the Mittelwerk; at least 10,000 prisoners died
+    building V-2s, more than were killed by them.
+- id: space-stations
+  span: [1967, 1971]
+  people: 5000
+  rough: true
+  note: >-
+    Salyut 1 was built quickly from Almaz military station hardware. The ISS
+    (1984 to 2011) is often cited at about $150 billion across partners, the
+    most expensive single object ever built.
+  cost_usd: null
+- id: perceptron
+  span: [1957, 1958]
+  people: 3
+  rough: true
+- id: deep-learning
+  span: [2011, 2012]
+  cost_usd: null
+  compute_usd: 16
+- id: transformer
+  span: [2016, 2017]
+  cost_usd: null
+  compute_usd: 440
+- id: large-language-models
+  span: [2019, 2020]
+  cost_usd: null
+  compute_usd: 2200000
+- id: bert
+  span: [2018, 2018]
+  cost_usd: null
+  compute_usd: 1800
+- id: backpropagation
+  span: [1982, 1986]
+- id: alphago
+  span: [2014, 2016]
+- id: frontier-models
+  span: [2022, 2023]
+  people: 300
+  cost_usd: null
+  compute_usd: 4e7
+  note: >-
+    For GPT-4: the technical report lists about 280 contributors, and Epoch
+    puts its amortized training compute at about $40 million (2023 dollars).
+    Later runs cost far more: about $366 million for GPT-4.5 and $390 million
+    for Grok 4 (speculative). Frontier training cost has grown about 2.4 times
+    a year since 2016, and total development costs are several times the
+    final run.
+- id: open-weight-llms
+  span: [2024, 2024]
+  people: 140
+  cost_usd: null
+  compute_usd: 5400000
+- id: ai-datacenters
+  work: build
+- id: gate-all-around
+  work: build
+- id: satellites
+  span: [1954, 1957]
+  people: 10000
+  rough: true
+  note: >-
+    Built on the R-7 ICBM program under Korolev, which employed tens of
+    thousands; the satellite itself was a quick add-on. By 2026 roughly
+    19,000 payloads were in orbit, over half of them Starlink.
+- id: lithium-ion-battery
+  span: [1976, 1991]
+  people: 20
+  rough: true
+- id: solar-photovoltaic
+  span: [1953, 1954]
+  people: 3
+- id: haber-bosch
+  people: 100
+  rough: true
+- id: nuclear-power
+  people: 5000
+  rough: true
+  note: >-
+    Rides on the Manhattan Project (about 130,000 people, about $30 billion
+    in 2025 dollars); the reactor programs that followed (Argonne, Oak
+    Ridge, Rickover's naval reactors) employed thousands. Vogtle 3 and 4 in
+    Georgia cost about $35 billion for two units and Hinkley Point C is
+    estimated near 46 billion pounds, which is why cost, not physics, is the
+    constraint in the West.
+- id: polio-vaccine
+  people: 50
+  person_years: 3000
+  rough: true
+  note: >-
+    Salk's Pittsburgh lab, a few dozen people, developed the vaccine from
+    1948 to 1953. The 1954 Francis field trial then enlisted roughly 20,000
+    physicians, 40,000 nurses and 200,000 volunteers, most of them part-time
+    for a few months, funded by the March of Dimes; the person-years here
+    count that as about 2,500.
+- id: mrna-vaccines
+  people: 3000
+  rough: true
+  note: >-
+    Moderna's and Pfizer and BioNTech's vaccine programs, a few thousand
+    people for a year, resting on three decades of mRNA work by Karikó,
+    Weissman and others. The trials enrolled about 74,000 volunteers.
+    Operation Warp Speed committed about $18 billion across several
+    vaccines, on top of the companies' own spending.
+- id: smallpox-eradication
+  work: build
+- id: transcontinental-railroad
+  work: build
+- id: panama-canal
+  work: build
+- id: green-revolution
+  people: 300
+  rough: true
+- id: imagenet
+  people: 10
+  note: >-
+    A small Princeton and Stanford group; about 14 million images were
+    labeled by roughly 49,000 Amazon Mechanical Turk workers in 167
+    countries, counted here as a few hundred person-years.
+  person_years: 300
+- id: container-shipping
+  span: [1955, 1956]
+  people: 30
+  rough: true
+- id: fusion-power
+  person_years: 1000000
+  growth: 0.03
+  rough: true
+- id: fully-reusable-rockets
+  span: [2012, 2026]
+  people: 4000
+  person_years: 25000
+  rough: true
+- id: crewed-lunar-return
+  span: [2017, 2026]
+  people: 30000
+  person_years: 250000
+  rough: true
+- id: direct-air-capture
+  span: [2009, 2026]
+  people: 3000
+  person_years: 15000
+  rough: true
+- id: convolutional-networks
+  span: [1988, 1989]
+  people: 5
+  rough: true
+- id: t2t-complete-genome
+  person_years: 150
+  rough: true
+- id: encode-project
+  people: 440
+
+# ------------------------------------------------------------ 1500 to 1900
+
+- id: telescope
+  span: [1608, 1609]
+  people: 3
+  rough: true
+  note: Spectacle makers in the Netherlands, then Galileo, who ground his own lenses and reached about 20x within a year.
+- id: blood-circulation
+  span: [1616, 1628]
+  people: 1
+  note: Harvey lectured on circulation from 1616 and published De Motu Cordis in 1628, after years of vivisection and measurement.
+- id: probability-theory
+  span: [1654, 1654]
+  people: 2
+  note: A few months of letters between Pascal and Fermat on the problem of points.
+- id: statistics
+  span: [1660, 1662]
+  people: 1
+  rough: true
+  note: John Graunt, a haberdasher, working through London's Bills of Mortality in his spare time.
+- id: microorganisms-discovered
+  span: [1673, 1676]
+  people: 1
+  note: Leeuwenhoek worked alone with single-lens microscopes he ground himself, reporting by letter to the Royal Society.
+- id: newtonian-mechanics
+  span: [1684, 1687]
+  people: 1
+  note: About two and a half years from Halley's 1684 visit to the Principia, on top of Newton's own work of the 1660s.
+- id: coke-iron-smelting
+  span: [1708, 1709]
+  people: 10
+  rough: true
+  note: Abraham Darby's furnace crew at Coalbrookdale.
+- id: steam-engine
+  span: [1700, 1712]
+  people: 2
+  rough: true
+  note: Thomas Newcomen and John Calley, an ironmonger and a plumber, experimenting for about a decade before the Dudley Castle engine.
+- id: watt-steam-engine
+  rough: true
+- id: chemical-revolution
+  span: [1772, 1789]
+  people: 4
+  rough: true
+  note: Lavoisier with Marie-Anne Paulze Lavoisier and a few collaborators, financed from his tax-farming income; his instruments were among the most expensive in Europe.
+- id: vaccination
+  span: [1796, 1798]
+  people: 1
+  note: Jenner's experiment on James Phipps in 1796 and his 1798 report.
+- id: electric-battery
+  span: [1792, 1800]
+  people: 1
+  note: Volta's years of experiments after Galvani's frog legs, ending in the voltaic pile.
+- id: atomic-theory
+  span: [1803, 1808]
+  people: 1
+- id: electromagnetism
+  span: [1820, 1826]
+  people: 2
+  note: Ørsted's 1820 observation, then Ampère's mathematical theory over the next six years.
+- id: electromagnetic-induction
+  span: [1821, 1831]
+  people: 1
+  note: Faraday looked for induction on and off for a decade before finding it in about ten days of experiments in 1831.
+- id: mechanical-reaper
+  span: [1831, 1834]
+  people: 3
+  rough: true
+  note: Cyrus McCormick, with Jo Anderson, an enslaved man on the family farm, building on his father's failed attempts.
+- id: telegraph
+  span: [1832, 1844]
+  people: 4
+  cost_usd: 1e6
+  rough: true
+  note: Morse, Vail and Gale, with Congress's $30,000 for the Washington to Baltimore line in 1843. Cooke and Wheatstone built a rival in Britain from 1837.
+- id: photography
+  span: [1826, 1839]
+  people: 2
+  note: Niépce and then Daguerre, partners from 1829.
+- id: anesthesia
+  span: [1844, 1846]
+  people: 3
+  note: Horace Wells, William Morton and Charles Jackson, ending in Morton's public ether demonstration in Boston.
+- id: cell-theory
+  span: [1837, 1839]
+  people: 2
+  note: Schleiden on plants and Schwann on animals.
+- id: boolean-logic
+  span: [1847, 1854]
+  people: 1
+- id: thermodynamics
+  span: [1824, 1850]
+  people: 3
+  rough: true
+  note: Carnot's 1824 essay, then Mayer, Joule, Helmholtz, Clausius and Thomson, each part-time, until Clausius's 1850 statement of the two laws.
+- id: oil-refining
+  span: [1850, 1855]
+  people: 5
+  rough: true
+  note: Łukasiewicz's kerosene lamp (1853) and Silliman's 1855 report on Pennsylvania rock oil.
+- id: epidemiology
+  span: [1849, 1855]
+  people: 2
+  note: John Snow, helped by the curate Henry Whitehead on Broad Street.
+- id: steel-bessemer
+  span: [1854, 1858]
+  people: 5
+  rough: true
+  note: Bessemer's own works; Robert Mushet's manganese fix (1856) and later the Thomas process were needed for most ores.
+- id: germ-theory
+  span: [1857, 1865]
+  people: 5
+  rough: true
+  note: Pasteur and a few assistants; Koch's postulates followed in the 1880s.
+- id: electric-generator
+  span: [1866, 1867]
+  people: 3
+  rough: true
+- id: antiseptic-surgery
+  span: [1865, 1867]
+  people: 3
+  rough: true
+- id: periodic-table
+  span: [1867, 1869]
+  people: 1
+  note: Mendeleev, while writing a chemistry textbook.
+- id: internal-combustion-engine
+  span: [1872, 1876]
+  people: 10
+  rough: true
+  note: Otto, Langen, Daimler and Maybach at the Deutz engine works.
+- id: telephone
+  span: [1874, 1876]
+  people: 2
+  note: Bell and Thomas Watson; Elisha Gray filed a rival caveat the same day.
+- id: electric-light
+  rough: true
+- id: steam-turbine
+  span: [1884, 1884]
+  people: 3
+  rough: true
+- id: ac-power
+  span: [1885, 1888]
+  people: 20
+  rough: true
+  note: Westinghouse's engineers (Stanley's transformer system at Great Barrington, 1886) and Tesla's motor patents (1888).
+- id: automobile
+  span: [1885, 1886]
+  people: 3
+  rough: true
+  note: Karl Benz's small workshop; Bertha Benz's 1888 drive proved it.
+- id: electromagnetic-waves
+  span: [1886, 1888]
+  people: 1
+- id: radio
+  span: [1894, 1897]
+  people: 3
+  rough: true
+  note: Marconi's first years, before his company grew; the 1901 transatlantic signal took dozens of staff.
+- id: x-rays
+  span: [1895, 1895]
+  people: 1
+  note: Röntgen worked alone for about seven weeks before announcing.
+- id: radioactivity
+  span: [1896, 1898]
+  people: 3
+  note: Becquerel, then Marie and Pierre Curie in a converted shed.
+- id: electron
+  span: [1896, 1897]
+  people: 4
+  rough: true
+- id: quantum-hypothesis
+  span: [1894, 1900]
+  people: 1
+  note: Planck's six years on black-body radiation.
+
+# ------------------------------------------------------------ 1900 to 1970
+
+- id: blood-transfusion
+  span: [1900, 1901]
+  people: 1
+  note: Landsteiner's blood groups; routine transfusion took decades more.
+- id: vacuum-tube
+  span: [1904, 1906]
+  people: 2
+  note: Fleming's diode (1904) and De Forest's audion (1906).
+- id: plastics
+  span: [1905, 1907]
+  people: 3
+  rough: true
+  note: Leo Baekeland and an assistant or two in his home lab in Yonkers.
+- id: chromosome-theory
+  span: [1908, 1915]
+  people: 5
+  note: Morgan's fly room at Columbia, with Sturtevant, Bridges and Muller.
+- id: atomic-nucleus
+  span: [1908, 1911]
+  people: 3
+  note: Rutherford, Geiger and Marsden in Manchester.
+- id: x-ray-crystallography
+  span: [1912, 1913]
+  people: 4
+  note: Von Laue's group in Munich, then William and Lawrence Bragg.
+- id: assembly-line
+  span: [1908, 1913]
+  people: 20
+  rough: true
+  note: Ford's production engineers at Highland Park, led by Charles Sorensen.
+- id: insulin-therapy
+  span: [1921, 1922]
+  people: 4
+  note: Banting, Best, Collip and Macleod in Toronto; Eli Lilly scaled it up within a year.
+- id: television
+  span: [1926, 1927]
+  people: 5
+  rough: true
+  note: Philo Farnsworth's small San Francisco lab, funded by a few private backers. RCA later spent about $50 million (1930s dollars) on Zworykin's rival system before 1939.
+- id: electron-microscope
+  span: [1931, 1933]
+  people: 2
+  note: Ernst Ruska and Max Knoll in Berlin.
+- id: computability-theory
+  span: [1935, 1936]
+  people: 1
+  note: Turing, independently of Church.
+- id: nuclear-fission
+  span: [1934, 1938]
+  people: 4
+  note: Hahn, Meitner and Strassmann in Berlin, after Fermi's 1934 experiments; Meitner and Frisch explained the result.
+- id: stored-program-computer
+  span: [1946, 1948]
+  people: 5
+  rough: true
+  note: Williams, Kilburn and Tootill's Manchester Baby.
+- id: dna-genetic-material
+  span: [1934, 1944]
+  people: 3
+  note: Avery, MacLeod and McCarty at the Rockefeller Institute.
+- id: information-theory
+  span: [1941, 1948]
+  people: 1
+- id: jet-airliner
+  span: [1946, 1952]
+  people: 2000
+  rough: true
+  note: De Havilland's Comet program; the fatigue failures of 1954 then took years of investigation.
+- id: compiler
+  span: [1951, 1952]
+  people: 3
+  rough: true
+  note: Grace Hopper's A-0 at Remington Rand.
+- id: dna-double-helix
+  span: [1951, 1953]
+  people: 4
+  note: Watson and Crick, using Rosalind Franklin's and Maurice Wilkins's X-ray data.
+- id: organ-transplantation
+  span: [1951, 1954]
+  people: 10
+  rough: true
+  note: Joseph Murray's team at the Peter Bent Brigham Hospital, between identical twins.
+- id: dna-polymerase
+  span: [1955, 1956]
+  people: 5
+  rough: true
+- id: symbolic-ai
+  span: [1955, 1956]
+  people: 3
+  note: Newell, Simon and Shaw's Logic Theorist.
+- id: photolithography
+  span: [1952, 1957]
+  people: 2
+  rough: true
+- id: integrated-circuit
+  span: [1958, 1960]
+  people: 3
+  rough: true
+  note: Kilby at Texas Instruments (1958) and Noyce at Fairchild (1959), each with a few colleagues.
+- id: mosfet
+  span: [1957, 1959]
+  people: 2
+- id: laser
+  span: [1959, 1960]
+  people: 2
+  rough: true
+  note: Theodore Maiman and his assistant at Hughes Research Labs, on a small budget; Hughes management had doubted ruby would work.
+- id: oral-contraceptive
+  span: [1951, 1960]
+  people: 10
+  cost_usd: 2e7
+  rough: true
+  note: Pincus, Chang and Rock, funded by Katharine McCormick, who gave about $2 million in total.
+- id: human-spaceflight
+  span: [1958, 1961]
+  people: 10000
+  rough: true
+  note: Vostok, built on the R-7 program. The US Project Mercury cost $277 million then (about $3 billion in 2025 dollars).
+- id: planetary-probes
+  span: [1961, 1962]
+  people: 500
+  rough: true
+  note: Mariner 2, built by JPL in under a year.
+- id: communications-satellites
+  span: [1960, 1962]
+  people: 300
+  rough: true
+  note: Telstar 1, built by Bell Labs and paid for by AT&T.
+- id: genetic-code
+  span: [1961, 1966]
+  people: 30
+  rough: true
+  note: Nirenberg and Matthaei's 1961 poly-U experiment, then Nirenberg's, Khorana's and Ochoa's groups.
+- id: packet-switching
+  span: [1960, 1965]
+  people: 2
+  note: Paul Baran at RAND and Donald Davies at the National Physical Laboratory, independently.
+- id: tokamak
+  span: [1955, 1968]
+  people: 100
+  rough: true
+  note: The Kurchatov Institute's tokamak program, ending with T-3's results confirmed by a British team in 1969.
+- id: dram
+  span: [1966, 1970]
+  people: 20
+  rough: true
+  note: Dennard's one-transistor cell at IBM (1966), then Intel's 1103.
+- id: restriction-enzymes
+  span: [1962, 1970]
+  people: 5
+  rough: true
+- id: optical-fiber
+  span: [1966, 1970]
+  people: 3
+  note: Maurer, Keck and Schultz at Corning, after Kao's 1966 analysis.
+
+# ------------------------------------------------------------- 1970 to now
+
+- id: expert-systems
+  span: [1972, 1976]
+  people: 10
+  rough: true
+  note: MYCIN at Stanford, after DENDRAL (from 1965).
+- id: recombinant-dna
+  span: [1972, 1973]
+  people: 6
+  rough: true
+  note: Cohen's and Boyer's labs, after Berg's 1972 construct.
+- id: graphical-user-interface
+  span: [1972, 1973]
+  people: 20
+  rough: true
+  note: The Xerox Alto at PARC, building on Engelbart's 1968 demonstration.
+- id: tcp-ip
+  span: [1973, 1974]
+  people: 5
+  rough: true
+  note: Cerf and Kahn's design; the ARPANET switched over in 1983.
+- id: monoclonal-antibodies
+  span: [1974, 1975]
+  people: 2
+- id: public-key-cryptography
+  span: [1974, 1976]
+  people: 2
+  note: Diffie and Hellman (Merkle independently); RSA followed in 1977. GCHQ's Ellis, Cocks and Williamson had it secretly by 1974.
+- id: personal-computer
+  span: [1976, 1977]
+  people: 10
+  rough: true
+  note: The Apple II; Wozniak designed most of it himself.
+- id: ivf
+  span: [1968, 1978]
+  people: 5
+  note: Robert Edwards, Patrick Steptoe and Jean Purdy, mostly without public funding.
+- id: cellular-network
+  span: [1968, 1979]
+  people: 1000
+  rough: true
+  note: Bell Labs' AMPS development, trialed in Chicago in 1978; NTT's Tokyo network opened in 1979.
+- id: 3d-printing
+  span: [1983, 1984]
+  people: 1
+- id: automated-sequencing
+  span: [1983, 1986]
+  people: 10
+  rough: true
+- id: reinforcement-learning
+  span: [1981, 1988]
+  people: 2
+  rough: true
+  note: Sutton and Barto's temporal-difference learning; Watkins's Q-learning followed in 1989.
+- id: world-wide-web
+  span: [1989, 1991]
+  people: 2
+  note: Tim Berners-Lee, joined by Robert Cailliau, at CERN.
+- id: gm-crops
+  span: [1988, 1994]
+  people: 50
+  rough: true
+  note: Calgene's Flavr Savr tomato.
+- id: lstm
+  span: [1991, 1997]
+  people: 2
+- id: quantum-computing
+  span: [1997, 1998]
+  people: 5
+  rough: true
+  note: The first two-qubit NMR demonstrations.
+- id: gpu
+  span: [1997, 1999]
+  people: 100
+  rough: true
+- id: graphene
+  span: [2002, 2004]
+  people: 5
+  note: Geim and Novoselov's "Friday night experiments" with sticky tape.
+- id: induced-pluripotent-stem-cells
+  span: [2000, 2006]
+  people: 5
+  note: Yamanaka's lab, with Kazutoshi Takahashi screening 24 candidate genes.
+- id: cloud-computing
+  span: [2003, 2006]
+  people: 100
+  rough: true
+  note: Amazon Web Services' S3 and EC2.
+- id: dna-origami
+  span: [2004, 2006]
+  people: 1
+- id: smartphone
+  span: [2004, 2007]
+  people: 1000
+  cost_usd: 2e8
+  rough: true
+  note: Apple's iPhone project, reportedly about $150 million in development (about $230 million in 2025 dollars).
+- id: gpu-computing
+  span: [2004, 2007]
+  people: 100
+  rough: true
+  note: NVIDIA's CUDA.
+- id: rna-seq
+  span: [2007, 2008]
+  people: 10
+  rough: true
+- id: crispr-cas9
+  span: [2011, 2012]
+  people: 6
+  note: Doudna's and Charpentier's labs (Jinek et al. 2012); Zhang's and Church's labs showed editing in human cells in early 2013.
+- id: attention-mechanism
+  span: [2014, 2014]
+  people: 3
+- id: partial-reprogramming
+  span: [2012, 2016]
+  people: 15
+  rough: true
+  note: Ocampo and Izpisua Belmonte's group at the Salk Institute.
+- id: rlhf
+  span: [2016, 2017]
+  people: 6
+- id: scaling-laws
+  span: [2019, 2020]
+  people: 10
+- id: diffusion-models
+  span: [2019, 2020]
+  people: 3
+  note: Ho, Jain and Abbeel, building on Sohl-Dickstein et al. (2015) and Song and Ermon (2019).
+- id: chatgpt
+  span: [2021, 2022]
+  people: 300
+  rough: true
+- id: reasoning-models
+  span: [2023, 2024]
+  people: 200
+  rough: true
+- id: fly-connectome
+  span: [2017, 2024]
+  people: 100
+  rough: true
+  note: The FlyWire consortium; much of the proofreading was done by volunteers and part-time annotators.
+- id: crispr-therapy-approved
+  span: [2015, 2023]
+  people: 500
+  rough: true
+  note: Casgevy, from Vertex and CRISPR Therapeutics.
+- id: deep-blue
+  span: [1985, 1997]
+- id: higgs-boson
+  work: research
+
+# ------------------------------------------------------- not yet achieved
+# People working on it now, and person-years so far, are rough: they count
+# the main companies and labs named in the node's efforts.
+
+- id: agi
+  span: [2012, 2026]
+  people: 30000
+  person_years: 150000
+  growth: 0.2
+  rough: true
+  note: >-
+    Technical staff at the frontier labs (OpenAI, Anthropic, Google DeepMind,
+    Meta, xAI and the Chinese labs) number in the tens of thousands, grown
+    from a few hundred people in deep learning in 2012; spending on AI
+    datacenters runs to hundreds of billions of dollars a year. The same
+    people are counted for automated AI research and the superhuman coder.
+- id: automated-ai-research
+  span: [2012, 2026]
+  people: 30000
+  person_years: 150000
+  growth: 0.2
+  rough: true
+  note: The same pool as AGI; see there.
+- id: superhuman-coder
+  span: [2012, 2026]
+  people: 30000
+  person_years: 150000
+  growth: 0.2
+  rough: true
+  note: The same pool as AGI; see there.
+- id: fault-tolerant-quantum-computer
+  span: [1995, 2026]
+  people: 15000
+  person_years: 150000
+  growth: 0.1
+  rough: true
+  note: >-
+    Quantum computing groups in companies (IBM, Google, Quantinuum, IonQ,
+    PsiQuantum, Microsoft and others) and universities since Shor's 1994
+    algorithm; governments have committed tens of billions of dollars.
+- id: useful-quantum-advantage
+  span: [1995, 2026]
+  people: 15000
+  person_years: 150000
+  growth: 0.1
+  rough: true
+  note: The same pool as the fault-tolerant quantum computer.
+- id: aging-reversal
+  span: [2006, 2026]
+  people: 3000
+  person_years: 20000
+  growth: 0.1
+  rough: true
+  note: >-
+    Reprogramming and rejuvenation since Yamanaka's 2006 factors: Altos Labs
+    (launched in 2022 with $3 billion), Calico, NewLimit, Retro Biosciences
+    and academic labs, a few thousand people. Aging research as a whole is
+    far larger.
+- id: whole-brain-emulation
+  span: [2010, 2026]
+  people: 1000
+  person_years: 8000
+  growth: 0.1
+  rough: true
+  note: Connectomics and brain simulation groups (FlyWire, MICrONS, Google, the Allen Institute, E11 Bio and others).
+- id: whole-mouse-connectome
+  span: [2016, 2026]
+  people: 500
+  person_years: 3000
+  growth: 0.15
+  rough: true
+  note: IARPA's MICrONS (about $100 million) and the NIH BRAIN CONNECTS program, plus Google and E11 Bio.
+- id: bci-approved
+  span: [2016, 2026]
+  people: 1500
+  person_years: 8000
+  rough: true
+  note: Neuralink, Synchron, Blackrock Neurotech, Paradromics, Precision Neuroscience and academic groups.
+- id: solid-state-batteries
+  span: [2010, 2026]
+  people: 5000
+  person_years: 40000
+  rough: true
+  note: QuantumScape, Solid Power, Toyota, Samsung SDI, CATL and others.
+- id: general-purpose-robots
+  span: [2015, 2026]
+  people: 10000
+  person_years: 40000
+  growth: 0.3
+  rough: true
+  note: Humanoid and robot-learning companies (Tesla, Figure, 1X, Agility, Unitree, Physical Intelligence and others) and labs, growing fast since 2022.
+- id: robotaxis-at-scale
+  span: [2009, 2026]
+  people: 15000
+  person_years: 150000
+  rough: true
+  note: Waymo (from Google's 2009 project), Baidu Apollo, Pony.ai, Zoox, Tesla and the defunct Cruise and Argo; over $100 billion has gone into autonomous driving.
+- id: xenotransplant-approved
+  span: [2015, 2026]
+  people: 500
+  person_years: 3000
+  rough: true
+  note: eGenesis, United Therapeutics (Revivicor) and transplant centers.
+- id: in-vivo-gene-editing
+  span: [2014, 2026]
+  people: 5000
+  person_years: 30000
+  rough: true
+  note: Intellia, Verve, Beam, Prime Medicine and academic groups.
+- id: molecular-nanotechnology
+  span: [1986, 2026]
+  people: 200
+  person_years: 5000
+  rough: true
+  note: A small field since Drexler's Engines of Creation (1986); DNA nanotechnology and protein design are much larger but aim elsewhere.

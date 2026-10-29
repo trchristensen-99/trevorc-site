@@ -42,6 +42,7 @@ const warnings = []
 const warn = (m) => warnings.push(m)
 const readYaml = (f) => YAML.parse(fs.readFileSync(f, "utf8"))
 const files = (dir) => (fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => /\.ya?ml$/.test(f)).sort().map((f) => path.join(dir, f)) : [])
+const list = (x) => (x == null ? [] : Array.isArray(x) ? x : [x])
 
 // ------------------------------------------------------------------ load
 
@@ -87,6 +88,32 @@ for (const l of linkEntries) {
 for (const l of linkEntries) {
   const n = byId.get(l.id)
   if (n) for (const key of LINK_KEYS) if (l.drop?.[key]) n[key] = (n[key] ?? []).filter((x) => !l.drop[key].includes(x))
+}
+// Effort (effort.yaml): what each technology took, merged key by key into
+// the node's own `effort`, so the figures can be reviewed in one place.
+const optional = (f) => (fs.existsSync(path.join(HERE, f)) ? readYaml(path.join(HERE, f)) ?? [] : [])
+for (const e of optional("effort.yaml")) {
+  const n = byId.get(e.id)
+  if (!n) { warn(`effort.yaml: unknown node ${e.id}`); continue }
+  const { id, ...rest } = e
+  n.effort = { ...(n.effort ?? {}), ...rest }
+  for (const [k, v] of Object.entries(n.effort)) if (v === null) delete n.effort[k]
+}
+// Supply (supply.yaml): world production, reserves and producers for each
+// resource. Resource use (resource-use.yaml): how much of a resource a
+// technology needs, and what share of the world's supply goes to it; each
+// entry also adds the `uses` link.
+for (const [id, s] of Object.entries(optional("supply.yaml"))) {
+  const n = byId.get(id)
+  if (!n) { warn(`supply.yaml: unknown node ${id}`); continue }
+  if (n.kind !== "resource") warn(`supply.yaml: ${id} isn't a resource`)
+  n.supply = s
+}
+const resourceUse = optional("resource-use.yaml")
+for (const u of resourceUse) {
+  const n = byId.get(u.tech), r = byId.get(u.resource)
+  if (!n || !r) { warn(`resource-use.yaml: unknown node ${n ? u.resource : u.tech}`); continue }
+  n.uses = [...new Set([...list(n.uses), u.resource])]
 }
 // Tracks (tracks.yaml): which sub-lane of its field each node sits in.
 const trackOf = new Map()
@@ -253,7 +280,6 @@ function crossing(m, value) {
 
 const fieldIds = new Set(FIELDS.map((f) => f.id))
 const trackField = new Map([...FIELDS, ROOTS].flatMap((f) => f.tracks.map(([t]) => [t, f.id])))
-const list = (x) => (x == null ? [] : Array.isArray(x) ? x : [x])
 
 // Dates: a year, [from, to], or { window: [from, to], likely }.
 function parseDate(d, where) {
@@ -395,6 +421,221 @@ for (const n of kept) {
     const earliest = Math.min(...n._routes.map((r) => Math.max(NOW, ...r.requires.map((id) => live.get(id)).filter((p) => p.status === "ongoing" || p.status === "speculative").map((p) => p._date.from))))
     if (earliest > n._date.from + 0.05) warn(`${n.id}: window opens ${n._date.from}, before any route's prerequisites can (${earliest})`)
   }
+}
+
+// ---------------------------------------------------------------- models
+
+// What it took. Person-years are the common measure: people working on it
+// at once times the years of focused work (or `person_years` when the
+// sources give a total). "research" efforts found out how; "build" efforts
+// mostly built something people already knew how to make, and are left out
+// of the fit.
+const quantile = (xs, q) => {
+  const a = [...xs].sort((x, y) => x - y)
+  if (!a.length) return null
+  const i = (a.length - 1) * q, lo = Math.floor(i)
+  return a[lo] + (a[Math.min(lo + 1, a.length - 1)] - a[lo]) * (i - lo)
+}
+const WORKS = ["research", "build"]
+for (const n of kept) {
+  const e = n.effort
+  if (!e) continue
+  const where = `${n._file}: ${n.id}: effort`
+  const span = Array.isArray(e.span) ? e.span.map(Number) : null
+  const years = span ? Math.max(1, span[1] - span[0]) : Number.isFinite(Number(e.span)) ? Number(e.span) : null
+  const people = e.people != null && Number.isFinite(Number(e.people)) ? Number(e.people) : null
+  const py = e.person_years != null ? Number(e.person_years) : years && people ? people * years : null
+  const cost = e.cost_usd != null ? Number(e.cost_usd) : null
+  const work = e.work ?? "research"
+  if (!WORKS.includes(work)) warn(`${where}: unknown work ${work}`)
+  if (e.people != null && people == null) warn(`${where}: people should be a number`)
+  if (span && span[0] > n._date.to + 1 && n.status === "achieved") warn(`${where}: starts after it was achieved`)
+  const open = n.status === "ongoing" || n.status === "speculative"
+  if (open && py && !people) warn(`${where}: unachieved, so give people (working on it now)`)
+  n._effort = { years, people, py, cost, work, rough: !!e.rough, open }
+}
+// Effort over time: log10 person-years against the year achieved and the
+// kind of technology (discoveries take the least, programs and
+// infrastructure the most), for research efforts since 1500, by least
+// squares.
+const EFFORT_FROM = 1500
+const KIND_GROUPS = [["discovery", ["discovery"]], ["technique or device", ["technique", "device", "milestone"]], ["infrastructure or institution", ["infrastructure", "institution"]]]
+const kindGroup = (kind) => Math.max(0, KIND_GROUPS.findIndex(([, ks]) => ks.includes(kind)))
+const effortX = (year, kind) => [1, (year - 1900) / 100, ...KIND_GROUPS.slice(1).map((_, i) => (kindGroup(kind) === i + 1 ? 1 : 0))]
+function ols(X, y) {
+  // Normal equations, solved by Gaussian elimination (a handful of terms).
+  const k = X[0].length
+  const A = Array.from({ length: k }, (_, i) => [...Array.from({ length: k }, (_, j) => X.reduce((a, r) => a + r[i] * r[j], 0)), X.reduce((a, r, t) => a + r[i] * y[t], 0)])
+  for (let c = 0; c < k; c++) {
+    const p = A.reduce((best, r, i) => (i >= c && Math.abs(r[c]) > Math.abs(A[best][c]) ? i : best), c)
+    ;[A[c], A[p]] = [A[p], A[c]]
+    for (let i = 0; i < k; i++) if (i !== c) { const f = A[i][c] / A[c][c]; for (let j = c; j <= k; j++) A[i][j] -= f * A[c][j] }
+  }
+  const beta = A.map((r, i) => r[k] / r[i])
+  const fit = X.map((r) => r.reduce((a, v, i) => a + v * beta[i], 0))
+  const my = y.reduce((a, b) => a + b) / y.length
+  const ssr = y.reduce((a, v, i) => a + (v - fit[i]) ** 2, 0), sst = y.reduce((a, v) => a + (v - my) ** 2, 0)
+  return { beta, sd: Math.sqrt(ssr / Math.max(1, y.length - k)), r2: 1 - ssr / sst }
+}
+const effortPts = kept.filter((n) => n.status === "achieved" && n._effort?.py > 0 && n._effort.work === "research" && n._date.at >= EFFORT_FROM)
+const effortFit = (() => {
+  if (effortPts.length < 10) return null
+  const f = ols(effortPts.map((n) => effortX(n._date.at, n.kind)), effortPts.map((n) => Math.log10(n._effort.py)))
+  return {
+    n: effortPts.length, beta: f.beta, sd: f.sd, r2: f.r2, fold: 10 ** f.beta[1],
+    kinds: KIND_GROUPS.map(([name, ks], i) => ({ name, kinds: ks, n: effortPts.filter((x) => kindGroup(x.kind) === i).length, shift: i ? f.beta[i + 1] : 0 })),
+  }
+})()
+const costPts = kept.filter((n) => n.status === "achieved" && n._effort?.cost > 0 && n._effort.work === "research" && n._date.at >= 1900)
+const costFit = (() => {
+  const pts = costPts.map((n) => [(n._date.at - 1900) / 100, Math.log10(n._effort.cost)])
+  if (pts.length < 10) return null
+  const f = fitTime(pts, false)
+  return { n: pts.length, slope: f.slope, intercept: f.intercept, sd: f.sd, r2: f.r2, fold: 10 ** f.slope }
+})()
+// Bigger efforts take longer, but not in proportion: years ~ person-years^b.
+const spanFit = (() => {
+  const pts = effortPts.filter((n) => n._effort.years && n._effort.people).map((n) => [Math.log10(n._effort.py), Math.log10(n._effort.years)])
+  if (pts.length < 10) return null
+  const f = fitTime(pts, false)
+  return { n: pts.length, exponent: f.slope, intercept: f.intercept, r2: f.r2 }
+})()
+const effortExpected = (year, kind) => effortX(year, kind).reduce((a, v, i) => a + v * effortFit.beta[i], 0)
+
+// Time after prerequisites: how long after the last thing it needed was in
+// place each technology came, by era. Only direct prerequisites that are
+// technologies count (not resources or preconditions).
+const LAG_ERAS = [[-10000, 1500], [1500, 1800], [1800, 1900], [1900, 1950], [1950, 2000], [2000, NOW + 0.01]]
+const techPrereqs = (ids) => ids.map((id) => live.get(id)).filter((p) => p.kind !== "resource" && p.kind !== "precondition")
+const lagOf = (n) => {
+  const ps = techPrereqs(n._requires)
+  if (!ps.length) return null
+  return Math.max(0, n._date.at - Math.max(...ps.map((p) => p._date.at)))
+}
+const lagRows = kept.filter((n) => n.status === "achieved" && n.kind !== "milestone" && n.kind !== "resource" && n.kind !== "precondition" && n._date.at >= LAG_ERAS[0][0]).map((n) => ({ n, lag: lagOf(n) })).filter((x) => x.lag != null)
+const lagModel = {
+  eras: LAG_ERAS.map(([a, b]) => {
+    const lags = lagRows.filter((x) => x.n._date.at >= a && x.n._date.at < b).map((x) => x.lag)
+    return { from: a, to: Math.min(b, Math.round(NOW)), n: lags.length, q25: quantile(lags, 0.25), q50: quantile(lags, 0.5), q75: quantile(lags, 0.75) }
+  }),
+}
+// The future: from when every prerequisite should be in place (the
+// earliest route, if it has routes), plus the lags seen since 1950. Lags
+// from recent decades are cut short (only the fast ones have happened
+// yet), so these lean early.
+const recentLags = lagRows.filter((x) => x.n._date.at >= 1950).map((x) => x.lag)
+lagModel.basis = { from: 1950, n: recentLags.length, q25: quantile(recentLags, 0.25), q50: quantile(recentLags, 0.5), q75: quantile(recentLags, 0.75) }
+// Something whose prerequisites are already in place has already waited
+// that long, so the lags it could still have are the longer ones: the
+// quantiles come from the lags at least that long (at least 20 of them).
+const condLag = (waited) => {
+  const sorted = [...recentLags].sort((a, b) => a - b)
+  let longer = sorted.filter((x) => x >= waited)
+  if (longer.length < 20) longer = sorted.slice(-20)
+  return [0.25, 0.5, 0.75].map((q) => Math.max(waited, quantile(longer, q)))
+}
+for (const n of kept) {
+  // Milestones are dated from their metrics instead.
+  if ((n.status !== "ongoing" && n.status !== "speculative") || n.kind === "milestone") continue
+  const readyOf = (ids) => Math.max(...techPrereqs(ids).map((p) => p._date.at), -Infinity)
+  const base = n._requires
+  if (!techPrereqs(base).length && !n._routes.length) continue
+  const last = n._routes.length ? Math.min(...n._routes.map((r) => readyOf([...base, ...r.requires]))) : readyOf(base)
+  if (!Number.isFinite(last)) continue
+  const waited = Math.max(0, NOW - last)
+  const [q25, q50, q75] = condLag(waited)
+  n._prereqModel = { ready: Math.max(NOW, last), last, waited, q25: last + q25, q50: last + q50, q75: last + q75 }
+}
+
+// Effort-based estimates for what's not done yet. Treat the person-years a
+// breakthrough needs as log-normal, centered on the trend above for today
+// and as wide as its scatter. Something that has already had S
+// person-years without success must need more than S; given that, the
+// remaining effort divided by the people on it now (growing at `growth` a
+// year, if given) is the time left.
+function normCdfUpper(z) {
+  // Upper tail Q(z), accurate far into the tail (W. J. Cody's erfc).
+  const t = 1 / (1 + 0.5 * Math.abs(z / Math.SQRT2))
+  const y = t * Math.exp(-((z / Math.SQRT2) ** 2) - 1.26551223 + t * (1.00002368 + t * (0.37409196 + t * (0.09678418 + t * (-0.18628806 + t * (0.27886807 + t * (-1.13520398 + t * (1.48851587 + t * (-0.82215223 + t * 0.17087277)))))))))
+  const erfc = z >= 0 ? y : 2 - y
+  return erfc / 2
+}
+function normInvUpper(q) {
+  // z with Q(z) = q (Acklam's rational approximation of the inverse).
+  const p = 1 - q
+  const a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.357751867269, -30.66479806614716, 2.506628277459239]
+  const b = [-54.47609879822406, 161.5858368580409, -155.6989798598866, 66.80131188771972, -13.28068155288572]
+  const c = [-0.007784894002430293, -0.3223964580411365, -2.400758277161838, -2.549732539343734, 4.374664141464968, 2.938163982698783]
+  const d = [0.007784695709041462, 0.3224671290700398, 2.445134137142996, 3.754408661907416]
+  const tail = (r) => (((((c[0] * r + c[1]) * r + c[2]) * r + c[3]) * r + c[4]) * r + c[5]) / ((((d[0] * r + d[1]) * r + d[2]) * r + d[3]) * r + 1)
+  if (q < 0.02425) return -tail(Math.sqrt(-2 * Math.log(q)))
+  if (p < 0.02425) return tail(Math.sqrt(-2 * Math.log(p)))
+  const r = (p - 0.5) ** 2
+  return ((((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * (p - 0.5)) / (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1)
+}
+for (const n of kept) {
+  const e = n._effort
+  if (!e?.open || !effortFit || !e.people) continue
+  const spent = e.py ?? 0
+  const mu = effortExpected(NOW, n.kind), sd = effortFit.sd
+  const zS = spent > 0 ? (Math.log10(spent) - mu) / sd : -Infinity
+  const qS = spent > 0 ? normCdfUpper(zS) : 1
+  const g = Number(n.effort.growth) || 0
+  const yearsFor = (rest) => (g > 0 ? Math.log(1 + (rest * Math.log(1 + g)) / e.people) / Math.log(1 + g) : rest / e.people)
+  const at = (q) => {
+    // The q-th quantile of the total, given it's more than what's spent.
+    const total = 10 ** (mu + sd * normInvUpper(qS * (1 - q)))
+    return Math.max(NOW + yearsFor(Math.max(0, total - spent)), n._prereqModel?.ready ?? NOW)
+  }
+  n._effortModel = { spent, people: e.people, growth: g, past: qS, q10: at(0.1), q50: at(0.5), q90: at(0.9) }
+}
+
+// Supply risk for each resource with supply data, from four parts (each
+// 0 to 1), averaged with weights over the parts that are known:
+//   concentration (0.45): the HHI of the most concentrated stage, mining
+//     or processing, over the producers listed (so a lower bound); 0.5 or
+//     more (two countries with half each) counts as fully concentrated;
+//   depletion (0.2): reserves over production, 100 years or more is 0,
+//     10 years or less is 1;
+//   recycling (0.15): the end-of-life recycling rate, from over 50% (0.2)
+//     to under 1% (1);
+//   demand growth (0.2): demand in 2040 over today's (IEA), fivefold or
+//     more is 1.
+// Ratings: under 0.3 low, under 0.45 moderate, under 0.6 high, else very
+// high. A resource can give its own `risk` (a judgment) instead.
+const RECYCLING = { ">50%": 0.2, "25-50%": 0.4, "10-25%": 0.6, "1-10%": 0.8, "<1%": 1 }
+const RATINGS = ["low", "moderate", "high", "very high"]
+const ratingOf = (score) => RATINGS[score < 0.3 ? 0 : score < 0.45 ? 1 : score < 0.6 ? 2 : 3]
+const hhi = (producers) => (producers?.length ? producers.reduce((a, [, share]) => a + (Number(share) / 100) ** 2, 0) : null)
+for (const n of kept) {
+  const s = n.supply
+  if (!s) continue
+  const where = `supply.yaml: ${n.id}`
+  const prod = Number(s.production?.value), res = Number(s.reserves?.value)
+  if (s.reserves && s.production && s.reserves.unit !== s.production.unit) warn(`${where}: reserves and production in different units`)
+  const rp = prod > 0 && res > 0 && s.reserves.unit === s.production.unit ? res / prod : null
+  const mine = hhi(s.producers), proc = hhi(s.processing?.producers)
+  const conc = mine == null && proc == null ? null : Math.min(1, Math.max(mine ?? 0, proc ?? 0) / 0.5)
+  const depl = rp == null ? null : Math.min(1, Math.max(0, Math.log10(100 / rp)))
+  if (s.recycling != null && !(s.recycling in RECYCLING)) warn(`${where}: recycling should be one of ${Object.keys(RECYCLING).join(", ")}`)
+  const rec = RECYCLING[s.recycling] ?? null
+  const grow = s.demand_2040 ? Math.min(1, Math.max(0, Math.log(Number(s.demand_2040)) / Math.log(5))) : null
+  const parts = [["concentration", conc, 0.45], ["depletion", depl, 0.2], ["recycling", rec, 0.15], ["demand growth", grow, 0.2]].filter(([, v]) => v != null)
+  const w = parts.reduce((a, [, , wt]) => a + wt, 0)
+  const score = w ? parts.reduce((a, [, v, wt]) => a + v * wt, 0) / w : null
+  if (s.risk && !RATINGS.includes(s.risk.rating)) warn(`${where}: risk rating should be one of ${RATINGS.join(", ")}`)
+  const rating = s.risk?.rating ?? (score == null ? null : ratingOf(score))
+  if (!rating) continue
+  n._supply = { rp, hhi: mine, procHhi: proc, parts: Object.fromEntries(parts.map(([k, v]) => [k, v])), score, rating, judged: !!s.risk }
+}
+// A technology's supply risk is that of the riskiest resource it uses.
+const useOf = new Map(resourceUse.map((u) => [`${u.resource}>${u.tech}`, u]))
+for (const n of kept) {
+  if (n.kind === "resource") continue
+  const used = n._requires.map((id) => live.get(id)).filter((p) => p._supply)
+  if (!used.length) continue
+  const worst = used.reduce((a, p) => (RATINGS.indexOf(p._supply.rating) > RATINGS.indexOf(a._supply.rating) || (p._supply.rating === a._supply.rating && (p._supply.score ?? 0) > (a._supply.score ?? 0)) ? p : a))
+  n._risk = { rating: worst._supply.rating, resource: worst.id }
 }
 
 // ------------------------------------------------------------------ rank
@@ -562,6 +803,7 @@ for (const n of kept)
 // tree.json has what the first view needs; details.json (the text,
 // efforts and sources) loads after it.
 const round = (v, d = 1) => Math.round(v * 10 ** d) / 10 ** d
+const mapVals = (o, f) => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, typeof v === "number" ? f(v) : v]))
 const out = {
   meta: {
     built: new Date().toISOString().slice(0, 10), now: NOW,
@@ -585,9 +827,17 @@ const out = {
       return { scenarioYears: line.scenarios.map((sc) => ({ id: sc.id, year: (() => { const y = pathCrossing(line, sc.points, Number(n.threshold.value)); return y == null ? null : round(y) })() })) }
     })(),
     ...(n._routes.length ? { routes: n._routes.map((r) => r.name) } : {}),
+    ...(n._effort?.py ? { py: round(Math.log10(n._effort.py), 2) } : {}),
+    ...(n._supply ? { risk: n._supply.rating } : n._risk ? { risk: n._risk.rating } : {}),
   })),
   edges,
   metrics: metricsOut,
+  models: {
+    effort: effortFit && { ...effortFit, from: EFFORT_FROM },
+    cost: costFit && { ...costFit, from: 1900 },
+    span: spanFit,
+    lag: lagModel,
+  },
 }
 // Years in the text read BC and AD (the data may say BCE and CE). Source
 // titles are left as published.
@@ -605,6 +855,18 @@ const details = Object.fromEntries(kept.map((n) => [n.id, eraDeep({
   date: n.date, summary: n.summary, criterion: n.criterion, efforts: n.efforts, effort: n.effort, forecast: n.forecast, lost: n.lost,
   scarcity: n.scarcity, note: n.note, sources: n.sources,
   ...(n._routes.length ? { routes: n._routes.map((r) => ({ name: r.name, note: r.note, requires: r.requires })) } : {}),
+  ...(n._effort ? { effortCalc: { years: n._effort.years, people: n._effort.people, py: n._effort.py, work: n._effort.work, rough: n._effort.rough, ...(n._effort.py && !n._effort.open && n._effort.work === "research" && n._date.at >= EFFORT_FROM && effortFit ? { vsTrend: round(Math.log10(n._effort.py) - effortExpected(n._date.at, n.kind), 2) } : {}) } } : {}),
+  ...(n._prereqModel ? { prereqModel: mapVals(n._prereqModel, (v) => round(v)) } : {}),
+  ...(n._effortModel ? { effortModel: mapVals(n._effortModel, (v) => round(v, 3)) } : {}),
+  ...(n.supply ? { supply: n.supply, supplyCalc: n._supply } : {}),
+  ...(n._risk ? { risk: n._risk } : {}),
+  ...(() => {
+    // Resource use, from either end.
+    const ofTech = n.kind === "resource" ? [] : n._requires.filter((id) => live.get(id).kind === "resource").map((id) => ({ resource: id, ...(useOf.get(`${id}>${n.id}`) ?? {}) }))
+    const ofRes = n.kind === "resource" ? kept.filter((t) => t._requires.includes(n.id)).map((t) => ({ tech: t.id, ...(useOf.get(`${n.id}>${t.id}`) ?? {}) })) : []
+    const clean = (u) => { const { tech, resource, ...rest } = u; return { ...(tech ? { tech } : {}), ...(resource ? { resource } : {}), ...rest } }
+    return ofTech.length ? { resourceUse: ofTech.map(clean) } : ofRes.length ? { usedBy: ofRes.map(clean) } : {}
+  })(),
 })]))
 fs.mkdirSync(OUT, { recursive: true })
 fs.writeFileSync(path.join(OUT, "tree.json"), JSON.stringify(out))
@@ -616,4 +878,7 @@ console.log(`${kept.length} nodes (${by("kind")}); tiers ${by("tier")}; status $
 console.log(`${bumped} nodes show later than their rank, to fit their tracks`)
 console.log(`${edges.length} links; ${metricsOut.length} metrics; tree.json ${kb("tree.json")} KB, details.json ${kb("details.json")} KB`)
 for (const m of metricsOut.flatMap((m) => (m.series ? m.series.map((sr) => ({ ...m, ...sr, id: `${m.id} (${sr.id})` })) : [m]))) if (m.trend) console.log(`  ${m.id}: ${m.trend.linear ? `${m.trend.slope > 0 ? "rises" : "falls"} ${Math.abs(m.trend.slope * 10).toPrecision(2)} ${m.unit} a decade` : `${m.trend.slope < 0 ? "halves" : "doubles"} every ${m.trend.years.toFixed(2)} years`} (r² ${m.trend.r2.toFixed(2)})${m.wright ? `; learning rate ${(m.wright.learningRate * 100).toFixed(0)}%` : ""}`)
+if (effortFit) console.log(`effort: ${effortFit.n} research efforts since ${EFFORT_FROM}; person-years grow ${effortFit.fold.toFixed(1)}x a century; by kind ${effortFit.kinds.map((k) => `${k.name} x${(10 ** k.shift).toFixed(0)} (n ${k.n})`).join(", ")} (r² ${effortFit.r2.toFixed(2)}, scatter ${effortFit.sd.toFixed(2)} orders of magnitude)${costFit ? `; cost ${costFit.fold.toFixed(1)}x a century since 1900 (n ${costFit.n})` : ""}${spanFit ? `; years ~ person-years^${spanFit.exponent.toFixed(2)}` : ""}`)
+console.log(`lag after prerequisites (median years): ${lagModel.eras.map((e) => `${e.from}-${e.to} ${e.q50 == null ? "-" : round(e.q50)} (n ${e.n})`).join(", ")}`)
+console.log(`supply risk: ${kept.filter((n) => n._supply).map((n) => `${n.id.replace(/^res-/, "")} ${n._supply.rating}${n._supply.score != null ? ` ${n._supply.score.toFixed(2)}` : ""}`).join(", ")}`)
 if (warnings.length) console.log(`\n${warnings.length} warning(s):\n  ` + warnings.slice(0, 80).join("\n  ") + (warnings.length > 80 ? `\n  ... and ${warnings.length - 80} more` : ""))

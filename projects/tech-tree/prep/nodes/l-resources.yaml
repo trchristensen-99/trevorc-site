@@ -1,0 +1,51 @@
+# Resources added with the supply data (supply.yaml, resource-use.yaml).
+
+- id: res-graphite
+  name: Graphite
+  kind: resource
+  fields: [materials]
+  date: 1565
+  status: achieved
+  tier: 3
+  scarcity: limited
+  summary: >-
+    A soft, conductive form of carbon. A pure deposit found at Borrowdale in England in the 1560s made the
+    first pencils; today most goes into steelmaking refractories and the anodes of lithium-ion batteries.
+  note: >-
+    Natural graphite is mined mostly in China; synthetic graphite, made by baking petroleum coke, competes for
+    battery anodes and is also made mostly in China.
+  sources:
+    - title: Graphite (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Graphite
+- id: res-gallium
+  name: Gallium
+  kind: resource
+  fields: [materials]
+  date: 1875
+  status: achieved
+  tier: 3
+  scarcity: critical
+  summary: >-
+    A soft metal predicted by Mendeleev and found in 1875, recovered as a byproduct of making alumina from
+    bauxite. Gallium arsenide and gallium nitride chips amplify radio signals in phones and power LEDs, radar
+    and fast chargers.
+  note: >-
+    Plentiful in bauxite, but only refineries that choose to recover it produce any, and nearly all of them
+    are in China.
+  sources:
+    - title: Gallium (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Gallium
+- id: res-indium
+  name: Indium
+  kind: resource
+  fields: [materials]
+  date: 1863
+  status: achieved
+  tier: 3
+  scarcity: scarce
+  summary: >-
+    A soft metal found in 1863, recovered from zinc ores. As indium tin oxide it is the transparent
+    conductor in nearly every touchscreen and flat-panel display.
+  sources:
+    - title: Indium (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Indium

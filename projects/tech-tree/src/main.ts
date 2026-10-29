@@ -1,7 +1,7 @@
 import "./style.css"
 import { dateLabel } from "./time"
-import { DETAIL_DEFAULT, DISPLAY_DEFAULTS, KIND_COLORS, ROUTE_COLORS, SERIES_COLORS, STATUS_COLORS, TreeView, fmtValue, kindShape, seriesOf, type Display, type Filters } from "./tree"
-import type { Details, Metric, Node, Source, Tree } from "./types"
+import { DETAIL_DEFAULT, DISPLAY_DEFAULTS, EFFORT_STOPS, KIND_COLORS, RISK_COLORS, ROUTE_COLORS, SERIES_COLORS, STATUS_COLORS, TreeView, effortColor, fmtValue, kindShape, seriesOf, type Display, type Filters } from "./tree"
+import type { Details, Metric, Models, Node, ResourceUse, Source, Supply, Tree } from "./types"
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
 const esc = (s: unknown) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!)
@@ -67,6 +67,21 @@ function people(v: unknown) {
   const n = num(v)
   return Number.isFinite(n) ? `about ${n.toLocaleString("en-US")}` : esc(v)
 }
+// Round to two significant figures, with commas: 1,234,567 -> "1,200,000".
+const sig = (n: number, d = 2) => (n >= 10 ** d ? Math.round(+n.toPrecision(d)) : +n.toPrecision(d)).toLocaleString("en-US")
+// A big quantity in words: 2.3 billion, 450,000.
+function qty(n: number) {
+  if (n >= 1e12) return `${+(n / 1e12).toPrecision(2)} trillion`
+  if (n >= 1e9) return `${+(n / 1e9).toPrecision(2)} billion`
+  if (n >= 1e6) return `${+(n / 1e6).toPrecision(2)} million`
+  return sig(n)
+}
+const UNIT_WORD: Record<string, string> = { t: "tonnes", kg: "kg", barrels: "barrels", "m³": "cubic meters", "million m³": "million cubic meters" }
+const amountOf = (v: { value: number; unit: string }) => `${qty(v.value)} ${UNIT_WORD[v.unit] ?? v.unit}`
+const yr = (y: number) => String(Math.round(y))
+const range = (a: number, b: number) => (Math.round(a) === Math.round(b) ? yr(a) : `${yr(a)} to ${Math.round(b) > 2200 ? "after 2200" : yr(b)}`)
+const badge = (rating: string) => `<span class="badge" style="--c:${RISK_COLORS[rating] ?? "var(--muted)"}">${esc(rating)}</span>`
+
 // An effort's date: a year or [from, to], with BC for negative years.
 function whenLabel(w: unknown): string {
   const y = (v: unknown) => (typeof v === "number" ? (v < 0 ? `${(-v).toLocaleString("en-US")} BC` : v < 1000 ? `AD ${v}` : String(v)) : String(v))
@@ -235,9 +250,14 @@ async function main() {
       ? (Object.keys(STATUS_COLORS) as Node["status"][]).map((k) => `<li><span class="sw" style="background:${STATUS_COLORS[k]}"></span>${STATUS_LABEL[k]}</li>`).join("")
       : by === "kind"
         ? (Object.keys(KIND_COLORS) as Node["kind"][]).map((k) => `<li><span class="sw" style="background:${KIND_COLORS[k]}"></span>${KIND_LABEL[k]}</li>`).join("")
-        : tree.fields.map((f) => `<li><span class="sw" style="background:${f.color}"></span>${esc(f.name)}</li>`).join("") + `<li><span class="sw" style="background:${tree.roots.color}"></span>Roots</li>`
+        : by === "risk"
+          ? Object.entries(RISK_COLORS).map(([k, c]) => `<li><span class="sw" style="background:${c}"></span>${k.charAt(0).toUpperCase() + k.slice(1)}</li>`).join("") + `<li><span class="sw" style="background:var(--line)"></span>No rated resources</li>`
+          : by === "effort"
+            ? `<li><span class="sw ramp" style="background:linear-gradient(90deg,${EFFORT_STOPS.join(",")})"></span>1 to a million person-years</li>` + [1, 100, 10000, 1e6].map((v) => `<li><span class="sw" style="background:${effortColor(Math.log10(v))}"></span>${sig(v)}</li>`).join("") + `<li><span class="sw" style="background:var(--line)"></span>Not recorded</li>`
+            : tree.fields.map((f) => `<li><span class="sw" style="background:${f.color}"></span>${esc(f.name)}</li>`).join("") + `<li><span class="sw" style="background:${tree.roots.color}"></span>Roots</li>`
+    const heading = { field: "field", status: "status", kind: "kind", risk: "supply risk", effort: "what it took" }[by]
     $("#legend").innerHTML =
-      `<li class="head">Colors: ${by === "field" ? "field" : by}</li>${colors}<li class="head">Shapes: kind</li>` +
+      `<li class="head">Colors: ${heading}</li>${colors}<li class="head">Shapes: kind</li>` +
       (Object.keys(KIND_LABEL) as Node["kind"][]).map((k) => `<li>${icon(k, "var(--muted)")}${KIND_LABEL[k]}</li>`).join("") +
       `<li class="head">Fill: status</li>` +
       `<li>${icon("device", "var(--muted)")}<span>Solid: achieved</span></li>` +
@@ -365,6 +385,7 @@ async function main() {
   let showing = ""
   const show = (html: string, what: string) => {
     showing = what
+    info.classList.toggle("wide", what === "models")
     info.innerHTML = `<button class="close" aria-label="Close">×</button>${html}`
     info.hidden = false
     info.scrollTop = 0
@@ -398,6 +419,84 @@ async function main() {
   const linkList = (ids: string[]) => ids.map(link).filter(Boolean).join(", ")
   const milestonesOf = (m: Metric) => m.milestones.map((id) => byId.get(id)).filter((n): n is Node => !!n?.threshold).sort((a, b) => a.at - b.at)
 
+  const models = tree.models
+  const KIND_GROUP = (kind: string) => models.effort?.kinds.find((k) => k.kinds.includes(kind))
+  // How many times bigger (or smaller) than typical, in words.
+  const times = (dex: number) => {
+    const f = 10 ** Math.abs(dex)
+    if (f < 2) return "about typical"
+    const w = f < 15 ? `${Math.round(f)} times` : f < 150 ? `${Math.round(f / 10) * 10} times` : `${sig(f, 1)} times`
+    return dex > 0 ? `about ${w} the typical effort` : `about 1/${f < 15 ? Math.round(f) : f < 150 ? Math.round(f / 10) * 10 : sig(f, 1)} of the typical effort`
+  }
+
+  // What it took (or has taken so far).
+  const effortHTML = (n: Node, d: Details) => {
+    const e = d.effort, c = d.effortCalc
+    if (!e) return ""
+    const open = n.status === "ongoing" || n.status === "speculative"
+    const span = Array.isArray(e.span) ? `${whenLabel(e.span[0])} to ${open ? "now" : whenLabel(e.span[1])}${c?.years ? ` (${sig(c.years)} year${c.years === 1 ? "" : "s"})` : ""}` : ""
+    const g = KIND_GROUP(n.kind)
+    const vs = c?.vsTrend != null && g ? `<dt>Compared</dt><dd>${times(c.vsTrend)} for ${g.name === "discovery" ? "a discovery" : g.name === "technique or device" ? "a technique or device" : "infrastructure or an institution"} of its time <span class="note">(the fit in What it takes)</span></dd>` : ""
+    const rows = (span ? `<dt>Time</dt><dd>${esc(span)}</dd>` : "") +
+      (e.people ? `<dt>${open ? "People now" : "People"}</dt><dd>${people(e.people)}</dd>` : "") +
+      (c?.py ? `<dt>Person-years</dt><dd>about ${sig(c.py)}${open ? " so far" : ""}</dd>` : "") +
+      (e.cost_usd ? `<dt>Cost</dt><dd>${money(e.cost_usd)}${open ? " so far" : ""} (2025 dollars)</dd>` : "") +
+      (e.compute_usd ? `<dt>Computing</dt><dd>${money(e.compute_usd)} for the final training run</dd>` : "") +
+      (open && e.growth ? `<dt>Growing</dt><dd>about ${Math.round(e.growth * 100)}% a year</dd>` : "") + vs
+    const tags = [c?.work === "build" ? "mostly building, not finding out how" : "", e.rough ? "rough estimate" : ""].filter(Boolean)
+    if (!rows && !e.note) return ""
+    return `<h3>${open ? "What it has taken so far" : "What it took"}</h3>${tags.length ? `<p class="note">${tags.map((t) => `<span class="tag">${t}</span>`).join(" ")}</p>` : ""}${rows ? `<dl>${rows}</dl>` : ""}${e.note ? `<p class="note">${esc(e.note)}</p>` : ""}`
+  }
+
+  // Estimates from the tree's own history, beside the judgment above.
+  const outsideView = (n: Node, d: Details) => {
+    const em = d.effortModel, pm = d.prereqModel
+    if (!em && !pm) return ""
+    const rows: string[] = []
+    if (em) rows.push(`<dt>From effort</dt><dd>${yr(em.q50)} <span class="note">(80%: ${range(em.q10, em.q90)})</span><br><span class="note">If it needs as much work as breakthroughs typically do, given that ${sig(em.spent)} person-years haven't been enough, at ${sig(em.people)} people${em.growth ? `, growing ${Math.round(em.growth * 100)}% a year` : ""}${pm && pm.ready > now + 0.5 ? `, and not before its prerequisites (${yr(pm.ready)})` : ""}.</span></dd>`)
+    if (pm) rows.push(`<dt>From prerequisites</dt><dd>${yr(pm.q50)} <span class="note">(middle half: ${range(pm.q25, pm.q75)})</span><br><span class="note">${pm.last > now + 0.5 ? `Its prerequisites should be in place by ${yr(pm.last)}` : `Its prerequisites were in place by ${yr(pm.last)}`}; since 1950, technologies came a median ${Math.round(models.lag.basis.q50)} years after their last prerequisite${pm.waited >= 1 ? `, and longer for those that had already waited ${Math.round(pm.waited)} years` : ""}.</span></dd>`)
+    return `<h3>Outside view</h3><dl>${rows.join("")}</dl>`
+  }
+
+  // A technology's resources, with how much it needs and the supply risk.
+  const resourcesHTML = (ids: string[], use: ResourceUse[]) => {
+    const byRes = new Map(use.map((u) => [u.resource, u]))
+    return `<h3>Resources</h3><ul class="resources">${ids.map((id) => {
+      const r = byId.get(id), u = byRes.get(id)
+      return `<li>${link(id)}${r?.risk ? ` ${badge(r.risk)}` : ""}${u?.share ? ` <span class="note">${u.share}% of world use</span>` : ""}${u?.amount ? `<br><span class="note">${esc(u.amount)}</span>` : ""}${u?.substitute ? `<br><span class="note">Avoided by ${link(u.substitute)}</span>` : ""}${u?.source ? `<br><span class="note"><a href="${esc(u.source.url)}" target="_blank" rel="noopener">${esc(u.source.title)}</a></span>` : ""}</li>`
+    }).join("")}</ul>`
+  }
+  const usedByHTML = (list: ResourceUse[]) => {
+    const sorted = [...list].sort((a, b) => (b.share ?? 0) - (a.share ?? 0) || (b.amount ? 1 : 0) - (a.amount ? 1 : 0) || (byId.get(a.tech!)?.at ?? 0) - (byId.get(b.tech!)?.at ?? 0))
+    return `<h3>Used by</h3><ul class="resources">${sorted.map((u) => `<li>${link(u.tech!)}${u.share ? ` <span class="note">${u.share}% of world use</span>` : ""}${u.amount ? `<br><span class="note">${esc(u.amount)}</span>` : ""}</li>`).join("")}</ul>`
+  }
+
+  // A resource's supply: where it comes from, how long it lasts, and the
+  // rating built from them.
+  const PART_HELP: Record<string, string> = {
+    concentration: "how few countries produce or process it",
+    depletion: "reserves against production",
+    recycling: "how little is recycled",
+    "demand growth": "demand in 2040 against today",
+  }
+  const supplyHTML = (d: Details) => {
+    const s: Supply | undefined = d.supply, c = d.supplyCalc
+    if (!s) return ""
+    const share = (list: [string, number][]) => list.map(([k, v]) => `${esc(k)} ${v}%`).join(", ")
+    const rows: string[] = []
+    if (s.production) rows.push(`<dt>Production</dt><dd>${amountOf(s.production)}${s.production.what ? ` <span class="note">(${esc(s.production.what)})</span>` : ""} in ${s.year ?? ""}</dd>`)
+    if (s.reserves) rows.push(`<dt>Reserves</dt><dd>${s.reserves.more ? "over " : ""}${amountOf(s.reserves)}${c?.rp ? `, about ${sig(c.rp)} years of production` : ""}</dd>`)
+    if (s.producers?.length) rows.push(`<dt>Producers</dt><dd>${share(s.producers)}</dd>`)
+    if (s.processing) rows.push(`<dt>${esc(s.processing.stage.charAt(0).toUpperCase() + s.processing.stage.slice(1))}</dt><dd>${share(s.processing.producers)}</dd>`)
+    if (s.recycling) rows.push(`<dt>Recycled</dt><dd>${esc(s.recycling)} at end of life</dd>`)
+    if (s.demand_2040) rows.push(`<dt>Demand</dt><dd>${s.demand_2040 >= 2 ? `${s.demand_2040} times` : `up ${Math.round((s.demand_2040 - 1) * 100)}%`} by 2040 (IEA, stated policies)</dd>`)
+    if (s.uses?.length) rows.push(`<dt>Uses</dt><dd>${share(s.uses)}</dd>`)
+    const parts = c && !c.judged && c.score != null
+      ? `<ul class="parts">${Object.entries(c.parts).map(([k, v]) => `<li><span class="bar"><span style="width:${Math.round(v * 100)}%"></span></span>${esc(k)} <span class="note">${PART_HELP[k] ?? ""}</span></li>`).join("")}</ul><p class="note">Score ${c.score.toFixed(2)} of 1, from the parts shown (see What it takes).</p>`
+      : s.risk?.note ? `<p class="note">${esc(s.risk.note)}</p>` : ""
+    return `<h3>Supply</h3>${c ? `<p>${badge(c.rating)} supply risk</p>` : ""}${parts}${rows.length ? `<dl>${rows.join("")}</dl>` : ""}${s.note ? `<p class="note">${esc(s.note)}</p>` : ""}${sourcesHTML(s.sources, "Supply sources")}`
+  }
+
   const nodeHTML = (n: Node, d: Details) => {
     const into = tree.edges.filter((e) => e.t === n.id)
     const needs = into.filter((e) => e.kind === "requires" && !e.routes).map((e) => e.s)
@@ -419,17 +518,10 @@ async function main() {
     }
     rows.push(`<dt>Status</dt><dd>${STATUS_LABEL[n.status]}</dd>`)
     if (n.lane !== "roots") rows.push(`<dt>Fields</dt><dd>${n.fields.map(fieldName).map(esc).join(", ")}</dd>`)
-    if (d.scarcity) rows.push(`<dt>Scarcity</dt><dd>${esc(d.scarcity)}</dd>`)
-    const e = d.effort
-    let effort = ""
-    if (e) {
-      const span = Array.isArray(e.span) ? `${e.span[0]} to ${e.span[1]} (${e.span[1] - e.span[0]} years)` : e.span ? `${e.span} years` : ""
-      effort = `<h3>What it took</h3><dl>` +
-        (span ? `<dt>Time</dt><dd>${esc(span)}</dd>` : "") +
-        (e.people ? `<dt>People</dt><dd>${people(e.people)}</dd>` : "") +
-        (e.cost_usd ? `<dt>Cost</dt><dd>${money(e.cost_usd)} (2025 dollars)</dd>` : "") +
-        `</dl>` + (e.note ? `<p class="note">${esc(e.note)}</p>` : "")
-    }
+    if (n.kind === "resource" && d.supplyCalc) rows.push(`<dt>Supply risk</dt><dd>${badge(d.supplyCalc.rating)}${d.supplyCalc.judged ? " <span class=\"note\">my judgment</span>" : ""}</dd>`)
+    else if (d.risk) rows.push(`<dt>Supply risk</dt><dd>${badge(d.risk.rating)} <span class="note">from ${link(d.risk.resource)}</span></dd>`)
+    if (d.scarcity) rows.push(`<dt>Scarcity</dt><dd>${esc(d.scarcity)} <span class="note">long run, my judgment</span></dd>`)
+    const effort = effortHTML(n, d)
     const efforts = d.efforts?.length
       ? `<h3>${n.status === "achieved" || n.status === "lost" ? "Who" : "Who's working on it"}</h3><ul class="efforts">${d.efforts.map((x) =>
           `<li><strong>${esc(x.who)}</strong>${x.where ? `, ${esc(x.where)}` : ""}${x.when != null ? ` (${esc(whenLabel(x.when))})` : ""}${x.outcome && x.outcome !== "achieved" ? ` <span class="tag ${esc(x.outcome)}">${esc(OUTCOME_LABEL[x.outcome] ?? x.outcome)}</span>` : ""}${x.note ? `<br><span class="note">${esc(x.note)}</span>` : ""}</li>`).join("")}</ul>`
@@ -451,14 +543,15 @@ async function main() {
       (d.lost ? `<h3>Lost</h3><p>${esc(d.lost)}</p>` : "") +
       (d.note ? `<p class="note">${esc(d.note)}</p>` : "") +
       routes +
-      efforts + effort +
+      efforts + effort + outsideView(n, d) +
+      (n.kind === "resource" ? supplyHTML(d) : "") +
       (d.forecast?.note ? `<h3>Forecast</h3><p>${esc(d.forecast.note)}</p>${sourcesHTML(d.forecast.sources, "Forecast sources")}` : "") +
       (m ? metricChart(m, milestonesOf(m), n.id) : "") +
       (needs.length ? `<h3>${routes ? "Needs on every route" : "Needs"}</h3><p>${linkList(needs)}</p>` : "") +
-      (uses.length ? `<h3>Uses</h3><p>${linkList(uses)}</p>` : "") +
+      (uses.length ? resourcesHTML(uses, d.resourceUse ?? []) : "") +
       (helped.length ? `<h3>Helped by</h3><p>${linkList(helped)}</p>` : "") +
       (rivals.length ? `<h3>Competed with</h3><p>${linkList(rivals)}</p>` : "") +
-      (led.length ? `<h3>Led to</h3><p>${linkList(led)}</p>` : "") +
+      (n.kind === "resource" && d.usedBy?.length ? usedByHTML(d.usedBy) : led.length ? `<h3>Led to</h3><p>${linkList(led)}</p>` : "") +
       sourcesHTML(d.sources)
   }
 
@@ -500,6 +593,80 @@ async function main() {
         const efforts = d[n.id]?.efforts ?? []
         return `<li>${link(n.id)} <span class="note">${esc(dateLabel(n.from, n.to, n.at, now, true))}</span>${efforts.length ? `<br><span class="note">${efforts.map((x) => esc(x.who)).slice(0, 5).join(" · ")}${efforts.length > 5 ? " …" : ""}</span>` : ""}</li>`
       }).join("")}</ul>`).join(""), "frontier")
+  })
+
+  // What it takes: the effort fit and its chart, how long technologies
+  // waited after their prerequisites, the frontier's outside-view
+  // estimates, and the resources by supply risk.
+  const timeX = (year: number) => {
+    const t = tree.meta.time
+    const dd = year - now
+    return dd >= 0 ? t.futureGain * Math.log10(1 + dd / t.tau) : -Math.log10(1 + -dd / t.tau)
+  }
+  const effortChart = (d: Record<string, Details>, m: NonNullable<Models["effort"]>) => {
+    const W = 312, H = 210, L = 34, B = 20, T = 8, R = 6
+    const x0 = timeX(m.from), x1 = timeX(2030)
+    const px = (year: number) => L + ((timeX(year) - x0) / (x1 - x0)) * (W - L - R)
+    const py = (v: number) => T + (1 - v / 7) * (H - T - B)
+    const pts = tree.nodes.filter((n) => n.py != null && n.at >= m.from && d[n.id]?.effortCalc)
+    const grid = [0, 1, 2, 3, 4, 5, 6, 7].map((v) => `<line x1="${L}" x2="${W - R}" y1="${py(v)}" y2="${py(v)}" class="grid"/><text x="${L - 4}" y="${py(v)}" class="ylab">${v < 4 ? sig(10 ** v) : v >= 6 ? `${10 ** (v - 6)}M` : `${10 ** (v - 3)}k`}</text>`).join("")
+    const xt = [1500, 1700, 1800, 1900, 1950, 2000, 2025].map((y) => `<text x="${px(y)}" y="${H - 6}" class="xlab">${y}</text>`).join("")
+    // The fitted line for each kind group, with the main group's scatter.
+    const line = (shift: number) => (y: number) => m.beta[0] + m.beta[1] * ((y - 1900) / 100) + shift
+    const years = Array.from({ length: 41 }, (_, i) => m.from + ((2026 - m.from) * i) / 40)
+    const path = (f: (y: number) => number) => years.map((y, i) => `${i ? "L" : "M"}${px(y).toFixed(1)},${py(f(y)).toFixed(1)}`).join("")
+    const main = line(m.kinds[1]?.shift ?? 0)
+    const band = "M" + [...years.map((y) => [px(y), py(main(y) + m.sd)]), ...years.map((y) => [px(y), py(main(y) - m.sd)]).reverse()].map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join("L") + "Z"
+    const lines = m.kinds.map((k, i) => `<path d="${path(line(k.shift))}" fill="none" stroke="var(--ink)" stroke-width="1.2" stroke-dasharray="${["", "6 3", "2 2"][i]}" opacity="0.65"/>`).join("")
+    const dots = pts.map((n) => {
+      const c = d[n.id].effortCalc!
+      const open = n.status !== "achieved"
+      const col = fieldColor.get(n.fields[0]) ?? "var(--muted)"
+      const x = px(open ? now : n.at), y = py(n.py!)
+      const label = `${n.name}: about ${sig(10 ** n.py!)} person-years${open ? " so far" : ""}${c.rough ? " (rough)" : ""}${c.work === "build" ? ", mostly building" : ""}`
+      const style = c.work === "build" || open ? `fill:none;stroke:${col};stroke-width:1.3` : c.rough ? `fill:${col};fill-opacity:0.35;stroke:${col}` : `fill:${col}`
+      const shape = open ? `<path d="M${x},${y - 4}L${x + 4},${y}L${x},${y + 4}L${x - 4},${y}Z" style="${style}"/>` : c.work === "build" ? `<rect x="${x - 2.8}" y="${y - 2.8}" width="5.6" height="5.6" style="${style}"/>` : `<circle cx="${x}" cy="${y}" r="3" style="${style}"/>`
+      return `<a href="#n=${esc(n.id)}" data-node="${esc(n.id)}"><title>${esc(label)}</title>${shape}</a>`
+    }).join("")
+    return `<svg class="chart effort" viewBox="0 0 ${W} ${H}" role="img" aria-label="Person-years behind each technology, by the year it was achieved">${grid}${xt}<path d="${band}" fill="var(--ink)" opacity="0.06"/>${lines}${dots}</svg>
+      <p class="note">Person-years (log scale) by year achieved, on the tree's time axis. Filled: research efforts (faded: rough estimates); squares: mostly building; diamonds: not yet achieved, effort so far. Lines: the fit for ${m.kinds.map((k, i) => `${k.name} (${["solid", "dashed", "dotted"][i]})`).join(", ")}; the band is one standard deviation.</p>`
+  }
+
+  $("#models").addEventListener("click", async () => {
+    view.select(null)
+    const d = details ?? (await detailsReady)
+    const m = models.effort, cost = models.cost, span = models.span, lag = models.lag
+    const effortText = m
+      ? `<p>The tree records what ${m.n} research efforts since ${m.from} took, in people and years. In a least-squares fit, the person-years behind a breakthrough grew about ${m.fold.toFixed(1)}-fold a century, and ${m.kinds.slice(1).map((k) => { const f = 10 ** k.shift; return `${k.name === "technique or device" ? "techniques and devices" : "infrastructure and institutions"} took ${f < 1.5 && f > 0.67 ? "about the same as discoveries" : `about ${f >= 1 ? Math.round(f) : (Math.round(f * 10) / 10)} times as much as discoveries`}` }).join(", while ")}. But the scatter dwarfs both: one standard deviation is a factor of ${Math.round(10 ** m.sd)}, and the fit explains only ${Math.round(m.r2 * 100)}% of the variation. Maxwell's equations took one person; the Manhattan Project took 130,000.${cost ? ` Costs (2025 dollars, ${cost.n} efforts since 1900) grew faster, about ${Math.round(cost.fold)}-fold a century, as each person came with more equipment.` : ""}${span ? ` Bigger efforts take longer, but not in proportion: years rose as person-years to the power ${span.exponent.toFixed(2)}, so a hundred times the effort took about ${(100 ** span.exponent).toFixed(1)} times as long. Mostly, more work means more people at once.` : ""}</p>
+        <p class="note">This matches Bloom, Jones, Van Reenen and Webb (2020), who found that research effort per unit of progress keeps rising (Moore's law takes 18 times the researchers it did in 1971), though a list of famous successes can't say what failed. Whose effort counts is a judgment: the core team, not the trial volunteers or the users.</p>`
+      : ""
+    const lagRows = lag.eras.filter((e) => e.n).map((e) => `<tr><td>${e.from < 0 ? "Before 1500" : e.to >= now - 1 ? `Since ${e.from}` : `${e.from} to ${e.to}`}</td><td>${e.n}</td><td>${Math.round(e.q50!)}</td><td>${Math.round(e.q25!)} to ${Math.round(e.q75!)}</td></tr>`).join("")
+    const open = tree.nodes.filter((n) => (n.status === "ongoing" || n.status === "speculative") && (d[n.id]?.effortModel || (d[n.id]?.prereqModel && n.tier <= 2))).sort((a, b) => a.at - b.at)
+    const est = open.map((n) => {
+      const em = d[n.id].effortModel, pm = d[n.id].prereqModel
+      return `<tr><td>${link(n.id)}</td><td>${yr(n.at)}</td><td>${em ? `${yr(em.q50)}<span class="note"><br>${range(em.q10, em.q90)}</span>` : ""}</td><td>${pm ? `${yr(pm.q50)}<span class="note"><br>${range(pm.q25, pm.q75)}</span>` : ""}</td></tr>`
+    }).join("")
+    const res = tree.nodes.filter((n) => n.kind === "resource" && d[n.id]?.supplyCalc).sort((a, b) => ["very high", "high", "moderate", "low"].indexOf(a.risk!) - ["very high", "high", "moderate", "low"].indexOf(b.risk!) || (d[b.id].supplyCalc!.score ?? 0) - (d[a.id].supplyCalc!.score ?? 0))
+    const resRows = res.map((n) => {
+      const s = d[n.id].supply!, c = d[n.id].supplyCalc!
+      const top = s.processing && s.processing.producers[0][1] > (s.producers?.[0]?.[1] ?? 0) ? s.processing.producers[0] : s.producers?.[0]
+      return `<tr><td>${link(n.id)}</td><td>${badge(c.rating)}</td><td>${top ? `${esc(top[0])} ${top[1]}%` : ""}</td><td>${c.rp ? sig(c.rp) : ""}</td></tr>`
+    }).join("")
+    show(`<p class="kind">Models</p><h2>What it takes</h2>
+      <p>Rough models built from the tree itself: how much effort technologies took, how long they came after what they needed, and how secure the resources they use are. They give an outside view beside the judgment behind each future window.</p>
+      <h3>Effort</h3>${m ? effortChart(d, m) : ""}${effortText}
+      <h3>Time after prerequisites</h3>
+      <p>How many years after its last prerequisite each technology came. The wait has shrunk from centuries to about a decade; since 1950 the median is ${Math.round(lag.basis.q50)} years (middle half ${Math.round(lag.basis.q25)} to ${Math.round(lag.basis.q75)}).</p>
+      <table class="t"><thead><tr><th>Achieved</th><th>n</th><th>Median</th><th>Middle half</th></tr></thead><tbody>${lagRows}</tbody></table>
+      <p class="note">Lags are measured to the latest direct prerequisite that is a technology, so missing links make lags look longer than they were.</p>
+      <h3>The frontier, from the outside</h3>
+      <p>For what isn't done yet, two estimates that ignore everything except the tree's history. <strong>From effort:</strong> treat the work a breakthrough needs as uncertain in the way past ones were; something that has absorbed a lot of work without success probably needs more still; divide what's left by the people on it now. <strong>From prerequisites:</strong> add the gaps seen since 1950 to when its prerequisites are in place. Both are crude, and the effort figures for future work are rough, but where they disagree with the tree's window, one of them is worth a second look.</p>
+      <table class="t est"><thead><tr><th></th><th>Tree</th><th>From effort</th><th>From prereqs</th></tr></thead><tbody>${est}</tbody></table>
+      <p class="note">Medians, with 80% ranges (effort) and middle halves (prerequisites). Shown for everything with effort figures and the major (tier 1 and 2) technologies; each technology's panel has both.</p>
+      <h3>Resources by supply risk</h3>
+      <p>A score from 0 to 1 for each resource: how concentrated its mining or processing is among countries (45%), its reserves against production (20%), how little is recycled (15%), and how fast demand is growing to 2040 (20%), averaged over the parts that are known. A technology takes the rating of the riskiest resource it uses; color the tree by supply risk under Display to see them.</p>
+      <table class="t"><thead><tr><th></th><th>Risk</th><th>Leading country</th><th>Years of reserves</th></tr></thead><tbody>${resRows}</tbody></table>
+      <p class="note">Concentration is by country, not company or alliance (OPEC+ coordinates oil output, which this understates). Reserves are what is economic to mine now; they grow as prices rise and exploration continues, so years of reserves is a warning light, not a countdown.</p>`, "models")
   })
 
   // ----------------------------------------------------------- tooltip
