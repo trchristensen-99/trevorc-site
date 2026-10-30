@@ -1358,7 +1358,7 @@ function UT(t) {
   };
 }
 function Q_(t) {
-  return ";";
+  return "";
 }
 function HT(t) {
   let n = Array.from(t).reduce(
@@ -50745,7 +50745,7 @@ function woe(t, e, n) {
         n(3, m = uo(Re ? JSON.parse(Re) : _e, null, c));
       } else
         n(3, m = uo(_e, null, c));
-      ue(m);
+      ue(m), window.startNode != null && setTimeout(() => fitStartNode(window.startNode));
     }), F();
   });
   function F() {
@@ -50898,6 +50898,10 @@ function woe(t, e, n) {
   function G(_e) {
     n(3, m.theme = LT[_e], m), Z();
   }
+  function fitStartNode(_e) {
+    let Re = m.items.find((lt) => lt.id === _e), lt = R.getBoundingClientRect(), be = 1e3 * Math.max(1, lt.width / lt.height), at = 1e3 * Math.max(1, lt.height / lt.width);
+    Re && Dr(R).call(J.transform, Hd.translate(500, 500).scale(Math.min(2, 0.85 * be / Re.width, 0.85 * at / Re.height)).translate(0 - Re.pos.x, 0 - Re.pos.y));
+  }
   function ce(_e) {
     let Re = m.items.find((lt) => lt.kind === "node" && lt.label === _e.value);
     Dr(R).transition().duration(1500).call(J.transform, Hd.translate(500, 500).scale(1.8).translate(0 - Re.pos.x, 0 - Re.pos.y));
@@ -50939,7 +50943,7 @@ function woe(t, e, n) {
   }
   const zt = (_e) => {
     n(3, m = uo(_e.detail, w, c)), Z();
-  }, Yt = (_e) => B(_e, w[0]), Bn = (_e) => X(w[0]), Tt = (_e) => Ve(w, !0), Oe = (_e) => Ve(w, !1), si = (_e) => qe(_e), Jt = (_e) => ce(_e.target), Kt = (_e) => n(18, H = m.items.filter((Re) => Re.kind === "node" && Re.tags.includes(_e.target.value)).map((Re) => Re.id)), ln = (_e) => n(10, g = !1), yn = (_e) => n(10, g = !0), Xn = (_e) => n(11, _ = !1), en = (_e) => n(11, _ = !0), oi = (_e) => n(8, d = !1), an = (_e) => n(8, d = !1), An = (_e) => n(8, d = !0), Di = (_e) => n(9, p = !1), Mn = (_e) => n(9, p = !1), ar = (_e) => n(9, p = !0);
+  }, Yt = (_e) => B(_e, w[0]), Bn = (_e) => X(w[0]), Tt = (_e) => Ve(w, !0), Oe = (_e) => Ve(w, !1), si = (_e) => qe(_e), Jt = (_e) => ce(_e.target), Kt = (_e) => n(18, H = m.items.filter((Re) => Re.kind === "node" && Re.tags.some((tg) => tg.replace(/ /g, "_") === _e.target.value)).map((Re) => Re.id)), ln = (_e) => n(10, g = !1), yn = (_e) => n(10, g = !0), Xn = (_e) => n(11, _ = !1), en = (_e) => n(11, _ = !0), oi = (_e) => n(8, d = !1), an = (_e) => n(8, d = !1), An = (_e) => n(8, d = !0), Di = (_e) => n(9, p = !1), Mn = (_e) => n(9, p = !1), ar = (_e) => n(9, p = !0);
   return t.$$set = (_e) => {
     "graphjsonpath" in _e && n(50, a = _e.graphjsonpath), "svgForTextBBox" in _e && n(1, c = _e.svgForTextBBox), "config" in _e && n(0, u = _e.config);
   }, t.$$.update = () => {

@@ -12557,7 +12557,7 @@
       "kind": "node",
       "label": "Start Here",
       "notes": "",
-      "desc": "https://foresight.org/ext/ForesightTechTree/editor.html",
+      "desc": "[Tree Editor](editor.html)",
       "link": "",
       "tags": [
         "goal"
@@ -12658,27 +12658,6 @@
       "fill": "#888888ff",
       "nodelabelfontsize": 80,
       "backgroundImageURL": null
-    },
-    {
-      "id": 13120,
-      "kind": "node",
-      "label": "",
-      "notes": "",
-      "desc": "",
-      "link": "",
-      "tags": [
-        "goal"
-      ],
-      "has_dynamic_notes": false,
-      "is_collapsed": false,
-      "parent": null,
-      "pos": {
-        "x": 1660.109375,
-        "y": 310
-      },
-      "nodelabelfontsize": null,
-      "nodenotesfontsize": null,
-      "backgroundImageURL": "https://foresight.org/ext/ForesightTechTree/qrcode2.png"
     },
     {
       "id": 6468,
@@ -24885,7 +24864,7 @@
       "kind": "node",
       "label": "Saving/Loading",
       "notes": "To edit the tree, click on this box and follow the link in the node description - \"Tree Editor\".\n\nWhen you modify this tree, it is only modified locally on your computer.  Use the menu in the top left to save a .graph file.  Send it to me and I can integrate it into the official tree.  We will get a better system for collaboration later but we're building out several other core features first.",
-      "desc": "[Tree Editor](https://foresight.org/ext/ForesightTechTree/editor.html)",
+      "desc": "[Tree Editor](editor.html)",
       "link": "",
       "tags": [
         "goal"
@@ -33098,28 +33077,6 @@
         "y": 3429.5
       },
       "fill": "#7b9ecbff",
-      "nodelabelfontsize": null,
-      "nodenotesfontsize": null,
-      "backgroundImageURL": null
-    },
-    {
-      "id": 13121,
-      "kind": "node",
-      "label": "",
-      "notes": "",
-      "desc": "",
-      "link": "",
-      "tags": [
-        "goal"
-      ],
-      "has_dynamic_notes": false,
-      "is_collapsed": false,
-      "parent": 13120,
-      "pos": {
-        "x": 1875.21875,
-        "y": 540
-      },
-      "fill": "#ffffffff",
       "nodelabelfontsize": null,
       "nodenotesfontsize": null,
       "backgroundImageURL": null
