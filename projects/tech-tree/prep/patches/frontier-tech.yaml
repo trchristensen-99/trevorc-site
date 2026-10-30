@@ -1088,7 +1088,7 @@
 - id: crewed-mars-landing
   criterion: >-
     A crew lands on Mars and later returns safely to Earth.
-  requires: [space-stations, mars-rovers, closed-loop-life-support]
+  requires: [space-stations, mars-rovers]
   routes:
     - name: Refueled Starship
       requires: [starship-orbital-refueling, propellant-depot, mars-propellant-production]
@@ -1096,7 +1096,7 @@
     - name: Nuclear propulsion
       requires: [nuclear-space-propulsion]
       note: NASA's longer-term architectures, which shorten the trip and carry return propellant.
-  helped_by: [crewed-lunar-return, lunar-base, small-modular-reactors]
+  helped_by: [crewed-lunar-return, lunar-base, small-modular-reactors, closed-loop-life-support]
   date: { window: [2035, 2060], likely: 2043 }
   efforts:
     - who: SpaceX, Starship

@@ -624,20 +624,53 @@ export class TreeView {
 
     // Labels: as many as fit, the selection and its chain first, then by
     // importance.
+    // A label goes right of its node, or left if that side runs off the
+    // screen or covers another label, a lane name or another node.
     const priority = (n: Node) => (n === sel ? -1e9 : inChain(n) ? -1e6 : 0) + n.z + (dim(n) ? 1e6 : 0)
-    const placed: [number, number, number, number][] = []
+    type Box = [number, number, number, number]
+    const hits = (a: Box, b: Box) => a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1]
+    const placed: Box[] = overview
+      ? laneLabels.map((d) => [lx, d.cy - 9, lx + d.name.length * 6.2 + 12, d.cy + 9] as Box)
+      : [[0, 0, 17, this.h]]
+    const CELL = 48
+    const grid = new Map<string, [Node, Box][]>()
+    for (const n of vis) {
+      if (dim(n)) continue
+      const x = sx(n.x), y = sy(n.y), r = rad(n)
+      const box: Box = [x - r, y - r, x + r, y + r]
+      for (let i = Math.floor(box[0] / CELL); i <= Math.floor(box[2] / CELL); i++)
+        for (let j = Math.floor(box[1] / CELL); j <= Math.floor(box[3] / CELL); j++) {
+          const k = `${i},${j}`
+          if (!grid.has(k)) grid.set(k, [])
+          grid.get(k)!.push([n, box])
+        }
+    }
+    const coversNode = (n: Node, box: Box) => {
+      for (let i = Math.floor(box[0] / CELL); i <= Math.floor(box[2] / CELL); i++)
+        for (let j = Math.floor(box[1] / CELL); j <= Math.floor(box[3] / CELL); j++)
+          for (const [m, b] of grid.get(`${i},${j}`) ?? []) if (m !== n && hits(box, b)) return true
+      return false
+    }
     const size = (n: Node) => (n.tier === 1 ? 12 : n.tier === 2 ? 11 : 10.5)
     const labelMode = this.display.labels
+    const side = new Map<Node, "left" | "right">()
     const labels = vis.filter((n) => (!dim(n) || n === sel) && (labelMode === "fit" || n === sel || inChain(n) || (labelMode === "landmarks" && n.tier === 1))).sort((a, b) => priority(a) - priority(b) || a.x - b.x).filter((n) => {
-      const s = size(n)
-      const x = sx(n.x) + rad(n) + 4, y = sy(n.y)
-      const box: [number, number, number, number] = [x - 2, y - s / 2 - 1, x + n.name.length * s * 0.55 + 2, y + s / 2 + 1]
-      if (placed.some((p) => box[0] < p[2] && box[2] > p[0] && box[1] < p[3] && box[3] > p[1])) return false
-      placed.push(box)
+      const s = size(n), w = n.name.length * s * 0.55, y = sy(n.y), gap = rad(n) + 4
+      const keen = n === sel || inChain(n)
+      const right: Box = [sx(n.x) + gap - 2, y - s / 2 - 1, sx(n.x) + gap + w + 2, y + s / 2 + 1]
+      const left: Box = [sx(n.x) - gap - w - 2, right[1], sx(n.x) - gap + 2, right[3]]
+      const fits = (box: Box, strict: boolean) => box[0] >= (overview ? 0 : 17) && box[2] <= this.w &&
+        !placed.some((p) => hits(box, p)) && !(strict && coversNode(n, box))
+      const pick = ([[right, "right"], [left, "left"]] as const).find(([box]) => fits(box, !keen))
+        ?? (keen ? ([[right, "right"], [left, "left"]] as const).find(([box]) => fits(box, false)) ?? [right, "right"] as const : undefined)
+      if (!pick) return false
+      placed.push(pick[0])
+      side.set(n, pick[1])
       return true
     })
     this.g.labels.selectAll<SVGTextElement, Node>("text").data(labels, (n) => n.id).join("text")
-      .attr("x", (n) => sx(n.x) + rad(n) + 4).attr("y", (n) => sy(n.y))
+      .attr("x", (n) => sx(n.x) + (side.get(n) === "left" ? -1 : 1) * (rad(n) + 4)).attr("y", (n) => sy(n.y))
+      .attr("text-anchor", (n) => (side.get(n) === "left" ? "end" : "start"))
       .attr("dominant-baseline", "central")
       .attr("font-size", size)
       .attr("font-weight", (n) => (n.tier === 1 || n === sel ? 650 : 500))

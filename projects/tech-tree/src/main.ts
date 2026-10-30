@@ -519,7 +519,9 @@ async function main() {
     const open = n.status === "speculative" || n.status === "ongoing"
     const rows: string[] = []
     rows.push(`<dt>When</dt><dd>${esc(dateLabel(n.from, n.to, n.at, now, open))}</dd>`)
-    if (n.trendYear && open) rows.push(`<dt>Trend</dt><dd>The trend alone gets there around ${Math.round(n.trendYear)}</dd>`)
+    if (n.trendYear && open) rows.push(`<dt>Trend</dt><dd>${n.trendYear < now
+      ? `Behind its trend line, which passed this level around ${Math.round(n.trendYear)}`
+      : `The trend alone gets there around ${Math.round(n.trendYear)}`}</dd>`)
     if (n.scenarioYears?.length && open) {
       const mm = metrics.get(n.threshold!.metric)!
       const ln = seriesOf(mm).find((x) => !mm.series || x.id === n.threshold!.series)
