@@ -661,8 +661,10 @@ export class TreeView {
       const left: Box = [sx(n.x) - gap - w - 2, right[1], sx(n.x) - gap + 2, right[3]]
       const fits = (box: Box, strict: boolean) => box[0] >= (overview ? 0 : 17) && box[2] <= this.w &&
         !placed.some((p) => hits(box, p)) && !(strict && coversNode(n, box))
+      // Its chain may cover other nodes; only the selection itself may
+      // cover other labels.
       const pick = ([[right, "right"], [left, "left"]] as const).find(([box]) => fits(box, !keen))
-        ?? (keen ? ([[right, "right"], [left, "left"]] as const).find(([box]) => fits(box, false)) ?? [right, "right"] as const : undefined)
+        ?? (n === sel ? [right, "right"] as const : undefined)
       if (!pick) return false
       placed.push(pick[0])
       side.set(n, pick[1])
