@@ -9,6 +9,7 @@
 import fs from "node:fs"
 import path from "node:path"
 import YAML from "yaml"
+import { forecasting, LEVELS, WEIGHTS, SLIP, SLIP_HIGH } from "./forecast.mjs"
 
 const HERE = path.dirname(new URL(import.meta.url).pathname)
 const OUT = path.join(HERE, "..", "data")
@@ -210,7 +211,7 @@ function lineOf(m, src, where) {
     warn(`${where}: trend fits poorly (r² ${trend.r2.toFixed(2)}), not shown`)
     trend = null
   }
-  return { points, trend, scenarios: scenariosOf({ ...m, id: where.replace(/^metric /, ""), scenarios: src.scenarios }, points) }
+  return { points, trend, scenarios: scenariosOf({ ...m, id: where.replace(/^metric /, ""), scenarios: src.scenarios }, points), _fitPts: fitPts }
 }
 // A metric is one line, or several (`series`, e.g. one per income group)
 // sharing a unit and a chart.
@@ -224,7 +225,7 @@ const metricsOut = metrics.map((m) => {
   const wright = cumulative ? fitWright({ points: main.points }, { points: cumulative.points.map(([x, y]) => [Number(x), Number(y)]) }) : null
   return {
     id: m.id, name: m.name, short: m.short ?? m.name, unit: m.unit, better: m.better ?? "higher", log: m.log !== false,
-    points: main.points, trend: main.trend, scenarios: main.scenarios, ...(series ? { series } : {}),
+    points: main.points, trend: main.trend, scenarios: main.scenarios, _fitPts: main._fitPts, ...(series ? { series } : {}),
     wright, source: m.source, license: m.license, note: m.note && era(m.note), field: m.field, milestones: [],
   }
 })
@@ -606,6 +607,19 @@ for (const n of kept) {
   n._effortModel = { spent, people: e.people, growth: g, past: qS, q10: at(0.1), q50: at(0.5), q90: at(0.9) }
 }
 
+// Forecasts: outside forecasts, the trends, the tree simulated, and the
+// pool (forecast.mjs). The year each forecast path on a milestone's metric
+// crosses its threshold comes first.
+for (const n of kept) {
+  if (!n.threshold || n.status === "achieved") continue
+  const line = lineFor(metricById.get(n.threshold.metric), n.threshold.series)
+  if (line?.scenarios.length) n._scenarioYears = new Map(line.scenarios.map((sc) => [sc.id, pathCrossing(line, sc.points, Number(n.threshold.value))]))
+}
+const forecastsYaml = fs.existsSync(path.join(HERE, "forecasts.yaml")) ? readYaml(path.join(HERE, "forecasts.yaml")) : {}
+const accelYaml = fs.existsSync(path.join(HERE, "acceleration.yaml")) ? readYaml(path.join(HERE, "acceleration.yaml")) : {}
+const fc = forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, metricById, lineFor, accel: accelYaml, forecastsYaml })
+for (const m of metricsOut) for (const line of m.series ?? [m]) if (line.trend && fc.bands.has(line)) line.trend.band = fc.bands.get(line)
+
 // Supply risk for each resource with supply data, from four parts (each
 // 0 to 1), averaged with weights over the parts that are known:
 //   concentration (0.45): the HHI of the most concentrated stage, mining
@@ -845,6 +859,7 @@ const out = {
     ...(n._routes.length ? { routes: n._routes.map((r) => r.name) } : {}),
     ...(n._effort?.py ? { py: round(Math.log10(n._effort.py), 2) } : {}),
     ...(n._checklist ? { steps: [n._checklist.filter((c) => c.done != null).length, n._checklist.length] } : {}),
+    ...(fc.results.get(n.id)?.flag ? { flag: fc.results.get(n.id).flag } : {}),
     ...(n._supply ? { risk: n._supply.rating } : n._risk ? { risk: n._risk.rating } : {}),
   })),
   edges,
@@ -854,6 +869,10 @@ const out = {
     cost: costFit && { ...costFit, from: 1900 },
     span: spanFit,
     lag: lagModel,
+    forecasting: {
+      levels: LEVELS, weights: WEIGHTS, slip: SLIP, slipHigh: SLIP_HIGH, draws: fc.draws, backtest: fc.backtest,
+      work: fc.work, mechanisms: fc.mechanisms.map(({ id, name, from, work, speedup, ramp, only, note, sources }) => ({ id, name, from, work, speedup, ramp, ...(only ? { only } : {}), note, sources })),
+    },
   },
 }
 // Years in the text read BC and AD (the data may say BCE and CE). Source
@@ -875,6 +894,18 @@ const details = Object.fromEntries(kept.map((n) => [n.id, eraDeep({
   ...(n._effort ? { effortCalc: { years: n._effort.years, people: n._effort.people, py: n._effort.py, work: n._effort.work, rough: n._effort.rough, ...(n._effort.py && !n._effort.open && n._effort.work === "research" && n._date.at >= EFFORT_FROM && effortFit ? { vsTrend: round(Math.log10(n._effort.py) - effortExpected(n._date.at, n.kind), 2) } : {}) } } : {}),
   ...(n._prereqModel ? { prereqModel: mapVals(n._prereqModel, (v) => round(v)) } : {}),
   ...(n._effortModel ? { effortModel: mapVals(n._effortModel, (v) => round(v, 3)) } : {}),
+  ...(() => {
+    const r = fc.results.get(n.id)
+    if (!r) return {}
+    const ys = (q) => q.map((v) => (Number.isFinite(v) ? round(v) : null))
+    return { pool: {
+      judged: ys(r.judged), pooled: ys(r.pooled), flag: r.flag, outsideOnly: r.outsideOnly,
+      inputs: r.inputs.map((i) => ({ ...i, weight: round(i.weight, 2), q: ys(i.q) })),
+      sim: { outside: ys(r.sim.outside), base: ys(r.sim.base), judged: ys(r.sim.judged), ...(r.sim.early ? { early: true } : {}) },
+      ...(r.cond ? { cond: mapVals(r.cond, (v) => round(v, 2)) } : {}),
+      ...(r.accel ? { accel: { shares: mapVals(r.accel.shares, (v) => round(v, 2)), by: r.accel.by } } : {}),
+    } }
+  })(),
   ...(n.supply ? { supply: n.supply, supplyCalc: n._supply } : {}),
   ...(n._risk ? { risk: n._risk } : {}),
   ...(n._checklist ? { checklist: n._checklist } : {}),
@@ -888,7 +919,7 @@ const details = Object.fromEntries(kept.map((n) => [n.id, eraDeep({
   })(),
 })]))
 fs.mkdirSync(OUT, { recursive: true })
-fs.writeFileSync(path.join(OUT, "tree.json"), JSON.stringify(out))
+fs.writeFileSync(path.join(OUT, "tree.json"), JSON.stringify(out, (k, v) => (k.startsWith("_") ? undefined : v)))
 fs.writeFileSync(path.join(OUT, "details.json"), JSON.stringify(details))
 
 const by = (key) => Object.entries(kept.reduce((m, n) => ({ ...m, [n[key]]: (m[n[key]] ?? 0) + 1 }), {})).map(([k, v]) => `${k} ${v}`).join(", ")

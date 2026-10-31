@@ -1,0 +1,754 @@
+# What others forecast for each future technology. See SCHEMA.md, "Forecasts".
+# Metaculus figures were read from Internet Archive snapshots of each question
+# (the site blocks automated reading); each note gives the snapshot month.
+# Collected 2026-10-30 and 2026-10-31.
+
+agi:
+  - title: "Metaculus: When will the first general AI system be devised, tested, and publicly announced?"
+    url: https://www.metaculus.com/questions/5121/
+    kind: crowd
+    asof: 2026-10
+    median: 2031.1
+    q25: 2028.3
+    q75: 2037.3
+    match: same
+    note: Community prediction from about 1,840 forecasters, read from an Internet Archive snapshot of 17 October 2026. The node's criterion embeds this question's tests and adds broad job coverage and on-the-job learning, so it is the same bar or slightly stricter.
+  - title: "Metaculus: When will the first weakly general AI system be devised, tested, and publicly announced?"
+    url: https://www.metaculus.com/questions/3479/
+    kind: crowd
+    asof: 2026-09
+    median: 2027.7
+    q25: 2026.7
+    q75: 2030.1
+    match: looser
+    note: About 1,730 forecasters, read from an Internet Archive snapshot of 23 September 2026. Weak AGI is a cognitive benchmark basket (Turing test, Winograd, SAT, Montezuma's Revenge) with no robotics or job coverage, a much easier bar.
+  - title: "Manifold: AGI When? [High Quality Turing Test]"
+    url: https://manifold.markets/ManifoldAI/agi-when-resolves-to-the-year-in-wh-d5c5ad8e4708
+    kind: market
+    asof: 2026-10
+    median: 2031.3
+    q10: 2027.8
+    q25: 2029
+    q75: 2035.5
+    q90: 2042
+    match: looser
+    note: Quantiles interpolated from the yearly buckets of this play-money market (about 1,080 traders). It resolves on passing a demanding Turing test, without the node's job coverage, cost or robotics requirements.
+  - title: "Kalshi: When will any company achieve AGI?"
+    url: https://kalshi.com/markets/kxagico
+    kind: market
+    asof: 2026-10
+    median: 2028.2
+    q25: 2027.4
+    q75: 2029
+    match: looser
+    note: Resolves when any company officially announces it has achieved AGI; quantiles interpolated between the quarterly contracts' mid prices (39 percent before 2028, 52 percent before April 2028, 76 percent before 2029). An announcement is a far easier bar than the node's capability test.
+  - title: "Kalshi: When will OpenAI achieve AGI?"
+    url: https://kalshi.com/markets/kxoaiagi
+    kind: market
+    asof: 2026-10
+    median: 2028.6
+    q25: 2027.5
+    match: looser
+    note: Resolves when OpenAI announces it has attained AGI; prices were about 6.5 percent before 2027, 43 percent before 2028 and 66 percent before 2030, and the quantiles are linear interpolations between those. One company's announcement is an easier bar than the node.
+  - title: "AI Futures Project (Kokotajlo): top-expert-dominating AI"
+    url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+    kind: expert
+    asof: 2026-08
+    median: 2028
+    match: stricter
+    note: Daniel Kokotajlo's median for AI at least as good as top human experts at virtually all cognitive tasks, as given in the site's forecast note. That is above the node's competent-professional bar, though it omits the node's robotics test.
+  - title: "AI Futures Project (Lifland): top-expert-dominating AI"
+    url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+    kind: expert
+    asof: 2026-08
+    median: 2032
+    match: stricter
+    note: Eli Lifland's median for top-expert-dominating AI, as given in the site's forecast note; a higher cognitive bar than the node's, without its robotics test.
+  - title: "Dwarkesh Patel: AI that learns on the job like a human"
+    url: https://www.dwarkesh.com/p/timelines-june-2025
+    kind: expert
+    asof: 2025-06
+    median: 2032
+    match: looser
+    note: Patel's 50 percent date for AI that learns on the job as easily as a human, which is only the second part of the node's three-part criterion.
+  - title: "2023 Expert Survey on Progress in AI (Grace et al., 2,778 researchers): high-level machine intelligence"
+    url: https://arxiv.org/abs/2401.02843
+    kind: survey
+    asof: 2023-10
+    median: 2047
+    q10: 2027
+    match: stricter
+    note: Aggregate forecast for unaided machines doing every task better and more cheaply than human workers (10 percent by 2027, 50 percent by 2047), a stricter bar than 90 percent of computer-based tasks.
+superhuman-coder:
+  - title: "AI 2027 scenario: superhuman coder"
+    url: https://ai-2027.com/research/takeoff-forecast
+    kind: expert
+    asof: 2025-04
+    median: 2027.2
+    match: same
+    note: The AI 2027 scenario puts the superhuman coder in March 2027; this is a scenario date nearer the authors' mode than a median, and the authors' own medians were later.
+  - title: "AI Futures Project (Kokotajlo): automated coder"
+    url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+    kind: expert
+    asof: 2026-08
+    median: 2027.8
+    match: same
+    note: Kokotajlo's median for the automated coder, November 2027, as given in the site's note; the automated coder is essentially the superhuman coder bar.
+  - title: "AI Futures Project (Lifland): automated coder"
+    url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+    kind: expert
+    asof: 2026-08
+    median: 2030
+    match: same
+    note: Lifland's median for the automated coder, January 2030, as given in the site's note.
+  - title: "AI Futures Model, December 2025 update: automated coder"
+    url: https://blog.aifutures.org/p/ai-futures-model-dec-2025-update
+    kind: model
+    asof: 2025-12
+    median: 2031.8
+    match: same
+    note: The published model's median for the automated coder, described as late 2031 in the site's note (late 2031 taken as 2031.8). The note adds that the August 2026 default run reaches it around October 2027, a single run rather than a median, so it is not listed separately.
+automated-ai-research:
+  - title: "AI Futures Project (Kokotajlo): top-expert-dominating AI"
+    url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+    kind: expert
+    asof: 2026-08
+    median: 2028.8
+    match: stricter
+    note: Kokotajlo's median of November 2028 for AI dominating top human experts at virtually all cognitive tasks; in the AI Futures milestone ladder this comes after the superhuman AI researcher, so it is a stricter bar.
+  - title: "AI Futures Project (Lifland): top-expert-dominating AI"
+    url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+    kind: expert
+    asof: 2026-08
+    median: 2032.5
+    match: stricter
+    note: Lifland's median of July 2032 for top-expert-dominating AI, a stricter bar than the superhuman AI researcher.
+  - title: "OpenAI (Sam Altman): a legitimate AI researcher by March 2028"
+    url: https://techcrunch.com/2025/10/28/sam-altman-says-openai-will-have-a-legitimate-ai-researcher-by-2028/
+    kind: target
+    asof: 2025-10
+    year: 2028.2
+    match: looser
+    note: OpenAI's stated internal goal of an automated AI researcher able to carry out larger research projects by March 2028; one such system is a lower bar than AI doing most of a frontier lab's research 30 times faster than its best people.
+continual-learning-ai:
+  - title: "Dwarkesh Patel: AI that learns on the job like a human"
+    url: https://www.dwarkesh.com/p/timelines-june-2025
+    kind: expert
+    asof: 2025-06
+    median: 2032
+    match: same
+    note: Patel's 50 percent date for AI that learns on the job as easily and well as a human employee, essentially this node's bar.
+fusion-power:
+  - title: "Metaculus: When will the first 100 Megawatt fusion-based electrical generation facility come into service?"
+    url: https://www.metaculus.com/questions/363/when-will-the-first-100-megawatt-fusion-based-electrical-generation-facility-come-into-service
+    kind: crowd
+    asof: 2025-11
+    median: 2043
+    q25: 2034.8
+    q75: 2057.4
+    match: stricter
+    note: About 250 forecasters, read from an Internet Archive snapshot of November 2025 (the latest archived). The site's note says this sat near 2041 in earlier snapshots. It asks for a 100 MW facility in service, a somewhat higher power bar than the node's 50 MW net.
+  - title: "Metaculus: When will nuclear fusion provide at least 0.1% of the world's primary energy?"
+    url: https://www.metaculus.com/questions/9464/
+    kind: crowd
+    asof: 2025-10
+    median: 2052
+    q25: 2041.3
+    q75: 2063.3
+    match: stricter
+    note: About 95 forecasters, read from an Internet Archive snapshot of October 2025. Fusion supplying 0.1 percent of world primary energy needs a fleet of plants, well beyond one plant running for months.
+  - title: "Helion: Orion plant online for Microsoft by 2028"
+    url: https://www.helionenergy.com/newsroom/helion-announces-worlds-first-fusion-ppa-with-microsoft
+    kind: target
+    asof: 2023-05
+    year: 2028
+    match: looser
+    note: Helion said Orion would be online by 2028 and target 50 MW or more after a one-year ramp; in 2026 its site softened this to beginning initial operations in 2028 (Axios, September 2026). Being online is an easier bar than six months at 50 percent availability.
+  - title: "UKAEA: STEP prototype fusion plant operating by 2040"
+    url: https://step.ukaea.uk/
+    kind: target
+    asof: 2022-10
+    year: 2040
+    match: same
+    note: The UK's STEP programme aims for a prototype plant delivering net electricity at West Burton by 2040, as cited in the site's note.
+fusion-net-electricity:
+  - title: "Metaculus: When will a fusion reactor reach the following energy gain (Q) milestones? (Qwp at least 1)"
+    url: https://www.metaculus.com/questions/14109/nuclear-fusion-energy-gain-milestones/
+    kind: crowd
+    asof: 2025-10
+    median: 2043.8
+    q25: 2034.4
+    q75: 2053.2
+    match: same
+    note: Wall-plug gain above 1, the same engineering-gain bar as the node; about 27 forecasters, read from an Internet Archive snapshot of October 2025.
+  - title: "Helion: fusion electricity by 2028"
+    url: https://www.helionenergy.com/newsroom/helion-announces-worlds-first-fusion-ppa-with-microsoft
+    kind: target
+    asof: 2023-05
+    year: 2028
+    match: same
+    note: Helion's stated date for electricity from its first plant, as given in the site's note; it missed an earlier 2024 electricity goal and in 2026 reworded the target as initial operations in 2028.
+magnetic-fusion-gain:
+  - title: "Commonwealth Fusion Systems: SPARC Q above 1"
+    url: https://www.nuclearnewsnetwork.com/industry-trackers/fusion-energy-companies/cfs-sparc
+    kind: target
+    asof: 2026-01
+    year: 2027
+    match: same
+    note: CFS targets first plasma in 2027 with Q above 1 shortly after; the date has slipped from 2025.
+  - title: "China BEST tokamak: Q above 1"
+    url: https://www.nuclearnewsnetwork.com/industry-trackers/fusion-energy-companies/china-best
+    kind: target
+    asof: 2026-01
+    year: 2027
+    match: same
+    note: The site's note says BEST, like SPARC, targets 2027.
+  - title: "Metaculus: When will Commonwealth Fusion System's SPARC tokamak first demonstrate net power (Q > 1)?"
+    url: https://www.metaculus.com/questions/38147/
+    kind: crowd
+    asof: 2025-10
+    median: 2030.3
+    q25: 2028.1
+    match: stricter
+    note: Only about 7 forecasters, read from an Internet Archive snapshot of October 2025. Limited to SPARC, so stricter than any device; the upper quartile sits at the question's 2033 bound and is left out.
+fault-tolerant-quantum-computer:
+  - title: "IBM: Starling, 200 logical qubits running 100 million gates, by 2029"
+    url: https://newsroom.ibm.com/2025-06-10-IBM-Sets-the-Course-to-Build-Worlds-First-Large-Scale,-Fault-Tolerant-Quantum-Computer-at-New-IBM-Quantum-Data-Center
+    kind: target
+    asof: 2025-06
+    year: 2029
+    match: stricter
+    note: IBM's roadmap machine exceeds the megaquop bar (100 logical qubits, a million operations), so it is a target for a somewhat stricter milestone.
+  - title: "Quantinuum: Apollo, universal fully fault-tolerant computer by 2029"
+    url: https://www.quantinuum.com/blog/quantinuum-overcomes-last-major-hurdle-to-deliver-scalable-universal-fault-tolerant-quantum-computers-by-2029
+    kind: target
+    asof: 2025-06
+    year: 2029
+    match: same
+    note: Quantinuum's roadmap puts Apollo, with hundreds of logical qubits running millions of operations, in 2029 (its 2024 press release said by 2030); roughly the megaquop bar.
+useful-quantum-advantage:
+  - title: "IBM: first quantum advantages by the end of 2026"
+    url: https://www.ibm.com/quantum/blog/quantum-advantage-era
+    kind: target
+    asof: 2025-06
+    year: 2027
+    match: looser
+    note: IBM predicted the first advantage claims would be confirmed by the end of 2026; a claim is an easier bar than one surviving a year of classical attempts to match it.
+cryptographically-relevant-quantum-computer:
+  - title: "Global Risk Institute: Quantum Threat Timeline Report 2025"
+    url: https://globalriskinstitute.org/publication/quantum-threat-timeline-report-2025b/
+    kind: survey
+    asof: 2026-03
+    median: 2038.6
+    match: same
+    note: Twenty-six experts gave 28 to 49 percent odds of a cryptographically relevant quantum computer within 10 years and 51 to 70 percent within 15 (published March 2026); the median is interpolated between the midpoints of those ranges at 2036 and 2041.
+  - title: "Metaculus: When will the RSA-2048 challenge number be factorized by a quantum computer?"
+    url: https://www.metaculus.com/questions/30596/
+    kind: crowd
+    asof: 2025-09
+    median: 2035.7
+    q25: 2031.4
+    q75: 2045.5
+    match: same
+    note: About 19 forecasters, read from an Internet Archive snapshot of September 2025; the same bar as the node.
+  - title: "Metaculus: When will a quantum computer running Shor's algorithm (or a similar one) be used to factor one of the RSA numbers for the first time?"
+    url: https://www.metaculus.com/questions/3684/
+    kind: crowd
+    asof: 2025-11
+    median: 2034.3
+    q25: 2029.5
+    q75: 2045.3
+    match: looser
+    note: About 130 forecasters, read from an Internet Archive snapshot of November 2025. Any RSA challenge number counts, including far smaller ones than RSA-2048.
+  - title: "Manifold: In what year will a quantum computer factor the RSA-2048 challenge number?"
+    url: https://manifold.markets/AlanTuring/in-what-year-will-a-quantum-compute
+    kind: market
+    asof: 2026-10
+    median: 2038
+    q10: 2027.9
+    q25: 2032.3
+    q75: 2047.6
+    q90: 2064.5
+    match: same
+    note: Play-money market with about 23 traders; quantiles interpolated from its yearly buckets.
+  - title: "Kalshi: When will the first useful quantum computer be developed?"
+    url: https://kalshi.com/markets/kxquantum
+    kind: market
+    asof: 2026-10
+    median: 2035
+    q25: 2029.4
+    match: looser
+    note: Resolves on RSA-2048 broken with Shor's algorithm or an accurate FeMoco or P450 simulation, whichever first, so it is easier than RSA alone; q25 interpolated between the 2027 and 2030 contracts.
+crewed-lunar-return:
+  - title: "Metaculus: When will NASA next land astronauts on the Moon?"
+    url: https://www.metaculus.com/questions/7721/
+    kind: crowd
+    asof: 2026-03
+    median: 2029.9
+    q25: 2028.4
+    q75: 2032.7
+    match: stricter
+    note: About 61 forecasters, read from an Internet Archive snapshot of March 2026. NASA astronauts only, so a Chinese landing would not count, which makes it stricter than the node.
+  - title: "Kalshi: NASA lands on the moon?"
+    url: https://kalshi.com/markets/kxmoon
+    kind: market
+    asof: 2026-10
+    q25: 2028.9
+    match: stricter
+    note: Crewed NASA landing contracts traded at about 3 percent before 2028, 28 percent before 2029 and 42 percent before 2030; q25 is interpolated and the median falls after the last contract (2030), so it is left out. NASA only, so stricter than either country.
+  - title: "NASA: first crewed landing on Artemis IV in early 2028"
+    url: https://livescience.com/space/space-exploration/nasa-announces-sweeping-overhaul-of-artemis-return-to-moon-targeting-a-2028-landing-and-a-2027-in-orbit-docking-flight
+    kind: target
+    asof: 2026-02
+    year: 2028.2
+    match: same
+    note: NASA's February 2026 overhaul made Artemis III a 2027 Earth-orbit docking test and moved the first landing to Artemis IV, hoped for early 2028.
+  - title: "China Manned Space Agency: crewed lunar landing by 2030"
+    url: https://news.cgtn.com/news/2026-02-28/China-gears-up-for-crewed-moon-landing-by-2030-1L7SwMwUaVa/p.html
+    kind: target
+    asof: 2026-02
+    year: 2030
+    match: same
+    note: China reaffirmed in February 2026 that it aims to land astronauts before 2030 using Long March 10, Mengzhou and Lanyue.
+starship-orbital-refueling:
+  - title: "SpaceX and NASA: Starship ship-to-ship propellant transfer test"
+    url: https://en.wikipedia.org/wiki/Starship_HLS
+    kind: target
+    asof: 2026-10
+    year: 2027
+    match: looser
+    note: The site's note says the ship-to-ship transfer test has slipped from 2025 to 2027; a first test demonstration is an easier bar than transfer at the scale a lunar landing needs.
+crewed-mars-landing:
+  - title: "Metaculus: When will the first humans land successfully on Mars?"
+    url: https://www.metaculus.com/questions/3515/
+    kind: crowd
+    asof: 2026-07
+    median: 2045.1
+    q25: 2037.3
+    q75: 2060
+    match: looser
+    note: About 390 forecasters, read from an Internet Archive snapshot of July 2026. Resolves on a crewed touchdown with a surviving crew member and does not require the return to Earth the node asks for.
+  - title: "Metaculus: SpaceX Starship orbit in 2023? (No) then date first human lands on Mars"
+    url: https://www.metaculus.com/questions/17154/date-first-human-lands-on-mars
+    kind: crowd
+    asof: 2023-12
+    median: 2037.2
+    q25: 2032.2
+    q75: 2046.9
+    match: looser
+    note: The conditional question cited in the site's note; it closed at the end of 2023 with about 16 forecasters, and since Starship did not reach orbit in 2023, the No branch shown here is the relevant one. Landing only, no return required. Superseded by question 3515.
+  - title: "Metaculus: When will China first successfully land people on Mars?"
+    url: https://www.metaculus.com/questions/9634/
+    kind: crowd
+    asof: 2026-02
+    median: 2046.1
+    q25: 2040.2
+    q75: 2054.6
+    match: stricter
+    note: About 34 forecasters, read from an Internet Archive snapshot of February 2026. China only, which is stricter, though it does not require a return.
+  - title: "Manifold: Will a human walk on Mars before 2037 / 2043 / 2044? (series)"
+    url: https://manifold.markets/RemNi/will-a-human-walk-on-mars-before-20-ceaed9045812
+    kind: market
+    asof: 2026-10
+    median: 2043.1
+    q25: 2037
+    match: looser
+    note: A ladder of play-money markets (about 25 to 50 traders each) at 24 percent before 2037, 39 percent before 2040, 50 percent before 2043 and 53 percent before 2044; quantiles interpolated. A walk on Mars without a return.
+mars-settlement:
+  - title: "Elon Musk: Mars self-sustaining in 25 to 50 years"
+    url: https://www.lawyer-monthly.com/2025/02/spacex-ceo-elon-musk-says-mars-could-be-self-sustaining-in-25-to-50-years-but-faces-major-challenges/
+    kind: expert
+    asof: 2025-02
+    median: 2062.5
+    match: stricter
+    note: Musk said in February 2025 that making Mars self-sustaining would take 25 to 50 years; the median is the midpoint of 2050 to 2075. A self-sustaining civilization is a higher bar than 100 people living there making their own consumables.
+lunar-base:
+  - title: "Metaculus: By what year will there be a permanently inhabited lunar base with at least five crew members, operational for six consecutive months?"
+    url: https://www.metaculus.com/questions/35211/
+    kind: crowd
+    asof: 2026-03
+    median: 2037.3
+    q25: 2031.1
+    q75: 2047.4
+    match: looser
+    note: About 15 forecasters, read from an Internet Archive snapshot of March 2026. Six months of continuous occupancy is an easier bar than the node's year.
+nuclear-space-propulsion:
+  - title: "NASA: Space Reactor-1 Freedom launch in 2028"
+    url: https://en.wikipedia.org/wiki/Space_Reactor-1_Freedom
+    kind: target
+    asof: 2026-10
+    year: 2028
+    match: same
+    note: The proposed nuclear electric propulsion demonstrator's 2028 date, which the site's note treats as a proposal likely to slip.
+xenotransplant-approved:
+  - title: "Metaculus: When will pig-to-human xenotransplantation become a routine medical procedure?"
+    url: https://www.metaculus.com/questions/36439/pig-to-human-xenotransplantation-routine
+    kind: crowd
+    asof: 2025-05
+    median: 2042
+    q25: 2035.4
+    q75: 2046.9
+    match: same
+    note: About 10 forecasters, read from an Internet Archive snapshot of May 2025 (the latest archived). Resolves on full FDA or EMA approval for routine use or a large phase 3 with at least 90 percent one-year survival, close to the node's licensing bar despite the word routine. The site's note gives about 2043.
+bci-approved:
+  - title: "Metaculus: When will the US FDA grant Neuralink permission to sell and implant a brain-machine interface device into general consumers?"
+    url: https://www.metaculus.com/questions/4966/
+    kind: crowd
+    asof: 2025-04
+    median: 2034.1
+    q25: 2029.5
+    q75: 2047.6
+    match: stricter
+    note: About 83 forecasters, read from an Internet Archive snapshot of April 2025. Neuralink only, and approval for sale to general consumers, so stricter than any company's approval for paralysis.
+  - title: "Neuralink: FDA approval of Telepathy by 2029"
+    url: https://www.medicaldevice-network.com/newsletters/neuralink-targets-1bn-revenue-by-2031
+    kind: target
+    asof: 2025-07
+    year: 2029
+    match: same
+    note: Investor documents reported in 2025 said Neuralink expects FDA approval for its Telepathy implant by 2029.
+reprogramming-human-trial:
+  - title: "Metaculus: Will a partial reprogramming-based therapy receive regulatory approval for treating Alzheimer's disease before January 1, 2035?"
+    url: https://www.metaculus.com/questions/34822/
+    kind: crowd
+    asof: 2025-04
+    median: 2035
+    match: stricter
+    note: About 8 forecasters gave 50 percent, read from an Internet Archive snapshot of April 2025. Regulatory approval for a brain disease is a much higher bar than a controlled trial showing benefit in one organ.
+lab-grown-solid-organ:
+  - title: "ARPA-H PRINT: first human trial of a bioprinted partial liver"
+    url: https://arpa-h.gov/news-and-events/arpa-h-awards-teams-set-bioprint-universally-matched-organs-demand
+    kind: target
+    asof: 2026-01
+    year: 2031
+    match: looser
+    note: The programme's goal of a first human trial around 2031, per the site's note; a small graft assisting the patient's own liver is far below a whole organ sustaining function for a year.
+reversible-suspended-animation:
+  - title: "Metaculus: When will the first cryogenically frozen large mammal be revived?"
+    url: https://www.metaculus.com/questions/19370/
+    kind: crowd
+    asof: 2025-02
+    median: 2079.3
+    q25: 2050.6
+    match: same
+    note: About 17 forecasters, read from an Internet Archive snapshot of February 2025; the upper quartile is at the question's 2100 bound and is left out. Matches the node's large-mammal bar.
+  - title: "Metaculus: Will a cryonically frozen individual be resuscitated before 2100?"
+    url: https://www.metaculus.com/questions/13672/
+    kind: crowd
+    asof: 2026-01
+    q05: 2100
+    match: stricter
+    note: About 290 forecasters gave 5 percent, read from an Internet Archive snapshot of January 2026. Reviving someone preserved by current cryonics methods is harder than a deliberate, designed procedure.
+whole-mouse-connectome:
+  - title: "Wellcome, Scaling connectomics: whole mouse brain in 10 to 15 years"
+    url: https://wellcome.org/insights/reports/scaling-connectomics
+    kind: expert
+    asof: 2023-06
+    median: 2035.5
+    match: same
+    note: The 2023 report set a whole mouse connectome as a 10 to 15 year goal, 2033 to 2038; the median is the midpoint.
+  - title: "E11 Bio roadmap: whole mouse brain connectome"
+    url: https://e11.bio/blog/roadmap
+    kind: target
+    asof: 2024-06
+    year: 2029
+    match: same
+    note: E11 Bio's roadmap aims for about 2029 using its own, still unproven, expansion and barcoding method.
+animal-brain-emulation:
+  - title: "Metaculus: When will a digital model of the C. elegans nervous system reproduce the organism's full behavioral repertoire with at least 90% accuracy?"
+    url: https://www.metaculus.com/questions/38069/
+    kind: crowd
+    asof: 2025-11
+    median: 2052
+    q25: 2043
+    match: stricter
+    note: About 10 forecasters, read from an Internet Archive snapshot of November 2025; the upper quartile is at the question's bound and is left out. Ninety percent of the full repertoire is a little stricter than most behaviors.
+  - title: "Manifold: Will the mind of a C. elegans roundworm be uploaded before 2033?"
+    url: https://manifold.markets/Harlan/will-the-mind-of-a-c-elegans-roundw
+    kind: market
+    asof: 2026-10
+    q75: 2033
+    match: looser
+    note: About 37 traders at 76 percent. An upload judged by the market creator, without the node's requirement to match recorded neural activity.
+  - title: "Survey of 312 neuroscientists (Zeleznikow-Johnston et al.): C. elegans whole-brain emulation"
+    url: https://www.news-medical.net/news/20250821/Neuroscientists-split-on-whether-memories-can-be-extracted-from-preserved-brains.aspx
+    kind: survey
+    asof: 2024-10
+    median: 2045
+    match: same
+    note: The median respondent in the 2024 survey (published 2025 in PLOS One) expected a C. elegans emulation around 2045.
+mouse-brain-emulation:
+  - title: "Survey of 312 neuroscientists (Zeleznikow-Johnston et al.): mouse whole-brain emulation"
+    url: https://www.news-medical.net/news/20250821/Neuroscientists-split-on-whether-memories-can-be-extracted-from-preserved-brains.aspx
+    kind: survey
+    asof: 2024-10
+    median: 2065
+    match: same
+    note: The median respondent expected a mouse brain emulation around 2065.
+whole-brain-emulation:
+  - title: "Metaculus: When will the human brain first be successfully emulated in full?"
+    url: https://www.metaculus.com/questions/2813/
+    kind: crowd
+    asof: 2026-03
+    median: 2074.8
+    q25: 2042.2
+    q75: 2216.6
+    match: same
+    note: About 170 forecasters, read from an Internet Archive snapshot of March 2026. The site's note gives the median as the early 2070s.
+  - title: "Survey of 312 neuroscientists (Zeleznikow-Johnston et al.): human whole-brain emulation"
+    url: https://www.news-medical.net/news/20250821/Neuroscientists-split-on-whether-memories-can-be-extracted-from-preserved-brains.aspx
+    kind: survey
+    asof: 2024-10
+    median: 2125
+    match: same
+    note: The median respondent expected a human brain emulation around 2125.
+aging-reversal:
+  - title: "Metaculus: When will a country reach longevity escape velocity?"
+    url: https://www.metaculus.com/questions/6592/date-life-expectancy-hits-escape-velocity
+    kind: crowd
+    asof: 2025-11
+    median: 2054.4
+    q25: 2038.4
+    q75: 2135
+    match: looser
+    note: About 140 forecasters, read from an Internet Archive snapshot of November 2025. The site's note treats longevity escape velocity as a looser bar than an approved rejuvenation therapy meeting this criterion.
+longevity-escape-velocity:
+  - title: "Metaculus: When will a country reach longevity escape velocity?"
+    url: https://www.metaculus.com/questions/6592/date-life-expectancy-hits-escape-velocity
+    kind: crowd
+    asof: 2025-11
+    median: 2054.4
+    q25: 2038.4
+    q75: 2135
+    match: same
+    note: Sustained rise in life expectancy of at least a year per year; about 140 forecasters, read from an Internet Archive snapshot of November 2025. The site's note gives medians of about 2050 to 2060 and an upper quartile after 2180; the latest snapshot's upper quartile is 2135.
+  - title: "Aubrey de Grey: 50 percent chance of longevity escape velocity by 2036"
+    url: https://en.wikipedia.org/wiki/Longevity_escape_velocity
+    kind: expert
+    asof: 2021-03
+    median: 2036
+    match: looser
+    note: De Grey's March 2021 statement; he defines LEV as therapies postponing aging by about 20 years, not measured life expectancy rising, which is an earlier and looser bar.
+molecular-nanotechnology:
+  - title: "Metaculus: Will molecular nanotechnology have been proven feasible by the following years?"
+    url: https://www.metaculus.com/questions/21257/feasible-nanotechnology/
+    kind: crowd
+    asof: 2025-09
+    median: 2041
+    q75: 2049
+    match: looser
+    note: About 20 forecasters gave 15 percent by 2030, 47 percent by 2040 and 78 percent by 2050 (Internet Archive snapshot of September 2025); median and q75 interpolated. Proven feasible is far short of useful gram-scale atomically precise products.
+programmable-molecular-assembler:
+  - title: "David Leigh: molecular factories within 10 to 20 years"
+    url: https://www.manchester.ac.uk/about/news/scientists-create-worlds-first-molecular-robot-capable-of-building-molecules/
+    kind: expert
+    asof: 2017-09
+    median: 2032
+    match: same
+    note: Leigh said in 2017 that molecular factories could arrive within 10 to 20 years; the median is the midpoint of 2027 to 2037.
+room-temperature-superconductor:
+  - title: "Metaculus: When will room-temperature and -pressure superconductivity be achieved?"
+    url: https://www.metaculus.com/questions/18169/
+    kind: crowd
+    asof: 2025-10
+    median: 2052.7
+    q25: 2035.8
+    match: same
+    note: About 67 forecasters, read from an Internet Archive snapshot of October 2025. Needs a replicated superconductor between -5 and 105 C at ambient pressure. The upper quartile is at the 2080 bound, so more than a quarter of the mass is beyond the question's range and q75 is left out.
+  - title: "Manifold: Will a room-temperature, atmospheric pressure superconductor be discovered before 2030?"
+    url: https://manifold.markets/AaronLehmann/will-a-roomtemperature-atmospheric
+    kind: market
+    asof: 2026-10
+    q10: 2030
+    match: same
+    note: About 890 traders at 11 percent.
+  - title: "Manifold: Will we get room temperature superconductors before 2035?"
+    url: https://manifold.markets/RemNi/will-we-get-room-temperature-superc-ece7abf70bde
+    kind: market
+    asof: 2026-10
+    q25: 2035
+    match: same
+    note: About 44 traders at 25 percent; a companion market gives 36 percent before 2040.
+robotaxis-at-scale:
+  - title: "Goldman Sachs: robotaxis about 8 percent of US rideshare by 2030"
+    url: https://www.goldmansachs.com/insights/articles/autonomous-vehicle-market-forecast-to-grow-ridesharing-presence
+    kind: expert
+    asof: 2025-06
+    median: 2030
+    match: looser
+    note: Eight percent by 2030 is short of the 10 percent bar, so 10 percent would come somewhat later on this forecast.
+  - title: "JPMorgan: Waymo about 7 percent of US ride-share by 2030"
+    url: https://www.sherwood.news/tech/waymos-now-serving-more-than-500-000-paid-robotaxi-rides-every-week/
+    kind: expert
+    asof: 2026-03
+    median: 2030
+    match: looser
+    note: Waymo alone; with Tesla, Zoox and others the total would be higher, but still short of 10 percent by 2030.
+personal-self-driving-cars:
+  - title: "Tesla: unsupervised FSD in customer cars in Q2 2027"
+    url: https://electrek.co/2026/10/21/tesla-unsupervised-fsd-q2-2027-robotaxi-fleet/
+    kind: target
+    asof: 2026-10
+    year: 2027.4
+    match: looser
+    note: Tesla's Q3 2026 call put the first unsupervised FSD in owners' cars in Q2 2027, only inside Robotaxi zones and for cars enrolled in its fleet; earlier targets (2025, Q4 2026) slipped. First cars, not 100,000 metro-wide.
+general-purpose-robots:
+  - title: "Metaculus: When will 'Tesla Bots' be available to US consumers?"
+    url: https://www.metaculus.com/questions/7791/
+    kind: crowd
+    asof: 2025-11
+    median: 2029.2
+    q25: 2027.6
+    q75: 2031.9
+    match: looser
+    note: About 130 forecasters, read from an Internet Archive snapshot of November 2025. Consumer availability of one product is easier than 100,000 robots in paid work or tens of thousands of home robots sold.
+  - title: "Manifold: Will 1M humanoid robots be manufactured before 2028 / 2029 / 2030 / 2031 / 2032? (series)"
+    url: https://manifold.markets/RemNi/will-1-million-humanoid-robots-be-m
+    kind: market
+    asof: 2026-10
+    median: 2029.6
+    q25: 2028.4
+    q75: 2031.5
+    match: stricter
+    note: "A ladder of play-money markets (25 to 80 traders each): 17 percent before 2028, 36 before 2029, 58 before 2030, 72 before 2031, 78 before 2032; quantiles interpolated. A million manufactured is a higher count than 100,000 working, though not all need be in paid work."
+solid-state-batteries:
+  - title: "Toyota: first all-solid-state battery EV in 2027 to 2028"
+    url: https://electrek.co/2025/10/08/toyota-aims-to-launch-worlds-first-all-solid-state-ev-batteries/
+    kind: target
+    asof: 2025-10
+    year: 2028
+    match: looser
+    note: Toyota aims to sell its first all-solid-state EV in 2027 or 2028 (an executive reaffirmed 2028); the date has slipped from 2020. A first model on sale is easier than 10,000 units a year.
+in-vivo-gene-editing:
+  - title: "FDA: priority review decision date for Intellia's lonvo-z"
+    url: https://www.sec.gov/Archives/edgar/data/0001652130/000119312526385194/ntla-ex99_1.htm
+    kind: projection
+    asof: 2026-09
+    match: same
+    note: The FDA's PDUFA goal date of March 10, 2027 for an in vivo CRISPR therapy backed by a randomized phase 3; regulators usually decide by the goal date, though a request for more data would push approval back a year or more (the quartile and 90th percentile are my reading).
+    median: 2027.2
+    q75: 2027.8
+    q90: 2029
+synthetic-human-chromosome:
+  - title: "SynHG (Wellcome): synthetic human chromosome in 5 to 10 years"
+    url: https://wellcome.org/news/new-project-pioneer-principles-human-genome-synthesis
+    kind: target
+    asof: 2025-06
+    year: 2032.5
+    match: same
+    note: The project's own horizon of 5 to 10 years from 2025, 2030 to 2035; the year is the midpoint.
+high-na-euv:
+  - title: Intel 14A with High-NA EUV in 2027
+    url: https://www.trendforce.com/news/2025/07/17/news-asml-confirms-first-high-na-euv-exe5200-shipment-reportedly-prepping-for-intels-14a-in-2027/
+    kind: target
+    asof: 2025-07
+    year: 2027
+    match: same
+    note: Intel's 14A process, the first planned to use High-NA EUV in production, was reported as targeting 2027.
+  - title: "Samsung and SK hynix: High-NA EUV in DRAM production by 2028"
+    url: https://www.trendforce.com/news/2026/09/09/news-the-race-to-2028-samsung-sk-hynix-set-high-na-euv-timelines-for-dram-as-micron-stays-tight-lipped/
+    kind: target
+    asof: 2026-09
+    year: 2028
+    match: same
+    note: The memory makers' stated timelines for High-NA in DRAM manufacturing.
+perovskite-silicon-tandem:
+  - title: "Oxford PV roadmap: 27 percent tandem modules in 2027"
+    url: https://www.oxfordpv.com/
+    kind: target
+    asof: 2026-07
+    year: 2027
+    match: looser
+    note: Oxford PV's roadmap module efficiency of 27 percent, below the node's 28 percent and with no gigawatt-scale shipment requirement.
+cfet-transistors:
+  - title: "Engineers quoted by IEEE Spectrum: CFET production in 7 to 10 years"
+    url: https://spectrum.ieee.org/cfet-intel-samsung-tsmc
+    kind: expert
+    asof: 2023-12
+    median: 2031.5
+    match: same
+    note: Engineers at the 2023 stacked-CFET demonstrations expected production 7 to 10 years out, 2030 to 2033; the median is the midpoint.
+newborn-genome-sequencing:
+  - title: "NHS 10-Year Health Plan: universal newborn genome sequencing within 10 years"
+    url: https://www.genomicsengland.co.uk/initiatives/newborns
+    kind: target
+    asof: 2025-07
+    year: 2035
+    match: same
+    note: England's July 2025 plan makes whole-genome sequencing for every newborn an ambition on a 10-year horizon.
+molten-salt-thorium:
+  - title: "China (SINAP): 100 MWt thorium molten salt demonstration reactor by 2035"
+    url: https://world-nuclear-news.org/articles/chinese-msr-achieves-conversion-of-thorium-uranium-fuel
+    kind: target
+    asof: 2025-11
+    year: 2035
+    match: same
+    note: China's stated next goal after TMSR-LF1, a 100 MWt demonstration reactor by 2035.
+c4-rice:
+  - title: "C4 Rice Project: rice in farmers' fields around 2039"
+    url: https://www.plantsci.cam.ac.uk/node/34271
+    kind: target
+    asof: 2019-01
+    year: 2039
+    match: same
+    note: Project statements have pointed to C4 rice reaching farmers around 2039, per the site's note.
+artificial-superintelligence:
+  - title: "Metaculus: weakly general AI (May 2028) plus months from weak AGI to superintelligence (36 months)"
+    url: http://web.archive.org/web/20260529063831/https://www.metaculus.com/questions/9062/time-from-weak-agi-to-superintelligence/
+    kind: crowd
+    asof: 2026-05
+    median: 2031.4
+    match: same
+    note: The sum of two community medians from May 2026 (weak AGI in May 2028; 36.4 months from it to superintelligence, middle half 9 months to 12 years), which is only a rough guide, since medians don't add.
+  - title: AI Futures Project, Daniel Kokotajlo's superintelligence median (August 2026)
+    url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+    kind: expert
+    asof: 2026-08
+    median: 2029.2
+    match: same
+    note: March 2029, a year after his automated-coder date.
+  - title: AI Futures Project, Eli Lifland's superintelligence median (August 2026)
+    url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+    kind: expert
+    asof: 2026-08
+    median: 2033.5
+    match: same
+    note: July 2033, about three years after his automated-coder date.
+waymo-million-rides:
+  - title: "Kalshi: When will Waymo announce 1 million paid rides per week?"
+    url: https://kalshi.com/markets/kxcompanyactionwaymo
+    kind: market
+    asof: 2026-10
+    median: 2027
+    match: same
+    note: The before-2027 contract traded at about 53 to 60 percent (2 percent before November 2026).
+  - title: "Waymo: more than a million paid rides a week by the end of 2026"
+    url: https://amp.claimsjournal.com/news/national/2026/02/12/335668.htm
+    kind: target
+    asof: 2026-02
+    year: 2026.99
+    match: same
+    note: Co-CEO Tekedra Mawakana's goal, set when Waymo was at about 400,000 a week.
+quantum-advantage-in-business:
+  - title: "Google's Hartmut Neven: real-world applications only quantum computers can do within five years (February 2025)"
+    url: https://thequantuminsider.com/2025/02/05/google-quantum-ai-head-sees-commercial-quantum-within-five-years/
+    kind: target
+    asof: 2025-02
+    year: 2030.1
+    match: same
+  - title: "Kalshi: When will the first useful quantum computer be developed?"
+    url: https://kalshi.com/markets/kxquantum
+    kind: market
+    asof: 2026-10
+    median: 2035
+    q25: 2029.4
+    match: stricter
+    note: Resolves when a quantum computer breaks RSA-2048 with Shor's algorithm or accurately simulates FeMoco or cytochrome P450; about 31 percent before 2030, 49 percent before 2035, 59 percent before 2040, with q25 interpolated. Either would be a valuable use, though not necessarily one a company pays for, so the bar is close but not the same.
+air-taxis-everyday:
+  - title: "Aviation Week: about 1,000 eVTOL deliveries by 2030"
+    url: https://aviationweek.com/shownews/paris-air-show/aviation-week-forecasts-1000-evtol-deliveries-2030
+    kind: model
+    asof: 2025-06
+    median: 2030
+    match: looser
+    note: Deliveries, not aircraft carrying passengers on routes in 20 cities, so the bar here comes later.

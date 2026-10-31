@@ -1,7 +1,7 @@
 ---
 title: Real Life Tech Tree
 date: 2026-10-27
-modified: 2026-10-30
+modified: 2026-10-31
 importance: 5
 status: in progress
 tags:
@@ -84,13 +84,37 @@ Some forecasts are linked to the tree itself. Life expectancy both depends on an
 
 ## What it takes
 
-How much work does a technology take, and how much of the world's resources? **What it takes** gathers three rough models built from the tree itself.
+How much work does a technology take, and how much of the world's resources? **What it takes** gathers rough models built from the tree itself, and the forecasts behind each future window.
 
 **Effort.** About 200 technologies record what they took: how many people, for how many years, at what cost. The Manhattan Project took about 130,000 people; the Human Genome Project took 13 years and about $6 billion in today's dollars; Maxwell's equations took one person. Across the 178 research efforts since 1500, the person-years behind a breakthrough grew about 2.5-fold a century, and infrastructure and institutions took about 20 times as much as discoveries, techniques or devices. But the scatter dwarfs both: one standard deviation is a factor of 18. Bigger efforts took longer, but nowhere near in proportion: a hundred times the work took about twice as long, because most of the extra work came from more people at once. Costs rose faster than people, about 50-fold a century since 1900, as each researcher came with more equipment. That fits the finding of Bloom and colleagues that ideas are getting harder to find.
 
 **Time after prerequisites.** Since 1950, technologies came a median of 12 years after the last thing they needed was in place, down from decades in the 19th century and centuries before 1800.
 
-**The frontier from the outside.** Together these give two estimates for each future technology that ignore everything except the tree's history. One divides the work it probably still needs by the people on it now; the other adds the usual wait to when its prerequisites will be in place. Fusion power, with about a million person-years spent so far, comes out around 2052 from effort, against the tree's 2040. Where they disagree with the tree's window, one of them is worth a second look.
+**Forecasts compared.** Every future window is my judgment, and it stays the tree's date. Beside it, each technology's panel shows every other source as a range of years:
+- forecasters and markets that asked about it (Metaculus, Manifold, Kalshi);
+- expert surveys and official projections;
+- companies' and agencies' own target dates, read the way such dates usually turn out: later;
+- the trend of its metric, carried forward as a random walk so the range widens the further out it goes;
+- the tree itself simulated from base rates.
+
+A pool averages them with fixed weights, more for forecasters with a track record and well-fitting trends, less for anything far out, old, or asking a looser or stricter question. Where my best guess falls outside the pool's middle half, the technology is flagged in **What it takes** and in **The frontier**, as a prompt to look again or to say why it differs.
+
+**The simulation.** The base rate on its own was too slow. Pretending it was 1980, 1990, 2000 or 2010 and predicting what came next from the gaps seen before, technologies arrived early far more often than late, so the gaps are scaled to 70% of their historical length, which balances the test. The simulation runs the whole frontier 3,000 times, so each technology waits on the things it needs, and their uncertainty flows downstream: something that needs four uncertain things is later on average than any one of them.
+
+**AI speeding up the rest.** The simulation also says how each AI milestone would speed up the others. Each technology's remaining work is split into kinds:
+- software;
+- design and analysis on computers;
+- experiments;
+- clinical trials and approval;
+- building;
+- adoption.
+
+Each AI milestone speeds up the kinds it can help: a superhuman coder for software, AI-led science for design, robots for experiments, and AGI and superintelligence a little of everything. The rest goes no faster, by Amdahl's law. So rejuvenation therapies, which are mostly clinical trials, move only about five years between an early and a late superintelligence (around 2058 against 2063), while AI itself moves a lot. Two other links are not about AI: an accepted biomarker of aging shortens longevity trials, and cheap launch speeds work in space. Run from the judgment, the simulation answers questions like "if AGI comes early, what moves?". Run from base rates with these speedups, it puts whole-brain emulation and molecular nanotechnology decades earlier than I do, a sign of how much rides on AI speeding up science. Superintelligence is now on the tree too, about three years after AGI, with the forecasts that exist for that gap.
+
+**First versus everyday.** A first commercial service and something everyday people use are often a decade apart, so robotaxis, quantum computers and air taxis now have both:
+- **Robotaxis:** a million rides a week by about 2027, against robotaxis carrying a tenth of ride-hail trips around 2031.
+- **Quantum computers:** a first useful quantum advantage in late 2027, against quantum computing in business use around 2033.
+- **Air taxis:** the first certified air taxi service around 2029, against a thousand air taxis in twenty cities around 2036.
 
 **Resources.** Each resource now has its world production, reserves, leading producers and processors, recycling rate and demand outlook, mostly from the USGS's 2026 summaries. From these the tree scores supply risk: how concentrated production or processing is among countries, how many years reserves last, how little is recycled, and how fast demand is growing. Technologies record how much they need (about 9 kg of lithium and 66 kg of graphite in a typical electric car's battery; solar panels take 17% of the world's silver) and take the rating of their riskiest resource. Lithium, graphite, rare earths, helium, gallium and germanium rate very high. Oil rates low, because many countries produce it; the price of oil is a political problem more than a supply one. **Display** can color the whole tree by supply risk or by what each technology took.
 
@@ -123,6 +147,7 @@ The forecasts draw on [Metaculus](https://www.metaculus.com/), the [AI Digest](h
 
 ## Changelog
 
+- **31 October 2026:** forecasts compared for every future technology: about 90 outside forecasts (forecasters, markets, surveys, projections and announced targets), trends with ranges that widen with the horizon, and the tree simulated from base rates tested against history, pooled beside the judgment, with disagreements flagged. A model of how AI milestones would speed up each kind of work, and how much each technology moves with them. Superintelligence. Robotaxis, quantum computing and air taxis split into a first milestone and everyday use, with Waymo's weekly rides as a new trend line. Labels no longer overlap when a technology is selected.
 - **30 October 2026:** each inspiration now has its own page, with previews and a bar for switching between them; fixes to the Foresight copies (no stray ";" before every label, Highlight by Tag works for every tag, each tree opens on its title, a local copy of the Longevity editor). Labels no longer sit on top of other technologies or lane names, and flip to the left at the screen's edge.
 - **29 October 2026:** display options (color by field, status or kind; links; labels; node size; theme; date bars, track names and eras); trend lines no longer cover the tree; life expectancy at birth and at 65 by country income group, with UN and IHME projections. Later the same day: **What it takes**, with effort figures for about 200 technologies, models of effort and of the time after prerequisites, outside-view estimates for the frontier, and world supply data and supply-risk ratings for the resources, with how much of each technology needs; color the tree by supply risk or by effort. Then: copies of the Foresight Institute tech trees and Antimortality on an [inspirations page](/apps/tech-tree/inspirations/); steps and open problems for the biggest goals, with what else they'd help with; five new steps in longevity and preservation; a way to suggest changes.
 - **28 October 2026:** tracks within each field; a detail control and a frontier view; concrete criteria, intermediate steps and alternative routes for future technologies; 34 milestones and trend lines for 23 measured series; about 200 more links, plus missing steps like carts, gears and the bicycle between the wheel and the car; faster drawing. Later the same day: forecasts from projections, surveys, markets and models drawn beside the trends; lifespan and AI benchmark series; every future window opens no sooner than it could be reached; sources checked; a detail slider from none to everything; trend lines get their own room, with compact and combined layouts; BC and AD.

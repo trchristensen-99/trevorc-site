@@ -34,6 +34,7 @@ export interface Node {
   steps?: [number, number] // checklist steps done, of all
   py?: number // log10 of the person-years it took (or has had so far)
   risk?: "low" | "moderate" | "high" | "very high" // supply risk: its own, or its riskiest resource's
+  flag?: "earlier" | "later" // the best guess is outside the pooled forecasts' middle half
 }
 
 // The text of each node, loaded after the tree is drawn.
@@ -46,6 +47,7 @@ export interface Details {
   effortCalc?: { years: number | null; people: number | null; py: number | null; work: string; rough: boolean; vsTrend?: number }
   prereqModel?: { ready: number; last: number; waited: number; q25: number; q50: number; q75: number }
   effortModel?: { spent: number; people: number; growth: number; past: number; q10: number; q50: number; q90: number }
+  pool?: Pool
   supply?: Supply
   supplyCalc?: { rp: number | null; hhi: number | null; procHhi: number | null; parts: Record<string, number>; score: number | null; rating: string; judged: boolean }
   risk?: { rating: string; resource: string }
@@ -59,6 +61,31 @@ export interface Details {
   note?: string
   sources?: Source[]
   routes?: { name: string; note?: string; requires: string[] }[]
+}
+
+// Quantiles at Models.forecasting.levels (5, 10, 25, 50, 75, 90, 95
+// percent), in years; null means never, in that source.
+export type Quantiles = (number | null)[]
+export interface PoolInput {
+  label: string
+  kind: "crowd" | "market" | "survey" | "expert" | "projection" | "target" | "model" | "trend" | "outside"
+  weight: number
+  q: Quantiles
+  url?: string
+  match?: "same" | "looser" | "stricter"
+  asof?: number | null
+  note?: string
+  year?: number // a target's own date
+}
+export interface Pool {
+  judged: Quantiles
+  pooled: Quantiles
+  flag: "earlier" | "later" | null
+  outsideOnly: boolean
+  inputs: PoolInput[]
+  sim: { outside: Quantiles; base: Quantiles; judged: Quantiles; early?: boolean }
+  cond?: { source: string; r: number; direct: number; earlyBy: number; early: number; lateAfter: number; late: number }
+  accel?: { shares: Record<string, number>; by: string[] }
 }
 
 export interface Supply {
@@ -121,7 +148,7 @@ export interface Metric {
   better: "higher" | "lower"
   log: boolean
   points: [number, number][]
-  trend: { slope: number; intercept: number; r2: number; sd: number; years: number | null; linear: boolean; from: number; to: number } | null
+  trend: { slope: number; intercept: number; r2: number; sd: number; years: number | null; linear: boolean; from: number; to: number; band?: [number, number, number][] } | null
   wright: { exponent: number; learningRate: number; r2: number; points: number } | null
   source?: Source
   license?: string
@@ -175,4 +202,15 @@ export interface Models {
   cost: { n: number; slope: number; intercept: number; sd: number; r2: number; fold: number; from: number } | null
   span: { n: number; exponent: number; intercept: number; r2: number } | null
   lag: { eras: { from: number; to: number; n: number; q25: number | null; q50: number | null; q75: number | null }[]; basis: { from: number; n: number; q25: number; q50: number; q75: number } }
+  forecasting: {
+    levels: number[]
+    weights: Record<string, number>
+    slip: number
+    slipHigh: number
+    draws: number
+    backtest: { scale: number; raw: Backtest[]; scaled: Backtest[] }
+    work: Record<string, string>
+    mechanisms: { id: string; name: string; from: string; work: string[]; speedup: Record<string, number>; ramp: number; only?: { tracks?: string[]; nodes?: string[] }; note?: string; sources?: Source[] }[]
+  }
 }
+export interface Backtest { from: number; n: number; early: number; inside: number; late: number; basis: number }

@@ -1,7 +1,7 @@
 import "./style.css"
 import { dateLabel } from "./time"
 import { DETAIL_DEFAULT, DISPLAY_DEFAULTS, EFFORT_STOPS, KIND_COLORS, RISK_COLORS, ROUTE_COLORS, SERIES_COLORS, STATUS_COLORS, TreeView, effortColor, fmtValue, kindShape, seriesOf, type Display, type Filters } from "./tree"
-import type { Details, Metric, Models, Node, ResourceUse, Source, Supply, Tree } from "./types"
+import type { Details, Metric, Models, Node, Pool, PoolInput, Quantiles, ResourceUse, Source, Supply, Tree } from "./types"
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
 const esc = (s: unknown) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!)
@@ -112,7 +112,9 @@ const SCENARIO_KIND: Record<string, string> = {
 
 // A small log-scale chart of a metric with its fitted trend carried
 // forward, and its milestones as thresholds.
+let clips = 0
 function metricChart(m: Metric, milestones: Node[], highlight?: string, title = true) {
+  const clipId = `${m.id}-${++clips}`
   const W = 300, H = 170, L = 50, B = 22, T = 8, Rr = 8
   // Log scale, or linear for steady growth. Several series share one scale.
   const f = (v: number) => (m.log ? Math.log10(v) : v)
@@ -160,6 +162,9 @@ function metricChart(m: Metric, milestones: Node[], highlight?: string, title = 
   const body = lines.map((ln, i) => {
     const c = lineColor(i)
     const tr = ln.trend
+    const band = tr?.band?.length
+      ? `<path d="${path(tr.band.map(([x, lo]) => [x, lo] as [number, number]))}${path([...tr.band].reverse().map(([x, , hi]) => [x, hi] as [number, number])).replace(/^M/, "L")}Z" fill="${c}" opacity="${many ? 0.07 : 0.12}" clip-path="url(#clip-${clipId})"/>`
+      : ""
     const trend = tr
       ? `<line x1="${px(tr.from)}" y1="${py(tr.slope * tr.from + tr.intercept)}" x2="${px(tr.to)}" y2="${py(tr.slope * tr.to + tr.intercept)}" class="fit"/>` +
         `<line x1="${px(tr.to)}" y1="${py(tr.slope * tr.to + tr.intercept)}" x2="${px(x1)}" y2="${py(tr.slope * x1 + tr.intercept)}" class="fit ext"/>`
@@ -172,7 +177,7 @@ function metricChart(m: Metric, milestones: Node[], highlight?: string, title = 
     const dots = many
       ? `<path d="${path(ln.points)}" fill="none" stroke="${c}" stroke-width="1.8"><title>${esc(ln.name)}</title></path>`
       : ln.points.map(([x, y]) => `<circle cx="${px(x)}" cy="${py(f(y))}" r="2.4"><title>${Math.round(x)}: ${esc(fmtValue(y, m.unit))}</title></circle>`).join("")
-    return scen + trend + dots
+    return band + scen + trend + dots
   }).join("")
   const marks = milestones.map((n) => {
     const v = f(n.threshold!.value)
@@ -184,7 +189,7 @@ function metricChart(m: Metric, milestones: Node[], highlight?: string, title = 
     : `${tr.slope < 0 ? "halves" : "doubles"} about every ${tr.years!.toFixed(1)} years (r² ${tr.r2.toFixed(2)})`
   const cap = (x: string) => x.charAt(0).toUpperCase() + x.slice(1)
   const wright = m.wright ? `; falls ${(m.wright.learningRate * 100).toFixed(0)}% each time cumulative production doubles` : ""
-  const key = `${lines.some((ln) => ln.trend) ? " Dashed: the trend carried forward." : ""}${allScen.length ? ` ${many ? "Patterned" : "Dotted"}: forecasts.` : ""}${milestones.length ? " Lines across: milestones." : ""}`
+  const key = `${lines.some((ln) => ln.trend) ? ` Dashed: the trend carried forward${lines.some((ln) => ln.trend?.band) ? "; shaded: where it could be (80 percent) if it moves like its own past, a random walk around the trend from the latest point" : ""}.` : ""}${allScen.length ? ` ${many ? "Patterned" : "Dotted"}: forecasts.` : ""}${milestones.length ? " Lines across: milestones." : ""}`
   const rates = many
     ? `<ul class="series">${lines.map((ln, i) => `<li><span class="sw" style="background:${lineColor(i)}"></span><div><strong>${esc(ln.name)}</strong>: ${rateOf(ln.trend)}${ln.points.length ? `; ${esc(fmtValue(ln.points.at(-1)![1], m.unit))} in ${Math.round(ln.points.at(-1)![0])}` : ""}</div></li>`).join("")}</ul><p class="rate">${key.trim()}</p>`
     : `<p class="rate">${cap(rateOf(lines[0].trend))}${wright}.${key}</p>`
@@ -192,7 +197,7 @@ function metricChart(m: Metric, milestones: Node[], highlight?: string, title = 
     ? `${many ? `<p class="kind">${esc(ln.name)}</p>` : ""}<ul class="scenarios">${ln.scenarios.map((sc, j) => `<li>${many ? `<svg width="18" height="8"><line x1="0" x2="18" y1="4" y2="4" stroke="${scenColor(i, j)}" stroke-width="2" stroke-dasharray="${DASHES[j % DASHES.length]}"/></svg>` : `<span class="sw" style="background:${scenColor(i, j)}"></span>`}<div><strong>${esc(sc.name)}</strong> <span class="tag">${esc(SCENARIO_KIND[sc.kind] ?? sc.kind)}</span>${sc.note ? `<br><span class="note">${esc(sc.note)}</span>` : ""}${sc.sources?.length ? `<br><span class="note">${sc.sources.map((x) => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>`).join("; ")}</span>` : ""}</div></li>`).join("")}</ul>`
     : "").join("")
   return `${title ? `<h3>${esc(m.name)}</h3>` : ""}
-    <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.name)}">${grid.join("")}${xt.join("")}${marks}${body}</svg>
+    <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(m.name)}"><clipPath id="clip-${clipId}"><rect x="${L}" y="${T}" width="${W - L - Rr}" height="${H - T - B}"/></clipPath>${grid.join("")}${xt.join("")}${marks}${body}</svg>
     ${rates}
     ${scenList ? `<details class="forecasts"${many ? "" : " open"}><summary>Forecasts</summary>${scenList}</details>` : ""}
     ${m.note ? `<p class="note">${esc(m.note)}</p>` : ""}
@@ -218,6 +223,7 @@ async function main() {
   const now = tree.meta.now
   const fieldColor = new Map(tree.fields.map((f) => [f.id, f.color]))
   const fieldName = (id: string) => tree.fields.find((f) => f.id === id)?.name ?? id
+  const trackName = (id: string) => `the ${(tree.lanes.flatMap((l) => l.tracks).find((t) => t.id === id)?.name ?? id).toLowerCase()} track`
 
   const techCount = tree.nodes.filter((n) => n.kind !== "resource" && n.kind !== "precondition").length
   $("#counts").textContent = `${techCount} technologies, ${tree.edges.filter((e) => e.kind === "requires").length} links`
@@ -451,14 +457,75 @@ async function main() {
     return `<h3>${open ? "What it has taken so far" : "What it took"}</h3>${tags.length ? `<p class="note">${tags.map((t) => `<span class="tag">${t}</span>`).join(" ")}</p>` : ""}${rows ? `<dl>${rows}</dl>` : ""}${e.note ? `<p class="note">${esc(e.note)}</p>` : ""}`
   }
 
-  // Estimates from the tree's own history, beside the judgment above.
-  const outsideView = (n: Node, d: Details) => {
-    const em = d.effortModel, pm = d.prereqModel
-    if (!em && !pm) return ""
-    const rows: string[] = []
-    if (em) rows.push(`<dt>From effort</dt><dd>${yr(em.q50)} <span class="note">(80%: ${range(em.q10, em.q90)})</span><br><span class="note">If it needs as much work as breakthroughs typically do, given that ${sig(em.spent)} person-years haven't been enough, at ${sig(em.people)} people${em.growth ? `, growing ${Math.round(em.growth * 100)}% a year` : ""}${pm && pm.ready > now + 0.5 ? `, and not before its prerequisites (${yr(pm.ready)})` : ""}.</span></dd>`)
-    if (pm) rows.push(`<dt>From prerequisites</dt><dd>${yr(pm.q50)} <span class="note">(middle half: ${range(pm.q25, pm.q75)})</span><br><span class="note">${pm.last > now + 0.5 ? `Its prerequisites should be in place by ${yr(pm.last)}` : `Its prerequisites were in place by ${yr(pm.last)}`}; since 1950, technologies came a median ${Math.round(models.lag.basis.q50)} years after their last prerequisite${pm.waited >= 1 ? `, and longer for those that had already waited ${Math.round(pm.waited)} years` : ""}.</span></dd>`)
-    return `<h3>Outside view</h3><dl>${rows.join("")}</dl>`
+  // Every source's forecast beside the judgment: a row each, on a scale of
+  // log years from now, with the pool and the tree simulated from the
+  // judgment. Quantiles are at 5, 10, 25, 50, 75, 90 and 95 percent.
+  const KIND_NAME: Record<PoolInput["kind"], string> = {
+    crowd: "forecasters", market: "market", survey: "expert survey", expert: "expert", projection: "official projection",
+    target: "announced target", model: "model", trend: "trend", outside: "base rates",
+  }
+  const Q = (q: Quantiles, i: number) => q[i] ?? Infinity
+  const forecastChart = (rows: { label: string; q: Quantiles; cls: string; tip?: string }[]) => {
+    const W = 312, L = 4, R = 8, ROW = 24, T = 16
+    const ends = rows.flatMap((r) => [Q(r.q, 1), Q(r.q, 5)]).filter(Number.isFinite)
+    const end = Math.min(2300, Math.max(now + 12, ...ends) + 2)
+    const xs = (y: number) => Math.log(1 + Math.max(0, Math.min(y, end) - now))
+    const px = (y: number) => L + (xs(y) / xs(end)) * (W - L - R)
+    const H = T + rows.length * ROW + 4
+    const ticks = [2030, 2040, 2050, 2075, 2100, 2150, 2200, 2300].filter((y) => y < end - 2 && y > now + 1)
+    const tick = ticks.map((y) => `<line x1="${px(y)}" x2="${px(y)}" y1="${T - 4}" y2="${H}" class="grid"/><text x="${px(y)}" y="${T - 6}" class="xlab">${y}</text>`).join("")
+    const body = rows.map((r, i) => {
+      const y = T + i * ROW + 15
+      const lo = Q(r.q, 1), q25 = Q(r.q, 2), med = Q(r.q, 3), q75 = Q(r.q, 4), hi = Q(r.q, 5)
+      const never = (v: number) => !Number.isFinite(v)
+      const arrow = never(hi) ? `<path d="M${W - R - 5},${y - 3}L${W - R},${y}L${W - R - 5},${y + 3}" class="arrow"/>` : ""
+      return `<g class="${r.cls}"><title>${esc(r.tip ?? r.label)}</title><text x="${L}" y="${y - 7}" class="rowlab">${esc(r.label.length > 58 ? r.label.slice(0, 56) + "…" : r.label)}</text>` +
+        (never(lo) ? `<text x="${W - R}" y="${y + 3}" class="never">not in this source</text>` :
+        `<line x1="${px(lo)}" x2="${px(hi)}" y1="${y}" y2="${y}" class="whisker"/>${arrow}` +
+        (never(q25) ? "" : `<rect x="${px(q25)}" y="${y - 3.5}" width="${Math.max(2, px(q75) - px(q25))}" height="7" rx="2" class="box"/>`) +
+        (never(med) ? "" : `<circle cx="${px(med)}" cy="${y}" r="3" class="med"/>`)) + "</g>"
+    }).join("")
+    return `<svg class="chart fc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Forecasts compared">${tick}${body}</svg>`
+  }
+  const when = (v: number | null | undefined) => (v == null || !Number.isFinite(v) ? "never, in this source" : v > 2300 ? "after 2300" : yr(v))
+  const middle = (q: Quantiles) => `${when(q[3])} <span class="note">(middle half ${q[2] == null ? "?" : yr(q[2])} to ${when(q[4])})</span>`
+  const SHARE_WORD = (w: string) => models.forecasting.work[w] ?? w
+  const forecastsHTML = (n: Node, d: Details) => {
+    const p = d.pool, em = d.effortModel
+    if (!p) return ""
+    const inputs = [...p.inputs].sort((a, b) => b.weight - a.weight)
+    const rows = [
+      { label: "This tree's judgment", q: p.judged, cls: "row judged" },
+      { label: `Pooled from ${inputs.length} source${inputs.length === 1 ? "" : "s"} below`, q: p.pooled, cls: "row pooled" },
+      ...inputs.map((i) => ({ label: i.kind === "outside" ? i.label : `${i.label} (${KIND_NAME[i.kind]})`, q: i.q, cls: `row input k-${i.kind}`, tip: `${i.label}, weight ${i.weight}` })),
+      { label: "The judgment, with what it needs varying", q: p.sim.judged, cls: "row sim" },
+      ...(p.accel ? [{ label: "Base rates alone, without AI speedups (not pooled)", q: p.sim.base, cls: "row base" }] : []),
+    ]
+    const flag = p.flag
+      ? `<p class="flagnote">The tree's best guess, ${yr(n.at)}, is ${p.flag} than the pool's middle half${p.outsideOnly ? ", but the only other source is the base rate, which can't see how far along it is" : ""}.</p>`
+      : ""
+    const shift = (p.sim.judged[3] ?? 0) - n.at
+    const simNote = Math.abs(shift) >= 2
+      ? ` With the uncertainty in what it needs (and in the AI milestones that would speed it up), the judgment's own logic puts it ${Math.round(Math.abs(shift))} years ${shift > 0 ? "later" : "earlier"}, around ${yr(p.sim.judged[3]!)}${p.sim.early ? "; its best guess comes before the likely dates of what it needs" : ""}.`
+      : p.sim.early ? " Its best guess comes before the likely dates of what it needs." : ""
+    const c = p.cond
+    const condNote = c
+      ? `<p>It moves with ${link(c.source)}: in the runs where that comes by ${yr(c.earlyBy)} (the earliest third), it comes around ${yr(c.early)}; where it comes after ${yr(c.lateAfter)} (the latest third), around ${yr(c.late)}.</p>`
+      : ""
+    const accel = p.accel
+      ? `<p class="note">What's left, by kind of work: ${Object.entries(p.accel.shares).sort((a, b) => b[1] - a[1]).map(([w, v]) => `${SHARE_WORD(w)} ${Math.round(v * 100)}%`).join(", ")}. Sped up by ${p.accel.by.map((id) => { const m = models.forecasting.mechanisms.find((x) => x.id === id); return m ? `${esc(m.name)} (${link(m.from)})` : esc(id) }).join(", ")}.</p>`
+      : ""
+    const list = inputs.filter((i) => i.kind !== "outside").map((i) => {
+      const meta = [KIND_NAME[i.kind], i.asof ? `as of ${Math.floor(i.asof)}` : "", i.match && i.match !== "same" ? `${i.match} question` : "", `weight ${i.weight}`].filter(Boolean).join(", ")
+      const what = i.kind === "target" ? `target ${yr(i.year!)}, read as ${when(i.q[3])}` : `${when(i.q[3])}${i.q[2] != null && i.q[4] != null ? ` (middle half ${yr(i.q[2])} to ${when(i.q[4])})` : ""}`
+      return `<li>${i.url ? `<a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.label)}</a>` : esc(i.label)}: ${what} <span class="note">${esc(meta)}</span>${i.note ? `<br><span class="note">${esc(i.note)}</span>` : ""}</li>`
+    }).join("")
+    const effort = em ? `<p class="note">From effort alone: ${yr(em.q50)} (80%: ${range(em.q10, em.q90)}), if it needs as much work as breakthroughs typically do, given that ${sig(em.spent)} person-years haven't been enough, at ${sig(em.people)} people${em.growth ? ` growing ${Math.round(em.growth * 100)}% a year` : ""}.</p>` : ""
+    return `<h3>Forecasts compared</h3>
+      <dl><dt>Pooled</dt><dd>${middle(p.pooled)}</dd></dl>${flag}
+      ${forecastChart(rows)}
+      <p class="note">Dots are medians, boxes the middle half, lines 10 to 90 percent; the scale is log years from now. The pool weights each source's quantiles by its kind, its horizon, its age and how well its question matches (What it takes explains).${simNote}</p>
+      ${condNote}${accel}${list ? `<ul class="fclist">${list}</ul>` : ""}${effort}`
   }
 
   // A technology's resources, with how much it needs and the supply risk.
@@ -558,9 +625,10 @@ async function main() {
       (d.note ? `<p class="note">${esc(d.note)}</p>` : "") +
       routes + checklistHTML(d) +
       (d.alsoHelps?.length ? `<h3>Would also help with</h3><p>${d.alsoHelps.map(esc).join(", ")}</p>` : "") +
-      efforts + effort + outsideView(n, d) +
+      efforts + effort +
       (n.kind === "resource" ? supplyHTML(d) : "") +
       (d.forecast?.note ? `<h3>Forecast</h3><p>${esc(d.forecast.note)}</p>${sourcesHTML(d.forecast.sources, "Forecast sources")}` : "") +
+      forecastsHTML(n, d) +
       (m ? metricChart(m, milestonesOf(m), n.id) : "") +
       (needs.length ? `<h3>${routes ? "Needs on every route" : "Needs"}</h3><p>${linkList(needs)}</p>` : "") +
       (uses.length ? resourcesHTML(uses, d.resourceUse ?? []) : "") +
@@ -607,7 +675,9 @@ async function main() {
       <p>Technologies not yet achieved, by field, with their likely windows and the groups working on them. Tick <em>Always show the frontier</em> to see them all on the tree.</p>` +
       groups.map(({ f, list }) => `<h3><span class="sw" style="background:${f.color}"></span>${esc(f.name)}</h3><ul class="frontier">${list.map((n) => {
         const efforts = d[n.id]?.efforts ?? []
-        return `<li>${link(n.id)} <span class="note">${esc(dateLabel(n.from, n.to, n.at, now, true))}${n.steps ? `; ${n.steps[0]} of ${n.steps[1]} steps done` : ""}</span>${efforts.length ? `<br><span class="note">${efforts.map((x) => esc(x.who)).slice(0, 5).join(" · ")}${efforts.length > 5 ? " …" : ""}</span>` : ""}</li>`
+        const p = d[n.id]?.pool
+        const flag = n.flag && p && !p.outsideOnly ? ` <span class="tag flag">outside forecasts: ${n.flag === "earlier" ? "later" : "sooner"}</span>` : ""
+        return `<li>${link(n.id)} <span class="note">${esc(dateLabel(n.from, n.to, n.at, now, true))}${n.steps ? `; ${n.steps[0]} of ${n.steps[1]} steps done` : ""}</span>${flag}${efforts.length ? `<br><span class="note">${efforts.map((x) => esc(x.who)).slice(0, 5).join(" · ")}${efforts.length > 5 ? " …" : ""}</span>` : ""}</li>`
       }).join("")}</ul>`).join(""), "frontier")
   })
 
@@ -657,11 +727,18 @@ async function main() {
         <p class="note">This matches Bloom, Jones, Van Reenen and Webb (2020), who found that research effort per unit of progress keeps rising (Moore's law takes 18 times the researchers it did in 1971), though a list of famous successes can't say what failed. Whose effort counts is a judgment: the core team, not the trial volunteers or the users.</p>`
       : ""
     const lagRows = lag.eras.filter((e) => e.n).map((e) => `<tr><td>${e.from < 0 ? "Before 1500" : e.to >= now - 1 ? `Since ${e.from}` : `${e.from} to ${e.to}`}</td><td>${e.n}</td><td>${Math.round(e.q50!)}</td><td>${Math.round(e.q25!)} to ${Math.round(e.q75!)}</td></tr>`).join("")
-    const open = tree.nodes.filter((n) => (n.status === "ongoing" || n.status === "speculative") && (d[n.id]?.effortModel || (d[n.id]?.prereqModel && n.tier <= 2))).sort((a, b) => a.at - b.at)
-    const est = open.map((n) => {
-      const em = d[n.id].effortModel, pm = d[n.id].prereqModel
-      return `<tr><td>${link(n.id)}</td><td>${yr(n.at)}</td><td>${em ? `${yr(em.q50)}<span class="note"><br>${range(em.q10, em.q90)}</span>` : ""}</td><td>${pm ? `${yr(pm.q50)}<span class="note"><br>${range(pm.q25, pm.q75)}</span>` : ""}</td></tr>`
-    }).join("")
+    const fcm = models.forecasting
+    const pooledOf = (n: Node) => d[n.id]?.pool
+    const flagged = tree.nodes.filter((n) => n.flag && pooledOf(n)).map((n) => {
+      const p = pooledOf(n)!
+      const gap = Math.log(1 + Math.max(0, n.at - now)) - Math.log(1 + Math.max(0, Math.min(2300, p.pooled[3] ?? 2300) - now))
+      return { n, p, gap }
+    }).sort((a, b) => Number(a.p.outsideOnly) - Number(b.p.outsideOnly) || Math.abs(b.gap) - Math.abs(a.gap))
+    const est = flagged.map(({ n, p }) => `<tr><td>${link(n.id)}${p.outsideOnly ? ' <span class="tag">base rates only</span>' : ""}</td><td>${yr(n.at)}</td><td>${when(p.pooled[3])}<span class="note"><br>${p.pooled[2] == null ? "" : yr(p.pooled[2])} to ${when(p.pooled[4])}</span></td></tr>`).join("")
+    const bt = (rows: typeof fcm.backtest.raw) => rows.map((r) => `<tr><td>${r.from}</td><td>${r.n}</td><td>${r.early}</td><td>${r.inside}</td><td>${r.late}</td></tr>`).join("")
+    const cap1 = (x: string) => x.charAt(0).toUpperCase() + x.slice(1)
+    const wt = Object.entries(fcm.weights).map(([k, v]) => `<tr><td>${esc(cap1(KIND_NAME[k as PoolInput["kind"]] ?? k))}</td><td>${v}</td></tr>`).join("")
+    const mech = fcm.mechanisms.map((m) => `<tr><td>${esc(m.name)}<br><span class="note">from ${link(m.from)}</span></td><td>${Object.entries(m.speedup).map(([w, k]) => `${esc(SHARE_WORD(w))} ×${k}`).join(", ")}<br><span class="note">over ${m.ramp} year${m.ramp === 1 ? "" : "s"}${m.only ? `; only ${[...(m.only.tracks ?? []).map((t) => trackName(t)), ...(m.only.nodes ?? []).map((id) => byId.get(id)?.name ?? id)].map(esc).join(", ")}` : ""}</span></td></tr>`).join("")
     const res = tree.nodes.filter((n) => n.kind === "resource" && d[n.id]?.supplyCalc).sort((a, b) => ["very high", "high", "moderate", "low"].indexOf(a.risk!) - ["very high", "high", "moderate", "low"].indexOf(b.risk!) || (d[b.id].supplyCalc!.score ?? 0) - (d[a.id].supplyCalc!.score ?? 0))
     const resRows = res.map((n) => {
       const s = d[n.id].supply!, c = d[n.id].supplyCalc!
@@ -675,10 +752,24 @@ async function main() {
       <p>How many years after its last prerequisite each technology came. The wait has shrunk from centuries to about a decade; since 1950 the median is ${Math.round(lag.basis.q50)} years (middle half ${Math.round(lag.basis.q25)} to ${Math.round(lag.basis.q75)}).</p>
       <table class="t"><thead><tr><th>Achieved</th><th>n</th><th>Median</th><th>Middle half</th></tr></thead><tbody>${lagRows}</tbody></table>
       <p class="note">Lags are measured to the latest direct prerequisite that is a technology, so missing links make lags look longer than they were.</p>
-      <h3>The frontier, from the outside</h3>
-      <p>For what isn't done yet, two estimates that ignore everything except the tree's history. <strong>From effort:</strong> treat the work a breakthrough needs as uncertain in the way past ones were; something that has absorbed a lot of work without success probably needs more still; divide what's left by the people on it now. <strong>From prerequisites:</strong> add the gaps seen since 1950 to when its prerequisites are in place. Both are crude, and the effort figures for future work are rough, but where they disagree with the tree's window, one of them is worth a second look.</p>
-      <table class="t est"><thead><tr><th></th><th>Tree</th><th>From effort</th><th>From prereqs</th></tr></thead><tbody>${est}</tbody></table>
-      <p class="note">Medians, with 80% ranges (effort) and middle halves (prerequisites). Shown for everything with effort figures and the major (tier 1 and 2) technologies; each technology's panel has both.</p>
+      <h3>Forecasts and the pool</h3>
+      <p>Each future technology's window is my judgment, and it stays the tree's date. Beside it, every other source becomes a range of years: forecasters, markets and surveys that asked about it, official projections, companies' own targets, the trend of its metric, and the tree simulated from base rates. The pool averages their quantiles, on a scale of log years from now, with these weights:</p>
+      <table class="t"><thead><tr><th>Source</th><th>Weight</th></tr></thead><tbody>${wt}</tbody></table>
+      <p class="note">Forecasters, markets, surveys and single experts count two thirds as much beyond 10 years and half beyond 25, since nobody has a track record that far out; half as much again if the figure is over two years old, or if their question is looser or stricter than the criterion. A trend counts in proportion to how well it fits (r²), and less when carried further than half its record. Announced targets slip: one set in year A for year T is read as a median of A + ${fcm.slip} × (T − A), with T itself at the 10th percentile, a judgment from the record (only 8.5 percent of 16,000 projects in Flyvbjerg's data met budget and schedule; air taxi and robotaxi launch dates have slipped two to three years and more). Simple fixed weights are deliberate: in studies of combining forecasts, they are hard to beat with fitted ones.</p>
+      <p><strong>Trends</strong> are carried forward as a random walk around the trend from the latest point, so their range widens with the horizon, both from the year-to-year noise and from uncertainty in the trend itself (the method Farmer and Lafond tested on 53 technologies in 2016). A milestone whose data has fallen behind its own trend line, like fusion's triple product, doesn't use the trend at all.</p>
+      <p><strong>The simulation</strong> runs the whole frontier ${fcm.draws.toLocaleString("en-US")} times. Each technology comes some time after the last thing it needs on its quickest route, so uncertainty flows downstream. From base rates, that time is drawn from the gaps seen since 1950, at least as long as it has already waited, and scaled by ${fcm.backtest.scale.toFixed(2)}, the factor that makes the base rate pass the test below. From the judgment, each window, with what it needs and the AI milestones at their likely dates, tells how much work it stands for; then everything varies together, which shows how a later AGI or a slow prerequisite would move it.</p>
+      <p><strong>Testing the base rate.</strong> Pretend it's an earlier year: for everything whose prerequisites were in place but that wasn't done yet, predict from the gaps seen in the 50 years before, and see where it actually came (still undone counts as late once the prediction's upper quartile has passed). Raw, the base rate was much too slow:</p>
+      <table class="t"><thead><tr><th>As of</th><th>n</th><th>Earlier</th><th>Middle half</th><th>Later</th></tr></thead><tbody>${bt(fcm.backtest.raw)}</tbody></table>
+      <p>Scaled by ${fcm.backtest.scale.toFixed(2)}, early and late balance overall:</p>
+      <table class="t"><thead><tr><th>As of</th><th>n</th><th>Earlier</th><th>Middle half</th><th>Later</th></tr></thead><tbody>${bt(fcm.backtest.scaled)}</tbody></table>
+      <p class="note">The tree holds mostly what was achieved, not the many things tried and abandoned, which makes history look faster than it was; the scaling inherits that bias.</p>
+      <h3>How AI would speed up the rest</h3>
+      <p>Each technology's remaining work is split into kinds (AI research itself; software; design, theory and simulation on computers; lab, field and test-flight experiments; clinical trials, certification and regulatory review; building and scaling up; adoption, financing and changing institutions), by its track or on its own. Once an AI milestone arrives, and over its ramp, the kinds it helps go faster; by Amdahl's law the rest goes no faster, so a therapy that is mostly clinical trials gains little from faster design. Multipliers are my judgment, anchored on what has been measured so far, which is mostly coding; each technology's panel shows its split and how much it moves with the AI milestones.</p>
+      <table class="t"><thead><tr><th>Mechanism</th><th>Speeds up</th></tr></thead><tbody>${mech}</tbody></table>
+      <details class="forecasts"><summary>Why these multipliers</summary>${fcm.mechanisms.map((m) => `<p><strong>${esc(m.name)}.</strong> ${esc(m.note ?? "")}${m.sources?.length ? ` <span class="note">${m.sources.map((x) => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>`).join("; ")}</span>` : ""}</p>`).join("")}</details>
+      <h3>Where the judgment and the pool disagree</h3>
+      <p>Technologies whose best guess falls outside the pool's middle half, the biggest gaps first; those with outside forecasts come before those where only the base rate disagrees. Each is worth a second look, or a sentence in its forecast saying why it differs.</p>
+      <table class="t est"><thead><tr><th></th><th>Tree</th><th>Pool</th></tr></thead><tbody>${est}</tbody></table>
       <h3>Resources by supply risk</h3>
       <p>A score from 0 to 1 for each resource: how concentrated its mining or processing is among countries (45%), its reserves against production (20%), how little is recycled (15%), and how fast demand is growing to 2040 (20%), averaged over the parts that are known. A technology takes the rating of the riskiest resource it uses; color the tree by supply risk under Display to see them.</p>
       <table class="t"><thead><tr><th></th><th>Risk</th><th>Leading country</th><th>Years of reserves</th></tr></thead><tbody>${resRows}</tbody></table>

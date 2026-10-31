@@ -1,0 +1,80 @@
+# First versus everyday (see nodes/o-scale.yaml): the robotaxi, quantum and
+# air taxi nodes, made specific. 2026-10-30.
+
+- id: robotaxis-at-scale
+  name: Robotaxis in everyday use
+  summary: >-
+    Driverless taxis as an ordinary way to get around, not a novelty in a
+    few cities. Waymo reached about 500,000 paid rides a week in 2026, under
+    1 percent of US ride-hail trips; Tesla removed safety monitors in
+    several Texas and Florida cities, and Baidu, Pony.ai and WeRide run
+    driverless fleets in China and the Gulf.
+  requires: [waymo-million-rides]
+  criterion: >-
+    Robotaxis with no safety driver or monitor on board carry at least 10
+    percent of ride-hail trips in the United States or in China over a
+    year.
+  forecast:
+    note: >-
+      Waymo's 500,000 rides a week in March 2026 were about 0.65 percent of
+      US ride-hail trips (Uber and Lyft give roughly 75 million a week), and
+      its growth slowed from about four times a year in 2024 to about twice
+      a year. Goldman Sachs expects about 8 percent of US rideshare by 2030
+      and JPMorgan 7 percent for Waymo alone; in China, Goldman expects
+      robotaxis to be 36 percent of ride-share vehicles by 2035, but
+      regulators froze new permits in 2026 after a mass stall in Wuhan. Ten
+      percent needs about four more doublings, plus cheaper vehicles and
+      approval in many more states and cities; self-driving dates have
+      slipped for a decade. Judgment: early 2030s.
+    sources:
+      - title: Goldman Sachs, autonomous vehicle market forecast
+        url: https://www.goldmansachs.com/insights/articles/autonomous-vehicle-market-forecast-to-grow-ridesharing-presence
+      - title: Goldman Sachs resets China robotaxi forecast (April 2026)
+        url: https://finance.yahoo.com/markets/stocks/articles/goldman-sachs-resets-china-robotaxi-191300539.html
+      - title: Sherwood News, Waymo serving more than 500,000 paid robotaxi rides every week (March 2026)
+        url: https://www.sherwood.news/tech/waymos-now-serving-more-than-500-000-paid-robotaxi-rides-every-week/
+      - title: CarExpert, China suspends robotaxi permits after mass outage
+        url: https://www.carexpert.com.au/car-news/china-suspends-robotaxi-permits-after-mass-outage
+
+- id: personal-self-driving-cars
+  requires: [autonomous-vehicles]
+  helped_by: [waymo-million-rides, robotaxis-at-scale]
+
+- id: useful-quantum-advantage
+  name: First useful quantum advantage
+  criterion: >-
+    A quantum computer solves a problem of scientific or commercial value
+    (not a benchmark designed to show off quantum hardware) faster, more
+    cheaply or more accurately than the best known classical method, and the
+    claim survives at least a year of attempts to match it classically. A
+    first scientific result, not yet a product (see quantum computing in
+    business use).
+  forecast:
+    note: >-
+      Google reported a verifiable advantage in October 2025 (an echo
+      measurement on its Willow chip, about 13,000 times faster than
+      classical), but it measures a quantity of interest mainly for testing
+      quantum hardware, and its molecule application was a proof of
+      principle. IBM and partners claimed advantage in chemistry in April
+      and July 2026; critics note that stronger classical methods (DMRG)
+      were not beaten and classical estimates disagree, and one tracker
+      candidate has already been simulated classically. IBM had predicted
+      the first advantages by the end of 2026. A claim made in mid 2026 can
+      complete its year of scrutiny in mid 2027 at the soonest, and most
+      earlier claims fell within months. Judgment: late 2027.
+    sources:
+      - title: Google Research, A verifiable quantum advantage (October 2025)
+        url: https://research.google/blog/a-verifiable-quantum-advantage/
+      - title: IBM and Algorithmiq demonstrate quantum advantage (July 2026)
+        url: https://newsroom.ibm.com/2026-07-30-ibm-and-algorithmiq-demonstrate-quantum-advantage,-establishing-a-framework-for-trusted-quantum-computation-beyond-classical-verification
+      - title: PostQuantum, IBM's 2026 quantum advantage claim with Fugaku
+        url: https://postquantum.com/quantum-research/ibm-quantum-advantage-2026-heron-fugaku/
+      - title: Classical simulation of peaked circuits (arXiv 2604.21908)
+        url: https://arxiv.org/pdf/2604.21908
+
+- id: electric-aviation
+  name: First certified air taxi service
+  criterion: >-
+    Electric air taxis with an FAA or EASA type certificate carry paying
+    passengers on regular service in at least one US or European city. A
+    first service, not yet everyday use (see air taxis in everyday use).

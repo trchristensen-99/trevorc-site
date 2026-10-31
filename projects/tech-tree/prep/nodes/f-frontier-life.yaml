@@ -420,9 +420,9 @@
   forecast:
     note: >-
       Metaculus' question on this (life expectancy rising a year per year)
-      has had community medians between about 2050 and 2060 in recent
-      snapshots, with an interquartile range from about 2039 to after 2180;
-      I could not read the live value. Life expectancy gains in rich
+      had a community median of about 2054 in November 2025, with an upper
+      quartile of 2135 (earlier snapshots put the median between 2050 and
+      2060). Life expectancy gains in rich
       countries slowed after 2010. Measured at age 60, this needs a
       rejuvenation therapy that is widely used, not just approved, so I put
       it about a decade after rejuvenation therapies, around 2070, and well

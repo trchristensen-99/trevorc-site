@@ -1,0 +1,221 @@
+# How AI milestones would speed up the rest of the frontier. See SCHEMA.md,
+# "Acceleration". Each technology's remaining work is split into kinds;
+# once a milestone arrives (and over its ramp), the kinds it helps go
+# faster, and by Amdahl's law the rest goes no faster, so a technology
+# that is mostly clinical trials gains little from faster design.
+#
+# The multipliers are my judgment, anchored on the sources given; most
+# measurements so far are of coding, and the further from software, the
+# thinner the evidence. Status as of 2026-10-30.
+
+work:                 # short names; what each covers is in the comment
+  ai-research: AI research          # AI research and engineering itself
+  software: software                # writing and testing software
+  design: design and analysis       # design, theory, simulation and analysis on computers
+  experiments: experiments          # lab, field and test-flight experiments
+  trials: trials and approval       # clinical trials, certification and regulatory review
+  building: building                # building, manufacturing and scaling up
+  adoption: adoption                # adoption, financing and changing institutions
+
+mechanisms:
+  - id: automated-coding
+    name: Automated coding
+    from: superhuman-coder
+    speedup: { software: 10, ai-research: 5 }
+    ramp: 1
+    note: >-
+      AI 2027's takeoff model put AI research progress at 5 times its human
+      pace with a superhuman coder, and its authors' 2026 model puts coding
+      uplift then at 20 to 32 times. Measured gains so far are far smaller:
+      METR's 2025 trial found experienced developers 19 percent slower with
+      AI, and its 2026 rerun about 18 percent faster, though it calls that
+      unreliable. 10 times for software, once coders are fully automated,
+      sits between.
+    sources:
+      - title: AI Futures Project, AI 2027 takeoff forecast
+        url: https://ai-2027.com/research/takeoff-forecast
+      - title: AI Futures Project, Q2.5 2026 timelines update
+        url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+      - title: METR, Measuring the impact of early-2025 AI on experienced open-source developer productivity
+        url: https://arxiv.org/pdf/2507.09089
+      - title: METR, uplift update (February 2026)
+        url: https://metr.org/blog/2026-02-24-uplift-update/
+
+  - id: automated-ai-research
+    name: Automated AI research
+    from: automated-ai-research
+    speedup: { ai-research: 25 }
+    ramp: 1
+    note: >-
+      AI 2027's figure for a superhuman AI researcher: AI research 25 times
+      its human pace. It speeds AI itself; its effect on other fields comes
+      through the AI milestones it brings sooner.
+    sources:
+      - title: AI Futures Project, AI 2027 takeoff forecast
+        url: https://ai-2027.com/research/takeoff-forecast
+
+  - id: ai-science
+    name: AI-led science
+    from: ai-autonomous-science
+    speedup: { design: 2.5 }
+    ramp: 2
+    note: >-
+      AI that makes discoveries on its own speeds the design and analysis
+      side of research. Insilico reports 12 to 18 months from target to drug
+      candidate against an industry 2.5 to 4 years, about 2 to 3 times, and
+      beta users said one run of Edison's Kosmos did about six months of
+      their work, though only 58 percent of its interpretations held up.
+    sources:
+      - title: Insilico Medicine, timelines to developmental candidate
+        url: https://www.eurekalert.org/news-releases/1073344
+      - title: Edison Scientific, Announcing Kosmos
+        url: https://edisonscientific.com/articles/announcing-kosmos
+
+  - id: lab-robots
+    name: Automated experiments
+    from: general-purpose-robots
+    speedup: { experiments: 3, building: 1.5 }
+    ramp: 4
+    note: >-
+      Robots that can run lab work and build things let experiments run day
+      and night at scale. Across published self-driving lab studies, the
+      median cut in experiments needed to reach a target was 6 times; each
+      experiment still takes as long as its chemistry or biology does, so
+      the calendar gain is smaller. Building gains more slowly, as robots
+      have to be made and deployed first.
+    sources:
+      - title: Benchmarking self-driving labs (arXiv 2508.06642)
+        url: https://arxiv.org/pdf/2508.06642
+      - title: Szymanski et al., An autonomous laboratory for the accelerated synthesis of novel materials (A-Lab), Nature 2023
+        url: https://pmc.ncbi.nlm.nih.gov/articles/PMC10700133
+
+  - id: agi
+    name: General AI
+    from: agi
+    speedup: { software: 30, ai-research: 25, design: 8, experiments: 1.5, trials: 1.2, building: 1.3, adoption: 1.1 }
+    ramp: 3
+    note: >-
+      AI that can do any computer-based job speeds everything that happens on
+      a computer and a little of what doesn't: better-designed experiments
+      and trials fail less often (AI-discovered drugs have passed phase 1 at
+      75 to 90 percent against about 52 percent, but phase 2 at about the
+      usual rate), and planning and paperwork speed up building and
+      approvals. Economists who model this expect what can't be automated to
+      set the pace (Aghion, Jones and Jones). The ramp is for it to be
+      deployed and trusted.
+    sources:
+      - title: Jayatunga et al. 2024, How successful are AI-discovered drugs in clinical trials?
+        url: https://www.htworld.co.uk/news/ai/ai-discovered-drugs-achieved-higher-success-rate-than-those-by-humans-study/
+      - title: BIO, Clinical Development Success Rates 2011 to 2020
+        url: https://go.bio.org/rs/490-EHZ-999/images/ClinicalDevelopmentSuccessRates2011_2020.pdf
+      - title: Aghion, Jones and Jones, Artificial Intelligence and Economic Growth (NBER w23928)
+        url: https://www.nber.org/system/files/working_papers/w23928/w23928.pdf
+
+  - id: superintelligence
+    name: Superintelligence
+    from: artificial-superintelligence
+    speedup: { software: 100, ai-research: 250, design: 50, experiments: 5, trials: 2, building: 3, adoption: 1.3 }
+    ramp: 3
+    note: >-
+      Pure speculation beyond the AI 2027 figure of 250 times for AI research
+      with a superintelligent AI researcher. Physical experiments still take
+      as long as they take, trials need people to live through them, and
+      building needs materials and energy, so these stay far slower than
+      thought.
+    sources:
+      - title: AI Futures Project, AI 2027 takeoff forecast
+        url: https://ai-2027.com/research/takeoff-forecast
+
+  # Not only AI: some future technologies speed up others in their field.
+  - id: biomarker-trials
+    name: Shorter aging trials
+    from: aging-biomarker-endpoint
+    speedup: { trials: 2 }
+    ramp: 2
+    only: { tracks: [longevity] }
+    note: >-
+      Once regulators accept a biomarker of aging as a trial endpoint, a
+      trial can show benefit in a few years instead of waiting for disease
+      or death, as surrogate endpoints have done for other conditions under
+      the FDA's accelerated approval. Twice as fast is my judgment.
+    sources:
+      - title: FDA, Accelerated Approval Program
+        url: https://www.fda.gov/drugs/nda-and-bla-approvals/accelerated-approval-program
+
+  - id: cheap-launch
+    name: Cheap launch
+    from: launch-1000-dollars-kg
+    speedup: { experiments: 1.5, building: 1.5 }
+    ramp: 3
+    only: { tracks: [space] }
+    note: >-
+      When getting to orbit costs a few hundred dollars a kilogram rather
+      than thousands, space hardware can be flown, tested and replaced more
+      often, and built heavier and simpler. A half again as fast is my
+      judgment.
+
+# What each technology's remaining work is made of, by track (or field),
+# with overrides for single technologies. Shares are relative.
+tracks:
+  deep-learning: { ai-research: 0.6, software: 0.15, building: 0.15, adoption: 0.1 }
+  computers: { design: 0.3, experiments: 0.45, building: 0.25 }
+  quantum-atomic: { design: 0.3, experiments: 0.5, building: 0.2 }
+  chipmaking: { design: 0.25, experiments: 0.3, building: 0.45 }
+  components: { design: 0.3, experiments: 0.3, building: 0.4 }
+  neurotech: { design: 0.15, experiments: 0.3, trials: 0.45, adoption: 0.1 }
+  nuclear-energy: { design: 0.2, experiments: 0.25, building: 0.45, adoption: 0.1 }
+  nuclear-particle: { design: 0.25, experiments: 0.35, building: 0.4 }
+  renewables: { design: 0.15, experiments: 0.2, building: 0.45, adoption: 0.2 }
+  storage-fuels: { design: 0.2, experiments: 0.3, building: 0.35, adoption: 0.15 }
+  grid: { design: 0.1, experiments: 0.2, building: 0.5, adoption: 0.2 }
+  carbon: { experiments: 0.2, building: 0.5, adoption: 0.3 }
+  industrial-chemistry: { experiments: 0.2, building: 0.5, adoption: 0.3 }
+  earth-climate: { design: 0.2, experiments: 0.2, adoption: 0.6 }
+  space: { design: 0.2, experiments: 0.3, building: 0.4, adoption: 0.1 }
+  aviation: { design: 0.15, experiments: 0.2, trials: 0.35, building: 0.2, adoption: 0.1 }
+  land-transport: { software: 0.3, experiments: 0.2, trials: 0.2, building: 0.15, adoption: 0.15 }
+  machines: { software: 0.25, design: 0.2, experiments: 0.25, building: 0.2, adoption: 0.1 }
+  modern-materials: { design: 0.35, experiments: 0.45, building: 0.2 }
+  nanotech: { design: 0.35, experiments: 0.45, building: 0.2 }
+  life-science: { design: 0.3, experiments: 0.5, building: 0.2 }
+  molecular-biology: { design: 0.3, experiments: 0.6, building: 0.1 }
+  synthetic-biology: { design: 0.3, experiments: 0.5, building: 0.2 }
+  sequencing: { design: 0.3, experiments: 0.4, building: 0.3 }
+  single-molecule: { design: 0.3, experiments: 0.5, building: 0.2 }
+  # Drugs: about 41 percent discovery and preclinical, 48 percent trials and
+  # 11 percent review (Paul et al. 2010).
+  genetic-medicine: { design: 0.2, experiments: 0.2, trials: 0.5, adoption: 0.1 }
+  longevity: { design: 0.2, experiments: 0.2, trials: 0.5, adoption: 0.1 }
+  surgery-organs: { design: 0.1, experiments: 0.35, trials: 0.45, adoption: 0.1 }
+  crops: { design: 0.2, experiments: 0.5, trials: 0.2, adoption: 0.1 }
+  animals-food: { design: 0.15, experiments: 0.25, trials: 0.1, building: 0.4, adoption: 0.1 }
+
+nodes:
+  # Computing power and money for AI: data centers and markets, not ideas.
+  ai-training-1e27-flop: { building: 0.7, adoption: 0.3 }
+  ai-training-1e28-flop: { building: 0.7, adoption: 0.3 }
+  ai-training-1e29-flop: { building: 0.7, adoption: 0.3 }
+  ai-lab-revenue-1t: { ai-research: 0.3, adoption: 0.7 }
+  general-purpose-robots: { ai-research: 0.3, software: 0.1, experiments: 0.3, building: 0.3 }
+  ai-autonomous-science: { ai-research: 0.5, experiments: 0.4, adoption: 0.1 }
+  # Life expectancy moves only as treatments reach whole populations.
+  life-expectancy-90: { trials: 0.3, adoption: 0.7 }
+  life-expectancy-100: { trials: 0.3, adoption: 0.7 }
+  life-expectancy-world-75: { adoption: 1 }
+  life-expectancy-world-80: { trials: 0.2, adoption: 0.8 }
+  life-expectancy-low-income-70: { adoption: 1 }
+  life-expectancy-lower-middle-75: { adoption: 1 }
+  life-expectancy-65-25: { trials: 0.3, adoption: 0.7 }
+  life-expectancy-65-30: { trials: 0.3, adoption: 0.7 }
+  life-expectancy-65-world-20: { adoption: 1 }
+  life-expectancy-65-high-income-25: { trials: 0.3, adoption: 0.7 }
+  lifespan-123: { trials: 0.4, adoption: 0.6 }
+  lifespan-125: { trials: 0.4, adoption: 0.6 }
+  longevity-escape-velocity: { trials: 0.4, adoption: 0.6 }
+  # The criterion asks for a randomized trial and two years of benefit.
+  aging-reversal: { design: 0.15, experiments: 0.2, trials: 0.55, adoption: 0.1 }
+  aging-biomarker-endpoint: { design: 0.2, experiments: 0.2, adoption: 0.6 }
+  whole-brain-emulation: { design: 0.3, experiments: 0.4, building: 0.3 }
+  mars-settlement: { design: 0.1, experiments: 0.1, building: 0.6, adoption: 0.2 }
+  interstellar-probe: { design: 0.2, experiments: 0.3, building: 0.5 }
+  robotaxis-at-scale: { software: 0.25, trials: 0.2, building: 0.3, adoption: 0.25 }

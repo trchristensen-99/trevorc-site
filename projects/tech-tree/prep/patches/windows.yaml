@@ -34,16 +34,17 @@
 - id: cultivated-meat
   date: { window: [2027.4, 2040], likely: 2032 }
 
-# Waymo was at about 500,000 paid rides a week (spring 2026) and targets
-# over a million by the end of 2026; the earliest is a year-end announcement.
+# Now "everyday use" (patches/scale.yaml): 10 percent of ride-hail trips in
+# the US or China, from under 1 percent in 2026.
 - id: robotaxis-at-scale
-  date: { window: [2026.9, 2030], likely: 2027.2 }
+  date: { window: [2029, 2040], likely: 2031.5 }
 
-# A claim must survive a year of classical attempts. The oldest live
-# candidates (IBM tracker entries, late 2025 to mid 2026) cannot complete
-# that year before early to mid 2027.
+# A claim must survive a year of classical attempts. IBM's April and July
+# 2026 chemistry claims are contested (classical methods disagree), and one
+# tracker candidate was already simulated classically; a claim from mid
+# 2026 completes its year in mid 2027 at the soonest.
 - id: useful-quantum-advantage
-  date: { window: [2027.1, 2031], likely: 2027.4 }
+  date: { window: [2027.1, 2032], likely: 2027.8 }
 
 # Geretsried's first loop reached the grid in December 2025 in partial
 # operation (one loop is about a quarter of the 8.2 MW plant); the second
@@ -197,21 +198,28 @@
 
 # Joby is in TIA flight testing with no type certificate (October 2026);
 # its 2026 passenger flights are under the FAA pilot program, which does not
-# count. Certificate then service: mid 2027 at the soonest.
+# count. Certificate then service: late 2027 at the soonest, and the
+# sector's dates have slipped two to three years.
 - id: electric-aviation
-  date: { window: [2027.4, 2031], likely: 2028 }
+  date: { window: [2027.6, 2034], likely: 2029.3 }
   forecast:
     note: >-
-      Joby is closest: it began type inspection flight testing in March 2026,
-      the final stage of certification, and expects FAA pilots' for-credit
-      flights to follow; that stage usually takes a year or more, and first
-      certified service would follow soon after. Its 2026 passenger flights
-      under the FAA's eVTOL pilot program come before a type certificate and
-      do not meet this bar. China already allows commercial eVTOL passenger
-      flights. Judgment: 2028.
+      No air taxi had an FAA or EASA type certificate in October 2026. Joby
+      flew its first FAA-conforming aircraft in March 2026 and still awaited
+      the FAA's own for-credit test flights; Archer had finished three of
+      the FAA's four phases. Both plan their first passengers in Dubai and
+      Abu Dhabi in late 2026 or 2027, under Gulf certification, which does
+      not meet this bar; Joby's Dubai date has already slipped from early
+      2026. Volocopter's EASA target is now 2027 after its insolvency, and
+      the sector's launch dates have slipped two to three years and more
+      since 2020. Judgment: 2029, with a long tail.
     sources:
       - title: Joby Aviation, second quarter 2026 results
         url: https://www.jobyaviation.com/news/joby-reports-second-quarter-2026-financial-results
+      - title: AIAA, Joby advances toward certification with first FAA-conforming flight tests (March 2026)
+        url: https://www.aiaa.org/2026/03/13/joby-advances-toward-certification-with-first-faa-conforming-flight-tests/
+      - title: Archer, first quarter 2026 results
+        url: https://investors.archer.com/news/news-details/2026/Archer-Announces-First-Quarter-2026-Results-Highlighting-Record-FAA-Certification-Progress-With-Initial-US-Operations-Expected-In-2026/
       - title: Wikipedia, Joby Aviation
         url: https://en.wikipedia.org/wiki/Joby_Aviation
 

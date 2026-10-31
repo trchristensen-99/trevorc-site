@@ -1,0 +1,34 @@
+id: robotaxi-rides-weekly
+name: Paid robotaxi rides a week (Waymo)
+short: Robotaxi rides a week
+unit: rides a week
+better: higher
+log: true
+field: engineering
+fit: { from: 2025 }
+points:                           # [date of the statement, paid rides a week]
+  - [2024.38, 50000]   # May 2024
+  - [2024.64, 100000]  # August 2024
+  - [2024.83, 150000]  # October 2024, Alphabet third-quarter call
+  - [2025.16, 200000]  # February 2025
+  - [2025.31, 250000]  # April 2025, Alphabet first-quarter call
+  - [2026.11, 400000]  # February 2026, co-CEO Tekedra Mawakana
+  - [2026.24, 500000]  # March 2026
+source:
+  title: "Waymo statements as reported by Engadget (May 2024), TechCrunch (February 2025), Insurance Journal (February 2026) and Sherwood News (March 2026)"
+  url: https://www.sherwood.news/tech/waymos-now-serving-more-than-500-000-paid-robotaxi-rides-every-week/
+license: reported figures
+note: >-
+  Paid driverless rides a week as Waymo announced them, dated by the
+  announcement. Waymo was the largest robotaxi service outside China;
+  Baidu's Apollo Go peaked above 350,000 a week in March 2026 before Chinese
+  regulators froze new permits after a mass stall in Wuhan, and Tesla, Zoox,
+  Pony.ai and WeRide don't publish weekly counts. Growth slowed from about
+  four times a year in 2024 to about twice a year by 2026, so the trend is
+  fitted from 2025. Waymo gave no new weekly figure between March and
+  October 2026 (its third-quarter call cited 15 cities and 300 million
+  autonomous miles). For scale, Uber and Lyft give very roughly 75 million
+  US trips a week, so 500,000 is under 1 percent. Sources: Engadget
+  (https://www.engadget.com/waymo-says-its-robotaxis-are-now-making-50000-paid-trips-every-week-130005096.html),
+  TechCrunch (https://techcrunch.com/2025/02/27/waymo-has-doubled-its-weekly-robotaxi-rides-in-less-than-a-year/),
+  Insurance Journal (https://amp.claimsjournal.com/news/national/2026/02/12/335668.htm).

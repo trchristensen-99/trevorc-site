@@ -1657,8 +1657,10 @@
   forecast:
     note: >-
       Private fusion has raised about $14 billion (FIA, July 2026) and most
-      firms say the early 2030s; Helion says 2028. Those dates have slipped
-      before, and engineering gain needs a Q well above 5 to 10 for magnetic
+      firms say the early 2030s; Helion says it will begin initial
+      operations in 2028, softened in 2026 from producing electricity then.
+      Metaculus's question on a plant with wall-plug gain above 1 had a
+      median near 2044. Those dates have slipped before, and engineering gain needs a Q well above 5 to 10 for magnetic
       routes or much higher target gains for inertial ones. Judgment: the
       first net-electric run around 2034, by whichever route gets there.
     sources:

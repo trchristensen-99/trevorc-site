@@ -1,0 +1,129 @@
+# Part O: first versus everyday. A first commercial service and broad
+# availability are different milestones, often a decade apart. Status as of
+# 2026-10-30.
+
+- id: waymo-million-rides
+  name: A million robotaxi rides a week
+  kind: milestone
+  fields: [engineering, computing]
+  track: land-transport
+  tier: 3
+  threshold: { metric: robotaxi-rides-weekly, value: 1000000, label: "1 million a week" }
+  date: { window: [2027.0, 2029], likely: 2027.7 }
+  status: ongoing
+  requires: [autonomous-vehicles, electric-vehicles]
+  summary: >-
+    Waymo gives a million paid driverless rides a week. Its co-CEO set this
+    as the goal for the end of 2026, when it was at about 400,000; it passed
+    500,000 in March 2026 and gave no new figure through October.
+  criterion: >-
+    Waymo reports at least one million paid rides a week with no safety
+    driver or monitor on board.
+  forecast:
+    note: >-
+      At the doubling a year seen since 2025, 500,000 in March 2026 becomes a
+      million around March 2027; FutureSearch's forecast for the fourth
+      quarter of 2026 was a median of about 775,000. Waymo's year-end 2026
+      goal looks likely to slip by a few months to a year. Judgment: late
+      2027.
+    sources:
+      - title: Insurance Journal, Waymo targets more than a million rides a week by the end of 2026 (February 2026)
+        url: https://amp.claimsjournal.com/news/national/2026/02/12/335668.htm
+      - title: FutureSearch, Waymo weekly paid rides in Q4 2026
+        url: https://futuresearch.ai/app/p/a/waymo-weekly-paid-rides-q4-2026
+
+- id: quantum-advantage-in-business
+  name: Quantum computing in business use
+  kind: technique
+  fields: [computing, physics]
+  track: computers
+  date: { window: [2029, 2045], likely: 2033 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Companies using quantum computers in their regular work because they beat
+    ordinary computers on a task that matters, not in pilots or research
+    collaborations. In 2025 quantum computing earned about $1 billion,
+    mostly from selling machines and cloud time to researchers.
+  requires: [useful-quantum-advantage]
+  helped_by: [fault-tolerant-quantum-computer]
+  criterion: >-
+    A company uses a quantum computer in regular production, not a pilot or
+    research partnership, for a task where it beats the best classical method
+    on cost, speed or accuracy (documented by the company and not refuted by
+    independent review), and that task earns or saves it at least $10
+    million a year.
+  efforts:
+    - who: IBM, Google Quantum AI, Quantinuum, IonQ, PsiQuantum and others, with chemical, drug, finance and logistics companies
+      where: USA, UK, Europe, Japan, China
+      when: 2026
+      outcome: ongoing
+      note: Many pilots and research partnerships; no production use that beats classical methods had been shown by October 2026.
+  forecast:
+    note: >-
+      The first claims of advantage on scientific problems (Google's 2025
+      echo measurement, IBM's 2026 chemistry results) are still contested or
+      are physics measurements with no buyer. Valuable chemistry and
+      materials problems probably need error-corrected machines with about
+      100 logical qubits or more; IBM aims for 200 in 2029, and such
+      roadmaps have slipped a year or two. Google's Hartmut Neven said in
+      February 2025 that real applications only quantum computers can do
+      were five years away. McKinsey's 2026 monitor expects revenue to grow
+      to about $4.4 billion by 2028, still mostly hardware and research.
+      Judgment: early 2030s, with a long tail if error correction scales
+      slowly.
+    sources:
+      - title: McKinsey Quantum Technology Monitor 2026
+        url: https://www.mckinsey.com/no/our-insights/mckinsey-quantum-technology-monitor-2026-a-commercial-tipping-point
+      - title: IBM Quantum roadmap
+        url: https://www.ibm.com/quantum-computing/roadmap
+      - title: The Quantum Insider, Google Quantum AI head sees commercial quantum within five years (February 2025)
+        url: https://thequantuminsider.com/2025/02/05/google-quantum-ai-head-sees-commercial-quantum-within-five-years/
+  sources:
+    - title: McKinsey Quantum Technology Monitor 2026
+      url: https://www.mckinsey.com/no/our-insights/mckinsey-quantum-technology-monitor-2026-a-commercial-tipping-point
+
+- id: air-taxis-everyday
+  name: Air taxis in everyday use
+  kind: infrastructure
+  fields: [engineering, energy]
+  track: aviation
+  date: { window: [2031, 2050], likely: 2036 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Electric air taxis as an ordinary, if pricey, way to cross a city: many
+    aircraft, many routes, many cities. In 2026 none had an American or
+    European type certificate, and China's pilotless EHang flights were
+    still trial operations.
+  requires: [electric-aviation]
+  helped_by: [solid-state-batteries, general-purpose-robots]
+  criterion: >-
+    At least 1,000 electric air taxis carry paying passengers on regular
+    routes across at least 20 cities worldwide.
+  efforts:
+    - who: Joby, Archer, Beta, Wisk (Boeing), Vertical Aerospace, EHang, AutoFlight and others
+      where: USA, UK, China, United Arab Emirates
+      when: 2026
+      outcome: ongoing
+      note: First Gulf launches planned for late 2026 or 2027 with a handful of aircraft each.
+  forecast:
+    note: >-
+      The first certified services start with a few aircraft and a route or
+      two. Aviation Week forecast about 1,000 deliveries by 2030, but the
+      sector's launch dates have slipped two to three years and more since
+      2020, Lilium closed and Volocopter went insolvent, and Morgan Stanley
+      cut its early adoption curve. Bain expects the world fleet to stay
+      under 15,000 until the mid 2030s. Batteries, noise, vertiports and
+      pilots (or approval to fly without them) limit the pace. Judgment:
+      about a decade after the first certified service, around 2036.
+    sources:
+      - title: Aviation Week forecasts 1,000 eVTOL deliveries by 2030
+        url: https://aviationweek.com/shownews/paris-air-show/aviation-week-forecasts-1000-evtol-deliveries-2030
+      - title: Bain, Advanced air mobility, what electric air taxis need to take off
+        url: https://www.bain.com/ja/insights/advanced-air-mobility-what-electric-air-taxis-need-to-take-off/
+      - title: Vertical, Morgan Stanley shifts timeline but stays bullish on eVTOL
+        url: https://verticalmag.com/news/morgan-stanley-shifts-timeline-stays-bullish-evtol-urban-air-mobility/
+  sources:
+    - title: Wikipedia, eVTOL
+      url: https://en.wikipedia.org/wiki/EVTOL

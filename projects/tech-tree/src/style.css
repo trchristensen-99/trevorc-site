@@ -173,3 +173,23 @@ body.folded.controls-open .controls { display: grid; }
 .info ul.checklist li.done .box { background: var(--accent); border-color: var(--accent); color: #fff; }
 .hint.links { margin-top: 4px; }
 .hint.links a, .info .suggest a { color: var(--accent); }
+
+/* Forecasts compared */
+.chart.fc { margin: 4px 0; }
+.chart.fc .rowlab { font-size: 9px; fill: var(--muted); }
+.chart.fc .whisker { stroke: currentColor; stroke-width: 1.2; }
+.chart.fc .arrow { fill: none; stroke: currentColor; stroke-width: 1.2; }
+.chart.fc .box { fill: currentColor; opacity: 0.35; }
+.chart.fc .med { fill: currentColor; }
+.chart.fc .never { font-size: 9px; text-anchor: end; fill: var(--muted); font-style: italic; }
+.chart.fc .row { color: var(--muted); }
+.chart.fc .row.judged { color: var(--accent); }
+.chart.fc .row.judged .rowlab, .chart.fc .row.pooled .rowlab { fill: var(--ink); font-weight: 600; }
+.chart.fc .row.pooled { color: var(--ink); }
+.chart.fc .row.sim .whisker { stroke-dasharray: 3 2; }
+.chart.fc .row.sim { color: var(--accent); opacity: 0.75; }
+.chart.fc .row.base { opacity: 0.5; }
+.chart.fc .xlab { font-size: 8.5px; }
+.info .flagnote { margin: 6px 0; padding: 4px 8px; border-left: 3px solid #c9772a; background: color-mix(in srgb, #c9772a 9%, transparent); border-radius: 0 6px 6px 0; font-size: 13px; }
+.info ul.fclist { list-style: none; padding: 0; display: grid; gap: 5px; font-size: 12.5px; margin: 6px 0; }
+.info .tag.flag { color: #c9772a; border-color: #c9772a; }

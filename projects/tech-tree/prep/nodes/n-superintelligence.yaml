@@ -1,0 +1,60 @@
+# Part N: after AGI. Status as of 2026-10-30.
+
+- id: artificial-superintelligence
+  name: Artificial superintelligence
+  kind: device
+  fields: [computing, society]
+  track: deep-learning
+  date: { window: [2029, 2060], likely: 2034 }
+  status: speculative
+  tier: 2
+  summary: >-
+    AI far better than the best humans at essentially every cognitive task,
+    including research in every field. Whether it follows AGI within months,
+    years or decades depends mostly on how much AI can speed up AI research
+    itself, and on limits of computing power, energy and physical
+    experiments.
+  criterion: >-
+    An AI system that beats the best human experts at essentially every
+    cognitive task, by at least the margin by which the best human expert in
+    a field beats a typical professional in it, including leading research in
+    any science, and that does so at lower cost than those experts.
+  requires: [agi]
+  helped_by: [automated-ai-research]
+  efforts:
+    - who: OpenAI, Google DeepMind, Anthropic, Meta Superintelligence Labs, Safe Superintelligence
+      where: USA and UK
+      when: 2026
+      outcome: ongoing
+      note: Several labs name superintelligence, not just AGI, as their goal.
+  forecast:
+    note: >-
+      Forecasts mostly give a gap after AGI rather than a date. In May 2026
+      Metaculus forecasters put the time from weakly general AI to
+      superintelligence at a median of about 36 months (middle half 9 months
+      to 12 years), down from 62 months in 2024; their weak-AGI date was then
+      May 2028, which together point to about 2031. The AI 2027 scenario's
+      takeoff model put AI research 25 times faster with a superhuman AI
+      researcher and superintelligence about a year after a superhuman coder;
+      in August 2026 its authors put superintelligence at March 2029
+      (Kokotajlo) and July 2033 (Lifland). The 2023 survey of AI researchers
+      gave only 10 percent to AI vastly better than humans at all professions
+      within two years of human-level AI, and 60 percent within 30 years.
+      Economists who model bottlenecks (Aghion, Jones and Jones) expect
+      whatever can't be automated, experiments, energy and institutions, to
+      slow things. I put it about three years after AGI, around 2034, with a
+      long tail.
+    sources:
+      - title: Metaculus, After a weak AGI is created, how many months will it be before the first superintelligent AI? (archived May 2026)
+        url: http://web.archive.org/web/20260529063831/https://www.metaculus.com/questions/9062/time-from-weak-agi-to-superintelligence/
+      - title: AI Futures Project, AI 2027 takeoff forecast (April 2025)
+        url: https://ai-2027.com/research/takeoff-forecast
+      - title: AI Futures Project, Q2.5 2026 timelines update (August 2026)
+        url: https://blog.aifutures.org/p/q25-2026-timelines-update-uplift
+      - title: Grace et al. 2024, Thousands of AI Authors on the Future of AI (2023 ESPAI survey)
+        url: https://arxiv.org/abs/2401.02843
+      - title: Aghion, Jones and Jones, Artificial Intelligence and Economic Growth (NBER w23928)
+        url: https://www.nber.org/system/files/working_papers/w23928/w23928.pdf
+  sources:
+    - title: Wikipedia, Superintelligence
+      url: https://en.wikipedia.org/wiki/Superintelligence

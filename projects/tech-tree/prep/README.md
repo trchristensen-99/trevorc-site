@@ -20,6 +20,10 @@ npm run build   # writes ../data/tree.json
 - `supply.yaml` and `resource-use.yaml`: world supply of each resource
   (production, reserves, producers; mostly USGS) and how much of each a
   technology needs.
+- `forecasts.yaml`: what others forecast for each future technology
+  (forecasters, markets, surveys, projections, announced targets, models).
+- `acceleration.yaml`: how AI milestones would speed up the rest, by kind
+  of work.
 - `metrics/*.yaml`: measured series (prices, performance) with their sources.
   The build fits a doubling or halving time to each, and a learning curve
   (Wright's law) where a series names its `cumulative` production series.
@@ -31,8 +35,9 @@ It dates milestones from their metrics (the year the data crossed the
 threshold, or the trend carried forward), ranks the nodes by importance (tier,
 then how much depends on them) to decide the zoom each first shows at, and
 places each on the log time axis inside its track. It also fits the
-effort and prerequisite models, gives an outside-view estimate for future
-technologies, and rates each resource's supply risk (see SCHEMA.md). It writes `tree.json`
+effort and prerequisite models, rates each resource's supply risk, and
+(in `forecast.mjs`) simulates the frontier and pools every forecast for
+each future technology beside its judged window (see SCHEMA.md). It writes `tree.json`
 (what the first view needs) and `details.json` (the text, loaded after). The
 app works out which links to draw for whatever is showing: only those not
 implied by a longer chain of shown nodes.

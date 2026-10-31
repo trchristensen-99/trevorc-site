@@ -130,6 +130,78 @@ The build fits three models from these and the links (`build.mjs`,
   (growing at `growth`), gives the time left, and never before its
   prerequisites are in place.
 
+## Forecasts
+
+A future window is a judgment: `window` is read as its 10th to 90th
+percentiles and `likely` as its median. `forecasts.yaml` adds what others
+forecast, keyed by node id:
+
+```yaml
+agi:
+  - title: "Metaculus: When will the first general AI system be devised, tested, and publicly announced?"
+    url: https://www.metaculus.com/questions/5121/
+    kind: crowd        # crowd | market | survey | expert | projection | target | model
+    asof: 2026-05      # when the figures were read (or published)
+    median: 2033.3     # and any of q05 q10 q25 q75 q90 q95
+    q25: 2029.2
+    q75: 2042.3
+    match: same        # same | looser | stricter: its question against the criterion
+    note: One sentence on what it asks and how that differs.
+  - title: Company X's announced date
+    kind: target
+    asof: 2025-01      # when the target was set
+    year: 2028         # the target itself
+    url: ...
+```
+
+`build.mjs` hands these to `forecast.mjs`, which turns every source into
+quantiles of the year (a normal in log years from now through the
+quantiles given; a target as A + 1.6 (T − A) at the median, from the year
+A it was set for year T), adds the metric's trend for a milestone (a random
+walk with drift from the latest point, Farmer and Lafond 2016) and the tree
+simulated from base rates, and pools them: a weighted average of quantiles
+in log years from now (weights in `forecast.mjs`: forecasters 3, markets
+and official projections 2, surveys 1.5, single experts, models and
+targets 1, trends 3 times r², base rates 1; less beyond 10 and 25 years,
+for figures over two years old and for looser or stricter questions). A
+node is flagged when its `likely` falls outside the pool's middle half (by
+more than half a year or a tenth of the time from now). The window is never
+changed by the pool.
+
+The simulation draws every future node 3,000 times in order, each after
+the last thing it needs on its quickest route. From base rates, the time
+after that is drawn from the gaps since 1950, at least as long as it has
+already waited, scaled by the factor that balances a backtest (pretending
+it's 1980, 1990, 2000 or 2010). From the judgment, each window, with what
+it needs and the AI milestones at their likely dates, gives the work it
+stands for, which then varies (three quarters of the window's own spread)
+with everything upstream.
+
+## Acceleration
+
+`acceleration.yaml` says how AI milestones speed up the rest:
+
+```yaml
+work:                    # kinds of remaining work: short names
+  design: design and analysis
+mechanisms:
+  - id: agi
+    name: General AI
+    from: agi            # the node whose arrival starts it
+    speedup: { software: 30, design: 8, experiments: 1.5 }   # per kind
+    ramp: 3              # years to reach full speed (geometric)
+    note: ...
+    sources: [...]
+tracks:                  # what each track's remaining work is made of
+  longevity: { design: 0.2, experiments: 0.2, trials: 0.5, adoption: 0.1 }
+nodes:                   # or a single node's
+  aging-reversal: { design: 0.15, experiments: 0.2, trials: 0.55, adoption: 0.1 }
+```
+
+At any moment a kind of work goes as fast as the best mechanism that has
+arrived allows, and the whole as Amdahl's law says: 1 over the sum of each
+share divided by its speedup. Shares are relative (they're normalized).
+
 ## Resources and supply
 
 `supply.yaml` gives each resource's world supply, keyed by id:
