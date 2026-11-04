@@ -3,7 +3,7 @@
 - {id: ai-autonomous-science, helped_by: [autonomous-labs]}
 - {id: aging-reversal, helped_by: [virtual-cell, ai-designed-drug-approved]}
 - {id: systemic-reprogramming, helped_by: [virtual-cell]}
-- {id: aging-drug-approved, helped_by: [ai-designed-drug-approved, in-silico-trials]}
+- {id: aging-drug-approved, helped_by: [ai-designed-drug-approved, organoids-replace-animal-tests]}
 - {id: lab-grown-solid-organ, helped_by: [autonomous-labs, virtual-cell]}
 - {id: room-temperature-superconductor, helped_by: [ai-discovered-material, autonomous-labs]}
 - {id: solid-state-batteries, helped_by: [ai-discovered-material]}
@@ -14,3 +14,5 @@
 - {id: lunar-base, helped_by: [robots-build-robots]}
 - {id: asteroid-mining, helped_by: [robots-build-robots]}
 - {id: fusion-power, helped_by: [ai-discovered-material]}
+- {id: ai-designed-drug-approved, helped_by: [organoids-replace-animal-tests]}
+- {id: lab-grown-solid-organ, helped_by: [organoids-replace-animal-tests]}

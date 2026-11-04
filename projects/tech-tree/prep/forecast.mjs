@@ -334,12 +334,24 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
   const future = kept.filter(open)
   const order = []
   {
-    const seen = new Set()
+    // Prerequisites first, then the milestones that speed it, unless the
+    // milestone itself depends on the technology (superintelligence speeds
+    // the superhuman coder's work but needs AGI, which needs the coder).
+    const upstream = new Map()
+    const above = (n) => {
+      if (upstream.has(n.id)) return upstream.get(n.id)
+      const set = new Set()
+      upstream.set(n.id, set)
+      for (const id of n._all) { const p = live.get(id); if (!open(p)) continue; set.add(id); for (const x of above(p)) set.add(x) }
+      return set
+    }
+    const state = new Map()
     const visit = (n) => {
-      if (seen.has(n.id)) return
-      seen.add(n.id)
+      if (state.has(n.id)) return
+      state.set(n.id, 1)
       for (const id of n._all) { const p = live.get(id); if (open(p)) visit(p) }
-      for (const m of mechanisms) if (m.from !== n.id && accelOf(n)?.mech.includes(m)) visit(live.get(m.from))
+      for (const m of mechanisms) if (m.from !== n.id && accelOf(n)?.mech.includes(m) && !above(live.get(m.from)).has(n.id)) visit(live.get(m.from))
+      state.set(n.id, 2)
       order.push(n)
     }
     future.forEach(visit)
@@ -455,6 +467,60 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
     return draws
   }
   const sims = { outside: simulate("outside", 1), base: simulate("outside", 1, false), judged: simulate("judged", 2) }
+  // The pace of progress: in the runs from the judgment, how many times
+  // faster each kind of work goes in each year, from the mechanisms that
+  // apply everywhere (those limited to some fields are left out), and the
+  // whole, for the average mix of work across the frontier.
+  const pace = (() => {
+    const global = mechanisms.filter((m) => !m.only)
+    const kinds = Object.keys(WORK)
+    const years = Array.from({ length: 38 }, (_, i) => Math.round(NOW) + 2 * i)
+    const mixes = future.map((n) => accelOf(n)?.shares).filter(Boolean)
+    const mix = Object.fromEntries(kinds.map((w) => [w, mixes.reduce((a, x) => a + (x[w] ?? 0), 0) / Math.max(1, mixes.length)]))
+    const at = (m, d) => (sims.judged.get(m.from)?.[d] ?? likely(m.from))
+    const per = Object.fromEntries(kinds.map((w) => [w, years.map(() => new Float64Array(DRAWS))]))
+    const all = years.map(() => new Float64Array(DRAWS))
+    for (let d = 0; d < DRAWS; d++)
+      years.forEach((t, yi) => {
+        let inv = 0
+        for (const w of kinds) {
+          let k = 1
+          for (const m of global) {
+            if (!m.speedup[w]) continue
+            const e = at(m, d)
+            if (t > e) k = Math.max(k, m.speedup[w] ** Math.min(1, m.ramp > 0 ? (t - e) / m.ramp : 1))
+          }
+          per[w][yi][d] = k
+          inv += (mix[w] ?? 0) / k
+        }
+        all[yi][d] = 1 / inv
+      })
+    const q = (arr) => { const a = Array.from(arr).sort((x, y) => x - y); return [0.1, 0.5, 0.9].map((p) => +sortedQuantile(a, p).toFixed(2)) }
+    return { years, mix: Object.fromEntries(Object.entries(mix).map(([k, v]) => [k, +v.toFixed(3)])), kinds: Object.fromEntries(kinds.map((w) => [w, per[w].map(q)])), all: all.map(q) }
+  })()
+
+  // For trying out other dates in the app: each future technology's
+  // prerequisites (by route), the mechanisms that speed it, and the work its
+  // window stands for at each of its three dates (start, best guess, end),
+  // with what needs it and the AI milestones at their own corresponding
+  // dates. The app moves a date by how much the same sum moves.
+  const dateAt = (id, k) => { const p = live.get(id); return open(p) ? [p._date.from, p._date.at, p._date.to][k] : fixed(p) }
+  const sandbox = {}
+  for (const n of order) {
+    const a = accelOf(n)
+    const work = [0, 1, 2].map((k) => {
+      const arrive = (id) => dateAt(id, k)
+      const start = Math.max(NOW, readyOf(n, arrive))
+      const w = workBetween(a, start, Math.max(start, dateAt(n.id, k)), arrive)
+      return [Math.round(w * 100) / 100, Math.round(finish(a, start, w, arrive) * 100) / 100]
+    })
+    sandbox[n.id] = {
+      needs: needsOf(n).map((r) => ({ done: Number.isFinite(r.done) ? r.done : null, open: r.open })),
+      ...(a ? { shares: a.shares, by: a.mech.map((m) => m.id) } : {}),
+      work,
+    }
+  }
+
   const summarize = (arr) => {
     const a = Array.from(arr).sort((x, y) => x - y)
     return LEVELS.map((q) => sortedQuantile(a, q))
@@ -568,5 +634,5 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
     })
   }
 
-  return { results, bands, backtest, mechanisms, work: WORK, draws: DRAWS }
+  return { results, bands, backtest, mechanisms, work: WORK, draws: DRAWS, pace, sandbox }
 }

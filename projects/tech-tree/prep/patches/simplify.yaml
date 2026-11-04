@@ -1,0 +1,26 @@
+# Aging and longevity, simplified (November 2026): the milestones for each
+# income group and for life expectancy at 65 are gone (the trend lines for
+# them stay, under Trend lines), leaving the general ones: the record
+# country at 90 and 100, the world at 80, the oldest person at 125, and
+# longevity escape velocity.
+- id: life-expectancy-low-income-70
+  remove: true
+- id: life-expectancy-lower-middle-75
+  remove: true
+- id: life-expectancy-world-75
+  remove: true
+- id: life-expectancy-65-25
+  remove: true
+- id: life-expectancy-65-30
+  remove: true
+- id: life-expectancy-65-world-20
+  remove: true
+- id: life-expectancy-65-high-income-25
+  remove: true
+- id: lifespan-123
+  remove: true
+
+- id: life-expectancy-world-80
+  requires: [vaccination, antibiotics-penicillin, hiv-antiretroviral-therapy, epidemiology]
+- id: lifespan-125
+  requires: [life-expectancy-85, aging-drug-approved]

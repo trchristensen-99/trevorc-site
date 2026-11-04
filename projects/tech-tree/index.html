@@ -85,6 +85,7 @@
         <div class="row actions">
           <button id="frontier" type="button">The frontier</button>
           <button id="models" type="button">What it takes</button>
+          <button id="sandbox" type="button" title="Move future dates and see what follows">Your own dates</button>
           <a id="elsewhere"></a>
         </div>
         <p class="hint">Scroll to zoom. Click a technology to light up what it needs and what it led to.</p>
@@ -96,6 +97,14 @@
         <ul id="legend"></ul>
       </details>
 
+      <div id="sandbox-bar" class="panel" hidden>
+        <strong>Your own dates</strong>
+        <span class="hint">Drag a window's ends or bar, or a technology's dot; what depends on it follows.</span>
+        <span id="sb-count" class="hint"></span>
+        <button id="sb-reset" type="button">Reset</button>
+        <button id="sb-copy" type="button">Copy link</button>
+        <button id="sb-exit" type="button">Done</button>
+      </div>
       <aside id="info" class="panel info" hidden aria-live="polite"></aside>
       <div id="tooltip" hidden></div>
     </main>

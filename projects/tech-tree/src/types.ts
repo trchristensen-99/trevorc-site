@@ -177,6 +177,7 @@ export interface Scenario {
   high: [number, number][]
   note?: string
   sources?: Source[]
+  follows?: { node: string; at: number; from: number; to: number; base: string } // computed for this technology's window
 }
 
 export interface Tree {
@@ -212,7 +213,17 @@ export interface Models {
     draws: number
     backtest: { scale: number; raw: Backtest[]; scaled: Backtest[] }
     work: Record<string, string>
+    pace: { years: number[]; mix: Record<string, number>; kinds: Record<string, [number, number, number][]>; all: [number, number, number][] }
+    sandbox: Record<string, SandboxNode>
     mechanisms: { id: string; name: string; from: string; work: string[]; speedup: Record<string, number>; ramp: number; only?: { tracks?: string[]; nodes?: string[] }; note?: string; sources?: Source[] }[]
   }
+}
+// What the app needs to move a future technology when what it depends on
+// moves (see prep/forecast.mjs, sandbox).
+export interface SandboxNode {
+  needs: { done: number | null; open: string[] }[] // per route: the latest prerequisite already done, and the open ones
+  shares?: Record<string, number>
+  by?: string[] // mechanisms that speed it
+  work: [number, number][] // per date (start, best guess, end): the work it stands for, and the date that work gives
 }
 export interface Backtest { from: number; n: number; early: number; inside: number; late: number; basis: number }

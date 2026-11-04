@@ -139,42 +139,45 @@
     - title: Insilico Medicine, rentosertib phase 2a results (Nature Medicine, June 2025)
       url: https://www.eurekalert.org/news-releases/1086096
 
-- id: in-silico-trials
-  name: Computer models accepted in place of trials
-  kind: institution
-  fields: [medicine, society]
+- id: organoids-replace-animal-tests
+  name: Organoids and organ chips in place of animal tests
+  kind: technique
+  fields: [medicine, biology]
   track: drugs
-  date: { window: [2027.5, 2042], likely: 2032 }
+  date: { window: [2028, 2040], likely: 2032 }
   status: ongoing
   tier: 3
   summary: >-
-    Regulators accepting validated computer models (digital twins of
-    patients, or simulations of a drug's effects) as evidence in place of
-    some animal studies, trial patients or whole studies, which would make
-    trials smaller and faster.
-  requires: [randomized-controlled-trial, frontier-models]
-  helped_by: [virtual-cell]
+    Miniature human tissues (organoids) and organs on chips, grown and run
+    at scale in automated labs, standing in for animal studies before
+    trials. They model human biology more faithfully than mice; trials in
+    people stay the standard of evidence. Computer models sit a step
+    earlier, choosing what is worth testing in them, as cell lines do now.
+  requires: [organoids]
+  helped_by: [autonomous-labs, virtual-cell]
   criterion: >-
-    The FDA or EMA approves a new drug or device on evidence in which a
-    validated computer model replaces at least a quarter of a trial's
-    control group or an entire required clinical study.
+    The FDA or EMA routinely accepts data from human organoids or organ
+    chips in place of the required animal studies for new drugs entering
+    trials, across most drug classes rather than as pilots.
   efforts:
-    - who: Unlearn (digital twins of trial patients); FDA
-      where: USA, EU
+    - who: FDA (roadmap to reduce animal testing); NIH; Emulate, CN Bio and other organ-chip makers
+      where: USA, UK
       when: 2025
       outcome: ongoing
-      note: EMA qualified Unlearn's method for shrinking control groups in 2022; the FDA said in April 2025 it would phase out animal testing requirements for monoclonal antibodies, using AI models among other methods.
+      note: The FDA Modernization Act 2.0 (2022) ended the legal requirement for animal tests; in April 2025 the FDA set out a plan to make animal studies the exception for monoclonal antibodies within three to five years.
   forecast:
     note: >-
-      Regulators have started with what comes before trials: in April 2025
-      the FDA announced a plan to replace animal testing for antibodies and
-      other drugs with computer models and lab methods. Replacing patients
-      needs models validated against many past trials and a regulator
-      willing to rely on them for a pivotal decision. Judgment: early
-      2030s, faster if AI-designed trials prove themselves.
+      The FDA's April 2025 roadmap aims to make animal studies the exception
+      rather than the rule for antibodies in three to five years, starting
+      with organoids, organ chips and computer models, and to extend that to
+      other drugs later. Validating human models against past results and
+      getting other regulators to agree takes time. Judgment: early 2030s
+      for most drug classes.
     sources:
       - title: FDA announces plan to phase out animal testing requirement for monoclonal antibodies and other drugs (April 2025)
         url: https://www.fda.gov/news-events/press-announcements/fda-announces-plan-phase-out-animal-testing-requirement-monoclonal-antibodies-and-other-drugs
+      - title: FDA Modernization Act 2.0 (S.5002, 2022)
+        url: https://www.congress.gov/bill/117th-congress/senate-bill/5002
   sources:
     - title: FDA announces plan to phase out animal testing requirement for monoclonal antibodies and other drugs (April 2025)
       url: https://www.fda.gov/news-events/press-announcements/fda-announces-plan-phase-out-animal-testing-requirement-monoclonal-antibodies-and-other-drugs

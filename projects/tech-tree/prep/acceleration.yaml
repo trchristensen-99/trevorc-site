@@ -105,20 +105,26 @@ mechanisms:
     ramp: 3
     only: { tracks: [molecular-biology, synthetic-biology, life-science, genetic-medicine, drugs, longevity, surgery-organs, neurotech] }
     note: >-
-      A model that predicts what a perturbation will do lets biologists
-      screen on the computer and run only the confirming experiments; half
-      the experiments is my judgment.
+      A model that predicts what a perturbation will do works like today's
+      cell-line screens, but on the computer: it picks what is worth testing
+      in organoids and animals, so biologists run only the confirming
+      experiments. Half the experiments is my judgment.
 
-  - id: in-silico-evidence
-    name: Smaller, faster trials
-    from: in-silico-trials
-    speedup: { trials: 1.5 }
+  - id: human-models
+    name: Human models in place of animals
+    from: organoids-replace-animal-tests
+    speedup: { experiments: 1.5, trials: 1.15 }
     ramp: 4
     only: { tracks: [genetic-medicine, drugs, longevity, surgery-organs, neurotech] }
     note: >-
-      Validated computer models in place of some control patients and some
-      studies make trials smaller and quicker to fill; trials that need years
-      of follow-up still take years. A third off is my judgment.
+      Organoids and organ chips grown from human cells, run at scale in
+      automated labs, replace slow animal studies before trials and predict
+      human results better, so fewer drugs fail in people. Trials stay the
+      standard of evidence; a little less failure is the gain there. Both
+      figures are my judgment.
+    sources:
+      - title: FDA announces plan to phase out animal testing requirement for monoclonal antibodies and other drugs (April 2025)
+        url: https://www.fda.gov/news-events/press-announcements/fda-announces-plan-phase-out-animal-testing-requirement-monoclonal-antibodies-and-other-drugs
 
   - id: ai-materials
     name: AI materials discovery
@@ -209,6 +215,19 @@ mechanisms:
       often, and built heavier and simpler. A half again as fast is my
       judgment.
 
+  - id: cheap-energy
+    name: Abundant clean power
+    from: fusion-power
+    speedup: { building: 1.5, experiments: 1.2 }
+    ramp: 8
+    only: { tracks: [carbon, industrial-chemistry, storage-fuels, earth-climate, deep-learning, space, nuclear-energy] }
+    note: >-
+      Electricity is a large share of the cost of capturing carbon from the
+      air, making hydrogen and synthetic fuels, desalinating water and
+      running data centers. Plentiful firm power that is cheap to build
+      lets these scale faster; fusion plants take years to build in
+      numbers, hence the long ramp. A half again as fast is my judgment.
+
 # What each technology's remaining work is made of, by track (or field),
 # with overrides for single technologies. Shares are relative.
 tracks:
@@ -256,15 +275,7 @@ nodes:
   # Life expectancy moves only as treatments reach whole populations.
   life-expectancy-90: { trials: 0.3, adoption: 0.7 }
   life-expectancy-100: { trials: 0.3, adoption: 0.7 }
-  life-expectancy-world-75: { adoption: 1 }
   life-expectancy-world-80: { trials: 0.2, adoption: 0.8 }
-  life-expectancy-low-income-70: { adoption: 1 }
-  life-expectancy-lower-middle-75: { adoption: 1 }
-  life-expectancy-65-25: { trials: 0.3, adoption: 0.7 }
-  life-expectancy-65-30: { trials: 0.3, adoption: 0.7 }
-  life-expectancy-65-world-20: { adoption: 1 }
-  life-expectancy-65-high-income-25: { trials: 0.3, adoption: 0.7 }
-  lifespan-123: { trials: 0.4, adoption: 0.6 }
   lifespan-125: { trials: 0.4, adoption: 0.6 }
   longevity-escape-velocity: { trials: 0.4, adoption: 0.6 }
   # The criterion asks for a randomized trial and two years of benefit.

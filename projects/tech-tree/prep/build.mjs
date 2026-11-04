@@ -229,6 +229,43 @@ const metricsOut = metrics.map((m) => {
     wright, source: m.source, license: m.license, note: m.note && era(m.note), field: m.field, milestones: [],
   }
 })
+// A model scenario computed for a technology arriving in a given year
+// (`follows`: the node, the year it assumed, its window, and the baseline
+// scenario it was added to) is moved to the node's current window: its
+// effect over the baseline shifts by however much the date has moved, the
+// band's high side with the window's start and its low side with the end.
+// The app does the same when someone moves the date.
+const interp = (pts, x) => {
+  if (!pts.length) return null
+  if (x <= pts[0][0]) return pts[0][1]
+  for (let i = 1; i < pts.length; i++) if (x <= pts[i][0]) return pts[i - 1][1] + ((x - pts[i - 1][0]) / (pts[i][0] - pts[i - 1][0])) * (pts[i][1] - pts[i - 1][1])
+  return pts.at(-1)[1]
+}
+export function shiftScenario(path, base, by) {
+  if (!by || !path.length) return path
+  return path.map(([x, y]) => {
+    const was = x - by
+    const effect = was < path[0][0] ? 0 : interp(path, was) - interp(base, was)
+    return [x, +(interp(base, x) + effect).toFixed(2)]
+  })
+}
+for (const m of metricsOut)
+  for (const line of m.series ?? [m])
+    for (const sc of line.scenarios) {
+      const f = metrics.find((x) => x.id === m.id)
+      const src = (f.series?.find((x) => x.id === line.id) ?? f).scenarios?.find((x) => x.id === sc.id)
+      if (!src?.follows) continue
+      const node = byId.get(src.follows.node), base = line.scenarios.find((x) => x.id === src.follows.base)
+      if (!node || !base) { warn(`metric ${m.id}: scenario ${sc.id} follows unknown ${node ? src.follows.base : src.follows.node}`); continue }
+      const d = node.date, at = Number(d.likely), [from, to] = d.window.map(Number)
+      sc.follows = { node: node.id, at, from, to, base: base.id }
+      const by = at - src.follows.at
+      sc.points = shiftScenario(sc.points, base.points, by)
+      sc.high = shiftScenario(sc.high, base.points, from - src.follows.from)
+      sc.low = shiftScenario(sc.low, base.points, to - src.follows.to)
+      if (by) sc.note = `${sc.note ?? ""} Moved ${Math.abs(by)} years ${by < 0 ? "earlier" : "later"} to follow the tree's current best guess for rejuvenation therapies, ${at} (the figures above are for ${src.follows.at}).`.trim()
+    }
+
 // The line a milestone sits on: the metric's own, or one of its series.
 function lineFor(m, seriesId) {
   if (!m.series) return m
@@ -872,6 +909,7 @@ const out = {
     forecasting: {
       levels: LEVELS, weights: WEIGHTS, slip: SLIP, slipHigh: SLIP_HIGH, draws: fc.draws, backtest: fc.backtest,
       work: fc.work, mechanisms: fc.mechanisms.map(({ id, name, from, work, speedup, ramp, only, note, sources }) => ({ id, name, from, work, speedup, ramp, ...(only ? { only } : {}), note, sources })),
+      pace: fc.pace, sandbox: fc.sandbox,
     },
   },
 }

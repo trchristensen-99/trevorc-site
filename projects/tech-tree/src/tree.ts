@@ -32,6 +32,7 @@ export interface Display {
   eras: boolean // era lines and names
   trends: string[] // metric ids shown along the bottom
   trendLayout: "auto" | "strips" | "compact" | "combined"
+  trendHeight: number // share of the screen the trend panel takes, set by dragging its edge (0: automatic)
 }
 
 const ERAS: [number, string][] = [
@@ -89,7 +90,7 @@ export const kindShape = shape
 
 export const DETAIL_DEFAULT = 40
 export const DISPLAY_DEFAULTS: Display = {
-  detail: DETAIL_DEFAULT, grow: true, frontier: false, trends: [], trendLayout: "auto",
+  detail: DETAIL_DEFAULT, grow: true, frontier: false, trends: [], trendLayout: "auto", trendHeight: 0,
   links: "main", colorBy: "field", labels: "fit", nodeSize: 1, bars: true, trackNames: true, eras: true,
 }
 // Colors when nodes are colored by status or kind instead of field.
@@ -117,6 +118,55 @@ export class TreeView {
   onMetric: (m: Metric) => void = () => {}
   onViewChange: () => void = () => {}
   onRender: () => void = () => {}
+  onTrendHeight: (share: number) => void = () => {}
+  // Your own tree: future windows that can be dragged, and what to do with
+  // a new window (done: the drag ended).
+  private editing = false
+  canEdit: (n: Node) => boolean = () => false
+  onEdit: (n: Node, d: [number, number, number], done: boolean) => void = () => {}
+  private dragged = false
+  setEditing(on: boolean) {
+    this.editing = on
+    this.schedule()
+  }
+  refresh() {
+    this.schedule()
+  }
+  // Drag part of a window: the start or end, the whole window (its body),
+  // or the best guess (the node). Positions are moved on screen, so the
+  // whole window keeps its look as it slides along the log time axis.
+  private drag(e: PointerEvent, n: Node, part: "lo" | "hi" | "body" | "at") {
+    e.stopPropagation()
+    const ts = timeScale(this.tree)
+    const orig: [number, number, number] = [n.from, n.at, n.to]
+    const box = this.svg.node()!.getBoundingClientRect()
+    const kx = this.t.k * this.bx
+    const startX = e.clientX
+    let moved = false
+    const yearAt = (clientX: number) => ts.year((clientX - box.left - this.t.x) / kx)
+    const move = (ev: PointerEvent) => {
+      if (!moved && Math.abs(ev.clientX - startX) < 3) return
+      moved = true
+      const dx = (ev.clientX - startX) / kx
+      let d: [number, number, number]
+      if (part === "lo") d = [Math.min(yearAt(ev.clientX), orig[1]), orig[1], orig[2]]
+      else if (part === "hi") d = [orig[0], orig[1], Math.max(yearAt(ev.clientX), orig[1])]
+      else if (part === "at") d = [orig[0], Math.max(orig[0], Math.min(orig[2], yearAt(ev.clientX))), orig[2]]
+      else d = orig.map((y) => ts.year(ts.x(y) + dx)) as [number, number, number]
+      this.onEdit(n, d, false)
+    }
+    const up = () => {
+      removeEventListener("pointermove", move)
+      removeEventListener("pointerup", up)
+      if (moved) {
+        this.dragged = true
+        setTimeout(() => (this.dragged = false), 0)
+        this.onEdit(n, [n.from, n.at, n.to], true)
+      }
+    }
+    addEventListener("pointermove", move)
+    addEventListener("pointerup", up)
+  }
 
   private svg: Sel<SVGSVGElement>
   private canvas: HTMLCanvasElement
@@ -182,7 +232,7 @@ export class TreeView {
     this.ctx = this.canvas.getContext("2d")!
     this.svg = select(el)
     this.svg.selectAll("*").remove()
-    for (const name of ["tracks", "nodes", "labels", "trends", "axis", "lanelabels"]) this.g[name] = this.svg.append("g").attr("class", name)
+    for (const name of ["tracks", "edit", "nodes", "labels", "trends", "axis", "lanelabels"]) this.g[name] = this.svg.append("g").attr("class", name)
     this.zoomer = zoom<SVGSVGElement, unknown>()
       .scaleExtent([0.5, 60])
       .on("zoom", (e: D3ZoomEvent<SVGSVGElement, unknown>) => {
@@ -274,14 +324,29 @@ export class TreeView {
     const n = this.display.trends.length
     const L = this.display.trendLayout
     if (L !== "auto") return L
+    // A height set by dragging: full strips if each gets enough room.
+    if (this.display.trendHeight > 0) {
+      const each = this.panelHeight() / Math.max(1, n) - STRIP_GAP
+      return each >= STRIP.strips ? "strips" : each >= 14 ? "compact" : "combined"
+    }
     if (n * (STRIP.strips + STRIP_GAP) <= this.h * 0.3) return "strips"
     if (n * (STRIP.compact + STRIP_GAP) <= this.h * 0.3) return "compact"
     return "combined"
+  }
+  // The dragged height, kept between a sliver and most of the screen.
+  private panelHeight() {
+    return Math.max(56, Math.min(this.h * 0.8, this.display.trendHeight * this.h)) - 6
+  }
+  // Each strip's height: its standard one, or its share of a dragged panel.
+  private stripH(layout: "strips" | "compact") {
+    const n = this.display.trends.length
+    return this.display.trendHeight > 0 ? Math.max(12, this.panelHeight() / n - STRIP_GAP) : STRIP[layout]
   }
   // Space the trend panel takes at the bottom.
   stripsHeight() {
     const n = this.display.trends.length
     if (!n || !this.h) return 0
+    if (this.display.trendHeight > 0) return Math.round(this.panelHeight() + 6)
     const L = this.trendLayout()
     return L === "combined" ? COMBINED_H + 6 : n * (STRIP[L] + STRIP_GAP) + 6
   }
@@ -607,7 +672,9 @@ export class TreeView {
     const vis = nodes.filter(onScreen)
     const nodeSel = this.g.nodes.selectAll<SVGPathElement, Node>("path").data(vis, (n) => n.id).join((en) =>
       en.append("path").attr("class", "node")
-        .on("click", (e: MouseEvent, n) => { e.stopPropagation(); this.select(this.selected === n ? null : n) })
+        .on("click", (e: MouseEvent, n) => { e.stopPropagation(); if (this.dragged) return; this.select(this.selected === n ? null : n) })
+        .on("mousedown", (e: MouseEvent, n) => { if (this.editing && this.canEdit(n)) e.stopPropagation() })
+        .on("pointerdown", (e: PointerEvent, n) => { if (this.editing && this.canEdit(n)) this.drag(e, n, "at") })
         .on("pointerenter", (e: PointerEvent, n) => this.onHover(n, [e.offsetX, e.offsetY]))
         .on("pointerleave", () => this.onHover(null, [0, 0])),
     )
@@ -621,6 +688,29 @@ export class TreeView {
       .attr("stroke-dasharray", (n) => (n.status === "speculative" ? "2 1.5" : null))
       .attr("opacity", (n) => (dim(n) ? 0.18 : 1))
       .style("cursor", "pointer")
+
+    // Your own tree: each future window as a bar with handles at its ends.
+    const editable = this.editing ? vis.filter((n) => this.canEdit(n)) : []
+    const tsx = timeScale(tree)
+    const wins = this.g.edit.selectAll<SVGGElement, Node>("g.win").data(editable, (n) => n.id).join((en) => {
+      const g = en.append("g").attr("class", "win")
+      const stop = (e: Event) => e.stopPropagation()
+      for (const part of ["body", "lo", "hi"] as const)
+        g.append("rect").attr("class", part).style("cursor", part === "body" ? "grab" : "ew-resize")
+          .on("mousedown", stop).on("touchstart", stop).on("click", stop)
+          .on("pointerdown", (e: PointerEvent, n) => this.drag(e, n as unknown as Node, part))
+      g.append("title")
+      return g
+    })
+    wins.each((n, i, els) => {
+      const g = select(els[i])
+      const x0 = sx(tsx.x(n.from)), x1 = Math.max(x0 + 6, sx(tsx.x(n.to))), y = sy(n.y), c = this.color(n)
+      g.select("rect.body").attr("x", x0).attr("y", y - 4).attr("width", x1 - x0).attr("height", 8).attr("rx", 3).attr("fill", c).attr("fill-opacity", 0.22).attr("stroke", c).attr("stroke-opacity", 0.6)
+      g.select("rect.lo").attr("x", x0 - 4).attr("y", y - 7).attr("width", 7).attr("height", 14).attr("rx", 2).attr("fill", c)
+      g.select("rect.hi").attr("x", x1 - 3).attr("y", y - 7).attr("width", 7).attr("height", 14).attr("rx", 2).attr("fill", c)
+      g.select("title").text(`${n.name}: drag the ends to change the window, the bar to move it, the dot to move the best guess`)
+      g.selectAll("rect").datum(n)
+    })
 
     // Labels: as many as fit, the selection and its chain first, then by
     // importance.
@@ -815,7 +905,7 @@ export class TreeView {
       area.append("text").attr("x", this.w - 8).attr("y", y0 + H - 4).attr("text-anchor", "end").attr("font-size", 9.5).attr("fill", muted)
         .text("Each line on its own scale. Dashed: trend; dotted: forecasts.")
     } else {
-      const H = STRIP[layout]
+      const H = this.stripH(layout)
       list.forEach((m, i) => {
         const y0 = top + 3 + i * (H + STRIP_GAP)
         const color = (m.field && this.fieldColor.get(m.field)) || ink
@@ -844,6 +934,32 @@ export class TreeView {
             .attr("stroke", halo).attr("stroke-width", 3).attr("paint-order", "stroke").text(`${fmtValue(last[1], m.unit)} (${Math.round(last[0])})`)
       })
     }
+    // The panel's top edge can be dragged to make the trend lines taller or
+    // shorter; a double click goes back to the automatic height.
+    const handle = g.append("g").attr("class", "trend-handle").style("cursor", "ns-resize")
+    handle.append("rect").attr("x", 0).attr("y", top - 5).attr("width", this.w).attr("height", 10).attr("fill", "transparent")
+    handle.append("rect").attr("x", this.w / 2 - 18).attr("y", top - 2).attr("width", 36).attr("height", 4).attr("rx", 2).attr("fill", muted).attr("opacity", 0.7)
+    handle.append("title").text("Drag to resize the trend lines; double-click for the automatic size")
+    const stop = (e: Event) => e.stopPropagation()
+    handle.on("mousedown", stop).on("touchstart", stop).on("wheel", stop)
+      .on("dblclick", (e: MouseEvent) => { e.stopPropagation(); this.setDisplay({ trendHeight: 0 }); this.onTrendHeight(0) })
+      .on("pointerdown", (e: PointerEvent) => {
+        e.stopPropagation()
+        e.preventDefault()
+        const el = this.svg.node()!
+        const box = el.getBoundingClientRect()
+        const move = (ev: PointerEvent) => {
+          const share = Math.round(((box.bottom - ev.clientY) / this.h) * 1000) / 1000
+          this.setDisplay({ trendHeight: Math.max(0.06, Math.min(0.8, share)) })
+        }
+        const up = () => {
+          removeEventListener("pointermove", move)
+          removeEventListener("pointerup", up)
+          this.onTrendHeight(this.display.trendHeight)
+        }
+        addEventListener("pointermove", move)
+        addEventListener("pointerup", up)
+      })
     // One invisible layer on top catches the pointer for the tooltip, and
     // passes clicks through to the strip or chip under it.
     g.on("pointermove", (e: PointerEvent) => {

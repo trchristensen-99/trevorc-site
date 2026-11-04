@@ -1,4 +1,5 @@
 import "./style.css"
+import { Sandbox } from "./sandbox"
 import { dateLabel } from "./time"
 import { DETAIL_DEFAULT, DISPLAY_DEFAULTS, EFFORT_STOPS, KIND_COLORS, RISK_COLORS, ROUTE_COLORS, SERIES_COLORS, STATUS_COLORS, TreeView, effortColor, fmtValue, kindShape, seriesOf, type Display, type Filters } from "./tree"
 import type { Details, Metric, Models, Node, Pool, PoolInput, Quantiles, ResourceUse, Source, Supply, Tree } from "./types"
@@ -317,7 +318,7 @@ async function main() {
       if (el.dataset.opt === "colorBy") renderLegend()
     })
   $("#reset-display").addEventListener("click", () => {
-    setDisplay({ ...DISPLAY_DEFAULTS, detail: display.detail, trends: display.trends, trendLayout: display.trendLayout, grow: display.grow, frontier: display.frontier })
+    setDisplay({ ...DISPLAY_DEFAULTS, detail: display.detail, trends: display.trends, trendLayout: display.trendLayout, trendHeight: display.trendHeight, grow: display.grow, frontier: display.frontier })
     optControls.forEach(writeOpt)
     renderLegend()
   })
@@ -402,6 +403,19 @@ async function main() {
       info.hidden = true
       showing = ""
       view.select(null)
+    })
+    info.querySelectorAll<HTMLInputElement>("input[data-my]").forEach((inp) =>
+      inp.addEventListener("change", () => {
+        const n = view.selection
+        if (!n) return
+        const v = Object.fromEntries([...info.querySelectorAll<HTMLInputElement>("input[data-my]")].map((x) => [x.dataset.my, +x.value]))
+        editTo(n, [v.from, v.at, v.to], true)
+      }))
+    info.querySelector("[data-my-reset]")?.addEventListener("click", () => {
+      const n = view.selection
+      if (!n) return
+      sandbox.clear(n.id)
+      editTo(null, null, true)
     })
     info.querySelectorAll<HTMLAnchorElement>("a[data-node]").forEach((a) =>
       a.addEventListener("click", (e) => {
@@ -585,6 +599,12 @@ async function main() {
     const led = tree.edges.filter((e) => e.s === n.id && (e.kind === "requires" || e.kind === "uses")).map((e) => e.t)
     const open = n.status === "speculative" || n.status === "ongoing"
     const rows: string[] = []
+    if (editing && sandbox.editable(n.id)) {
+      const o = sandbox.originalOf(n.id)!
+      const mine = sandbox.edits.has(n.id)
+      const field = (k: string, v: number) => `<input type="number" step="1" data-my="${k}" value="${Math.round(v)}" aria-label="${k}">`
+      rows.push(`<dt>Yours</dt><dd class="my-dates">${field("from", n.from)} to ${field("to", n.to)}, best guess ${field("at", n.at)}<br><span class="note">The tree's: ${esc(dateLabel(o[0], o[2], o[1], now, true))}.${mine ? ` <button type="button" class="link" data-my-reset>Back to the tree's</button>` : lastMoved.has(n.id) ? " Moved by what it depends on." : ""}</span></dd>`)
+    }
     rows.push(`<dt>When</dt><dd>${esc(dateLabel(n.from, n.to, n.at, now, open))}${d.was != null && open ? `<br><span class="note">Best guess ${d.was} until November 2026${d.was > n.at ? ", moved earlier to allow for AI speeding up the work (What it takes)" : ", moved later as outside forecasts suggested"}.</span>` : ""}</dd>`)
     if (n.trendYear && open) rows.push(`<dt>Trend</dt><dd>${n.trendYear < now
       ? `Behind its trend line, which passed this level around ${Math.round(n.trendYear)}`
@@ -718,6 +738,83 @@ async function main() {
       <p class="note">Person-years (log scale) by year achieved, on the tree's time axis. Filled: research efforts (faded: rough estimates); squares: mostly building; diamonds: not yet achieved, effort so far. Lines: the fit for ${m.kinds.map((k, i) => `${k.name} (${["solid", "dashed", "dotted"][i]})`).join(", ")}; the band is one standard deviation.</p>`
   }
 
+  // How many times faster each kind of work goes, by year (log scale).
+  const PACE_COLORS: Record<string, string> = {
+    "ai-research": "#3d6fb6", software: "#2f8fb0", design: "#7b5ea7", experiments: "#4f9a4a", trials: "#d0587e", building: "#c9772a", adoption: "#6b7280",
+  }
+  const paceChart = (p: Models["forecasting"]["pace"]) => {
+    const W = 330, H = 190, L = 34, B = 20, T = 8, R = 96
+    const y1 = Math.ceil(Math.log10(Math.max(...Object.values(p.kinds).flatMap((v) => v.map((x) => x[1]))) * 1.05))
+    const px = (y: number) => L + ((y - p.years[0]) / (p.years.at(-1)! - p.years[0])) * (W - L - R)
+    const py = (v: number) => T + (1 - Math.log10(v) / y1) * (H - T - B)
+    const grid = Array.from({ length: y1 + 1 }, (_, i) => `<line x1="${L}" x2="${W - R}" y1="${py(10 ** i)}" y2="${py(10 ** i)}" class="grid"/><text x="${L - 4}" y="${py(10 ** i)}" class="ylab">${(10 ** i).toLocaleString("en-US")}×</text>`).join("")
+    const xt = [2030, 2050, 2075, 2100].filter((y) => y >= p.years[0] && y <= p.years.at(-1)!).map((y) => `<text x="${px(y)}" y="${H - 6}" class="xlab">${y}</text>`).join("")
+    const path = (vals: number[]) => vals.map((v, i) => `${i ? "L" : "M"}${px(p.years[i]).toFixed(1)},${py(v).toFixed(1)}`).join("")
+    const bandPath = "M" + [...p.all.map((x, i) => [px(p.years[i]), py(x[2])]), ...[...p.all].map((x, i) => [px(p.years[i]), py(x[0])]).reverse()].map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join("L") + "Z"
+    const ends: { y: number; text: string; color: string }[] = []
+    const lines = Object.entries(p.kinds).map(([w, v]) => {
+      const c = PACE_COLORS[w] ?? "var(--muted)"
+      ends.push({ y: py(v.at(-1)![1]), text: SHARE_WORD(w), color: c })
+      return `<path d="${path(v.map((x) => x[1]))}" fill="none" stroke="${c}" stroke-width="1.4"/>`
+    }).join("")
+    ends.push({ y: py(p.all.at(-1)![1]), text: "the whole", color: "var(--ink)" })
+    let last = -Infinity
+    const tags = ends.sort((a, b) => a.y - b.y).map((e) => {
+      const y = Math.max(e.y, last + 9)
+      last = y
+      return `<text x="${W - R + 4}" y="${y}" font-size="8.5" dominant-baseline="central" fill="${e.color}">${esc(e.text)}</text>`
+    }).join("")
+    return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="The pace of progress">${grid}${xt}<path d="${bandPath}" fill="var(--ink)" opacity="0.12"/>${lines}<path d="${path(p.all.map((x) => x[1]))}" fill="none" stroke="var(--ink)" stroke-width="2.2"/>${tags}</svg>`
+  }
+
+  // Your own dates: drag windows on the tree (or type them in a panel), and
+  // everything that depends on them moves with them. Kept in the link and
+  // in this browser.
+  const sandbox = new Sandbox(tree)
+  let editing = false
+  let lastMoved = new Set<string>()
+  const STORE = "tech-tree-mine"
+  const bar = $<HTMLDivElement>("#sandbox-bar")
+  const remember = () => {
+    try { localStorage.setItem(STORE, sandbox.encode()) } catch { /* storage blocked */ }
+  }
+  const editTo = (n: Node | null, d: [number, number, number] | null, done: boolean) => {
+    if (n && d) sandbox.set(n.id, d)
+    lastMoved = sandbox.apply(editing)
+    $("#sb-count").textContent = sandbox.edits.size ? `${sandbox.edits.size} moved by you, ${[...lastMoved].filter((id) => !sandbox.edits.has(id)).length} following` : ""
+    view.refresh()
+    if (done) {
+      remember()
+      saveSoon()
+      if (view.selection && showing.startsWith("node:")) void view.onSelect(view.selection)
+    }
+  }
+  const setEditing = (on: boolean) => {
+    editing = on
+    bar.hidden = !on
+    document.body.classList.toggle("editing", on)
+    view.setEditing(on)
+    editTo(null, null, true)
+  }
+  view.canEdit = (n) => editing && sandbox.editable(n.id)
+  view.onEdit = (n, d, done) => editTo(n, d, done)
+  $("#sandbox").addEventListener("click", () => setEditing(!editing))
+  $("#sb-exit").addEventListener("click", () => setEditing(false))
+  $("#sb-reset").addEventListener("click", () => {
+    sandbox.clear()
+    editTo(null, null, true)
+  })
+  $("#sb-copy").addEventListener("click", async () => {
+    save()
+    try {
+      await navigator.clipboard.writeText(location.href)
+      $("#sb-copy").textContent = "Copied"
+    } catch {
+      $("#sb-copy").textContent = "Copy the address bar"
+    }
+    setTimeout(() => ($("#sb-copy").textContent = "Copy link"), 1500)
+  })
+
   $("#models").addEventListener("click", async () => {
     view.select(null)
     const d = details ?? (await detailsReady)
@@ -767,6 +864,10 @@ async function main() {
       <p>Each technology's remaining work is split into kinds (AI research itself; software; design, theory and simulation on computers; lab, field and test-flight experiments; clinical trials, certification and regulatory review; building and scaling up; adoption, financing and changing institutions), by its track or on its own. Once an AI milestone arrives, and over its ramp, the kinds it helps go faster; by Amdahl's law the rest goes no faster, so a therapy that is mostly clinical trials gains little from faster design. Multipliers are my judgment, anchored on what has been measured so far, which is mostly coding; each technology's panel shows its split and how much it moves with the AI milestones.</p>
       <table class="t"><thead><tr><th>Mechanism</th><th>Speeds up</th></tr></thead><tbody>${mech}</tbody></table>
       <details class="forecasts"><summary>Why these multipliers</summary>${fcm.mechanisms.map((m) => `<p><strong>${esc(m.name)}.</strong> ${esc(m.note ?? "")}${m.sources?.length ? ` <span class="note">${m.sources.map((x) => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>`).join("; ")}</span>` : ""}</p>`).join("")}</details>
+      <h3>The pace of progress</h3>
+      ${paceChart(fcm.pace)}
+      <p>Across all ${fcm.draws.toLocaleString("en-US")} runs from the judgment, how many times faster each kind of work goes each year once the AI milestones arrive (medians), and the frontier as a whole (the band, 10 to 90 percent), for the average mix of remaining work: ${Object.entries(fcm.pace.mix).sort((a, b) => b[1] - a[1]).map(([w, v]) => `${esc(SHARE_WORD(w))} ${Math.round(v * 100)}%`).join(", ")}. Software and AI research can go hundreds of times faster, but the whole can't go faster than its slowest parts: with experiments, building, trials and adoption barely sped up, the frontier tops out at about ${fcm.pace.all.at(-1)![1].toFixed(1)} times its pace today. That ceiling, not the speed of thought, is what superintelligence would run into first, which is why the speedups that matter most for everything else are the ones for physical work: self-driving labs, human models in place of animals, robots building robots.</p>
+      <p class="note">Only mechanisms that apply everywhere are counted here; those limited to some fields (cheap launch, abundant clean power, shorter aging trials, AI materials) speed those fields further. Each technology's own split of work, and so its own ceiling, is in its panel.</p>
       <h3>Where the judgment and the pool disagree</h3>
       <p>Technologies whose best guess falls outside the pool's middle half, the biggest gaps first; those with outside forecasts come before those where only the base rate disagrees. Each is worth a second look, or a sentence in its forecast saying why it differs.</p>
       <table class="t est"><thead><tr><th></th><th>Tree</th><th>Pool</th></tr></thead><tbody>${est}</tbody></table>
@@ -796,7 +897,11 @@ async function main() {
   // #n=id selects a technology; #z=x,y,zoom keeps the view; d (detail), t
   // and tl (trend lines and layout) and OPT_KEYS keep the display options,
   // when they differ from the defaults.
-  const OPT_KEYS: Record<Opt, string> = { grow: "g", frontier: "f", links: "lk", colorBy: "cb", labels: "lb", nodeSize: "ns", bars: "br", trackNames: "tn", eras: "er", trendLayout: "tl" }
+  const OPT_KEYS: Record<Opt, string> = { grow: "g", frontier: "f", links: "lk", colorBy: "cb", labels: "lb", nodeSize: "ns", bars: "br", trackNames: "tn", eras: "er", trendLayout: "tl", trendHeight: "th" }
+  view.onTrendHeight = (share) => {
+    display.trendHeight = share
+    saveSoon()
+  }
   let pending = 0
   const save = () => {
     const h = new URLSearchParams()
@@ -810,6 +915,9 @@ async function main() {
       if (v !== DISPLAY_DEFAULTS[key as Opt]) h.set(short, typeof v === "boolean" ? (v ? "1" : "0") : String(v))
     }
     if (display.trends.length) h.set("t", display.trends.join(","))
+    if (editing) {
+      h.set("my", sandbox.encode())
+    }
     history.replaceState(null, "", `#${h}`.replace(/%2C/g, ","))
   }
   function saveSoon() {
@@ -848,6 +956,17 @@ async function main() {
     for (const id of t) trendBoxes.get(id)!.checked = true
     restored.trends = sortedMetrics.filter((m) => t.includes(m.id)).map((m) => m.id)
     ;($("#trends") as HTMLDetailsElement).open = true
+  }
+  // Your own dates from the link, or from this browser.
+  const my = h.get("my")
+  if (my != null) {
+    sandbox.decode(my)
+    setEditing(true)
+  } else {
+    try {
+      const kept = localStorage.getItem(STORE)
+      if (kept) sandbox.decode(kept)
+    } catch { /* storage blocked */ }
   }
   slider.value = String(restored.detail ?? DETAIL_DEFAULT)
   setDisplay(restored)

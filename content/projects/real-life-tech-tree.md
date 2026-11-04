@@ -70,7 +70,7 @@ Some lines of technology have a number that tracks them:
 
 For many technologies, how cheap or how good matters more than whether something is possible at all: solar cells worked in 1954 but changed the world only once they got cheap. So the tree tracks 23 measured series, and where there's a long enough one it fits a trend and reports how fast it doubles or halves. For solar, which has production data, it also fits a learning curve: how much the price falls each time cumulative production doubles.
 
-**Trend lines** shows any of these series along the bottom, on the same time axis as the tree, as strips or one combined chart. **Milestones** (flags) are thresholds on them that people actually talk about: the $1,000 genome, solar modules under 20 cents a watt, battery packs under $100 a kilowatt-hour, AI agents that can do a day's or a month's work. A milestone already passed is dated from the data; one not yet reached is dated by carrying the trend forward, unless there's a good reason to think the trend will bend, which its note explains. No window opens sooner than the series' fastest past improvement could get there from where it stands now.
+**Trend lines** shows any of these series along the bottom (drag the top edge of the panel to make them taller), on the same time axis as the tree, as strips or one combined chart. **Milestones** (flags) are thresholds on them that people actually talk about: the $1,000 genome, solar modules under 20 cents a watt, battery packs under $100 a kilowatt-hour, AI agents that can do a day's or a month's work. A milestone already passed is dated from the data; one not yet reached is dated by carrying the trend forward, unless there's a good reason to think the trend will bend, which its note explains. No window opens sooner than the series' fastest past improvement could get there from where it stands now.
 
 ## Forecasting
 
@@ -113,12 +113,17 @@ Each AI milestone speeds up the kinds it can help: a superhuman coder for softwa
 
 The speedups mostly don't come from AGI directly but through things it would make possible, which are on the tree as steps of their own:
 - self-driving labs at scale, running experiments around the clock;
-- virtual cell models, good enough to replace most screening experiments in biology;
-- a drug discovered by AI approved, and computer models accepted in place of some trial evidence;
+- virtual cell models, which would do what cell-line screens do now, on the computer, picking what's worth testing;
+- organoids and organ chips in place of animal tests, grown at scale in automated labs (clinical trials stay the standard of evidence);
+- a drug discovered by AI approved;
 - a material discovered by AI in commercial use;
 - robots building robots, so building is limited by materials and energy rather than labor.
 
 Each speeds up particular kinds of work in particular fields, and links to what it would help. Since most long-range windows were set without AI in mind, each was moved halfway from my earlier date to where it would come if AI arrives on schedule and speeds things up as modeled: even odds that it does. Whole-brain emulation moved from 2090 to about 2067, molecular nanotechnology from 2080 to 2061 and rejuvenation therapies from 2062 to 2054; the late end of every window stayed put, in case AI disappoints. Each technology's panel shows its earlier date.
+
+**The pace of progress.** Drawing an edge from superintelligence to everything it would speed up would bury the tree, so What it takes also shows the effect as a pace: across all the runs, how many times faster each kind of work goes, year by year. Software and AI research could go hundreds of times faster, but the frontier as a whole tops out around three and a half times its pace today, because most of what's left is experiments, building, trials and adoption, which thinking faster barely touches. That ceiling, not the speed of thought, is what superintelligence would run into first, and it's why the steps that matter most for everything else are the physical ones: labs that run themselves, human tissue in place of animals, robots that build robots. Fusion works the same way through abundant clean power, for the energy-hungry fields.
+
+**Your own dates.** The button of that name, beside **What it takes**, lets you drag any future window: its ends, the whole bar, or a technology's dot for its best guess (or type the years in its panel). Everything that depends on it moves with it, through what it needs and the AI milestones that speed it, by the same sums the simulation uses, and the life expectancy forecasts that assume a date for rejuvenation therapies shift with it. Push AGI back to 2040 and superintelligence follows to about 2042 and rejuvenation therapies to about 2056; bring it forward to 2028 and superintelligence comes around 2032. Your dates are kept in your browser and in the link, so **Copy link** shares your version of the tree.
 
 **First versus everyday.** A first commercial service and something everyday people use are often a decade apart, so robotaxis, quantum computers and air taxis now have both:
 - **Robotaxis:** a million rides a week by about 2027, against robotaxis carrying a tenth of ride-hail trips around 2031.
@@ -156,6 +161,7 @@ The forecasts draw on [Metaculus](https://www.metaculus.com/), the [AI Digest](h
 
 ## Changelog
 
+- **4 November 2026, later:** **Your own dates**, to move any future window and see what follows; the pace of progress; organoids and organ chips in place of animal tests, with computer models choosing what to test in them; a simpler aging and longevity track; resizable trend lines; the life expectancy forecasts follow the tree's date for rejuvenation therapies; abundant clean power from fusion speeds the energy-hungry fields.
 - **4 November 2026:** steps between AI and the rest of the frontier (self-driving labs at scale, virtual cell models, an AI-discovered drug and material, computer models in place of trials, robots building robots), each speeding up particular work and linked to what it helps; 51 long-range windows moved earlier to allow for AI; launch prices no longer extrapolated from a record line that moves in jumps; several dates moved toward the outside forecasts.
 - **31 October 2026:** forecasts compared for every future technology: about 90 outside forecasts (forecasters, markets, surveys, projections and announced targets), trends with ranges that widen with the horizon, and the tree simulated from base rates tested against history, pooled beside the judgment, with disagreements flagged. A model of how AI milestones would speed up each kind of work, and how much each technology moves with them. Superintelligence. Robotaxis, quantum computing and air taxis split into a first milestone and everyday use, with Waymo's weekly rides as a new trend line. Labels no longer overlap when a technology is selected.
 - **30 October 2026:** each inspiration now has its own page, with previews and a bar for switching between them; fixes to the Foresight copies (no stray ";" before every label, Highlight by Tag works for every tag, each tree opens on its title, a local copy of the Longevity editor). Labels no longer sit on top of other technologies or lane names, and flip to the left at the screen's edge.

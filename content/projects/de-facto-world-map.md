@@ -1,7 +1,7 @@
 ---
 title: De Facto World Map
 date: 2026-10-08
-modified: 2026-11-05
+modified: 2026-11-04
 importance: 5
 status: in progress
 tags:
@@ -85,8 +85,7 @@ The map data is released under the [Open Database License (ODbL) 1.0](https://op
 
 ## Changelog
 
-- **5 November 2026:** no more Ukrainian islands among the occupied municipalities of southern Kherson and the Kinburn peninsula, or Georgian slivers inside Abkhazia.
-- **4 November 2026:** fixed Czechia covering Slovakia, South Korea covering North Korea and Morocco covering the Polisario-held zone of Western Sahara (which also dropped some borders), and Ukraine turned inside out in the flat views; no more strips of Moldova along Transnistria's border; smoother borders on the world view; cities from Natural Earth with filters for capitals and cities by population, area and what's in view.
+- **4 November 2026:** fixed Czechia covering Slovakia, South Korea covering North Korea and Morocco covering the Polisario-held zone of Western Sahara (which also dropped some borders), and Ukraine turned inside out in the flat views; no more strips of Moldova along Transnistria's border; smoother borders on the world view; cities from Natural Earth with filters for capitals and cities by population, area and what's in view. Later the same day: no more Ukrainian islands among the occupied municipalities of southern Kherson and the Kinburn peninsula, or Georgian slivers inside Abkhazia.
 - **15 October 2026:** borders redrawn from OpenStreetMap, accurate to about 100 m, with full detail when zoomed in; the Philadelphi corridor, which separates Hamas-held Gaza from Egypt; map layers that combine like Google Maps' (base, terrain, country style, and OpenStreetMap features such as cities, states, parks, Indigenous lands and military areas); names for occupied, contested and insurgent regions; a layer of military bases abroad.
 - **15 October 2026:** satellite, terrain and street base maps on a 3D globe, with optional 3D terrain; downloads for Google Earth, Google My Maps and GIS tools.
 - **8 October 2026:** Houthi gains on the Red Sea coast and around Taiz, and a Yemeni front-line layer; Israel's occupation of southern Lebanon; a retraced Gaza yellow line on a more accurate outline of the Strip; Sudan, Somalia, Congo and Myanmar updated to late-September reporting; full-resolution borders when zoomed in; Mercator fixed.

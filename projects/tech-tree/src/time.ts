@@ -14,7 +14,12 @@ export function timeScale(tree: Tree) {
     return -v
   }
   const x = (year: number) => ((u(year) - uMin) / (uMax - uMin)) * width
-  return { x }
+  // The year at a position, for the future (from now on).
+  const year = (px: number) => {
+    const v = (px / width) * (uMax - uMin) + uMin
+    return v <= 0 ? now : now + tau * (10 ** (v / futureGain) - 1)
+  }
+  return { x, year }
 }
 
 const fmt = (n: number) => n.toLocaleString("en-US")

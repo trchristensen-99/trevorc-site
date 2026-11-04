@@ -36,9 +36,6 @@
 - id: crewed-mars-landing
   date: { window: [2032, 2060], likely: 2040 }
   was: 2043
-- id: lifespan-123
-  date: { window: [2031, 2080], likely: 2042 }
-  was: 2043
 - id: life-expectancy-90
   date: { window: [2041, 2053], likely: 2044 }
   was: 2046
@@ -51,9 +48,6 @@
 - id: launch-100-dollars-kg
   date: { window: [2030, 2055], likely: 2038 }
   was: 2040
-- id: life-expectancy-low-income-70
-  date: { window: [2035, 2085], likely: 2046 }
-  was: 2047
 - id: cultivated-meat-parity
   date: { window: [2034, 2070], likely: 2044 }
   was: 2048
@@ -63,9 +57,6 @@
 - id: life-expectancy-world-80
   date: { window: [2044, 2110], likely: 2072 }
   was: 2078
-- id: life-expectancy-65-30
-  date: { window: [2045, 2120], likely: 2073 }
-  was: 2080
 - id: whole-brain-emulation
   date: { window: [2037, 2160], likely: 2067 }
   was: 2090
@@ -132,12 +123,6 @@
 - id: solar-geoengineering
   date: { window: [2031, 2080], likely: 2048 }
   was: 2052
-- id: life-expectancy-65-world-20
-  date: { window: [2045, 2061], likely: 2050 }
-  was: 2052
-- id: life-expectancy-lower-middle-75
-  date: { window: [2036, 2094], likely: 2051 }
-  was: 2053
 - id: gigaton-carbon-removal
   date: { window: [2036, 2075], likely: 2049 }
   was: 2055
@@ -147,9 +132,6 @@
 - id: room-temperature-superconductor
   date: { window: [2028, 2100], likely: 2052 }
   was: 2065
-- id: life-expectancy-65-high-income-25
-  date: { window: [2045, 2090], likely: 2061 }
-  was: 2066
 - id: lifespan-125
   date: { window: [2034, 2130], likely: 2064 }
   was: 2070

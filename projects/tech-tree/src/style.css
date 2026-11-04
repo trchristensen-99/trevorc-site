@@ -193,3 +193,13 @@ body.folded.controls-open .controls { display: grid; }
 .info .flagnote { margin: 6px 0; padding: 4px 8px; border-left: 3px solid #c9772a; background: color-mix(in srgb, #c9772a 9%, transparent); border-radius: 0 6px 6px 0; font-size: 13px; }
 .info ul.fclist { list-style: none; padding: 0; display: grid; gap: 5px; font-size: 12.5px; margin: 6px 0; }
 .info .tag.flag { color: #c9772a; border-color: #c9772a; }
+
+/* Your own dates */
+#sandbox-bar { top: 12px; left: 50%; transform: translateX(-50%); padding: 6px 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; max-width: calc(100% - 24px); font-size: 13px; z-index: 5; }
+#sandbox-bar[hidden] { display: none; }
+#sandbox-bar button { font: inherit; font-size: 12.5px; padding: 3px 9px; border-radius: 6px; border: 1px solid var(--line); background: transparent; color: inherit; cursor: pointer; }
+#sandbox-bar button:hover { border-color: var(--accent); }
+body.editing #sandbox { border-color: var(--accent); color: var(--accent); }
+.info .my-dates input { width: 4.6em; font: inherit; font-size: 12.5px; padding: 1px 3px; border: 1px solid var(--line); border-radius: 4px; background: transparent; color: inherit; }
+.edit .win rect.lo, .edit .win rect.hi { opacity: 0.85; }
+.edit .win rect.body:active { cursor: grabbing; }
