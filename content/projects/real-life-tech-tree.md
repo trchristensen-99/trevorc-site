@@ -1,7 +1,7 @@
 ---
 title: Real Life Tech Tree
 date: 2026-10-27
-modified: 2026-10-31
+modified: 2026-11-04
 importance: 5
 status: in progress
 tags:
@@ -111,6 +111,15 @@ A pool averages them with fixed weights, more for forecasters with a track recor
 
 Each AI milestone speeds up the kinds it can help: a superhuman coder for software, AI-led science for design, robots for experiments, and AGI and superintelligence a little of everything. The rest goes no faster, by Amdahl's law. So rejuvenation therapies, which are mostly clinical trials, move only about five years between an early and a late superintelligence (around 2058 against 2063), while AI itself moves a lot. Two other links are not about AI: an accepted biomarker of aging shortens longevity trials, and cheap launch speeds work in space. Run from the judgment, the simulation answers questions like "if AGI comes early, what moves?". Run from base rates with these speedups, it puts whole-brain emulation and molecular nanotechnology decades earlier than I do, a sign of how much rides on AI speeding up science. Superintelligence is now on the tree too, about three years after AGI, with the forecasts that exist for that gap.
 
+The speedups mostly don't come from AGI directly but through things it would make possible, which are on the tree as steps of their own:
+- self-driving labs at scale, running experiments around the clock;
+- virtual cell models, good enough to replace most screening experiments in biology;
+- a drug discovered by AI approved, and computer models accepted in place of some trial evidence;
+- a material discovered by AI in commercial use;
+- robots building robots, so building is limited by materials and energy rather than labor.
+
+Each speeds up particular kinds of work in particular fields, and links to what it would help. Since most long-range windows were set without AI in mind, each was moved halfway from my earlier date to where it would come if AI arrives on schedule and speeds things up as modeled: even odds that it does. Whole-brain emulation moved from 2090 to about 2067, molecular nanotechnology from 2080 to 2061 and rejuvenation therapies from 2062 to 2054; the late end of every window stayed put, in case AI disappoints. Each technology's panel shows its earlier date.
+
 **First versus everyday.** A first commercial service and something everyday people use are often a decade apart, so robotaxis, quantum computers and air taxis now have both:
 - **Robotaxis:** a million rides a week by about 2027, against robotaxis carrying a tenth of ride-hail trips around 2031.
 - **Quantum computers:** a first useful quantum advantage in late 2027, against quantum computing in business use around 2033.
@@ -147,6 +156,7 @@ The forecasts draw on [Metaculus](https://www.metaculus.com/), the [AI Digest](h
 
 ## Changelog
 
+- **4 November 2026:** steps between AI and the rest of the frontier (self-driving labs at scale, virtual cell models, an AI-discovered drug and material, computer models in place of trials, robots building robots), each speeding up particular work and linked to what it helps; 51 long-range windows moved earlier to allow for AI; launch prices no longer extrapolated from a record line that moves in jumps; several dates moved toward the outside forecasts.
 - **31 October 2026:** forecasts compared for every future technology: about 90 outside forecasts (forecasters, markets, surveys, projections and announced targets), trends with ranges that widen with the horizon, and the tree simulated from base rates tested against history, pooled beside the judgment, with disagreements flagged. A model of how AI milestones would speed up each kind of work, and how much each technology moves with them. Superintelligence. Robotaxis, quantum computing and air taxis split into a first milestone and everyday use, with Waymo's weekly rides as a new trend line. Labels no longer overlap when a technology is selected.
 - **30 October 2026:** each inspiration now has its own page, with previews and a bar for switching between them; fixes to the Foresight copies (no stray ";" before every label, Highlight by Tag works for every tag, each tree opens on its title, a local copy of the Longevity editor). Labels no longer sit on top of other technologies or lane names, and flip to the left at the screen's edge.
 - **29 October 2026:** display options (color by field, status or kind; links; labels; node size; theme; date bars, track names and eras); trend lines no longer cover the tree; life expectancy at birth and at 65 by country income group, with UN and IHME projections. Later the same day: **What it takes**, with effort figures for about 200 technologies, models of effort and of the time after prerequisites, outside-view estimates for the frontier, and world supply data and supply-risk ratings for the resources, with how much of each technology needs; color the tree by supply risk or by effort. Then: copies of the Foresight Institute tech trees and Antimortality on an [inspirations page](/apps/tech-tree/inspirations/); steps and open problems for the biggest goals, with what else they'd help with; five new steps in longevity and preservation; a way to suggest changes.

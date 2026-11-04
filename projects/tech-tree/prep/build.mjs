@@ -849,7 +849,7 @@ const out = {
     x: round(n._x), y: round(n._y), z: round(n._z, 2), lane: (n.lane ?? n.fields[0]), track: n._track,
     ...(n.metric ? { metric: n.metric } : {}),
     ...(n.threshold ? { threshold: { metric: n.threshold.metric, value: Number(n.threshold.value), label: n.threshold.label, ...(n.threshold.series ? { series: n.threshold.series } : {}) } } : {}),
-    ...(n._trend && !n._trend.crossed ? { trendYear: round(n._trend.year) } : {}),
+    ...(n._trend && !n._trend.crossed && n.trend !== false ? { trendYear: round(n._trend.year) } : {}),
     ...(() => {
       if (!n.threshold || n.status === "achieved") return {}
       const line = lineFor(metricById.get(n.threshold.metric), n.threshold.series)
@@ -888,7 +888,7 @@ const eraDeep = (v, key = "") => {
   return v
 }
 const details = Object.fromEntries(kept.map((n) => [n.id, eraDeep({
-  date: n.date, summary: n.summary, criterion: n.criterion, efforts: n.efforts, effort: n.effort, forecast: n.forecast, lost: n.lost,
+  date: n.date, ...(n.was != null ? { was: n.was } : {}), summary: n.summary, criterion: n.criterion, efforts: n.efforts, effort: n.effort, forecast: n.forecast, lost: n.lost,
   scarcity: n.scarcity, note: n.note, sources: n.sources,
   ...(n._routes.length ? { routes: n._routes.map((r) => ({ name: r.name, note: r.note, requires: r.requires })) } : {}),
   ...(n._effort ? { effortCalc: { years: n._effort.years, people: n._effort.people, py: n._effort.py, work: n._effort.work, rough: n._effort.rough, ...(n._effort.py && !n._effort.open && n._effort.work === "research" && n._date.at >= EFFORT_FROM && effortFit ? { vsTrend: round(Math.log10(n._effort.py) - effortExpected(n._date.at, n.kind), 2) } : {}) } } : {}),
@@ -903,6 +903,7 @@ const details = Object.fromEntries(kept.map((n) => [n.id, eraDeep({
       inputs: r.inputs.map((i) => ({ ...i, weight: round(i.weight, 2), q: ys(i.q) })),
       sim: { outside: ys(r.sim.outside), base: ys(r.sim.base), judged: ys(r.sim.judged), ...(r.sim.early ? { early: true } : {}) },
       ...(r.cond ? { cond: mapVals(r.cond, (v) => round(v, 2)) } : {}),
+      ...(r.ifAI != null ? { ifAI: round(r.ifAI) } : {}),
       ...(r.accel ? { accel: { shares: mapVals(r.accel.shares, (v) => round(v, 2)), by: r.accel.by } } : {}),
     } }
   })(),
@@ -919,6 +920,12 @@ const details = Object.fromEntries(kept.map((n) => [n.id, eraDeep({
   })(),
 })]))
 fs.mkdirSync(OUT, { recursive: true })
+// The app asks for details.json with this hash of it, so a browser holding
+// an older copy can't pair it with a newer tree.json.
+{
+  const { createHash } = await import("node:crypto")
+  out.meta.details = createHash("sha1").update(JSON.stringify(details)).digest("hex").slice(0, 10)
+}
 fs.writeFileSync(path.join(OUT, "tree.json"), JSON.stringify(out, (k, v) => (k.startsWith("_") ? undefined : v)))
 fs.writeFileSync(path.join(OUT, "details.json"), JSON.stringify(details))
 

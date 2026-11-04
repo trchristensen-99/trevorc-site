@@ -1,0 +1,175 @@
+# Long-range windows moved earlier to allow for AI (November 2026). For each,
+# the build worked out when it would come if its window had ignored AI and
+# the AI milestones then arrived on their likely dates (forecast.mjs, ifAI),
+# and the best guess moved halfway there: even odds that transformative AI
+# arrives about on schedule and speeds things up as modeled. The window opens
+# earlier by the same amount; its late end stays, in case AI disappoints.
+# `was` keeps the earlier best guess, shown in the app.
+
+- id: aging-reversal
+  date: { window: [2037, 2110], likely: 2054 }
+  was: 2062
+- id: fusion-power
+  date: { window: [2032, 2060], likely: 2038 }
+  was: 2040
+- id: longevity-escape-velocity
+  date: { window: [2040, 2150], likely: 2060 }
+  was: 2070
+- id: molecular-nanotechnology
+  date: { window: [2036, 2140], likely: 2061 }
+  was: 2080
+- id: whole-mouse-connectome
+  date: { window: [2029, 2045], likely: 2035 }
+  was: 2036
+- id: aging-drug-approved
+  date: { window: [2032, 2055], likely: 2038 }
+  was: 2040
+- id: systemic-reprogramming
+  date: { window: [2032, 2060], likely: 2041 }
+  was: 2044
+- id: lab-grown-solid-organ
+  date: { window: [2032, 2060], likely: 2042 }
+  was: 2045
+- id: reversible-suspended-animation
+  date: { window: [2043, 2200], likely: 2073 }
+  was: 2090
+- id: crewed-mars-landing
+  date: { window: [2032, 2060], likely: 2040 }
+  was: 2043
+- id: lifespan-123
+  date: { window: [2031, 2080], likely: 2042 }
+  was: 2043
+- id: life-expectancy-90
+  date: { window: [2041, 2053], likely: 2044 }
+  was: 2046
+- id: programmable-molecular-assembler
+  date: { window: [2030, 2075], likely: 2043 }
+  was: 2048
+- id: lunar-base
+  date: { window: [2030, 2055], likely: 2038 }
+  was: 2040
+- id: launch-100-dollars-kg
+  date: { window: [2030, 2055], likely: 2038 }
+  was: 2040
+- id: life-expectancy-low-income-70
+  date: { window: [2035, 2085], likely: 2046 }
+  was: 2047
+- id: cultivated-meat-parity
+  date: { window: [2034, 2070], likely: 2044 }
+  was: 2048
+- id: mars-settlement
+  date: { window: [2042, 2130], likely: 2062 }
+  was: 2075
+- id: life-expectancy-world-80
+  date: { window: [2044, 2110], likely: 2072 }
+  was: 2078
+- id: life-expectancy-65-30
+  date: { window: [2045, 2120], likely: 2073 }
+  was: 2080
+- id: whole-brain-emulation
+  date: { window: [2037, 2160], likely: 2067 }
+  was: 2090
+- id: life-expectancy-100
+  date: { window: [2041, 2160], likely: 2081 }
+  was: 2090
+- id: organ-banking
+  date: { window: [2031, 2050], likely: 2037 }
+  was: 2038
+- id: small-mammal-cryorevival
+  date: { window: [2032, 2100], likely: 2052 }
+  was: 2060
+- id: mars-propellant-production
+  date: { window: [2031, 2060], likely: 2038 }
+  was: 2040
+- id: tritium-breeding-blanket
+  date: { window: [2031, 2050], likely: 2038 }
+  was: 2040
+- id: positional-assembly-3d
+  date: { window: [2031, 2070], likely: 2041 }
+  was: 2045
+- id: closed-loop-life-support
+  date: { window: [2031, 2065], likely: 2041 }
+  was: 2045
+- id: mouse-brain-emulation
+  date: { window: [2033, 2075], likely: 2045 }
+  was: 2052
+- id: human-connectome
+  date: { window: [2034, 2100], likely: 2051 }
+  was: 2062
+- id: ten-dollar-genome
+  date: { window: [2030, 2048], likely: 2036 }
+  was: 2038
+- id: molten-salt-thorium
+  date: { window: [2032, 2050], likely: 2037 }
+  was: 2038
+- id: lunar-water-mining
+  date: { window: [2028, 2050], likely: 2036 }
+  was: 2038
+- id: green-hydrogen
+  date: { window: [2031, 2055], likely: 2038 }
+  was: 2040
+- id: smr-series-production
+  date: { window: [2031, 2050], likely: 2038 }
+  was: 2040
+- id: bci-at-scale
+  date: { window: [2035, 2060], likely: 2042 }
+  was: 2045
+- id: nitrogen-fixing-cereals
+  date: { window: [2031, 2065], likely: 2041 }
+  was: 2045
+- id: cereal-yield-5-tonnes
+  date: { window: [2034, 2056], likely: 2041 }
+  was: 2045
+- id: space-based-solar
+  date: { window: [2031, 2065], likely: 2043 }
+  was: 2047
+- id: c4-rice
+  date: { window: [2033, 2065], likely: 2043 }
+  was: 2048
+- id: asteroid-mining
+  date: { window: [2029, 2080], likely: 2044 }
+  was: 2050
+- id: solar-geoengineering
+  date: { window: [2031, 2080], likely: 2048 }
+  was: 2052
+- id: life-expectancy-65-world-20
+  date: { window: [2045, 2061], likely: 2050 }
+  was: 2052
+- id: life-expectancy-lower-middle-75
+  date: { window: [2036, 2094], likely: 2051 }
+  was: 2053
+- id: gigaton-carbon-removal
+  date: { window: [2036, 2075], likely: 2049 }
+  was: 2055
+- id: synthetic-mammalian-genome
+  date: { window: [2035, 2080], likely: 2048 }
+  was: 2058
+- id: room-temperature-superconductor
+  date: { window: [2028, 2100], likely: 2052 }
+  was: 2065
+- id: life-expectancy-65-high-income-25
+  date: { window: [2045, 2090], likely: 2061 }
+  was: 2066
+- id: lifespan-125
+  date: { window: [2034, 2130], likely: 2064 }
+  was: 2070
+- id: progressive-brain-replacement
+  date: { window: [2034, 2150], likely: 2069 }
+  was: 2085
+- id: interstellar-probe
+  date: { window: [2035, 2200], likely: 2075 }
+  was: 2100
+
+# Not AI: SpaceX's ship-to-ship transfer has slipped from 2025 to 2027, and
+# announced dates like it usually slip further (forecasts compared).
+- id: starship-orbital-refueling
+  date: { window: [2027.5, 2032], likely: 2028.7 }
+  was: 2028
+
+# The record line of launch prices moves in jumps (a new vehicle every few
+# decades: Saturn V in 1967, then nothing cheaper until Falcon 9 in 2010), so
+# carrying it forward as a steady trend gives nonsense (median about 2105,
+# upper quartile after 2270). Its forecasts compared use published
+# forecasts instead.
+- id: launch-100-dollars-kg
+  trend: false

@@ -73,21 +73,76 @@ mechanisms:
 
   - id: lab-robots
     name: Automated experiments
-    from: general-purpose-robots
-    speedup: { experiments: 3, building: 1.5 }
-    ramp: 4
+    from: autonomous-labs
+    speedup: { experiments: 3 }
+    ramp: 3
     note: >-
-      Robots that can run lab work and build things let experiments run day
-      and night at scale. Across published self-driving lab studies, the
-      median cut in experiments needed to reach a target was 6 times; each
-      experiment still takes as long as its chemistry or biology does, so
-      the calendar gain is smaller. Building gains more slowly, as robots
-      have to be made and deployed first.
+      Self-driving labs run experiments day and night and choose each next
+      one from the last. Across published studies, the median cut in
+      experiments needed to reach a target was 6 times; each experiment
+      still takes as long as its chemistry or biology does, so the calendar
+      gain is smaller.
     sources:
       - title: Benchmarking self-driving labs (arXiv 2508.06642)
         url: https://arxiv.org/pdf/2508.06642
       - title: Szymanski et al., An autonomous laboratory for the accelerated synthesis of novel materials (A-Lab), Nature 2023
         url: https://pmc.ncbi.nlm.nih.gov/articles/PMC10700133
+
+  - id: robot-work
+    name: Robots at work
+    from: general-purpose-robots
+    speedup: { building: 1.5, experiments: 1.3 }
+    ramp: 4
+    note: >-
+      General-purpose robots take on construction, assembly and lab chores,
+      but they have to be made and deployed first, so the gain is modest
+      until robots build robots.
+
+  - id: virtual-cells
+    name: Experiments on virtual cells
+    from: virtual-cell
+    speedup: { experiments: 2, design: 1.5 }
+    ramp: 3
+    only: { tracks: [molecular-biology, synthetic-biology, life-science, genetic-medicine, drugs, longevity, surgery-organs, neurotech] }
+    note: >-
+      A model that predicts what a perturbation will do lets biologists
+      screen on the computer and run only the confirming experiments; half
+      the experiments is my judgment.
+
+  - id: in-silico-evidence
+    name: Smaller, faster trials
+    from: in-silico-trials
+    speedup: { trials: 1.5 }
+    ramp: 4
+    only: { tracks: [genetic-medicine, drugs, longevity, surgery-organs, neurotech] }
+    note: >-
+      Validated computer models in place of some control patients and some
+      studies make trials smaller and quicker to fill; trials that need years
+      of follow-up still take years. A third off is my judgment.
+
+  - id: ai-materials
+    name: AI materials discovery
+    from: ai-discovered-material
+    speedup: { design: 2, experiments: 1.5 }
+    ramp: 3
+    only: { tracks: [modern-materials, nanotech, storage-fuels, renewables, components, chipmaking, nuclear-energy, nuclear-particle, quantum-atomic] }
+    note: >-
+      Once AI-led searches routinely find materials that work, finding a
+      better electrolyte, magnet, superconductor or wall material for a
+      reactor becomes faster, though qualifying it still takes time.
+
+  - id: robot-industry
+    name: Robots building robots
+    from: robots-build-robots
+    speedup: { building: 3 }
+    ramp: 5
+    note: >-
+      When robots make robots, building is limited by materials, energy and
+      permits rather than labor. Three times as fast is a judgment; the
+      industrial explosion argument says far more is possible.
+    sources:
+      - title: Davidson and Hadshar, The industrial explosion (Forethought, 2025)
+        url: https://www.forethought.org/research/the-industrial-explosion
 
   - id: agi
     name: General AI

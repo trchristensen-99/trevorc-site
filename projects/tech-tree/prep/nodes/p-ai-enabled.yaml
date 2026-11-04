@@ -1,0 +1,266 @@
+# Part P: what AI would make possible, and through which the rest of the
+# frontier would speed up (see acceleration.yaml, where each of these is a
+# mechanism). Status as of 2026-11-04.
+
+- id: autonomous-labs
+  name: Self-driving labs at scale
+  kind: infrastructure
+  fields: [society, computing]
+  track: research
+  date: { window: [2027.5, 2038], likely: 2031 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Laboratories where AI decides what to try and robots do the work, so
+    experiments run around the clock and each result feeds the next. A few
+    exist (Berkeley's A-Lab, Lila Sciences, Emerald Cloud Lab, Periodic
+    Labs), mostly in chemistry and materials, with people still moving
+    samples between some instruments.
+  requires: [ai-agents, robot-foundation-models]
+  helped_by: [general-purpose-robots, superhuman-coder]
+  criterion: >-
+    Labs where AI plans the experiments and robots run them, with no person
+    handling samples, together run at least a million experiments a year
+    across at least ten organizations, in chemistry, materials or biology.
+  efforts:
+    - who: Lila Sciences; Periodic Labs; FutureHouse and Edison Scientific
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Lila reported screening 2,942 catalysts in three months; Periodic Labs had published no throughput figures.
+    - who: Lawrence Berkeley National Laboratory (A-Lab); Emerald Cloud Lab; Ginkgo Bioworks
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: A-Lab made 41 of 58 target compounds in 17 days in 2023, though critics found most were known phases.
+  forecast:
+    note: >-
+      Across published self-driving lab studies, the median cut in the
+      number of experiments needed to reach a target was six times, and the
+      field is growing fast with venture money, but most labs still run
+      hundreds or thousands of experiments a year, not millions, and need
+      people for setup and sample handling. Cheaper general-purpose robots
+      and AI agents that can run long projects would both push this along.
+      Judgment: about 2031.
+    sources:
+      - title: Benchmarking self-driving labs (arXiv 2508.06642)
+        url: https://arxiv.org/pdf/2508.06642
+      - title: Szymanski et al., An autonomous laboratory for the accelerated synthesis of novel materials, Nature 2023
+        url: https://pmc.ncbi.nlm.nih.gov/articles/PMC10700133
+      - title: Lila Sciences, how an AI-run lab cracked open green hydrogen's catalyst problem
+        url: https://www.lila.ai/news/how-an-ai-run-lab-cracked-open-green-hydrogens-catalyst-problem
+  sources:
+    - title: Benchmarking self-driving labs (arXiv 2508.06642)
+      url: https://arxiv.org/pdf/2508.06642
+
+- id: virtual-cell
+  name: Virtual cell models
+  kind: technique
+  fields: [biology, computing]
+  track: life-science
+  date: { window: [2029, 2048], likely: 2035 }
+  status: speculative
+  tier: 2
+  summary: >-
+    AI models of human cells good enough to predict what a gene edit or a
+    drug will do before anyone runs the experiment, so most screening moves
+    from the bench to the computer. Single-cell sequencing now measures
+    millions of cells, the data such models learn from.
+  requires: [single-cell-rna-seq, frontier-models]
+  helped_by: [autonomous-labs, agi]
+  criterion: >-
+    An AI model predicts how human cells respond to genetic or drug
+    perturbations it hasn't seen, in cell types it wasn't trained on,
+    across the whole transcriptome, about as well as repeating the
+    experiment does, and drug or biology labs use it to replace most of
+    their screening experiments.
+  efforts:
+    - who: Arc Institute (Virtual Cell Challenge); Chan Zuckerberg Initiative; Google DeepMind and others
+      where: USA, UK
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Bunne and colleagues set out the goal in 2024, and the Arc Institute
+      ran its first Virtual Cell Challenge in 2025, where models struggled to
+      beat simple baselines at predicting unseen perturbations. The data is
+      growing fast and AI that can design its own experiments would close
+      the loop. Judgment: mid 2030s, sooner with an early AGI.
+    sources:
+      - title: Bunne et al., How to build the virtual cell with artificial intelligence, Cell 2024
+        url: https://doi.org/10.1016/j.cell.2024.11.015
+      - title: Arc Institute, Virtual Cell Challenge
+        url: https://virtualcellchallenge.org/
+  sources:
+    - title: Bunne et al., How to build the virtual cell with artificial intelligence, Cell 2024
+      url: https://doi.org/10.1016/j.cell.2024.11.015
+
+- id: ai-designed-drug-approved
+  name: A drug discovered by AI approved
+  kind: technique
+  fields: [medicine, computing]
+  track: drugs
+  date: { window: [2028, 2035], likely: 2030 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    The first approved medicine whose target and molecule were both found
+    mainly by AI. AI-discovered molecules have passed early trials at higher
+    rates than usual, though phase 2 success has been about the same.
+  requires: [protein-structure-prediction]
+  helped_by: [autonomous-labs]
+  criterion: >-
+    The FDA, EMA or China's NMPA approves a drug whose biological target and
+    molecule were both found mainly by AI.
+  efforts:
+    - who: Insilico Medicine (rentosertib)
+      where: USA, China
+      when: 2025
+      outcome: ongoing
+      note: A positive phase 2a in idiopathic pulmonary fibrosis, published in Nature Medicine in June 2025.
+    - who: Isomorphic Labs, Recursion, Iambic and others
+      where: UK, USA
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Insilico reports getting from target to drug candidate in 12 to 18
+      months against an industry 2.5 to 4 years; AI-discovered molecules
+      have passed phase 1 at 75 to 90 percent against about 52 percent for
+      others, but phase 2 at about the usual rate. The most advanced
+      programs still need larger trials, typically two to four years, then
+      review. Judgment: about 2030.
+    sources:
+      - title: Insilico Medicine, rentosertib phase 2a results (Nature Medicine, June 2025)
+        url: https://www.eurekalert.org/news-releases/1086096
+      - title: IQVIA Institute, Global R&D trends 2026
+        url: https://www.iqvia.com/blogs/2026/05/iqvia-institutes-global-r-and-d-trends-2026-report-finds-credible-signal-on-ai-enabled-programs
+  sources:
+    - title: Insilico Medicine, rentosertib phase 2a results (Nature Medicine, June 2025)
+      url: https://www.eurekalert.org/news-releases/1086096
+
+- id: in-silico-trials
+  name: Computer models accepted in place of trials
+  kind: institution
+  fields: [medicine, society]
+  track: drugs
+  date: { window: [2027.5, 2042], likely: 2032 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Regulators accepting validated computer models (digital twins of
+    patients, or simulations of a drug's effects) as evidence in place of
+    some animal studies, trial patients or whole studies, which would make
+    trials smaller and faster.
+  requires: [randomized-controlled-trial, frontier-models]
+  helped_by: [virtual-cell]
+  criterion: >-
+    The FDA or EMA approves a new drug or device on evidence in which a
+    validated computer model replaces at least a quarter of a trial's
+    control group or an entire required clinical study.
+  efforts:
+    - who: Unlearn (digital twins of trial patients); FDA
+      where: USA, EU
+      when: 2025
+      outcome: ongoing
+      note: EMA qualified Unlearn's method for shrinking control groups in 2022; the FDA said in April 2025 it would phase out animal testing requirements for monoclonal antibodies, using AI models among other methods.
+  forecast:
+    note: >-
+      Regulators have started with what comes before trials: in April 2025
+      the FDA announced a plan to replace animal testing for antibodies and
+      other drugs with computer models and lab methods. Replacing patients
+      needs models validated against many past trials and a regulator
+      willing to rely on them for a pivotal decision. Judgment: early
+      2030s, faster if AI-designed trials prove themselves.
+    sources:
+      - title: FDA announces plan to phase out animal testing requirement for monoclonal antibodies and other drugs (April 2025)
+        url: https://www.fda.gov/news-events/press-announcements/fda-announces-plan-phase-out-animal-testing-requirement-monoclonal-antibodies-and-other-drugs
+  sources:
+    - title: FDA announces plan to phase out animal testing requirement for monoclonal antibodies and other drugs (April 2025)
+      url: https://www.fda.gov/news-events/press-announcements/fda-announces-plan-phase-out-animal-testing-requirement-monoclonal-antibodies-and-other-drugs
+
+- id: ai-discovered-material
+  name: A material discovered by AI in commercial use
+  kind: technique
+  fields: [materials, computing]
+  track: modern-materials
+  date: { window: [2028, 2042], likely: 2032 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    A new material found by an AI-led search, screening millions of
+    candidates by computer and testing the best in automated labs, put to
+    work in a product. Claims so far have outrun results: most of the
+    hundreds of thousands of crystals AI has proposed were known or
+    unremarkable.
+  requires: [frontier-models]
+  helped_by: [autonomous-labs]
+  criterion: >-
+    A material found mainly by an AI-led search (computational screening
+    plus automated synthesis and testing) goes into a commercially sold
+    product, such as a battery electrolyte, catalyst, magnet or
+    semiconductor.
+  efforts:
+    - who: Microsoft and Pacific Northwest National Laboratory
+      where: USA
+      when: 2024
+      outcome: ongoing
+      note: Screened 32 million candidates by computer and made a sodium-lithium electrolyte using about 70 percent less lithium in prototype cells.
+    - who: Google DeepMind (GNoME); Lila Sciences; Periodic Labs
+      where: USA, UK
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      From a lab prototype, a new battery or catalyst material typically
+      takes five to ten years to reach products, for scale-up, durability
+      testing and qualification. Automated labs could compress the testing.
+      Judgment: early 2030s.
+    sources:
+      - title: Chen et al., Accelerating computational materials discovery with artificial intelligence and cloud high-performance computing (arXiv 2401.04070)
+        url: https://arxiv.org/abs/2401.04070
+      - title: Cheetham and Seshadri, Artificial intelligence driving materials discovery? Perspective on the article Scaling deep learning for materials discovery
+        url: https://pmc.ncbi.nlm.nih.gov/articles/PMC11044265
+  sources:
+    - title: Chen et al., Accelerating computational materials discovery with artificial intelligence and cloud high-performance computing (arXiv 2401.04070)
+      url: https://arxiv.org/abs/2401.04070
+
+- id: robots-build-robots
+  name: Robots building robots
+  kind: infrastructure
+  fields: [engineering, computing]
+  track: machines
+  date: { window: [2031, 2060], likely: 2039 }
+  status: speculative
+  tier: 2
+  summary: >-
+    Factories where robots directed by AI do nearly all the work of making
+    more robots, so the number of robots, and of everything they build,
+    can grow as fast as materials and energy allow: what some economists
+    call an industrial explosion.
+  requires: [general-purpose-robots]
+  helped_by: [agi, artificial-superintelligence]
+  criterion: >-
+    Robots directed by AI do nearly all the work of making and assembling
+    general-purpose robots in at least one large factory network, and world
+    output of such robots doubles at least every two years for five years
+    running.
+  efforts:
+    - who: Tesla (Optimus); Figure; Unitree, UBTech and other Chinese makers
+      where: USA, China
+      when: 2026
+      outcome: ongoing
+      note: Humanoid makers plan to use their own robots in their factories; output was in the thousands to tens of thousands a year in 2026.
+  forecast:
+    note: >-
+      Davidson and Hadshar (Forethought, 2025) argue that AI able to direct
+      robots could make physical industry grow far faster than ever before,
+      once robots can build robots and the factories that make them. It needs
+      general-purpose robots at work first (about 2032 here) and probably
+      AGI to direct them. Judgment: late 2030s, very uncertain.
+    sources:
+      - title: Davidson and Hadshar, The industrial explosion (Forethought, 2025)
+        url: https://www.forethought.org/research/the-industrial-explosion
+  sources:
+    - title: Davidson and Hadshar, The industrial explosion (Forethought, 2025)
+      url: https://www.forethought.org/research/the-industrial-explosion

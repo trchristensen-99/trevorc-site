@@ -40,6 +40,7 @@ export interface Node {
 // The text of each node, loaded after the tree is drawn.
 export interface Details {
   date: unknown
+  was?: number // the best guess before it was last revised
   summary?: string
   criterion?: string
   efforts?: Effort[]
@@ -181,6 +182,7 @@ export interface Scenario {
 export interface Tree {
   meta: {
     built: string
+    details?: string // hash of details.json, to fetch the matching copy
     now: number
     width: number
     height: number

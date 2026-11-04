@@ -213,7 +213,7 @@ async function main() {
   })
   // The text loads after the tree is drawn.
   let details: Record<string, Details> | null = null
-  const detailsReady: Promise<Record<string, Details>> = fetch("./data/details.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})).then((d) => (details = d))
+  const detailsReady: Promise<Record<string, Details>> = fetch(`./data/details.json${tree.meta.details ? `?v=${tree.meta.details}` : ""}`).then((r) => (r.ok ? r.json() : {})).catch(() => ({})).then((d) => (details = d))
   const detail = async (id: string): Promise<Details> => (details ?? (await detailsReady))[id] ?? ({} as Details)
 
   const byId = new Map(tree.nodes.map((n) => [n.id, n]))
@@ -585,7 +585,7 @@ async function main() {
     const led = tree.edges.filter((e) => e.s === n.id && (e.kind === "requires" || e.kind === "uses")).map((e) => e.t)
     const open = n.status === "speculative" || n.status === "ongoing"
     const rows: string[] = []
-    rows.push(`<dt>When</dt><dd>${esc(dateLabel(n.from, n.to, n.at, now, open))}</dd>`)
+    rows.push(`<dt>When</dt><dd>${esc(dateLabel(n.from, n.to, n.at, now, open))}${d.was != null && open ? `<br><span class="note">Best guess ${d.was} until November 2026${d.was > n.at ? ", moved earlier to allow for AI speeding up the work (What it takes)" : ", moved later as outside forecasts suggested"}.</span>` : ""}</dd>`)
     if (n.trendYear && open) rows.push(`<dt>Trend</dt><dd>${n.trendYear < now
       ? `Behind its trend line, which passed this level around ${Math.round(n.trendYear)}`
       : `The trend alone gets there around ${Math.round(n.trendYear)}`}</dd>`)

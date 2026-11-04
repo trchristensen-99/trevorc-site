@@ -752,3 +752,12 @@ air-taxis-everyday:
     median: 2030
     match: looser
     note: Deliveries, not aircraft carrying passengers on routes in 20 cities, so the bar here comes later.
+launch-100-dollars-kg:
+  - title: "Citi GPS, Space: The Dawn of a New Age (May 2022): launch costs about $100 a kilogram by 2040"
+    url: https://www.citigroup.com/global/insights/space_20220509
+    kind: model
+    asof: 2022-05
+    median: 2040
+    q10: 2034
+    match: same
+    note: Base case about $100 a kilogram by 2040, down about 95 percent from $1,500, from reusability and scale; a bull case of about $33 a kilogram (so $100 sooner, my reading for the 10th percentile) and, in secondary reporting, a bear case of about $300 if rockets are reused only about ten times.

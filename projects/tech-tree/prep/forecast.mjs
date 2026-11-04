@@ -201,8 +201,10 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
     const w = line && walkOf(line)
     if (!w || line.points.some(([, y]) => (line.better === "lower" ? y <= n.threshold.value : y >= n.threshold.value))) return null
     // The data has fallen behind its own trend line, which says this
-    // should already have happened: the trend is no guide.
+    // should already have happened: the trend is no guide. A milestone can
+    // also say so itself (`trend: false`), where its line moves in jumps.
     if (n._trend && !n._trend.crossed && n._trend.year < NOW - 2) return null
+    if (n.trend === false) return null
     return { q: walkCrossing(w, Number(n.threshold.value), line.better), record: w.T, r2: line.trend.r2, last: w.t0, scenarios: line.scenarios ?? [] }
   }
 
@@ -403,6 +405,19 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
     calib.set(n.id, { a, med: Math.max(0.1, med), sLo: Math.max(0.05, (0.75 * lo) / -Z[0.1]), sHi: Math.max(0.05, (0.75 * hi) / Z[0.9]), early: n._date.at < start - 0.25, start })
   }
 
+  // If a window had ignored AI: its time after what it needs is then work
+  // at today's pace, and with the AI milestones at their likely dates it
+  // comes sooner. Worked through in order, so earlier prerequisites carry
+  // forward. Used to revisit judgments, not in the pool.
+  const ifAI = new Map()
+  for (const n of order) {
+    const a = accelOf(n)
+    const dateOf = (id) => ifAI.get(id) ?? likely(id)
+    const start0 = Math.max(NOW, readyOf(n, likely)), start = Math.max(NOW, readyOf(n, dateOf))
+    const work = Math.max(0, n._date.at - start0)
+    ifAI.set(n.id, a ? finish(a, start, work, likely) : start + work)
+  }
+
   const simulate = (mode, seed, withAI = true) => {
     const rand = rng(seed)
     const draws = new Map(order.map((n) => [n.id, new Float64Array(DRAWS)]))
@@ -548,6 +563,7 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
       judged: J, pooled, inputs, flag, outsideOnly,
       sim: { outside, base: summarize(sims.base.get(n.id)), judged: summarize(sims.judged.get(n.id)), early: calib.get(n.id)?.early || undefined },
       cond: conditional(n),
+      ifAI: ifAI.get(n.id),
       accel: accelOf(n) && { shares: accelOf(n).shares, by: accelOf(n).mech.map((m) => m.id) },
     })
   }

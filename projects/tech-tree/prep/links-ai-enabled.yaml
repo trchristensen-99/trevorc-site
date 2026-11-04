@@ -1,0 +1,16 @@
+# What the AI-enabled steps (nodes/p-ai-enabled.yaml) would help, beyond
+# the speedups in acceleration.yaml. 2026-11-04.
+- {id: ai-autonomous-science, helped_by: [autonomous-labs]}
+- {id: aging-reversal, helped_by: [virtual-cell, ai-designed-drug-approved]}
+- {id: systemic-reprogramming, helped_by: [virtual-cell]}
+- {id: aging-drug-approved, helped_by: [ai-designed-drug-approved, in-silico-trials]}
+- {id: lab-grown-solid-organ, helped_by: [autonomous-labs, virtual-cell]}
+- {id: room-temperature-superconductor, helped_by: [ai-discovered-material, autonomous-labs]}
+- {id: solid-state-batteries, helped_by: [ai-discovered-material]}
+- {id: molecular-nanotechnology, helped_by: [autonomous-labs, artificial-superintelligence]}
+- {id: programmable-molecular-assembler, helped_by: [autonomous-labs]}
+- {id: whole-brain-emulation, helped_by: [artificial-superintelligence]}
+- {id: mars-settlement, helped_by: [robots-build-robots]}
+- {id: lunar-base, helped_by: [robots-build-robots]}
+- {id: asteroid-mining, helped_by: [robots-build-robots]}
+- {id: fusion-power, helped_by: [ai-discovered-material]}
