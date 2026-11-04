@@ -16,7 +16,12 @@ export interface Entity {
   color: string
   label?: [number, number]
   km2?: number
+  pop?: number // people it governs (estimated; see prep/places.mjs)
 }
+
+// One of the map's cities: [name, lon, lat, population, the zoom it shows
+// from, controller, 1 if it's the controller's capital].
+export type City = [string, number, number, number, number, string, 0 | 1]
 
 // How an area is held. "control" is ordinary governance; the rest get
 // their own fill treatment on the map.

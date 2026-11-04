@@ -13,6 +13,7 @@ const NE_LAYERS = [
   "admin_0_disputed_areas",
   "admin_0_antarctic_claims",
   "admin_1_states_provinces",
+  "populated_places",
 ]
 
 async function download(url, dest) {

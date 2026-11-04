@@ -12,7 +12,7 @@ npm run build   # writes ../data (about 5 minutes; the border step is cached)
 
 ## What goes in
 
-- `raw/ne/`: Natural Earth 1:10m countries, disputed areas and provinces. It
+- `raw/ne/`: Natural Earth 1:10m countries, disputed areas, provinces and populated places. It
   decides who holds what, since it draws de facto lines and features such as
   Somaliland or Northern Cyprus.
 - `raw/overture/`: OpenStreetMap's country borders by way of Overture Maps.
@@ -32,6 +32,7 @@ The curated files:
 - `areas.json`: every place where control differs from the base map, in order.
   Each area is carved out of whatever it overlaps.
 - `claims.json`, `presence.json`, `bases.json`, `bases-abroad.json`.
+- `capitals.json`: seats of government Natural Earth doesn't mark for the entity that holds them (Tiraspol, Aden, Benghazi, Goma...). The rest come from Natural Earth's populated places, given to whoever controls the ground they're on (`places.mjs`).
 - `zones/`: hand-drawn or traced shapes that areas refer to.
 
 ## Drawing an area
@@ -75,6 +76,7 @@ within about 300 m.
 - `map.topo.json`: simplified to 6 km, for the atlas and the first view.
 - `map-hi.topo.json`: 300 m, for the globe and Mercator views.
 - `cells/`: full detail, one file per zoom-6 map tile, loaded as you zoom in.
+- `cities.json`: every Natural Earth place with its population, the zoom it shows from, its controller and whether it's that controller's capital; `entities.json` also gets each controller's estimated population.
 - `entities.json`, `details.json`, `bases.json`, `abroad.json`, `meta.json`.
 - `export/`: the KMZ for Google Earth and My Maps, the GeoJSON, and the
   live link for Google Earth Pro (written by `export.mjs`).

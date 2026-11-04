@@ -1,7 +1,7 @@
 ---
 title: De Facto World Map
 date: 2026-10-08
-modified: 2026-10-20
+modified: 2026-11-04
 importance: 5
 status: in progress
 tags:
@@ -25,6 +25,8 @@ The Winkel tripel, Equal Earth and Robinson projections show a flat-color atlas.
 - **3D** terrain;
 - a **country style**: filled, colored outlines, borders only or hidden;
 - **map features** from OpenStreetMap: cities, states and provinces, parks and protected areas, Indigenous lands, military areas, major roads and airports.
+
+Cities can be filtered. Capitals (of whoever actually holds them, so Sanaa is the Houthis' and Aden the Yemeni government's) can show for every country, for countries over a population or an area, or for the largest countries in view; other cities can show as zoom allows, above a population, or as the biggest in view; and OpenStreetMap's towns and villages can come in as you zoom.
 
 Occupied, contested and insurgent regions have their own names and shading, which can be switched off. The borders follow OpenStreetMap's to within about 100 m, and full detail loads as you zoom in. You can download the current view as an image. The address bar keeps track of the view, so a link like [this one](/apps/de-facto-world-map/#p=winkel&z=40,15,4) opens straight onto a region.
 
@@ -52,7 +54,7 @@ To use them:
 
 ## How the borders are drawn
 
-Who controls what comes from [Natural Earth](https://www.naturalearthdata.com/), which draws de facto lines, and from the curated areas below. The lines themselves come from [OpenStreetMap](https://www.openstreetmap.org/), so they match the street map and satellite imagery underneath. Areas held by armed groups are drawn from district boundaries ([geoBoundaries](https://www.geoboundaries.org/)) or OpenStreetMap features: the Philadelphi corridor, for example, is OpenStreetMap's Egypt–Gaza border widened to 400 m. Where the best source is a published map, as with Israel's line in southern Lebanon, it's traced from the image after fitting the image to known places. The tools for all this are described in the project's [data README](https://github.com/trchristensen-99/trevorc-site/tree/main/projects/de-facto-world-map/prep).
+Who controls what comes from [Natural Earth](https://www.naturalearthdata.com/), which draws de facto lines, and from the curated areas below. The lines themselves come from [OpenStreetMap](https://www.openstreetmap.org/), so they match the street map and satellite imagery underneath. Areas held by armed groups are drawn from district boundaries ([geoBoundaries](https://www.geoboundaries.org/)) or OpenStreetMap features: the Philadelphi corridor, for example, is OpenStreetMap's Egypt–Gaza border widened to 400 m. Where the best source is a published map, as with Israel's line in southern Lebanon, it's traced from the image after fitting the image to known places. Every country's area is checked after the borders are simplified, so that none can swallow a neighbor, and thin strips left where an area's edge doesn't quite meet a country's border go to the area. The tools for all this are described in the project's [data README](https://github.com/trchristensen-99/trevorc-site/tree/main/projects/de-facto-world-map/prep).
 
 ## What counts as control
 
@@ -75,13 +77,15 @@ Some of the calls are judgment calls:
 - **Ukraine:** municipalities that are mostly occupied on [DeepStateMap](https://deepstatemap.live/)'s current map. DeepStateMap is the reference for which units are held, but its own geometry isn't redistributed here, so the front line is approximate at the scale of a municipality.
 - **Antarctic stations:** [COMNAP](https://github.com/PolarGeospatialCenter/comnap-antarctic-facilities) (COMNAP 2017), free for non-commercial use.
 - **Military bases abroad:** compiled from Wikipedia's lists of overseas military bases, with coordinates from Wikipedia and Wikidata, as of October 2026. Bases whose status is unclear, such as US bases in the Gulf after the Iran war, are marked uncertain.
-- **Map features:** cities, states, parks, Indigenous lands, military areas, roads and airports from [OpenStreetMap](https://www.openstreetmap.org/copyright) through [OpenFreeMap](https://openfreemap.org).
+- **Cities:** [Natural Earth](https://www.naturalearthdata.com/) populated places (public domain), with capitals given to whoever holds them, a few de facto seats added by hand, and each controller's population estimated from its countries' populations, split by the share of their cities it holds.
+- **Map features:** towns and villages, states, parks, Indigenous lands, military areas, roads and airports from [OpenStreetMap](https://www.openstreetmap.org/copyright) through [OpenFreeMap](https://openfreemap.org).
 - **Base maps:** satellite imagery from [EOxCloudless 2025](https://cloudless.eox.at) by EOX IT Services (modified Copernicus Sentinel-2 data, CC BY-NC-SA 4.0); elevation from [Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) (Mapzen, from SRTM, GMTED2010, ETOPO1 and others); streets and place names from [OpenFreeMap](https://openfreemap.org) and [OpenStreetMap](https://www.openstreetmap.org/copyright); drawn with [MapLibre](https://maplibre.org).
 
 The map data is released under the [Open Database License (ODbL) 1.0](https://opendatacommons.org/licenses/odbl/1-0/), since its borders come from OpenStreetMap; credit "© OpenStreetMap contributors" along with this site. The Antarctic stations layer keeps COMNAP's non-commercial terms. The control assessments are mine, and front lines move; corrections are welcome through the [contact page](../contact).
 
 ## Changelog
 
+- **4 November 2026:** fixed Czechia covering Slovakia, South Korea covering North Korea and Morocco covering the Polisario-held zone of Western Sahara (which also dropped some borders), and Ukraine turned inside out in the flat views; no more strips of Moldova along Transnistria's border; smoother borders on the world view; cities from Natural Earth with filters for capitals and cities by population, area and what's in view.
 - **15 October 2026:** borders redrawn from OpenStreetMap, accurate to about 100 m, with full detail when zoomed in; the Philadelphi corridor, which separates Hamas-held Gaza from Egypt; map layers that combine like Google Maps' (base, terrain, country style, and OpenStreetMap features such as cities, states, parks, Indigenous lands and military areas); names for occupied, contested and insurgent regions; a layer of military bases abroad.
 - **15 October 2026:** satellite, terrain and street base maps on a 3D globe, with optional 3D terrain; downloads for Google Earth, Google My Maps and GIS tools.
 - **8 October 2026:** Houthi gains on the Red Sea coast and around Taiz, and a Yemeni front-line layer; Israel's occupation of southern Lebanon; a retraced Gaza yellow line on a more accurate outline of the Strip; Sudan, Somalia, Congo and Myanmar updated to late-September reporting; full-resolution borders when zoomed in; Mercator fixed.

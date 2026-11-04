@@ -38,8 +38,10 @@ const HOST = {
   PSX: ["XG", "XW"], ISR: ["IL", "XH"], SDN: ["SD", "XY"], RUS: ["RU", "XA", "XO", "XI", "XU"], IRN: ["IR", "XM", "XN"],
 }
 // Small disputed pockets Natural Earth draws as their own features, kept
-// with Natural Earth's outline.
-const OWN_OUTLINE = new Set(["KAS", "SPI", "BRT", "BRI"])
+// with Natural Earth's outline, and Western Sahara's Polisario-held zone,
+// whose edge is the Moroccan berm, a line OpenStreetMap doesn't have as a
+// border (without its own outline, Morocco took the whole zone).
+const OWN_OUTLINE = new Set(["KAS", "SPI", "BRT", "BRI", "SAH"])
 
 const readJson = (f) => JSON.parse(fs.readFileSync(f, "utf8"))
 const inBox = (bb, [x, y]) => x >= bb[0] && x <= bb[2] && y >= bb[1] && y <= bb[3]
@@ -143,6 +145,11 @@ export function preciseCountries(neFile) {
   const ownedFile = path.join(TMP, "owned.json")
   fs.writeFileSync(ownedFile, JSON.stringify({ type: "FeatureCollection", features: owned }))
   execFileSync(MAPSHAPER, ["-i", ownedFile, "-dissolve", "id", "-o", out], { stdio: ["ignore", "ignore", "inherit"] })
+  // Every Natural Earth feature should come out with a shape; one that
+  // didn't was swallowed by a neighbor, and would be drawn over it.
+  const got = new Set(readJson(out).features.map((f) => f.properties.id))
+  const lost = ne.features.map((f) => f.properties.id).filter((id) => !got.has(id))
+  if (lost.length) throw new Error(`precise borders: no faces for ${lost.join(", ")}`)
   console.log(`precise borders: ${owned.length} faces in ${((Date.now() - t0) / 1000).toFixed(0)} s`)
   return readJson(out)
 }

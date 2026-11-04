@@ -1,0 +1,85 @@
+{
+  "_note": "Seats of government Natural Earth doesn't mark as the capital of the entity that holds them. Every other capital comes from Natural Earth's national capitals (and regional capitals of de facto states), given to whoever controls the ground they're on; a capital held by someone else, like Sanaa under the Houthis, becomes theirs. Coordinates are matched to a Natural Earth place within 15 km for the population.",
+  "capitals": {
+    "PMR": {
+      "name": "Tiraspol",
+      "at": [29.64, 46.853]
+    },
+    "YEM": {
+      "name": "Aden",
+      "at": [45.009, 12.78],
+      "note": "Temporary capital of the internationally recognized government while the Houthis hold Sanaa."
+    },
+    "LNA": {
+      "name": "Benghazi",
+      "at": [20.067, 32.117]
+    },
+    "TASIS": {
+      "name": "Nyala",
+      "at": [24.89, 12.06],
+      "note": "Seat of the RSF-led Government of Peace and Unity."
+    },
+    "M23": {
+      "name": "Goma",
+      "at": [29.222, -1.679]
+    },
+    "PUNTLAND": {
+      "name": "Garowe",
+      "at": [48.485, 8.405]
+    },
+    "JUBALAND": {
+      "name": "Kismayo",
+      "at": [42.545, -0.358]
+    },
+    "UWSA": {
+      "name": "Pangkham",
+      "at": [99.183, 22.167]
+    },
+    "SWD": {
+      "name": "As Suwayda",
+      "at": [36.567, 32.7]
+    },
+    "SPLMN": {
+      "name": "Kauda",
+      "at": [30.53, 11.07]
+    },
+    "HAMAS": {
+      "name": "Gaza",
+      "at": [34.445, 31.53]
+    },
+    "CYN": {
+      "name": "North Nicosia",
+      "at": [33.364, 35.185]
+    },
+    "SOS": {
+      "name": "Tskhinvali",
+      "at": [43.975, 42.232]
+    },
+    "ABK": {
+      "name": "Sukhumi",
+      "at": [41.02, 43.02]
+    },
+    "SAH": {
+      "name": "Tifariti",
+      "at": [-10.567, 26.158]
+    },
+    "CYP": {
+      "name": "Nicosia",
+      "at": [33.37, 35.155],
+      "note": "The part of the city south of the UN buffer zone."
+    },
+    "MCO": {
+      "name": "Monaco",
+      "at": [7.4246, 43.7384]
+    },
+    "NRU": {
+      "name": "Yaren",
+      "at": [166.9209, -0.5477]
+    },
+    "TZA": {
+      "name": "Dodoma",
+      "at": [35.75, -6.183],
+      "note": "The official capital, where the government moved by 2023; Natural Earth still marks Dar es Salaam."
+    }
+  }
+}

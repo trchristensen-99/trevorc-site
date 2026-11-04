@@ -17,6 +17,7 @@ import * as turf from "@turf/turf"
 import polylabel from "polylabel"
 import { preciseCountries } from "./base.mjs"
 import { writeCells } from "./cells.mjs"
+import { buildCities } from "./places.mjs"
 import { converter, differenceCiede2000, formatHex, clampChroma } from "culori"
 import { feature as topoFeature, neighbors as topoNeighbors } from "topojson-client"
 
@@ -401,6 +402,50 @@ for (const area of areasIn.areas) {
   }
 }
 
+// Leftovers: carving an area out of a country whose border it doesn't
+// quite follow (Natural Earth's disputed areas are accurate to about a
+// kilometer, the country borders to about 100 m) can leave thin strips of
+// the old controller along the area's far edge, like Moldova's along
+// Transnistria's border with Ukraine. Any piece of a Natural Earth country
+// under about 1 km wide (twice its area over its perimeter) and smaller
+// than 300 km² goes to the carved area it touches most.
+{
+  const isBase = (f) => f.properties.a.startsWith("ne-")
+  const pieces = (g) => (g.type === "MultiPolygon" ? g.coordinates : [g.coordinates])
+  let moved = 0
+  // Only carved areas can take a strip, so only they are compared.
+  const carved = control.filter((o) => !isBase(o)).map((o) => ({ o, bb: turf.bbox(o) }))
+  const near = (p) => {
+    const b = turf.bbox(p)
+    return carved.filter(({ bb }) => bb[0] <= b[2] + 0.01 && b[0] <= bb[2] + 0.01 && bb[1] <= b[3] + 0.01 && b[1] <= bb[3] + 0.01)
+  }
+  for (const f of control.filter(isBase)) {
+    const keep = []
+    for (const poly of pieces(f.geometry)) {
+      const p = turf.polygon(poly)
+      const cands = near(p)
+      if (!cands.length) { keep.push(poly); continue }
+      const km2 = turf.area(p) / 1e6
+      const width = (2 * km2) / turf.length(turf.polygonToLine(p), { units: "kilometers" })
+      if (km2 > 300 || width > 1 || pieces(f.geometry).length === 1) { keep.push(poly); continue }
+      const halo = turf.buffer(p, 0.15, { units: "kilometers" })
+      let best = null, bestA = 0
+      for (const { o } of cands) {
+        if (o.properties.c === f.properties.c) continue
+        const i = turf.intersect(turf.featureCollection([o, halo]))
+        const a = i ? turf.area(i) : 0
+        if (a > bestA) { bestA = a; best = o }
+      }
+      if (!best) { keep.push(poly); continue }
+      best.geometry = turf.union(turf.featureCollection([turf.feature(best.geometry), p])).geometry
+      moved++
+    }
+    f.geometry = keep.length === 0 ? null : keep.length === 1 ? { type: "Polygon", coordinates: keep[0] } : { type: "MultiPolygon", coordinates: keep }
+  }
+  control = control.filter((f) => f.geometry)
+  console.log(`leftover strips given to their neighbors: ${moved}`)
+}
+
 // ---------------------------------------------------------------------------
 // Claims: territory a state or movement claims but doesn't control.
 
@@ -462,14 +507,17 @@ fs.mkdirSync(OUT, { recursive: true })
 const topology = (file, simplify, quantization) =>
   execFileSync(MAPSHAPER, [
     "-i", "combine-files", ...["control", "claims", "presence"].map((n) => path.join(TMP, `${n}.json`)),
-    "-snap", "interval=0.0005",
+    // A small snap (about 10 m) joins borders from different sources. A
+    // larger one (50 m) let mapshaper's cleanup merge whole countries with
+    // their neighbors (Czechia with Slovakia); checkAreas below catches that.
+    "-snap", "interval=0.0001",
     "-clean", "allow-overlaps",
     ...simplify,
     "-o", path.join(OUT, file), "format=topojson", `quantization=${quantization}`, "target=*",
   ], { stdio: ["ignore", "ignore", "inherit"] })
 // Light for the atlas and the whole-world view, 300 m for the globe and
 // Mercator views, and full detail in per-region cells for zooming in.
-topology("map.topo.json", ["-simplify", "weighted", "interval=6000", "keep-shapes"], 100000)
+topology("map.topo.json", ["-simplify", "weighted", "interval=3000", "keep-shapes"], 200000)
 topology("map-hi.topo.json", ["-simplify", "weighted", "interval=300", "keep-shapes"], 2000000)
 {
   const full = path.join(TMP, "control-full.json")
@@ -482,6 +530,22 @@ topology("map-hi.topo.json", ["-simplify", "weighted", "interval=300", "keep-sha
   const { count, bytes } = writeCells(readJson(full).features, path.join(OUT, "cells"))
   console.log(`detail cells: ${count} files, ${(bytes / 1048576).toFixed(1)} MB`)
 }
+
+// No feature may come out bigger than it went in (beyond what simplifying
+// adds): a feature that grew has swallowed a neighbor or turned inside out.
+function checkAreas(file, features) {
+  const before = new Map()
+  for (const f of control) before.set(f.properties.a, (before.get(f.properties.a) ?? 0) + turf.area(f) / 1e6)
+  const after = new Map()
+  for (const f of features) after.set(f.properties.a, (after.get(f.properties.a) ?? 0) + turf.area(f) / 1e6)
+  const grew = [...before].filter(([a, x]) => (after.get(a) ?? 0) - x > Math.max(100, 0.05 * x))
+  if (grew.length) throw new Error(`${file}: features grew: ${grew.map(([a, x]) => `${a} ${Math.round(x)} -> ${Math.round(after.get(a))} km²`).join(", ")}`)
+}
+for (const file of ["map.topo.json", "map-hi.topo.json"]) {
+  const t = readJson(path.join(OUT, file))
+  checkAreas(file, topoFeature(t, t.objects.control).features)
+}
+checkAreas("control-full.json", readJson(path.join(TMP, "control-full.json")).features)
 
 const topo = readJson(path.join(OUT, "map.topo.json"))
 const controlOut = topoFeature(topo, topo.objects.control).features
@@ -662,6 +726,9 @@ for (const id of new Set([...claimFeatures, ...presenceFeatures].map((f) => f.pr
   const e = entities[id] ?? {}
   entitiesOut[id] = { name: e.name, formal: e.formal, kind: e.kind, parent: e.parent, recognition: e.recognition, note: e.note, color: colorOf(id) }
 }
+// Cities and capitals (places.mjs).
+buildCities({ places: ne("populated_places"), countries, entities: entitiesOut, controllers, hiFile: path.join(OUT, "map-hi.topo.json"), curatedCaps: curated("capitals.json").capitals, out: path.join(OUT, "cities.json"), warn })
+
 fs.writeFileSync(path.join(OUT, "entities.json"), JSON.stringify(entitiesOut))
 fs.writeFileSync(path.join(OUT, "details.json"), JSON.stringify({ areas: areaMeta, claims: claimMeta, presence: presenceMeta }))
 fs.writeFileSync(path.join(OUT, "bases.json"), JSON.stringify(bases))

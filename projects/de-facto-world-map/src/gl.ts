@@ -35,7 +35,7 @@ import {
   type Renderer,
   type Theme,
 } from "./map"
-import type { BaseAbroad, FeatureProps, Station } from "./types"
+import type { BaseAbroad, City, FeatureProps, Station } from "./types"
 
 type MapLibre = typeof import("maplibre-gl")
 
@@ -56,7 +56,25 @@ export const MAP_FEATURES = {
 } as const
 export type MapFeature = keyof typeof MAP_FEATURES
 
+// Which cities show. Capitals: all, none, those of countries over a size
+// (people or km²), or the largest countries' in view. Other cities: as
+// zoom allows (biggest first), none, those over a population, or the
+// biggest in view. Towns and villages come from OpenStreetMap's tiles.
+export type CityMode = "all" | "none" | "over" | "top"
+export interface CityOptions {
+  capitals: CityMode
+  capBy: "pop" | "area"
+  capMin: number
+  capTop: number
+  others: CityMode
+  minPop: number
+  top: number
+  towns: boolean
+}
+export const CITY_DEFAULTS: CityOptions = { capitals: "all", capBy: "pop", capMin: 10_000_000, capTop: 20, others: "all", minPop: 1_000_000, top: 25, towns: true }
+
 export interface GlOptions {
+  cities: CityOptions
   base: BaseId
   terrain: boolean // relief shading, plus elevation colors on the plain base
   relief3d: boolean
@@ -268,10 +286,12 @@ export class GlMap implements Renderer {
   private layers = new Set<LayerId>(["labels", "regions", "shading", "claims", "presence", "stations", "bases"])
   private styleLoaded = false
   private options: GlOptions
-  private cityLayers: string[] = []
+  private cityLayers: string[] = [] // OpenStreetMap's towns and villages
+  private cities: City[] = []
+  private citiesLoaded: Promise<void> | null = null
 
   constructor(lib: MapLibre, container: HTMLElement, private data: MapData, options: GlOptions, private theme: Theme) {
-    this.options = { ...options, features: new Set(options.features) }
+    this.options = { ...options, features: new Set(options.features), cities: { ...options.cities } }
     this.d = detail(data.topo)
     this.map = new lib.Map({
       container,
@@ -284,7 +304,10 @@ export class GlMap implements Renderer {
     })
     this.map.addControl(new lib.NavigationControl({ visualizePitch: true }), "bottom-right")
     this.map.setMissingStyleImageResolver((id) => this.makeImage(id))
-    this.map.on("moveend", () => this.onViewChange())
+    this.map.on("moveend", () => {
+      this.onViewChange()
+      if (this.styleLoaded && (this.options.cities.capitals === "top" || this.options.cities.others === "top")) this.filterCities()
+    })
     this.map.on("mousemove", (e) => this.onHover(this.hitAt(e), [e.point.x, e.point.y]))
     this.map.getCanvas().addEventListener("mouseleave", () => this.onHover(null, [0, 0]))
     this.map.on("click", (e) => {
@@ -336,7 +359,7 @@ export class GlMap implements Renderer {
   // on and off.
   setOptions(o: GlOptions) {
     const rebuild = o.base !== this.options.base || o.terrain !== this.options.terrain
-    this.options = { ...o, features: new Set(o.features) }
+    this.options = { ...o, features: new Set(o.features), cities: { ...o.cities } }
     if (rebuild) void this.restyle()
     else if (this.styleLoaded) this.applyLayers()
   }
@@ -435,6 +458,7 @@ export class GlMap implements Renderer {
     })
     this.styleLoaded = true
     this.pushData()
+    if (this.cities.length) this.pushCities()
     this.applyLayers()
     this.onNeedDetail()
   }
@@ -508,7 +532,7 @@ export class GlMap implements Renderer {
       sources: {
         ...sources,
         "dfm-control": { type: "geojson", data: empty(), attribution: DATA_CREDIT },
-        "dfm-detail": { type: "vector", tiles: ["dfm://{z}/{x}/{y}"], minzoom: DETAIL_Z, maxzoom: 14 },
+        "dfm-detail": { type: "vector", tiles: ["dfm://{z}/{x}/{y}"], minzoom: DETAIL_Z, maxzoom: 14, attribution: DATA_CREDIT },
         "dfm-borders": { type: "geojson", data: empty() },
         "dfm-kinds": { type: "geojson", data: empty() },
         "dfm-outline": { type: "geojson", data: empty() },
@@ -518,6 +542,7 @@ export class GlMap implements Renderer {
         "dfm-bases": { type: "geojson", data: empty() },
         "dfm-labels": { type: "geojson", data: empty() },
         "dfm-regions": { type: "geojson", data: empty() },
+        "dfm-cities": { type: "geojson", data: empty() },
       },
       layers: [
         ...under,
@@ -639,7 +664,7 @@ export class GlMap implements Renderer {
     // when each class appears, recolored for the base. Names are in Latin
     // script with the local script beneath.
     const places = ofm.layers
-      .filter((l) => l.type === "symbol" && "source-layer" in l && l["source-layer"] === "place" && !/country|state/.test(l.id))
+      .filter((l) => l.type === "symbol" && "source-layer" in l && l["source-layer"] === "place" && !/country|state|city|capital/.test(l.id))
       .map((l) => ({ ...l, id: `ref-cities-${l.id}`, paint: { ...(l as { paint?: object }).paint, ...text } }) as LayerSpecification)
     this.cityLayers = places.map((l) => l.id)
     const italic = (color: string) => ({ "text-color": color, "text-halo-color": L.halo, "text-halo-width": 1.2 })
@@ -716,7 +741,87 @@ export class GlMap implements Renderer {
       },
       paint: { "text-color": ["get", L.regionInk], "text-halo-color": L.halo, "text-halo-width": 1.5 },
     }))
-    return [...regions, ...countries]
+    // The map's own cities: one layer per zoom for those shown as zoom
+    // allows (from Natural Earth's MIN_ZOOM), each with a dot, bigger
+    // cities winning where names collide and capitals first.
+    const cities = Array.from({ length: CITY_ZOOMS }, (_, z): LayerSpecification => ({
+      id: `dfm-cities-${z}`,
+      type: "symbol",
+      source: "dfm-cities",
+      minzoom: z,
+      layout: {
+        "icon-image": ["case", ["==", ["get", "cap"], 1], "capital-dot", "city-dot"],
+        "text-field": ["get", "n"],
+        "text-font": ["case", ["==", ["get", "cap"], 1], ["literal", ["Noto Sans Bold"]], ["literal", ["Noto Sans Regular"]]],
+        "text-size": ["case", ["==", ["get", "cap"], 1], 12, ["interpolate", ["linear"], ["get", "p"], 1e5, 10.5, 1e7, 12.5]],
+        "text-anchor": "left",
+        "text-offset": [0.55, 0],
+        "text-optional": true,
+        "symbol-sort-key": ["-", ["*", ["get", "cap"], -1e9], ["get", "p"]],
+      },
+      paint: { "text-color": L.ink, "text-halo-color": L.halo, "text-halo-width": 1.3 },
+    }))
+    return [...cities, ...regions, ...countries]
+  }
+
+  // The filter each city layer gets for the current options: layer z shows
+  // what zoom z first allows ("all"), and layer 0 everything chosen by size
+  // or by what's in view.
+  private filterCities() {
+    if (!this.styleLoaded) return
+    const o = this.options.cities
+    const isCap: ExpressionSpecification = ["==", ["get", "cap"], 1]
+    const notCap: ExpressionSpecification = ["==", ["get", "cap"], 0]
+    const inView = (list: number[]): ExpressionSpecification => ["in", ["get", "i"], ["literal", list]]
+    let topCaps: number[] = [], topOthers: number[] = []
+    if (o.capitals === "top" || o.others === "top") {
+      const b = this.map.getBounds()
+      const seen = this.cities.map((c, i) => ({ c, i })).filter(({ c }) => b.contains([c[1], c[2]]))
+      const measure = (c: City) => (o.capBy === "pop" ? this.data.entities[c[5]]?.pop ?? 0 : this.data.entities[c[5]]?.km2 ?? 0)
+      topCaps = seen.filter(({ c }) => c[6]).sort((x, y) => measure(y.c) - measure(x.c)).slice(0, o.capTop).map(({ i }) => i)
+      topOthers = seen.filter(({ c }) => !c[6]).sort((x, y) => y.c[3] - x.c[3]).slice(0, o.top).map(({ i }) => i)
+    }
+    const caps: ExpressionSpecification | null =
+      o.capitals === "all" ? isCap
+      : o.capitals === "over" ? ["all", isCap, [">=", ["get", o.capBy === "pop" ? "ep" : "ea"], o.capMin]]
+      : o.capitals === "top" ? ["all", isCap, inView(topCaps)]
+      : null
+    const others: ExpressionSpecification | null =
+      o.others === "over" ? ["all", notCap, [">=", ["get", "p"], o.minPop]]
+      : o.others === "top" ? ["all", notCap, inView(topOthers)]
+      : null
+    for (let z = 0; z < CITY_ZOOMS; z++) {
+      const parts: ExpressionSpecification[] = []
+      if (z === 0 && caps) parts.push(caps)
+      if (z === 0 && others) parts.push(others)
+      if (o.others === "all") parts.push(["all", notCap, ["==", ["get", "mz"], z]])
+      const id = `dfm-cities-${z}`
+      if (this.has(id)) this.map.setFilter(id, parts.length ? (["any", ...parts] as FilterSpecification) : ["==", ["get", "cap"], 2])
+    }
+  }
+
+  private loadCities() {
+    this.citiesLoaded ??= fetch(new URL("./data/cities.json", import.meta.url).href)
+      .then((r) => (r.ok ? r.json() : []))
+      .then((list: City[]) => {
+        this.cities = list
+        if (this.styleLoaded) this.pushCities()
+      })
+      .catch(() => {})
+    return this.citiesLoaded
+  }
+
+  private pushCities() {
+    const e = this.data.entities
+    ;(this.map.getSource("dfm-cities") as GeoJSONSource | undefined)?.setData({
+      type: "FeatureCollection",
+      features: this.cities.map((c, i) => ({
+        type: "Feature",
+        properties: { i, n: c[0], p: c[3], mz: Math.max(0, Math.min(CITY_ZOOMS - 1, Math.floor(c[4]))), cap: c[6], ep: e[c[5]]?.pop ?? 0, ea: e[c[5]]?.km2 ?? 0 },
+        geometry: { type: "Point", coordinates: [c[1], c[2]] },
+      })),
+    })
+    this.filterCities()
   }
 
   private has(id: string) {
@@ -760,7 +865,14 @@ export class GlMap implements Renderer {
     vis(["dfm-stations"], this.layers.has("stations"))
     vis(["dfm-bases"], this.layers.has("bases"))
     for (const [f, ids] of Object.entries(FEATURE_LAYERS) as [MapFeature, string[]][])
-      vis(f === "cities" ? this.cityLayers : ids, o.features.has(f) && !(f === "roads" && o.base === "streets"))
+      if (f !== "cities") vis(ids, o.features.has(f) && !(f === "roads" && o.base === "streets"))
+    const cities = o.features.has("cities")
+    vis(this.cityLayers, cities && o.cities.towns)
+    vis(Array.from({ length: CITY_ZOOMS }, (_, z) => `dfm-cities-${z}`), cities)
+    if (cities) {
+      if (this.cities.length) this.filterCities()
+      else void this.loadCities()
+    }
     this.map.setTerrain(o.relief3d ? { source: "dem3d", exaggeration: 1.5 } : null)
   }
 
@@ -815,6 +927,7 @@ export class GlMap implements Renderer {
   // Stripe images are made on demand, the first time a layer asks.
   private makeImage(id: string) {
     if (this.map.hasImage(id)) return
+    if (id === "city-dot" || id === "capital-dot") return this.addDot(id)
     const rgba = (c: string, a: number): [number, number, number, number] => [...hex(c), Math.round(a * 255)]
     let img
     if (id === "contested") img = stripes([138, 144, 150, 230], [255, 255, 255, 70], 4)
@@ -824,6 +937,36 @@ export class GlMap implements Renderer {
     } else if (id.startsWith("pres-")) img = stripes(rgba(this.colorOf(id.slice(5)), 0.9), [0, 0, 0, 0], 3, true)
     else return
     this.map.addImage(id, img, { pixelRatio: 2 })
+  }
+
+  // A city's dot, or a capital's: a dot in a ring.
+  private addDot(id: string) {
+    const L = this.look()
+    const size = 16
+    const c = document.createElement("canvas")
+    c.width = c.height = size
+    const g = c.getContext("2d")!
+    g.beginPath()
+    if (id === "capital-dot") {
+      g.arc(8, 8, 5.5, 0, Math.PI * 2)
+      g.fillStyle = L.halo
+      g.fill()
+      g.lineWidth = 1.6
+      g.strokeStyle = L.ink
+      g.stroke()
+      g.beginPath()
+      g.arc(8, 8, 2.4, 0, Math.PI * 2)
+      g.fillStyle = L.ink
+      g.fill()
+    } else {
+      g.arc(8, 8, 3.2, 0, Math.PI * 2)
+      g.fillStyle = L.ink
+      g.fill()
+      g.lineWidth = 1.2
+      g.strokeStyle = L.halo
+      g.stroke()
+    }
+    this.map.addImage(id, g.getImageData(0, 0, size, size), { pixelRatio: 2 })
   }
 
   // ---------------------------------------------------------- hit tests
@@ -846,6 +989,7 @@ export class GlMap implements Renderer {
 }
 
 const empty = (): FeatureCollection => ({ type: "FeatureCollection", features: [] })
+const CITY_ZOOMS = 12
 
 // A layer drawn from the 300 m GeoJSON below DETAIL_Z and from the
 // full-detail tiles above it ("-d"). The GeoJSON lines come from their own

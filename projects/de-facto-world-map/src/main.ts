@@ -2,12 +2,15 @@ import "./style.css"
 import type { Topology } from "topojson-specification"
 import {
   BASES,
+  CITY_DEFAULTS,
   COUNTRY_STYLES,
   GL_PROJECTIONS,
   GlMap,
   MAP_FEATURES,
   createGlMap,
   type BaseId,
+  type CityMode,
+  type CityOptions,
   type CountryStyle,
   type GlOptions,
   type MapFeature,
@@ -88,9 +91,24 @@ function readHash(): State {
   const c = h.get("c")
   const layers = h.get("l")
   const features = h.get("f")
+  // #cy=capitals,by,min,top,others,minPop,top,towns (defaults when absent).
+  const cy = h.get("cy")?.split(",") ?? []
+  const MODES: CityMode[] = ["all", "none", "over", "top"]
+  const num = (v: string | undefined, d: number) => (v && Number.isFinite(Number(v)) ? Number(v) : d)
+  const cities: CityOptions = {
+    capitals: MODES.includes(cy[0] as CityMode) ? (cy[0] as CityMode) : CITY_DEFAULTS.capitals,
+    capBy: cy[1] === "area" ? "area" : "pop",
+    capMin: num(cy[2], CITY_DEFAULTS.capMin),
+    capTop: num(cy[3], CITY_DEFAULTS.capTop),
+    others: MODES.includes(cy[4] as CityMode) ? (cy[4] as CityMode) : CITY_DEFAULTS.others,
+    minPop: num(cy[5], CITY_DEFAULTS.minPop),
+    top: num(cy[6], CITY_DEFAULTS.top),
+    towns: cy[7] === undefined ? CITY_DEFAULTS.towns : cy[7] === "1",
+  }
   return {
     projection: (p && p in PROJECTIONS ? p : "winkel") as ProjectionId,
     gl: {
+      cities,
       base,
       terrain: oldTerrain || h.get("t") === "1",
       relief3d: h.get("d") === "1",
@@ -110,6 +128,9 @@ function writeHash(s: State, view?: [number, number, number] | null) {
     if (s.gl.terrain) h.set("t", "1")
     if (s.gl.relief3d) h.set("d", "1")
     h.set("f", [...s.gl.features].join(","))
+    const c = s.gl.cities, d = CITY_DEFAULTS
+    if ((Object.keys(d) as (keyof CityOptions)[]).some((k) => c[k] !== d[k]))
+      h.set("cy", [c.capitals, c.capBy, c.capMin, c.capTop, c.others, c.minPop, c.top, c.towns ? 1 : 0].join(","))
   }
   h.set("l", [...s.layers].join(","))
   if (view && view[2] > 1.05) h.set("z", view.map((x, i) => x.toFixed(i < 2 ? 2 : 1)).join(","))
@@ -138,6 +159,65 @@ function sourcesHTML(sources: Source[] | undefined) {
   const items = sources.map((s) =>
     `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>${s.archived ? ` (<a href="${esc(s.archived)}" target="_blank" rel="noopener">archived</a>)` : ""}</li>`)
   return `<h3>Sources</h3><ul class="sources">${items.join("")}</ul>`
+}
+
+// Which capitals and other cities show (see CityOptions in gl.ts): a mode
+// for each, with its threshold or count beside it.
+const people = (n: number) => (n >= 1e6 ? `${n / 1e6} million` : `${n / 1e3},000`)
+const area = (n: number) => (n >= 1e6 ? `${n / 1e6} million km²` : `${(n / 1e3).toLocaleString("en-US")},000 km²`)
+function cityControls(box: HTMLElement, o: CityOptions, changed: () => void) {
+  const select = (parent: HTMLElement, options: [string | number, string][], value: string | number, onChange: (v: string) => void) => {
+    const sel = document.createElement("select")
+    for (const [v, label] of options) sel.add(new Option(label, String(v)))
+    sel.value = String(value)
+    sel.addEventListener("change", () => onChange(sel.value))
+    parent.append(sel)
+    return sel
+  }
+  const row = (label: string) => {
+    const r = document.createElement("div")
+    r.className = "city-row"
+    const l = document.createElement("span")
+    l.textContent = label
+    r.append(l)
+    box.append(r)
+    return r
+  }
+  const POP_STEPS = [1e6, 5e6, 1e7, 5e7, 1e8]
+  const AREA_STEPS = [1e4, 1e5, 5e5, 1e6]
+  const capRow = row("Capitals")
+  const capMode = select(capRow, [["all", "All"], ["over", "Of countries over"], ["top", "The largest countries' in view"], ["none", "None"]], o.capitals, (v) => { o.capitals = v as CityMode; sync(); changed() })
+  const capBy = select(capRow, [["pop", "by people"], ["area", "by area"]], o.capBy, (v) => {
+    o.capBy = v as "pop" | "area"
+    o.capMin = o.capBy === "pop" ? 1e7 : 1e5
+    fillMin()
+    sync()
+    changed()
+  })
+  const capMin = select(capRow, [], o.capMin, (v) => { o.capMin = Number(v); changed() })
+  const fillMin = () => {
+    capMin.innerHTML = ""
+    for (const v of o.capBy === "pop" ? POP_STEPS : AREA_STEPS) capMin.add(new Option(o.capBy === "pop" ? people(v) : area(v), String(v)))
+    capMin.value = String(o.capMin)
+  }
+  fillMin()
+  const capTop = select(capRow, [5, 10, 20, 50].map((n) => [n, `top ${n}`]), o.capTop, (v) => { o.capTop = Number(v); changed() })
+  const othRow = row("Other cities")
+  const othMode = select(othRow, [["all", "As zoom allows"], ["over", "Over"], ["top", "The biggest in view"], ["none", "None"]], o.others, (v) => { o.others = v as CityMode; sync(); changed() })
+  const minPop = select(othRow, [1e5, 5e5, 1e6, 5e6, 1e7].map((n) => [n, `${people(n)} people`]), o.minPop, (v) => { o.minPop = Number(v); changed() })
+  const top = select(othRow, [10, 25, 50, 100].map((n) => [n, `top ${n}`]), o.top, (v) => { o.top = Number(v); changed() })
+  const towns = checkbox(box, "Towns and villages, zoomed in (OpenStreetMap)", o.towns, (on) => { o.towns = on; changed() })
+  towns.classList.add("city-towns")
+  const sync = () => {
+    capBy.hidden = o.capitals !== "over" && o.capitals !== "top"
+    capMin.hidden = o.capitals !== "over"
+    capTop.hidden = o.capitals !== "top"
+    minPop.hidden = o.others !== "over"
+    top.hidden = o.others !== "top"
+    capMode.title = "Which capitals show"
+    othMode.title = "Which other cities show"
+  }
+  sync()
 }
 
 function checkbox(box: HTMLElement, label: string, checked: boolean, onChange: (on: boolean) => void) {
@@ -242,12 +322,27 @@ function main(data: MapData, meta: Meta) {
       saveView()
     }))
   const featureBox = $<HTMLElement>("#features")
-  for (const [id, label] of Object.entries(MAP_FEATURES) as [MapFeature, string][])
+  const cityBox = document.createElement("div")
+  cityBox.className = "city-options"
+  for (const [id, label] of Object.entries(MAP_FEATURES) as [MapFeature, string][]) {
     checkbox(featureBox, label, state.gl.features.has(id), (on) => {
       if (on) state.gl.features.add(id)
       else state.gl.features.delete(id)
+      if (id === "cities") cityBox.hidden = !on
       pushGl()
     })
+    if (id === "cities") featureBox.append(cityBox)
+  }
+  cityBox.hidden = !state.gl.features.has("cities")
+  cityControls(cityBox, state.gl.cities, pushGl)
+
+  // The options panel stops above the legend (both sit on the left) and
+  // scrolls, rather than running under it.
+  const legend = $<HTMLDetailsElement>(".legend")
+  const fitPanel = () => app.style.setProperty("--legend", `${legend.offsetHeight}px`)
+  legend.addEventListener("toggle", fitPanel)
+  addEventListener("resize", fitPanel)
+  fitPanel()
 
   // The globe and Mercator views take base maps and map features; the
   // other projections are the flat-color atlas.

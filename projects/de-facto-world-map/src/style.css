@@ -52,7 +52,7 @@ body {
 }
 .controls {
   top: 12px; left: 12px; width: 248px; padding: 10px 12px; display: grid; gap: 8px;
-  max-height: calc(100% - 24px); overflow: auto; overscroll-behavior: contain;
+  max-height: calc(100% - 36px - var(--legend, 0px)); overflow: auto; overscroll-behavior: contain;
 }
 #gl-options { display: grid; gap: 8px; }
 #gl-options[hidden], #features-box[hidden] { display: none; }
@@ -130,3 +130,11 @@ fieldset label[hidden] { display: none; }
   .legend:not([open]) { padding: 4px 10px; }
   .info { left: 8px; right: 8px; top: auto; bottom: 8px; width: auto; max-height: 55%; }
 }
+
+/* Which cities show */
+.city-options { display: grid; gap: 5px; margin: 2px 0 6px 22px; font-size: 12.5px; }
+.city-options[hidden] { display: none; }
+.city-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+.city-row > span { min-width: 74px; color: var(--muted); }
+.city-row select { font-size: 12px; padding: 2px 4px; max-width: 100%; }
+.city-row select[hidden] { display: none; }
