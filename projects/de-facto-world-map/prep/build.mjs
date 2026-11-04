@@ -445,6 +445,38 @@ for (const area of areasIn.areas) {
   control = control.filter((f) => f.geometry)
   console.log(`leftover strips given to their neighbors: ${moved}`)
 }
+// Areas marked `absorb` also take any piece of a country (up to 2,000 km²)
+// that they cut off from the rest of it: in southern Ukraine, coastal
+// municipalities partly under water fall short of DeepStateMap's occupied
+// threshold and leave Ukrainian islands among the occupied ones. Not done
+// everywhere, since some pockets are real (Taiz, Sittwe, Moldova's villages
+// east of the Dniester).
+{
+  let moved = 0
+  for (const area of areasIn.areas.filter((x) => x.absorb)) {
+    const target = control.find((f) => f.properties.a === area.id)
+    if (!target) continue
+    const tb = turf.bbox(target)
+    for (const f of control.filter((x) => x.properties.a.startsWith("ne-") && x.geometry?.type === "MultiPolygon")) {
+      const ps = f.geometry.coordinates
+      const big = ps.reduce((x, y) => (turf.area(turf.polygon(y)) > turf.area(turf.polygon(x)) ? y : x))
+      const keep = []
+      for (const poly of ps) {
+        const p = turf.polygon(poly)
+        const b = turf.bbox(p)
+        const near = b[0] <= tb[2] && tb[0] <= b[2] && b[1] <= tb[3] && tb[1] <= b[3]
+        if (poly === big || !near || turf.area(p) > 2e9) { keep.push(poly); continue }
+        const halo = turf.buffer(p, 0.2, { units: "kilometers" })
+        const joins = ps.some((q) => q !== poly && turf.booleanIntersects(turf.polygon(q), halo))
+        if (joins || !turf.booleanIntersects(target, halo)) { keep.push(poly); continue }
+        target.geometry = turf.union(turf.featureCollection([turf.feature(target.geometry), p])).geometry
+        moved++
+      }
+      f.geometry = keep.length === 1 ? { type: "Polygon", coordinates: keep[0] } : { type: "MultiPolygon", coordinates: keep }
+    }
+  }
+  console.log(`cut-off pieces absorbed: ${moved}`)
+}
 
 // ---------------------------------------------------------------------------
 // Claims: territory a state or movement claims but doesn't control.
