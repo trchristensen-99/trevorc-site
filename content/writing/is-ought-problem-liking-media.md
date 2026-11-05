@@ -1,7 +1,7 @@
 ---
 title: The Is-Ought Problem in Liking Media
 date: 2026-06-22
-modified: 2026-06-22
+modified: 2026-11-05
 importance: 4
 status: finished
 tags:
@@ -22,6 +22,8 @@ Another interesting axis is novelty vs familiarity. This is related to the explo
 
 Finally, even if something does all of the above just right, you still might just not like it. There might be a free jazz or death metal song that connoisseurs of the genre agree is amazing, but I just don't like those genres of music. Music is a great example of the problem of taste, since the qualities of "good" vs "bad" songs are even harder to pin down. Even if you like a given genre or broader style, it is hard to find someone with the exact same tastes as you.
 
+As a recent illustration of this point, I read *Piranesi* by Susanna Clarke for a book club with members whose tastes are somewhat similar to mine. While the other members loved it, I did not, finding the ending unsatisfying, the plot thin, and the main character <span class="spoiler">too much of a positive pepe about the whole thing in a way that neither an ancient nor modern mentality[^2] would bring about. The setup has a few parallels to *The Secret History* by Donna Tartt, as both feature academics trying to unlock secrets about the ancients' worldview, a select group of students learning from an eccentric but genius mentor, and some of these students taking things too far, which leads to serious consequences, but in *Piranesi* almost all of that happens off-screen.</span> I liked the descriptions of the setting, and I was hoping the book would go somewhere more interesting, but the whole thing became kind of mundane by the end. This is where people who like the book would talk about how actually the plot is engaging or the plot isn't the point since it's more about the vibes, setting, and main character (<span class="spoiler">and only the main character since the others are all pretty less-than-three-dimensional</span>). Ultimately, I liked the setting but found the rest lacking, so unless they could make me see the work in a new light we would have to agree to disagree.
+
 This poses a fundamental limit to any description of the objective qualities of a work: you can describe a work in any arbitrary detail, but to then say that some set of those qualities makes a work "good" is a normative claim that doesn't universally hold. There can be any combination of tropes, their subversion, or their absence, but whether you enjoy the resulting product is more a function of your own tastes than those tropes. You can argue that people should like some features more than others, but this is again a normative claim rather than an objective one.
 
 Just like moral claims don't automatically fall out of amoral language, claims about the quality of a work don't automatically fall out of descriptors of the work itself. Not only do there have to be some links between descriptors and quality (which you can disagree with), but these links don't always hold. If they did, you could just apply a formula to generate a work with arbitrary levels of quality. Since there is intuitively no (as-yet-discovered) way to automatically produce media with a given level of quality, this suggests that people have a level of reflexive novelty-seeking that precludes not just a quantifiable mapping from description to quality but a prediction of how that mapping will change with time. Even if you could approximate this with some accuracy, it would probably chaotically evolve like weather systems, doing so even more quickly if people become aware of this system.
@@ -29,3 +31,5 @@ Just like moral claims don't automatically fall out of amoral language, claims a
 Given this complexity, it is all the more important to think about what works you like and why you like them. Not only can you seek out more of what you like, but you can find others who share your tastes, and even [create your own works as that process becomes easier](./ai-as-a-catalyst).
 
 [^1]: Spoilers: <span class="spoiler">Regarding technology, I don't think post-fertilization genetic enhancement will be as effective as pre-fertilization selection/enhancement or brain-computer interfaces (of which keyboards/mice/touchscreens are preliminary versions), and AI will develop differently, but for being published pre-ChatGPT it does well.</span>
+
+[^2]: Unless you're Ted Lasso, a show I couldn't make it through the first episode of due to finding the main character insufferable.
