@@ -1,7 +1,7 @@
 ---
 title: Real Life Tech Tree
 date: 2026-10-27
-modified: 2026-11-04
+modified: 2026-11-06
 importance: 5
 status: in progress
 tags:
@@ -68,7 +68,7 @@ Some lines of technology have a number that tracks them:
 - the price of a watt of solar power;
 - the compute used to train AI models.
 
-For many technologies, how cheap or how good matters more than whether something is possible at all: solar cells worked in 1954 but changed the world only once they got cheap. So the tree tracks 23 measured series, and where there's a long enough one it fits a trend and reports how fast it doubles or halves. For solar, which has production data, it also fits a learning curve: how much the price falls each time cumulative production doubles.
+For many technologies, how cheap or how good matters more than whether something is possible at all: solar cells worked in 1954 but changed the world only once they got cheap. So the tree tracks 38 measured series, and where there's a long enough one it fits a trend and reports how fast it doubles or halves. For solar, which has production data, it also fits a learning curve: how much the price falls each time cumulative production doubles.
 
 **Trend lines** shows any of these series along the bottom (drag the top edge of the panel to make them taller), on the same time axis as the tree, as strips or one combined chart. **Milestones** (flags) are thresholds on them that people actually talk about: the $1,000 genome, solar modules under 20 cents a watt, battery packs under $100 a kilowatt-hour, AI agents that can do a day's or a month's work. A milestone already passed is dated from the data; one not yet reached is dated by carrying the trend forward, unless there's a good reason to think the trend will bend, which its note explains. No window opens sooner than the series' fastest past improvement could get there from where it stands now.
 
@@ -125,6 +125,25 @@ Each speeds up particular kinds of work in particular fields, and links to what 
 
 **Your own dates.** The button of that name, beside **What it takes**, lets you drag any future window: its ends, the whole bar, or a technology's dot for its best guess (or type the years in its panel). Everything that depends on it moves with it, through what it needs and the AI milestones that speed it, by the same sums the simulation uses, and the life expectancy forecasts that assume a date for rejuvenation therapies shift with it. Push AGI back to 2040 and superintelligence follows to about 2042 and rejuvenation therapies to about 2056; bring it forward to 2028 and superintelligence comes around 2032. Your dates are kept in your browser and in the link, so **Copy link** shares your version of the tree.
 
+**Comparing with the forecasts.** In Your own dates, **Compare** shows where your best guesses sit against the pooled forecasts: how many fall inside their middle half, sooner or later, how far your tree leans overall against the tree's own, and what each of your edits drags with it. **Start from** can begin at the forecasts' pool instead of my dates.
+
+**The far future.** Past superintelligence nobody can say what will be invented, but physics says what any invention needs: energy. So the far end of the tree is dated by thresholds of power use: ten times today's, Kardashev's Type I (10¹⁶ watts, about 500 times today), 1 percent of the Sun's output, and a Dyson swarm catching most of it. A growth model runs 3,000 futures. In each, once robots build robots (that run's date for it), growth takes one of three courses:
+- no explosion, with growth held near today's by what can't be automated, as most economists expect (45 percent);
+- a gradual explosion, the first doublings taking a few years (40 percent);
+- a fast one, where superintelligence or molecular manufacturing finds shortcuts and doubling times fall to weeks (15 percent).
+
+The doubling time itself shortens as the machines improve, down to a floor. Waste heat caps growth on Earth at a few hundred terawatts, so beyond that it moves to space, from the first factory there that copies itself, up to the Sun's output. The model puts even odds on a Dyson swarm by about 2240, but with two humps: fast paths reach it this century, and in more than a quarter of runs it hasn’t happened by 3000. Neither the optimists nor the skeptics are taken at their word: the fast course allows for routes nobody can see yet, while the ramp-up delays and the slow course allow for optimism that is wrong over short spans. In Your own dates, moving robots building robots moves these thresholds as the model says, and **After robots build robots** picks one course. Probes to other stars, self-replicating probes and explosive economic growth are on the tree too, with the forecasts that exist for them.
+
+**Mathematics.** Proof is where AI moved first, because a proof can be checked by computer in minutes, with no experiment to wait for. A new track follows proof by machine, from the four color theorem (1976) through machine-checked mathematics to 2026, when AI settled famous open problems and formalized Fermat's Last Theorem in days. Ahead: a Millennium Prize problem settled (the Navier-Stokes claim is under review), the Riemann hypothesis, formal proofs routine in top journals, most of the literature formalized, AI producing most new mathematics, and verified software in the mainstream. Lean's mathlib and the Erdős problems are new trend lines, and AI speeds up proof work more than any other kind of work except software.
+
+**Thinner fields.** Physics, chemistry, electronics and institutions had few future technologies. Now they include:
+- the second redefined by optical clocks, nuclear clocks, the neutrino mass ordering, a gravitational-wave observatory in space, a Higgs factory and dark matter identified;
+- a tenth of ammonia made with electrolytic hydrogen, enzyme recycling of plastic, automated synthesis of molecules on demand, and solar fuels;
+- 1 nm-class chips, co-packaged optics, atomically thin transistors, 6G and broadband from satellites straight to phones;
+- an AI verification treaty, a carbon price covering most emissions, a national basic income, a company run mostly by AI, and legal personhood for AI.
+
+**Pruning.** The AI track lost the benchmark milestones that saturate within a year or two (SWE-bench, OSWorld, Humanity's Last Exam) and the in-between steps of compute, task length and revenue; their trend lines remain.
+
 **First versus everyday.** A first commercial service and something everyday people use are often a decade apart, so robotaxis, quantum computers and air taxis now have both:
 - **Robotaxis:** a million rides a week by about 2027, against robotaxis carrying a tenth of ride-hail trips around 2031.
 - **Quantum computers:** a first useful quantum advantage in late 2027, against quantum computing in business use around 2033.
@@ -161,6 +180,7 @@ The forecasts draw on [Metaculus](https://www.metaculus.com/), the [AI Digest](h
 
 ## Changelog
 
+- **6 November 2026:** the far future, dated by a growth model of energy use (ten times today's, Kardashev Type I, 1 percent of the Sun, a Dyson swarm, explosive growth, a self-replicating factory in space, probes to other stars), with world energy use and the stock of AI chips as trend lines; a mathematics track for proof by machine, with mathlib and the Erdős problems; 20 new technologies in physics, chemistry, electronics and institutions; the AI track pruned of saturating benchmarks; Compare and Start from in Your own dates, and a choice of what robots building robots starts; the time axis reaches 3000.
 - **4 November 2026, later:** **Your own dates**, to move any future window and see what follows; the pace of progress; organoids and organ chips in place of animal tests, with computer models choosing what to test in them; a simpler aging and longevity track; resizable trend lines; the life expectancy forecasts follow the tree's date for rejuvenation therapies; abundant clean power from fusion speeds the energy-hungry fields.
 - **4 November 2026:** steps between AI and the rest of the frontier (self-driving labs at scale, virtual cell models, an AI-discovered drug and material, computer models in place of trials, robots building robots), each speeding up particular work and linked to what it helps; 51 long-range windows moved earlier to allow for AI; launch prices no longer extrapolated from a record line that moves in jumps; several dates moved toward the outside forecasts.
 - **31 October 2026:** forecasts compared for every future technology: about 90 outside forecasts (forecasters, markets, surveys, projections and announced targets), trends with ranges that widen with the horizon, and the tree simulated from base rates tested against history, pooled beside the judgment, with disagreements flagged. A model of how AI milestones would speed up each kind of work, and how much each technology moves with them. Superintelligence. Robotaxis, quantum computing and air taxis split into a first milestone and everyday use, with Waymo's weekly rides as a new trend line. Labels no longer overlap when a technology is selected.

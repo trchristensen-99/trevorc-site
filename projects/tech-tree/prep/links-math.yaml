@@ -1,0 +1,3 @@
+# Links from the mathematics nodes (nodes/s-math.yaml). Math fell to AI
+# first, the forecast note for AI-led science says.
+- {id: ai-autonomous-science, helped_by: [ai-resolves-open-conjecture]}

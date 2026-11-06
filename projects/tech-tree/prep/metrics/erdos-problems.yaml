@@ -1,0 +1,75 @@
+id: erdos-problems
+name: Erdős problems solved, and with AI
+short: Erdős problems
+unit: problems
+better: higher
+log: false
+field: math
+series:
+  - id: solved
+    name: Solved (proved, disproved or otherwise solved)
+    points:                       # [date as fractional year, count]; from statistics_history.csv, last row before each date
+      - [2025.66, 355]    # 2025-08-31, database of 992 problems
+      - [2025.75, 379]    # 2025-09-30
+      - [2025.83, 407]    # 2025-10-31
+      - [2025.91, 410]    # 2025-11-29
+      - [2026.00, 439]    # 2025-12-31
+      - [2026.08, 476]    # 2026-01-31
+      - [2026.16, 483]    # 2026-02-28
+      - [2026.25, 492]    # 2026-03-31
+      - [2026.33, 525]    # 2026-04-30
+      - [2026.41, 544]    # 2026-05-31
+      - [2026.50, 547]    # 2026-06-30
+      - [2026.58, 559]    # 2026-07-31
+      - [2026.66, 564]    # 2026-08-31
+      - [2026.74, 579]    # 2026-09-28; unchanged to 2026-11-06, 1,221 problems
+  - id: lean-solved
+    name: Solutions formalized in Lean
+    points:
+      - [2025.66, 0]
+      - [2025.75, 3]
+      - [2025.83, 4]
+      - [2025.91, 16]
+      - [2026.00, 38]
+      - [2026.08, 69]
+      - [2026.16, 110]
+      - [2026.25, 124]
+      - [2026.33, 167]
+      - [2026.41, 186]
+      - [2026.50, 199]
+      - [2026.58, 207]
+      - [2026.66, 292]
+      - [2026.74, 317]
+      - [2026.85, 318]    # 2026-11-06
+  - id: ai-full
+    name: Fully solved with AI as a main contributor (new results)
+    points:                       # cumulative distinct problems, first full solution by month end
+      - [2025.83, 1]      # October 2025 (problem 347)
+      - [2025.91, 2]
+      - [2026.00, 3]
+      - [2026.08, 8]
+      - [2026.16, 9]
+      - [2026.25, 15]
+      - [2026.33, 43]
+      - [2026.41, 49]
+      - [2026.50, 57]     # 30 June 2026; the wiki stopped here
+source:
+  title: Terence Tao et al., erdosproblems community database (data/statistics_history.csv) and AI contributions wiki
+  url: https://github.com/teorth/erdosproblems
+license: Apache-2.0 (database repository); check the wiki's terms before reuse
+note: >-
+  Thomas Bloom's erdosproblems.com lists problems Paul Erdős posed; the
+  community database on GitHub mirrors it and logs counts at every commit
+  from 31 August 2025 (read 2026-11-06). "Solved" includes problems later
+  found solved in old papers and grows partly because problems are added
+  (992 to 1,221). On 6 October 2026 the site stopped showing statuses and
+  counts, so that problems are read as questions rather than a scoreboard,
+  and the solved count has not moved since 28 September; the series may
+  have ended. The AI line counts distinct problems with a "full solution"
+  in sections 1(a), 1(c) and 1(d) of the community wiki (AI alone, AI
+  building on literature, AI with humans), leaving out 1(b), where an
+  earlier solution was found afterwards; counting 1(b) gives 79. The wiki
+  says it is not a benchmark and stopped on 30 June 2026, before Astra's
+  three Erdős solutions in August. Quanta reported 565 solved and 652 open
+  when it went to press in August 2026, and 111 status changes from 2024
+  to August 2025.

@@ -1,0 +1,72 @@
+id: world-primary-energy
+name: World primary energy use (average power)
+short: World energy use
+unit: TW
+better: higher
+log: true
+field: energy
+fit: { from: 1965 }
+points:                           # [year, TW]; comment gives the source TWh and EJ
+  - [1800, 0.64]   # 5653 TWh, 20 EJ
+  - [1810, 0.68]   # 5961 TWh, 21 EJ
+  - [1820, 0.71]   # 6264 TWh, 23 EJ
+  - [1830, 0.76]   # 6653 TWh, 24 EJ
+  - [1840, 0.83]   # 7300 TWh, 26 EJ
+  - [1850, 0.89]   # 7791 TWh, 28 EJ
+  - [1860, 0.91]   # 8005 TWh, 29 EJ
+  - [1870, 0.98]   # 8592 TWh, 31 EJ
+  - [1880, 1.09]   # 9519 TWh, 34 EJ
+  - [1890, 1.22]   # 10659 TWh, 38 EJ
+  - [1900, 1.38]   # 12101 TWh, 44 EJ
+  - [1910, 1.78]   # 15617 TWh, 56 EJ
+  - [1920, 2.05]   # 17963 TWh, 65 EJ
+  - [1930, 2.26]   # 19837 TWh, 71 EJ
+  - [1940, 2.57]   # 22528 TWh, 81 EJ
+  - [1950, 3.19]   # 27972 TWh, 101 EJ
+  - [1960, 4.63]   # 40589 TWh, 146 EJ
+  - [1965, 5.79]   # 50744 TWh, 183 EJ
+  - [1970, 7.34]   # 64364 TWh, 232 EJ
+  - [1975, 8.46]   # 74167 TWh, 267 EJ
+  - [1980, 9.68]   # 84853 TWh, 305 EJ
+  - [1985, 10.43]   # 91438 TWh, 329 EJ
+  - [1990, 11.76]   # 103124 TWh, 371 EJ
+  - [1995, 12.41]   # 108759 TWh, 392 EJ
+  - [2000, 13.52]   # 118481 TWh, 427 EJ
+  - [2005, 15.45]   # 135437 TWh, 488 EJ
+  - [2010, 16.87]   # 147912 TWh, 532 EJ
+  - [2015, 17.87]   # 156610 TWh, 564 EJ
+  - [2016, 18.02]   # 158004 TWh, 569 EJ
+  - [2017, 18.35]   # 160838 TWh, 579 EJ
+  - [2018, 18.79]   # 164729 TWh, 593 EJ
+  - [2019, 18.92]   # 165835 TWh, 597 EJ
+  - [2020, 18.16]   # 159193 TWh, 573 EJ
+  - [2021, 19.03]   # 166787 TWh, 600 EJ
+  - [2022, 19.30]   # 169176 TWh, 609 EJ
+  - [2023, 19.63]   # 172104 TWh, 620 EJ
+  - [2024, 20.03]   # 175604 TWh, 632 EJ
+  - [2025, 20.29]   # 177864 TWh, 640 EJ
+source:
+  title: "Our World in Data, Global primary energy use by source (Energy Institute Statistical Review of World Energy 2026; Smil 2017)"
+  url: https://ourworldindata.org/grapher/global-primary-energy
+license: CC BY 4.0 (OWID processing); underlying data Energy Institute and Smil
+note: >-
+  Sum of all sources in OWID's world series, including traditional biomass
+  (wood, charcoal, crop residues, dung), converted from TWh a year to
+  average power (divided by 8,766 hours). One method throughout: the
+  physical energy content method the Statistical Review adopted in 2025,
+  in which nuclear counts at its heat input and hydro, wind and solar at
+  their electricity output (OWID indicator metadata: "non-combustible
+  renewables on the energy content of their gross electrical output").
+  This is the right basis for physical limits such as waste heat, but it
+  gives renewables less weight than the older substitution method (which
+  grossed their output up as if made in a fossil plant at about 40
+  percent efficiency), so totals differ from older charts by a few
+  percent in recent years. Before 1965 the world figures are Smil's
+  estimates; traditional biomass is Smil's to 2015 and held at its 2015
+  value (11,111 TWh, about 1.27 TW) since. Without traditional biomass
+  the 2025 total is 19.0 TW. Growth: 1.07 percent a year 1800 to 1950
+  (doubling in 65 years), 2.93 percent 1950 to 2000 (24 years), 1.64
+  percent 2000 to 2025 (43 years); 1.54 percent over 1800 to 2025.
+  Downloaded 2026-11-06 (data updated 2026-06-30, covering 1800 to 2025).
+  Kardashev Type I on Sagan's scale is 1e16 W, 10,000 TW, about 490
+  times the 2025 value (Sagan's K = 0.73).

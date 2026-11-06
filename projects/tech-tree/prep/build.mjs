@@ -19,7 +19,7 @@ const NOW = 2026.8
 // (sub-lanes, top to bottom) so related technologies sit together; nodes
 // are assigned to tracks in tracks.yaml or with their own `track:`.
 const FIELDS = [
-  { id: "math", name: "Mathematics", color: "#7b5ea7", tracks: [["geometry-analysis", "Geometry and analysis"], ["number-algebra", "Number and algebra"], ["probability-statistics", "Probability and statistics"], ["logic", "Logic"], ["cryptography", "Cryptography"]] },
+  { id: "math", name: "Mathematics", color: "#7b5ea7", tracks: [["geometry-analysis", "Geometry and analysis"], ["number-algebra", "Number and algebra"], ["probability-statistics", "Probability and statistics"], ["logic", "Logic"], ["proof", "Proof and formal verification"], ["cryptography", "Cryptography"]] },
   { id: "computing", name: "Computing and AI", color: "#3d6fb6", tracks: [["computing-theory", "Theory"], ["classic-ai", "Early AI and machine learning"], ["deep-learning", "Deep learning"], ["bioinformatics", "Bioinformatics"], ["software", "Software"], ["networks", "Networks"], ["computers", "Computers"]] },
   { id: "electronics", name: "Electronics and communication", color: "#2f8fb0", tracks: [["processors", "Processors"], ["components", "Components and memory"], ["chipmaking", "Chipmaking"], ["communication", "Communication"], ["neurotech", "Neurotechnology"]] },
   { id: "physics", name: "Physics", color: "#2a9d8f", tracks: [["quantum-atomic", "Quantum and atomic"], ["em-optics", "Electromagnetism and optics"], ["astronomy", "Astronomy"], ["earth-climate", "Earth and climate"], ["mechanics-heat", "Mechanics and heat"], ["nuclear-particle", "Nuclear and particle"]] },
@@ -654,7 +654,8 @@ for (const n of kept) {
 }
 const forecastsYaml = fs.existsSync(path.join(HERE, "forecasts.yaml")) ? readYaml(path.join(HERE, "forecasts.yaml")) : {}
 const accelYaml = fs.existsSync(path.join(HERE, "acceleration.yaml")) ? readYaml(path.join(HERE, "acceleration.yaml")) : {}
-const fc = forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, metricById, lineFor, accel: accelYaml, forecastsYaml })
+const growthYaml = fs.existsSync(path.join(HERE, "growth.yaml")) ? readYaml(path.join(HERE, "growth.yaml")) : null
+const fc = forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, metricById, lineFor, accel: accelYaml, forecastsYaml, growthYaml })
 for (const m of metricsOut) for (const line of m.series ?? [m]) if (line.trend && fc.bands.has(line)) line.trend.band = fc.bands.get(line)
 
 // Supply risk for each resource with supply data, from four parts (each
@@ -737,20 +738,26 @@ ranked.forEach((n, r) => {
 
 // Time: logarithmic in distance from now, so the deep past is compressed
 // and the present and future get room. Beyond about 12,000 years ago it's
-// compressed twice as hard, since few nodes live there.
+// compressed twice as hard, since few nodes live there, and so is the far
+// future, beyond 2150.
 const TAU = 12
 const DEEP = Math.log10(1 + 12000 / TAU)
 const FUTURE_GAIN = 1.25
+const FAR_YEAR = 2150
+const FAR = FUTURE_GAIN * Math.log10(1 + (FAR_YEAR - NOW) / TAU)
 function timeU(year) {
   const d = year - NOW
-  if (d >= 0) return FUTURE_GAIN * Math.log10(1 + d / TAU)
+  if (d >= 0) {
+    const u = FUTURE_GAIN * Math.log10(1 + d / TAU)
+    return u > FAR ? FAR + (u - FAR) * 0.5 : u
+  }
   let u = Math.log10(1 + -d / TAU)
   if (u > DEEP) u = DEEP + (u - DEEP) * 0.5
   return -u
 }
 const years = kept.flatMap((n) => [n._date.from, n._date.to])
 const uMin = timeU(Math.min(...years)) - 0.08
-const uMax = Math.max(timeU(2100), timeU(Math.min(2300, Math.max(...years)))) + 0.06
+const uMax = Math.max(timeU(2100), timeU(Math.min(3000, Math.max(...years)))) + 0.06
 // World units are screen pixels at the starting zoom on a typical desktop
 // (about 1,150 by 860 of map), so the spacing below is real spacing.
 const WIDTH = 1150
@@ -875,7 +882,7 @@ const out = {
   meta: {
     built: new Date().toISOString().slice(0, 10), now: NOW,
     width: WIDTH, height: HEIGHT,
-    time: { tau: TAU, deep: DEEP, futureGain: FUTURE_GAIN, uMin, uMax },
+    time: { tau: TAU, deep: DEEP, futureGain: FUTURE_GAIN, far: FAR, uMin, uMax },
     reveal: { p: P, fullZoom: FULL_ZOOM },
   },
   fields: FIELDS.map(({ tracks, ...f }) => f), roots: (({ tracks, ...f }) => f)(ROOTS),
@@ -910,6 +917,15 @@ const out = {
       levels: LEVELS, weights: WEIGHTS, slip: SLIP, slipHigh: SLIP_HIGH, draws: fc.draws, backtest: fc.backtest,
       work: fc.work, mechanisms: fc.mechanisms.map(({ id, name, from, work, speedup, ramp, only, note, sources }) => ({ id, name, from, work, speedup, ramp, ...(only ? { only } : {}), note, sources })),
       pace: fc.pace, sandbox: fc.sandbox,
+      ...(fc.growth ? {
+        growth: {
+          t0: fc.growth.t0, e0: fc.growth.e0, regimes: fc.growth.regimes,
+          path: { years: fc.growth.path.years, q: fc.growth.path.q.map((x) => x.map((v) => +v.toPrecision(3))), byRegime: Object.fromEntries(Object.entries(fc.growth.path.byRegime).map(([k, x]) => [k, x.map((v) => +v.toPrecision(3))])) },
+          params: { steady: growthYaml.steady, explosion: growthYaml.explosion, earth: growthYaml.earth, space: growthYaml.space, sun: growthYaml.sun },
+          thresholds: growthYaml.nodes, sources: growthYaml.sources,
+          ...fc.growth.app,
+        },
+      } : {}),
     },
   },
 }

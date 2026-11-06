@@ -16,12 +16,13 @@ work:                 # short names; what each covers is in the comment
   trials: trials and approval       # clinical trials, certification and regulatory review
   building: building                # building, manufacturing and scaling up
   adoption: adoption                # adoption, financing and changing institutions
+  proof: proof                      # finding and checking proofs, in mathematics and formal verification
 
 mechanisms:
   - id: automated-coding
     name: Automated coding
     from: superhuman-coder
-    speedup: { software: 10, ai-research: 5 }
+    speedup: { software: 10, ai-research: 5, proof: 5 }
     ramp: 1
     note: >-
       AI 2027's takeoff model put AI research progress at 5 times its human
@@ -57,7 +58,7 @@ mechanisms:
   - id: ai-science
     name: AI-led science
     from: ai-autonomous-science
-    speedup: { design: 2.5 }
+    speedup: { design: 2.5, proof: 4 }
     ramp: 2
     note: >-
       AI that makes discoveries on its own speeds the design and analysis
@@ -131,7 +132,7 @@ mechanisms:
     from: ai-discovered-material
     speedup: { design: 2, experiments: 1.5 }
     ramp: 3
-    only: { tracks: [modern-materials, nanotech, storage-fuels, renewables, components, chipmaking, nuclear-energy, nuclear-particle, quantum-atomic] }
+    only: { tracks: [modern-materials, nanotech, storage-fuels, renewables, components, chipmaking, nuclear-energy, nuclear-particle, quantum-atomic, industrial-chemistry, classical-chemistry] }
     note: >-
       Once AI-led searches routinely find materials that work, finding a
       better electrolyte, magnet, superconductor or wall material for a
@@ -153,7 +154,7 @@ mechanisms:
   - id: agi
     name: General AI
     from: agi
-    speedup: { software: 30, ai-research: 25, design: 8, experiments: 1.5, trials: 1.2, building: 1.3, adoption: 1.1 }
+    speedup: { software: 30, ai-research: 25, design: 8, experiments: 1.5, trials: 1.2, building: 1.3, adoption: 1.1, proof: 30 }
     ramp: 3
     note: >-
       AI that can do any computer-based job speeds everything that happens on
@@ -175,7 +176,7 @@ mechanisms:
   - id: superintelligence
     name: Superintelligence
     from: artificial-superintelligence
-    speedup: { software: 100, ai-research: 250, design: 50, experiments: 5, trials: 2, building: 3, adoption: 1.3 }
+    speedup: { software: 100, ai-research: 250, design: 50, experiments: 5, trials: 2, building: 3, adoption: 1.3, proof: 200 }
     ramp: 3
     note: >-
       Pure speculation beyond the AI 2027 figure of 250 times for AI research
@@ -186,6 +187,41 @@ mechanisms:
     sources:
       - title: AI Futures Project, AI 2027 takeoff forecast
         url: https://ai-2027.com/research/takeoff-forecast
+
+  - id: ai-proving
+    name: AI proving theorems
+    from: ai-resolves-open-conjecture
+    speedup: { proof: 3 }
+    ramp: 1
+    note: >-
+      On the Erdős problems database, 224 problems moved to solved in the
+      year from September 2025, against 111 from the start of 2024 to
+      August 2025, about three times the pace, though some were old
+      solutions found in the literature. Formalizing went faster still:
+      Fermat's Last Theorem took AI agents 11 days against a five-year
+      plan, and the classification of finite simple groups 24 days. A
+      proof can be checked by computer in minutes, with no experiment to
+      wait for, which is why mathematics moved first; what doesn't speed
+      up is people accepting it. Three times for finding proofs is my
+      judgment.
+    sources:
+      - title: erdosproblems community database, statistics history
+        url: https://github.com/teorth/erdosproblems
+      - title: Quanta Magazine, Why the legendary Erdős problems are falling to AI (August 2026)
+        url: https://www.quantamagazine.org/why-the-legendary-erdos-problems-are-falling-to-ai-20260803/
+      - title: Anthropic, Formalizing Fermat's Last Theorem (September 2026)
+        url: https://www.anthropic.com/research/formalizing-fermats-last-theorem
+
+  - id: verified-code
+    name: Verified software
+    from: verified-software-mainstream
+    speedup: { software: 1.2, trials: 1.15 }
+    ramp: 4
+    only: { tracks: [aviation, land-transport, software, computers] }
+    note: >-
+      When proofs of correctness are cheap, safety-critical software can be
+      certified from the proof instead of long test campaigns. Both figures
+      are my judgment; there is no measurement yet.
 
   # Not only AI: some future technologies speed up others in their field.
   - id: biomarker-trials
@@ -208,7 +244,7 @@ mechanisms:
     from: launch-1000-dollars-kg
     speedup: { experiments: 1.5, building: 1.5 }
     ramp: 3
-    only: { tracks: [space] }
+    only: { tracks: [space, astronomy] }
     note: >-
       When getting to orbit costs a few hundred dollars a kilogram rather
       than thousands, space hardware can be flown, tested and replaced more
@@ -263,10 +299,31 @@ tracks:
   surgery-organs: { design: 0.1, experiments: 0.35, trials: 0.45, adoption: 0.1 }
   crops: { design: 0.2, experiments: 0.5, trials: 0.2, adoption: 0.1 }
   animals-food: { design: 0.15, experiments: 0.25, trials: 0.1, building: 0.4, adoption: 0.1 }
+  astronomy: { design: 0.15, experiments: 0.2, building: 0.5, adoption: 0.15 }
+  communication: { design: 0.15, experiments: 0.15, building: 0.45, adoption: 0.25 }
+  processors: { design: 0.4, experiments: 0.2, building: 0.4 }
+  law-governance: { design: 0.1, adoption: 0.9 }
+  economy: { software: 0.1, design: 0.1, adoption: 0.8 }
+  research: { design: 0.2, experiments: 0.2, building: 0.2, adoption: 0.4 }
+  proof: { proof: 0.6, software: 0.1, adoption: 0.3 }
 
 nodes:
+  millennium-problem-settled: { proof: 0.4, adoption: 0.6 }
+  riemann-hypothesis-settled: { proof: 0.9, adoption: 0.1 }
+  formal-proofs-routine: { proof: 0.3, adoption: 0.7 }
+  formalized-literature: { proof: 0.6, software: 0.1, adoption: 0.3 }
+  ai-majority-new-math: { ai-research: 0.3, proof: 0.2, adoption: 0.5 }
+  verified-software-mainstream: { software: 0.3, proof: 0.35, adoption: 0.35 }
+  optical-second: { experiments: 0.5, adoption: 0.5 }
+  higgs-factory: { design: 0.1, building: 0.6, adoption: 0.3 }
+  dark-matter-identified: { design: 0.25, experiments: 0.5, building: 0.25 }
+  automated-synthesis-on-demand: { software: 0.15, design: 0.3, experiments: 0.45, building: 0.1 }
+  solar-fuels-at-scale: { design: 0.25, experiments: 0.35, building: 0.3, adoption: 0.1 }
+  enzymatic-plastic-recycling: { experiments: 0.1, building: 0.6, adoption: 0.3 }
+  6g-networks: { design: 0.15, experiments: 0.1, building: 0.4, adoption: 0.35 }
+  ai-verification-treaty: { design: 0.15, experiments: 0.1, building: 0.1, adoption: 0.65 }
+  ai-run-company: { ai-research: 0.3, software: 0.2, adoption: 0.5 }
   # Computing power and money for AI: data centers and markets, not ideas.
-  ai-training-1e27-flop: { building: 0.7, adoption: 0.3 }
   ai-training-1e28-flop: { building: 0.7, adoption: 0.3 }
   ai-training-1e29-flop: { building: 0.7, adoption: 0.3 }
   ai-lab-revenue-1t: { ai-research: 0.3, adoption: 0.7 }

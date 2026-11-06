@@ -146,6 +146,7 @@ agi:
     q25: 2029.2
     q75: 2042.3
     match: same        # same | looser | stricter: its question against the criterion
+    weight: 0.5        # optional: a factor on its weight in the pool (thin markets)
     note: One sentence on what it asks and how that differs.
   - title: Company X's announced date
     kind: target
@@ -201,6 +202,33 @@ nodes:                   # or a single node's
 At any moment a kind of work goes as fast as the best mechanism that has
 arrived allows, and the whole as Amdahl's law says: 1 over the sum of each
 share divided by its speedup. Shares are relative (they're normalized).
+
+## The growth model
+
+`growth.yaml` dates the far future by thresholds of power use
+(`src/growth.ts`, shared with the app). Energy use starts from the latest
+point of its metric and grows at its historical rate; in each run from the
+judgment, some years after that run's date for robots building robots,
+growth takes one of three courses, chosen by weight: no explosion (a new
+steady rate), or a gradual or fast explosion, in which the first doubling
+takes a few years and each later doubling is shorter by half every few
+doublings, down to a floor. On Earth it stops at a cap (waste heat);
+industry in space starts from a seed after robots build robots and a
+lunar base, and grows to the Sun's output. Ranges are 10th, 50th and 90th
+percentiles.
+
+```yaml
+nodes:                          # thresholds the model dates
+  kardashev-type-1: { watts: 1.0e16 }     # total power use
+  dyson-swarm: { space: 1.914e26 }        # power used in space
+  explosive-growth: { growth: 0.3 }       # a year's growth of the total
+  probe-reaches-star: { after: interstellar-probe, plus: { q10: 25, q50: 45, q90: 100 } }
+```
+
+Each threshold's years join its pool as a model, in place of base rates,
+which know nothing of scale. The build also reruns the model with what it
+waits on 5 years later, and in each course alone, so the app can move
+these thresholds in Your own dates.
 
 ## Resources and supply
 

@@ -187,7 +187,7 @@ export interface Tree {
     now: number
     width: number
     height: number
-    time: { tau: number; deep: number; futureGain: number; uMin: number; uMax: number }
+    time: { tau: number; deep: number; futureGain: number; far?: number; uMin: number; uMax: number }
     reveal: { p: number; fullZoom: number }
   }
   fields: { id: string; name: string; color: string }[]
@@ -215,6 +215,7 @@ export interface Models {
     work: Record<string, string>
     pace: { years: number[]; mix: Record<string, number>; kinds: Record<string, [number, number, number][]>; all: [number, number, number][] }
     sandbox: Record<string, SandboxNode>
+    growth?: Growth
     mechanisms: { id: string; name: string; from: string; work: string[]; speedup: Record<string, number>; ramp: number; only?: { tracks?: string[]; nodes?: string[] }; note?: string; sources?: Source[] }[]
   }
 }
@@ -225,5 +226,29 @@ export interface SandboxNode {
   shares?: Record<string, number>
   by?: string[] // mechanisms that speed it
   work: [number, number][] // per date (start, best guess, end): the work it stands for, and the date that work gives
+  pool?: (number | null)[] // the pooled forecasts' 10th, 25th, 50th, 75th and 90th percentiles (null: never, for some sources)
+  baseOnly?: boolean // the pool is base rates alone
 }
 export interface Backtest { from: number; n: number; early: number; inside: number; late: number; basis: number }
+// The far future as growth in energy use (prep/growth.yaml, src/growth.ts).
+type Range = number | { q10: number; q50: number; q90: number }
+export interface Growth {
+  t0: number
+  e0: number // watts
+  regimes: Record<string, number> // share of runs in each
+  path: { years: number[]; q: number[][]; byRegime: Record<string, number[]> } // power use in watts: quantiles per year, and each regime's median
+  params: {
+    steady: { growth: Range }
+    explosion: { from: string; delay: Range; regimes: Record<string, { weight: number; growth?: Range; first?: Range; halving?: Range; floor?: Range }> }
+    earth: { cap: Range }
+    space: { from: string[]; seed: number; delay: Record<string, Range>; doubling: Range }
+    sun: number
+  }
+  thresholds: Record<string, { watts?: number; space?: number; growth?: number; after?: string; plus?: Range }>
+  sources: Source[]
+  drivers: string[] // what the paths wait on
+  // Per threshold: its 10th, 50th and 90th percentiles (null: not by the
+  // model's end), how far they move per year that each driver moves, and
+  // where they fall in each regime alone.
+  nodes: Record<string, { q: (number | null)[]; sens: Record<string, number[]>; regimes: Record<string, (number | null)[]> }>
+}

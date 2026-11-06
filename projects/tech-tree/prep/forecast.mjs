@@ -53,6 +53,8 @@ const normCdf = (z) => {
   return z > 0 ? 1 - p : p
 }
 // Mulberry32: the same draws on every build.
+import { crossings } from "../src/growth.ts"
+
 function rng(seed) {
   let a = seed >>> 0
   return () => {
@@ -75,7 +77,7 @@ const sortedQuantile = (a, q) => {
   return Number.isFinite(hi) ? a[lo] + (hi - a[lo]) * (i - lo) : Infinity
 }
 
-export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, metricById, lineFor, accel, forecastsYaml }) {
+export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, metricById, lineFor, accel, forecastsYaml, growthYaml }) {
   // Years as log years from now: x = ln(1 + years from now).
   const X = (y) => Math.log(1 + Math.max(0, y - NOW))
   const Y = (x) => NOW + Math.exp(x) - 1
@@ -467,6 +469,115 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
     return draws
   }
   const sims = { outside: simulate("outside", 1), base: simulate("outside", 1, false), judged: simulate("judged", 2) }
+
+  // ------------------------------------------ the far future (growth.yaml)
+  // Power use drawn forward (src/growth.ts) once per run from the
+  // judgment, with the explosion and industry in space starting from that
+  // run's dates for the technologies they wait on, and every other
+  // parameter drawn from its range. Each threshold's years go into its
+  // pool as a model.
+  const growth = (() => {
+    const G = growthYaml
+    if (!G?.nodes) return null
+    const m = metricById.get(G.energy.metric)
+    if (!m) { warn(`growth.yaml: unknown metric ${G.energy.metric}`); return null }
+    const last = m.points.at(-1)
+    const t0 = last[0], e0 = last[1] * G.energy.watts
+    let rand = rng(7)
+    // A range as its 10th, 50th and 90th percentiles: two half-normals, in
+    // logs for positive quantities, or as given for a fraction.
+    const draw = (r, log = true) => {
+      if (typeof r === "number") return r
+      const z = gauss(rand)
+      if (!log) return r.q50 + z * (z < 0 ? r.q50 - r.q10 : r.q90 - r.q50) / 1.2816
+      return r.q50 * Math.exp(z * Math.log(z < 0 ? r.q50 / r.q10 : r.q90 / r.q50) / 1.2816)
+    }
+    const runOf = (id) => {
+      const p = live.get(id)
+      if (!p) { warn(`growth.yaml: unknown node ${id}`); return () => NOW }
+      if (!open(p)) return () => fixed(p)
+      const a = sims.judged.get(id)
+      return (d) => a[d]
+    }
+    const ids = Object.keys(G.nodes).filter((id) => {
+      if (!live.get(id)) { warn(`growth.yaml: unknown node ${id}`); return false }
+      return true
+    })
+    const list = ids.map((id) => G.nodes[id])
+    // What the paths wait on: robots building robots, what industry in
+    // space needs, and what a threshold comes after.
+    const drivers = [...new Set([G.explosion.from, ...G.space.from, ...list.filter((g) => g.after).map((g) => g.after)])]
+    const at = new Map(drivers.map((id) => [id, runOf(id)]))
+    const years = G.path.years
+    const R = G.explosion.regimes
+    const names = Object.keys(R)
+    const total = names.reduce((a, k) => a + R[k].weight, 0)
+    const q = (arr) => { const a = Array.from(arr).sort((x, y) => x - y); return LEVELS.map((lv) => sortedQuantile(a, lv)) }
+    // One set of runs, the same random draws each time, with what the
+    // paths wait on moved by `shift` years, or one regime throughout.
+    const run = ({ shift = {}, only = null } = {}) => {
+      rand = rng(7)
+      const when = (id, d) => at.get(id)(d) + (shift[id] ?? 0)
+      const out = ids.map(() => new Float64Array(DRAWS))
+      const paths = years.map(() => new Float64Array(DRAWS))
+      const counts = Object.fromEntries(names.map((k) => [k, 0]))
+      for (let d = 0; d < DRAWS; d++) {
+        let u = rand() * total, regime = names[0]
+        for (const k of names) { if (u < R[k].weight) { regime = k; break } u -= R[k].weight }
+        if (only) regime = only
+        counts[regime]++
+        const r = R[regime]
+        const onset = when(G.explosion.from, d) + draw(G.explosion.delay)
+        const ready = Math.max(...G.space.from.map((id) => when(id, d)))
+        const spaceStart = Math.max(ready, regime === "slow" ? -Infinity : onset) + draw(G.space.delay[regime])
+        // The slow regime is a new steady rate; the others shorten their
+        // doubling time by half every `halving` doublings.
+        const slow = r.growth != null
+        const first = slow ? Math.LN2 / Math.max(0.002, draw(r.growth, false)) : draw(r.first)
+        const p = {
+          t0, e0, g0: draw(G.steady.growth, false), onset, first,
+          shrink: slow ? 1 : 0.5 ** (1 / Math.max(0.5, draw(r.halving))), floor: slow ? first : draw(r.floor),
+          earthCap: draw(G.earth.cap), spaceStart, spaceSeed: G.space.seed,
+          spaceDoubling: draw(G.space.doubling), sun: G.sun,
+        }
+        const path = []
+        const c = crossings(p, list, G.path.end, years, path)
+        c.forEach((v, i) => {
+          const g = list[i]
+          out[i][d] = (g.after ? when(g.after, d) : v) + (g.plus ? draw(g.plus) : 0)
+        })
+        path.forEach((v, i) => (paths[i][d] = v))
+      }
+      return { q: out.map(q), paths: paths.map(q), counts }
+    }
+    const main = run()
+    // For your own dates: how far each threshold's 10th, 50th and 90th
+    // percentiles move when what it waits on comes 5 years later, and
+    // where they fall in each regime alone.
+    const STEP = 5
+    const pick = (qs) => [qs[1], qs[3], qs[5]]
+    const sens = Object.fromEntries(drivers.map((id) => {
+      const moved = run({ shift: { [id]: STEP } })
+      return [id, ids.map((_, i) => pick(moved.q[i]).map((v, k) => Number.isFinite(v) && Number.isFinite(pick(main.q[i])[k]) ? Math.round(((v - pick(main.q[i])[k]) / STEP) * 100) / 100 : 0))]
+    }))
+    const byRegime = Object.fromEntries(names.map((k) => [k, run({ only: k })]))
+    const r1 = (v) => (Number.isFinite(v) ? Math.round(v * 10) / 10 : null)
+    return {
+      ids, byId: new Map(ids.map((id, i) => [id, main.q[i]])),
+      regimes: Object.fromEntries(names.map((k) => [k, main.counts[k] / DRAWS])),
+      path: { years, q: main.paths, byRegime: Object.fromEntries(names.map((k) => [k, byRegime[k].paths.map((x) => x[3])])) },
+      t0, e0,
+      // For the app.
+      app: {
+        drivers,
+        nodes: Object.fromEntries(ids.map((id, i) => [id, {
+          q: pick(main.q[i]).map(r1),
+          sens: Object.fromEntries(drivers.map((dr) => [dr, sens[dr][i]])),
+          regimes: Object.fromEntries(names.map((k) => [k, pick(byRegime[k].q[i]).map(r1)])),
+        }])),
+      },
+    }
+  })()
   // The pace of progress: in the runs from the judgment, how many times
   // faster each kind of work goes in each year, from the mechanisms that
   // apply everywhere (those limited to some fields are left out), and the
@@ -580,6 +691,7 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
       let w = WEIGHTS[f.kind] * ((f.kind === "projection" || f.kind === "model" || f.kind === "target") ? 1 : horizonFactor(f.q))
       if (f.match && f.match !== "same") w *= 0.5
       if (f.asof != null && NOW - f.asof > 2) w *= 0.5
+      if (f.weight != null) w *= Number(f.weight)
       inputs.push({ label: f.title, kind: f.kind, weight: w, q: f.q, url: f.url, match: f.match ?? "same", asof: f.asof, note: f.note, ...(f.kind === "target" ? { year: Number(f.year) } : {}) })
     }
     const tr = trendOf(n)
@@ -597,10 +709,13 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
       if (y == null) continue
       inputs.push({ label: sc.name, kind: sc.kind, weight: WEIGHTS[sc.kind] * 0.67, q: fromNormal(X(y), DEFAULT_SIGMA[sc.kind] ?? 0.5) })
     }
+    const g = growth?.byId.get(n.id)
+    if (g) inputs.push({ label: "Growth model (this tree; What it takes)", kind: "model", weight: WEIGHTS.model, q: g })
     const outside = summarize(sims.outside.get(n.id))
     // A milestone's run from base rates follows its trend, so it would
-    // count the trend twice.
-    if (!(tr && Number.isFinite(qOf(tr.q, 0.5)))) inputs.push({ label: accelOf(n) ? "Base rates, with AI speedups" : "Base rates", kind: "outside", weight: WEIGHTS.outside, q: outside })
+    // count the trend twice; and the growth model stands in for base rates,
+    // which know nothing of scale, where it applies.
+    if (!(tr && Number.isFinite(qOf(tr.q, 0.5))) && !g) inputs.push({ label: accelOf(n) ? "Base rates, with AI speedups" : "Base rates", kind: "outside", weight: WEIGHTS.outside, q: outside })
     const poolOf = (list) => {
       const tot = list.reduce((a, i) => a + i.weight, 0)
       return LEVELS.map((lv, k) => {
@@ -618,7 +733,9 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
     const base = poolOf(same)
     const bounded = inputs.map((i) => !i.match || i.match === "same" ? i
       : { ...i, q: i.q.map((v, k) => (i.match === "looser" ? Math.max(v, base[k]) : Math.min(v, base[k]))) })
-    const pooled = poolOf(bounded)
+    // Sources that say never at some levels drop out there, which can
+    // leave a later quantile below an earlier one: keep them in order.
+    const pooled = poolOf(bounded).map((v, k, a) => Math.max(v, ...a.slice(0, k)))
     const lo = qOf(pooled, 0.25), hi = qOf(pooled, 0.75)
     const outsideOnly = inputs.every((i) => i.kind === "outside")
     // Outside the middle half by more than half a year, or a tenth of the
@@ -634,5 +751,13 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
     })
   }
 
-  return { results, bands, backtest, mechanisms, work: WORK, draws: DRAWS, pace, sandbox }
+  // The pool's 10th, 25th, 50th, 75th and 90th percentiles, for comparing
+  // your own dates with it in the app (null where some sources say never),
+  // and whether base rates were its only source.
+  for (const [id, r] of results) if (sandbox[id]) {
+    sandbox[id].pool = [0.1, 0.25, 0.5, 0.75, 0.9].map((lv) => { const v = qOf(r.pooled, lv); return Number.isFinite(v) ? Math.round(v * 10) / 10 : null })
+    if (r.outsideOnly) sandbox[id].baseOnly = true
+  }
+
+  return { results, bands, backtest, mechanisms, work: WORK, draws: DRAWS, pace, sandbox, growth }
 }

@@ -196,8 +196,8 @@
     for a typical remote freelance job, handing it to an AI would usually
     work, the clearest sign on any benchmark of AI replacing paid work
     rather than helping with it.
-  requires: [osworld-human-level, ai-agents]
-  helped_by: [ai-horizon-1-workday, ai-horizon-1-week]
+  requires: [ai-agents]
+  helped_by: [ai-horizon-1-workday, ai-horizon-1-month]
 
 # --------------------------------------------------------------- economy
 
@@ -235,7 +235,7 @@
     likely come from replacing labor rather than selling software seats. Epoch AI's
     3-times-a-year trend reaches it in late 2028; the Forecasting Research
     Institute's superforecasters expected $770 billion only by 2040.
-  requires: [ai-lab-revenue-100b]
+  requires: [frontier-models]
   helped_by: [remote-labor-index-50, superhuman-coder]
   sources:
     - title: Forecasting Research Institute, LEAP wave 11 report
@@ -256,8 +256,8 @@
     A model trained with ten times GPT-6 Astra's estimated compute and about
     500 times GPT-4's. In practice it needs a gigawatt-scale data center
     campus; Epoch AI put the power limit for 2030 at 1e28 to 3e29 FLOP.
-  requires: [ai-training-1e27-flop]
-  helped_by: [ai-datacenters, ai-lab-revenue-100b]
+  requires: [ai-training-1e26-flop]
+  helped_by: [ai-datacenters]
 
 - id: ai-training-1e29-flop
   name: "AI model trained with 10^29 FLOP"
@@ -273,7 +273,7 @@
     billion, so it tests whether money and electricity, not ideas,
     set the pace of AI.
   requires: [ai-training-1e28-flop]
-  helped_by: [ai-lab-revenue-100b]
+  helped_by: [ai-lab-revenue-1t]
   sources:
     - title: Epoch AI, Can AI scaling continue through 2030? (August 2024)
       url: https://epoch.ai/blog/can-ai-scaling-continue-through-2030

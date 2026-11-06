@@ -1,0 +1,34 @@
+# The AI track, pruned (November 2026): benchmark milestones that saturate
+# within a year or two (SWE-bench, OSWorld, Humanity's Last Exam) and the
+# in-between steps of the compute, time-horizon and revenue lines are gone.
+# Their trend lines stay, under Trend lines. Kept: the capability
+# milestones (a month and a year of autonomous work, half of real
+# freelance projects) and every tenfold of training compute from 1e26 on
+# that still lies ahead. Applied last, after the other patches.
+- id: swe-bench-verified-50
+  remove: true
+- id: swe-bench-verified-95
+  remove: true
+- id: osworld-human-level
+  remove: true
+- id: hle-50
+  remove: true
+- id: hle-80
+  remove: true
+- id: ai-training-1e25-flop
+  remove: true
+- id: ai-training-1e27-flop
+  remove: true
+- id: ai-horizon-1-hour
+  remove: true
+- id: ai-horizon-1-week
+  remove: true
+- id: ai-lab-revenue-100b
+  remove: true
+
+- id: ai-training-1e26-flop
+  requires: [large-language-models]
+- id: ai-horizon-1-workday
+  requires: [reasoning-models, ai-agents]
+- id: ai-horizon-1-month
+  requires: [ai-horizon-1-workday]

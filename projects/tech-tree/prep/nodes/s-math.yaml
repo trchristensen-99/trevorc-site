@@ -1,0 +1,521 @@
+# Part S: proof by machine and the future of mathematics. Status as of
+# 2026-11-06.
+# ---------------------------------------------------------- achieved
+
+- id: computer-assisted-proof
+  name: Computer-assisted proof
+  kind: technique
+  fields: [math, computing]
+  track: proof
+  date: 1976
+  status: achieved
+  tier: 2
+  summary: >-
+    A proof in which a computer checks cases no person could. Appel and
+    Haken proved the four color theorem in 1976 by reducing all maps to
+    1,834 configurations and checking them in more than a thousand hours
+    of computer time; many mathematicians were uneasy that no one could
+    read the whole proof.
+  requires: [stored-program-computer]
+  efforts:
+    - who: Kenneth Appel, Wolfgang Haken, with John Koch (University of Illinois)
+      where: USA
+      when: 1976
+      outcome: achieved
+      note: Errors found by others were corrected in their 1989 book; Robertson, Sanders, Seymour and Thomas cut the configurations to 633 in 1997.
+  sources:
+    - title: Four color theorem (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Four_color_theorem
+
+- id: machine-checked-mathematics
+  name: Machine-checked mathematics
+  kind: technique
+  fields: [math, computing]
+  track: proof
+  date: 2005
+  status: achieved
+  tier: 2
+  summary: >-
+    Proofs written in a formal language that a small trusted program
+    checks step by step, so that no referee has to be trusted. Gonthier
+    checked the four color theorem in Coq in 2005; whole libraries
+    followed, and Lean's mathlib grew from 2017 into a shared library of
+    about 2.5 million lines.
+  requires: [mathematical-logic, computer-assisted-proof, programming-languages]
+  efforts:
+    - who: Georges Gonthier, Benjamin Werner (Microsoft Research, Inria)
+      where: UK, France
+      when: 2005
+      outcome: achieved
+      note: The four color theorem in Coq; the Feit-Thompson odd order theorem followed in September 2012.
+    - who: Thomas Hales and 21 coauthors (Flyspeck)
+      where: USA, Vietnam, Germany and others
+      when: 2015
+      outcome: achieved
+      note: A formal proof of the Kepler conjecture in HOL Light and Isabelle; the official account of the completed project was posted in January 2015 (arXiv 1501.02155).
+    - who: Gerwin Klein and colleagues (NICTA, seL4)
+      where: Australia
+      when: 2009
+      outcome: achieved
+      note: The first operating system kernel proved correct against its specification, 8,700 lines of C with 200,000 lines of proof; the proof took about 20 person-years against 2.2 for the kernel itself.
+    - who: Lean community (Liquid Tensor Experiment)
+      where: International
+      when: 2022
+      outcome: achieved
+      note: Checked a main theorem of Clausen and Scholze's condensed mathematics at Scholze's challenge, in about a year and a half, finishing on 14 July 2022.
+  sources:
+    - title: Feit-Thompson theorem (Wikipedia)
+      url: https://en.wikipedia.org/wiki/Feit%E2%80%93Thompson_theorem
+    - title: Hales et al., A formal proof of the Kepler conjecture (arXiv 1501.02155)
+      url: https://arxiv.org/abs/1501.02155
+    - title: Klein et al., seL4, formal verification of an OS kernel (SOSP 2009)
+      url: https://www.sigops.org/s/conferences/sosp/2009/papers/klein-sosp09.pdf
+    - title: Lean community, Completion of the Liquid Tensor Experiment
+      url: https://leanprover-community.github.io/blog/posts/lte-final/
+    - title: Mathlib statistics
+      url: https://leanprover-community.github.io/mathlib_stats.html
+
+- id: ai-resolves-open-conjecture
+  name: AI settles a long-open conjecture
+  kind: discovery
+  fields: [math, computing]
+  track: proof
+  date: 2026
+  status: achieved
+  tier: 2
+  summary: >-
+    An AI system, not a person, finding the key idea that settles a
+    well-known conjecture. In May 2026 an unreleased OpenAI model disproved
+    Erdős's 1946 unit distance conjecture, a result Gowers said a human
+    would have sent to the Annals. By mid 2026 AI had fully solved about 80
+    of the problems on Erdős's list, mostly obscure ones.
+  requires: [reasoning-models]
+  helped_by: [ai-discovered-results, frontiermath-tier4-50, machine-checked-mathematics]
+  efforts:
+    - who: OpenAI (unreleased model); checked by Alon, Bloom, Gowers, Litt, Sawin, Shankar, Tsimerman, Wang and Wood
+      where: USA
+      when: 2026
+      outcome: achieved
+      note: "20 May 2026: a counterexample to the unit distance conjecture built from towers of number fields; the nine mathematicians posted a shorter, human-checked version the same day (arXiv 2605.20695)."
+    - who: OpenAI (Astra)
+      where: USA
+      when: 2026
+      outcome: achieved
+      note: On 1 August 2026 OpenAI announced ten results on problems open at least a decade, with Lean certificates, including Erdős problems 146, 180 and 183, for about $2,000 of compute.
+    - who: Google DeepMind (prover agent); GPT-5.x users; Harmonic (Aristotle)
+      where: UK, USA
+      when: 2026
+      outcome: achieved
+      note: A May 2026 DeepMind paper reported its agent solving 9 of 353 open Erdős problems for a few hundred dollars each; the community wiki counted 79 Erdős problems fully solved with AI as a main contributor by 30 June 2026, 57 of them with no earlier solution found in the literature.
+  sources:
+    - title: Alon et al., Remarks on the disproof of the unit distance conjecture (arXiv 2605.20695)
+      url: https://arxiv.org/abs/2605.20695
+    - title: Quanta Magazine, Why the legendary Erdős problems are falling to AI (August 2026)
+      url: https://www.quantamagazine.org/why-the-legendary-erdos-problems-are-falling-to-ai-20260803/
+    - title: SiliconANGLE, OpenAI's Astra solves 10 long-open math problems (August 2026)
+      url: https://siliconangle.com/2026/08/02/openais-astra-solves-10-long-open-math-problems-publishes-proofs/
+    - title: AI contributions to Erdős problems (community wiki, frozen 30 June 2026)
+      url: https://github.com/teorth/erdosproblems/wiki/AI-contributions-to-Erd%C5%91s-problems
+
+- id: landmark-proofs-autoformalized
+  name: Landmark proofs machine-checked by AI
+  kind: technique
+  fields: [math, computing]
+  track: proof
+  date: 2026
+  status: achieved
+  tier: 2
+  summary: >-
+    AI agents turning the longest proofs in mathematics into formal proofs
+    in weeks. Claude agents formalized Fermat's Last Theorem in Lean in 11
+    days in August 2026, about 13 million lines, ahead of Kevin Buzzard's
+    five-year human-led project; Axiom's agents did the 15,000-page
+    classification of finite simple groups in 24 days that October.
+  requires: [machine-checked-mathematics, ai-agents]
+  helped_by: [ai-coding-assistants]
+  efforts:
+    - who: Math, Inc. (Gauss)
+      where: USA
+      when: 2026
+      outcome: achieved
+      note: Finished the Lean proofs of optimal sphere packing in 8 dimensions (about five days, February 2026) and 24 dimensions (about two weeks, March 2026), on top of a human project begun in 2024.
+    - who: Anthropic (Claude agents, Tianyi Peng); checked by Kevin Buzzard
+      where: USA, UK
+      when: 2026
+      outcome: achieved
+      note: Fermat's Last Theorem following Darmon, Diamond and Taylor's account of Wiles's proof; about six billion output tokens; announced 4 September 2026. Buzzard compiled it, ran the comparator and found it sound, and said it "tells us essentially nothing" mathematically.
+    - who: Axiom Math
+      where: USA
+      when: 2026
+      outcome: achieved
+      note: The classification of finite simple groups, about 43 million lines of Lean, announced 27 October 2026; it found 34 serious issues in the literature, one needing new mathematics. Not yet independently rebuilt when announced.
+    - who: Kevin Buzzard (Imperial College London, EPSRC)
+      where: UK
+      when: 2024
+      outcome: ongoing
+      note: The human-led project to formalize a modern proof of Fermat's Last Theorem, funded with 1 million pounds over five years, continues with different goals.
+  sources:
+    - title: Anthropic, Formalizing Fermat's Last Theorem (September 2026)
+      url: https://www.anthropic.com/research/formalizing-fermats-last-theorem
+    - title: Kevin Buzzard, FLT, Anthropic has beaten me to it (Xena, 4 September 2026)
+      url: https://xenaproject.wordpress.com/2026/09/04/flt-anthropic-has-beaten-me-to-it/
+    - title: OfficeChai, Axiom formally verifies the 15,000-page Enormous Theorem (October 2026)
+      url: https://officechai.com/ai/axiom-enormous-theorem/
+    - title: IEEE Spectrum, AI and humans verify a Fields Medal proof (March 2026)
+      url: https://spectrum.ieee.org/ai-proof-verification
+
+# ------------------------------------------------------------ future
+
+- id: millennium-problem-settled
+  name: A Millennium Prize problem settled
+  kind: discovery
+  fields: [math, physics]
+  track: geometry-analysis
+  date: { window: [2027, 2035], likely: 2028 }
+  status: ongoing
+  tier: 1
+  summary: >-
+    One of the six open problems the Clay Institute set in 2000 settled to
+    the satisfaction of mathematicians. In September 2026 OpenAI claimed a
+    proof, made by about 10,000 AI agents in 88 hours and checked in Lean,
+    that the Navier-Stokes equations with a smooth driving force can blow
+    up, which is one of the four answers Clay's statement accepts. Experts
+    are still checking it.
+  requires: []
+  helped_by: [ai-resolves-open-conjecture, landmark-proofs-autoformalized]
+  criterion: >-
+    A proof or disproof of one of the six open Millennium Prize problems,
+    as the Clay Institute states them, is published in a refereed journal
+    and generally accepted by experts, or Clay announces that it is
+    correct. Dated by that acceptance, by anyone; the node notes whether
+    AI did most of the work.
+  efforts:
+    - who: OpenAI (internal agent system)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: "Announced 8 September 2026: a 166-page paper and a Lean proof of Fefferman's alternatives (C) and (D), blow-up with a smooth force. On 6 October Bastounis, Circelli and Hansen found places where the Lean statement and the written proof do not match; by mid October no one fully understood the proof."
+    - who: Tristan Buckmaster (NYU), Levent Alpöge
+      where: USA
+      when: 2026
+      outcome: rival
+      note: Human proofs, checked in Lean, of blow-up with a smooth force for the Euler, porous medium and Boussinesq equations (August 2026), building on Córdoba and Martínez-Zoroa; a priority dispute with OpenAI followed.
+    - who: Javier Gómez-Serrano (Brown) with Google DeepMind
+      where: USA, UK
+      when: 2026
+      outcome: ongoing
+      note: Neural networks that find unstable singularities, aimed at a computer-assisted proof of blow-up.
+  forecast:
+    note: >-
+      Only one of the seven problems has been solved since 2000: Perelman
+      posted the Poincaré proof in 2002 and 2003 and Clay awarded it in 2010,
+      seven years later. Clay said on 11 September 2026 that the
+      Navier-Stokes problem "has apparently been settled" but that its review
+      is deliberately unhurried and needs refereed publication; its rules
+      also wait two years after publication before any prize. Critics say a
+      man-made force is a loophole, though Fefferman's statement allows it,
+      and the unforced question stays open. If the proof holds, general
+      acceptance would come in 2027 or 2028; if it fails, the human groups
+      are close behind. Traders agree it is near: Kalshi put a Clay prize
+      for any problem at 56 percent before 2030, which with the two-year
+      wait implies acceptance around 2027 or 2028. Judgment: 2028.
+    sources:
+      - title: Fefferman, Existence and smoothness of the Navier-Stokes equation (Clay official problem statement)
+        url: https://www.claymath.org/wp-content/uploads/2022/06/navierstokes.pdf
+      - title: Navier-Stokes priority controversy (Wikipedia, edited 4 November 2026)
+        url: https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_priority_controversy
+      - title: The Decoder, Clay says the Navier-Stokes problem has apparently been settled (September 2026)
+        url: https://the-decoder.com/clay-mathematics-institute-says-the-navier-stokes-millennium-prize-problem-has-apparently-been-settled/
+      - title: Scientific American, OpenAI's blockbuster Navier-Stokes proof isn't what we thought it was (13 October 2026)
+        url: https://www.scientificamerican.com/article/openais-blockbuster-navier-stokes-proof-isnt-what-we-thought-it-was/
+      - title: Clay Mathematics Institute, Poincaré conjecture
+        url: https://www.claymath.org/millennium/poincare-conjecture/
+      - title: Clay Mathematics Institute, Millennium Prize rules
+        url: https://www.claymath.org/millennium-problems/rules/
+      - title: "Kalshi: Will the Clay Institute award a Millennium Prize?"
+        url: https://kalshi.com/markets/kxmillennium
+  sources:
+    - title: Clay Mathematics Institute, Millennium Prize Problems
+      url: https://www.claymath.org/millennium-problems/
+    - title: Tufts Daily, Mathematicians still checking the Navier-Stokes proof that OpenAI claims to have solved (September 2026)
+      url: https://www.tuftsdaily.com/article/2026/09/mathematicians-still-checking-the-navier-stokes-proof-that-openai-claims-to-have-solved
+
+- id: riemann-hypothesis-settled
+  name: Riemann hypothesis settled
+  kind: discovery
+  fields: [math]
+  track: number-algebra
+  date: { window: [2028, 2070], likely: 2034 }
+  status: speculative
+  tier: 2
+  summary: >-
+    A proof or disproof of Riemann's 1859 guess about where the zeros of
+    the zeta function lie, which controls how the primes are spread out.
+    It is the best known open problem in mathematics, on Hilbert's 1900
+    list and Clay's 2000 list, and unlike the Navier-Stokes claim there is
+    no loophole version to aim at.
+  requires: []
+  helped_by: [millennium-problem-settled, artificial-superintelligence]
+  criterion: >-
+    A proof or disproof of the Riemann hypothesis is published and
+    generally accepted by experts, or checked in a formal proof assistant
+    with its statement confirmed by experts to match the hypothesis.
+  efforts:
+    - who: Number theorists worldwide; AI labs
+      where: International
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Hisano and Sornette found the waiting time from conjecture to proof
+      fits an exponential with a rate of about 1 percent a year, a mean of
+      about a century, and the hypothesis is already 167 years old. Against
+      that, AI went from olympiad problems in 2025 to a claimed Millennium
+      result in September 2026, and Scientific American reported that OpenAI
+      released about 400 results in one week, some judged worth a Fields
+      Medal before AI. Daniel Litt, who in February 2026 expected AI to match
+      the best mathematicians by 2040 but not 2030, notes that models still
+      rarely invent new ideas, which a proof of this would probably need.
+      Markets in November 2026 were far more bullish: Kalshi traders put
+      about 23 percent on a resolution before 2029, and a Manifold market
+      gave 73.5 percent before 2030. Unlike forced Navier-Stokes, no human
+      program was close. Judgment: mid 2030s, later than the markets.
+    sources:
+      - title: Hisano and Sornette, On the distribution of time-to-proof of mathematical conjectures (Mathematical Intelligencer 2013)
+        url: https://arxiv.org/abs/1202.3936
+      - title: Daniel Litt, Mathematics in the library of Babel (February 2026)
+        url: https://www.daniellitt.com/blog/2026/2/20/mathematics-in-the-library-of-babel
+      - title: Scientific American, OpenAI's blockbuster Navier-Stokes proof isn't what we thought it was (13 October 2026)
+        url: https://www.scientificamerican.com/article/openais-blockbuster-navier-stokes-proof-isnt-what-we-thought-it-was/
+      - title: "Kalshi: When will the Riemann hypothesis be resolved?"
+        url: https://kalshi.com/markets/kxriemannres
+  sources:
+    - title: Clay Mathematics Institute, Millennium Prize Problems
+      url: https://www.claymath.org/millennium-problems/
+
+- id: formal-proofs-routine
+  name: Machine-checked proofs as standard in research papers
+  kind: institution
+  fields: [math, computing]
+  track: proof
+  date: { window: [2028, 2040], likely: 2031 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Research papers published with a formal proof that a computer has
+    checked, so referees judge whether a result matters rather than whether
+    it is right. AI now formalizes even the longest proofs in weeks; the
+    brakes are human review of the statements, gaps in the libraries for
+    some fields, and journals' habits.
+  requires: [landmark-proofs-autoformalized]
+  helped_by: [superhuman-coder]
+  criterion: >-
+    In a calendar year, at least half of the research articles published
+    in the Annals of Mathematics, Acta Mathematica, Inventiones, the
+    Journal of the AMS and Publications de l'IHÉS come with a public
+    machine-checked formalization of their main theorems.
+  efforts:
+    - who: Lean FRO and the Mathlib Initiative (Tau Ceti, Palomar)
+      where: USA, international
+      when: 2026
+      outcome: ongoing
+      note: Tau Ceti is a Lean library written by AI under human roadmaps and adversarial AI review; its maintainers expect it to hold a substantial part of graduate mathematics within a year or two. Palomar, set up with Tao, is a registry for Lean-checked results.
+    - who: OpenAI
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Released 722 AI-written manuscripts with a Lean proof library in October 2026, many but not all formalized.
+  forecast:
+    note: >-
+      Formalizing has become cheap: Fermat's Last Theorem took 11 days and
+      about six billion tokens, and Gauss redid a three-week formalization
+      of the strong prime number theorem in two to three days. Buzzard says the
+      bottleneck has moved to review: mathlib does not accept AI reviews and
+      had about 3,000 open pull requests, and he expects it to stay human-led
+      while AI libraries hold far more. The October 2026 Navier-Stokes
+      critique showed a Lean statement can differ from the claim, so
+      checking statements still needs experts. Twenty-five Fields
+      medallists' September 2026 declaration shows resistance to AI's role.
+      Judgment: about 2031, set mostly by how fast journals change their
+      rules.
+    sources:
+      - title: Kevin Buzzard, FLT, Anthropic has beaten me to it (Xena, 4 September 2026)
+        url: https://xenaproject.wordpress.com/2026/09/04/flt-anthropic-has-beaten-me-to-it/
+      - title: IEEE Spectrum, AI and humans verify a Fields Medal proof (March 2026)
+        url: https://spectrum.ieee.org/ai-proof-verification
+      - title: The Next Web, The man paid to prove Fermat by hand says Claude did it in 11 days (September 2026)
+        url: https://thenextweb.com/news/anthropic-claude-fermat-last-theorem-lean-buzzard
+      - title: Lean, Tau Ceti use case
+        url: https://lean-lang.org/use-cases/tau-ceti
+      - title: AI Weekly, OpenAI publishes 722 AI-generated math preprints on GitHub (October 2026)
+        url: https://aiweekly.co/alerts/openai-publishes-722-ai-generated-math-preprints-on-github
+      - title: Scientific American, 25 winners of math's Nobel Prize decry the AI invasion of their discipline (September 2026)
+        url: https://www.scientificamerican.com/article/25-winners-of-maths-nobel-prize-decry-the-ai-invasion-of-their-discipline/
+  sources:
+    - title: Anthropic, Formalizing Fermat's Last Theorem (September 2026)
+      url: https://www.anthropic.com/research/formalizing-fermats-last-theorem
+
+- id: formalized-literature
+  name: The mathematical literature formalized
+  kind: infrastructure
+  fields: [math, computing]
+  track: proof
+  date: { window: [2028, 2042], likely: 2032 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Most of the main theorems in the published literature, not just the
+    famous ones, checked by machine in an open library, so errors in old
+    papers surface and new work can build on checked results. Formalizing
+    has found real gaps: Axiom's agents found 34 serious problems in the
+    classification of finite simple groups.
+  requires: [landmark-proofs-autoformalized]
+  helped_by: [formal-proofs-routine, agi]
+  criterion: >-
+    An audit of a random sample of at least 500 research papers published
+    in the leading general mathematics journals between 1950 and 2025 finds
+    the main theorems of at least half of them formalized, with statements
+    reviewed, in one or more open formal libraries.
+  efforts:
+    - who: Lean FRO (Tau Ceti), Math, Inc., Axiom Math, Anthropic, OpenAI
+      where: USA, international
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Fermat's Last Theorem cost about six billion output tokens, and the
+      15,000-page classification of finite simple groups took 24 days, so a
+      typical paper is far cheaper, and inference prices keep falling. What
+      is slow is the background each field needs and checking that the
+      formal statements say what the papers say; Tau Ceti's maintainers
+      expect a substantial part of graduate mathematics within a year or
+      two. Nobody has set this as a public goal for the whole literature.
+      Judgment: early 2030s.
+    sources:
+      - title: Anthropic, Formalizing Fermat's Last Theorem (September 2026)
+        url: https://www.anthropic.com/research/formalizing-fermats-last-theorem
+      - title: OfficeChai, Axiom formally verifies the 15,000-page Enormous Theorem (October 2026)
+        url: https://officechai.com/ai/axiom-enormous-theorem/
+      - title: Lean, Tau Ceti use case
+        url: https://lean-lang.org/use-cases/tau-ceti
+  sources:
+    - title: Lean, Tau Ceti use case
+      url: https://lean-lang.org/use-cases/tau-ceti
+
+- id: ai-majority-new-math
+  name: AI finds most new mathematics
+  kind: technique
+  fields: [math, computing]
+  track: proof
+  date: { window: [2028, 2045], likely: 2032 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    AI systems, rather than people, finding the main results of most of
+    the best new mathematics, with people choosing questions, checking and
+    explaining. Labs already release hundreds of AI-found results at a
+    time; leading journals, referees and the field's culture have not
+    caught up.
+  requires: [ai-resolves-open-conjecture]
+  helped_by: [formal-proofs-routine, agi]
+  criterion: >-
+    In a calendar year, at least half of the research articles published in
+    the Annals of Mathematics, Acta Mathematica, Inventiones, the Journal of
+    the AMS and Publications de l'IHÉS state that an AI system found their
+    main result.
+  efforts:
+    - who: OpenAI, Google DeepMind, Anthropic, Axiom Math, Harmonic
+      where: USA, UK
+      when: 2026
+      outcome: ongoing
+      note: Axiom reported in May 2026 that proofs from AxiomProver, checked in Lean before submission, had been accepted by five peer-reviewed journals, which it did not name.
+  forecast:
+    note: >-
+      Tao wrote in 2023 that 2026-level AI, used properly, would be a
+      trustworthy co-author. Daniel Litt bet Tamay Besiroglu at 3 to 1 in
+      March 2025 that AI could not write Annals-quality number theory papers
+      on its own by 2030; he wrote in February 2026 that he expected to lose,
+      and the Manifold market on the bet resolved yes on 1 August 2026.
+      Scientific American reported in October 2026 that OpenAI released about
+      400 results in a week and that there are too few experts to check
+      them. The brakes are on the human side: refereeing takes months, top
+      journals publish a few hundred papers a year, and 25 Fields medallists
+      warned against mass-produced proofs. Judgment: early 2030s.
+    sources:
+      - title: AI Weekly, Axiom Math AI proofs accepted by five academic journals (May 2026)
+        url: https://aiweekly.co/alerts/axiom-math-ai-proofs-accepted-by-five-academic-journals
+      - title: Terence Tao, Embracing change and resetting expectations (Microsoft AI anthology, June 2023)
+        url: https://unlocked.microsoft.com/ai-anthology/terence-tao/
+      - title: Daniel Litt, Mathematics in the library of Babel (February 2026)
+        url: https://www.daniellitt.com/blog/2026/2/20/mathematics-in-the-library-of-babel
+      - title: "Manifold: Will AI be capable of producing an Annals-quality math paper for $100k by March 2030?"
+        url: https://manifold.markets/TamayBesiroglu/will-ai-be-capable-of-producing-ann
+      - title: Scientific American, OpenAI's blockbuster Navier-Stokes proof isn't what we thought it was (13 October 2026)
+        url: https://www.scientificamerican.com/article/openais-blockbuster-navier-stokes-proof-isnt-what-we-thought-it-was/
+      - title: Scientific American, 25 winners of math's Nobel Prize decry the AI invasion of their discipline (September 2026)
+        url: https://www.scientificamerican.com/article/25-winners-of-maths-nobel-prize-decry-the-ai-invasion-of-their-discipline/
+  sources:
+    - title: Quanta Magazine, Why the legendary Erdős problems are falling to AI (August 2026)
+      url: https://www.quantamagazine.org/why-the-legendary-erdos-problems-are-falling-to-ai-20260803/
+
+- id: verified-software-mainstream
+  name: Formally verified software in the mainstream
+  kind: technique
+  fields: [computing, math]
+  track: software
+  date: { window: [2029, 2045], likely: 2034 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Everyday software, not just small kernels and crypto libraries, shipped
+    with machine-checked proofs that it does what its specification says.
+    seL4 showed it could be done in 2009 at about ten times the cost of
+    writing the code; AI that writes proofs could make it cheap, though
+    writing good specifications stays hard.
+  requires: [machine-checked-mathematics, landmark-proofs-autoformalized]
+  helped_by: [superhuman-coder, formal-proofs-routine]
+  criterion: >-
+    A general-purpose operating system kernel or web browser engine used
+    by more than 100 million people ships with machine-checked proofs that
+    most of its code meets a formal specification of functional
+    correctness, not just memory safety.
+  efforts:
+    - who: ARIA Safeguarded AI (59 million pounds)
+      where: UK
+      when: 2026
+      outcome: ongoing
+      note: Started as a program for provable guarantees on AI systems; in 2025 and 2026 it narrowed to an open toolkit for AI agents that produce formally verified software, applied to cybersecurity, because frontier AI advanced faster than expected.
+    - who: Amazon Web Services (Cedar, Dafny)
+      where: USA
+      when: 2023
+      outcome: ongoing
+      note: Proved key properties of the Cedar authorization engine and the soundness of its validator, finding design bugs.
+    - who: Vero benchmark (Berkeley and others)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: The best AI agent fully built 27 of 43 formally verified repositories in Lean (August 2026) and closed no specifications on the hardest.
+  forecast:
+    note: >-
+      seL4's proof took about 20 person-years for 8,700 lines of C, against
+      2.2 person-years for the kernel; its authors thought a repeat would
+      take 6. Mainstream kernels and browsers have tens of millions of lines
+      and no formal specifications. AI agents now write Lean proofs at the
+      scale of millions of lines, and ARIA's program narrowed its aim to
+      AI-built verified software for this reason, but repository-scale
+      benchmarks show agents still failing on the hardest specifications.
+      Judgment: mid 2030s. A separate node for provable guarantees about AI
+      systems themselves is left out: ARIA moved away from that goal and no
+      credible checkable version exists yet.
+    sources:
+      - title: Klein et al., seL4, formal verification of an OS kernel (SOSP 2009)
+        url: https://www.sigops.org/s/conferences/sosp/2009/papers/klein-sosp09.pdf
+      - title: ARIA, Safeguarded AI
+        url: https://www.aria.org.uk/opportunity-spaces/mathematics-for-safe-ai/safeguarded-ai
+      - title: Ye et al., Vero, can AI agents build formally verified software repositories? (arXiv 2608.13522)
+        url: https://arxiv.org/abs/2608.13522
+      - title: Amazon Science, How we built Cedar with automated reasoning and differential testing (2023)
+        url: https://www.amazon.science/blog/how-we-built-cedar-with-automated-reasoning-and-differential-testing
+  sources:
+    - title: Klein et al., seL4, formal verification of an OS kernel (SOSP 2009)
+      url: https://www.sigops.org/s/conferences/sosp/2009/papers/klein-sosp09.pdf

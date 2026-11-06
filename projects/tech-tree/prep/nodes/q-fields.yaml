@@ -1,0 +1,1128 @@
+# Part Q: the thinner fields (physics, chemistry, electronics, society).
+# Status as of 2026-11-06.
+
+# ---- physics ----
+
+- id: optical-second
+  name: The second redefined by optical clocks
+  kind: institution
+  fields: [physics, society]
+  track: quantum-atomic
+  date: { window: [2030.5, 2035], likely: 2030.9 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Replacing the caesium microwave definition of the second, in place since
+    1967, with one based on optical atomic clocks, which are now up to 100
+    times more accurate than the caesium standard that defines time.
+  requires: [atomic-clock, laser]
+  helped_by: [gps]
+  criterion: >-
+    The General Conference on Weights and Measures (CGPM) adopts a new
+    definition of the SI second based on one or more optical frequency
+    standards.
+  efforts:
+    - who: BIPM Consultative Committee for Time and Frequency (CCTF)
+      where: International
+      when: 2026
+      outcome: ongoing
+      note: The 28th CGPM in October 2026 (Resolution 4) asked for a proposal for the new definition at the 29th CGPM in 2030, with an implementation date.
+    - who: JILA, NIST, PTB, NPL, SYRTE, RIKEN and other national labs
+      where: USA, Germany, UK, France, Japan
+      when: 2024
+      outcome: ongoing
+      note: JILA's strontium lattice clock reached a systematic uncertainty of 8.1e-19 in 2024.
+  forecast:
+    note: >-
+      The 2026 CGPM did not redefine the second but set 2030 as the target
+      for a proposal, noting that the community has not agreed on which atom
+      or ensemble to use and that some mandatory criteria, such as better
+      international comparisons of optical clocks, are unmet but "could
+      realistically be fulfilled by 2030". The CGPM meets every four years,
+      so a miss in 2030 means 2034. Judgment: the 2030 CGPM (late 2030), with a real chance of
+      slipping to 2034.
+    sources:
+      - title: BIPM, CGPM 2026 Resolution 4, On the future definition of the second
+        url: https://www.bipm.org/en/cgpm-2026/resolution-4
+      - title: BIPM, Frequently asked questions concerning the redefinition of the second
+        url: https://www.bipm.org/en/faq-redefinition-second
+      - title: Aeppli et al., Clock with 8e-19 systematic uncertainty, PRL 133, 023401 (2024)
+        url: https://arxiv.org/abs/2403.10664
+  sources:
+    - title: BIPM, CGPM 2026 Resolution 4, On the future definition of the second
+      url: https://www.bipm.org/en/cgpm-2026/resolution-4
+
+- id: nuclear-clock-precision
+  name: Nuclear clocks as accurate as atomic clocks
+  kind: device
+  fields: [physics]
+  track: quantum-atomic
+  date: { window: [2031, 2045], likely: 2037 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Clocks that tick on a transition inside the thorium-229 nucleus rather
+    than in its electrons, which makes them far less sensitive to stray
+    fields and a sharp probe of whether constants of nature drift. The first
+    working nuclear clocks were reported in October 2026, still about a
+    thousand times less stable than the best atomic clocks.
+  requires: [atomic-clock, laser]
+  helped_by: [optical-second]
+  criterion: >-
+    A nuclear clock reaches a total systematic uncertainty of 1e-18 or
+    better, verified by comparison with optical atomic clocks.
+  efforts:
+    - who: TU Wien (Thorsten Schumm) with PTB
+      where: Austria, Germany
+      when: 2026
+      outcome: ongoing
+      note: Nature, October 2026, a continuous-wave 148 nm laser locked to thorium-229 nuclei in a calcium fluoride crystal, running over 24 hours with instability approaching 1e-15 over a day.
+    - who: Tsinghua University and collaborators
+      where: China
+      when: 2026
+      outcome: ongoing
+      note: A second nuclear clock synchronized to thorium-229, published in the same issue of Nature.
+    - who: JILA (Jun Ye)
+      where: USA
+      when: 2024
+      outcome: ongoing
+      note: Measured the thorium-229 transition against a strontium clock with a frequency comb in 2024.
+  forecast:
+    note: >-
+      The two 2026 nuclear clocks run with instability near 1e-15 over a day,
+      and their authors expect about four orders of magnitude more stability
+      is possible. The best optical clock's systematic uncertainty is 8e-19,
+      reached about 20 years after the first optical lattice clocks. Solid
+      crystals bring their own shifts, and ion traps for thorium are at an
+      earlier stage. Judgment: late 2030s.
+    sources:
+      - title: Nature Asia press release, first nuclear clocks (October 2026)
+        url: https://www.natureasia.com/en/info/press-releases/detail/9455
+      - title: Toscani De Col et al., A thorium-229 optical nuclear clock with feedback loop (arXiv 2606.04997)
+        url: https://arxiv.org/abs/2606.04997
+      - title: Aeppli et al., Clock with 8e-19 systematic uncertainty, PRL 133, 023401 (2024)
+        url: https://arxiv.org/abs/2403.10664
+  sources:
+    - title: Toscani De Col et al., A thorium-229 optical nuclear clock with feedback loop (arXiv 2606.04997)
+      url: https://arxiv.org/abs/2606.04997
+
+- id: neutrino-mass-ordering
+  name: Neutrino mass ordering settled
+  kind: discovery
+  fields: [physics]
+  track: nuclear-particle
+  date: { window: [2029, 2039], likely: 2033 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Finding out whether the third neutrino is the heaviest or the lightest,
+    one of the last unknown basic facts of the Standard Model's neutrino
+    sector. It decides how to search for whether neutrinos are their own
+    antiparticles and how matter could have won over antimatter.
+  requires: [standard-model, nuclear-reactor, particle-accelerator]
+  helped_by: [big-science]
+  criterion: >-
+    One experiment, or a combined analysis published by the experiments'
+    own collaborations, rejects one of the two mass orderings at 5 sigma or
+    more.
+  efforts:
+    - who: JUNO (Jiangmen Underground Neutrino Observatory)
+      where: China
+      when: 2025
+      outcome: ongoing
+      note: A 20,000 tonne reactor neutrino detector that began taking data in August 2025; about 3 sigma alone after about 6.5 years.
+    - who: IceCube Upgrade; KM3NeT/ORCA
+      where: Antarctica, Mediterranean
+      when: 2026
+      outcome: ongoing
+      note: Atmospheric neutrino detectors; combined with JUNO, studies project 5 sigma within 2 to 7 years of joint data.
+    - who: DUNE (Fermilab); Hyper-Kamiokande
+      where: USA, Japan
+      when: 2031
+      outcome: ongoing
+      note: Hyper-Kamiokande expects beam data from 2028 and DUNE from about 2031; DUNE aims for 5 sigma within a few years of beam.
+  forecast:
+    note: >-
+      Outside reanalyses of JUNO's first data and global fits favor the
+      normal ordering at roughly 2 to 3 sigma. JUNO alone reaches about 3
+      sigma after 6.5 years; combined with IceCube Upgrade or ORCA, studies
+      project 5 sigma within 2 to 7 years, and DUNE could get there within a
+      few years of first beam around 2031 or 2032. Combined fits across
+      collaborations can take years to publish. Judgment: about 2033.
+    sources:
+      - title: Lessons from the first JUNO results (arXiv 2601.09791)
+        url: https://arxiv.org/abs/2601.09791
+      - title: Combined sensitivity to the neutrino mass ordering with JUNO, the IceCube Upgrade, and PINGU (PRD 2020)
+        url: https://jyx.jyu.fi/handle/123456789/68286
+      - title: Combined sensitivity of JUNO and KM3NeT/ORCA to the neutrino mass ordering (arXiv 2108.06293)
+        url: https://arxiv.org/abs/2108.06293
+      - title: DUNE status and science (PoS 2025)
+        url: https://pos.sissa.it/485/180/
+  sources:
+    - title: Lessons from the first JUNO results (arXiv 2601.09791)
+      url: https://arxiv.org/abs/2601.09791
+
+- id: space-gravitational-wave-detection
+  name: Gravitational waves detected from space
+  kind: discovery
+  fields: [physics, engineering]
+  track: astronomy
+  date: { window: [2036, 2046], likely: 2038 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Three spacecraft millions of kilometres apart, swapping laser beams, to
+    hear the slow gravitational waves of merging giant black holes and tight
+    binary stars, a band no detector on the ground can reach.
+  requires: [gravitational-wave-detection, laser, satellites]
+  helped_by: [big-science]
+  criterion: >-
+    A space-based interferometer (LISA, Taiji or TianQin) detects
+    gravitational waves in the millihertz band from any source, and the
+    result is published.
+  efforts:
+    - who: ESA LISA (with NASA; prime contractor OHB)
+      where: Europe, USA
+      when: 2024
+      outcome: ongoing
+      note: Adopted in January 2024 for launch on an Ariane 6 in 2035. OHB's prime contract was signed in June 2025. The White House proposed ending NASA's share in 2026 and 2027; Congress kept it for 2026, and ESA began buying European replacements in 2025 and 2026.
+    - who: Chinese Academy of Sciences (Taiji); Sun Yat-sen University (TianQin)
+      where: China
+      when: 2026
+      outcome: rival
+      note: Both aim to fly full constellations around 2035; precursor satellites have flown.
+  forecast:
+    note: >-
+      LISA's launch is set for 2035, and resolved galactic binaries should
+      show up soon after it reaches its orbit and starts science. Large ESA
+      missions often slip a few years, and the loss of NASA's lasers and
+      telescopes would add risk; a Manifold market gives 38 percent to a
+      launch in 2035. China's Taiji or TianQin could get there first.
+      Judgment: about 2038.
+    sources:
+      - title: ESA, Capturing the ripples of spacetime, LISA gets go-ahead (January 2024)
+        url: https://www.esa.int/Science_Exploration/Space_Science/Capturing_the_ripples_of_spacetime_LISA_gets_go-ahead
+      - title: European Spaceflight, ESA begins developing replacements for NASA's contributions to LISA (May 2026)
+        url: https://europeanspaceflight.com/?p=6457
+      - title: TianQin project site
+        url: https://tianqin.sysu.edu.cn/en
+  sources:
+    - title: ESA, Capturing the ripples of spacetime, LISA gets go-ahead (January 2024)
+      url: https://www.esa.int/Science_Exploration/Space_Science/Capturing_the_ripples_of_spacetime_LISA_gets_go-ahead
+
+- id: higgs-factory
+  name: A Higgs factory collider
+  kind: infrastructure
+  fields: [physics]
+  track: nuclear-particle
+  date: { window: [2042, 2065], likely: 2048 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    The next big collider after the LHC: an electron-positron machine that
+    makes millions of Higgs bosons in clean collisions, to measure them
+    precisely enough to see cracks in the Standard Model. CERN's 91 km
+    FCC-ee is the lead design.
+  requires: [higgs-boson, particle-accelerator, cern]
+  helped_by: [superconductivity, big-science]
+  criterion: >-
+    A new electron-positron collider designed to produce Higgs bosons
+    (FCC-ee, CEPC, ILC or a linear collider at CERN) starts colliding beams
+    for physics.
+  efforts:
+    - who: CERN (Future Circular Collider, FCC-ee)
+      where: Switzerland, France
+      when: 2026
+      outcome: ongoing
+      note: The CERN Council named FCC-ee the preferred next flagship in May 2026 and aims for a go or no-go decision by 2028; the feasibility study costs it at CHF 15.3 billion with about 15 years of construction from the early 2030s.
+    - who: IHEP (Circular Electron Positron Collider, CEPC)
+      where: China
+      when: 2026
+      outcome: rival
+      note: Reported not included in China's 15th five-year plan (2026 to 2030); the study group still aims for a Higgs factory before 2040.
+    - who: International Linear Collider proponents
+      where: Japan
+      when: 2026
+      outcome: rival
+  forecast:
+    note: >-
+      If CERN approves FCC-ee in 2028 and construction takes about 15 years
+      from the early 2030s, collisions would start in the mid to late 2040s,
+      and big projects of this kind usually run late. CEPC could be faster
+      but lost its place in the current five-year plan, and the ILC has
+      waited for Japanese approval since 2013. Judgment: about 2048, with a
+      real chance that none is built.
+    sources:
+      - title: CERN Courier, CERN Council updates the European Strategy (2026)
+        url: https://cerncourier.com/cern-council-updates-the-european-strategy/
+      - title: CERN Courier, FCC feasibility study complete (2025)
+        url: https://cerncourier.com/a/fcc-feasibility-study-complete/
+      - title: Jianchun Wang, HEP in China, DPF 2026
+        url: https://indico.fnal.gov/event/72820/contributions/345950/attachments/200117/279027/Dpf2026-Hepinchina-Jianchun%20Wang.pdf
+  sources:
+    - title: CERN Courier, FCC feasibility study complete (2025)
+      url: https://cerncourier.com/a/fcc-feasibility-study-complete/
+
+- id: dark-matter-identified
+  name: Dark matter identified
+  kind: discovery
+  fields: [physics]
+  track: nuclear-particle
+  date: { window: [2032, 2080], likely: 2050 }
+  status: speculative
+  tier: 2
+  summary: >-
+    Catching dark matter, about 85 percent of the matter in the universe, in
+    a detector rather than only through its gravity, and so learning what it
+    is made of. Decades of searches for WIMPs and axions have found nothing
+    convincing, and xenon detectors are nearing the floor set by neutrinos.
+  requires: [standard-model]
+  helped_by: [particle-accelerator, superconducting-qubits, big-science, ai-autonomous-science]
+  criterion: >-
+    A non-gravitational detection of dark matter at 5 sigma or more by one
+    experiment, confirmed by an independent experiment or method, that
+    physicists broadly accept as identifying what at least most dark matter
+    is.
+  efforts:
+    - who: LZ (LUX-ZEPLIN); XENONnT; PandaX-4T
+      where: USA, Italy, China
+      when: 2025
+      outcome: ongoing
+      note: LZ published record limits from 4.2 tonne-years in 2025 and runs to about 2028.
+    - who: XLZD consortium (XENON, LZ and DARWIN)
+      where: International
+      when: 2026
+      outcome: ongoing
+      note: A planned 60 to 80 tonne xenon detector that would reach the neutrino fog for WIMPs, aiming to run in the 2030s.
+    - who: ADMX and other axion searches
+      where: USA, worldwide
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Metaculus forecasters give 58 percent to a Nobel Prize for explaining
+      dark matter before 2050, which implies a discovery well before then,
+      but that is the most optimistic reading. WIMP searches will reach the
+      neutrino floor in the 2030s with XLZD; if nothing turns up, the
+      remaining candidates (axions, light or ultralight dark matter) need
+      many different experiments, and some forms may never be detectable.
+      Judgment: about 2050, with a large chance of never.
+    sources:
+      - title: "Metaculus: Will we know what dark matter is before 2050?"
+        url: https://www.metaculus.com/questions/1469/will-we-know-what-dark-matter-is-before-2050/
+      - title: Berkeley Lab, LZ's record-setting limits on dark matter interaction published in PRL (2025)
+        url: https://www.physics.lbl.gov/lz-results-published-in-prl/
+      - title: The XLZD Design Book (arXiv 2410.17137)
+        url: https://arxiv.org/abs/2410.17137
+  sources:
+    - title: The XLZD Design Book (arXiv 2410.17137)
+      url: https://arxiv.org/abs/2410.17137
+
+# ---- chemistry ----
+
+- id: electrolytic-ammonia-tenth
+  name: A tenth of ammonia made without fossil hydrogen
+  kind: technique
+  fields: [chemistry, energy, agriculture]
+  track: industrial-chemistry
+  date: { window: [2031, 2048], likely: 2036 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Making ammonia, the base of nitrogen fertilizer, from hydrogen split
+    out of water with clean electricity instead of hydrogen from natural
+    gas or coal. Haber-Bosch ammonia now accounts for about 2 percent of
+    the world's final energy use and 450 million tonnes of CO2 a year;
+    electrolytic ammonia is a fraction of a percent of output, with the
+    first giant plant, NEOM in Saudi Arabia, in commissioning.
+  requires: [haber-bosch, electrolysis, wind-power, solar-photovoltaic]
+  helped_by: [carbon-pricing, solar-power-5-cents-kwh, ai-discovered-material]
+  criterion: >-
+    In some calendar year, ammonia made with hydrogen from water
+    electrolysis powered by low-carbon electricity, or by direct
+    electrochemical reduction of nitrogen, is at least 10 percent of world
+    ammonia production (about 19 million tonnes of roughly 190 million), by
+    the IEA's, IFA's or the Ammonia Energy Association's count.
+  efforts:
+    - who: NEOM Green Hydrogen Company (ACWA Power, Air Products, NEOM)
+      where: Saudi Arabia
+      when: 2027
+      outcome: ongoing
+      note: About 1.2 million tonnes of ammonia a year from 2.2 GW of electrolyzers; construction finished in August 2026 and first ammonia is planned for 2027.
+    - who: Ammonia plants in India, China and Denmark using electrolytic hydrogen
+      where: India, China, Denmark
+      when: 2025
+      outcome: ongoing
+      note: A 1 million tonne a year plant in India reached investment decision in 2024; a 5,000 tonne flexible plant started in Denmark in 2025.
+    - who: Jupiter Ionics; academic groups on lithium-mediated nitrogen reduction
+      where: Australia, Denmark, USA
+      when: 2026
+      outcome: ongoing
+      note: Direct electrochemical routes skip separate hydrogen production but are still at lab or small pilot scale.
+  forecast:
+    note: >-
+      The Ammonia Energy Association counted 0.2 million tonnes of
+      low-emission ammonia capacity operating in late 2024 and expects 15.1
+      million tonnes of electrolysis-based capacity by 2030, from projects
+      that are operating, under construction or mature. The IEA is less
+      hopeful: its 2025 review cut announced low-emission hydrogen for 2030
+      from 49 to 37 million tonnes, with only about 4 million tonnes from
+      projects already built or financed, across all uses. Ten percent of
+      ammonia needs about 3.4 million tonnes of electrolytic hydrogen, a
+      third of the tree's green hydrogen bar, and ammonia is its largest
+      ready market. The work is mostly building plants and finding buyers
+      for a product that costs two to three times more. Judgment: mid 2030s.
+    sources:
+      - title: Ammonia Energy Association, Low-Emission Ammonia Plants executive summary (November 2024)
+        url: https://ammoniaenergy.org/wp-content/uploads/2024/12/AEA-LEAP-Executive-Summary-November-2024.pdf
+      - title: IEA, Global Hydrogen Review 2025, production highlights
+        url: https://www.iea.org/reports/global-hydrogen-review-2025/production-highlights-2
+      - title: IEA, Ammonia Technology Roadmap, executive summary
+        url: https://www.iea.org/reports/ammonia-technology-roadmap/executive-summary
+      - title: Decarbonfuse, NEOM green hydrogen megaproject enters commissioning ahead of 2027 start (August 2026)
+        url: https://decarbonfuse.com/posts/neom-green-hydrogen-megaproject-enters-commissioning-ahead-of-2027-start
+  sources:
+    - title: IEA, Ammonia Technology Roadmap, executive summary
+      url: https://www.iea.org/reports/ammonia-technology-roadmap/executive-summary
+    - title: Ammonia Energy Association, Low-Emission Ammonia Plants executive summary (November 2024)
+      url: https://ammoniaenergy.org/wp-content/uploads/2024/12/AEA-LEAP-Executive-Summary-November-2024.pdf
+
+- id: enzymatic-plastic-recycling
+  name: Enzymatic plastic recycling at commercial scale
+  kind: technique
+  fields: [chemistry, biology, materials]
+  track: industrial-chemistry
+  date: { window: [2028.5, 2037], likely: 2031.5 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Breaking plastic waste back into its building blocks with engineered
+    enzymes, so it can be made into new plastic as good as virgin, including
+    colored bottles and polyester clothing that melt recycling can't take.
+    An engineered enzyme depolymerized 90 percent of PET in 10 hours in
+    2020, but the first commercial plants have slipped for lack of
+    financing.
+  requires: [plastics, de-novo-protein-design]
+  helped_by: [protein-structure-prediction, carbon-pricing, autonomous-labs]
+  criterion: >-
+    A plant that breaks down plastic waste with enzymes, with a capacity of
+    at least 20,000 tonnes of waste a year, runs commercially and sells
+    recycled monomer or polymer for a full calendar year.
+  efforts:
+    - who: Carbios, Longlaville plant
+      where: France
+      when: 2026
+      outcome: ongoing
+      note: A 50,000 tonne a year PET plant, permitted in 2023 and postponed in 2024; in August 2026 it missed its September financial close target and gave no new start date (previously the first half of 2028).
+    - who: Samsara Eco
+      where: Australia
+      when: 2025
+      outcome: ongoing
+      note: Opened a first small plant in Jerrabomberra in September 2025 for nylon 6,6 and polyester; plans a 20,000 tonne nylon plant in Asia for 2028.
+    - who: Protein Evolution; Epoch Biodesign; academic enzyme engineers
+      where: USA, UK
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      The enzymes work at industrial rates (Tournier and colleagues reached
+      16.7 grams of terephthalate per litre per hour), so what is left is
+      financing, building and competing with cheap virgin PET. Carbios has
+      had permits since 2023 and over half its output presold but has
+      missed financing dates twice; once financed, its plant was planned to
+      take about two years to build. Samsara Eco targets 2028 for its first
+      large plant, and announced dates like these usually slip. Counting a
+      full year of sales after start-up: about 2031 or 2032.
+    sources:
+      - title: Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 2020
+        url: https://doi.org/10.1038/s41586-020-2149-4
+      - title: Petnology, Carbios updates on further delay to recycling plant project (August 2026)
+        url: https://www.petnology.com/online/news-detail/carbios-updates-on-further-delay-to-recycling-plant-project
+      - title: CHEManager, Carbios confirms Longlaville plant plans while revising project schedule (January 2026)
+        url: https://www.chemanager-online.com/en/news/carbios-confirms-longlaville-plant-plans-while-revising-project-schedule
+      - title: Environment+Energy Leader, Samsara Eco opens first enzymatic recycling plant (September 2025)
+        url: https://www.environmentenergyleader.com/stories/samsara-eco-opens-first-enzymatic-recycling-plant,91072
+  sources:
+    - title: Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 2020
+      url: https://doi.org/10.1038/s41586-020-2149-4
+    - title: Indian Chemical News, Carbios obtains building and operating permits (October 2023)
+      url: https://www.indianchemicalnews.com/sustainability/carbios-obtains-building-and-operating-permits-for-worlds-first-pet-biorecycling-plant-in-longlaville-19364
+
+- id: automated-synthesis-on-demand
+  name: Small molecules made on demand by machine
+  kind: technique
+  fields: [chemistry, computing]
+  track: classical-chemistry
+  date: { window: [2029, 2042], likely: 2033 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    A machine that takes the structure of a small molecule, plans a route to
+    it, and runs the reactions and purification itself, the way a DNA
+    synthesizer turned genes into something you order. Robots have made
+    handfuls of known drugs from programmed or AI-planned routes since 2019,
+    but people still choose conditions and fix failures.
+  requires: [chromatography, deep-learning, robot-foundation-models]
+  helped_by: [autonomous-labs, ai-autonomous-science, agi, large-language-models]
+  criterion: >-
+    A system, given only target structures, plans routes and makes at least
+    half of a randomly chosen set of 100 drug-like molecules of three or
+    more steps, including ones never made before, at 10 milligrams or more
+    and 95 percent purity, with no person handling samples or editing
+    routes, and the capability is offered as a commercial service.
+  efforts:
+    - who: Lee Cronin (University of Glasgow) and Chemify
+      where: UK
+      when: 2025
+      outcome: ongoing
+      note: The Chemputer ran three pharmaceutical syntheses from a chemical programming language in 2019; Chemify opened its automated Chemifarm in Glasgow in June 2025.
+    - who: Connor Coley, Klavs Jensen (MIT)
+      where: USA
+      when: 2019
+      outcome: ongoing
+      note: Paired AI retrosynthesis with a robotic flow platform for 15 medicinal compounds, with people still supplying practical details such as solvents.
+    - who: Martin Burke (University of Illinois)
+      where: USA
+      when: 2015
+      outcome: ongoing
+      note: Iterative coupling of standard building blocks in one automated process.
+    - who: Onepot AI; Lilly and other drug companies' automated chemistry labs
+      where: USA
+      when: 2025
+      outcome: ongoing
+      note: Onepot raised a 13 million dollar seed round in November 2025 for an automated synthesis lab selling compounds from a catalog.
+  forecast:
+    note: >-
+      The pieces exist separately: AI route planning, robots that run
+      written procedures, and building-block chemistry that covers some
+      structure classes. What fails is the long tail of reactions that need
+      a chemist's judgment and purification of messy mixtures. This is
+      mostly design and lab work, where AI planning and self-driving labs
+      help most, so an early general AI would pull it forward. I found no
+      outside forecast. Judgment: early 2030s.
+    sources:
+      - title: Coley et al., A robotic platform for flow synthesis of organic compounds informed by AI planning, Science 2019
+        url: https://doi.org/10.1126/science.aax1566
+      - title: Steiner et al., Organic synthesis in a modular robotic system driven by a chemical programming language, Science 2019
+        url: https://doi.org/10.1126/science.aav2211
+      - title: Li et al., Synthesis of many different types of organic small molecules using one automated process, Science 2015
+        url: https://doi.org/10.1126/science.aaa5414
+      - title: Manufacturing Chemist, Chemify launches Chemifarm (June 2025)
+        url: https://manufacturingchemist.com/chemify-launches-chemifarm-molecular-design-synthesis
+      - title: TechCrunch, Onepot AI raises 13M (November 2025)
+        url: https://techcrunch.com/2025/11/19/onepot-ai-raises-13m-to-help-make-chemical-drug-creation-easier
+  sources:
+    - title: Steiner et al., Organic synthesis in a modular robotic system driven by a chemical programming language, Science 2019
+      url: https://doi.org/10.1126/science.aav2211
+
+- id: solar-fuels-at-scale
+  name: Fuel made directly from sunlight at scale
+  kind: technique
+  fields: [chemistry, energy]
+  track: industrial-chemistry
+  date: { window: [2033, 2060], likely: 2042 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Artificial photosynthesis and its cousins: making hydrogen or carbon
+    fuels from sunlight, water and CO2 in one step, by photocatalysts,
+    photoelectrochemical cells or concentrated solar heat, instead of solar
+    panels feeding an electrolyzer. A 100 square meter photocatalytic array
+    ran safely for months in 2021 at 0.76 percent efficiency, and
+    Synhelion's solar-heat plant in Germany makes a few thousand liters a
+    year.
+  requires: [semiconductor-physics, thermodynamics, electrolysis]
+  helped_by: [ai-discovered-material, autonomous-labs, carbon-pricing]
+  competes: [green-hydrogen]
+  criterion: >-
+    Plants that turn sunlight into hydrogen or a liquid or gaseous fuel
+    without first making electricity (photocatalysis, photoelectrochemistry
+    or solar thermochemistry) together sell at least 100,000 tonnes of fuel
+    in a year.
+  efforts:
+    - who: Kazunari Domen and Japan's ARPChem consortium
+      where: Japan
+      when: 2021
+      outcome: ongoing
+      note: 100 square meter photocatalytic panel array with hydrogen separation, maximum 0.76 percent solar to hydrogen.
+    - who: Synhelion (DAWN, Jülich; RISE, Spain)
+      where: Switzerland, Germany, Spain
+      when: 2027
+      outcome: ongoing
+      note: DAWN has made syncrude since 2024; RISE, planned at 1,000 tonnes of fuel a year, was due to start in 2027.
+    - who: Liquid Sunlight Alliance (Caltech, Berkeley Lab); EPFL; Osaka Metropolitan University and others
+      where: USA, Switzerland, Japan
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Photocatalytic water splitting is about 1 percent efficient at scale
+      against about 30 percent for solar cells plus electrolysis in the
+      lab, so it must win on cost per square meter, and the gap to cheap
+      panels keeps widening. Solar thermochemistry is closer to market, but
+      the first commercial plant is planned at 1,000 tonnes a year, a
+      hundredth of the bar. Better photocatalysts found by AI-run searches
+      are the main hope for a faster path. Judgment: 2040s, and it may lose
+      to panels plus electrolyzers entirely.
+    sources:
+      - title: Nishiyama et al., Photocatalytic solar hydrogen production from water on a 100-m2 scale, Nature 2021
+        url: https://doi.org/10.1038/s41586-021-03907-3
+      - title: Synhelion, our plants
+        url: https://synhelion.com/our-plants
+      - title: pv magazine, Synhelion to start producing solar fuels in Spain in 2027 (January 2025)
+        url: https://www.pv-magazine.com/?p=39671
+  sources:
+    - title: Nishiyama et al., Photocatalytic solar hydrogen production from water on a 100-m2 scale, Nature 2021
+      url: https://doi.org/10.1038/s41586-021-03907-3
+
+# ---- electronics ----
+# Electronics: future nodes drafted 2026-11-06. Status as of November 2026.
+
+- id: one-nm-class-logic
+  name: 1 nm-class chips in volume production
+  kind: technique
+  fields: [electronics]
+  track: chipmaking
+  date: { window: [2030, 2034], likely: 2031 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Logic processes that foundries call 1 nanometer class (TSMC's A10, or
+    the like), two generations after 2 nm. The names no longer describe any
+    real feature size, but each step still packs in more transistors per
+    watt, which is what AI chips are limited by.
+  requires: [gate-all-around, backside-power-delivery, euv-lithography]
+  helped_by: [high-na-euv, cfet-transistors, ai-discovered-material]
+  criterion: >-
+    A foundry ships commercial chips in high-volume manufacturing on a logic
+    process it markets as 1 nm class or smaller (TSMC A10, Intel 10A,
+    Samsung SF1.0 or similar names).
+  efforts:
+    - who: TSMC (A14, A13, A12, A10)
+      where: Taiwan
+      when: 2026
+      outcome: ongoing
+      note: A14 is due in volume in 2028 and A13 and A12 in 2029; trial A10 production of about 5,000 wafers a month was reported as planned for 2029.
+    - who: Intel (14A); Samsung
+      where: USA, South Korea
+      when: 2026
+      outcome: ongoing
+      note: Intel targets 14A risk production in the second half of 2027 and volume in 2028, but says it needs an outside customer to continue past 14A.
+  forecast:
+    note: >-
+      TSMC's April 2026 roadmap runs to A12 and A13 in 2029, and Digitimes,
+      via 3DNews, reported A10 trial production planned for 2029, which
+      usually means volume about a year later. imec's 2026 roadmap puts its
+      A10 node in 2031. TSMC's A16 slipped about a year, from 2026 to 2027,
+      so I allow for slips. Judgment: 2031.
+    sources:
+      - title: Tom's Hardware, TSMC unveils process technology roadmap through 2029 (April 2026)
+        url: https://www.tomshardware.com/tech-industry/semiconductors/tsmc-unveils-process-technology-roadmap-through-2029-a12-a13-n2u-announced-a16-slips-to-2027
+      - title: 3DNews, TSMC plans trial production on A10 by 2029 (April 2026, citing Digitimes)
+        url: https://3dnews.ru/1140238/tsmc-zaplanirovala-nachat-opitniy-vipusk-chipov-po-subnanometrovomu-tehprotsessu-a10-k-2029-godu
+      - title: Wccftech, imec logic roadmap (May 2026)
+        url: https://wccftech.com/sub-1nm-process-node-technology-wont-arrive-till-2034-logic-roadmap-2dfets-sub-0-2nm-2046/
+      - title: Tom's Hardware, Intel commits to 14A mass production in 2028
+        url: https://www.tomshardware.com/pc-components/cpus/intel-commits-to-14a-mass-production-in-2028-as-its-sales-rise-25-percent-year-over-year
+  sources:
+    - title: Tom's Hardware, TSMC unveils process technology roadmap through 2029 (April 2026)
+      url: https://www.tomshardware.com/tech-industry/semiconductors/tsmc-unveils-process-technology-roadmap-through-2029-a12-a13-n2u-announced-a16-slips-to-2027
+
+- id: co-packaged-optics
+  name: Co-packaged optics at scale
+  kind: technique
+  fields: [electronics, computing]
+  track: communication
+  date: { window: [2029, 2036], likely: 2031 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Putting the lasers and optical links in the same package as a switch or
+    AI chip, instead of in plug-in modules at the edge of the board. It cuts
+    the power spent moving data several times over and lets AI systems
+    spread one fast network across many racks.
+  requires: [optical-fiber, advanced-packaging, ai-datacenters]
+  helped_by: [ai-accelerators]
+  criterion: >-
+    Co-packaged optics make up at least a third of the optical links
+    (by units or by value) shipped into AI data centers in a year, as
+    reported by a major market analyst such as TrendForce, LightCounting or
+    Cignal AI.
+  efforts:
+    - who: Nvidia (Quantum-X and Spectrum-X Photonics switches); TSMC (COUPE)
+      where: USA, Taiwan
+      when: 2026
+      outcome: ongoing
+      note: Nvidia's co-packaged switches entered production in 2026; it plans optical NVLink, as an option beside copper, with Feynman systems shipping mid to late 2028.
+    - who: Broadcom; Ayar Labs; Lightmatter; Huawei (near-packaged optics)
+      where: USA, China
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      TrendForce put co-packaged optics at about 0.5 percent of AI data
+      center optical modules in 2026 and said they could reach about 35
+      percent around 2030, with the jump coming when the GPU-to-GPU network
+      itself goes optical across racks (Rubin Ultra or Feynman). Its June
+      2026 forecast has co-packaged and near-packaged optics at over 39
+      billion dollars in 2030 against 26 billion for plug-in modules.
+      Yield, serviceability and laser supply are the stated obstacles, and
+      copper stays cheaper inside a rack. Judgment: 2031.
+    sources:
+      - title: TrendForce, NVIDIA architecture drives optical interconnects (March 2026)
+        url: https://www.trendforce.com/presscenter/news/20260311-12962.html
+      - title: TrendForce, optical interconnects and the CPO and NPO market to 2030 (June 2026)
+        url: https://trendforce.com/presscenter/news/20260615-13098.html
+      - title: The Register, Nvidia optical scale-up (April 2026)
+        url: https://www.theregister.com/2026/04/05/nvidia_optical_scale_up/
+  sources:
+    - title: TrendForce, NVIDIA architecture drives optical interconnects (March 2026)
+      url: https://www.trendforce.com/presscenter/news/20260311-12962.html
+
+- id: atomically-thin-transistors
+  name: Transistors with 2D-material channels
+  kind: technique
+  fields: [electronics, materials]
+  track: components
+  date: { window: [2034, 2050], likely: 2041 }
+  status: speculative
+  tier: 3
+  summary: >-
+    Transistors whose channel is a single layer of atoms of a material such
+    as molybdenum disulfide, instead of silicon, which stops conducting well
+    when made only a few nanometers thick. It is the industry's planned way
+    to keep shrinking after silicon stacked transistors.
+  requires: [gate-all-around, euv-lithography]
+  helped_by: [cfet-transistors, ai-discovered-material, autonomous-labs]
+  criterion: >-
+    Commercial chips made in high-volume manufacturing use transistors with
+    two-dimensional semiconductor channels (MoS2, WSe2 or similar) for at
+    least part of their logic.
+  efforts:
+    - who: imec, ASML and TSMC
+      where: Belgium, Netherlands, Taiwan
+      when: 2026
+      outcome: ongoing
+      note: Made MoS2 n-type and WSe2 p-type transistors on the same 300 mm wafer at 50 nm contacted poly pitch, with 94 percent working (VLSI Symposium, June 2026).
+    - who: Fudan University (Peng Zhou, Wenzhong Bao)
+      where: China
+      when: 2025
+      outcome: ongoing
+      note: RV32-WUJI, a 32-bit RISC-V processor of 5,900 MoS2 transistors, n-type only and running at kilohertz speeds (Nature, April 2025).
+  forecast:
+    note: >-
+      imec plans to bring 2D materials in first as planar devices at its A7
+      node, and its 2026 roadmap has 2D transistors as the main logic device
+      at A2, in 2043. Device-quality growth, low-resistance contacts, gate
+      oxides and good p-type channels are unsolved at scale, and new
+      transistor types have usually taken more than a decade from first
+      demonstration to production. Judgment: early 2040s.
+    sources:
+      - title: imec, Introducing 2D-material based devices in the logic scaling roadmap (January 2025)
+        url: https://www.imec-int.com/en/articles/introducing-2d-material-based-devices-logic-scaling-roadmap
+      - title: Semiconductor Today, imec, ASML and TSMC 300 mm 2D transistor integration (June 2026)
+        url: https://semiconductor-today.com/news_items/2026/jun/imec-asml-tsmc-220626.shtml
+      - title: Semiconductor Today, Fudan 2D RISC-V processor (April 2025)
+        url: https://www.semiconductor-today.com/news_items/2025/apr/fudan-170425.shtml
+      - title: Wccftech, imec logic roadmap (May 2026)
+        url: https://wccftech.com/sub-1nm-process-node-technology-wont-arrive-till-2034-logic-roadmap-2dfets-sub-0-2nm-2046/
+  sources:
+    - title: imec, Introducing 2D-material based devices in the logic scaling roadmap (January 2025)
+      url: https://www.imec-int.com/en/articles/introducing-2d-material-based-devices-logic-scaling-roadmap
+
+- id: 6g-networks
+  name: 6G mobile networks
+  kind: infrastructure
+  fields: [electronics, computing]
+  track: communication
+  date: { window: [2030.5, 2035], likely: 2032 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    The sixth generation of mobile networks, standardized in 3GPP Release
+    21, with new mid-band spectrum, AI built into the radio and sensing as
+    well as communication. Each generation so far has come about ten years
+    after the last.
+  requires: [cellular-network, smartphone]
+  helped_by: [ai-accelerators, frontier-models]
+  criterion: >-
+    At least 100 million 6G (3GPP Release 21 or later, IMT-2030)
+    subscriptions worldwide, as counted by Ericsson, GSMA Intelligence or a
+    similar tracker.
+  efforts:
+    - who: 3GPP (Release 21)
+      where: International
+      when: 2026
+      outcome: ongoing
+      note: Timeline agreed in June 2026, with the functional freeze in December 2028 and the ASN.1 freeze, completing the first 6G release, in March 2029.
+    - who: South Korea, China, Japan, USA; Ericsson, Nokia, Huawei, Qualcomm, Samsung
+      where: International
+      when: 2026
+      outcome: ongoing
+      note: South Korea has targeted a 2028 launch since 2023, ahead of the standard.
+  forecast:
+    note: >-
+      The first 6G standard completes in March 2029. Juniper Research expects
+      the first connections in late 2029 in the US and South Korea and nine
+      countries with commercial 6G by 2030, and Ericsson forecasts 180
+      million subscriptions by the end of 2031, which passes 100 million in
+      about 2031. 5G went faster than that, but Europe is expected to lag
+      and operators are wary of new spending. Judgment: 2032.
+    sources:
+      - title: 3GPP, Release 21 timeline agreed (June 2026)
+        url: https://www.3gpp.org/news-events/3gpp-news/rel21-timeline
+      - title: TelecomTV, 6G looms large in latest Ericsson report (November 2025)
+        url: https://www.telecomtv.com/content/6g/6g-looms-large-in-latest-ericsson-report-54345/
+      - title: ICTbusiness, Juniper Research, the US and South Korea will lead 6G launches in 2029 (June 2026)
+        url: https://www.ictbusiness.biz/analysis/the-us-and-south-korea-will-lead-6g-launches-in-2029
+  sources:
+    - title: 3GPP, Release 21 timeline agreed (June 2026)
+      url: https://www.3gpp.org/news-events/3gpp-news/rel21-timeline
+
+- id: direct-to-cell-broadband
+  name: Satellite broadband to ordinary phones
+  kind: infrastructure
+  fields: [electronics, engineering]
+  track: communication
+  date: { window: [2028.5, 2035], likely: 2031.2 }
+  status: ongoing
+  tier: 2
+  summary: >-
+    Satellites acting as cell towers in space, so ordinary phones get
+    service anywhere outdoors. Texting by satellite reached millions of
+    people in 2025 and 2026; the next satellites, launched on Starship or in
+    larger numbers, aim at voice and broadband.
+  requires: [satellite-megaconstellations, cellular-network, smartphone]
+  helped_by: [fully-reusable-rockets, launch-1000-dollars-kg]
+  criterion: >-
+    At least 100 million people a month connect unmodified smartphones
+    directly to satellites, and services offering voice and broadband data
+    (typical speeds of at least 10 Mbps) to such phones are on sale in at
+    least 30 countries.
+  efforts:
+    - who: SpaceX (Starlink Direct to Cell) with T-Mobile, Rogers, Optus, KDDI, Kyivstar and others
+      where: USA, international
+      when: 2026
+      outcome: ongoing
+      note: Bought EchoStar's AWS-4 and H-block spectrum for about 17 billion dollars in 2025 and targets up to 150 Mbps from next-generation satellites, with tests from late 2027.
+    - who: AST SpaceMobile with AT&T, Verizon, Vodafone and others
+      where: USA, international
+      when: 2026
+      outcome: ongoing
+      note: FCC authorized commercial US service; it reported 98.9 Mbps peak to an unmodified phone and targeted about 45 satellites in orbit during 2026.
+  forecast:
+    note: >-
+      Juniper Research forecasts monthly direct-to-cell users rising from
+      17.4 million in 2026 to 133 million in 2031, passing 100 million
+      around 2030, though most of that is texting and light data, and it
+      expects usage below early hopes. Broadband to phones waits on SpaceX's
+      new spectrum and satellites, which depend on Starship, and on AST
+      filling its constellation. Judgment: about 2031.
+    sources:
+      - title: Advanced Television, Juniper Research forecast, over 130m D2C users by 2031 (June 2026)
+        url: https://www.advanced-television.com/2026/06/01/forecast-over-130m-d2c-users-by-2031/
+      - title: SatNews, SpaceX unveils 150 Mbps target for upgraded Direct to Cell (February 2026)
+        url: https://satnews.com/2026/02/25/spacex-unveils-150mbps-performance-target-for-upgraded-direct-to-cell-starlink/
+      - title: AST SpaceMobile, first quarter 2026 results (SEC 8-K, May 2026)
+        url: https://www.sec.gov/Archives/edgar/data/0001780312/000119312526216946/asts-ex99_1.htm
+      - title: TechCrunch, SpaceX strikes 17B deal to buy EchoStar's spectrum (September 2025)
+        url: https://techcrunch.com/2025/09/08/spacex-strikes-17b-deal-to-buy-echostars-spectrum-for-starlinks-direct-to-phone-service/
+  sources:
+    - title: Advanced Television, Juniper Research forecast, over 130m D2C users by 2031 (June 2026)
+      url: https://www.advanced-television.com/2026/06/01/forecast-over-130m-d2c-users-by-2031/
+
+# ---- society ----
+# Society and institutions: draft future nodes. Status as of 2026-11-06.
+
+- id: ai-verification-treaty
+  name: Verified international limits on frontier AI
+  kind: institution
+  fields: [society, computing]
+  track: law-governance
+  date: { window: [2029, 2055], likely: 2037 }
+  status: speculative
+  tier: 2
+  summary: >-
+    A binding agreement between the leading AI powers that limits frontier
+    AI development, for example by a cap on training compute, and lets each
+    side check the other through inspections, chip tracking or
+    cryptographic proofs of what a data center ran. It would be to AI what
+    arms control verification was to nuclear weapons.
+  requires: [ai-safety-institutes, frontier-models]
+  helped_by: [ai-accelerators, ai-datacenters, earth-observation, public-key-cryptography, agi]
+  criterion: >-
+    The United States and China, at least, are parties to a treaty or
+    binding executive agreement in force that sets limits on frontier AI
+    training or deployment (such as a compute threshold) and provides for
+    verification beyond self-reporting: on-site inspection, hardware-based
+    chip tracking or attestation, or an international monitoring body with
+    access to data centers.
+  efforts:
+    - who: Council of Europe Framework Convention on AI
+      where: Europe, USA, others
+      when: 2024
+      outcome: ongoing
+      note: The first binding AI treaty, on human rights and the rule of law; it has no compute limits or verification.
+    - who: US and China bilateral AI dialogue (Treasury Secretary Bessent, Vice Premier He Lifeng)
+      where: USA, China
+      when: 2026
+      outcome: ongoing
+      note: Agreed in September 2026; CNAS judged neither side ready for an ambitious safety agreement.
+    - who: MIRI technical governance team; CNAS; RAND and start-ups building verification tools
+      where: USA, UK
+      when: 2026
+      outcome: ongoing
+      note: CNAS put the number of engineers working on AI verification worldwide at about 50.
+  forecast:
+    note: >-
+      No agreement limits frontier AI today. Metaculus forecasters gave about
+      8 percent to any formal US and China agreement limiting frontier AI
+      before 2029, and about 5 percent to an AGI-limiting treaty before 2030,
+      neither requiring verification. A 2026 review of hardware mechanisms
+      found the ones a treaty most needs, such as on-chip compute metering
+      and proofs of training, are the least mature. Nuclear arms control took
+      27 years from the first bomb to the first agreed limits checked by satellite (SALT
+      I, 1972). Pressure should rise sharply once AI is general, which the
+      tree puts around 2031, but rivalry and the gains from racing push the
+      other way. Judgment: late 2030s, with a long tail.
+    sources:
+      - title: "Metaculus: US and China reach an agreement to limit frontier AI development before 2029?"
+        url: https://www.metaculus.com/questions/38418/
+      - title: "Metaculus: US-China AGI-limiting treaty signed before 2030?"
+        url: https://www.metaculus.com/questions/39149/
+      - title: CNAS, U.S.-China AI agreements need verification, not trust (September 2026)
+        url: https://www.cnas.org/publications/cnas-insights/cnas-insights-u-s-china-ai-agreements-need-verification-not-trust
+      - title: Hardware-level governance of AI compute, a feasibility taxonomy for regulatory compliance and treaty verification (arXiv 2604.04712)
+        url: https://arxiv.org/pdf/2604.04712
+  sources:
+    - title: MIRI, Mechanisms to verify international agreements about AI development (2026)
+      url: https://intelligence.org/2026/03/18/mechanisms-to-verify-international-agreements-about-ai-development/
+    - title: Council of Europe, Framework Convention on Artificial Intelligence
+      url: https://www.coe.int/en/web/artificial-intelligence/the-framework-convention-on-artificial-intelligence
+
+- id: carbon-price-majority
+  name: A carbon price on most of the world's emissions
+  kind: institution
+  fields: [society, energy]
+  track: law-governance
+  date: { window: [2033, 2060], likely: 2042 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    Carbon taxes and emissions trading spreading until most of the world's
+    greenhouse gases carry a price. Coverage rose from about 12 percent to
+    29 percent in a decade, mostly when China's national market started; the
+    rest needs the United States, India and other large emitters, and
+    farming and methane.
+  requires: [carbon-pricing]
+  helped_by: [ipcc, earth-observation]
+  criterion: >-
+    The World Bank's State and Trends of Carbon Pricing reports that direct
+    carbon pricing (emissions trading systems and carbon taxes in force)
+    covers at least 50 percent of global greenhouse gas emissions.
+  efforts:
+    - who: China national emissions trading system
+      where: China
+      when: 2026
+      outcome: ongoing
+      note: Added steel, cement and aluminum in 2025; plans to cover all major industrial emitters by 2027 and move to absolute caps by 2030.
+    - who: India Carbon Credit Trading Scheme; Japan GX-ETS; Brazil, Indonesia and Turkey markets in development
+      where: Asia, South America
+      when: 2026
+      outcome: ongoing
+    - who: Global Carbon Pricing Challenge (Canada, Chile, EU and others)
+      where: International
+      when: 2021
+      outcome: ongoing
+      note: Aims for 60 percent of global emissions to be priced by 2030.
+  forecast:
+    note: >-
+      The World Bank's 2026 report puts coverage at just over 29 percent,
+      rising to about a third if instruments under development in several
+      large emerging economies start, from 28 percent a year earlier and
+      about 12 percent a decade before. At the decade's pace of about 1.6
+      points a year, half would come around 2040. Most of what is left is
+      in countries with no national price (the United States, Russia, much
+      of South Asia and Africa) and in farming and methane, which are hard
+      to measure and price. A small Metaculus group, counting only CO2 from
+      Our World in Data, gave a median of 2036. Canada's 60 percent by 2030
+      goal will be missed by a wide margin. Judgment: early 2040s.
+    sources:
+      - title: World Bank, Direct carbon pricing covers nearly one third of global emissions (May 2026)
+        url: https://www.worldbank.org/en/news/press-release/2026/05/19/direct-carbon-pricing-covers-nearly-one-third-of-global-emissions
+      - title: Balkan Green Energy News, World Bank says carbon pricing schemes cover 28 percent of global emissions (2025 report)
+        url: https://balkangreenenergynews.com/world-bank-carbon-pricing-schemes-cover-28-of-global-emissions/
+      - title: "Metaculus: When will a carbon price be paid on 50% or more of the world's carbon emissions?"
+        url: https://www.metaculus.com/questions/22546/
+      - title: Climate Cooperation China, China unveils roadmap for absolute emission caps, 2027 and 2030 milestones
+        url: https://climatecooperation.cn/climate/china-unveils-roadmap-for-absolute-emission-caps-2027-and-2030-milestones-for-national-carbon-markets/
+  sources:
+    - title: World Bank, State and Trends of Carbon Pricing
+      url: https://www.worldbank.org/en/publication/state-and-trends-of-carbon-pricing
+    - title: Government of Canada, The Global Carbon Pricing Challenge
+      url: https://www.canada.ca/en/services/environment/weather/climatechange/climate-action/pricing-carbon-pollution/global-challenge.html
+
+- id: national-basic-income
+  name: Basic income or AI dividend in a large country
+  kind: institution
+  fields: [society]
+  track: economy
+  date: { window: [2031, 2065], likely: 2041 }
+  status: speculative
+  tier: 2
+  summary: >-
+    A government paying every adult resident a regular unconditional sum,
+    funded by taxes, resource rents or a public stake in AI, so income no
+    longer depends only on work. It has been tried in pilots and once, in
+    Iran from 2010, almost nationally; AI that can do most jobs would make
+    it a live question.
+  helped_by: [agi, general-purpose-robots, ai-lab-revenue-1t]
+  criterion: >-
+    A country of at least 10 million people pays an unconditional cash
+    benefit to at least two thirds of its adult residents, with no work
+    test, worth at least 10 percent of median personal income a year, and
+    keeps paying it for at least two years.
+  efforts:
+    - who: Iran cash subsidy program
+      where: Iran
+      when: 2010
+      outcome: abandoned
+      note: Paid every resident about 40 to 45 dollars a month, two thirds of a minimum wage per average household; inflation cut its value 70 percent by 2016 and it was replaced by targeted transfers in 2022.
+    - who: Finland basic income experiment; GiveDirectly in Kenya; Alaska Permanent Fund Dividend
+      where: Finland, Kenya, USA
+      when: 2017
+      outcome: ongoing
+      note: Pilots and a small state dividend, none national and substantial.
+    - who: OpenAI, Industrial policy for the Intelligence Age (public wealth fund proposal)
+      where: USA
+      when: 2026
+      outcome: ongoing
+      note: Proposed a national fund, partly seeded by AI companies, giving every citizen a stake.
+  forecast:
+    note: >-
+      Metaculus forecasters, with a looser bar (any country over a million
+      people, at least a year of payments), put the median in 2037 and the
+      middle half from 2030 to 2051 (snapshot of March 2025). For the US,
+      UK, China or an EU country before 2030 they gave about 5 percent.
+      Today's welfare states could afford such payments only with large tax
+      rises, so the trigger is likely AI taking a large share of jobs and
+      profits, which the tree puts after general AI around 2031, plus years
+      of politics. Judgment: about 2041.
+    sources:
+      - title: "Metaculus: When will a 1M-population country adopt Universal Basic Income?"
+        url: https://www.metaculus.com/questions/6818/
+      - title: "Metaculus: Will the US, UK, China, or any of the countries in the EU enact a universal basic income before 2030?"
+        url: https://www.metaculus.com/questions/22388/
+      - title: Karshenas and Tabatabai, Iran's cash subsidy programme (LSE presentation, 2018)
+        url: https://www.lse.ac.uk/asset-library/events/karshenas-tabatabai-lse-presentation-20-feb-2018-final.pdf
+      - title: SiliconANGLE, OpenAI releases policy document on the financial impact and risks of AI (April 2026)
+        url: https://siliconangle.com/2026/04/06/openai-releases-policy-document-focused-financial-impact-risks-ai/
+  sources:
+    - title: Tabatabai, Basic income by default, lessons from Iran's cash subsidy programme (SOAS)
+      url: https://library.soas.ac.uk/Record/eprints-31848/Details
+
+- id: ai-run-company
+  name: A billion-dollar company run by AI
+  kind: institution
+  fields: [society, computing]
+  track: economy
+  date: { window: [2027, 2040], likely: 2031 }
+  status: ongoing
+  tier: 3
+  summary: >-
+    A large business whose work, from product to sales to support, is done
+    by AI agents, with only a handful of people overseeing it. Tiny firms
+    already sell hundreds of millions of dollars a year with AI tools, but
+    lean on partner firms' staff for the core work.
+  requires: [ai-agents]
+  helped_by: [superhuman-coder, continual-learning-ai, agi]
+  criterion: >-
+    A company with fewer than 10 people (employees plus full-time
+    contractors) reports, credibly, at least 1 billion dollars of revenue
+    in a year, with most of its core work done by AI rather than by staff
+    of partner firms it pays to do that work.
+  efforts:
+    - who: Medvi (Matthew Gallagher)
+      where: USA
+      when: 2026
+      outcome: rival
+      note: A GLP-1 telehealth seller with two employees and about 401 million dollars of 2025 sales, on track for 1.8 billion in 2026; partner firms supply the doctors, prescriptions and pharmacies, and the FDA sent it a warning letter.
+    - who: Solo founders building with AI agents
+      where: Worldwide
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Dario Amodei predicted in May 2025 the first billion-dollar company
+      with one human employee by 2026, which hasn't happened on a valuation
+      bar either. Manifold traders give about even odds of a one-person
+      company valued at a billion dollars by the end of 2030, and about 23
+      percent to a billion-dollar-revenue company run mainly by an AI chief
+      executive before 2030. Revenue is a harder bar than valuation, and
+      Medvi shows the headcount bar can be met by outsourcing, which the
+      criterion excludes. Agents that can run long projects, which the tree
+      expects before 2030, are the main step. Judgment: about 2031.
+    sources:
+      - title: "Manifold: Will there be a one-person unicorn by 2030?"
+        url: https://manifold.markets/SimoneRomeo/will-there-be-a-oneperson-unicorn-b
+      - title: "Manifold: Will a company with at least $1B in revenue be run primarily by an AI CEO before 2030?"
+        url: https://manifold.markets/EliLifland/will-a-company-with-at-least-1b-in
+      - title: CO/AI, Anthropic CEO predicts billion-dollar solo startups by 2026
+        url: https://getcoai.com/news/anthropic-ceo-predicts-billion-dollar-solo-startups-by-2026
+      - title: Dealroom, From 20k to 1.8B in revenue, how one founder built a telehealth giant (April 2026)
+        url: https://dealroom.co/news/127216-from-20k-to-1-8b-in-revenue-how-one-founder-built-a-telehealth-giant-wit/
+  sources:
+    - title: Dealroom, From 20k to 1.8B in revenue, how one founder built a telehealth giant (April 2026)
+      url: https://dealroom.co/news/127216-from-20k-to-1-8b-in-revenue-how-one-founder-built-a-telehealth-giant-wit/
+
+- id: ai-legal-personhood
+  name: Legal personhood for an AI
+  kind: institution
+  fields: [society, computing]
+  track: law-governance
+  date: { window: [2030, 2080], likely: 2048 }
+  status: speculative
+  tier: 3
+  summary: >-
+    A country's law recognizing an AI system itself, not its owner or a
+    company wrapped around it, as a person that can hold property, make
+    contracts or go to court. Companies got legal personhood centuries ago;
+    several US states have passed laws ruling it out for AI.
+  requires: [frontier-models]
+  helped_by: [joint-stock-company, agi, ai-run-company]
+  criterion: >-
+    The legislature or highest court of a UN member country recognizes an
+    AI system as a legal person in its own right, able to own property,
+    enter contracts or sue and be sued in its own name, without a human or
+    company standing as its owner.
+  efforts:
+    - who: Idaho, North Dakota and Utah exclusion laws; Ohio, Oklahoma and other bills
+      where: USA
+      when: 2026
+      outcome: rival
+      note: Laws barring courts and agencies from treating AI as a person; the Nonhuman Rights Project has challenged Utah's.
+    - who: Legal scholars on AI-controlled companies and AI rights
+      where: USA, Europe
+      when: 2026
+      outcome: ongoing
+  forecast:
+    note: >-
+      Manifold traders give about 20 percent to legal personhood for an AI in
+      some country by the end of 2030 and about 58 percent by the end of
+      2055, thin markets that may count small or symbolic cases. Law has
+      been moving the other way: at least nine US state legislatures have
+      introduced or passed bills denying AI personhood or consciousness.
+      Pressure would grow with general AI, AI-run firms and any evidence of
+      AI welfare, and one small country could move first. Judgment: late
+      2040s, with a very wide window.
+    sources:
+      - title: "Manifold: Will an AI be granted legal personhood in any country by end of 2030?"
+        url: https://manifold.markets/_deleted_/will-an-ai-be-granted-legal-personh
+      - title: "Manifold: Will any country recognize AI or robots as non human persons with legal rights before the end of 2055?"
+        url: https://manifold.markets/strutheo/will-any-country-recognize-ai-or-ro
+      - title: The Regulatory Review, Legislating AI consciousness without an exit (June 2026)
+        url: https://www.theregreview.org/2026/06/29/rost-legislating-ai-consciousness-without-an-exit/
+  sources:
+    - title: AI Frontiers, It's too early to ban AI personhood
+      url: https://ai-frontiers.org/articles/its-too-early-to-ban-ai-personhood
+

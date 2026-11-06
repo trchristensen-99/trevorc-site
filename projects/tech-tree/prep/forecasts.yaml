@@ -489,12 +489,12 @@ whole-brain-emulation:
   - title: "Metaculus: When will the human brain first be successfully emulated in full?"
     url: https://www.metaculus.com/questions/2813/
     kind: crowd
-    asof: 2026-03
-    median: 2074.8
-    q25: 2042.2
-    q75: 2216.6
+    asof: 2026-10
+    median: 2067.7
+    q25: 2040.7
+    q75: 2199
     match: same
-    note: About 170 forecasters, read from an Internet Archive snapshot of March 2026. The site's note gives the median as the early 2070s.
+    note: 174 forecasters, read from an Internet Archive snapshot of 25 October 2026 (http://web.archive.org/web/20261025073503/https://www.metaculus.com/questions/2813/date-of-first-human-whole-brain-emulation/); down from about 2075 in March 2026.
   - title: "Survey of 312 neuroscientists (Zeleznikow-Johnston et al.): human whole-brain emulation"
     url: https://www.news-medical.net/news/20250821/Neuroscientists-split-on-whether-memories-can-be-extracted-from-preserved-brains.aspx
     kind: survey
@@ -761,3 +761,597 @@ launch-100-dollars-kg:
     q10: 2034
     match: same
     note: Base case about $100 a kilogram by 2040, down about 95 percent from $1,500, from reusability and scale; a bull case of about $33 a kilogram (so $100 sooner, my reading for the 10th percentile) and, in secondary reporting, a bear case of about $300 if rockets are reused only about ten times.
+
+# Physics, chemistry, electronics and society (added 2026-11-06; Manifold read
+# from its API that day).
+
+# ---- physics ----
+
+optical-second:
+  - title: "Manifold: Will the SI second be redefined to an optical frequency standard before 2035?"
+    weight: 0.25             # a thin market
+    url: https://manifold.markets/chrisjbillington/will-the-si-second-be-redefined-to-9cf2f30ae5ab
+    kind: market
+    asof: 2026-11
+    median: 2031
+    match: same
+    note: About 6 traders at 83 percent before 2035; a companion market gives 5 percent by 1 January 2030, before the October 2030 CGPM. With the CGPM meeting in 2030 and 2034, the median falls at the 2030 meeting; taken as 2031 to sit after it.
+  - title: "CGPM Resolution 4 (2026): proposal for a new definition at the 29th CGPM"
+    url: https://www.bipm.org/en/cgpm-2026/resolution-4
+    kind: target
+    asof: 2026-10
+    year: 2030
+    match: same
+    note: The CGPM asked for a proposal and an implementation date at its 2030 meeting; adoption could come then.
+neutrino-mass-ordering:
+  - title: "Manifold: Will we know the neutrino mass ordering in 2035?"
+    weight: 0.25             # a thin market
+    url: https://manifold.markets/PlasmaBallin/will-we-know-the-neutrino-mass-orde
+    kind: market
+    asof: 2026-11
+    q75: 2036
+    match: same
+    note: About 5 traders at 80 percent by the end of 2035, for a published 5 sigma result; taken as q75 at 2036 (a slightly late reading of q80).
+  - title: "JUNO plus KM3NeT/ORCA: 5 sigma after 2 to 6 years of joint data"
+    url: https://arxiv.org/abs/2108.06293
+    kind: model
+    asof: 2021-08
+    median: 2032
+    match: same
+    note: The study projects 5 sigma after 6 years of joint data for any parameter values and 2 years at the current normal-ordering best fit; with JUNO from 2025 and ORCA still growing, a median around 2032 is my reading, not the paper's.
+space-gravitational-wave-detection:
+  - title: "Manifold: Will ESA's LISA launch in 2035 as planned?"
+    weight: 0.5             # a thin market
+    url: https://manifold.markets/mug0/will-esas-laser-interferometer-spac
+    kind: market
+    asof: 2026-11
+    q25: 2037
+    match: looser
+    note: About 18 traders at 38 percent for a launch in 2035. A launch is looser than a detection, which should follow within a year or two of reaching orbit; adding about a year, q25 is put at 2037 (an upper bound on q38).
+  - title: "ESA: LISA launch in 2035"
+    url: https://www.esa.int/Science_Exploration/Space_Science/Capturing_the_ripples_of_spacetime_LISA_gets_go-ahead
+    kind: target
+    asof: 2024-01
+    year: 2035
+    match: looser
+    note: The launch date set at adoption; detection comes after launch, transfer and commissioning.
+  - title: "TianQin: three-satellite mission around 2035"
+    url: https://tianqin.sysu.edu.cn/en
+    kind: target
+    asof: 2025-02
+    year: 2035
+    match: looser
+    note: The project's planned launch for TianQin-3; a launch, not a detection.
+higgs-factory:
+  - title: "CERN Council: go or no-go decision on FCC-ee by 2028"
+    url: https://cerncourier.com/cern-council-updates-the-european-strategy/
+    kind: target
+    asof: 2026-05
+    year: 2028
+    match: looser
+    note: A decision to build, not first collisions; the feasibility study adds about 15 years of construction from the early 2030s, so collisions in the mid to late 2040s.
+  - title: "CEPC study group: a Higgs factory before 2040"
+    url: https://indico.fnal.gov/event/72820/contributions/345950/attachments/200117/279027/Dpf2026-Hepinchina-Jianchun%20Wang.pdf
+    kind: target
+    asof: 2026-01
+    year: 2040
+    match: same
+    note: The study group's aim as reported at DPF 2026, after CEPC was left out of China's 15th five-year plan, so it lacks funding.
+dark-matter-identified:
+  - title: "Metaculus: Will we know what dark matter is before 2050?"
+    url: https://www.metaculus.com/questions/1469/will-we-know-what-dark-matter-is-before-2050/
+    kind: crowd
+    asof: 2026-06
+    median: 2049
+    match: stricter
+    note: About 180 forecasters at 58 percent, read from an Internet Archive snapshot of 5 June 2026; median put just before 2050. It asks for a Nobel Prize for explaining dark matter before 2050, which usually lags a discovery by a decade or more, so it is stricter than the node.
+
+# ---- chemistry ----
+
+electrolytic-ammonia-tenth:
+  - title: "Ammonia Energy Association: 15.1 million tonnes of electrolysis-based ammonia capacity by 2030"
+    url: https://ammoniaenergy.org/wp-content/uploads/2024/12/AEA-LEAP-Executive-Summary-November-2024.pdf
+    kind: projection
+    asof: 2024-11
+    median: 2030
+    match: looser
+    note: The association's project list expects 15.1 Mt of water-electrolysis ammonia capacity operating in 2030 from operating, firm and mature projects. That is capacity, not output, and about 8 percent of world production even at full use, so read as reaching the bar no earlier than 2030; the IEA has since cut its hydrogen pipeline outlook.
+
+enzymatic-plastic-recycling:
+  - title: "Carbios: Longlaville plant (50,000 t/yr PET) commissioning in the first half of 2028"
+    url: https://www.chemanager-online.com/en/news/carbios-confirms-longlaville-plant-plans-while-revising-project-schedule
+    kind: target
+    asof: 2026-01
+    year: 2028.3
+    match: looser
+    note: Target set in January 2026, conditional on financing by the end of the first quarter; in August 2026 Carbios said it would miss its September financial close and gave no new date. The node also asks for a full year of commercial sales.
+  - title: "Samsara Eco: 20,000 t/yr enzymatic nylon recycling plant complete in early 2028"
+    url: https://www.environmentenergyleader.com/stories/samsara-eco-opens-first-enzymatic-recycling-plant,91072
+    kind: target
+    asof: 2025-09
+    year: 2028.2
+    match: looser
+    note: Plant completion, not a full year of commercial sales.
+
+
+# ---- electronics ----
+
+one-nm-class-logic:
+  - title: "TSMC: A10 trial production in 2029 (Digitimes via 3DNews)"
+    url: https://3dnews.ru/1140238/tsmc-zaplanirovala-nachat-opitniy-vipusk-chipov-po-subnanometrovomu-tehprotsessu-a10-k-2029-godu
+    kind: target
+    asof: 2026-04
+    year: 2029
+    match: looser
+    note: Trial production of about 5,000 wafers a month, as reported from a TSMC briefing; volume production usually follows about a year later.
+  - title: "imec logic roadmap: A10 node in 2031"
+    url: https://wccftech.com/sub-1nm-process-node-technology-wont-arrive-till-2034-logic-roadmap-2dfets-sub-0-2nm-2046/
+    kind: projection
+    asof: 2026-05
+    median: 2031
+    match: same
+    note: imec's roadmap year for its A10 node, as reported in May 2026; imec's node names track but don't exactly match foundries'.
+co-packaged-optics:
+  - title: "TrendForce: co-packaged optics at about 35 percent of AI data center optical modules around 2030"
+    url: https://www.trendforce.com/presscenter/news/20260311-12962.html
+    kind: projection
+    asof: 2026-03
+    median: 2030
+    match: same
+    note: From about 0.5 percent in 2026; TrendForce says CPO could reach about 35 percent by around 2030, just above the node's one-third bar.
+6g-networks:
+  - title: "Ericsson Mobility Report: 180 million 6G subscriptions by end of 2031"
+    url: https://www.telecomtv.com/content/6g/6g-looms-large-in-latest-ericsson-report-54345/
+    kind: projection
+    asof: 2025-11
+    median: 2031.5
+    match: same
+    note: Ericsson's first 6G forecast, repeated in June 2026; the median is my reading of when an S-shaped ramp to 180 million at the end of 2031 passes 100 million.
+direct-to-cell-broadband:
+  - title: "Juniper Research: 133 million monthly direct-to-cell users in 2031"
+    url: https://www.advanced-television.com/2026/06/01/forecast-over-130m-d2c-users-by-2031/
+    kind: projection
+    asof: 2026-06
+    median: 2030.3
+    match: looser
+    note: From 17.4 million in 2026; the median is the steady-growth interpolation of when it passes 100 million. It counts texting-only users and has no broadband requirement.
+  - title: "Sequoia Capital, as reported by SatNews: mass adoption of next-generation direct-to-cell in 2028"
+    url: https://satnews.com/2026/02/25/spacex-unveils-150mbps-performance-target-for-upgraded-direct-to-cell-starlink/
+    kind: expert
+    asof: 2026-02
+    median: 2028
+    match: looser
+    note: A loose "mass adoption" date once enough V3 satellites are in very low orbit; SpaceX's own 150 Mbps tests are planned for late 2027.
+atomically-thin-transistors:
+  - title: "imec logic roadmap: 2D transistors as the main device at A2 in 2043"
+    url: https://wccftech.com/sub-1nm-process-node-technology-wont-arrive-till-2034-logic-roadmap-2dfets-sub-0-2nm-2046/
+    kind: projection
+    asof: 2026-05
+    median: 2043
+    match: stricter
+    note: The roadmap year for 2D FETs as the leading logic device; imec also plans planar 2D devices earlier, from its A7 node (2034 on the same roadmap), which would meet the node's looser bar of some logic.
+  - title: "imec: first planar 2D devices at the A7 node (2034)"
+    url: https://www.imec-int.com/en/articles/introducing-2d-material-based-devices-logic-scaling-roadmap
+    kind: target
+    asof: 2025-01
+    year: 2034
+    match: same
+    note: imec's plan to introduce 2D devices first at A7, dated 2034 on its 2026 roadmap; a research institute's plan, not a foundry commitment.
+
+# ---- society ----
+
+ai-verification-treaty:
+  - title: "Metaculus: US and China reach an agreement to limit frontier AI development before 2029?"
+    url: https://www.metaculus.com/questions/38418/
+    kind: crowd
+    asof: 2026-02
+    q10: 2029
+    match: looser
+    note: Community prediction 8 percent (about 135 forecasters in all, 61 in the recent aggregate), read from an Internet Archive snapshot of February 2026; taken as roughly the 10th percentile at the start of 2029. Any formal limit counts, with no verification required.
+  - title: "Metaculus: US-China AGI-limiting treaty signed before 2030?"
+    url: https://www.metaculus.com/questions/39149/
+    kind: crowd
+    asof: 2026-07
+    q05: 2030
+    match: looser
+    note: Community prediction 5 percent (about 108 forecasters, 50 in the recent aggregate), read from an Internet Archive snapshot of July 2026. A signed treaty limiting AGI development, without the node's verification requirement, though in practice such a treaty would likely include some.
+carbon-price-majority:
+  - title: "Metaculus: When will a carbon price be paid on 50% or more of the world's carbon emissions?"
+    url: https://www.metaculus.com/questions/22546/
+    kind: crowd
+    asof: 2025-02
+    median: 2036.5
+    q10: 2029.6
+    q25: 2032.2
+    q75: 2040.9
+    q90: 2046.8
+    match: looser
+    note: Only 6 forecasters, read from an Internet Archive snapshot of February 2025; about 7 percent beyond 2050. It resolves on Our World in Data's share of CO2 (not all greenhouse gases) covered by any carbon price, which runs ahead of the World Bank's all-gas figure because methane and farming are rarely priced.
+  - title: "Global Carbon Pricing Challenge: 60 percent of global emissions priced by 2030"
+    url: https://www.canada.ca/en/services/environment/weather/climatechange/climate-action/pricing-carbon-pollution/global-challenge.html
+    kind: target
+    asof: 2021-11
+    year: 2030
+    match: stricter
+    note: Canada's goal, launched at COP26 and relaunched with Chile at COP27, to triple coverage to 60 percent; coverage was 29 percent in 2026, so it will be missed.
+national-basic-income:
+  - title: "Metaculus: When will a 1M-population country adopt Universal Basic Income?"
+    url: https://www.metaculus.com/questions/6818/
+    kind: crowd
+    asof: 2025-03
+    median: 2037
+    q10: 2026.8
+    q25: 2030.1
+    q75: 2051.5
+    q90: 2076.2
+    match: looser
+    note: About 74 forecasters, read from an Internet Archive snapshot of March 2025 (the question then closed). Any country over a million people, payments to two thirds of residents worth 10 percent of median income for at least a year; the node asks for 10 million people and two years.
+  - title: "Metaculus: Will the US, UK, China, or any of the countries in the EU enact a universal basic income before 2030?"
+    url: https://www.metaculus.com/questions/22388/
+    kind: crowd
+    asof: 2025-10
+    q05: 2030
+    match: stricter
+    note: Community prediction 5 percent from about 36 forecasters, read from an Internet Archive snapshot of October 2025. Limited to the largest economies, a narrower set than any country of 10 million.
+  - title: "Manifold: Will a country implement Universal Basic Income as a permanent policy by 2030?"
+    url: https://manifold.markets/SimoneRomeo/will-a-country-implement-universal
+    kind: market
+    asof: 2026-11
+    q25: 2030
+    match: looser
+    note: About 35 percent by the end of 2030 from 53 traders; q25 assumes an even spread from now. Any country over 20 million citizens and a permanent payment to every citizen, with no minimum amount.
+ai-run-company:
+  - title: "Manifold: Will there be a one-person unicorn by 2030?"
+    url: https://manifold.markets/SimoneRomeo/will-there-be-a-oneperson-unicorn-b
+    kind: market
+    asof: 2026-11
+    median: 2031
+    match: looser
+    note: About 52 percent by the end of 2030 from 91 traders. A one-employee company valued at a billion dollars, a looser bar than a billion dollars of revenue; contractors are allowed.
+  - title: "Manifold: Will a company with at least $1B in revenue be run primarily by an AI CEO before 2030?"
+    weight: 0.5             # a thin market
+    url: https://manifold.markets/EliLifland/will-a-company-with-at-least-1b-in
+    kind: market
+    asof: 2026-11
+    q25: 2030
+    match: same
+    note: About 23 percent before 2030 from 16 traders, taken as roughly the 25th percentile. It asks for an AI doing most of a chief executive's work at a billion-dollar-revenue company, of any headcount, so it is stricter on management and looser on staff.
+  - title: "Dario Amodei: first billion-dollar company with one human employee by 2026"
+    url: https://getcoai.com/news/anthropic-ceo-predicts-billion-dollar-solo-startups-by-2026
+    kind: expert
+    asof: 2025-05
+    median: 2026
+    match: looser
+    note: Said at Anthropic's first developer conference in May 2025; a valuation bar with one employee. Not met as of November 2026.
+ai-legal-personhood:
+  - title: "Manifold: AI legal personhood in any country (2030 and 2055 markets)"
+    url: https://manifold.markets/_deleted_/will-an-ai-be-granted-legal-personh
+    kind: market
+    asof: 2026-11
+    q25: 2034.6
+    median: 2050.7
+    match: looser
+    note: About 20 percent by the end of 2030 (223 traders) and 58 percent by the end of 2055 in a second market (https://manifold.markets/strutheo/will-any-country-recognize-ai-or-ro, 21 traders); quantiles interpolated linearly between the two. Both may count limited or symbolic rights.
+
+
+# The far future (added 2026-11-06; Metaculus from Internet Archive snapshots,
+# Manifold from its API).
+
+explosive-growth:
+  - title: "Metaculus: In which year will the world's real GDP first exceed 130% of its highest level from any previous year?"
+    url: https://www.metaculus.com/questions/5159/
+    kind: crowd
+    asof: 2026-06
+    median: 2058.9
+    q25: 2038.4
+    q75: 2129
+    match: same
+    note: Community prediction from 114 forecasters, read from an Internet Archive snapshot of 4 June 2026 (http://web.archive.org/web/20260604010253/https://www.metaculus.com/questions/5159/date-of-gwp-growth-over-130/); resolves above its range if not by 2200.
+  - title: "Manifold (Barnett series): Will the world economy grow by more than 30% in a single year before 2030 / 2035 / 2040 / 2043?"
+    weight: 0.5             # a thin market
+    url: https://manifold.markets/MatthewBarnett/will-the-world-economy-grow-by-more-d2b742a25e5e
+    kind: market
+    asof: 2026-11
+    q10: 2030.5
+    q25: 2033.1
+    match: same
+    note: Play-money markets with 14 to 49 traders each, at 7.3 percent before 2030, 35.8 before 2035, 39 before 2040 and 42 before 2043; quantiles interpolated, and the median lies beyond 2043, the last deadline. The jump between 2030 and 2035 and flat line after look like thin trading.
+  - title: "Roodman's model of long-run growth, as summarized by Davidson (Open Philanthropy 2021)"
+    url: https://web.archive.org/web/2024/https://www.openphilanthropy.org/research/could-advanced-ai-drive-explosive-economic-growth/
+    kind: model
+    asof: 2021-06
+    median: 2043
+    q10: 2034
+    q90: 2065
+    match: same
+    note: Roodman's stochastic hyperbolic fit to world output since 10,000 BCE gives the first year of over 30 percent growth (median 2043, 80 percent range 2034 to 2065); Davidson himself puts only "> 10%" on explosive growth this century, because the fit ignores the demographic transition.
+  - title: "Davidson (Open Philanthropy 2021): probability of explosive growth this century"
+    url: https://web.archive.org/web/2024/https://www.openphilanthropy.org/research/could-advanced-ai-drive-explosive-economic-growth/
+    kind: expert
+    asof: 2021-06
+    q10: 2100
+    match: same
+    note: "\"> 10% probability to explosive growth occurring this century\" (over 30 percent a year growth of gross world product), from over 30 percent for sufficiently advanced AI in time times over a third that it then drives explosive growth. A floor, not a full distribution; here q10 at 2100."
+  - title: "Erdil and Besiroglu (Epoch AI 2023): explosive growth by 2100"
+    url: https://arxiv.org/pdf/2309.11690
+    kind: expert
+    asof: 2023-09
+    median: 2100
+    match: same
+    note: "\"the odds of widespread automation and subsequent explosive growth by the end of this century are about even\"; their bar is gross world product exceeding 130 percent of its previous maximum in a year, the same as the node."
+  - title: "Hanson (2000): start of the next growth mode"
+    url: http://mason.gmu.edu/~rhanson/longgrow.pdf
+    kind: model
+    asof: 2000-01
+    median: 2071
+    match: stricter
+    note: Table 3 projects a new mode with a doubling time of 9 to 16 days beginning in 2067 to 2075 by the doubling-time method (the world-product method's 1976 to 1996 has already failed); a mode that fast would pass 30 percent a year almost at once, so the onset date is close to the node's.
+
+kardashev-type-1:
+  - title: "Jiang et al. (2022), Avoiding the Great Filter"
+    url: https://arxiv.org/abs/2204.07070
+    kind: model
+    asof: 2022-03
+    median: 2371
+    match: same
+    note: Fits trends in fossil, nuclear and renewable supply with climate limits and finds Sagan's 1e16 W "will not come until year 2371"; it assumes no step change in growth such as an industrial explosion.
+  - title: "Kaku: Type I in 100 to 200 years at 3 percent growth"
+    url: https://en.wikipedia.org/wiki/Kardashev_scale
+    kind: expert
+    asof: 2011-01
+    median: 2161
+    q10: 2111
+    q90: 2211
+    match: same
+    note: Kaku (Physics of the Future, 2011) as cited by Wikipedia; 100 to 200 years from 2011 is taken as the 10th to 90th range, which is generous to a loose statement.
+  - title: "Sagan: Type I around 2100"
+    url: https://en.wikipedia.org/wiki/Kardashev_scale
+    kind: expert
+    asof: 1973-01
+    median: 2100
+    match: same
+    note: Sagan's estimate as cited by Wikipedia (via Hamish 2012); the source of the date is secondhand.
+  - title: "Manifold: By 2060, will humanity achieve (or be approaching) a Type I civilization?"
+    weight: 0.25             # a thin market
+    url: https://manifold.markets/Latte_Horse/by-2060-will-humanity-achieve-type
+    kind: market
+    asof: 2026-11
+    q25: 2060
+    match: stricter
+    note: 34 percent by 2060 with only 17 traders (10 percent in the 2050 version), taken here as about the 25th percentile at 2060; its bar of about 5e20 Wh a year (5.7e16 W) is higher than Sagan's 1e16 W. Weak evidence.
+
+dyson-swarm:
+  - title: "Kardashev (1971): the Sun's whole output in about 800 years at 4 percent growth"
+    url: https://en.wikipedia.org/wiki/Kardashev_scale
+    kind: model
+    asof: 1971-01
+    median: 2771
+    match: same
+    note: A growth extrapolation, not a forecast; at 4 percent a year, human energy use would match the Sun's output about 800 years on, and the sunlight reaching Earth after about 240.
+  - title: "Murphy (2011): the Sun's whole output in about 1,350 years at 2.3 percent growth"
+    url: https://dothemath.ucsd.edu/2011/07/galactic-scale-energy/
+    kind: model
+    asof: 2011-07
+    median: 3361
+    match: same
+    note: Murphy's point is that such growth must stop, not that it will happen; listed as the slow-growth anchor.
+
+probe-reaches-star:
+  - title: "Breakthrough Starshot: launch about 2036, 20 to 30 year flight"
+    url: https://en.wikipedia.org/wiki/Breakthrough_Starshot
+    kind: target
+    asof: 2016-04
+    year: 2061
+    match: looser
+    note: Milner's original hope of a first launch around 2036 plus about 25 years to Alpha Centauri; a flyby that returns data meets the node, but the program has been on hold indefinitely since 2025, so the target is stale.
+  - title: "Manifold: Will any human spacecraft reach another star system by the end of the 21st century?"
+    weight: 0.75             # a thin market
+    url: https://manifold.markets/IsaacKing/will-any-human-spacecraft-reach-ano
+    kind: market
+    asof: 2026-11
+    median: 2100
+    match: looser
+    note: 50.3 percent by 2100 with 31 traders; craft built by AI count, and reaching the system is enough without sending data back. A sister market requiring data received by 2100 was at 48.1 percent (19 traders), and 12 percent by 2050 (20 traders).
+
+energy-use-10x:
+  - title: "Metaculus: In what year will world energy consumption first exceed 130% of every prior year?"
+    url: https://www.metaculus.com/questions/11108/
+    kind: crowd
+    asof: 2026-09
+    median: 2079
+    q25: 2038.9
+    match: looser
+    note: 40 forecasters, read from an Internet Archive snapshot of 4 September 2026 (http://web.archive.org/web/20260904044557/https://www.metaculus.com/questions/11108/date-of-energy-consumption-growth-over-30/); upper quartile after 2201. A first year of 30 percent energy growth comes before a tenfold rise, which at that pace takes about nine more years.
+
+sun-one-percent:
+  - title: "Manifold: Will there be a Dyson Sphere around the Sun before 2100?"
+    url: https://manifold.markets/RemNi/will-there-be-a-dyson-sphere-around-51d476bf5275
+    kind: market
+    asof: 2026-11
+    q10: 2075
+    match: same
+    note: 19 percent by 2100 (82 traders), with sister markets at 7.2 percent by 2040, 11 by 2060, 11.4 by 2070, 19.5 by 2090 and 66 by 2200 (5 traders); it resolves on structures harnessing at least 1 percent of the Sun's output, the node's bar. Only the 10th percentile is read off with any confidence (about 2075, where the curve passes 10 percent); the 2200 figure suggests a median in the 2100s.
+
+self-replicating-probe:
+  - title: "Manifold: When will the first self-replicating spaceship take off?"
+    weight: 0.5             # a thin market
+    url: https://manifold.markets/JoeandSeth/when-will-the-first-selfreplicating
+    kind: market
+    asof: 2026-11
+    q25: 2042
+    match: looser
+    note: 23 traders; 4.4 percent for 2025 to 2030, 9 for 2031 to 35, 13.1 for 2036 to 40, 11.5 for 2041 to 45, and 62 for "2046 to 2050 or never", so the 25th percentile is about 2042 and the rest unpriced. A self-replicating craft anywhere in space would count, not necessarily one sent to another star; thin and probably optimistic.
+
+# Mathematics (added 2026-11-06; Metaculus from Internet Archive snapshots).
+
+millennium-problem-settled:
+  - title: "Base rate: any of the six open problems, at the historical rate of conjecture proofs"
+    url: https://arxiv.org/abs/1202.3936
+    kind: model
+    asof: 2026-11
+    median: 2038.4
+    q10: 2028.6
+    q25: 2031.6
+    q75: 2050
+    q90: 2065.2
+    match: same
+    note: Hisano and Sornette's best simple fit is a proof rate of about 1 percent a year per conjecture; six independent problems give 6 percent a year from now. One of seven Millennium problems was solved in 26 years, about the same rate. It ignores the September 2026 Navier-Stokes claim and AI.
+  - title: "Kalshi: Will the Clay Institute award a Millennium Prize? (KXMILLENNIUM)"
+    url: https://kalshi.com/markets/kxmillennium
+    kind: market
+    asof: 2026-11
+    median: 2029.9
+    q10: 2028.5
+    q25: 2029.3
+    q75: 2033
+    match: stricter
+    note: Last trade prices of 1.8 percent before 2027, 6 before 2028, 13.4 before 2029, 56.1 before 2030 and 87.6 before 2035, interpolated linearly; thin. A prize needs two years after publication, so it comes later than the general acceptance the node asks for.
+  - title: "Polymarket: Will the Clay Institute declare the Navier-Stokes problem solved by ...?"
+    url: https://polymarket.com/event/will-cmi-declare-the-navier-stokes-problem-solved-by
+    kind: market
+    asof: 2026-11
+    q10: 2027.6
+    q25: 2028.5
+    match: stricter
+    note: Yes prices of 3.65 percent by the end of 2026, 14.5 by the end of 2027 and 36.5 by the end of 2028, interpolated. Only Navier-Stokes and only a Clay declaration, so stricter; a separate market priced OpenAI retracting its proof in 2026 at 6 percent.
+  - title: "Manifold: Will any Millennium Prize problem other than Poincaré be solved before 2030 (accepted by Clay)?"
+    url: https://manifold.markets/PlasmaBallin/will-any-millenium-prize-problem-ot
+    kind: market
+    asof: 2026-11
+    q95: 2030
+    match: same
+    note: 98.5 percent, 139 traders, play money; only an upper quantile can be read from one date.
+  - title: "Metaculus: When will AI solve a Millennium Problem? (28536)"
+    url: https://www.metaculus.com/questions/28536/
+    kind: crowd
+    asof: 2026-04
+    median: 2031.5
+    q25: 2030
+    q75: 2036.2
+    match: stricter
+    note: Read from an Internet Archive snapshot of April 2026 (prediction of 13 March 2026, only 9 forecasters in it), before the Navier-Stokes claim. It needs an AI-generated proof with little human help, published in a peer-reviewed journal; AI only is narrower than the node.
+  - title: "Forecasting Research Institute, LEAP wave 2 (experts): AI solves or substantially assists in solving a Millennium Prize problem"
+    url: https://leap.forecastingresearch.org/forecasts/millennium-prize
+    kind: survey
+    asof: 2025-09
+    median: 2038.5
+    q10: 2028
+    q25: 2032.2
+    match: stricter
+    note: Medians of 277 experts, 10 percent by 2027, 20.4 by 2030 and 60 by 2040, interpolated by year end; superforecasters gave 5.4, 20 and 58. Fielded August to September 2025, a year before the claim; AI-assisted only.
+  - title: "2023 Expert Survey on Progress in AI (Grace et al.): AI solves a long-standing problem such as a Millennium Prize problem without more human input"
+    url: https://arxiv.org/abs/2401.02843
+    kind: survey
+    asof: 2023-10
+    median: 2050
+    match: stricter
+    note: 2,778 AI researchers put a 50 percent chance at 27 years; AI alone, so stricter.
+
+riemann-hypothesis-settled:
+  - title: "Base rate: time from conjecture to proof (Hisano and Sornette 2013)"
+    url: https://arxiv.org/abs/1202.3936
+    kind: model
+    asof: 2026-11
+    median: 2096.2
+    q10: 2037.4
+    q25: 2055.6
+    q75: 2165.5
+    match: same
+    note: An exponential waiting time at about 1 percent a year, the simplest model their data could not reject, applied from now (memoryless, so the 167 years already waited do not matter). It assumes the pre-AI pace of mathematics.
+
+  - title: "Kalshi: When will the Riemann hypothesis be resolved? (KXRIEMANNRES)"
+    url: https://kalshi.com/markets/kxriemannres
+    kind: market
+    asof: 2026-11
+    q10: 2027.6
+    match: same
+    note: Last trades of 4 percent before 2027 and 23 before 2029, very wide spreads; only the lower quantile is interpolated. The prize market KXRIEMANN (1 percent by 2028, 33 by 2030, 50 by 2032, 47 by 2035) is thin and not monotonic.
+  - title: "Polymarket: Will the Clay Institute declare the Riemann hypothesis solved by ...?"
+    url: https://polymarket.com/event/will-cmi-declare-the-riemann-hypothesis-solved-by
+    kind: market
+    asof: 2026-11
+    q10: 2028
+    match: stricter
+    note: Yes prices of 1.85 percent by the end of 2026 and 10.5 by the end of 2027; a Clay declaration is a stricter bar than acceptance.
+  - title: "Manifold: Will the Riemann hypothesis be solved before 2030?"
+    url: https://manifold.markets/Grothenfla/will-the-riemann-hypothesis-be-solv-ypNQz5hEgI
+    kind: market
+    asof: 2026-11
+    q75: 2030
+    match: same
+    note: 73.5 percent, 38 traders, play money; resolves on acceptance, such as a Clay announcement.
+  - title: "Manifold: Will an AI program resolve the Riemann hypothesis before 2035?"
+    url: https://manifold.markets/HarrisonLucas/ai-program-resolves-riemann-hypothe
+    kind: market
+    asof: 2026-11
+    q75: 2035
+    match: stricter
+    note: 76 percent, 123 traders, play money; needs AI to do it and a proof vetted to Annals standard.
+
+ai-majority-new-math:
+  - title: "Manifold (Besiroglu and Litt bet): Will AI be capable of producing an Annals-quality math paper for $100k by March 2030?"
+    url: https://manifold.markets/TamayBesiroglu/will-ai-be-capable-of-producing-ann
+    kind: market
+    asof: 2026-08
+    median: 2026.6
+    match: looser
+    note: Resolved YES on 1 August 2026 (345 traders), on Daniel Litt's judgment that AI could autonomously write number theory papers of 2025 Annals quality for $100,000 of compute. That is capability; the node needs AI-found results to fill half of the top journals, so it is a much looser bar and the median is just the resolution date.
+  - title: "Epoch AI (Matthew Barnett): AI better than top mathematicians at proving arbitrary theorems"
+    url: https://epoch.ai/gradient-updates/the-promise-of-reasoning-models
+    kind: expert
+    asof: 2025-02
+    median: 2027.7
+    match: looser
+    note: Barnett gave "roughly 3 in 5" that by the end of 2027 an AI could take any statement and find a proof or disproof within 30 days more accurately than any single mathematician, so his median falls a little before 2028. Capability, not journal practice.
+  - title: "Daniel Litt: models match some of the best mathematicians' output"
+    url: https://www.daniellitt.com/blog/2026/2/20/mathematics-in-the-library-of-babel
+    kind: expert
+    asof: 2026-02
+    q25: 2030
+    q75: 2040
+    match: looser
+    note: Litt wrote in February 2026 that he expects models to match some of the best human mathematicians' output by 2040 but thinks it unlikely by 2030; reading "unlikely" as about a quarter and "expects" as about three quarters is my interpretation. Matching the best is about capability, not who publishes in journals.
+  - title: "Christian Szegedy: superhuman AI mathematician"
+    url: https://3quarksdaily.com/?p=236618
+    kind: expert
+    asof: 2023-07
+    median: 2026
+    match: looser
+    note: The New York Times (July 2023) reported Szegedy predicted in 2019 that AI would match or beat the best human mathematicians at problem-solving within a decade, and in 2022 moved this to 2026; Michael Harris's July 2025 post gives his bet with Chollet as AI autonomously solving 10 of 100 preselected open conjectures. No resolution of the bet was found.
+  - title: "Terence Tao: 2026-level AI as a trustworthy co-author"
+    url: https://unlocked.microsoft.com/ai-anthology/terence-tao/
+    kind: expert
+    asof: 2023-06
+    median: 2026
+    match: looser
+    note: Tao expected that 2026-level AI, used properly, would be a trustworthy co-author in mathematical research; co-authorship is far short of AI finding most top results.
+  - title: "Metaculus: When will a computer be an author of a paper in the Annals of Mathematics? (4880)"
+    url: https://www.metaculus.com/questions/4880/
+    kind: crowd
+    asof: 2026-07
+    median: 2029
+    q25: 2025.6
+    q75: 2033.9
+    match: looser
+    note: Read from an Internet Archive snapshot of July 2026 (prediction of 27 February 2026, 32 forecasters; 6 percent after 2100). One Annals paper with a program listed as author, far short of half the top journals.
+  - title: "Manifold: AI outperforms humans in all mathematical areas by July 2028 (Litt's judgment)"
+    url: https://manifold.markets/DanielLittQCSn/ai-outperforms-humans-in-all-mathem
+    kind: market
+    asof: 2026-11
+    q75: 2028.5
+    match: looser
+    note: 79.2 percent, 221 traders, play money; public AI tools beating most professional mathematicians in every area is capability, not who publishes the top papers.
+  - title: "2023 Expert Survey on Progress in AI (Grace et al.): AI routinely and autonomously proves theorems publishable in top math journals"
+    url: https://arxiv.org/abs/2401.02843
+    kind: survey
+    asof: 2023-10
+    median: 2045
+    match: looser
+    note: 2,778 AI researchers put a 50 percent chance at 22 years, including generating the theorems; capability rather than a share of journal papers.
+
+# No outside forecasts found for formal-proofs-routine, formalized-literature
+# or verified-software-mainstream. Related, resolved: Manifold's "Will we
+# have a formalized proof of Fermat's Last Theorem" resolved Yes on
+# 2026-09-05; in "Which theorems will be formally proven in Lean by end of
+# 2028" the Navier-Stokes counterexample stood at 98 percent and the Hodge
+# conjecture at 52.8 (read 2026-11-06).

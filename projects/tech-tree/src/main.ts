@@ -2,7 +2,7 @@ import "./style.css"
 import { Sandbox } from "./sandbox"
 import { dateLabel } from "./time"
 import { DETAIL_DEFAULT, DISPLAY_DEFAULTS, EFFORT_STOPS, KIND_COLORS, RISK_COLORS, ROUTE_COLORS, SERIES_COLORS, STATUS_COLORS, TreeView, effortColor, fmtValue, kindShape, seriesOf, type Display, type Filters } from "./tree"
-import type { Details, Metric, Models, Node, Pool, PoolInput, Quantiles, ResourceUse, Source, Supply, Tree } from "./types"
+import type { Details, Growth, Metric, Models, Node, Pool, PoolInput, Quantiles, ResourceUse, Source, Supply, Tree } from "./types"
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
 const esc = (s: unknown) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!)
@@ -482,11 +482,11 @@ async function main() {
   const forecastChart = (rows: { label: string; q: Quantiles; cls: string; tip?: string }[]) => {
     const W = 312, L = 4, R = 8, ROW = 24, T = 16
     const ends = rows.flatMap((r) => [Q(r.q, 1), Q(r.q, 5)]).filter(Number.isFinite)
-    const end = Math.min(2300, Math.max(now + 12, ...ends) + 2)
+    const end = Math.min(3000, Math.max(now + 12, ...ends) + 2)
     const xs = (y: number) => Math.log(1 + Math.max(0, Math.min(y, end) - now))
     const px = (y: number) => L + (xs(y) / xs(end)) * (W - L - R)
     const H = T + rows.length * ROW + 4
-    const ticks = [2030, 2040, 2050, 2075, 2100, 2150, 2200, 2300].filter((y) => y < end - 2 && y > now + 1)
+    const ticks = [2030, 2040, 2050, 2075, 2100, 2150, 2200, 2300, 2500, 3000].filter((y) => y < end - 2 && y > now + 1)
     const tick = ticks.map((y) => `<line x1="${px(y)}" x2="${px(y)}" y1="${T - 4}" y2="${H}" class="grid"/><text x="${px(y)}" y="${T - 6}" class="xlab">${y}</text>`).join("")
     const body = rows.map((r, i) => {
       const y = T + i * ROW + 15
@@ -501,7 +501,7 @@ async function main() {
     }).join("")
     return `<svg class="chart fc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Forecasts compared">${tick}${body}</svg>`
   }
-  const when = (v: number | null | undefined) => (v == null || !Number.isFinite(v) ? "never, in this source" : v > 2300 ? "after 2300" : yr(v))
+  const when = (v: number | null | undefined) => (v == null || !Number.isFinite(v) ? "never, in this source" : v > 3000 ? "after 3000" : yr(v))
   const middle = (q: Quantiles) => `${when(q[3])} <span class="note">(middle half ${q[2] == null ? "?" : yr(q[2])} to ${when(q[4])})</span>`
   const SHARE_WORD = (w: string) => models.forecasting.work[w] ?? w
   const forecastsHTML = (n: Node, d: Details) => {
@@ -603,7 +603,7 @@ async function main() {
       const o = sandbox.originalOf(n.id)!
       const mine = sandbox.edits.has(n.id)
       const field = (k: string, v: number) => `<input type="number" step="1" data-my="${k}" value="${Math.round(v)}" aria-label="${k}">`
-      rows.push(`<dt>Yours</dt><dd class="my-dates">${field("from", n.from)} to ${field("to", n.to)}, best guess ${field("at", n.at)}<br><span class="note">The tree's: ${esc(dateLabel(o[0], o[2], o[1], now, true))}.${mine ? ` <button type="button" class="link" data-my-reset>Back to the tree's</button>` : lastMoved.has(n.id) ? " Moved by what it depends on." : ""}</span></dd>`)
+      rows.push(`<dt>Yours</dt><dd class="my-dates">${field("from", n.from)} to ${field("to", n.to)}, best guess ${field("at", n.at)}<br><span class="note">The tree's: ${esc(dateLabel(o[0], o[2], o[1], now, true))}.${poolNote(n)}${mine ? ` <button type="button" class="link" data-my-reset>Back to the tree's</button>` : lastMoved.has(n.id) ? " Moved by what it depends on." : ""}</span></dd>`)
     }
     rows.push(`<dt>When</dt><dd>${esc(dateLabel(n.from, n.to, n.at, now, open))}${d.was != null && open ? `<br><span class="note">Best guess ${d.was} until November 2026${d.was > n.at ? ", moved earlier to allow for AI speeding up the work (What it takes)" : ", moved later as outside forecasts suggested"}.</span>` : ""}</dd>`)
     if (n.trendYear && open) rows.push(`<dt>Trend</dt><dd>${n.trendYear < now
@@ -742,6 +742,53 @@ async function main() {
   const PACE_COLORS: Record<string, string> = {
     "ai-research": "#3d6fb6", software: "#2f8fb0", design: "#7b5ea7", experiments: "#4f9a4a", trials: "#d0587e", building: "#c9772a", adoption: "#6b7280",
   }
+  // The far future: power use in the growth model's runs, 10 to 90 percent
+  // and the median, each regime's median, and the thresholds the tree uses.
+  const REGIME_COLORS: Record<string, string> = { slow: "#5b8bd0", gradual: "#d08b3a", fast: "#c0504d" }
+  const REGIME_WORD: Record<string, string> = { slow: "no explosion", gradual: "gradual explosion", fast: "fast explosion" }
+  const growthChart = (g: Growth) => {
+    const W = 330, H = 210, L = 40, B = 20, T = 8, R = 92
+    const ys = g.path.years
+    const lx = (y: number) => Math.log(1 + Math.max(0, y - g.t0))
+    const px = (y: number) => L + (lx(y) / lx(ys.at(-1)!)) * (W - L - R)
+    const v0 = 13, v1 = 27
+    const py = (w: number) => T + (1 - (Math.log10(w) - v0) / (v1 - v0)) * (H - T - B)
+    const grid = [13, 15, 17, 19, 21, 23, 25, 27].map((e) => `<line x1="${L}" x2="${W - R}" y1="${py(10 ** e)}" y2="${py(10 ** e)}" class="grid"/><text x="${L - 4}" y="${py(10 ** e)}" class="ylab">10^${e} W</text>`).join("")
+    const xt = [2050, 2100, 2200, 3000].filter((y) => y <= ys.at(-1)!).map((y) => `<text x="${px(y)}" y="${H - 6}" class="xlab">${y}</text>`).join("")
+    const path = (vals: number[]) => vals.map((v, i) => `${i ? "L" : "M"}${px(ys[i]).toFixed(1)},${py(v).toFixed(1)}`).join("")
+    const band = "M" + [...g.path.q.map((x, i) => [px(ys[i]), py(x[5])]), ...g.path.q.map((x, i) => [px(ys[i]), py(x[1])]).reverse()].map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join("L") + "Z"
+    const refs: [number, string][] = [[1e16, "Type I (Sagan)"], [1.74e17, "sunlight on Earth"], [3.83e24, "1% of the Sun"], [3.83e26, "the Sun"]]
+    const ref = refs.map(([w, t]) => `<line x1="${L}" x2="${W - R}" y1="${py(w)}" y2="${py(w)}" stroke="var(--muted)" stroke-dasharray="2 3" stroke-width="0.8"/><text x="${W - R + 4}" y="${py(w)}" font-size="8.5" dominant-baseline="central" fill="var(--muted)">${t}</text>`).join("")
+    const lines = Object.entries(g.path.byRegime).map(([k, v]) => `<path d="${path(v)}" fill="none" stroke="${REGIME_COLORS[k] ?? "var(--muted)"}" stroke-width="1.3"/>`).join("")
+    return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Power use in the growth model">${grid}${xt}${ref}<path d="${band}" fill="var(--ink)" opacity="0.12"/>${lines}<path d="${path(g.path.q.map((x) => x[3]))}" fill="none" stroke="var(--ink)" stroke-width="2"/></svg>`
+  }
+  const rangeText = (r: unknown, f: (v: number) => string) => {
+    if (typeof r === "number") return f(r)
+    const x = r as { q10: number; q50: number; q90: number }
+    return `${f(x.q50)} <span class="note">(${f(x.q10)} to ${f(x.q90)})</span>`
+  }
+  const growthHTML = (g: Growth) => {
+    const pct = (v: number) => `${+(v * 100).toFixed(1)}%`
+    const yrs = (v: number) => (v < 1 ? `${+(v * 12).toFixed(1)} months` : v === 1 ? "1 year" : `${+v.toFixed(1)} years`)
+    const tw = (v: number) => `${(v / 1e12).toLocaleString("en-US")} TW`
+    const R = g.params.explosion.regimes
+    const regimeRows = Object.entries(R).map(([k, r]) => `<tr><td><span class="sw" style="background:${REGIME_COLORS[k] ?? "var(--muted)"}"></span> ${esc(REGIME_WORD[k] ?? k)}</td><td>${Math.round(r.weight * 100)}%</td><td>${r.growth ? `grows ${rangeText(r.growth, pct)} a year` : `first doubling ${rangeText(r.first, yrs)}, halving every ${rangeText(r.halving, (v) => String(v))} doublings, down to ${rangeText(r.floor, yrs)}`}</td></tr>`).join("")
+    const rows = Object.entries(g.nodes).map(([id, x]) => {
+      const n = byId.get(id)
+      if (!n) return ""
+      const q = (v: number | null) => (v == null ? "after 5000" : yr(v))
+      return `<tr><td>${link(id)}</td><td>${yr(sandbox.originalOf(id)?.[1] ?? n.at)}</td><td>${q(x.q[1])}<span class="note"><br>${q(x.q[0])} to ${q(x.q[2])}</span></td>${Object.keys(R).map((k) => `<td>${q(x.regimes[k]?.[1] ?? null)}</td>`).join("")}</tr>`
+    }).join("")
+    return `<h3>The far future: a growth model</h3>
+      ${growthChart(g)}
+      <p>Past superintelligence, nobody can say what will be invented, but physics says what any invention needs: energy. So the far end of the tree is dated by thresholds of power use, from a model of how fast it could grow (<code>prep/growth.yaml</code>). Humanity used ${tw(g.e0)} in ${g.t0}, growing ${rangeText(g.params.steady.growth, pct)} a year. In each of the ${models.forecasting.draws.toLocaleString("en-US")} runs, once robots build robots (that run's date for it), and ${rangeText(g.params.explosion.delay, yrs)} later, growth takes one of three courses:</p>
+      <table class="t"><thead><tr><th>After robots build robots</th><th>Chance</th><th>Power use</th></tr></thead><tbody>${regimeRows}</tbody></table>
+      <p>The doubling time itself changes: in an explosion, each doubling comes quicker than the last as the machines improve, down to a floor. On Earth's surface growth stops at ${rangeText(g.params.earth.cap, tw)}, where waste heat would warm the planet by about a degree; beyond that it continues only in space, from the first factory there that copies itself (some years after robots build robots and a lunar base: ${Object.entries(g.params.space.delay).map(([k, r]) => `${rangeText(r, yrs)} in a ${esc(REGIME_WORD[k] ?? k)}`).join(", ")}), up to the Sun's whole output. The chart shows power use (the band holds 10 to 90 percent of runs, the black line the median, the colored lines each course's median).</p>
+      <p>Neither the optimists nor the skeptics are taken at their word. A superintelligence may see faster routes than anyone can now: the fast course lets doubling times fall to ${rangeText(R.fast?.floor ?? 0.1, yrs)}, near Hanson's projected next growth mode (doubling every few weeks) and Davidson and Hadshar's limit for self-copying robots. But arguments that it will be fast can be too optimistic over short spans: chips, permits, power plants and what can't be automated (Aghion, Jones and Jones; Acemoglu) can hold growth near today's for decades, and even a fast course needs years to ramp up. Forecasters and economists disagree here more than anywhere in the tree; Metaculus forecasters put the first year of 30 percent world growth at a median of 2059, while economists surveyed in 2026 expected 2.5 to 3.5 percent a year. The weights above put the model between them, at about ${Math.round((1 - (R.slow?.weight ?? 0)) * 100)}% for an explosion once robots build robots.</p>
+      <table class="t est"><thead><tr><th>Threshold</th><th>Tree</th><th>Model</th>${Object.keys(R).map((k) => `<th>${esc(REGIME_WORD[k] ?? k)}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table>
+      <p class="note">Model: the median and 10 to 90 percent of runs; the last columns, the median in each course alone. The model is one source in each threshold's pool, standing in for base rates, which know nothing of scale; the tree's date stays a judgment. In Your own dates, moving robots building robots or a lunar base moves these thresholds as the model says, and you can pick one course under After robots build robots. ${g.sources.map((x) => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>`).join("; ")}.</p>`
+  }
+
   const paceChart = (p: Models["forecasting"]["pace"]) => {
     const W = 330, H = 190, L = 34, B = 20, T = 8, R = 96
     const y1 = Math.ceil(Math.log10(Math.max(...Object.values(p.kinds).flatMap((v) => v.map((x) => x[1]))) * 1.05))
@@ -787,6 +834,7 @@ async function main() {
       remember()
       saveSoon()
       if (view.selection && showing.startsWith("node:")) void view.onSelect(view.selection)
+      else if (showing === "compare") showCompare()
     }
   }
   const setEditing = (on: boolean) => {
@@ -815,6 +863,63 @@ async function main() {
     setTimeout(() => ($("#sb-copy").textContent = "Copy link"), 1500)
   })
 
+  // Your tree against the forecasts: where each best guess sits in the
+  // pooled forecasts' middle half, the overall lean, and what each of your
+  // edits drags with it. Only where the pool has more than base rates.
+  const yrsAhead = (y: number) => Math.log(1 + Math.max(0, y - now))
+  const sideOf = (at: number, p: number[]) => {
+    const tol = Math.max(0.5, 0.1 * (at - now))
+    return at < p[1] - tol ? "sooner" : at > p[3] + tol ? "later" : "inside"
+  }
+  const poolNote = (n: Node) => {
+    const p = sandbox.poolOf(n.id)
+    if (!p) return ""
+    const side = sideOf(n.at, p)
+    return ` Forecasts pooled: middle half ${yr(p[1])} to ${yr(p[3])}, median ${yr(p[2])}; yours is ${side === "inside" ? "inside it" : side === "sooner" ? "sooner" : "later"}.`
+  }
+  const lean = (pairs: { at: number; p: number[] }[]) => {
+    const r = pairs.map(({ at, p }) => yrsAhead(at) - yrsAhead(p[2])).sort((a, b) => a - b)
+    return r.length ? r[Math.floor(r.length / 2)] : 0
+  }
+  const leanText = (v: number) => {
+    const f = Math.exp(Math.abs(v))
+    return f < 1.05 ? "about the same time from now as the forecasts" : `${f.toFixed(1)} times ${v < 0 ? "sooner" : "later"} in time from now than the forecasts, at the median`
+  }
+  const compareHTML = () => {
+    const rows = tree.nodes.flatMap((n) => {
+      const p = sandbox.poolOf(n.id)
+      return p ? [{ n, p, side: sideOf(n.at, p), r: yrsAhead(n.at) - yrsAhead(p[2]) }] : []
+    })
+    const theirs = rows.map(({ n, p }) => ({ at: sandbox.originalOf(n.id)![1], p }))
+    const count = (side: string) => rows.filter((x) => x.side === side).length
+    const list = (side: string) => {
+      const xs = rows.filter((x) => x.side === side).sort((a, b) => Math.abs(b.r) - Math.abs(a.r)).slice(0, 12)
+      return xs.length ? `<table class="t est compare"><tr><th>${side === "sooner" ? "Sooner" : "Later"} than the forecasts</th><th>Yours</th><th>Pooled middle half</th></tr>${xs.map(({ n, p }) =>
+        `<tr><td>${link(n.id)}${sandbox.edits.has(n.id) ? ' <span class="tag">moved by you</span>' : ""}</td><td>${yr(n.at)}</td><td>${yr(p[1])} to ${yr(p[3])}</td></tr>`).join("")}</table>` : ""
+    }
+    const effects = [...sandbox.edits.keys()].map((id) => {
+      const e = sandbox.effectsOf(id)
+      return `<li>${link(id)}: ${e.length ? e.slice(0, 6).map((x) => `${link(x.id)} ${x.by < 0 ? "−" : "+"}${Math.abs(x.by) < 9.5 ? Math.abs(x.by).toFixed(1) : Math.round(Math.abs(x.by))}`).join(", ") + (e.length > 6 ? `, and ${e.length - 6} more` : "") : "moves nothing else by more than half a year"}</li>`
+    }).join("")
+    return `<p class="kind">Your own dates</p><h2>Against the forecasts</h2>
+      <p>Of ${rows.length} future technologies with outside forecasts, your best guess is inside the pooled forecasts' middle half for ${count("inside")}, sooner for ${count("sooner")} and later for ${count("later")}. Overall your dates are ${leanText(lean(rows.map(({ n, p }) => ({ at: n.at, p }))))}; the tree's own are ${leanText(lean(theirs))}.</p>
+      <p class="note">Time from now is compared on a log scale, so 2 years against 4 counts as much as 20 against 40. ${sandbox.base === "pool" ? "You started from the pooled forecasts, so whatever your edits don’t reach sits at its pooled median." : "Pick “the forecasts” under Start from to begin at the pool instead of the tree's dates."}</p>
+      ${sandbox.edits.size ? `<h3>What your edits move</h3><p class="note">Each on its own, in years (− sooner).</p><ul class="effects">${effects}</ul>` : ""}
+      ${list("sooner")}${list("later")}`
+  }
+  const showCompare = () => show(compareHTML(), "compare")
+  $("#sb-compare").addEventListener("click", () => { view.select(null); showCompare() })
+  const regimeSel = $<HTMLSelectElement>("#sb-regime")
+  regimeSel.addEventListener("change", () => {
+    sandbox.setRegime(regimeSel.value)
+    editTo(null, null, true)
+  })
+  const baseSel = $<HTMLSelectElement>("#sb-base")
+  baseSel.addEventListener("change", () => {
+    sandbox.setBase(baseSel.value === "pool" ? "pool" : "tree")
+    editTo(null, null, true)
+  })
+
   $("#models").addEventListener("click", async () => {
     view.select(null)
     const d = details ?? (await detailsReady)
@@ -828,7 +933,7 @@ async function main() {
     const pooledOf = (n: Node) => d[n.id]?.pool
     const flagged = tree.nodes.filter((n) => n.flag && pooledOf(n)).map((n) => {
       const p = pooledOf(n)!
-      const gap = Math.log(1 + Math.max(0, n.at - now)) - Math.log(1 + Math.max(0, Math.min(2300, p.pooled[3] ?? 2300) - now))
+      const gap = Math.log(1 + Math.max(0, n.at - now)) - Math.log(1 + Math.max(0, Math.min(3000, p.pooled[3] ?? 3000) - now))
       return { n, p, gap }
     }).sort((a, b) => Number(a.p.outsideOnly) - Number(b.p.outsideOnly) || Math.abs(b.gap) - Math.abs(a.gap))
     const est = flagged.map(({ n, p }) => `<tr><td>${link(n.id)}${p.outsideOnly ? ' <span class="tag">base rates only</span>' : ""}</td><td>${yr(n.at)}</td><td>${when(p.pooled[3])}<span class="note"><br>${p.pooled[2] == null ? "" : yr(p.pooled[2])} to ${when(p.pooled[4])}</span></td></tr>`).join("")
@@ -868,6 +973,7 @@ async function main() {
       ${paceChart(fcm.pace)}
       <p>Across all ${fcm.draws.toLocaleString("en-US")} runs from the judgment, how many times faster each kind of work goes each year once the AI milestones arrive (medians), and the frontier as a whole (the band, 10 to 90 percent), for the average mix of remaining work: ${Object.entries(fcm.pace.mix).sort((a, b) => b[1] - a[1]).map(([w, v]) => `${esc(SHARE_WORD(w))} ${Math.round(v * 100)}%`).join(", ")}. Software and AI research can go hundreds of times faster, but the whole can't go faster than its slowest parts: with experiments, building, trials and adoption barely sped up, the frontier tops out at about ${fcm.pace.all.at(-1)![1].toFixed(1)} times its pace today. That ceiling, not the speed of thought, is what superintelligence would run into first, which is why the speedups that matter most for everything else are the ones for physical work: self-driving labs, human models in place of animals, robots building robots.</p>
       <p class="note">Only mechanisms that apply everywhere are counted here; those limited to some fields (cheap launch, abundant clean power, shorter aging trials, AI materials) speed those fields further. Each technology's own split of work, and so its own ceiling, is in its panel.</p>
+      ${fcm.growth ? growthHTML(fcm.growth) : ""}
       <h3>Where the judgment and the pool disagree</h3>
       <p>Technologies whose best guess falls outside the pool's middle half, the biggest gaps first; those with outside forecasts come before those where only the base rate disagrees. Each is worth a second look, or a sentence in its forecast saying why it differs.</p>
       <table class="t est"><thead><tr><th></th><th>Tree</th><th>Pool</th></tr></thead><tbody>${est}</tbody></table>
@@ -968,6 +1074,8 @@ async function main() {
       if (kept) sandbox.decode(kept)
     } catch { /* storage blocked */ }
   }
+  baseSel.value = sandbox.base
+  regimeSel.value = sandbox.regime
   slider.value = String(restored.detail ?? DETAIL_DEFAULT)
   setDisplay(restored)
   optControls.forEach(writeOpt)

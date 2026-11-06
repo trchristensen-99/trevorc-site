@@ -1,0 +1,7 @@
+# The FrontierMath milestones move to the new proof track (November 2026).
+- id: frontiermath-50
+  track: proof
+- id: frontiermath-tier4-50
+  track: proof
+- id: frontiermath-tier4-solved
+  track: proof

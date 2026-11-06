@@ -1,0 +1,34 @@
+id: mathlib-size
+name: Size of Lean's mathlib, the main human-reviewed library of formal mathematics
+short: mathlib lines
+unit: lines of Lean
+better: higher
+log: true
+field: math
+points:                           # [year, lines]; first of January unless noted
+  - [2018, 47700]       # mathlib (Lean 3), 2018-01-02
+  - [2019, 115633]
+  - [2020, 213820]
+  - [2021, 455152]
+  - [2022, 745076]
+  - [2023, 1056518]     # last January of Lean 3 mathlib
+  - [2023.5, 1265702]   # mathlib4 (Lean 4), 2023-07-01, after the port
+  - [2024, 1422310]
+  - [2025, 1678403]
+  - [2026, 2127788]
+  - [2026.5, 2383764]
+  - [2026.84, 2500069]  # 2026-11-05
+source:
+  title: Lean community, Mathlib statistics (gitstats.js and gitstats4.js data behind the charts)
+  url: https://leanprover-community.github.io/mathlib_stats.html
+license: Apache-2.0 (mathlib); statistics page by the Lean community
+note: >-
+  Lines of code from the data files behind the mathlib statistics page,
+  generated 2026-11-06; Lean 3 mathlib until early 2023, then mathlib4
+  after the port, so the step in 2023 is partly a change of language. On
+  2026-11-06 the page listed 140,178 definitions and 293,404 theorems from
+  772 contributors. Growth has been steady, about 250,000 to
+  450,000 lines a year, not explosive, because every change is reviewed by
+  people; AI-built proofs live outside it and dwarf it (Fermat's Last
+  Theorem alone is about 13 million lines, the classification of finite
+  simple groups about 43 million).

@@ -10,6 +10,7 @@ geometry-analysis: [geometry, trigonometry, analytic-geometry, calculus, fourier
 number-algebra: [tally-marks, numerals, place-value-zero, algebra]
 probability-statistics: [probability-theory, statistics, monte-carlo-method, reverse-mode-autodiff]
 logic: [formal-logic, boolean-logic, mathematical-logic]
+proof: [computer-assisted-proof, machine-checked-mathematics, ai-resolves-open-conjecture, landmark-proofs-autoformalized, formal-proofs-routine, formalized-literature, ai-majority-new-math]
 cryptography: [public-key-cryptography, shor-algorithm, post-quantum-cryptography]
 
 # Computing and AI

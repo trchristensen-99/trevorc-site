@@ -46,7 +46,7 @@ const ERAS: [number, string][] = [
 ]
 // Axis ticks: years ago in the deep past, calendar years after.
 const DEEP_TICKS: [number, string][] = [[3e6, "3M years ago"], [1e6, "1M"], [3e5, "300k"], [1e5, "100k"], [3e4, "30k"], [1.2e4, "12k"]]
-const TICKS = [-3000, -1000, 1, 1000, 1500, 1700, 1800, 1850, 1900, 1925, 1950, 1975, 2000, 2010, 2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200]
+const TICKS = [-3000, -1000, 1, 1000, 1500, 1700, 1800, 1850, 1900, 1925, 1950, 1975, 2000, 2010, 2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2300, 2500, 3000]
 const RADIUS = { 1: 7.5, 2: 5.5, 3: 4.2 } as const
 // Alternative routes to a selected node, in order.
 export const ROUTE_COLORS = ["#7b5ea7", "#d0587e", "#2f8fb0", "#8aa33a", "#c9772a"]

@@ -1,0 +1,137 @@
+# The far future as growth in energy use (src/growth.ts, run in
+# forecast.mjs). See SCHEMA.md, "The growth model". Each range is a 10th,
+# 50th and 90th percentile; the model draws every parameter afresh in each
+# of the runs from the judgment, so what happens after robots build robots
+# starts from that run's date for it. Status as of 2026-11-06.
+#
+# The ranges are my judgment from the sources given. The main knob is the
+# regime weights: with Metaculus-like weights the explosion comes sooner,
+# with economists' it mostly never comes.
+
+energy:
+  metric: world-primary-energy   # its latest point is where paths start
+  watts: 1.0e12                  # its unit, TW, in watts
+
+# Until robots build robots: energy use grows as it has. 1.07 percent a year
+# from 1800 to 1950, 2.93 from 1950 to 2000, 1.64 from 2000 to 2025;
+# population is expected to level off this century (UN WPP 2024).
+steady:
+  growth: { q10: 0.010, q50: 0.016, q90: 0.022 }
+
+# What robots building robots starts, if anything. Weights are given that it
+# happens (its date comes from the tree). Davidson (2021) put over 10
+# percent on explosive growth this century and Erdil and Besiroglu (2023)
+# about even odds by 2100; Metaculus forecasters (median first 30 percent
+# year 2059) are more bullish and surveyed economists (the Forecasting
+# Research Institute, 2026: 2.5 percent US growth to 2050, 3.5 with rapid
+# AI) far less. These weights give roughly 40 percent for explosive growth
+# by 2100.
+explosion:
+  from: robots-build-robots
+  # Years from robots building robots to growth at the regime's pace: a
+  # ramp as the share of automated work rises (Epoch: explosive growth needs
+  # 50 to 70 percent of tasks automated; Korinek and Suh: 5 to 20 years).
+  delay: { q10: 2, q50: 5, q90: 15 }
+  regimes:
+    slow:
+      weight: 0.45
+      # AI arrives but bottlenecks (what stays hard to automate, regulation,
+      # permits, satiation) keep growth modest: Cowen half a point more,
+      # Goldman Sachs 1.5 points, Jones (2024) 10 percent a year as a strong
+      # case. Energy grows slower than output as efficiency improves.
+      growth: { q10: 0.010, q50: 0.020, q90: 0.040 }
+    gradual:
+      weight: 0.40
+      # Davidson and Hadshar (2025): the first doublings with robots
+      # building robots take "a few years, rather than months or decades";
+      # the robot stock's last doubling took 6 years. Power plants and grids
+      # double slower than robots. Doubling time halves every 3 to 10
+      # doublings, down to a floor for energy capture in bulk.
+      first: { q10: 1.0, q50: 2.5, q90: 6.0 }
+      halving: { q10: 3, q50: 5, q90: 10 }
+      floor: { q10: 0.25, q50: 1.0, q90: 3.0 }
+    fast:
+      weight: 0.15
+      # Superintelligence or molecular manufacturing finds shortcuts:
+      # Davidson and Hadshar's 1 to 5 doublings per halving, toward days or
+      # weeks; Hanson's next growth mode doubles in 9 to 16 days; Armstrong
+      # and Sandberg's swarm works out to about half a year per doubling.
+      first: { q10: 0.3, q50: 1.0, q90: 2.0 }
+      halving: { q10: 1, q50: 2, q90: 3 }
+      floor: { q10: 0.02, q50: 0.1, q90: 0.5 }
+
+# Earth's surface: direct waste heat warms about 1 C at 630 TW and 3 C at
+# 1,900 TW (AR6 sensitivity; Chaisson 2008 puts 3 C near 4,800 TW without
+# feedbacks); land, politics and greenhouse gases may bind sooner.
+earth:
+  cap: { q10: 1.0e14, q50: 4.0e14, q90: 2.0e15 }
+
+# Industry in space that copies itself from local material (NASA's 1980
+# lunar factory: a 100 tonne seed copying itself in a year; Metzger et al.
+# 2013: lunar industry bootstrapped in about 20 years). It starts some years
+# after both robots building robots and a lunar base, sooner if growth is
+# exploding, and from then grows on its own up to the Sun's whole output.
+space:
+  from: [robots-build-robots, lunar-base]
+  seed: 1.0e8                      # watts when it starts copying itself
+  delay:
+    slow: { q10: 10, q50: 40, q90: 150 }
+    gradual: { q10: 3, q50: 12, q90: 40 }
+    fast: { q10: 1, q50: 4, q90: 12 }
+  # Its first doubling time in the slow regime; when growth is exploding it
+  # starts as fast as Earth's industry is then doubling.
+  doubling: { q10: 3, q50: 8, q90: 25 }
+
+sun: 3.828e26                      # watts (IAU 2015 nominal)
+
+# Thresholds dated by the model, as one source in each pool (in place of
+# base rates, which know nothing of scale). `plus` adds years drawn from a
+# range after the threshold; `after` starts from another technology's date
+# in the same run instead.
+nodes:
+  explosive-growth: { growth: 0.3 }   # power use growing 30 percent in a year, standing in for output
+  energy-use-10x: { watts: 2.0e14 }
+  self-replicating-space-factory: { space: 1.0e8 }
+  kardashev-type-1: { watts: 1.0e16 }
+  sun-one-percent: { space: 3.828e24 }
+  dyson-swarm: { space: 1.914e26 }
+  # Launch at a speed to arrive within 100 years (its criterion), then the
+  # flight to Alpha Centauri (4.37 light years) and the signal home: 26
+  # years at a fifth of light speed (Starshot), 104 at the slowest allowed.
+  probe-reaches-star: { after: interstellar-probe, plus: { q10: 25, q50: 45, q90: 100 } }
+  # A probe that copies itself is far harder than a factory on the Moon
+  # (Freitas's 1980 design: 500 tonnes, 500 years to replicate; Armstrong
+  # and Sandberg: easy once a swarm exists). Some generations of space
+  # industry first.
+  self-replicating-probe: { space: 1.0e8, plus: { q10: 10, q50: 40, q90: 200 } }
+
+# The fan of paths shown under What it takes.
+path:
+  years: [2025, 2030, 2040, 2050, 2060, 2075, 2100, 2125, 2150, 2200, 2300, 2500, 3000]
+  end: 5000
+
+sources:
+  - title: Davidson, Could advanced AI drive explosive economic growth? (Open Philanthropy 2021, archived)
+    url: https://web.archive.org/web/2024/https://www.openphilanthropy.org/research/could-advanced-ai-drive-explosive-economic-growth/
+  - title: Erdil and Besiroglu, Explosive growth from AI automation, a review of the arguments (arXiv 2309.11690)
+    url: https://arxiv.org/pdf/2309.11690
+  - title: Davidson and Hadshar, The industrial explosion (Forethought 2025)
+    url: https://www.forethought.org/research/the-industrial-explosion
+  - title: Forecasting Research Institute, Forecasting the economic effects of AI (2026)
+    url: https://forecastingresearch.org/research/economic-effects-of-ai
+  - title: Hanson, Long-term growth as a sequence of exponential modes (2000)
+    url: http://mason.gmu.edu/~rhanson/longgrow.pdf
+  - title: Korinek and Suh, Scenarios for the transition to AGI (NBER w32255)
+    url: https://www.nber.org/system/files/working_papers/w32255/w32255.pdf
+  - title: Epoch AI, AI and explosive growth redux
+    url: https://epoch.ai/gradient-updates/ai-and-explosive-growth-redux
+  - title: Chaisson, Long-term global heating from energy usage (Eos 2008)
+    url: https://dash.harvard.edu/server/api/core/bitstreams/7312037d-7b16-6bd4-e053-0100007fdf3b/content
+  - title: Freitas and Merkle, Kinematic Self-Replicating Machines, 3.13.2.2 (NASA 1980 study)
+    url: https://www.molecularassembler.com/KSRM/3.13.2.2.htm
+  - title: Metzger et al., Affordable, rapid bootstrapping of space industry (2013)
+    url: https://arxiv.org/pdf/1612.03238
+  - title: Armstrong and Sandberg, Eternity in six hours (preprint, 2013)
+    url: http://web.archive.org/web/2020/http://www.fhi.ox.ac.uk/wp-content/uploads/intergalactic-spreading.pdf
+  - title: Acemoglu, The simple macroeconomics of AI (NBER w32487)
+    url: https://www.nber.org/papers/w32487

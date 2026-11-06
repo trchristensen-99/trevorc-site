@@ -1,0 +1,419 @@
+# Part R: the far future, beyond superintelligence. Every node is a
+# measurable physical threshold. Those marked "growth model" are also dated
+# by the model of energy use in growth.yaml, as one source in their pool.
+# Status as of 2026-11-06.
+
+- id: ai-compute-exceeds-brains
+  name: More AI computing than all human brains
+  kind: milestone
+  fields: [computing, society]
+  track: computers
+  tier: 2
+  threshold: { metric: ai-compute-stock, value: 8.3e24, label: "8.3e24 FLOP/s" }
+  date: { window: [2030, 2042], likely: 2032 }
+  status: ongoing
+  summary: >-
+    The world's AI chips together do more arithmetic each second than all
+    the people alive, at the common estimate of about a thousand trillion
+    operations a second per brain. In mid 2026 they had about a 265th of
+    that; the stock was growing about two and a half times a year.
+  criterion: >-
+    The installed stock of AI accelerators, in dense 16-bit FLOP/s as
+    estimated by Epoch AI or an equivalent source, exceeds the world
+    population times 1e15 FLOP/s (about 8.3e24 FLOP/s).
+  requires: [ai-datacenters, gpu-computing]
+  helped_by: [frontier-models, advanced-packaging]
+  forecast:
+    note: >-
+      Epoch's chip sales data put the stock at about 3.1e22 FLOP/s in mid
+      2026, up 2.6 times in a year. At that pace the threshold falls in
+      2032; at a slower 2 times a year in 2034, at 1.4 times in 2043.
+      The bar itself is uncertain: Carlsmith (2020) thought 1e15 FLOP/s
+      "more likely than not" enough to match a brain, with a mechanistic
+      range of 1e13 to 1e17, so the date moves by about three years for
+      each factor of ten. Power is the likely brake: at today's best chips
+      the threshold draws about 4 TW, a fifth of world energy use, so it
+      needs either much more efficient chips or a large build-out of power.
+      The trend alone gives 2031 or 2032. Judgment: 2032 or 2033.
+    sources:
+      - title: Epoch AI, AI chip sales
+        url: https://epoch.ai/data/ai-chip-sales
+      - title: Carlsmith, How much computational power does it take to match the human brain? (archived)
+        url: http://web.archive.org/web/20251105140409/https://www.openphilanthropy.org/research/how-much-computational-power-does-it-take-to-match-the-human-brain/
+  sources:
+    - title: Epoch AI, AI chip sales
+      url: https://epoch.ai/data/ai-chip-sales
+
+- id: explosive-growth
+  name: Explosive economic growth
+  kind: milestone
+  fields: [society, computing]
+  track: economy
+  tier: 1
+  date: { window: [2036, 2250], likely: 2070 }     # growth model
+  status: speculative
+  summary: >-
+    The world economy growing more than 30 percent in a year, ten times
+    the pace of the last fifty years, so that it doubles every two to three
+    years. Economists who model AI that can do all work, including
+    building robots and doing research, find it possible; others expect
+    bottlenecks in whatever stays hard to automate.
+  criterion: >-
+    Gross world product, in constant prices as reported by the World Bank
+    or IMF, grows by more than 30 percent in a calendar year, not as a
+    rebound from a collapse.
+  requires: [agi]
+  helped_by: [robots-build-robots, artificial-superintelligence, autonomous-labs]
+  forecast:
+    note: >-
+      Forecasters are far more bullish than economists. Metaculus put the
+      first year of over 30 percent growth at a median of December 2058
+      (middle half 2038 to 2129) in June 2026, and gave even odds that it
+      comes within 15 years of human-level AI; Manifold's thin markets
+      had 42 percent before 2043. Roodman's fit to all of history gave
+      2043. Davidson (2021) put over 10 percent on it this century, Erdil
+      and Besiroglu (2023) about even odds by 2100, and Davidson and
+      Hadshar (2025) argue robots building robots could double physical
+      output every year or two and then faster. Against that, economists
+      surveyed by the Forecasting Research Institute in 2026 expected US
+      growth of 2.5 percent a year to 2050, and only 3.5 percent even if
+      AI advances rapidly; Acemoglu estimates at most about 1 percent
+      more GDP over ten years, Cowen half a point a year, and Aghion,
+      Jones and Jones expect whatever stays hard to automate to cap
+      growth. This tree's growth model, with power use standing in for
+      output, gives about even odds by 2120 and about 40 percent that it
+      never comes (What it takes). Judgment: around 2070, later than
+      Metaculus and sooner than the model, with a long tail.
+    sources:
+      - title: Davidson, Could advanced AI drive explosive economic growth? (Open Philanthropy 2021, archived)
+        url: https://web.archive.org/web/2024/https://www.openphilanthropy.org/research/could-advanced-ai-drive-explosive-economic-growth/
+      - title: Erdil and Besiroglu, Explosive growth from AI automation, a review of the arguments (arXiv 2309.11690)
+        url: https://arxiv.org/pdf/2309.11690
+      - title: Davidson and Hadshar, The industrial explosion (Forethought 2025)
+        url: https://www.forethought.org/research/the-industrial-explosion
+      - title: Acemoglu, The simple macroeconomics of AI (NBER w32487)
+        url: https://www.nber.org/papers/w32487
+      - title: Cowen, Why I think AI take-off is relatively slow (Feb 2025)
+        url: https://marginalrevolution.com/marginalrevolution/2025/02/why-i-think-ai-take-off-is-relatively-slow.html
+      - title: Metaculus, Date of GWP growth over 130 percent (archived June 2026)
+        url: http://web.archive.org/web/20260604010253/https://www.metaculus.com/questions/5159/date-of-gwp-growth-over-130/
+      - title: Metaculus, GDP growth to exceed 30 percent within 15 years of human-level AI (archived June 2026)
+        url: http://web.archive.org/web/20260604010253/https://www.metaculus.com/questions/3477/gdp-growth-to-exceed-30-15-years-post-hlai/
+      - title: Forecasting Research Institute, Forecasting the economic effects of AI (2026)
+        url: https://forecastingresearch.org/research/economic-effects-of-ai
+  sources:
+    - title: Trammell and Korinek, Economic growth under transformative AI (NBER w31815)
+      url: https://www.nber.org/system/files/working_papers/w31815/w31815.pdf
+
+- id: energy-use-10x
+  name: Ten times today's energy use
+  kind: milestone
+  fields: [energy, society]
+  track: grid
+  tier: 2
+  threshold: { metric: world-primary-energy, value: 200, label: "200 TW" }
+  date: { window: [2045, 2185], likely: 2095 }     # growth model
+  status: speculative
+  summary: >-
+    Humanity using about 200 terawatts, ten times its 2025 rate. At the
+    1.6 percent a year of the last quarter century that takes until about
+    2170; an industrial explosion run by AI and robots could do it within
+    a decade or two of starting. On Earth's surface, the waste heat alone
+    would then add a few tenths of a degree of warming.
+  criterion: >-
+    World primary energy use, by the Statistical Review's physical energy
+    content method plus traditional biomass, averages at least 200 TW
+    (about 6,300 EJ) over a year, counting energy used by human industry
+    in space.
+  requires: [solar-1-terawatt]
+  helped_by: [robots-build-robots, fusion-power, space-based-solar, explosive-growth]
+  forecast:
+    note: >-
+      World energy use grew 1.07 percent a year from 1800 to 1950, 2.93
+      percent from 1950 to 2000 and 1.64 percent from 2000 to 2025, when
+      it was 20.3 TW. Carried forward at 1.6 percent, tenfold takes about
+      145 years (2170); at the 2.3 percent Murphy used, 100 years. Davidson
+      and Hadshar's industrial explosion would have robot numbers doubling
+      every year or two at first and faster after, but power plants,
+      grids and permits are slower to double than robots. Direct waste
+      heat from 200 TW is about 0.3 C (AR6 sensitivity), not yet a limit.
+      Metaculus forecasters put the first year of 30 percent growth in
+      energy use at a median of 2079 (middle half 2039 to after 2201).
+      The growth model gives a median of about 2090, with explosive paths
+      in the 2050s to 2080s and slow ones after 2150. Judgment: about
+      2095.
+    sources:
+      - title: Our World in Data, Global primary energy use by source
+        url: https://ourworldindata.org/grapher/global-primary-energy
+      - title: Murphy, Galactic-scale energy (Do the Math, 2011)
+        url: https://dothemath.ucsd.edu/2011/07/galactic-scale-energy/
+      - title: Davidson and Hadshar, The industrial explosion (Forethought 2025)
+        url: https://www.forethought.org/research/the-industrial-explosion
+      - title: Metaculus, Date of energy consumption growth over 30 percent (archived September 2026)
+        url: http://web.archive.org/web/20260904044557/https://www.metaculus.com/questions/11108/date-of-energy-consumption-growth-over-30/
+  sources:
+    - title: Our World in Data, Global primary energy use by source
+      url: https://ourworldindata.org/grapher/global-primary-energy
+
+- id: self-replicating-space-factory
+  name: Self-replicating factory in space
+  kind: infrastructure
+  fields: [engineering, materials]
+  track: space
+  tier: 2
+  date: { window: [2045, 2150], likely: 2075 }
+  status: speculative
+  summary: >-
+    A factory on the Moon, an asteroid or in orbit that builds a working
+    copy of itself almost entirely from local materials, so that space
+    industry can grow without being lifted from Earth. NASA studied one for
+    the Moon in 1980, with a 100 tonne seed copying itself in a year;
+    nothing like it has been built.
+  criterion: >-
+    A facility off Earth builds a second facility that works as well as
+    itself, with at least 90 percent of the new facility's mass made from
+    material mined in space, and the second one goes on to build a third.
+  requires: [robots-build-robots, lunar-base]
+  helped_by: [asteroid-mining, lunar-water-mining, orbital-manufacturing, artificial-superintelligence, molecular-nanotechnology, launch-100-dollars-kg]
+  forecast:
+    note: >-
+      The 1980 NASA summer study assumed a 100 tonne seed and a one year
+      replication time; Metzger and colleagues (2013) argued a lunar
+      industry could bootstrap from 12 tonnes over about 20 years with
+      2 year generations, but closing the loop on chips, bearings and
+      other precision parts from local rock has never been tried even on
+      Earth. It needs robots that build robots (about 2039 here) and a
+      lunar base (about 2038), and probably AI good enough to run it with
+      little human help. The growth model, which starts it some years
+      after both, gives a median near 2068. Judgment: about 2075, with a
+      long tail if there is no economic reason to build industry in space
+      until Earth's limits bite.
+    sources:
+      - title: Freitas and Merkle, Kinematic Self-Replicating Machines, 3.13.2.2 (NASA 1980 study)
+        url: https://www.molecularassembler.com/KSRM/3.13.2.2.htm
+      - title: Metzger et al., Affordable, rapid bootstrapping of space industry (2013)
+        url: https://arxiv.org/pdf/1612.03238
+  sources:
+    - title: Freitas and Merkle, Kinematic Self-Replicating Machines, 3.13
+      url: https://www.molecularassembler.com/KSRM/3.13.htm
+
+- id: kardashev-type-1
+  name: Kardashev Type I
+  kind: milestone
+  fields: [energy, engineering]
+  track: renewables
+  tier: 2
+  threshold: { metric: world-primary-energy, value: 10000, label: "1e16 W" }
+  date: { window: [2065, 2450], likely: 2150 }     # growth model
+  status: speculative
+  summary: >-
+    A civilization using 10 million billion watts (1e16 W), Carl Sagan's
+    version of Kardashev's planetary level: about 490 times humanity's use
+    in 2025 and 6 percent of all the sunlight striking Earth. That much
+    waste heat on the ground would warm Earth by many degrees, so most of
+    it would have to be used in space.
+  criterion: >-
+    Human (and machine) civilization uses energy at an average rate of at
+    least 1e16 W over a year, counting all energy used on Earth and in
+    space by industry humans or their machines control.
+  requires: [energy-use-10x]
+  helped_by: [self-replicating-space-factory, space-based-solar, fusion-power, explosive-growth]
+  forecast:
+    note: >-
+      Kardashev's 1964 Type I was 4e12 W, which humanity has passed; the
+      usual modern bar is Sagan's 1e16 W, where humanity stood at K = 0.73
+      in 2025. Jiang and colleagues (2022) put it at 2371 on current energy
+      trends; Sagan said about 2100, Kaku 100 to 200 years at 3 percent
+      growth, Dyson about 200 years. At 1.6 percent a year it takes until
+      about 2415. Earth caps the road: direct waste heat warms about 1 C at
+      630 TW and 3 C at about 1,900 TW (AR6 sensitivity), so beyond a few
+      hundred terawatts growth must move to space. With an industrial
+      explosion that reaches space industry, Type I could come in the 2070s
+      to 2100s; without one, the 2300s or later. Metaculus has no question
+      on it; a thin Manifold market gave 34 percent by 2060. The growth
+      model has two humps, explosive paths before 2100 and slow ones from
+      the 2300s, with a median near 2155. Judgment: about 2150.
+    sources:
+      - title: Wikipedia, Kardashev scale
+        url: https://en.wikipedia.org/wiki/Kardashev_scale
+      - title: Jiang et al., Avoiding the Great Filter (arXiv 2204.07070)
+        url: https://arxiv.org/abs/2204.07070
+      - title: Chaisson, Long-term global heating from energy usage (Eos 2008)
+        url: https://dash.harvard.edu/server/api/core/bitstreams/7312037d-7b16-6bd4-e053-0100007fdf3b/content
+      - title: Wikipedia, Climate sensitivity
+        url: https://en.wikipedia.org/wiki/Climate_sensitivity
+      - title: Manifold, By 2060 will humanity achieve (or be approaching) a Type I civilization?
+        url: https://manifold.markets/Latte_Horse/by-2060-will-humanity-achieve-type
+  sources:
+    - title: Wikipedia, Kardashev scale
+      url: https://en.wikipedia.org/wiki/Kardashev_scale
+
+- id: sun-one-percent
+  name: One percent of the Sun's output captured
+  kind: milestone
+  fields: [engineering, energy]
+  track: space
+  tier: 2
+  threshold: { metric: world-primary-energy, value: 3.828e12, label: "1% of the Sun" }
+  date: { window: [2080, 3000], likely: 2230 }     # growth model
+  status: speculative
+  summary: >-
+    Collectors in orbit around the Sun catching and using one percent of
+    its light, 3.8e24 watts: 22 times all the sunlight that strikes Earth.
+    This is the first large step of a Dyson swarm, built from asteroids or
+    a dismantled planet.
+  criterion: >-
+    Solar collectors in space controlled by humans or their machines
+    capture and use an average of at least 3.8e24 W (1 percent of the
+    Sun's luminosity of 3.828e26 W) over a year.
+  requires: [kardashev-type-1, self-replicating-space-factory]
+  helped_by: [molecular-nanotechnology, artificial-superintelligence, asteroid-mining]
+  forecast:
+    note: >-
+      This is 380 times the Type I bar. Armstrong and Sandberg (2013)
+      worked through turning Mercury into a swarm at its orbit: from a
+      1 km2 seed, with 5 years to make each batch of collectors and a third
+      of the energy delivered, the planet is used up in about 31 years,
+      most of it in the last four, a power doubling about every half year.
+      Bolton (2026) argues heat at Mercury's surface could stretch that by
+      decades to millennia. Without an explosion, even 2.3 percent growth
+      takes about 1,350 years from 2011 to reach the whole Sun (Murphy).
+      So the date depends almost entirely on whether self-replicating
+      industry in space happens. A Manifold market on exactly this bar
+      (82 traders) gave 19 percent by 2100, and a thin sister market 66
+      percent by 2200. The growth model gives a median near 2230, with
+      fast paths in the 2060s to 2100s and a quarter of paths after 3000.
+      Judgment: about 2230.
+    sources:
+      - title: Armstrong and Sandberg, Eternity in six hours (preprint, 2013)
+        url: http://web.archive.org/web/2020/http://www.fhi.ox.ac.uk/wp-content/uploads/intergalactic-spreading.pdf
+      - title: Bolton, Disassembling Mercury at high temperature (May 2026)
+        url: https://thequantummilkman.substack.com/p/disassembling-mercury-at-high-temperature
+      - title: Manifold, Will there be a Dyson Sphere around the Sun before 2100?
+        url: https://manifold.markets/RemNi/will-there-be-a-dyson-sphere-around-51d476bf5275
+      - title: Murphy, Galactic-scale energy (2011)
+        url: https://dothemath.ucsd.edu/2011/07/galactic-scale-energy/
+  sources:
+    - title: Wikipedia, Solar luminosity
+      url: https://en.wikipedia.org/wiki/Solar_luminosity
+
+- id: dyson-swarm
+  name: Dyson swarm
+  kind: milestone
+  fields: [engineering, energy]
+  track: space
+  tier: 1
+  threshold: { metric: world-primary-energy, value: 1.914e14, label: "half the Sun" }
+  date: { window: [2085, 3200], likely: 2270 }     # growth model
+  status: speculative
+  summary: >-
+    A swarm of collectors around the Sun catching most of its light, as
+    Freeman Dyson suggested in 1960: Kardashev's Type II. Spread at
+    Mercury's distance, half of Mercury's mass would make a layer about
+    half a millimeter of iron thick over the whole sphere.
+  criterion: >-
+    Collectors around the Sun controlled by humans or their machines
+    intercept more than half of its light (about 1.9e26 W) and use it.
+  requires: [sun-one-percent]
+  helped_by: [molecular-nanotechnology, artificial-superintelligence]
+  forecast:
+    note: >-
+      Once a swarm captures 1 percent of the Sun it is only about six
+      doublings from capturing most of it, so in fast paths this follows
+      within years to decades (Armstrong and Sandberg's whole build is about
+      31 years); with slow growth, centuries. Kardashev (1971) put the
+      Sun's whole output about 800 years away at 4 percent growth. It may
+      also never be wanted: collecting most of the Sun's light dims what
+      reaches Earth unless the swarm is arranged to leave it clear.
+      The growth model gives a median near 2240, and about a quarter of
+      its paths don't get there by 3000. Judgment: about 2270.
+    sources:
+      - title: Armstrong and Sandberg, Eternity in six hours (preprint, 2013)
+        url: http://web.archive.org/web/2020/http://www.fhi.ox.ac.uk/wp-content/uploads/intergalactic-spreading.pdf
+      - title: Wikipedia, Kardashev scale
+        url: https://en.wikipedia.org/wiki/Kardashev_scale
+  sources:
+    - title: Wikipedia, Dyson sphere
+      url: https://en.wikipedia.org/wiki/Dyson_sphere
+
+- id: probe-reaches-star
+  name: A probe reaches another star
+  kind: milestone
+  fields: [engineering, physics]
+  track: space
+  tier: 2
+  date: { window: [2065, 2300], likely: 2110 }
+  status: speculative
+  summary: >-
+    A spacecraft from Earth arrives at another star system and sends back
+    what it finds. Alpha Centauri is 4.37 light years away; Breakthrough
+    Starshot's laser-pushed sails at a fifth of light speed would take 20
+    to 30 years, plus four for the signal home.
+  criterion: >-
+    A spacecraft launched from the solar system passes within 1,000
+    astronomical units of a star other than the Sun and returns data from
+    there that is received on Earth.
+  requires: [interstellar-probe]
+  helped_by: [space-based-solar, self-replicating-space-factory, fusion-power]
+  forecast:
+    note: >-
+      The launch node (interstellar-probe) is about 2075 here. Starshot's
+      plan was a flight of 20 to 30 years at 15 to 20 percent of light
+      speed, launched once hoped for about 2036, but it needs up to 100 GW
+      of lasers and $5 to 10 billion, and was on hold indefinitely by
+      2025. A slower probe meeting that node's 100 year bar would arrive
+      next century. Manifold traders gave even odds that a spacecraft
+      reaches another star system by 2100. Judgment: launch about 2075
+      plus 25 to 60 years, about 2110. Abundant energy in space would make
+      fast probes cheap.
+    sources:
+      - title: Wikipedia, Breakthrough Starshot
+        url: https://en.wikipedia.org/wiki/Breakthrough_Starshot
+      - title: Breakthrough Initiatives, Starshot
+        url: https://breakthroughinitiatives.org/initiative/3
+      - title: Manifold, Will any human spacecraft reach another star system by the end of the 21st century?
+        url: https://manifold.markets/IsaacKing/will-any-human-spacecraft-reach-ano
+  sources:
+    - title: Wikipedia, Breakthrough Starshot
+      url: https://en.wikipedia.org/wiki/Breakthrough_Starshot
+
+- id: self-replicating-probe
+  name: Self-replicating probe launched
+  kind: device
+  fields: [engineering, computing]
+  track: space
+  tier: 2
+  date: { window: [2070, 2600], likely: 2170 }
+  status: speculative
+  summary: >-
+    A von Neumann probe: a spacecraft sent to another star that can mine
+    and build copies of itself there and send them on, so that one launch
+    can in time reach the whole galaxy. Estimates of the replicator's size
+    range from a 500 tonne fusion machine (Freitas, 1980) to a few grams
+    of nanomachinery.
+  criterion: >-
+    A probe is launched toward another star system at a speed that would
+    get it there within 500 years, carrying the means to build at least
+    one working copy of itself from material at its destination, a
+    capability shown first by the same design replicating in the solar
+    system.
+  requires: [self-replicating-space-factory, interstellar-probe]
+  helped_by: [molecular-nanotechnology, artificial-superintelligence, sun-one-percent]
+  forecast:
+    note: >-
+      Armstrong and Sandberg (2013) argue that once a civilization has a
+      Dyson swarm, launching such probes to every reachable galaxy takes
+      only hours of the Sun's output; their probes range from 35 tonne
+      fission craft at half light speed to 5 kg antimatter craft at 99
+      percent, and Freitas's conservative 1980 design weighed 500 tonnes
+      and took 500 years to replicate. Making a self-copying factory small
+      and robust enough to cross interstellar space is far beyond making
+      one on the Moon. Judgment: about 2170, a few generations after
+      self-replicating industry in space, with a very long tail and a real
+      chance it is never done for safety or political reasons.
+    sources:
+      - title: Armstrong and Sandberg, Eternity in six hours (preprint, 2013)
+        url: http://web.archive.org/web/2020/http://www.fhi.ox.ac.uk/wp-content/uploads/intergalactic-spreading.pdf
+  sources:
+    - title: Armstrong and Sandberg, Eternity in six hours (preprint, 2013)
+      url: http://web.archive.org/web/2020/http://www.fhi.ox.ac.uk/wp-content/uploads/intergalactic-spreading.pdf

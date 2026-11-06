@@ -1,0 +1,41 @@
+id: ai-compute-stock
+name: World stock of AI chips (16-bit FLOP/s, cumulative since 2022)
+short: AI compute stock
+unit: FLOP/s (16-bit dense)
+better: higher
+log: true
+field: computing
+fit: { from: 2024 }
+points:                           # [year at quarter end, FLOP/s]
+  - [2022.25, 6.62e+19]   # 0.1 million H100e
+  - [2022.50, 1.37e+20]   # 0.1 million H100e
+  - [2022.75, 2.10e+20]   # 0.2 million H100e
+  - [2023.00, 3.00e+20]   # 0.3 million H100e
+  - [2023.25, 4.16e+20]   # 0.4 million H100e
+  - [2023.50, 6.58e+20]   # 0.7 million H100e
+  - [2023.75, 1.05e+21]   # 1.1 million H100e
+  - [2024.00, 1.58e+21]   # 1.6 million H100e
+  - [2024.25, 2.40e+21]   # 2.4 million H100e
+  - [2024.50, 3.42e+21]   # 3.5 million H100e
+  - [2024.75, 4.71e+21]   # 4.8 million H100e
+  - [2025.00, 6.62e+21]   # 6.7 million H100e
+  - [2025.25, 9.16e+21]   # 9.3 million H100e
+  - [2025.50, 1.21e+22]   # 12.2 million H100e
+  - [2025.75, 1.57e+22]   # 15.9 million H100e
+  - [2026.00, 2.01e+22]   # 20.3 million H100e
+  - [2026.25, 2.50e+22]   # 25.3 million H100e
+  - [2026.50, 3.13e+22]   # 31.6 million H100e
+source:
+  title: Epoch AI, AI chip sales (timelines by chip, updated 21 October 2026)
+  url: https://epoch.ai/data/ai-chip-sales
+license: CC BY 4.0 (Epoch AI)
+note: >-
+  Epoch's median estimates of AI accelerators sold each quarter (Nvidia,
+  Google TPU, AMD, Huawei and others) in H100-equivalents, summed from
+  Q1 2022 with no retirements, times the H100's 9.895e14 dense 16-bit
+  FLOP/s (Epoch's chip table). Chips sold before 2022 are left out, so
+  early points are too low and early growth looks too fast; fit from 2024.
+  Q3 2026 was incomplete when read and is omitted. Epoch's 90 percent
+  range for mid 2026 is 25 to 39 million H100e. The stock grew 2.6 times
+  from mid 2025 to mid 2026. Human brains for comparison: 8.3e9 people at
+  Carlsmith's 1e15 FLOP/s is 8.3e24 FLOP/s.
