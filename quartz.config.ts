@@ -86,7 +86,7 @@ const config: QuartzConfig = {
       // the plugin pulls katex.min.css and copy-tex.min.js from jsdelivr
       // on every page (render-blocking, ~50KB). Re-add if math is needed.
     ],
-    filters: [Plugin.RemoveDrafts()],
+    filters: process.env.DRAFTS ? [] : [Plugin.RemoveDrafts()], // DRAFTS=1 to preview drafts locally
     emitters: [
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),
