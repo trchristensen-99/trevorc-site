@@ -114,6 +114,18 @@ nodes:
   # and Sandberg: easy once a swarm exists). Some generations of space
   # industry first.
   self-replicating-probe: { space: 1.0e8, plus: { q10: 10, q50: 40, q90: 200 } }
+  # Beyond the Sun: each waits for space industry of a scale that makes its
+  # energy cheap, then for the engineering (years drawn from the range).
+  # A tonne at 0.1c is days of 20 TW; a crewed ship needs a large space
+  # economy and probes' reports; a 1,000 tonne ship at 0.5c and launches to
+  # other galaxies want a swarm's output; a second swarm follows ours by the
+  # flight (9 to 45 years to Alpha Centauri) and a build from a seed.
+  heavy-fast-probe: { space: 2.0e13, plus: { q10: 5, q50: 25, q90: 100 } }
+  crewed-interstellar-ship: { space: 1.74e17, plus: { q10: 10, q50: 60, q90: 400 } }
+  interstellar-settlement: { space: 1.74e17, plus: { q10: 40, q50: 150, q90: 800 } }
+  near-light-ship: { space: 3.828e24, plus: { q10: 5, q50: 50, q90: 300 } }
+  intergalactic-probe-launch: { space: 3.828e24, plus: { q10: 5, q50: 80, q90: 1000 } }
+  second-dyson-swarm: { space: 1.914e26, plus: { q10: 30, q50: 150, q90: 1000 } }
 
 # The fan of paths shown under What it takes.
 path:

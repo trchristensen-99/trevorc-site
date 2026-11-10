@@ -1,7 +1,7 @@
 ---
 title: Real Life Tech Tree
 date: 2026-10-27
-modified: 2026-11-06
+modified: 2026-11-10
 importance: 5
 status: in progress
 tags:
@@ -134,6 +134,8 @@ Each speeds up particular kinds of work in particular fields, and links to what 
 
 The doubling time itself shortens as the machines improve, down to a floor. Waste heat caps growth on Earth at a few hundred terawatts, so beyond that it moves to space, from the first factory there that copies itself, through stages (more power in space than the world used in 2025, then more than all the sunlight on Earth, then 1 percent of the Sun) up to its whole output. The model puts even odds on a Dyson swarm by about 2155 and 90 percent by about 2330: fast paths reach it this century, and the slowest are worlds that hold growth back for centuries. Neither the optimists nor the skeptics are taken at their word: the fast course allows for routes nobody can see yet, while the ramp-up delays and the held-back course allow for optimism that is wrong over short spans. In Your own dates, moving robots building robots moves these thresholds as the model says, and **After robots build robots** picks one course. Probes to other stars, self-replicating probes and explosive economic growth are on the tree too, with the forecasts that exist for them.
 
+**Beyond the Sun.** Past the Dyson swarm the tree goes on: a tonne-class probe at a tenth of light speed, the first crewed ship to another star, a large ship at half light speed, the first settlement around another star, a swarm around a second star, and the first probe launched to another galaxy. Each waits for space industry big enough to make its energy cheap, then for the engineering, so the growth model dates them too. Further out, the speed of light sets the pace: reaching most of the Milky Way (about 300,000 years from now), Kardashev's Type III (a galaxy's power), and a probe reaching Andromeda (about 3.5 million years). Base rates are left out of these pools, since gaps between past inventions say nothing about crossing a galaxy. Beyond 3000 the time axis is compressed five times as hard, so these fit without squeezing the present. [What Would a Dyson Sphere Actually Look Like?](/writing/what-would-a-dyson-sphere-look-like) is a post about the swarm itself.
+
 **Mathematics.** Proof is where AI moved first, because a proof can be checked by computer in minutes, with no experiment to wait for. A new track follows proof by machine, from the four color theorem (1976) through machine-checked mathematics to 2026, when AI settled famous open problems and formalized Fermat's Last Theorem in days. Ahead: a Millennium Prize problem settled (the Navier-Stokes claim is under review), the Riemann hypothesis, formal proofs routine in top journals, most of the literature formalized, AI producing most new mathematics, and verified software in the mainstream. Lean's mathlib and the Erdős problems are new trend lines, and AI speeds up proof work more than any other kind of work except software.
 
 **Thinner fields.** Physics, chemistry, electronics and institutions had few future technologies. Now they include:
@@ -180,6 +182,7 @@ The forecasts draw on [Metaculus](https://www.metaculus.com/), the [AI Digest](h
 
 ## Changelog
 
+- **10 November 2026:** growth held back after robots build robots now ends in a late explosion instead of never, which brings the Dyson swarm from about 2270 to 2180; stages toward the swarm; nine milestones beyond the Sun, out to Andromeda, with the time axis reaching ten million years; posts on the site link to their technologies, and the technologies back.
 - **6 November 2026:** the far future, dated by a growth model of energy use (ten times today's, Kardashev Type I, 1 percent of the Sun, a Dyson swarm, explosive growth, a self-replicating factory in space, probes to other stars), with world energy use and the stock of AI chips as trend lines; a mathematics track for proof by machine, with mathlib and the Erdős problems; 20 new technologies in physics, chemistry, electronics and institutions; the AI track pruned of saturating benchmarks; Compare and Start from in Your own dates, and a choice of what robots building robots starts; the time axis reaches 3000.
 - **4 November 2026, later:** **Your own dates**, to move any future window and see what follows; the pace of progress; organoids and organ chips in place of animal tests, with computer models choosing what to test in them; a simpler aging and longevity track; resizable trend lines; the life expectancy forecasts follow the tree's date for rejuvenation therapies; abundant clean power from fusion speeds the energy-hungry fields.
 - **4 November 2026:** steps between AI and the rest of the frontier (self-driving labs at scale, virtual cell models, an AI-discovered drug and material, computer models in place of trials, robots building robots), each speeding up particular work and linked to what it helps; 51 long-range windows moved earlier to allow for AI; launch prices no longer extrapolated from a record line that moves in jumps; several dates moved toward the outside forecasts.

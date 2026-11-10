@@ -1358,3 +1358,23 @@ ai-majority-new-math:
 # 2026-09-05; in "Which theorems will be formally proven in Lean by end of
 # 2028" the Navier-Stokes counterexample stood at 98 percent and the Hodge
 # conjecture at 52.8 (read 2026-11-06).
+
+crewed-interstellar-ship:
+  - title: "Manifold: Will we send humans to other stars by 2100?"
+    weight: 0.25            # a thin market; unclear whether launch or arrival counts
+    url: https://manifold.markets/XavierBelleville/will-we-send-humans-to-other-stars
+    kind: market
+    asof: 2026-11
+    median: 2110
+    match: same
+    note: 43 percent by 2101 (24 traders), so a median somewhat after 2100; the market doesn't say whether departing counts or only arriving.
+
+interstellar-settlement:
+  - title: "Manifold: Will living humans (or human descendants) reach another star system within 1000 years?"
+    weight: 0.25            # a thin market
+    url: https://manifold.markets/Leggo/will-living-humansor-human-decentan
+    kind: market
+    asof: 2026-11
+    q75: 3024
+    match: looser
+    note: 74 percent within 1,000 years (20 traders); arriving, not settling, and AI descended from humans counts, so a lower bound.

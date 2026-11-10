@@ -46,6 +46,7 @@ const ERAS: [number, string][] = [
 ]
 // Axis ticks: years ago in the deep past, calendar years after.
 const DEEP_TICKS: [number, string][] = [[3e6, "3M years ago"], [1e6, "1M"], [3e5, "300k"], [1e5, "100k"], [3e4, "30k"], [1.2e4, "12k"]]
+const FAR_TICKS: [number, string][] = [[1e4, "in 10k years"], [1e5, "100k"], [1e6, "1M"], [1e7, "10M"]]
 const TICKS = [-3000, -1000, 1, 1000, 1500, 1700, 1800, 1850, 1900, 1925, 1950, 1975, 2000, 2010, 2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2300, 2500, 3000]
 const RADIUS = { 1: 7.5, 2: 5.5, 3: 4.2 } as const
 // Alternative routes to a selected node, in order.
@@ -555,6 +556,7 @@ export class TreeView {
     const all = [
       ...DEEP_TICKS.map(([ago, label]) => ({ key: label, x: sx(ts.x(tree.meta.now - ago)), label })),
       ...TICKS.map((y) => ({ key: String(y), x: sx(ts.x(y)), label: y < 0 ? `${-y} BC` : y === 1 ? "AD 1" : String(y) })),
+      ...FAR_TICKS.map(([on, label]) => ({ key: `far-${label}`, x: sx(ts.x(tree.meta.now + on)), label })),
     ]
     const ticks = all.filter((d) => {
       if (d.x < 0 || d.x > this.w || d.x - last < d.label.length * 3.2 + 34) return false

@@ -49,6 +49,8 @@ achieved.
 
 ```yaml
   track: longevity                # sub-lane within the main field; see Tracks
+  base_rates: false               # optional: leave base rates out of its pool (the galaxy-scale
+                                  #   nodes, bounded by the speed of light, not by past gaps)
   criterion: >-                   # for ongoing and speculative nodes: what
     A therapy that, in a randomized  # counts as done, concretely enough that
     trial, ...                    # someone could check it.

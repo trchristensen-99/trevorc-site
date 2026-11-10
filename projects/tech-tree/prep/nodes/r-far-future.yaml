@@ -487,3 +487,307 @@
   sources:
     - title: Armstrong and Sandberg, Eternity in six hours (preprint, 2013)
       url: http://web.archive.org/web/2020/http://www.fhi.ox.ac.uk/wp-content/uploads/intergalactic-spreading.pdf
+
+# Beyond the Sun: ships, settlements and the galaxy. Dates past 3000 are
+# bounded below by the speed of light, so base rates (gaps between past
+# inventions) are left out of their pools (base_rates: false).
+
+- id: heavy-fast-probe
+  name: A tonne-class probe at a tenth of light speed
+  kind: device
+  fields: [engineering, physics]
+  track: space
+  tier: 3
+  date: { window: [2075, 2350], likely: 2140 }
+  status: speculative
+  summary: >-
+    A spacecraft of at least a tonne sent toward another star at 10
+    percent of light speed, a million times the mass of Starshot's gram
+    chips: enough to carry instruments, a factory seed or, eventually,
+    shielding for people.
+  criterion: >-
+    A spacecraft with a mass of at least 1,000 kg is accelerated to at
+    least 0.1c on a course to another star system.
+  requires: [interstellar-probe, space-power-terawatts]
+  helped_by: [fusion-power, molecular-nanotechnology, sun-one-percent]
+  forecast:
+    note: >-
+      The energy is no longer the obstacle once there is industry in
+      space: a tonne at 0.1c carries about 4.5e17 J, which with a laser
+      sail at a few percent efficiency is days of output from 20 TW of
+      collectors. The hard parts are the laser optics (focusing across
+      millions of kilometers), sails that survive the push, and stopping
+      or surviving at the far end, where a dust grain hits with the energy
+      of a small explosive. Judgment: some decades after terawatts in
+      space, about 2140.
+    sources:
+      - title: Lubin, A roadmap to interstellar flight (JBIS 2016, arXiv 1604.01356)
+        url: https://arxiv.org/abs/1604.01356
+  sources:
+    - title: Wikipedia, Interstellar travel
+      url: https://en.wikipedia.org/wiki/Interstellar_travel
+
+- id: crewed-interstellar-ship
+  name: First crewed ship to another star
+  kind: device
+  fields: [engineering, society]
+  track: space
+  tier: 1
+  date: { window: [2110, 3200], likely: 2230 }
+  status: speculative
+  summary: >-
+    A ship carrying living people launched to another star system, after
+    probes have scouted it: the first time humans leave the Sun behind.
+    It could be a fast ship crossing in decades or a slow world ship
+    whose crew's descendants arrive.
+  criterion: >-
+    A vessel carrying living humans is launched on a course to another
+    star system, designed to arrive and to keep its crew or their
+    descendants alive on the way.
+  requires: [heavy-fast-probe, probe-reaches-star]
+  helped_by: [self-replicating-space-factory, sun-one-percent, cryonics, artificial-superintelligence]
+  forecast:
+    note: >-
+      Energy stops being the limit after a swarm begins (a thousand tonnes
+      at a fifth of light speed is about 2e21 J, minutes of 1 percent of
+      the Sun); what remains is keeping people alive, shielded and sane for
+      decades, and choosing to go when digital minds or probes could go
+      first. A thin Manifold market gave 43 percent to sending humans to
+      other stars by 2100. Judgment: after probes have reported back and
+      space industry is large, about 2230, with a long tail.
+    sources:
+      - title: Manifold, Will we send humans to other stars by 2100?
+        url: https://manifold.markets/XavierBelleville/will-we-send-humans-to-other-stars
+  sources:
+    - title: Wikipedia, Interstellar travel
+      url: https://en.wikipedia.org/wiki/Interstellar_travel
+
+- id: near-light-ship
+  name: A large ship at half the speed of light
+  kind: device
+  fields: [engineering, physics]
+  track: space
+  tier: 2
+  date: { window: [2150, 4000], likely: 2260 }
+  status: speculative
+  summary: >-
+    A ship of a thousand tonnes or more at half the speed of light, which
+    would reach Alpha Centauri in under ten years. Its kinetic energy is
+    about 1.4e22 J, decades of humanity's use in 2025 but a fraction of a
+    second of 1 percent of the Sun.
+  criterion: >-
+    A spacecraft with a mass of at least 1,000 tonnes travels at 0.5c or
+    faster.
+  requires: [heavy-fast-probe, sun-one-percent]
+  helped_by: [molecular-nanotechnology, artificial-superintelligence]
+  forecast:
+    note: >-
+      Armstrong and Sandberg (2013) consider probes at 0.5 to 0.99c
+      feasible with a swarm's energy. The danger is the medium: at half
+      light speed, a microgram dust grain carries about 1.4e7 J, a few
+      kilograms of TNT, so a ship needs thick forward shielding or a way
+      to clear its path, and a way to brake (a magnetic sail against the
+      interstellar medium, or a laser at the destination). Judgment: a
+      century after the first heavy probes, about 2260.
+    sources:
+      - title: Armstrong and Sandberg, Eternity in six hours (preprint, 2013)
+        url: http://web.archive.org/web/2020/http://www.fhi.ox.ac.uk/wp-content/uploads/intergalactic-spreading.pdf
+  sources:
+    - title: Wikipedia, Relativistic rocket
+      url: https://en.wikipedia.org/wiki/Relativistic_rocket
+
+- id: interstellar-settlement
+  name: First settlement around another star
+  kind: milestone
+  fields: [engineering, society]
+  track: space
+  tier: 1
+  date: { window: [2150, 5000], likely: 2330 }
+  status: speculative
+  summary: >-
+    People living for good in another star system. They might arrive in a
+    ship, or be built there: a self-copying probe could build habitats and
+    then grow, or run, the settlers it carries as data.
+  criterion: >-
+    At least 100 people, biological or emulated, live in another star
+    system for at least a year with no plan to return.
+  requires: [interstellar-probe]
+  routes:
+    - name: By ship
+      requires: [crewed-interstellar-ship]
+      note: People travel there.
+    - name: Built there
+      requires: [self-replicating-probe, whole-brain-emulation]
+      note: A probe builds the settlement and runs its people as emulations.
+  helped_by: [near-light-ship]
+  forecast:
+    note: >-
+      The nearest stars are 4 to 12 light years away, so a settlement comes
+      decades to centuries after a launch, depending on speed. A thin
+      Manifold market gave 74 percent that living humans or their
+      descendants (counting AI descended from humans) reach another star
+      within 1,000 years, a looser bar. Judgment: about 2330.
+    sources:
+      - title: Manifold, Will living humans (or human descendants) reach another star system within 1000 years?
+        url: https://manifold.markets/Leggo/will-living-humansor-human-decentan
+  sources:
+    - title: Wikipedia, Interstellar travel
+      url: https://en.wikipedia.org/wiki/Interstellar_travel
+
+- id: second-dyson-swarm
+  name: A Dyson swarm around another star
+  kind: milestone
+  fields: [engineering, energy]
+  track: space
+  tier: 2
+  date: { window: [2190, 6000], likely: 2400 }
+  status: speculative
+  summary: >-
+    Collectors catching most of the light of a second star, built by
+    self-copying machines sent there. From then on, growth no longer
+    depends on one star.
+  criterion: >-
+    Collectors controlled by humans or their machines intercept more than
+    half of the light of a star other than the Sun with at least a tenth
+    of the Sun's luminosity (Alpha Centauri A or B would qualify, Proxima
+    would not).
+  requires: [self-replicating-probe, dyson-swarm]
+  helped_by: [near-light-ship, interstellar-settlement]
+  forecast:
+    note: >-
+      A probe launched about 2170 at a tenth to half of light speed reaches
+      Alpha Centauri in 9 to 45 years; then the build repeats the Sun's,
+      from a small seed, a few decades if self-copying industry doubles in
+      months. Judgment: about 2400, with a long tail if no one chooses to.
+  sources:
+    - title: Wikipedia, Dyson sphere
+      url: https://en.wikipedia.org/wiki/Dyson_sphere
+
+- id: intergalactic-probe-launch
+  name: First probe launched to another galaxy
+  kind: milestone
+  fields: [engineering, physics]
+  track: space
+  tier: 2
+  date: { window: [2150, 6000], likely: 2300 }
+  status: speculative
+  summary: >-
+    A self-copying probe sent out of the Milky Way. Because the universe's
+    expansion carries distant galaxies out of reach a little more each
+    year, a civilization that wants them has a reason to launch early.
+  criterion: >-
+    A probe able to build copies of itself is launched on a course to a
+    galaxy other than the Milky Way and its satellite galaxies.
+  requires: [self-replicating-probe, near-light-ship]
+  helped_by: [dyson-swarm]
+  forecast:
+    note: >-
+      Armstrong and Sandberg (2013) argue that a Dyson swarm around the Sun
+      could launch probes to millions of galaxies with a few hours of its
+      output, since each probe can be small. Judgment: soon after
+      self-copying probes and near-light ships, about 2300, if anyone
+      wants to.
+    sources:
+      - title: Armstrong and Sandberg, Eternity in six hours (preprint, 2013)
+        url: http://web.archive.org/web/2020/http://www.fhi.ox.ac.uk/wp-content/uploads/intergalactic-spreading.pdf
+  sources:
+    - title: Wikipedia, Intergalactic travel
+      url: https://en.wikipedia.org/wiki/Intergalactic_travel
+
+- id: galaxy-reached
+  name: Most of the Milky Way reached
+  kind: milestone
+  fields: [engineering, society]
+  track: space
+  tier: 1
+  date: { window: [47000, 10002000], likely: 302000 }
+  status: speculative
+  base_rates: false
+  summary: >-
+    Probes or settlers from Earth in star systems holding most of the
+    galaxy's stars. The Milky Way is about 100,000 light years across and
+    the Sun is 26,000 light years from its center, so even at light speed
+    this takes tens of thousands of years.
+  criterion: >-
+    Probes or settlements originating from Earth have arrived in star
+    systems that together hold more than half of the Milky Way's stars.
+  requires: [self-replicating-probe, interstellar-settlement]
+  helped_by: [near-light-ship, second-dyson-swarm]
+  forecast:
+    note: >-
+      Classic estimates for the Fermi paradox (Hart, Tipler) put a
+      galaxy-wide spread at about 650,000 years to a few million with
+      sub-relativistic probes, and later work at a million to a hundred
+      million; slow growth or deliberate restraint could stretch it to the
+      age of the galaxy (Newman and Sagan, 1981). With probes at half
+      light speed, reaching beyond the center takes about 100,000 to
+      150,000 years. Judgment: about 300,000 years from now, with a long
+      tail.
+    sources:
+      - title: Carroll-Nellenback et al., The Fermi paradox and the Aurora effect (2019)
+        url: https://arxiv.org/abs/1902.04450
+      - title: Wikipedia, Fermi paradox
+        url: https://en.wikipedia.org/wiki/Fermi_paradox
+  sources:
+    - title: Wikipedia, Milky Way
+      url: https://en.wikipedia.org/wiki/Milky_Way
+
+- id: kardashev-type-3
+  name: Kardashev Type III
+  kind: milestone
+  fields: [engineering, energy]
+  track: space
+  tier: 2
+  date: { window: [52000, 20002000], likely: 352000 }
+  status: speculative
+  base_rates: false
+  summary: >-
+    A civilization using the power of a galaxy: 1e36 W on Sagan's scale,
+    ten billion times a Dyson swarm around the Sun, from swarms around a
+    large share of the Milky Way's stars.
+  criterion: >-
+    Civilization originating from Earth uses energy at an average rate of
+    at least 1e36 W.
+  requires: [galaxy-reached, second-dyson-swarm]
+  forecast:
+    note: >-
+      It comes with or soon after reaching most of the galaxy, since
+      building a swarm takes decades to centuries and crossing the galaxy
+      takes far longer. Whether it is ever wanted is the bigger question.
+      Judgment: about 350,000 years from now.
+    sources:
+      - title: Wikipedia, Kardashev scale
+        url: https://en.wikipedia.org/wiki/Kardashev_scale
+  sources:
+    - title: Wikipedia, Kardashev scale
+      url: https://en.wikipedia.org/wiki/Kardashev_scale
+
+- id: probe-reaches-andromeda
+  name: A probe reaches the Andromeda galaxy
+  kind: milestone
+  fields: [engineering, physics]
+  track: space
+  tier: 2
+  date: { window: [2502000, 30002000], likely: 3502000 }
+  status: speculative
+  base_rates: false
+  summary: >-
+    The nearest large galaxy is 2.5 million light years away, so even a
+    probe at nearly light speed launched in the next few centuries
+    arrives millions of years from now, still billions of years before
+    Andromeda and the Milky Way merge.
+  criterion: >-
+    A probe launched from the solar system, or descended from one,
+    arrives in the Andromeda galaxy (M31).
+  requires: [intergalactic-probe-launch]
+  forecast:
+    note: >-
+      At 0.99c it takes about 2.5 million years, at half light speed 5
+      million, at a tenth 25 million. Armstrong and Sandberg's probes run
+      from 0.5 to 0.99c. Judgment: about 3.5 million years from now.
+    sources:
+      - title: Armstrong and Sandberg, Eternity in six hours (preprint, 2013)
+        url: http://web.archive.org/web/2020/http://www.fhi.ox.ac.uk/wp-content/uploads/intergalactic-spreading.pdf
+  sources:
+    - title: Wikipedia, Andromeda Galaxy
+      url: https://en.wikipedia.org/wiki/Andromeda_Galaxy

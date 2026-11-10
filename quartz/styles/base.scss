@@ -934,9 +934,10 @@ html[saved-theme="dark"][data-art-theme="neutral_gray"]  { --outer-bg: #242424; 
   }
 }
 
-/* Diagrams drawn inline in a post, with a caption set apart from the text. */
+/* Diagrams drawn inline in a post, with a caption set apart from the text
+   like a figure in a paper: a labeled panel the reader can fold away. */
 figure.diagram {
-  margin: 1.5rem 0;
+  margin: 1.75rem 0;
 }
 figure.diagram svg {
   display: block;
@@ -944,10 +945,37 @@ figure.diagram svg {
   height: auto;
 }
 figure.diagram figcaption {
-  margin-top: 0.5rem;
-  font-size: 0.85em;
-  line-height: 1.45;
+  margin-top: 0.6rem;
+  font-size: 0.86em;
+  line-height: 1.5;
   color: var(--darkgray);
-  border-left: 2px solid var(--lightgray);
-  padding-left: 0.75rem;
+  background: var(--highlight);
+  border-radius: 6px;
+  padding: 0.45rem 0.8rem;
+}
+figure.diagram figcaption summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--dark);
+  list-style: none;
+}
+figure.diagram figcaption summary::-webkit-details-marker {
+  display: none;
+}
+figure.diagram figcaption summary::after {
+  content: "hide";
+  float: right;
+  font-weight: 400;
+  font-size: 0.9em;
+  color: var(--gray);
+}
+figure.diagram figcaption details:not([open]) summary::after {
+  content: "show caption";
+}
+figure.diagram figcaption .fig-label {
+  font-variant: small-caps;
+  letter-spacing: 0.02em;
+}
+figure.diagram figcaption p {
+  margin: 0.3rem 0 0.1rem;
 }

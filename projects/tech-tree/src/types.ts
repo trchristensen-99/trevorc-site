@@ -188,7 +188,7 @@ export interface Tree {
     now: number
     width: number
     height: number
-    time: { tau: number; deep: number; futureGain: number; far?: number; uMin: number; uMax: number }
+    time: { tau: number; deep: number; futureGain: number; far?: number; far2?: number; uMin: number; uMax: number }
     reveal: { p: number; fullZoom: number }
   }
   fields: { id: string; name: string; color: string }[]

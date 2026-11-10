@@ -721,7 +721,10 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
     // A milestone's run from base rates follows its trend, so it would
     // count the trend twice; and the growth model stands in for base rates,
     // which know nothing of scale, where it applies.
-    if (!(tr && Number.isFinite(qOf(tr.q, 0.5))) && !g) inputs.push({ label: accelOf(n) ? "Base rates, with AI speedups" : "Base rates", kind: "outside", weight: WEIGHTS.outside, q: outside })
+    // Nor do they know the speed of light: nodes marked base_rates: false
+    // (the galaxy-scale ones) leave them out.
+    if (!(tr && Number.isFinite(qOf(tr.q, 0.5))) && !g && n.base_rates !== false) inputs.push({ label: accelOf(n) ? "Base rates, with AI speedups" : "Base rates", kind: "outside", weight: WEIGHTS.outside, q: outside })
+    if (!inputs.length) continue // judgment alone: nothing to pool
     const poolOf = (list) => {
       const tot = list.reduce((a, i) => a + i.weight, 0)
       return LEVELS.map((lv, k) => {

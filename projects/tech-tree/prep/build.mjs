@@ -739,16 +739,20 @@ ranked.forEach((n, r) => {
 // Time: logarithmic in distance from now, so the deep past is compressed
 // and the present and future get room. Beyond about 12,000 years ago it's
 // compressed twice as hard, since few nodes live there, and so is the far
-// future, beyond 2150.
+// future, beyond 2150; beyond 3000, where only the galaxy-scale milestones
+// live, five times as hard.
 const TAU = 12
 const DEEP = Math.log10(1 + 12000 / TAU)
 const FUTURE_GAIN = 1.25
 const FAR_YEAR = 2150
 const FAR = FUTURE_GAIN * Math.log10(1 + (FAR_YEAR - NOW) / TAU)
+const FAR2_YEAR = 3000
+const FAR2 = FUTURE_GAIN * Math.log10(1 + (FAR2_YEAR - NOW) / TAU)
 function timeU(year) {
   const d = year - NOW
   if (d >= 0) {
     const u = FUTURE_GAIN * Math.log10(1 + d / TAU)
+    if (u > FAR2) return FAR + (FAR2 - FAR) * 0.5 + (u - FAR2) * 0.2
     return u > FAR ? FAR + (u - FAR) * 0.5 : u
   }
   let u = Math.log10(1 + -d / TAU)
@@ -757,7 +761,7 @@ function timeU(year) {
 }
 const years = kept.flatMap((n) => [n._date.from, n._date.to])
 const uMin = timeU(Math.min(...years)) - 0.08
-const uMax = Math.max(timeU(2100), timeU(Math.min(3000, Math.max(...years)))) + 0.06
+const uMax = Math.max(timeU(2100), timeU(Math.max(...years))) + 0.06
 // World units are screen pixels at the starting zoom on a typical desktop
 // (about 1,150 by 860 of map), so the spacing below is real spacing.
 const WIDTH = 1150
@@ -882,7 +886,7 @@ const out = {
   meta: {
     built: new Date().toISOString().slice(0, 10), now: NOW,
     width: WIDTH, height: HEIGHT,
-    time: { tau: TAU, deep: DEEP, futureGain: FUTURE_GAIN, far: FAR, uMin, uMax },
+    time: { tau: TAU, deep: DEEP, futureGain: FUTURE_GAIN, far: FAR, far2: FAR2, uMin, uMax },
     reveal: { p: P, fullZoom: FULL_ZOOM },
   },
   fields: FIELDS.map(({ tracks, ...f }) => f), roots: (({ tracks, ...f }) => f)(ROOTS),

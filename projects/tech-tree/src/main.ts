@@ -2,7 +2,7 @@ import "./style.css"
 import { Sandbox } from "./sandbox"
 import { dateLabel } from "./time"
 import { DETAIL_DEFAULT, DISPLAY_DEFAULTS, EFFORT_STOPS, KIND_COLORS, RISK_COLORS, ROUTE_COLORS, SERIES_COLORS, STATUS_COLORS, TreeView, effortColor, fmtValue, kindShape, seriesOf, type Display, type Filters } from "./tree"
-import type { Details, Growth, Metric, Models, Node, Pool, PoolInput, Quantiles, ResourceUse, Source, Supply, Tree } from "./types"
+import type { Details, Growth, Metric, Models, Node, PoolInput, Quantiles, ResourceUse, Source, Supply, Tree } from "./types"
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
 const esc = (s: unknown) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!)
@@ -486,7 +486,13 @@ async function main() {
     const xs = (y: number) => Math.log(1 + Math.max(0, Math.min(y, end) - now))
     const px = (y: number) => L + (xs(y) / xs(end)) * (W - L - R)
     const H = T + rows.length * ROW + 4
-    const ticks = [2030, 2040, 2050, 2075, 2100, 2150, 2200, 2300, 2500, 3000].filter((y) => y < end - 2 && y > now + 1)
+    // Ticks at least 26 px apart, so the labels don't run together.
+    let lastTick = -Infinity
+    const ticks = [2030, 2040, 2050, 2075, 2100, 2150, 2200, 2300, 2500, 3000].filter((y) => y < end - 2 && y > now + 1).filter((y) => {
+      if (px(y) - lastTick < 26) return false
+      lastTick = px(y)
+      return true
+    })
     const tick = ticks.map((y) => `<line x1="${px(y)}" x2="${px(y)}" y1="${T - 4}" y2="${H}" class="grid"/><text x="${px(y)}" y="${T - 6}" class="xlab">${y}</text>`).join("")
     const body = rows.map((r, i) => {
       const y = T + i * ROW + 15
