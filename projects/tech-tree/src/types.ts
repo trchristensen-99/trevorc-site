@@ -40,6 +40,7 @@ export interface Node {
 // The text of each node, loaded after the tree is drawn.
 export interface Details {
   date: unknown
+  writing?: { title: string; url: string }[] // posts on the site about it
   was?: number // the best guess before it was last revised
   summary?: string
   criterion?: string
@@ -239,7 +240,7 @@ export interface Growth {
   path: { years: number[]; q: number[][]; byRegime: Record<string, number[]> } // power use in watts: quantiles per year, and each regime's median
   params: {
     steady: { growth: Range }
-    explosion: { from: string; delay: Range; regimes: Record<string, { weight: number; growth?: Range; first?: Range; halving?: Range; floor?: Range }> }
+    explosion: { from: string; delay: Range; regimes: Record<string, { weight: number; growth?: Range; lasts?: Range; then?: string; first?: Range; halving?: Range; floor?: Range }> }
     earth: { cap: Range }
     space: { from: string[]; seed: number; delay: Record<string, Range>; doubling: Range }
     sun: number

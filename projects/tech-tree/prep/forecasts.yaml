@@ -1089,6 +1089,7 @@ explosive-growth:
 
 kardashev-type-1:
   - title: "Jiang et al. (2022), Avoiding the Great Filter"
+    weight: 0.25            # assumes growth never changes pace; the growth model covers slow worlds
     url: https://arxiv.org/abs/2204.07070
     kind: model
     asof: 2022-03
@@ -1122,6 +1123,7 @@ kardashev-type-1:
 
 dyson-swarm:
   - title: "Kardashev (1971): the Sun's whole output in about 800 years at 4 percent growth"
+    weight: 0.25            # assumes growth never changes pace; the growth model covers slow worlds
     url: https://en.wikipedia.org/wiki/Kardashev_scale
     kind: model
     asof: 1971-01
@@ -1129,6 +1131,7 @@ dyson-swarm:
     match: same
     note: A growth extrapolation, not a forecast; at 4 percent a year, human energy use would match the Sun's output about 800 years on, and the sunlight reaching Earth after about 240.
   - title: "Murphy (2011): the Sun's whole output in about 1,350 years at 2.3 percent growth"
+    weight: 0.25            # assumes growth never changes pace; the growth model covers slow worlds
     url: https://dothemath.ucsd.edu/2011/07/galactic-scale-energy/
     kind: model
     asof: 2011-07

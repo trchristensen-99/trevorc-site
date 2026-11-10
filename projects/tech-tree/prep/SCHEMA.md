@@ -209,8 +209,9 @@ share divided by its speedup. Shares are relative (they're normalized).
 (`src/growth.ts`, shared with the app). Energy use starts from the latest
 point of its metric and grows at its historical rate; in each run from the
 judgment, some years after that run's date for robots building robots,
-growth takes one of three courses, chosen by weight: no explosion (a new
-steady rate), or a gradual or fast explosion, in which the first doubling
+growth takes one of three courses, chosen by weight: held back (a new
+steady rate for `lasts` years, then the explosion of course `then`), or a
+gradual or fast explosion, in which the first doubling
 takes a few years and each later doubling is shorter by half every few
 doublings, down to a floor. On Earth it stops at a cap (waste heat);
 industry in space starts from a seed after robots build robots and a

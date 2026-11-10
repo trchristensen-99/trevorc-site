@@ -528,15 +528,21 @@ export function forecasting({ NOW, kept, live, warn, techPrereqs, recentLags, me
         counts[regime]++
         const r = R[regime]
         const onset = when(G.explosion.from, d) + draw(G.explosion.delay)
+        // Held back: a modest new rate for some decades, then the
+        // explosion of another course (`then`) after all.
+        const held = r.growth != null
+        const g1 = held ? draw(r.growth, false) : 0
+        const boom = held ? onset + draw(r.lasts) : onset
+        const e = held ? R[r.then] : r
         const ready = Math.max(...G.space.from.map((id) => when(id, d)))
-        const spaceStart = Math.max(ready, regime === "slow" ? -Infinity : onset) + draw(G.space.delay[regime])
-        // The slow regime is a new steady rate; the others shorten their
-        // doubling time by half every `halving` doublings.
-        const slow = r.growth != null
-        const first = slow ? Math.LN2 / Math.max(0.002, draw(r.growth, false)) : draw(r.first)
+        const spaceStart = held
+          ? Math.min(ready + draw(G.space.delay[regime]), Math.max(ready, boom) + draw(G.space.delay[r.then]))
+          : Math.max(ready, onset) + draw(G.space.delay[regime])
+        // Each doubling after the explosion begins comes quicker than the
+        // last, by half every `halving` doublings.
         const p = {
-          t0, e0, g0: draw(G.steady.growth, false), onset, first,
-          shrink: slow ? 1 : 0.5 ** (1 / Math.max(0.5, draw(r.halving))), floor: slow ? first : draw(r.floor),
+          t0, e0, g0: draw(G.steady.growth, false), onset, g1, boom, first: draw(e.first),
+          shrink: 0.5 ** (1 / Math.max(0.5, draw(e.halving))), floor: draw(e.floor),
           earthCap: draw(G.earth.cap), spaceStart, spaceSeed: G.space.seed,
           spaceDoubling: draw(G.space.doubling), sun: G.sun,
         }

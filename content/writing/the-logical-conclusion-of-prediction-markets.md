@@ -8,6 +8,7 @@ tags:
   - future
   - technology
   - politics
+tech: [prediction-markets]
 ---
 
 You've probably heard of prediction markets in the last few years, particularly crypto-based ones. You can bet on anything from elections to sports to the year Jesus Christ will return[^1].

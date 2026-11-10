@@ -7,6 +7,7 @@ status: finished
 tags:
   - ai
   - technology
+tech: [ai-agents]
 ---
 
 > "AI is whatever hasn't been done yet." — Larry Tesler

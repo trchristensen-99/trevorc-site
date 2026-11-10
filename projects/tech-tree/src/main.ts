@@ -640,6 +640,7 @@ async function main() {
       threshold +
       (d.summary ? `<p>${esc(d.summary)}</p>` : "") +
       (d.criterion ? `<div class="criterion"><h3>Counts as done when</h3><p>${esc(d.criterion)}</p></div>` : "") +
+      (d.writing?.length ? `<p class="writing">On this site: ${d.writing.map((w) => `<a href="${esc(w.url)}" target="_top">${esc(w.title)}</a>`).join("; ")}</p>` : "") +
       `<dl>${rows.join("")}</dl>` +
       (d.lost ? `<h3>Lost</h3><p>${esc(d.lost)}</p>` : "") +
       (d.note ? `<p class="note">${esc(d.note)}</p>` : "") +
@@ -745,7 +746,7 @@ async function main() {
   // The far future: power use in the growth model's runs, 10 to 90 percent
   // and the median, each regime's median, and the thresholds the tree uses.
   const REGIME_COLORS: Record<string, string> = { slow: "#5b8bd0", gradual: "#d08b3a", fast: "#c0504d" }
-  const REGIME_WORD: Record<string, string> = { slow: "no explosion", gradual: "gradual explosion", fast: "fast explosion" }
+  const REGIME_WORD: Record<string, string> = { slow: "held back", gradual: "gradual explosion", fast: "fast explosion" }
   const growthChart = (g: Growth) => {
     const W = 330, H = 210, L = 40, B = 20, T = 8, R = 92
     const ys = g.path.years
@@ -772,7 +773,7 @@ async function main() {
     const yrs = (v: number) => (v < 1 ? `${+(v * 12).toFixed(1)} months` : v === 1 ? "1 year" : `${+v.toFixed(1)} years`)
     const tw = (v: number) => `${(v / 1e12).toLocaleString("en-US")} TW`
     const R = g.params.explosion.regimes
-    const regimeRows = Object.entries(R).map(([k, r]) => `<tr><td><span class="sw" style="background:${REGIME_COLORS[k] ?? "var(--muted)"}"></span> ${esc(REGIME_WORD[k] ?? k)}</td><td>${Math.round(r.weight * 100)}%</td><td>${r.growth ? `grows ${rangeText(r.growth, pct)} a year` : `first doubling ${rangeText(r.first, yrs)}, halving every ${rangeText(r.halving, (v) => String(v))} doublings, down to ${rangeText(r.floor, yrs)}`}</td></tr>`).join("")
+    const regimeRows = Object.entries(R).map(([k, r]) => `<tr><td><span class="sw" style="background:${REGIME_COLORS[k] ?? "var(--muted)"}"></span> ${esc(REGIME_WORD[k] ?? k)}</td><td>${Math.round(r.weight * 100)}%</td><td>${r.growth ? `grows ${rangeText(r.growth, pct)} a year for ${rangeText(r.lasts ?? 0, yrs)}, then as a ${esc(REGIME_WORD[r.then ?? ""] ?? "")}` : `first doubling ${rangeText(r.first, yrs)}, halving every ${rangeText(r.halving, (v) => String(v))} doublings, down to ${rangeText(r.floor, yrs)}`}</td></tr>`).join("")
     const rows = Object.entries(g.nodes).map(([id, x]) => {
       const n = byId.get(id)
       if (!n) return ""
@@ -781,10 +782,10 @@ async function main() {
     }).join("")
     return `<h3>The far future: a growth model</h3>
       ${growthChart(g)}
-      <p>Past superintelligence, nobody can say what will be invented, but physics says what any invention needs: energy. So the far end of the tree is dated by thresholds of power use, from a model of how fast it could grow (<code>prep/growth.yaml</code>). Humanity used ${tw(g.e0)} in ${g.t0}, growing ${rangeText(g.params.steady.growth, pct)} a year. In each of the ${models.forecasting.draws.toLocaleString("en-US")} runs, once robots build robots (that run's date for it), and ${rangeText(g.params.explosion.delay, yrs)} later, growth takes one of three courses:</p>
+      <p>Past superintelligence, nobody can say what will be invented, but physics says what any invention needs: energy. So the far end of the tree is dated by thresholds of power use, from a model of how fast it could grow (<code>prep/growth.yaml</code>). Humanity used ${tw(g.e0)} in ${g.t0}, growing ${rangeText(g.params.steady.growth, pct)} a year. In each of the ${models.forecasting.draws.toLocaleString("en-US")} runs, once robots build robots (that run's date for it), and ${rangeText(g.params.explosion.delay, yrs)} later, growth takes one of three courses. Held back, it stays modest for a while, but not forever: over a century or more, rules change, rivals defect, and machines that build machines find ways around what held them, so the explosion comes late rather than never.</p>
       <table class="t"><thead><tr><th>After robots build robots</th><th>Chance</th><th>Power use</th></tr></thead><tbody>${regimeRows}</tbody></table>
       <p>The doubling time itself changes: in an explosion, each doubling comes quicker than the last as the machines improve, down to a floor. On Earth's surface growth stops at ${rangeText(g.params.earth.cap, tw)}, where waste heat would warm the planet by about a degree; beyond that it continues only in space, from the first factory there that copies itself (some years after robots build robots and a lunar base: ${Object.entries(g.params.space.delay).map(([k, r]) => `${rangeText(r, yrs)} in a ${esc(REGIME_WORD[k] ?? k)}`).join(", ")}), up to the Sun's whole output. The chart shows power use (the band holds 10 to 90 percent of runs, the black line the median, the colored lines each course's median).</p>
-      <p>Neither the optimists nor the skeptics are taken at their word. A superintelligence may see faster routes than anyone can now: the fast course lets doubling times fall to ${rangeText(R.fast?.floor ?? 0.1, yrs)}, near Hanson's projected next growth mode (doubling every few weeks) and Davidson and Hadshar's limit for self-copying robots. But arguments that it will be fast can be too optimistic over short spans: chips, permits, power plants and what can't be automated (Aghion, Jones and Jones; Acemoglu) can hold growth near today's for decades, and even a fast course needs years to ramp up. Forecasters and economists disagree here more than anywhere in the tree; Metaculus forecasters put the first year of 30 percent world growth at a median of 2059, while economists surveyed in 2026 expected 2.5 to 3.5 percent a year. The weights above put the model between them, at about ${Math.round((1 - (R.slow?.weight ?? 0)) * 100)}% for an explosion once robots build robots.</p>
+      <p>Neither the optimists nor the skeptics are taken at their word. A superintelligence may see faster routes than anyone can now: the fast course lets doubling times fall to ${rangeText(R.fast?.floor ?? 0.1, yrs)}, near Hanson's projected next growth mode (doubling every few weeks) and Davidson and Hadshar's limit for self-copying robots. But arguments that it will be fast can be too optimistic over short spans: chips, permits, power plants and what can't be automated (Aghion, Jones and Jones; Acemoglu) can hold growth near today's for decades, and even a fast course needs years to ramp up. Forecasters and economists disagree here more than anywhere in the tree; Metaculus forecasters put the first year of 30 percent world growth at a median of 2059, while economists surveyed in 2026 expected 2.5 to 3.5 percent a year. The weights above put the model between them, at about ${Math.round((1 - (R.slow?.weight ?? 0)) * 100)}% for an explosion within a few years of robots building robots.</p>
       <table class="t est"><thead><tr><th>Threshold</th><th>Tree</th><th>Model</th>${Object.keys(R).map((k) => `<th>${esc(REGIME_WORD[k] ?? k)}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table>
       <p class="note">Model: the median and 10 to 90 percent of runs; the last columns, the median in each course alone. The model is one source in each threshold's pool, standing in for base rates, which know nothing of scale; the tree's date stays a judgment. In Your own dates, moving robots building robots or a lunar base moves these thresholds as the model says, and you can pick one course under After robots build robots. ${g.sources.map((x) => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>`).join("; ")}.</p>`
   }

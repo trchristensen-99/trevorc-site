@@ -8,6 +8,7 @@ tags:
   - future
   - reading
   - war
+tech: [artificial-superintelligence, agi]
 ---
 
 Reading old writing about artificial intelligence generally elicits (from me at least) a mixture of interest, humor, and concern, with the amount of concern increasing and humor decreasing as the accuracy of the predictions increases. One of these works that I finally got around to reading is *The Artilect War: Cosmists vs. Terrans* by Hugo de Garis. "Artilect" is just a portmanteau of "artificial intellect," which de Garis uses as "a useful shorthand for the term 'godlike massively intelligent machine'" (11)[^1] but may have been clearer as the more straightforward term "superintelligence" (from "superhuman intelligence," yielding "The Superintelligence War" which is a lot more terminologically self-explanatory in my opinion). He posted the book in PDF format for free on his website [here](https://profhugodegaris.wordpress.com/wp-content/uploads/2011/04/artilectwar.pdf) (also [archived here](https://web.archive.org/web/20260927235321/https://profhugodegaris.wordpress.com/wp-content/uploads/2011/04/artilectwar.pdf)), which I respect a lot as someone who dislikes locking important ideas behind paywalls.

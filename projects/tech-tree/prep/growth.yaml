@@ -35,11 +35,19 @@ explosion:
   regimes:
     slow:
       weight: 0.45
-      # AI arrives but bottlenecks (what stays hard to automate, regulation,
-      # permits, satiation) keep growth modest: Cowen half a point more,
-      # Goldman Sachs 1.5 points, Jones (2024) 10 percent a year as a strong
-      # case. Energy grows slower than output as efficiency improves.
+      # Held back: AI arrives but bottlenecks (what stays hard to automate,
+      # regulation, permits, satiation, a deliberate pause) keep growth
+      # modest: Cowen half a point more, Goldman Sachs 1.5 points, Jones
+      # (2024) 10 percent a year as a strong case. Energy grows slower than
+      # output as efficiency improves.
       growth: { q10: 0.010, q50: 0.020, q90: 0.040 }
+      # But not forever. Economists' views are about the next few decades;
+      # over a century or more, rules change, rivals defect, and machines
+      # that already build machines find ways around what held them, so
+      # the explosion comes late rather than never (a gradual one). The
+      # long tail stands for restraint chosen and kept, or a setback.
+      lasts: { q10: 15, q50: 60, q90: 300 }
+      then: gradual
     gradual:
       weight: 0.40
       # Davidson and Hadshar (2025): the first doublings with robots
@@ -92,6 +100,8 @@ nodes:
   explosive-growth: { growth: 0.3 }   # power use growing 30 percent in a year, standing in for output
   energy-use-10x: { watts: 2.0e14 }
   self-replicating-space-factory: { space: 1.0e8 }
+  space-power-terawatts: { space: 2.0e13 }
+  sunlight-on-earth-in-space: { space: 1.74e17 }
   kardashev-type-1: { watts: 1.0e16 }
   sun-one-percent: { space: 3.828e24 }
   dyson-swarm: { space: 1.914e26 }

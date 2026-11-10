@@ -941,9 +941,27 @@ const eraDeep = (v, key = "") => {
   if (v && typeof v === "object") return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, eraDeep(x, k)]))
   return v
 }
+// Writing on the site about a technology: a post lists tree ids under
+// `tech:` in its front matter (drafts are left out until published).
+const writingOf = new Map()
+for (const dir of ["writing", "projects"]) {
+  const full = path.join(HERE, "..", "..", "..", "content", dir)
+  if (!fs.existsSync(full)) continue
+  for (const f of fs.readdirSync(full).filter((f) => f.endsWith(".md") && f !== "index.md").sort()) {
+    const m = fs.readFileSync(path.join(full, f), "utf8").match(/^---\n([\s\S]*?)\n---/)
+    const fm = m ? YAML.parse(m[1]) : null
+    if (!fm?.tech || fm.draft) continue
+    for (const id of [].concat(fm.tech)) {
+      if (!live.get(id)) { warn(`content/${dir}/${f}: unknown tech ${id}`); continue }
+      if (!writingOf.has(id)) writingOf.set(id, [])
+      writingOf.get(id).push({ title: String(fm.title), url: `/${dir}/${f.replace(/\.md$/, "")}` })
+    }
+  }
+}
 const details = Object.fromEntries(kept.map((n) => [n.id, eraDeep({
   date: n.date, ...(n.was != null ? { was: n.was } : {}), summary: n.summary, criterion: n.criterion, efforts: n.efforts, effort: n.effort, forecast: n.forecast, lost: n.lost,
   scarcity: n.scarcity, note: n.note, sources: n.sources,
+  ...(writingOf.has(n.id) ? { writing: writingOf.get(n.id) } : {}),
   ...(n._routes.length ? { routes: n._routes.map((r) => ({ name: r.name, note: r.note, requires: r.requires })) } : {}),
   ...(n._effort ? { effortCalc: { years: n._effort.years, people: n._effort.people, py: n._effort.py, work: n._effort.work, rough: n._effort.rough, ...(n._effort.py && !n._effort.open && n._effort.work === "research" && n._date.at >= EFFORT_FROM && effortFit ? { vsTrend: round(Math.log10(n._effort.py) - effortExpected(n._date.at, n.kind), 2) } : {}) } } : {}),
   ...(n._prereqModel ? { prereqModel: mapVals(n._prereqModel, (v) => round(v)) } : {}),
